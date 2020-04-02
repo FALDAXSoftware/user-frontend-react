@@ -44,10 +44,11 @@ class TemplateManage extends React.Component {
       }
     ];
     this.state = {
-      activeKey: panes[0].key,
+      templates: [],
+      activeKey: "0",
       panes,
       comingSoon: this.props.visible ? true : "",
-      pairs: "",
+      pairs: this.props.pairs,
       templateArray: [
         {
           id: "1",
@@ -117,20 +118,11 @@ class TemplateManage extends React.Component {
     this.onChangeCheckbox = this.onChangeCheckbox.bind(this);
   }
 
-  //   handleComing = e => {
-  //     this.setState({ comingSoon: false });
-  //   };
+  handleSave = () => {
+    this.props.onSave(this.state.templates)
+  };
   componentDidMount() {
-    this.getPairs();
-    const children = [];
-
-    // if (this.state.pairs && this.state.pairs.length > 0)
-    //   for (let i = 0; i < this.state.pairs.length; i++) {
-    //     console.log("^^^", i);
-    //     // children.push(
-    //     //   <Option key={i.}>{i.toString(36) + i}</Option>
-    //     // );
-    //   }
+    this.setState({ templates: this.props.templates })
   }
   getPairs = () => {
     fetch(API_URL + `/users/get-all-pair`, {
@@ -155,11 +147,11 @@ class TemplateManage extends React.Component {
           );
         }
       })
-      .catch(error => {});
+      .catch(error => { });
   };
-  comingCancel = e => {
+  onCancle = e => {
     this.setState({ comingSoon: false });
-    this.props.comingCancel(e);
+    this.props.onCancle(e);
   };
 
   onChange = activeKey => {
@@ -199,42 +191,18 @@ class TemplateManage extends React.Component {
     }
     this.setState({ panes, activeKey });
   };
-  handleChange(value, index) {
-    let temp = this.state.templateArray;
-    console.log(`selected ${value}`, index);
-    let array = temp[index].data;
-    array = value;
-    temp[index].data = array;
-    this.setState(
-      {
-        templateArray: temp
-      },
-      () => {
-        console.log("^^^^array", this.state.templateArray);
-      }
-    );
+  handleChange(value, widgetIndex, templateIndex) {
+    let templates = this.state.templates
+    console.log(value);
+
+    templates[templateIndex].widgets[widgetIndex].data = value
+    this.setState({ templates })
   }
-  onChangeCheckbox = (e, id) => {
-    console.log("^^^^e", e, id);
-    let temp = this.state.templateArray;
-    for (var i = 0; i < this.state.templateArray.length; i++) {
-      if (temp[i].id === id) {
-        if (temp[i].checked) {
-          temp[i].checked = false;
-        } else {
-          temp[i].checked = true;
-        }
-        break;
-      }
-    }
-    this.setState(
-      {
-        templateArray: temp
-      },
-      () => {
-        console.log("^^^^checkbox", this.state.templateArray);
-      }
-    );
+  onChangeCheckbox = (checked, widgetIndex, templateIndex) => {
+
+    let templates = this.state.templates
+    templates[templateIndex].widgets[widgetIndex].checked = checked
+    this.setState({ templates })
   };
   render() {
     const { templateArray } = this.state;
@@ -247,14 +215,14 @@ class TemplateManage extends React.Component {
             </div>
           }
           visible={this.props.visible}
-          onOk={e => this.handleComing()}
+          onOk={e => this.handleSave()}
           // closable={false}
-          onCancel={e => this.comingCancel(e)}
+          onCancel={e => this.onCancle(e)}
           maskClosable={false}
-          footer={null}
           width={605}
           height={490}
           className="simple-maps template_manage"
+          destroyOnClose={true}
         >
           <ModalWrap className="template_modal_wrap">
             <TemplateTab
@@ -264,64 +232,50 @@ class TemplateManage extends React.Component {
               onEdit={this.onEdit}
               className="template_tab"
             >
-              {/* {this.state.panes.map(pane => (
+              {this.state.templates.map((t, index) => (
                 <TemplateTabPane
                   className="testtabpane"
-                  tab={pane.title}
-                  key={pane.key}
-                  closable={pane.closable}
+                  tab={t.title}
+                  key={index}
+                  closable={false}
                 >
-                  {pane.content}
+                  {t.widgets.map((w, windex) => (
+                    <TempRow>
+                      <WidgetName>
+                        <Switch
+                          checked={w.checked}
+                          onChange={checked => {
+                            this.onChangeCheckbox(checked, windex, index);
+                          }}
+                        />
+                        <span>{w.name}</span>
+                      </WidgetName>
+                      {w.checked && w.multiple ? (
+                        <TemplatePairSelect
+                          mode="multiple"
+                          style={{ width: "100%" }}
+                          placeholder="Please select pairs"
+                          value={w.data}
+                          // defaultValue={["XRP-BTC"]}
+                          onChange={value => {
+                            this.handleChange(value, windex, index);
+                          }}
+                        >
+                          {this.state.pairs &&
+                            this.state.pairs.map((element1) => (
+                              <Option key={element1.name}>{element1.name}</Option>
+                            ))}
+                        </TemplatePairSelect>
+                      ) : (
+                          ""
+                        )}
+                    </TempRow>
+                  ))
+                  }
                 </TemplateTabPane>
-              ))} */}
-              <TemplateTabPane
-                className="testtabpane"
-                tab="Template 1"
-                key="1"
-                closable={false}
-              >
-                {templateArray.map((element, index) => (
-                  <TempRow>
-                    {/* <Checkbox
-                      checked={element.checked}
-                      value={element.id}
-                      onClick={this.onChangeCheckbox.bind(this)}
-                    >
-                      {element.name}
-                    </Checkbox> */}
-                    <WidgetName>
-                      <Switch
-                        data-id={`${element.id}`}
-                        checked={element.checked}
-                        onChange={e => {
-                          this.onChangeCheckbox(e, element.id);
-                        }}
-                      />
-                      <span>{element.name}</span>
-                    </WidgetName>
-                    {element.checked && element.multiple ? (
-                      <TemplatePairSelect
-                        mode="multiple"
-                        style={{ width: "100%" }}
-                        placeholder="Please select pairs"
-                        value={element.data}
-                        // defaultValue={["XRP-BTC"]}
-                        onChange={value => {
-                          this.handleChange(value, index);
-                        }}
-                      >
-                        {this.state.pairs &&
-                          this.state.pairs.map((element1, index) => (
-                            <Option key={element1.name}>{element1.name}</Option>
-                          ))}
-                      </TemplatePairSelect>
-                    ) : (
-                      ""
-                    )}
-                  </TempRow>
-                ))}
-                <SaveBtn type="primary">Save</SaveBtn>
-              </TemplateTabPane>
+              ))
+
+              }
             </TemplateTab>
           </ModalWrap>
         </Modal>

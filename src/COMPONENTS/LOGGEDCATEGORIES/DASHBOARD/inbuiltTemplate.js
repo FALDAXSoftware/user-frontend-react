@@ -9,10 +9,7 @@ export const inbuiltTemplates = [
                 name: "Technical analysis",
                 checked: false,
                 multiple: true,
-                data: [{
-                    key: "technical_analysis1",
-                    pair: "XRP-BTC"
-                }]
+                data: ["XRP-BTC"]
             },
             {
                 id: "2",
@@ -34,22 +31,7 @@ export const inbuiltTemplates = [
                 name: "Mini graph",
                 checked: true,
                 multiple: true,
-                data: [{
-                    key: "mini_graph1",
-                    pair: "XRP-BTC"
-                },
-                {
-                    key: "mini_graph2",
-                    pair: "XRP-BTC"
-                },
-                {
-                    key: "mini_graph3",
-                    pair: "XRP-BTC"
-                },
-                {
-                    key: "mini_graph4",
-                    pair: "XRP-BTC"
-                }]
+                data: ["XRP-BTC", "LTC-BTC", "ETH-BTC", "XRP-ETH"]
             },
             {
                 id: "5",
@@ -78,10 +60,7 @@ export const inbuiltTemplates = [
                 name: "Candle Stick",
                 checked: false,
                 multiple: true,
-                data: [{
-                    key: "candle_stick1",
-                    pair: "XRP-BTC"
-                }]
+                data: ["XRP-BTC"]
             }
         ],
         layouts: {
@@ -91,7 +70,7 @@ export const inbuiltTemplates = [
                     "h": 1,
                     "x": 8,
                     "y": 0,
-                    "i": "mini_graph1",
+                    "i": "mini_graph0",
                     "moved": false,
                     "static": false
                 },
@@ -100,7 +79,7 @@ export const inbuiltTemplates = [
                     "h": 1,
                     "x": 4,
                     "y": 0,
-                    "i": "mini_graph2",
+                    "i": "mini_graph1",
                     "moved": false,
                     "static": false
                 },
@@ -109,7 +88,7 @@ export const inbuiltTemplates = [
                     "h": 1,
                     "x": 6,
                     "y": 0,
-                    "i": "mini_graph3",
+                    "i": "mini_graph2",
                     "moved": false,
                     "static": false
                 },
@@ -118,7 +97,7 @@ export const inbuiltTemplates = [
                     "h": 1,
                     "x": 2,
                     "y": 0,
-                    "i": "mini_graph4",
+                    "i": "mini_graph3",
                     "moved": false,
                     "static": false
                 },
@@ -156,42 +135,7 @@ export const inbuiltTemplates = [
                     "w": 12,
                     "y": 0,
                     "x": 0,
-                    "i": "mini_graph1"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph2"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph3"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "activity"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "portfolio"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "news"
+                    "i": "mini_graph0"
                 },
                 {
                     "h": 3,
@@ -235,188 +179,6 @@ export const inbuiltTemplates = [
                     "x": 0,
                     "i": "news"
                 },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph1"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph2"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph3"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "activity"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "portfolio"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "news"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph1"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph2"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph3"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "activity"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "portfolio"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "news"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph1"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph2"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph3"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph4"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "activity"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "portfolio"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "news"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph1"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph2"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph3"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph4"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "activity"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "portfolio"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "news"
-                }
             ],
             "sm": [
                 {
@@ -424,42 +186,7 @@ export const inbuiltTemplates = [
                     "w": 12,
                     "y": 0,
                     "x": 0,
-                    "i": "mini_graph1"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph2"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph3"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "activity"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "portfolio"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "news"
+                    "i": "mini_graph0"
                 },
                 {
                     "h": 3,
@@ -481,188 +208,6 @@ export const inbuiltTemplates = [
                     "y": 0,
                     "x": 0,
                     "i": "mini_graph3"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "activity"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "portfolio"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "news"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph1"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph2"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph3"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "activity"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "portfolio"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "news"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph1"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph2"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph3"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "activity"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "portfolio"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "news"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph1"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph2"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph3"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph4"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "activity"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "portfolio"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "news"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph1"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph2"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph3"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph4"
                 },
                 {
                     "h": 3,
@@ -692,42 +237,7 @@ export const inbuiltTemplates = [
                     "w": 12,
                     "y": 0,
                     "x": 0,
-                    "i": "mini_graph1"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph2"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph3"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "activity"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "portfolio"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "news"
+                    "i": "mini_graph0"
                 },
                 {
                     "h": 3,
@@ -749,188 +259,6 @@ export const inbuiltTemplates = [
                     "y": 0,
                     "x": 0,
                     "i": "mini_graph3"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "activity"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "portfolio"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "news"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph1"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph2"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph3"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "activity"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "portfolio"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "news"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph1"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph2"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph3"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "activity"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "portfolio"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "news"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph1"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph2"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph3"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph4"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "activity"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "portfolio"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "news"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph1"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph2"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph3"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph4"
                 },
                 {
                     "h": 3,
@@ -960,42 +288,7 @@ export const inbuiltTemplates = [
                     "w": 12,
                     "y": 0,
                     "x": 0,
-                    "i": "mini_graph1"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph2"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph3"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "activity"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "portfolio"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "news"
+                    "i": "mini_graph0"
                 },
                 {
                     "h": 3,
@@ -1017,188 +310,6 @@ export const inbuiltTemplates = [
                     "y": 0,
                     "x": 0,
                     "i": "mini_graph3"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "activity"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "portfolio"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "news"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph1"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph2"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph3"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "activity"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "portfolio"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "news"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph1"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph2"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph3"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "activity"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "portfolio"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "news"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph1"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph2"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph3"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph4"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "activity"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "portfolio"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "news"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph1"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph2"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph3"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph4"
                 },
                 {
                     "h": 3,
@@ -1234,10 +345,7 @@ export const inbuiltTemplates = [
                 name: "Technical analysis",
                 checked: true,
                 multiple: true,
-                data: [{
-                    key: "technical_analysis1",
-                    pair: "XRP-BTC"
-                }]
+                data: ["XRP-BTC"]
             },
             {
                 id: "2",
@@ -1259,18 +367,7 @@ export const inbuiltTemplates = [
                 name: "Mini graph",
                 checked: true,
                 multiple: true,
-                data: [{
-                    key: "mini_graph1",
-                    pair: "XRP-BTC"
-                },
-                {
-                    key: "mini_graph2",
-                    pair: "XRP-BTC"
-                },
-                {
-                    key: "mini_graph3",
-                    pair: "XRP-BTC"
-                }]
+                data: ["XRP-BTC", "XRP-BTC", "XRP-BTC"]
             },
             {
                 id: "5",
@@ -1299,10 +396,7 @@ export const inbuiltTemplates = [
                 name: "Candle Stick",
                 checked: true,
                 multiple: true,
-                data: [{
-                    key: "candle_stick1",
-                    pair: "XRP-BTC"
-                }]
+                data: ["XRP-BTC"]
             }
         ],
         layouts: {
@@ -1312,7 +406,7 @@ export const inbuiltTemplates = [
                     "h": 3,
                     "x": 6,
                     "y": 0,
-                    "i": "technical_analysis1",
+                    "i": "technical_analysis0",
                     "moved": false,
                     "static": false
                 },
@@ -1339,7 +433,7 @@ export const inbuiltTemplates = [
                     "h": 1,
                     "x": 10,
                     "y": 3,
-                    "i": "mini_graph1",
+                    "i": "mini_graph0",
                     "moved": false,
                     "static": false
                 },
@@ -1348,7 +442,7 @@ export const inbuiltTemplates = [
                     "h": 1,
                     "x": 6,
                     "y": 3,
-                    "i": "mini_graph2",
+                    "i": "mini_graph1",
                     "moved": false,
                     "static": false
                 },
@@ -1357,7 +451,7 @@ export const inbuiltTemplates = [
                     "h": 1,
                     "x": 8,
                     "y": 3,
-                    "i": "mini_graph3",
+                    "i": "mini_graph2",
                     "moved": false,
                     "static": false
                 },
@@ -1393,7 +487,7 @@ export const inbuiltTemplates = [
                     "h": 4,
                     "x": 6,
                     "y": 4,
-                    "i": "candle_stick1",
+                    "i": "candle_stick0",
                     "moved": false,
                     "static": false
                 }
@@ -1418,6 +512,13 @@ export const inbuiltTemplates = [
                     "w": 12,
                     "y": 0,
                     "x": 0,
+                    "i": "mini_graph0"
+                },
+                {
+                    "h": 3,
+                    "w": 12,
+                    "y": 0,
+                    "x": 0,
                     "i": "mini_graph1"
                 },
                 {
@@ -1426,13 +527,6 @@ export const inbuiltTemplates = [
                     "y": 0,
                     "x": 0,
                     "i": "mini_graph2"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph3"
                 },
                 {
                     "h": 3,
@@ -1460,210 +554,7 @@ export const inbuiltTemplates = [
                     "w": 12,
                     "y": 0,
                     "x": 0,
-                    "i": "candle_stick1"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "crypto_screener"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "rising_falling"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph1"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph2"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph3"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "activity"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "portfolio"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "news"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "candle_stick1"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "technical_analysis1"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "crypto_screener"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "rising_falling"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph1"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph2"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph3"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "activity"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "portfolio"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "news"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "candle_stick1"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "technical_analysis1"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "crypto_screener"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "rising_falling"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph1"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph2"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph3"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "activity"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "portfolio"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "news"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "candle_stick1"
+                    "i": "candle_stick0"
                 }
             ],
             "sm": [
@@ -1686,6 +577,13 @@ export const inbuiltTemplates = [
                     "w": 12,
                     "y": 0,
                     "x": 0,
+                    "i": "mini_graph0"
+                },
+                {
+                    "h": 3,
+                    "w": 12,
+                    "y": 0,
+                    "x": 0,
                     "i": "mini_graph1"
                 },
                 {
@@ -1694,13 +592,6 @@ export const inbuiltTemplates = [
                     "y": 0,
                     "x": 0,
                     "i": "mini_graph2"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph3"
                 },
                 {
                     "h": 3,
@@ -1722,216 +613,6 @@ export const inbuiltTemplates = [
                     "y": 0,
                     "x": 0,
                     "i": "news"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "candle_stick1"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "crypto_screener"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "rising_falling"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph1"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph2"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph3"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "activity"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "portfolio"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "news"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "candle_stick1"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "technical_analysis1"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "crypto_screener"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "rising_falling"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph1"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph2"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph3"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "activity"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "portfolio"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "news"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "candle_stick1"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "technical_analysis1"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "crypto_screener"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "rising_falling"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph1"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph2"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph3"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "activity"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "portfolio"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "news"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "candle_stick1"
                 }
             ],
             "xs": [
@@ -1954,6 +635,13 @@ export const inbuiltTemplates = [
                     "w": 12,
                     "y": 0,
                     "x": 0,
+                    "i": "mini_graph0"
+                },
+                {
+                    "h": 3,
+                    "w": 12,
+                    "y": 0,
+                    "x": 0,
                     "i": "mini_graph1"
                 },
                 {
@@ -1962,13 +650,6 @@ export const inbuiltTemplates = [
                     "y": 0,
                     "x": 0,
                     "i": "mini_graph2"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph3"
                 },
                 {
                     "h": 3,
@@ -1996,210 +677,7 @@ export const inbuiltTemplates = [
                     "w": 12,
                     "y": 0,
                     "x": 0,
-                    "i": "candle_stick1"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "crypto_screener"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "rising_falling"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph1"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph2"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph3"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "activity"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "portfolio"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "news"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "candle_stick1"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "technical_analysis1"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "crypto_screener"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "rising_falling"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph1"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph2"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph3"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "activity"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "portfolio"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "news"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "candle_stick1"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "technical_analysis1"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "crypto_screener"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "rising_falling"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph1"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph2"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph3"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "activity"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "portfolio"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "news"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "candle_stick1"
+                    "i": "candle_stick0"
                 }
             ],
             "xxs": [
@@ -2222,6 +700,13 @@ export const inbuiltTemplates = [
                     "w": 12,
                     "y": 0,
                     "x": 0,
+                    "i": "mini_graph0"
+                },
+                {
+                    "h": 3,
+                    "w": 12,
+                    "y": 0,
+                    "x": 0,
                     "i": "mini_graph1"
                 },
                 {
@@ -2230,13 +715,6 @@ export const inbuiltTemplates = [
                     "y": 0,
                     "x": 0,
                     "i": "mini_graph2"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph3"
                 },
                 {
                     "h": 3,
@@ -2264,7 +742,7 @@ export const inbuiltTemplates = [
                     "w": 12,
                     "y": 0,
                     "x": 0,
-                    "i": "candle_stick1"
+                    "i": "candle_stick0"
                 },
                 {
                     "h": 3,
@@ -2285,6 +763,13 @@ export const inbuiltTemplates = [
                     "w": 12,
                     "y": 0,
                     "x": 0,
+                    "i": "mini_graph0"
+                },
+                {
+                    "h": 3,
+                    "w": 12,
+                    "y": 0,
+                    "x": 0,
                     "i": "mini_graph1"
                 },
                 {
@@ -2293,13 +778,6 @@ export const inbuiltTemplates = [
                     "y": 0,
                     "x": 0,
                     "i": "mini_graph2"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph3"
                 },
                 {
                     "h": 3,
@@ -2327,14 +805,14 @@ export const inbuiltTemplates = [
                     "w": 12,
                     "y": 0,
                     "x": 0,
-                    "i": "candle_stick1"
+                    "i": "candle_stick0"
                 },
                 {
                     "h": 3,
                     "w": 12,
                     "y": 0,
                     "x": 0,
-                    "i": "technical_analysis1"
+                    "i": "technical_analysis0"
                 },
                 {
                     "h": 3,
@@ -2355,6 +833,13 @@ export const inbuiltTemplates = [
                     "w": 12,
                     "y": 0,
                     "x": 0,
+                    "i": "mini_graph0"
+                },
+                {
+                    "h": 3,
+                    "w": 12,
+                    "y": 0,
+                    "x": 0,
                     "i": "mini_graph1"
                 },
                 {
@@ -2363,13 +848,6 @@ export const inbuiltTemplates = [
                     "y": 0,
                     "x": 0,
                     "i": "mini_graph2"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph3"
                 },
                 {
                     "h": 3,
@@ -2397,14 +875,14 @@ export const inbuiltTemplates = [
                     "w": 12,
                     "y": 0,
                     "x": 0,
-                    "i": "candle_stick1"
+                    "i": "candle_stick0"
                 },
                 {
                     "h": 3,
                     "w": 12,
                     "y": 0,
                     "x": 0,
-                    "i": "technical_analysis1"
+                    "i": "technical_analysis0"
                 },
                 {
                     "h": 3,
@@ -2425,6 +903,13 @@ export const inbuiltTemplates = [
                     "w": 12,
                     "y": 0,
                     "x": 0,
+                    "i": "mini_graph0"
+                },
+                {
+                    "h": 3,
+                    "w": 12,
+                    "y": 0,
+                    "x": 0,
                     "i": "mini_graph1"
                 },
                 {
@@ -2433,13 +918,6 @@ export const inbuiltTemplates = [
                     "y": 0,
                     "x": 0,
                     "i": "mini_graph2"
-                },
-                {
-                    "h": 3,
-                    "w": 12,
-                    "y": 0,
-                    "x": 0,
-                    "i": "mini_graph3"
                 },
                 {
                     "h": 3,
@@ -2467,7 +945,7 @@ export const inbuiltTemplates = [
                     "w": 12,
                     "y": 0,
                     "x": 0,
-                    "i": "candle_stick1"
+                    "i": "candle_stick0"
                 }
             ]
         }

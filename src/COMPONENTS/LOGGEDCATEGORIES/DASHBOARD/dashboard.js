@@ -73,6 +73,7 @@ class Dashboard extends Component {
     this.state = {
       templateManage: false,
       pairs: [],
+      showLayout: true,
       allTemplates: [...inbuiltTemplates],
       currentTemplateIndex: 0,
       editState: false,
@@ -107,8 +108,9 @@ class Dashboard extends Component {
               innerIndex++
             ) {
               const innerElement = element.data[innerIndex];
+              let key = element.key + innerIndex
               renderLayout.push(
-                <div key={innerElement.key}>
+                <div key={key}>
                   <WhiteBgWrapper>
                     <Technical
                       options={{
@@ -116,8 +118,8 @@ class Dashboard extends Component {
                         width: "100%",
                         isTransparent: true,
                         height: "98%",
-                        symbol: `BINANCE:${innerElement.pair.split("-")[0]}${
-                          innerElement.pair.split("-")[1]
+                        symbol: `BINANCE:${innerElement.split("-")[0]}${
+                          innerElement.split("-")[1]
                           }`,
                         showIntervalTabs: true,
                         locale: localStorage["i18nextLng"],
@@ -128,7 +130,7 @@ class Dashboard extends Component {
                   </WhiteBgWrapper>
                 </div>
               );
-              layouts = this.addKeyToLayout(innerElement, layouts);
+              layouts = this.addKeyToLayout(key, layouts);
             }
             break;
           case "crypto_screener":
@@ -150,7 +152,7 @@ class Dashboard extends Component {
                 </WhiteBgWrapper>
               </div>
             );
-            layouts = this.addKeyToLayout(element, layouts);
+            layouts = this.addKeyToLayout(element.key, layouts);
             break;
           case "rising_falling":
             renderLayout.push(
@@ -170,7 +172,7 @@ class Dashboard extends Component {
                 </WhiteBgWrapper>
               </div>
             );
-            layouts = this.addKeyToLayout(element, layouts);
+            layouts = this.addKeyToLayout(element.key, layouts);
             break;
           case "mini_graph":
             for (
@@ -179,19 +181,20 @@ class Dashboard extends Component {
               innerIndex++
             ) {
               const innerElement = element.data[innerIndex];
+              let key = element.key + innerIndex
               renderLayout.push(
-                <div key={innerElement.key}>
-                  <WhiteBgWrapper>
+                <div key={key}>
+                  <WhiteBgWrapper style={{ overflow: "hidden" }}>
                     <MiniGraph
-                      crypto={innerElement.pair.split("-")[0]}
-                      currency={innerElement.pair.split("-")[1]}
+                      crypto={innerElement.split("-")[0]}
+                      currency={innerElement.split("-")[1]}
                       // total={4}
                       lineColor="#ffab30"
                     />
                   </WhiteBgWrapper>
                 </div>
               );
-              layouts = this.addKeyToLayout(innerElement, layouts);
+              layouts = this.addKeyToLayout(key, layouts);
             }
             break;
           case "activity":
@@ -202,7 +205,7 @@ class Dashboard extends Component {
                 </WhiteBgWrapper>
               </div>
             );
-            layouts = this.addKeyToLayout(element, layouts);
+            layouts = this.addKeyToLayout(element.key, layouts);
             break;
           case "portfolio":
             renderLayout.push(
@@ -212,7 +215,7 @@ class Dashboard extends Component {
                 </WhiteBgWrapper>
               </div>
             );
-            layouts = this.addKeyToLayout(element, layouts);
+            layouts = this.addKeyToLayout(element.key, layouts);
             break;
           case "news":
             renderLayout.push(
@@ -222,7 +225,7 @@ class Dashboard extends Component {
                 </WhiteBgWrapper>
               </div>
             );
-            layouts = this.addKeyToLayout(element, layouts);
+            layouts = this.addKeyToLayout(element.key, layouts);
             break;
           case "candle_stick":
             for (
@@ -231,21 +234,22 @@ class Dashboard extends Component {
               innerIndex++
             ) {
               const innerElement = element.data[innerIndex];
+              let key = element.key + innerIndex
               renderLayout.push(
-                <div key={innerElement.key}>
+                <div key={key}>
                   <WhiteBgWrapper style={{ overflow: "hidden" }}>
                     <div style={{ height: "100%", paddingTop: "20px" }}>
                       <TradingViewChart
-                        crypto={innerElement.pair.split("-")[0]}
-                        currency={innerElement.pair.split("-")[1]}
+                        crypto={innerElement.split("-")[0]}
+                        currency={innerElement.split("-")[1]}
                         theme={this.props.theme}
-                        containerId={innerElement.key}
+                        containerId={key}
                       />
                     </div>
                   </WhiteBgWrapper>
                 </div>
               );
-              layouts = this.addKeyToLayout(innerElement, layouts);
+              layouts = this.addKeyToLayout(key, layouts);
             }
             break;
           default:
@@ -259,51 +263,53 @@ class Dashboard extends Component {
   findKeyFromLayout = (key, layout) => {
     for (let index = 0; index < layout.length; index++) {
       const element = layout[index];
-      if (element.key == key) {
+      if (element.i == key) {
         return element;
       }
     }
     return null;
   };
-  addKeyToLayout = (element, layouts) => {
-    if (!this.findKeyFromLayout(element.key, layouts.lg)) {
-      layouts.lg.push({
+  addKeyToLayout = (key, layouts) => {
+    let selfLayout = { ...layouts }
+    if (!this.findKeyFromLayout(key, selfLayout.lg)) {
+      selfLayout.lg.push({
         h: 3,
         w: 5,
-        y: 0,
+        y: Infinity,
         x: 0,
-        i: element.key
+        i: key,
       });
-      layouts.md.push({
+      selfLayout.md.push({
         h: 3,
         w: 12,
         y: 0,
         x: 0,
-        i: element.key
+        i: key
       });
-      layouts.sm.push({
+      selfLayout.sm.push({
         h: 3,
         w: 12,
         y: 0,
         x: 0,
-        i: element.key
+        i: key
       });
-      layouts.xs.push({
+      selfLayout.xs.push({
         h: 3,
         w: 12,
         y: 0,
         x: 0,
-        i: element.key
+        i: key
       });
-      layouts.xxs.push({
+      selfLayout.xxs.push({
         h: 3,
         w: 12,
         y: 0,
         x: 0,
-        i: element.key
+        i: key
       });
     }
-    return layouts;
+    console.log("selfLayout", selfLayout);
+    return selfLayout;
   };
   componentDidMount() {
     var self = this;
@@ -331,12 +337,14 @@ class Dashboard extends Component {
       })
       .catch(error => { });
   };
-  comingCancel = e => {
+  onCancle = e => {
     this.setState({
       templateManage: false
     });
   };
   onLayoutChange = (layout, layouts) => {
+    console.log(layout);
+
     tempLayouts = layouts
   }
   onCurrentTemplateChange = (index) => {
@@ -376,6 +384,19 @@ class Dashboard extends Component {
       this.setState({
         currentTemplate
       })
+    })
+  }
+  handleTemplateSave = (templates) => {
+    this.setState({
+      allTemplates: templates,
+      templateManage: false,
+      showLayout: false
+    }, () => {
+      if (this.state.allTemplates[this.state.currentTemplateIndex]) {
+        this.setState({ currentTemplate: this.state.allTemplates[this.state.currentTemplateIndex], showLayout: true }, () => {
+          this.forceUpdate()
+        })
+      }
     })
   }
   render() {
@@ -463,29 +484,36 @@ class Dashboard extends Component {
           <GreyWrapDashboard>
             <Row>
               <Col>
-                <RGL
-                  className="layout"
-                  layouts={layouts}
-                  breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
-                  cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
-                  isDraggable={this.state.editState}
-                  isResizable={this.state.editState}
-                  onLayoutChange={(layout, layouts) =>
-                    this.onLayoutChange(layout, layouts)
-                  }
-                >
-                  {renderLayout.map(el => el)}
-                </RGL>
+                {this.state.showLayout &&
+                  <RGL
+                    className="layout"
+                    layouts={layouts}
+                    breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
+                    cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
+                    isDraggable={this.state.editState}
+                    isResizable={this.state.editState}
+                    onLayoutChange={(layout, layouts) =>
+                      this.onLayoutChange(layout, layouts)
+                    }
+                  >
+                    {renderLayout.map(el => el)}
+                  </RGL>
+                }
               </Col>
             </Row>
           </GreyWrapDashboard>
           <CommonFooter />
         </ContactWrap>
-        <TemplateManage
-          comingCancel={e => this.comingCancel(e)}
-          visible={this.state.templateManage}
-          templates={this.state.allTemplates}
-        />
+        {this.state.templateManage && this.state.pairs.length > 0 &&
+          < TemplateManage
+            onCancle={e => this.onCancle(e)}
+            onSave={this.handleTemplateSave}
+            visible={this.state.templateManage}
+            templates={this.state.allTemplates}
+            pairs={this.state.pairs}
+          />
+        }
+
       </div>
     );
   }
