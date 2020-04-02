@@ -1055,7 +1055,7 @@ td.column-Email {
 }
 .trade-action-validation {
   color: red;
-  /* font-size: 12px; */
+  font-size: 13px;
 }
 /* React Date Picker Css */
 .datePicker .react-datepicker-wrapper {
