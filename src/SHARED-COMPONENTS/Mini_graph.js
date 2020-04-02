@@ -52,9 +52,9 @@ const SpanCoinPercentage = styled.span`
     font-size: 14px;
     font-family: "Open sans";
     color: ${props =>
-      props.value === 0
-        ? props => (props.theme.mode === "dark" ? "white" : "black")
-        : props.value <= 0
+    props.value === 0
+      ? props => (props.theme.mode === "dark" ? "white" : "black")
+      : props.value <= 0
         ? "red"
         : "#34a539"}
     line-height: 1.286;
@@ -123,7 +123,7 @@ class Mini_graph extends React.Component {
   miniGraph() {
     fetch(
       SOCKET_HOST +
-        `/api/v1/tradding/get-chart-data-graph?symbol=${this.props.crypto}-${this.props.currency}`,
+      `/api/v1/tradding/get-chart-data-graph?symbol=${this.props.crypto}-${this.props.currency}`,
       {
         method: "get",
         headers: {
@@ -255,21 +255,20 @@ class Mini_graph extends React.Component {
       <GraphWrapper className="9292">
         <Row>
           <SpanCoinNameWrapper>
-            <Col xs={19} offset={5}>
+            <Col xs={24}>
               <SpanCoinName> {coinName} </SpanCoinName>
             </Col>
           </SpanCoinNameWrapper>
         </Row>
         <Row>
-          <Col xs={5}>{/* <ImageWrapper src={_AMAZONBUCKET + image} /> */}</Col>
-          <Col xs={11} md={12}>
+
+          <Col xs={24} md={16}>
             <SpanCoinPrice>
-              {" "}
               {price ? `${price.toFixed(5)}` : "0"}
               {this.props.currency}{" "}
             </SpanCoinPrice>
           </Col>
-          <Col xs={8} md={7}>
+          <Col xs={24} md={8}>
             <SpanCoinPercentage value={percentage ? percentage : "0"}>
               {" "}
               {percentage === 0 ? "" : percentage >= 0 ? "+" : ""}
