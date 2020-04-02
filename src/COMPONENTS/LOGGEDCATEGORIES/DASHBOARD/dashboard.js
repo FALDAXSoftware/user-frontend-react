@@ -473,12 +473,17 @@ class Dashboard extends Component {
       <div>
         <ContactWrap>
           <SettingDropdown
+            className="dashboard_setting"
             overlay={menu}
             placement="bottomLeft"
             trigger={["click"]}
             overlayClassName="dropSettings"
           >
-            <Icon type="setting" />
+            {/* <Icon type="setting" /> */}
+            <span>
+              <Icon type="setting" />
+              Customize Dashboard
+            </span>
           </SettingDropdown>
           <LoggedNavigation />
           <GreyWrapDashboard>
