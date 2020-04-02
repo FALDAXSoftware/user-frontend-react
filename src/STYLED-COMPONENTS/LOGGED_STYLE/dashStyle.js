@@ -10,7 +10,7 @@ export const Lleft = styled.div`
   background-color: ${props =>
     props.theme.mode === "dark" ? "#041b2c" : "white"};
   margin-right: 15px;
-  height: 680px;
+  // height: 680px;
   padding-bottom: 30px;
   overflow-y: auto;
   box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -23,7 +23,7 @@ export const Rright = styled.div`
   background-color: ${props =>
     props.theme.mode === "dark" ? "#041b2c" : "white"};
   margin-left: 15px;
-  height: 680px;
+  // height: 680px;
   padding-bottom: 30px;
   overflow-y: auto;
   box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -58,21 +58,21 @@ export const ActTable = styled(Table)`
     & thead>tr>th
     {
         background-color:${props =>
-          props.theme.mode === "dark" ? "#041b2c" : "white"};
+    props.theme.mode === "dark" ? "#041b2c" : "white"};
         border-bottom:${props =>
-          props.theme.mode === "dark"
-            ? "1px solid #334553"
-            : "1px solid #eeeeee"};
+    props.theme.mode === "dark"
+      ? "1px solid #334553"
+      : "1px solid #eeeeee"};
         color:${props =>
-          props.theme.mode === "dark" ? "#174c7e" : "#7f7f7f"} !important;
+    props.theme.mode === "dark" ? "#174c7e" : "#7f7f7f"} !important;
     }
     & tbody>tr>td
     {
         color:${props => (props.theme.mode === "dark" ? "white" : "")};
         background-color:${props =>
-          props.theme.mode === "dark" ? "#041b2c !important" : "white"};
+    props.theme.mode === "dark" ? "#041b2c !important" : "white"};
         border-bottom:${props =>
-          props.theme.mode === "dark" ? "1px solid #334553" : ""}
+    props.theme.mode === "dark" ? "1px solid #334553" : ""}
     }
     & .amount{
     width: 120px;
@@ -85,9 +85,9 @@ export const ActTable = styled(Table)`
     width: 170px;
      & .ant-progress-text {
        color:${props =>
-         props.theme.mode === "dark"
-           ? "#fff !important"
-           : "rgba(0, 0, 0, 0.45)"};
+    props.theme.mode === "dark"
+      ? "#fff !important"
+      : "rgba(0, 0, 0, 0.45)"};
      }
     }
     & .ant-table{
@@ -96,13 +96,13 @@ export const ActTable = styled(Table)`
     & .ant-table-placeholder
     {
         background-color:${props =>
-          props.theme.mode === "dark" ? "#041b2c" : ""}
+    props.theme.mode === "dark" ? "#041b2c" : ""}
         color:${props => (props.theme.mode === "dark" ? "white" : "")}
     }
     & .ant-table-tbody>tr:hover>td
     {
         background-color:${props =>
-          props.theme.mode === "dark" ? "#041b2c" : ""};
+    props.theme.mode === "dark" ? "#041b2c" : ""};
     }
      & .ant-table-body
     {
@@ -113,12 +113,12 @@ export const ActTable = styled(Table)`
      
        &::-webkit-scrollbar-thumb {
         background-color: ${props =>
-          props.theme.mode === "dark" ? "#041624" : ""};
+    props.theme.mode === "dark" ? "#041624" : ""};
         border-radius: 3px;
        }
         &::-webkit-scrollbar-track{
             background: ${props =>
-              props.theme.mode === "dark" ? "#072135" : ""};
+    props.theme.mode === "dark" ? "#072135" : ""};
         }
      
         &:hover {
@@ -160,20 +160,20 @@ export const PortTable = styled(Table)`
     & thead>tr>th
     {
         background-color:${props =>
-          props.theme.mode === "dark" ? "#041b2c" : "white"};
+    props.theme.mode === "dark" ? "#041b2c" : "white"};
         border-bottom:${props =>
-          props.theme.mode === "dark"
-            ? "1px solid #334553"
-            : "1px solid #eeeeee"};
+    props.theme.mode === "dark"
+      ? "1px solid #334553"
+      : "1px solid #eeeeee"};
         color:${props => (props.theme.mode === "dark" ? "#174c7e" : "#7f7f7f")};
     }
     & tbody>tr>td
     {
         color:${props => (props.theme.mode === "dark" ? "white" : "")};
         background-color:${props =>
-          props.theme.mode === "dark" ? "#041b2c !important" : "white"};
+    props.theme.mode === "dark" ? "#041b2c !important" : "white"};
         border-bottom:${props =>
-          props.theme.mode === "dark" ? "1px solid #334553" : ""}
+    props.theme.mode === "dark" ? "1px solid #334553" : ""}
     }
     & .coin{
         width: 150px;
@@ -195,13 +195,13 @@ export const PortTable = styled(Table)`
     & .ant-table-placeholder
     {
         background-color:${props =>
-          props.theme.mode === "dark" ? "#041b2c" : ""}
+    props.theme.mode === "dark" ? "#041b2c" : ""}
         color:${props => (props.theme.mode === "dark" ? "white" : "")}
     } 
     & .ant-table-tbody>tr:hover>td
     {
         background-color:${props =>
-          props.theme.mode === "dark" ? "#041b2c" : ""};
+    props.theme.mode === "dark" ? "#041b2c" : ""};
     }
     & .ant-table-body
     {
@@ -212,12 +212,12 @@ export const PortTable = styled(Table)`
      
        &::-webkit-scrollbar-thumb {
         background-color: ${props =>
-          props.theme.mode === "dark" ? "#041624" : ""};
+    props.theme.mode === "dark" ? "#041624" : ""};
         border-radius: 3px;
        }
         &::-webkit-scrollbar-track{
             background: ${props =>
-              props.theme.mode === "dark" ? "#072135" : ""};
+    props.theme.mode === "dark" ? "#072135" : ""};
         }
      
         &:hover {
@@ -287,22 +287,26 @@ export const Newsdiv = styled.div`
   height: 680px;
   overflow-y: auto;
 `;
-export const News = styled.span`
+export const NewsHeader = styled.span`
   font-size: 14px;
   font-family: "Open Sans";
   color: rgb(127, 127, 127);
   font-weight: bold;
-  margin-left: 30px;
+  display: block;
+  padding: 30px;
+    padding-bottom: 0;
 `;
 export const NewsList = styled.div`
   margin-top: 25px;
-  margin-left: 30px;
-  margin-right: 30px;
+  // margin-left: 30px;
+  // margin-right: 30px;
+  height:calc(100% - 76px);
 `;
 export const List = styled.div`
   border-bottom: ${props =>
     props.theme.mode === "dark" ? "1px solid #33465e" : "1px solid #eeeeee"};
   margin-top: 20px;
+  padding: 0 30px;
 `;
 export const ListSpan = styled.span`
   font-size: 12px;
