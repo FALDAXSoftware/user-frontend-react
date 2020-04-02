@@ -64,13 +64,13 @@ const GreyWrapDashboard = styled(GreyWrap)`
 const RGL = styled(ResponsiveReactGridLayout)`
   & .react-resizable-handle::after {
     border-right: ${props =>
-      props.theme.mode === "dark"
-        ? "2px solid rgb(255, 255, 255) !important"
-        : ""};
+    props.theme.mode === "dark"
+      ? "2px solid rgb(255, 255, 255) !important"
+      : ""};
     border-bottom: ${props =>
-      props.theme.mode === "dark"
-        ? "2px solid rgb(255, 255, 255) !important"
-        : ""};
+    props.theme.mode === "dark"
+      ? "2px solid rgb(255, 255, 255) !important"
+      : ""};
   }
 `;
 
@@ -97,7 +97,8 @@ class Dashboard extends Component {
   }
 
   renderLayout = () => {
-    let { widgets, layouts } = this.state.currentTemplate;
+    let widgets = this.state.currentTemplate?.widgets || [];
+    let layouts = this.state.currentTemplate?.layouts || {};
     let renderLayout = [];
     if (!layouts || !layouts.lg) {
       layouts["lg"] = [];
@@ -130,7 +131,7 @@ class Dashboard extends Component {
                         height: "98%",
                         symbol: `BINANCE:${innerElement.split("-")[0]}${
                           innerElement.split("-")[1]
-                        }`,
+                          }`,
                         showIntervalTabs: true,
                         locale: localStorage["i18nextLng"],
                         colorTheme: this.props.theme ? "dark" : "light",
@@ -341,32 +342,29 @@ class Dashboard extends Component {
     })
       .then(response => response.json())
       .then(responseData => {
-        if (responseData.status == 200) {
-          console.log(responseData.data);
-          let templates = [];
-          if (responseData.data.dashboard_layout?.templates) {
-            templates = [
-              ...inbuiltTemplates,
-              ...responseData.data.dashboard_layout.templates
-            ];
-          } else {
-            templates = [...inbuiltTemplates];
-          }
-
-          let currentSelectedTemplate =
-            responseData.data.dashboard_layout.currentSelectedTemplate;
-          if (!currentSelectedTemplate) {
-            currentSelectedTemplate = 0;
-          }
-          this.setState({
-            showLayout: true,
-            allTemplates: templates,
-            currentTemplateIndex: currentSelectedTemplate,
-            currentTemplate: templates[currentSelectedTemplate]
-          });
+        let templates = [];
+        if (responseData.data?.dashboard_layout?.templates) {
+          templates = [
+            ...inbuiltTemplates,
+            ...responseData.data.dashboard_layout.templates
+          ];
+        } else {
+          templates = [...inbuiltTemplates];
         }
+
+        let currentSelectedTemplate =
+          responseData.data?.dashboard_layout?.currentSelectedTemplate;
+        if (!currentSelectedTemplate) {
+          currentSelectedTemplate = 0;
+        }
+        this.setState({
+          showLayout: true,
+          allTemplates: templates,
+          currentTemplateIndex: currentSelectedTemplate,
+          currentTemplate: templates[currentSelectedTemplate]
+        });
       })
-      .catch(error => {});
+      .catch(error => { });
   };
   getPairs = () => {
     fetch(API_URL + `/users/get-all-pair`, {
@@ -385,7 +383,7 @@ class Dashboard extends Component {
           });
         }
       })
-      .catch(error => {});
+      .catch(error => { });
   };
   onCancle = e => {
     this.setState({
@@ -546,7 +544,7 @@ class Dashboard extends Component {
         </SubMenu>
         <Menu.Item
           onClick={this.enableEditLayout}
-          disabled={this.state.editState}
+          disabled={(this.state.editState || this.state.currentTemplate?.inbuilt == true)}
           key="1"
         >
           Edit Layout
