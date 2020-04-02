@@ -174,7 +174,8 @@ export const TemplateTabPane = styled(TabPane)`
   }
 `;
 export const TemplatePairSelect = styled(Select)`
-  margin: 10px 0 15px 0;
+  margin: 10px 0 0 0;
+  padding: 0 0 0 55px;
 `;
 export const SaveBtn = styled.button`
   font-size: 13px;
@@ -212,5 +213,17 @@ export const TempRow = styled.div`
   & .ant-select.ant-select-enabled {
     margin: 10px 0 10px 0;
     padding: 0 0 0 55px;
+  }
+`;
+export const TempName = styled.div`
+  margin: 0 0 15px 0;
+  > input {
+    width: 100%;
+    border: 1px solid #e8e8e8;
+    border-radius: 4px;
+    padding: 5px 10px;
+  }
+  > input:focus {
+    outline: none;
   }
 `;

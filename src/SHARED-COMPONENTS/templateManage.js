@@ -7,7 +7,10 @@ import {
   Tabs,
   Checkbox,
   Select,
-  Switch
+  Switch,
+  Alert,
+  Row,
+  Col
 } from "antd";
 import { withRouter } from "react-router-dom";
 import { globalVariables } from "../Globals.js";
@@ -16,7 +19,8 @@ import {
   ModalWrap,
   TemplateTabPane,
   TemplatePairSelect,
-  SaveBtn
+  SaveBtn,
+  TempName
 } from "STYLED-COMPONENTS/SHARED-STYLES/sharedStyle";
 import {
   TemplateTab,
@@ -110,7 +114,9 @@ class TemplateManage extends React.Component {
           checked: false,
           multiple: false
         }
-      ]
+      ],
+      templateName: "New Template",
+      errMsg: ""
     };
     // this.t = this.props.t;
     this.newTabIndex = 0;
@@ -119,10 +125,19 @@ class TemplateManage extends React.Component {
   }
 
   handleSave = () => {
-    this.props.onSave(this.state.templates)
+    if (this.state.templateName) {
+      this.props.onSave(this.state.templates);
+      this.setState({
+        errMsg: ""
+      });
+    } else {
+      this.setState({
+        errMsg: "Please enter template name"
+      });
+    }
   };
   componentDidMount() {
-    this.setState({ templates: this.props.templates })
+    this.setState({ templates: this.props.templates });
   }
   getPairs = () => {
     fetch(API_URL + `/users/get-all-pair`, {
@@ -147,7 +162,7 @@ class TemplateManage extends React.Component {
           );
         }
       })
-      .catch(error => { });
+      .catch(error => {});
   };
   onCancle = e => {
     this.setState({ comingSoon: false });
@@ -155,54 +170,46 @@ class TemplateManage extends React.Component {
   };
 
   onChange = activeKey => {
+    console.log("aksfjh^", activeKey);
     this.setState({ activeKey });
   };
 
   onEdit = (targetKey, action) => {
+    console.log(targetKey);
     this[action](targetKey);
   };
 
   add = () => {
-    const { panes } = this.state;
-    const activeKey = `newTab${this.newTabIndex++}`;
-    panes.push({
-      title: "New Tab",
-      content: "Content of new Tab",
-      key: activeKey
+    console.log("^^^^^", this.state.templates);
+    let temp = this.state.templates;
+    const activeKey = temp.length + 1;
+    temp.push({
+      ...temp[0],
+      title: this.state.templateName,
+      inbuilt: false
     });
-    this.setState({ panes, activeKey });
+    this.setState({
+      templates: temp,
+      activeKey: Number(temp.length - 1).toString()
+    });
   };
 
   remove = targetKey => {
-    let { activeKey } = this.state;
-    let lastIndex;
-    this.state.panes.forEach((pane, i) => {
-      if (pane.key === targetKey) {
-        lastIndex = i - 1;
-      }
-    });
-    const panes = this.state.panes.filter(pane => pane.key !== targetKey);
-    if (panes.length && activeKey === targetKey) {
-      if (lastIndex >= 0) {
-        activeKey = panes[lastIndex].key;
-      } else {
-        activeKey = panes[0].key;
-      }
-    }
-    this.setState({ panes, activeKey });
+    let templates = this.state.templates;
+    templates.splice(targetKey);
+    this.setState({ templates, activeKey: "0" });
   };
   handleChange(value, widgetIndex, templateIndex) {
-    let templates = this.state.templates
+    let templates = this.state.templates;
     console.log(value);
 
-    templates[templateIndex].widgets[widgetIndex].data = value
-    this.setState({ templates })
+    templates[templateIndex].widgets[widgetIndex].data = value;
+    this.setState({ templates });
   }
   onChangeCheckbox = (checked, widgetIndex, templateIndex) => {
-
-    let templates = this.state.templates
-    templates[templateIndex].widgets[widgetIndex].checked = checked
-    this.setState({ templates })
+    let templates = this.state.templates;
+    templates[templateIndex].widgets[widgetIndex].checked = checked;
+    this.setState({ templates });
   };
   render() {
     const { templateArray } = this.state;
@@ -211,7 +218,7 @@ class TemplateManage extends React.Component {
         <Modal
           title={
             <div>
-              <span>Manage Templates</span>
+              <span>Templates</span>
             </div>
           }
           visible={this.props.visible}
@@ -237,12 +244,56 @@ class TemplateManage extends React.Component {
                   className="testtabpane"
                   tab={t.title}
                   key={index}
-                  closable={false}
+                  closable={!t.inbuilt ? true : false}
                 >
+                  {t.inbuilt && (
+                    <Row style={{ marginBottom: "15px" }}>
+                      <Col>
+                        <Alert
+                          message="If you want customized dashboard create your own."
+                          type="info"
+                          showIcon
+                        />
+                      </Col>
+                    </Row>
+                  )}
+                  {!t.inbuilt ? (
+                    <TempName>
+                      <input
+                        type="text"
+                        placeholder="Template Name"
+                        value={t.title ? t.title : this.state.templateName}
+                        onChange={e => {
+                          let temp = this.state.templates;
+                          if (e.target.value) {
+                            temp[index].title = e.target.value;
+                            this.setState({
+                              templateName: e.target.value,
+                              templates: temp,
+                              errMsg: ""
+                            });
+                          } else {
+                            this.setState({
+                              templateName: "",
+                              errMsg: "Please enter template name"
+                            });
+                          }
+                        }}
+                      />
+                      {this.state.errMsg && (
+                        <div className="validation-message">
+                          {this.state.errMsg}
+                        </div>
+                      )}
+                    </TempName>
+                  ) : (
+                    ""
+                  )}
                   {t.widgets.map((w, windex) => (
                     <TempRow>
                       <WidgetName>
                         <Switch
+                          disabled={t.inbuilt}
                           checked={w.checked}
                           onChange={checked => {
                             this.onChangeCheckbox(checked, windex, index);
@@ -252,6 +303,7 @@ class TemplateManage extends React.Component {
                       </WidgetName>
                       {w.checked && w.multiple ? (
                         <TemplatePairSelect
+                          disabled={t.inbuilt}
                           mode="multiple"
                           style={{ width: "100%" }}
                           placeholder="Please select pairs"
@@ -262,20 +314,19 @@ class TemplateManage extends React.Component {
                           }}
                         >
                           {this.state.pairs &&
-                            this.state.pairs.map((element1) => (
-                              <Option key={element1.name}>{element1.name}</Option>
+                            this.state.pairs.map(element1 => (
+                              <Option key={element1.name}>
+                                {element1.name}
+                              </Option>
                             ))}
                         </TemplatePairSelect>
                       ) : (
-                          ""
-                        )}
+                        ""
+                      )}
                     </TempRow>
-                  ))
-                  }
+                  ))}
                 </TemplateTabPane>
-              ))
-
-              }
+              ))}
             </TemplateTab>
           </ModalWrap>
         </Modal>

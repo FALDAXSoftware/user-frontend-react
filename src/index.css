@@ -339,6 +339,9 @@ table .ant-table-tbody > tr > td {
   transform: rotate(180deg);
   right: auto;
 }
+.templateActive {
+  background-color: #e6f7ff;
+}
 @media (max-width: 425px) {
   .simple-maps img:first-child {
     width: 50px;
