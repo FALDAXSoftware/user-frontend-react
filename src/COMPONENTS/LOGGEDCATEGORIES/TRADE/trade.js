@@ -98,10 +98,10 @@ const GreyWrapTrade = styled(GreyWrap)`
     height: calc(100% - 20px);
     width: calc(100% - 20px);
     margin: 10px;
-    overflow:hidden;
+    overflow: hidden;
     background-color: ${props =>
-    props.theme.mode === "dark" ? "#041b2c" : "white"};
-    border-radius:5px;
+      props.theme.mode === "dark" ? "#041b2c" : "white"};
+    border-radius: 5px;
     -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -112,8 +112,8 @@ const GreyWrapTrade = styled(GreyWrap)`
     margin: 10px;
     overflow: auto;
     background-color: ${props =>
-    props.theme.mode === "dark" ? "#041b2c" : "white"};
-    border-radius:5px;
+      props.theme.mode === "dark" ? "#041b2c" : "white"};
+    border-radius: 5px;
     -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -124,8 +124,8 @@ const GreyWrapTrade = styled(GreyWrap)`
     margin: 10px;
     overflow: auto;
     background-color: ${props =>
-    props.theme.mode === "dark" ? "#041b2c" : "white"};
-    border-radius:5px;
+      props.theme.mode === "dark" ? "#041b2c" : "white"};
+    border-radius: 5px;
     -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -136,8 +136,8 @@ const GreyWrapTrade = styled(GreyWrap)`
     margin: 10px;
     overflow: auto;
     background-color: ${props =>
-    props.theme.mode === "dark" ? "#041b2c" : "white"};
-    border-radius:5px;
+      props.theme.mode === "dark" ? "#041b2c" : "white"};
+    border-radius: 5px;
     -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -148,8 +148,8 @@ const GreyWrapTrade = styled(GreyWrap)`
     margin: 10px;
     overflow: auto;
     background-color: ${props =>
-    props.theme.mode === "dark" ? "#041b2c" : "white"};
-    border-radius:5px;
+      props.theme.mode === "dark" ? "#041b2c" : "white"};
+    border-radius: 5px;
     -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -160,8 +160,8 @@ const GreyWrapTrade = styled(GreyWrap)`
     margin: 10px;
     overflow: auto;
     background-color: ${props =>
-    props.theme.mode === "dark" ? "#041b2c" : "white"};
-    border-radius:5px;
+      props.theme.mode === "dark" ? "#041b2c" : "white"};
+    border-radius: 5px;
     -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -172,8 +172,8 @@ const GreyWrapTrade = styled(GreyWrap)`
     margin: 10px;
     overflow: auto;
     background-color: ${props =>
-    props.theme.mode === "dark" ? "#041b2c" : "white"};
-    border-radius:5px;
+      props.theme.mode === "dark" ? "#041b2c" : "white"};
+    border-radius: 5px;
     -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -261,7 +261,7 @@ class Trade extends Component {
       orderHistoryTableHeight: 330,
       myOrderTableHeight: 150,
       buySellOrderHeight: 91,
-      depthChartHeight: 538,
+      depthChartHeight: 700,
       buySellLoader: false,
       hisLoader: false,
       depthLoader: false,
@@ -328,6 +328,7 @@ class Trade extends Component {
   }
 
   componentDidMount() {
+    console.log("^^^^", this.state.crypto, this.state.currency);
     var self = this;
     // io.sails.headers = {
     //   Accept: "application/json",
@@ -892,7 +893,7 @@ class Trade extends Component {
             },
             {
               w: 4,
-              h: 4,
+              h: 5,
               x: 4,
               y: 4,
               i: "tradeAction",
@@ -902,7 +903,7 @@ class Trade extends Component {
             },
             {
               w: 4,
-              h: 4,
+              h: 5,
               x: 8,
               y: 4,
               i: "buysellBook",
@@ -911,13 +912,13 @@ class Trade extends Component {
             },
             {
               w: 4,
-              h: 4,
+              h: 5,
               x: 0,
               y: 4,
               i: "depthChart",
               minW: 4,
               minH: 4,
-              maxH: 4
+              maxH: 5
             },
             {
               w: 12,
@@ -1419,18 +1420,24 @@ class Trade extends Component {
                           <Market
                             MLS={this.state.MLS}
                             userBal={this.state.userBal}
+                            crypto={this.state.crypto}
+                            currency={this.state.currency}
                           />
                         </TabPane>
                         <TabPane tab="Limit" key="2">
                           <Limit
                             MLS={this.state.MLS}
                             userBal={this.state.userBal}
+                            crypto={this.state.crypto}
+                            currency={this.state.currency}
                           />
                         </TabPane>
                         <TabPane tab="Stop-Limit" key="3">
                           <StopLimit
                             MLS={this.state.MLS}
                             userBal={this.state.userBal}
+                            crypto={this.state.crypto}
+                            currency={this.state.currency}
                           />
                         </TabPane>
                       </TabsRight>
@@ -1609,7 +1616,7 @@ function getFromLS(key) {
             },
             {
               w: 4,
-              h: 4,
+              h: 5,
               x: 4,
               y: 4,
               i: "tradeAction",
@@ -1619,7 +1626,7 @@ function getFromLS(key) {
             },
             {
               w: 4,
-              h: 4,
+              h: 5,
               x: 8,
               y: 4,
               i: "buysellBook",
@@ -1628,13 +1635,13 @@ function getFromLS(key) {
             },
             {
               w: 4,
-              h: 4,
+              h: 5,
               x: 0,
               y: 4,
               i: "depthChart",
               minW: 4,
               minH: 4,
-              maxH: 4
+              maxH: 5
             },
             {
               w: 12,

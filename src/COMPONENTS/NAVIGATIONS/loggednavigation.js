@@ -112,17 +112,20 @@ const Headermain = styled(Header)`
   height: 80px;
   display: flex;
   align-items: center;
-  & ul {
-    > li.ant-menu-item-selected {
-      border: 1px solid #1890ff !important;
-      border-radius: 38px;
-    }
-  }
   & .color_important {
     color: ${props =>
       props.theme.mode === "dark" ? "#fff !important" : "black !important"};
     @media (min-width: 2000px) {
       font-size: 20px;
+    }
+  }
+  & ul {
+    > li.ant-menu-item-selected {
+      // border: 1px solid #1890ff !important;
+      border-radius: 38px;
+      & .color_important {
+        color: #1890ff !important;
+      }
     }
   }
 `;
@@ -702,24 +705,24 @@ class LoggedNavigation extends Component {
     //   }
     // }
   }
-  onChange = e => {
-    // Pages that redirect from WordPress with lng params
-    let lngQueryParamsUrls = [
-      "/open-ticket",
-      "/simplex",
-      "/crypto-conversion",
-      "/conversion",
-      "/editProfile",
-      "/careers"
-    ];
-    // remove queryParams in case of found from list else reload component.
-    if (lngQueryParamsUrls.indexOf(window.location.pathname) != -1) {
-      window.location.href = window.location.pathname;
-    } else {
-      window.location.reload();
-    }
-    this.props.i18n.changeLanguage(e.key);
-  };
+  // onChange = e => {
+  //   // Pages that redirect from WordPress with lng params
+  //   let lngQueryParamsUrls = [
+  //     "/open-ticket",
+  //     "/simplex",
+  //     "/crypto-conversion",
+  //     "/conversion",
+  //     "/editProfile",
+  //     "/careers"
+  //   ];
+  //   // remove queryParams in case of found from list else reload component.
+  //   if (lngQueryParamsUrls.indexOf(window.location.pathname) != -1) {
+  //     window.location.href = window.location.pathname;
+  //   } else {
+  //     window.location.reload();
+  //   }
+  //   this.props.i18n.changeLanguage(e.key);
+  // };
   render() {
     const radioStyle = {
       display: "block",
@@ -930,7 +933,7 @@ class LoggedNavigation extends Component {
               </NavLink>
             </DropDownDiv>
           </Menuitem>
-          <Menuitem key="7">
+          {/* <Menuitem key="7">
             <DropDownDiv
               // className="Drop-main"
               className="lang-main"
@@ -943,7 +946,7 @@ class LoggedNavigation extends Component {
               </div>
             </DropDownDiv>
             {/* <Open onClick={() => this.openNav()}>&#9776;</Open> */}
-          </Menuitem>
+          {/* </Menuitem>  */}
           {/* <Menuitem key="3">
             <NavLink className="Nav_selected" to="/history">
               HISTORY
@@ -985,7 +988,7 @@ class LoggedNavigation extends Component {
               {" "}
               <Link to="/conversion">Conversion</Link>
             </span> */}
-            <a className="DROPSUB">
+            {/* <a className="DROPSUB">
               <DropMenu mode="inline">
                 <SubMenuNav
                   key="mobsub0"
@@ -1000,7 +1003,7 @@ class LoggedNavigation extends Component {
                   </Menu.Item>
                 </SubMenuNav>
               </DropMenu>
-            </a>
+            </a> */}
             <span>
               <Link to="/market">Market</Link>
             </span>
