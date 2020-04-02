@@ -32,6 +32,7 @@ import { Responsive, WidthProvider } from "react-grid-layout";
 import Activity from "./activity";
 import News from "./news";
 import Portfolio from "./portfolio";
+import { inbuiltTemplates } from "./inbuiltTemplate";
 let { API_URL } = globalVariables;
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 const WhiteBgWrapper = styled.div`
@@ -53,119 +54,30 @@ const GreyWrapDashboard = styled(GreyWrap)`
 const RGL = styled(ResponsiveReactGridLayout)`
   & .react-resizable-handle::after {
     border-right: ${props =>
-      props.theme.mode === "dark"
-        ? "2px solid rgb(255, 255, 255) !important"
-        : ""};
+    props.theme.mode === "dark"
+      ? "2px solid rgb(255, 255, 255) !important"
+      : ""};
     border-bottom: ${props =>
-      props.theme.mode === "dark"
-        ? "2px solid rgb(255, 255, 255) !important"
-        : ""};
+    props.theme.mode === "dark"
+      ? "2px solid rgb(255, 255, 255) !important"
+      : ""};
   }
 `;
 
 const originalLayouts = getFromLS("layouts") || {};
 let io = null;
+let tempLayouts = {}
 class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
       templateManage: false,
       pairs: [],
+      allTemplates: [...inbuiltTemplates],
+      currentTemplateIndex: 0,
+      editState: false,
       currentTemplate: {
-        title: [],
-        inbuilt: false,
-        widgets: [
-          {
-            id: "1",
-            key: "technical_analysis",
-            name: "Technical analysis",
-            checked: false,
-            multiple: true,
-            data: [
-              {
-                key: "technical_analysis1",
-                pair: "XRP-BTC"
-              },
-              {
-                key: "technical_analysis2",
-                pair: "LTC-BTC"
-              }
-            ]
-          },
-          {
-            id: "2",
-            key: "crypto_screener",
-            name: "Crypto screener",
-            checked: true,
-            multiple: false
-          },
-          {
-            id: "3",
-            key: "rising_falling",
-            name: "Rising / Falling",
-            checked: true,
-            multiple: false
-          },
-          {
-            id: "4",
-            key: "mini_graph",
-            name: "Mini graph",
-            checked: true,
-            multiple: true,
-            data: [
-              {
-                key: "mini_graph1",
-                pair: "XRP-BTC"
-              },
-              {
-                key: "mini_graph2",
-                pair: "XRP-BTC"
-              },
-              {
-                key: "mini_graph3",
-                pair: "XRP-BTC"
-              }
-            ]
-          },
-          {
-            id: "5",
-            key: "activity",
-            name: "Activity",
-            checked: true,
-            multiple: false
-          },
-          {
-            id: "6",
-            key: "portfolio",
-            name: "Portfolio",
-            checked: true,
-            multiple: false
-          },
-          {
-            id: "7",
-            key: "news",
-            name: "News",
-            checked: true,
-            multiple: false
-          },
-          {
-            id: "8",
-            key: "candle_stick",
-            name: "Candle Stick",
-            checked: true,
-            multiple: true,
-            data: [
-              {
-                key: "candle_stick1",
-                pair: "XRP-BTC"
-              },
-              {
-                key: "candle_stick2",
-                pair: "XRP-BTC"
-              }
-            ]
-          }
-        ],
+        widgets: [],
         layouts: {}
       }
     };
@@ -206,7 +118,7 @@ class Dashboard extends Component {
                         height: "98%",
                         symbol: `BINANCE:${innerElement.pair.split("-")[0]}${
                           innerElement.pair.split("-")[1]
-                        }`,
+                          }`,
                         showIntervalTabs: true,
                         locale: localStorage["i18nextLng"],
                         colorTheme: this.props.theme ? "dark" : "light",
@@ -396,6 +308,9 @@ class Dashboard extends Component {
   componentDidMount() {
     var self = this;
     self.getPairs();
+    this.setState({
+      currentTemplate: this.state.allTemplates[0]
+    })
   }
   getPairs = () => {
     fetch(API_URL + `/users/get-all-pair`, {
@@ -414,7 +329,7 @@ class Dashboard extends Component {
           });
         }
       })
-      .catch(error => {});
+      .catch(error => { });
   };
   comingCancel = e => {
     this.setState({
@@ -422,20 +337,58 @@ class Dashboard extends Component {
     });
   };
   onLayoutChange = (layout, layouts) => {
+    tempLayouts = layouts
+  }
+  onCurrentTemplateChange = (index) => {
+    this.setState({
+      currentTemplate: this.state.allTemplates[index],
+      currentTemplateIndex: index
+    })
+  }
+  enableEditLayout = () => {
+    this.setState({
+      editState: true
+    }, () => {
+      tempLayouts = this.state.currentTemplate.layouts
+    })
+  }
+  saveLayout = () => {
+    let allTemplates = this.state.allTemplates
+    allTemplates[this.state.currentTemplateIndex].layouts = tempLayouts
     this.setState({
       currentTemplate: {
         ...this.state.currentTemplate,
-        layouts: layout
+        layouts: tempLayouts
+      },
+      allTemplates,
+      editState: false
+    })
+  }
+  cancleEdit = () => {
+    let currentTemplate = this.state.currentTemplate
+    this.setState({
+      editState: false,
+      currentTemplate: {
+        widgets: [],
+        layouts: {}
       }
-    });
-  };
+    }, () => {
+      this.setState({
+        currentTemplate
+      })
+    })
+  }
   render() {
     const { renderLayout, layouts } = this.renderLayout();
     const menu = (
       <Menu className="SettingMenu templateSettingMenu">
         <SubMenu className="templates" title="Templates">
-          <Menu.Item>Template 1</Menu.Item>
-          <Menu.Item>Template 2</Menu.Item>
+          {
+            this.state.allTemplates.map((t, index) => (
+              <Menu.Item onClick={() => { this.onCurrentTemplateChange(index) }}>{t.title}</Menu.Item>
+            ))
+          }
+
           <Menu.Divider />
           <Menu.Item
             onClick={() => {
@@ -449,13 +402,13 @@ class Dashboard extends Component {
           </Menu.Item>
         </SubMenu>
         <Menu.Item
-          //   onClick={this.editLayout.bind(this)}
+          onClick={this.enableEditLayout}
           disabled={this.state.editState}
           key="1"
         >
           Edit Layout
         </Menu.Item>
-        {this.state.isFullscreen && (
+        {/* {this.state.isFullscreen && (
           <Menu.Item
             key="2"
             //   onClick={this.exitFullScreen}
@@ -478,19 +431,20 @@ class Dashboard extends Component {
           key="3"
         >
           Clear Layout
-        </Menu.Item>
+        </Menu.Item> */}
         <Menu.Item
-          //   onClick={this.saveLayout.bind(this)}
-          disabled={this.state.saveState}
+          onClick={this.saveLayout}
+          disabled={!this.state.editState}
           key="2"
         >
           Save
         </Menu.Item>
         <Menu.Item
-          //  onClick={this.resetLayout.bind(this)}
+          disabled={!this.state.editState}
+          onClick={this.cancleEdit}
           key="4"
         >
-          Reset Layout
+          Cancle
         </Menu.Item>
       </Menu>
     );
@@ -535,6 +489,7 @@ class Dashboard extends Component {
         <TemplateManage
           comingCancel={e => this.comingCancel(e)}
           visible={this.state.templateManage}
+          templates={this.state.allTemplates}
         />
       </div>
     );
