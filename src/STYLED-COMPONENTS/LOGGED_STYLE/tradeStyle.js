@@ -490,6 +490,11 @@ export const BalanceWrap = styled.div`
   > .ant-row {
     > .ant-col {
       padding: 0 10px;
+      width: 50%;
+      float: none;
+      display: inline-block;
+      vertical-align: top;
+      margin: 0 0 0 -2px;
     }
   }
 `;
@@ -557,6 +562,8 @@ export const Willpay2 = styled.span`
   color: ${props => (props.theme.mode === "dark" ? "white" : "#174c7e")};
   font-weight: bold;
   letter-spacing: 1px;
+  max-width: 50%;
+  word-break: break-word;
 `;
 export const TotalWrap = styled.div`
   > .ant-input-group-wrapper > .ant-input-group > .ant-input {
