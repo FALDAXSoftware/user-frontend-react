@@ -49,8 +49,8 @@ class StopLimit extends Component {
 
     this.state = {
       side: "Buy",
-      crypto: this.props.cryptoPair ? this.props.cryptoPair.crypto : "XRP",
-      currency: this.props.cryptoPair ? this.props.cryptoPair.currency : "BTC",
+      crypto: this.props.crypto ? this.props.crypto : "XRP",
+      currency: this.props.currency ? this.props.currency : "BTC",
       sellprice: 0.001,
       buyPrice: 0.002,
       amount: "",
@@ -502,12 +502,12 @@ class StopLimit extends Component {
                 <Col xs={24} sm={12}>
                   <Row>
                     <Col span={24}>
-                      <Balance1>Best ask</Balance1>
+                      <Balance1>Best Ask</Balance1>
                     </Col>
                     <Col span={24}>
                       <Balance>
                         {this.props.userBal.buyPay.toFixed(5)}{" "}
-                        {this.state.crypto}
+                        {this.state.currency}
                       </Balance>
                     </Col>
                   </Row>
@@ -572,7 +572,7 @@ class StopLimit extends Component {
                 <Col xs={24} sm={12}>
                   <Row>
                     <Col span={24}>
-                      <Balance1>Best ask</Balance1>
+                      <Balance1>Best Bid</Balance1>
                     </Col>
                     <Col span={24}>
                       <Balance>
@@ -716,7 +716,7 @@ class StopLimit extends Component {
                   <WillpayBelow>Fiat Value</WillpayBelow>
                   <WillpayBelow2>
                     {this.state.fiatCurrency}{" "}
-                    {parseFloat(this.state.fiatCryptoValue).toFixed(8)}
+                    {parseFloat(this.state.fiatCurrencyValue).toFixed(8)}
                   </WillpayBelow2>
                 </ApproxBelow>
                 <ApproxBelow>
@@ -728,7 +728,7 @@ class StopLimit extends Component {
                 <ApproxBelow>
                   <WillpayBelow>Fee {userBalFees} %</WillpayBelow>
                   <WillpayBelow2>
-                    {(buyPayAmt - buyEstPrice).toFixed(8)} {this.state.currency}
+                    {(buyPayAmt - buyEstPrice).toFixed(8)} {this.state.crypto}
                   </WillpayBelow2>
                 </ApproxBelow>
               </Esti>

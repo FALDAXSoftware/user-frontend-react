@@ -328,6 +328,7 @@ class Trade extends Component {
   }
 
   componentDidMount() {
+    console.log("^^^^", this.state.crypto, this.state.currency);
     var self = this;
     // io.sails.headers = {
     //   Accept: "application/json",
@@ -1419,18 +1420,24 @@ class Trade extends Component {
                           <Market
                             MLS={this.state.MLS}
                             userBal={this.state.userBal}
+                            crypto={this.state.crypto}
+                            currency={this.state.currency}
                           />
                         </TabPane>
                         <TabPane tab="Limit" key="2">
                           <Limit
                             MLS={this.state.MLS}
                             userBal={this.state.userBal}
+                            crypto={this.state.crypto}
+                            currency={this.state.currency}
                           />
                         </TabPane>
                         <TabPane tab="Stop-Limit" key="3">
                           <StopLimit
                             MLS={this.state.MLS}
                             userBal={this.state.userBal}
+                            crypto={this.state.crypto}
+                            currency={this.state.currency}
                           />
                         </TabPane>
                       </TabsRight>
