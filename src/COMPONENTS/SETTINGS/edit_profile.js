@@ -19,6 +19,7 @@ import TierOne from "./TIERS/tier_one";
 import SupportHub from "./Account_settings/support_hub";
 import { translate } from "react-i18next";
 import CompleteProfile from "../../SHARED-COMPONENTS/completeProfile";
+import Tier from "./tier";
 // import AgreeTerms from "../../SHARED-COMPONENTS/AgreeTerms";
 
 const TabPane = Tabs.TabPane;
@@ -229,7 +230,7 @@ class Editprofile extends Component {
                     visible={this.state.countryAccess}
                   />
                 ) : (
-                  <TierOne />
+                  <Tier />
                 )}
               </TabPane>
               <TabPane tab={t("head_referral.message")} key="5">

@@ -40,7 +40,7 @@ class Tier extends Component {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        "Accept-Language": localStorage["i18nextLng"], 
+        "Accept-Language": localStorage["i18nextLng"],
         Authorization: "Bearer " + this.props.isLoggedIn
       }
     })
@@ -89,7 +89,9 @@ class Tier extends Component {
                               <Icon type="check" />
                             </span>
                             <span className="text-wrap">
-                              {tier.minimum_activity_thresold.Account_Age}
+                              {tier.minimum_activity_thresold
+                                ? tier.minimum_activity_thresold.Account_Age
+                                : "-"}
                             </span>
                           </li>
                           <li>
@@ -97,10 +99,10 @@ class Tier extends Component {
                               <Icon type="check" />
                             </span>
                             <span className="text-wrap">
-                              {
-                                tier.minimum_activity_thresold
-                                  .Minimum_Total_Transactions
-                              }
+                              {tier.minimum_activity_thresold
+                                ? tier.minimum_activity_thresold
+                                    .Minimum_Total_Transactions
+                                : "-"}
                             </span>
                           </li>
                           <li>
@@ -108,10 +110,10 @@ class Tier extends Component {
                               <Icon type="check" />
                             </span>
                             <span className="text-wrap">
-                              {
-                                tier.minimum_activity_thresold
-                                  .Minimum_Total_Value_of_All_Transactions
-                              }
+                              {tier.minimum_activity_thresold
+                                ? tier.minimum_activity_thresold
+                                    .Minimum_Total_Value_of_All_Transactions
+                                : ""}
                             </span>
                           </li>
                         </TierUl>
@@ -136,15 +138,17 @@ class Tier extends Component {
                       <TierRequirements>
                         <TierSubHeadRequire>Requirements</TierSubHeadRequire>
                         <ul className="requirements">
-                          {Object.values(tier.requirements) &&
-                            Object.values(tier.requirements).map(
-                              requirement => (
-                                <li key={requirement}>
-                                  <span className="disc-icon" />
-                                  <span>{requirement}</span>
-                                </li>
+                          {tier.requirements
+                            ? Object.values(tier.requirements) &&
+                              Object.values(tier.requirements).map(
+                                requirement => (
+                                  <li key={requirement}>
+                                    <span className="disc-icon" />
+                                    <span>{requirement}</span>
+                                  </li>
+                                )
                               )
-                            )}
+                            : ""}
                         </ul>
                       </TierRequirements>
                       {tier.is_verified && (
@@ -185,6 +189,10 @@ class Tier extends Component {
 const mapStateToProps = state => {
   return {
     ...state,
+    isLoggedIn:
+      state.simpleReducer.isLoggedIn !== undefined
+        ? state.simpleReducer.isLoggedIn
+        : "",
     profileDetails:
       state.simpleReducer.profileDetails !== undefined
         ? state.simpleReducer.profileDetails.data[0]
