@@ -1076,7 +1076,10 @@ td.column-Email {
 .validation-message {
   color: red;
 }
-
+.trade-action-validation {
+  color: red;
+  font-size: 13px;
+}
 /* React Date Picker Css */
 .datePicker .react-datepicker-wrapper {
   max-width: 450px;
@@ -1394,4 +1397,11 @@ div.scrollbar>div:nth-child(3)>div{
 
 .grecaptcha-badge:hover {
   width: 256px !important;
+}
+.lang-menu .ant-dropdown-menu-item .lang-menu-item {
+  display: flex;
+  align-items: center;
+}
+.lang-menu .ant-dropdown-menu-item .lang-menu-item img {
+  margin: 0 5px 0 0;
 }

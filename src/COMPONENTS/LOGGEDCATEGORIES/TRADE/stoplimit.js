@@ -30,8 +30,15 @@ import {
   Pay,
   Esti,
   ButtonWrap,
-  ButtonETH
+  ButtonETH,
+  FlexWrapDiv
 } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
+import {
+  Approx,
+  ApproxBelow,
+  WillpayBelow,
+  WillpayBelow2
+} from "../../../STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
 
 // let { API_URL } = globalVariables;
 let { SOCKET_HOST } = globalVariables;
@@ -42,8 +49,8 @@ class StopLimit extends Component {
 
     this.state = {
       side: "Buy",
-      crypto: this.props.cryptoPair ? this.props.cryptoPair.crypto : "XRP",
-      currency: this.props.cryptoPair ? this.props.cryptoPair.currency : "BTC",
+      crypto: this.props.crypto ? this.props.crypto : "XRP",
+      currency: this.props.currency ? this.props.currency : "BTC",
       sellprice: 0.001,
       buyPrice: 0.002,
       amount: "",
@@ -441,10 +448,10 @@ class StopLimit extends Component {
               <Row>
                 <Col xs={24} sm={12}>
                   <Row>
-                    <Col span={12}>
+                    <Col span={24}>
                       <Balance1>Balance</Balance1>
                     </Col>
-                    <Col span={12}>
+                    <Col span={24}>
                       <Balance>
                         {this.props.userBal.currency[0]
                           ? `${this.props.userBal.currency[0].balance.toFixed(
@@ -458,28 +465,28 @@ class StopLimit extends Component {
                 </Col>
                 <Col xs={24} sm={12}>
                   <Row>
-                    <Col span={12}>
+                    <Col span={24}>
                       <Balance1>Total</Balance1>
                     </Col>
-                    <Col span={12}>
-                      <Total>
+                    <Col span={24}>
+                      <Balance>
                         {this.props.userBal.currency[0]
                           ? `${this.props.userBal.currency[0].balance.toFixed(
                               8
                             )}${" "}`
                           : `00${" "}`}
                         {this.state.currency}
-                      </Total>
+                      </Balance>
                     </Col>
                   </Row>
                 </Col>
                 <Col xs={24} sm={12}>
                   <Row>
-                    <Col span={12}>
+                    <Col span={24}>
                       <Balance1>In orders</Balance1>
                     </Col>
-                    <Col span={12}>
-                      <Total>
+                    <Col span={24}>
+                      <Balance>
                         {this.props.userBal.currency[0]
                           ? `${Math.abs(
                               this.props.userBal.currency[0].balance -
@@ -488,20 +495,20 @@ class StopLimit extends Component {
                           : `00${" "}`}
 
                         {this.state.currency}
-                      </Total>
+                      </Balance>
                     </Col>
                   </Row>
                 </Col>
                 <Col xs={24} sm={12}>
                   <Row>
-                    <Col span={12}>
-                      <Balance1>Best ask</Balance1>
+                    <Col span={24}>
+                      <Balance1>Best Ask</Balance1>
                     </Col>
-                    <Col span={12}>
-                      <Total>
+                    <Col span={24}>
+                      <Balance>
                         {this.props.userBal.buyPay.toFixed(5)}{" "}
-                        {this.state.crypto}
-                      </Total>
+                        {this.state.currency}
+                      </Balance>
                     </Col>
                   </Row>
                 </Col>
@@ -512,10 +519,10 @@ class StopLimit extends Component {
               <Row>
                 <Col xs={24} sm={12}>
                   <Row>
-                    <Col span={12}>
+                    <Col span={24}>
                       <Balance1>Balance</Balance1>
                     </Col>
-                    <Col span={12}>
+                    <Col span={24}>
                       <Balance>
                         {this.props.userBal.crypto[0]
                           ? `${this.props.userBal.crypto[0].balance.toFixed(
@@ -529,28 +536,28 @@ class StopLimit extends Component {
                 </Col>
                 <Col xs={24} sm={12}>
                   <Row>
-                    <Col span={12}>
+                    <Col span={24}>
                       <Balance1>Total</Balance1>
                     </Col>
-                    <Col span={12}>
-                      <Total>
+                    <Col span={24}>
+                      <Balance>
                         {this.props.userBal.crypto[0]
                           ? `${this.props.userBal.crypto[0].balance.toFixed(
                               8
                             )}${" "}`
                           : `00${" "}`}
                         {this.state.crypto}
-                      </Total>
+                      </Balance>
                     </Col>
                   </Row>
                 </Col>
                 <Col xs={24} sm={12}>
                   <Row>
-                    <Col span={12}>
+                    <Col span={24}>
                       <Balance1>In orders</Balance1>
                     </Col>
-                    <Col span={12}>
-                      <Total>
+                    <Col span={24}>
+                      <Balance>
                         {this.props.userBal.crypto[0]
                           ? `${Math.abs(
                               this.props.userBal.crypto[0].balance -
@@ -558,20 +565,20 @@ class StopLimit extends Component {
                             ).toFixed(8)}${" "}`
                           : `00${" "}`}
                         {this.state.crypto}
-                      </Total>
+                      </Balance>
                     </Col>
                   </Row>
                 </Col>
                 <Col xs={24} sm={12}>
                   <Row>
-                    <Col span={12}>
-                      <Balance1>Best ask</Balance1>
+                    <Col span={24}>
+                      <Balance1>Best Bid</Balance1>
                     </Col>
-                    <Col span={12}>
-                      <Total>
+                    <Col span={24}>
+                      <Balance>
                         {this.props.userBal.sellPay.toFixed(5)}{" "}
                         {this.state.currency}
-                      </Total>
+                      </Balance>
                     </Col>
                   </Row>
                 </Col>
@@ -583,7 +590,7 @@ class StopLimit extends Component {
         )}
         <ETHWrap>
           <Label>Amount</Label>
-          <TotalWrap style={{ marginBottom: 16 }}>
+          <TotalWrap>
             <AMTInput
               min="0"
               type="number"
@@ -598,7 +605,7 @@ class StopLimit extends Component {
               "amount",
               this.state.amount,
               "required|gtzero|numeric|decimalrestrict3",
-              "text-danger-validation",
+              "trade-action-validation",
               {
                 gtzero: "Amount should be greater than zero.",
                 decimalrestrict3:
@@ -609,7 +616,7 @@ class StopLimit extends Component {
               "amount",
               this.state.amount,
               "required|gtzero|numeric|decimalrestrict3",
-              "text-danger-validation",
+              "trade-action-validation",
               {
                 gtzero: "Amount should be greater than zero.",
                 decimalrestrict3:
@@ -618,61 +625,63 @@ class StopLimit extends Component {
             )}
           </TotalWrap>
         </ETHWrap>
-        <BTCWrap>
-          <Label>Stop Price</Label>
-          <TotalWrap style={{ marginBottom: 16 }}>
-            <TotInput
-              min="0"
-              type="number"
-              placeholder="0"
-              step="0.00001"
-              addonAfter={this.state.currency}
-              value={this.state.stop_price}
-              name="stop_price"
-              onChange={this.onChange}
-            />
-            {this.validator.message(
-              "stop_price",
-              this.state.stop_price,
-              "required|gtzero|numeric|decimalrestrict5",
-              "text-danger-validation",
-              {
-                gtzero: "Amount should be greater than zero.",
-                decimalrestrict5:
-                  "Amount must be less than or equal to 5 digits after decimal point."
-              }
-            )}
-          </TotalWrap>
-        </BTCWrap>
-        <BTCWrap>
-          <Label>Limit Price</Label>
-          <TotalWrap style={{ marginBottom: 16 }}>
-            <TotInput
-              min="0"
-              type="number"
-              placeholder="0"
-              step="0.00001"
-              addonAfter={this.state.currency}
-              value={this.state.limit_price}
-              name="limit_price"
-              onChange={this.onChange}
-            />
-            {this.validator.message(
-              "Limit_Price",
-              this.state.limit_price,
-              "required|gtzero|numeric|decimalrestrict5",
-              "text-danger-validation",
-              {
-                gtzero: "Limit Price should be greater than zero.",
-                decimalrestrict5:
-                  "Limit Price must be less than or equal to 5 digits after decimal point."
-              }
-            )}
-          </TotalWrap>
-        </BTCWrap>
+        <FlexWrapDiv>
+          <BTCWrap className="width_class">
+            <Label>Stop Price</Label>
+            <TotalWrap>
+              <TotInput
+                min="0"
+                type="number"
+                placeholder="0"
+                step="0.00001"
+                addonAfter={this.state.currency}
+                value={this.state.stop_price}
+                name="stop_price"
+                onChange={this.onChange}
+              />
+              {this.validator.message(
+                "stop_price",
+                this.state.stop_price,
+                "required|gtzero|numeric|decimalrestrict5",
+                "trade-action-validation",
+                {
+                  gtzero: "Amount should be greater than zero.",
+                  decimalrestrict5:
+                    "Amount must be less than or equal to 5 digits after decimal point."
+                }
+              )}
+            </TotalWrap>
+          </BTCWrap>
+          <BTCWrap className="width_class">
+            <Label>Limit Price</Label>
+            <TotalWrap>
+              <TotInput
+                min="0"
+                type="number"
+                placeholder="0"
+                step="0.00001"
+                addonAfter={this.state.currency}
+                value={this.state.limit_price}
+                name="limit_price"
+                onChange={this.onChange}
+              />
+              {this.validator.message(
+                "Limit_Price",
+                this.state.limit_price,
+                "required|gtzero|numeric|decimalrestrict5",
+                "trade-action-validation",
+                {
+                  gtzero: "Limit Price should be greater than zero.",
+                  decimalrestrict5:
+                    "Limit Price must be less than or equal to 5 digits after decimal point."
+                }
+              )}
+            </TotalWrap>
+          </BTCWrap>
+        </FlexWrapDiv>
         <BTCWrap>
           <Label>Total</Label>
-          <TotalWrap style={{ marginBottom: 16 }} className="readonly-input">
+          <TotalWrap className="readonly-input">
             <TotInput
               min="0"
               readOnly="true"
@@ -686,7 +695,7 @@ class StopLimit extends Component {
               "Total",
               this.state.total,
               "required|gtzero|numeric",
-              "text-danger-validation",
+              "trade-action-validation",
               {
                 gtzero: "Total should be greater than zero."
               }
@@ -696,83 +705,63 @@ class StopLimit extends Component {
         {Object.keys(this.props.userBal).length > 0 ? (
           this.state.side === "Buy" ? (
             <Pay>
-              <Row>
-                <Col xs={15} sm={12}>
-                  <div>
-                    <Willpay>You will approximately pay</Willpay>
-                  </div>
-                </Col>
-                <Col xs={9} sm={12}>
-                  <div>
-                    <Willpay2>
-                      {buyPayAmt.toFixed(8)} {this.state.currency}
-                    </Willpay2>
-                  </div>
-                </Col>
-              </Row>
+              <Approx>
+                <Willpay>You will approximately pay</Willpay>
+                <Willpay2>
+                  {buyPayAmt.toFixed(8)} {this.state.currency}
+                </Willpay2>
+              </Approx>
               <Esti>
-                <Row>
-                  <Col xs={15} sm={12}>
-                    Fiat Value
-                  </Col>
-                  <Col xs={9} sm={12}>
+                <ApproxBelow>
+                  <WillpayBelow>Fiat Value</WillpayBelow>
+                  <WillpayBelow2>
                     {this.state.fiatCurrency}{" "}
-                    {parseFloat(this.state.fiatCryptoValue).toFixed(8)}
-                  </Col>
-                  <Col xs={15} sm={12}>
-                    Estimated Best Price
-                  </Col>
-                  <Col xs={9} sm={12}>
+                    {parseFloat(this.state.fiatCurrencyValue).toFixed(8)}
+                  </WillpayBelow2>
+                </ApproxBelow>
+                <ApproxBelow>
+                  <WillpayBelow>Estimated Best Price</WillpayBelow>
+                  <WillpayBelow2>
                     {buyPayAmt.toFixed(8)} {this.state.currency}
-                  </Col>
-                  <Col xs={15} sm={12}>
-                    Fee {userBalFees} %
-                  </Col>
-                  <Col xs={9} sm={12}>
-                    {(buyPayAmt - buyEstPrice).toFixed(8)} {this.state.currency}
-                  </Col>
-                </Row>
+                  </WillpayBelow2>
+                </ApproxBelow>
+                <ApproxBelow>
+                  <WillpayBelow>Fee {userBalFees} %</WillpayBelow>
+                  <WillpayBelow2>
+                    {(buyPayAmt - buyEstPrice).toFixed(8)} {this.state.crypto}
+                  </WillpayBelow2>
+                </ApproxBelow>
               </Esti>
             </Pay>
           ) : (
             <Pay>
-              <Row>
-                <Col xs={15} sm={12}>
-                  <div>
-                    <Willpay>You will approximately receive</Willpay>
-                  </div>
-                </Col>
-                <Col xs={9} sm={12}>
-                  <div>
-                    <Willpay2>
-                      {sellEstPrice.toFixed(8)} {this.state.currency}
-                    </Willpay2>
-                  </div>
-                </Col>
-              </Row>
+              <Approx>
+                <Willpay>You will approximately receive</Willpay>
+                <Willpay2>
+                  {sellEstPrice.toFixed(8)} {this.state.currency}
+                </Willpay2>
+              </Approx>
               <Esti>
-                <Row>
-                  <Col xs={15} sm={12}>
-                    Fiat Value
-                  </Col>
-                  <Col xs={9} sm={12}>
+                <ApproxBelow>
+                  <WillpayBelow>Fiat Value</WillpayBelow>
+                  <WillpayBelow2>
                     {this.state.fiatCurrency}{" "}
                     {parseFloat(this.state.fiatCurrencyValue).toFixed(8)}
-                  </Col>
-                  <Col xs={15} sm={12}>
-                    Estimated Best Price
-                  </Col>
-                  <Col xs={9} sm={12}>
+                  </WillpayBelow2>
+                </ApproxBelow>
+                <ApproxBelow>
+                  <WillpayBelow>Estimated Best Price</WillpayBelow>
+                  <WillpayBelow2>
                     {sellPayAmt.toFixed(8)} {this.state.currency}
-                  </Col>
-                  <Col xs={15} sm={12}>
-                    Fee {userBalFees} %
-                  </Col>
-                  <Col xs={9} sm={12}>
+                  </WillpayBelow2>
+                </ApproxBelow>
+                <ApproxBelow>
+                  <WillpayBelow>Fee {userBalFees} %</WillpayBelow>
+                  <WillpayBelow2>
                     {(sellPayAmt - sellEstPrice).toFixed(8)}{" "}
                     {this.state.currency}
-                  </Col>
-                </Row>
+                  </WillpayBelow2>
+                </ApproxBelow>
               </Esti>
             </Pay>
           )

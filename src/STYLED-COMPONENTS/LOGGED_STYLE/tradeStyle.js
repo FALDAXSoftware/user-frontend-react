@@ -187,7 +187,6 @@ export const FIAT = styled.div`
 
 export const RadioSelect = styled(RadioGroup)`
   font-family: "Open Sans";
-
   & .ant-radio-button-wrapper {
     font-weight: 600 !important;
     background-color: ${props =>
@@ -377,6 +376,42 @@ export const TabsRight = styled(Tabs)`
     > .ant-tabs-tab {
     margin: 0 20px !important;
   }
+  &.tardeActionCard {
+    .ant-tabs-nav-container {
+      > .ant-tabs-nav-wrap {
+        > .ant-tabs-nav-scroll {
+          > .ant-tabs-nav-animated {
+            > div {
+              > .ant-tabs-tab {
+                margin: 0 !important;
+              }
+            }
+          }
+        }
+      }
+    }
+    & .ant-tabs-nav-container-scrolling {
+      padding: 0;
+      & .ant-tabs-tab-arrow-show {
+        display: none;
+      }
+    }
+    & .ant-tabs-nav {
+      width: 100%;
+      & .ant-tabs-ink-bar {
+        display: none !important;
+      }
+      & .ant-tabs-tab {
+        display: inline-flex;
+        margin: 0 !important;
+        justify-content: center;
+        width: 33.33%;
+      }
+      & .ant-tabs-tab-active {
+        border-bottom: 4px solid;
+      }
+    }
+  }
   @media (max-width: 475px) {
     > .ant-tabs-nav-container
       > .ant-tabs-nav-wrap
@@ -396,6 +431,9 @@ export const Label = styled.label`
 export const MarketWrap = styled.div`
   padding-left: 30px;
   padding-right: 30px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 `;
 export const BuyWrap = styled.div``;
 export const BuySell = styled.div`
@@ -404,10 +442,19 @@ export const BuySell = styled.div`
   margin-right: auto;
   height: auto;
   text-align: center;
+  & .ant-radio-button-wrapper {
+    background: ${props =>
+      props.theme.mode === "dark" ? "#041422" : "#f5f6fa"};
+    border: ${props =>
+      props.theme.mode === "dark" ? "1px solid #2c3f51" : "1px solid #cad0e6"};
+    color: ${props => (props.theme.mode === "dark" ? "#617090" : "#9e9ea1")};
+  }
 `;
 export const BuySellRadio = styled(RadioButton)`
   padding-left: 40px;
   padding-right: 40px;
+  font-size: 14px !important;
+  font-weight: bold;
   @media (max-width: 375px) {
     border-radius: 4px 4px 4px 4px !important;
     margin-top: 15px;
@@ -443,18 +490,29 @@ export const BalanceWrap = styled.div`
   > .ant-row {
     > .ant-col {
       padding: 0 10px;
+      width: 50%;
+      float: none;
+      display: inline-block;
+      vertical-align: top;
+      margin: 0 0 0 -2px;
     }
   }
 `;
 export const Balance = styled.p`
-  color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+  color: ${props => (props.theme.mode === "dark" ? "white" : "#174c7e")};
+  font-weight: bold;
   word-break: break-word;
-  font-size: 13px;
+  font-size: 14px;
+  letter-spacing: 1px;
+  line-height: 1;
+  margin: 0 0 20px 0;
 `;
-export const Balance1 = styled(Balance)`
-  color: ${props => (props.theme.mode === "dark" ? "white" : "#333")};
-  font-weight: 600;
-  font-size: 13px;
+export const Balance1 = styled.p`
+  color: ${props => (props.theme.mode === "dark" ? "#617090" : "#7f7f7f")};
+  font-weight: normal;
+  font-size: 12px;
+  margin: 0 0 5px 0;
+  line-height: 1;
 `;
 export const Total = styled.p`
   color: ${props => (props.theme.mode === "dark" ? "white" : "")};
@@ -467,7 +525,8 @@ export const CheckWrap = styled.div`
   }
 `;
 export const ETHWrap = styled.div`
-  margin-top: 15px;
+  // margin-top: 15px;
+  padding: 0 10px;
 `;
 
 export const AMTInput = styled(Input)`
@@ -485,21 +544,26 @@ export const AMTInput = styled(Input)`
 `;
 
 export const BTCWrap = styled.div`
-  margin-top: 10px;
+  margin-top: 15px;
+  padding: 0 10px;
+  &.width_class {
+    width: 50%;
+  }
 `;
 export const Willpay = styled.span`
   font-size: 12px;
   font-family: "Open Sans";
   font-weight: 600;
-  color: ${props =>
-    props.theme.mode === "dark" ? "white" : "rgb( 51, 51, 51 )"};
+  color: ${props => (props.theme.mode === "dark" ? "white" : "#333")};
 `;
 export const Willpay2 = styled.span`
   font-size: 20px;
   // font-family: "NotoSansThai";
-  color: ${props =>
-    props.theme.mode === "dark" ? "white" : "rgb( 51, 51, 51 )"};
-  font-weight: 600;
+  color: ${props => (props.theme.mode === "dark" ? "white" : "#174c7e")};
+  font-weight: bold;
+  letter-spacing: 1px;
+  max-width: 50%;
+  word-break: break-word;
 `;
 export const TotalWrap = styled.div`
   > .ant-input-group-wrapper > .ant-input-group > .ant-input {
@@ -514,6 +578,7 @@ export const TotalWrap = styled.div`
       props.theme.mode === "dark" ? "#041b2c" : "white"};
     border-left: 0px;
     color: #c5c5c5;
+    letter-spacing: 1px;
   }
   &.readonly-input input {
     -moz-appearance: textfield;
@@ -533,15 +598,39 @@ export const TotInput = styled(Input)`
   }
 `;
 export const Pay = styled.div`
-  margin-top: 15px;
+  margin-top: 20px;
+  padding: 0 10px;
   color: ${props => (props.theme.mode === "dark" ? "white" : "")};
 `;
+export const Approx = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
 export const Esti = styled.div`
-  margin-top: 15px;
-  margin-bottom: 15px;
+  margin-top: 20px;
   > .ant-row {
     font-size: 13px;
   }
+`;
+export const ApproxBelow = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 0 10px 0;
+`;
+export const WillpayBelow = styled.div`
+  line-height: 1;
+  font-weight: 600;
+  font-size: 12px;
+  color: ${props => (props.theme.mode === "dark" ? "white" : "#333")};
+`;
+export const WillpayBelow2 = styled.div`
+  line-height: 1;
+  font-weight: bold;
+  font-size: 14px;
+  color: ${props => (props.theme.mode === "dark" ? "white" : "#333")};
+  letter-spacing: 1px;
 `;
 export const Best = styled.span`
   font-size: 12px;
@@ -558,7 +647,7 @@ export const ButtonETH = styled(Button)`
   text-transform: uppercase;
   width: 100%;
   height: 50px;
-  margin-bottom: 30px;
+  // margin-bottom: 30px;
   &:hover,
   &:focus {
     background-color: ${props =>
@@ -574,8 +663,19 @@ export const StopCheck = styled(Checkbox)`
   color: ${props =>
     props.theme.mode === "dark" ? "white" : "rgb( 127, 127, 127 )"};
 `;
+export const FlexWrapDiv = styled.div`
+  display: flex;
+`;
 export const ButtonWrap = styled.div`
-  margin-top: 25px;
+  margin-top: 20px;
+  position: absolute;
+  width: calc(100% - 60px);
+  bottom: 30px;
+  position: relative;
+  width: 100%;
+  bottom: auto;
+  margin-top: auto;
+  margin-bottom: 10px;
 `;
 export const BBCWrap = styled.div`
   margin-left: 30px;

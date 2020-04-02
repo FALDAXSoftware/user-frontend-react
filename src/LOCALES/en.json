@@ -1406,7 +1406,7 @@
     },
     "wallet_generation_in_process": {
       "page": "Wallet Details",
-      "message": "Your wallet is being generated and you will receive a notification when it is ready for use. If you do not receive a notification within 24 hours, or if you have any other concerns, please feel free to contact us",
+      "message": "Your wallet is being generated and you will receive a notification when it is ready for use. If you do not receive a notification within 24 hours, or if you have any other concerns, please feel free to contact us ",
       "message_type": "Web content",
       "context": "wallet generation under process message"
     },
@@ -2922,7 +2922,7 @@
     },
     "lang_ja_text": {
       "page": "Header",
-      "message": "Japanese",
+      "message": "\u65e5\u672c\u8a9e",
       "message_type": "Web content",
       "context": "Japanese text"
     }
