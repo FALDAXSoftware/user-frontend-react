@@ -264,8 +264,10 @@ class TemplateManage extends React.Component {
                         placeholder="Template Name"
                         value={t.title ? t.title : this.state.templateName}
                         onChange={e => {
+                          e.preventDefault();
                           let temp = this.state.templates;
                           if (e.target.value) {
+                            // console.log("%%%%", e.target.value);
                             temp[index].title = e.target.value;
                             this.setState({
                               templateName: e.target.value,
@@ -273,8 +275,11 @@ class TemplateManage extends React.Component {
                               errMsg: ""
                             });
                           } else {
+                            // console.log("%%%%else", e.target.value);
+                            temp[index].title = e.target.value;
                             this.setState({
                               templateName: "",
+                              templates: temp,
                               errMsg: "Please enter template name"
                             });
                           }
