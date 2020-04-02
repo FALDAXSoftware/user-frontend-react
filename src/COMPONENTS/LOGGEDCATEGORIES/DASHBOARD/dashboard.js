@@ -69,7 +69,7 @@ class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      templateManage: true,
+      templateManage: false,
       pairs: [],
       currentTemplate: {
         title: [],
