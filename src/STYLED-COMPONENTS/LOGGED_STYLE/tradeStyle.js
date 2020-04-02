@@ -486,7 +486,7 @@ export const Sell = styled(Button)`
   height: 40px;
 `;
 export const BalanceWrap = styled.div`
-  margin-top: 30px;
+  margin-top: 15px;
   > .ant-row {
     > .ant-col {
       padding: 0 10px;
@@ -886,4 +886,8 @@ export const SettingDropdown = styled(Dropdown)`
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  &.dashboard_setting {
+    font-size: 14px;
+    font-weight: bold;
+  }
 `;
