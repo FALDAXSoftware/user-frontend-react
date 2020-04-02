@@ -137,7 +137,7 @@ class TemplateManage extends React.Component {
     }
   };
   componentDidMount() {
-    this.setState({ templates: this.props.templates });
+    this.setState({ templates: [...this.props.templates] });
   }
   getPairs = () => {
     fetch(API_URL + `/users/get-all-pair`, {
@@ -162,7 +162,7 @@ class TemplateManage extends React.Component {
           );
         }
       })
-      .catch(error => {});
+      .catch(error => { });
   };
   onCancle = e => {
     this.setState({ comingSoon: false });
@@ -287,8 +287,8 @@ class TemplateManage extends React.Component {
                       )}
                     </TempName>
                   ) : (
-                    ""
-                  )}
+                      ""
+                    )}
                   {t.widgets.map((w, windex) => (
                     <TempRow>
                       <WidgetName>
@@ -321,8 +321,8 @@ class TemplateManage extends React.Component {
                             ))}
                         </TemplatePairSelect>
                       ) : (
-                        ""
-                      )}
+                          ""
+                        )}
                     </TempRow>
                   ))}
                 </TemplateTabPane>
