@@ -431,6 +431,9 @@ export const Label = styled.label`
 export const MarketWrap = styled.div`
   padding-left: 30px;
   padding-right: 30px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 `;
 export const BuyWrap = styled.div``;
 export const BuySell = styled.div`
@@ -661,6 +664,11 @@ export const ButtonWrap = styled.div`
   position: absolute;
   width: calc(100% - 60px);
   bottom: 30px;
+  position: relative;
+  width: 100%;
+  bottom: auto;
+  margin-top: auto;
+  margin-bottom: 10px;
 `;
 export const BBCWrap = styled.div`
   margin-left: 30px;
