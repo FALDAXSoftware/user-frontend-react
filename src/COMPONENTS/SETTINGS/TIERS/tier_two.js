@@ -8,8 +8,9 @@ import Navigation from "COMPONENTS/NAVIGATIONS/loggednavigation";
 import FooterHome from "COMPONENTS/LANDING/FOOTERS/footer_home";
 import { TierWrapper, KYCHead } from "./tier_one";
 import { TierWrap } from "../../../STYLED-COMPONENTS/TIER/tierStyle";
-import { Upload, Button, Icon } from "antd";
-import { ConversionLeftSpan } from "../../../STYLED-COMPONENTS/CONVERSION/tradeCalcStyle";
+import { Upload, Button, Icon, Input } from "antd";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
 /* Styled-Components */
 const KYCWrap = styled.div`
@@ -25,17 +26,17 @@ class TierTwo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      fileList: [
-        {
-          uid: "-1",
-          name: "xxx.png",
-          status: "done",
-          url: "http://www.baidu.com/xxx.png"
-        }
-      ]
+      id_number: "",
+      fileList: []
     };
   }
-
+  componentWillMount() {
+    if (this.props.profileDetails) {
+      if (!this.props.profileDetails.account_tier == 2) {
+        this.props.history.push("/");
+      }
+    }
+  }
   componentDidMount() {}
   handleChange = info => {
     let fileList = [...info.fileList];
@@ -80,8 +81,20 @@ class TierTwo extends React.Component {
                   </Button>
                 </Upload>
               </div>
-              <div>Proof of Residence</div>
-              <div> Social security Number / Govt. Issued ID Number</div>
+              <div>
+                <label>Proof of Residence</label>
+                <br />
+                <Upload {...props} fileList={this.state.fileList}>
+                  <Button>
+                    <Icon type="upload" /> Upload
+                  </Button>
+                </Upload>
+              </div>
+              <div>
+                <label>Social security Number / Govt. Issued ID Number</label>
+                <br />
+                <Input type="text" value={this.state.id_number} />
+              </div>
             </TierWrap>
           </KYCWrap>
         </TierWrapper>
@@ -90,20 +103,25 @@ class TierTwo extends React.Component {
     );
   }
 }
-
-const mapStateToProps = state => {
+const mapDispatchToProps = dispatch => ({
+  // LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
+});
+// export default Conversion;
+function mapStateToProps(state) {
   return {
+    isLoggedIn: state.simpleReducer.isLoggedIn,
     profileDetails:
       state.simpleReducer.profileDetails !== undefined
-        ? state.simpleReducer.profileDetails.data[0]
+        ? state.simpleReducer.profileDetails.data !== undefined
+          ? state.simpleReducer.profileDetails.data[0]
+          : ""
         : "",
     theme:
-      state.themeReducer.theme !== undefined ? state.themeReducer.theme : "",
-    isLoggedIn:
-      state.simpleReducer.isLoggedIn !== undefined
-        ? state.simpleReducer.isLoggedIn
-        : ""
+      state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
   };
-};
+}
 
-export default TierTwo;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(TierTwo));

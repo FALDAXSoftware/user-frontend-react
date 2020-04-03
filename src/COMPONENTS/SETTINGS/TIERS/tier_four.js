@@ -7,6 +7,8 @@ import styled from "styled-components";
 import Navigation from "COMPONENTS/NAVIGATIONS/loggednavigation";
 import FooterHome from "COMPONENTS/LANDING/FOOTERS/footer_home";
 import { TierWrapper } from "./tier_one";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
 /* Styled-Components */
 const KYCWrap = styled.div`
@@ -23,7 +25,15 @@ class TierFour extends React.Component {
     super(props);
     this.state = {};
   }
-
+  componentWillMount() {
+    if (this.props.profileDetails) {
+      if (this.props.profileDetails.account_tier == 4) {
+        this.props.history.push("/tier4");
+      } else {
+        this.props.history.push("/");
+      }
+    }
+  }
   componentDidMount() {}
 
   render() {
@@ -39,19 +49,25 @@ class TierFour extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapDispatchToProps = dispatch => ({
+  // LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
+});
+// export default Conversion;
+function mapStateToProps(state) {
   return {
+    isLoggedIn: state.simpleReducer.isLoggedIn,
     profileDetails:
       state.simpleReducer.profileDetails !== undefined
-        ? state.simpleReducer.profileDetails.data[0]
+        ? state.simpleReducer.profileDetails.data !== undefined
+          ? state.simpleReducer.profileDetails.data[0]
+          : ""
         : "",
     theme:
-      state.themeReducer.theme !== undefined ? state.themeReducer.theme : "",
-    isLoggedIn:
-      state.simpleReducer.isLoggedIn !== undefined
-        ? state.simpleReducer.isLoggedIn
-        : ""
+      state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
   };
-};
+}
 
-export default TierFour;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(TierFour));
