@@ -897,7 +897,7 @@ class PersonalDetails extends Component {
           this.openNotificationWithProfile(
             "error",
             this.t("validations:error_text.message"),
-            this.t("validations:profile_img_error2.message")
+            this.t("general_1:only_images_error.message")
           );
       }
 
