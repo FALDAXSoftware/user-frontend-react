@@ -274,7 +274,7 @@ class SellTable extends Component {
         <BBC2>SELLING {this.props.crypto}</BBC2>
         <TotalBTC>
           Total: {this.state.lastsum && this.state.lastsum.toFixed(8)}{" "}
-          {this.state.crypto}
+          {this.state.currency}
         </TotalBTC>
         <BuyTable>
           <HistoryWrap1>
