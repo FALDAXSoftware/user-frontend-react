@@ -69,7 +69,7 @@ export const TierSubHead = styled.span`
   text-transform: uppercase;
   font-weight: bold;
   color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "#333333")};
-  font-size: 16px;
+  font-size: 15px;
   line-height: 18px;
   padding: 20px 0;
 `;
@@ -81,7 +81,7 @@ export const TierUl = styled.ul`
   text-align: left;
   > li {
     padding: 5px 0;
-    font-size: 16px;
+    font-size: 14px;
     display: flex;
     > .icon-wrap {
       font-weight: bold;
@@ -104,7 +104,7 @@ export const TierWithdrawalHead = styled.div`
   text-transform: uppercase;
   padding: 20px 0 15px;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 15px;
   line-height: 18px;
 `;
 export const TierTable = styled.table`
@@ -118,13 +118,13 @@ export const TierTable = styled.table`
     width: 50%;
     background: #e1e1e1;
     font-weight: 600;
-    font-size: 18px;
+    font-size: 16px;
     padding: 5px 0;
     color: #333333;
   }
   > tbody tr td {
     width: 50%;
-    font-size: 18px;
+    font-size: 16px;
     padding: 5px 0;
     font-weight: bold;
     color: #333333;
@@ -168,8 +168,8 @@ export const TierRequirements = styled.div`
     text-align: left;
     > li {
       display: flex;
-      font-size: 16px;
-      line-height: 18px;
+      font-size: 14px;
+      line-height: 16px;
       padding: 5px 0;
       align-items: flex-start;
       color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "")};
@@ -190,7 +190,7 @@ export const TierRequirements = styled.div`
       width: 8px;
       border-radius: 50%;
       vertical-align: middle;
-      margin: 5px 10px 0 0;
+      margin: 4px 10px 0 0;
     }
   }
 `;
@@ -517,4 +517,8 @@ export const TierStepContent = styled.div`
   padding: 0 0 0 30px;
   display: inherit;
   justify-content: center;
+`;
+export const TierWrap = styled.div`
+  width: 50%;
+  margin: 0 auto;
 `;

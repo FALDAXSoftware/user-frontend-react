@@ -39,6 +39,10 @@ import NotFound from "./SHARED-COMPONENTS/NotFound.js";
 import Dashboard from "./COMPONENTS/LOGGEDCATEGORIES/DASHBOARD/dashboard.js";
 import Trade from "./COMPONENTS/LOGGEDCATEGORIES/TRADE/trade.js";
 import Tradingviewchart from "./COMPONENTS/tradingviewchart.js";
+import TierOne from "./COMPONENTS/SETTINGS/TIERS/tier_one.js";
+import TierTwo from "./COMPONENTS/SETTINGS/TIERS/tier_two.js";
+import TierThree from "./COMPONENTS/SETTINGS/TIERS/tier_three.js";
+import TierFour from "./COMPONENTS/SETTINGS/TIERS/tier_four.js";
 // let { API_URL } = globalVariables;
 const socketIOClient = require("socket.io-client");
 // const sailsIOClient = require("sails.io.js");
@@ -149,30 +153,26 @@ const routes = [
   //   component: () => <TokenDashboard io={io} />,
   //   io: io
   // },
-  // {
-  //   exact: false,
-  //   path: "/tier1",
-  //   component: () => <TierOne io={io} />,
-  //   io: io
-  // },
-  // {
-  //   exact: false,
-  //   path: "/tier2",
-  //   component: () => <TierTwo io={io} />,
-  //   io: io
-  // },
-  // {
-  //   exact: false,
-  //   path: "/tier3",
-  //   component: () => <TierThree io={io} />,
-  //   io: io
-  // },
-  // {
-  //   exact: false,
-  //   path: "/tier4",
-  //   component: () => <TierFour io={io} />,
-  //   io: io
-  // },
+  {
+    exact: false,
+    path: "/tier1",
+    component: () => <TierOne />
+  },
+  {
+    exact: false,
+    path: "/tier2",
+    component: () => <TierTwo />
+  },
+  {
+    exact: false,
+    path: "/tier3",
+    component: () => <TierThree />
+  },
+  {
+    exact: false,
+    path: "/tier4",
+    component: () => <TierFour />
+  },
   {
     exact: false,
     path: "/tier-upgrade-information",

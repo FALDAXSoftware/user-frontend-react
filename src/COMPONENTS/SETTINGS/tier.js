@@ -86,33 +86,45 @@ class Tier extends Component {
                         <TierUl>
                           <li>
                             <span className="icon-wrap">
-                              <Icon type="check" />
+                              {tier.minimum_activity_thresold ? (
+                                <Icon type="check" />
+                              ) : (
+                                ""
+                              )}
                             </span>
                             <span className="text-wrap">
                               {tier.minimum_activity_thresold
-                                ? tier.minimum_activity_thresold.Account_Age
-                                : "-"}
+                                ? tier.minimum_activity_thresold.account_change
+                                : ""}
                             </span>
                           </li>
                           <li>
                             <span className="icon-wrap">
-                              <Icon type="check" />
+                              {tier.minimum_activity_thresold ? (
+                                <Icon type="check" />
+                              ) : (
+                                ""
+                              )}
                             </span>
                             <span className="text-wrap">
                               {tier.minimum_activity_thresold
                                 ? tier.minimum_activity_thresold
-                                    .Minimum_Total_Transactions
-                                : "-"}
+                                    .minimum_total_transactions
+                                : ""}
                             </span>
                           </li>
                           <li>
                             <span className="icon-wrap">
-                              <Icon type="check" />
+                              {tier.minimum_activity_thresold ? (
+                                <Icon type="check" />
+                              ) : (
+                                ""
+                              )}
                             </span>
                             <span className="text-wrap">
                               {tier.minimum_activity_thresold
                                 ? tier.minimum_activity_thresold
-                                    .Minimum_Total_Value_of_All_Transactions
+                                    .minimum_total_value_transaction
                                 : ""}
                             </span>
                           </li>
