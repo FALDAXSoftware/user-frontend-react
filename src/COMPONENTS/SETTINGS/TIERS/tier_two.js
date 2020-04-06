@@ -11,6 +11,12 @@ import { TierWrap } from "../../../STYLED-COMPONENTS/TIER/tierStyle";
 import { Upload, Button, Icon, Input } from "antd";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+import {
+  DropzoneStyle,
+  IconS,
+  FileSelectText
+} from "../../../STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle";
+import { SupportText } from "../../LANDINGCATEGORIES/apply_job";
 
 /* Styled-Components */
 const KYCWrap = styled.div`
@@ -27,7 +33,8 @@ class TierTwo extends React.Component {
     super(props);
     this.state = {
       id_number: "",
-      fileList: []
+      fileList: [],
+      files: []
     };
   }
   componentWillMount() {
@@ -38,6 +45,40 @@ class TierTwo extends React.Component {
     }
   }
   componentDidMount() {}
+  onDrop(type, files) {
+    if (type === "res") {
+      let flag = false,
+        flagLimit = false;
+      if (files.length > 0) {
+        flag = true;
+        if (files[0].size <= 3000000) {
+          flagLimit = true;
+        }
+      }
+      this.setState({
+        flag_drop: flag,
+        resumeLimit: flagLimit,
+        fields: { ...this.state.fields, resume: files[0] }
+      });
+    } else {
+      let flag = false,
+        flagLimit = false;
+      if (files.length > 0) {
+        flag = true;
+        if (files[0].size <= 3000000) {
+          flagLimit = true;
+        }
+      }
+      this.setState({
+        cover_flag: flag,
+        coverLimit: flagLimit,
+        fields: { ...this.state.fields, cover_letter: files[0] }
+      });
+    }
+  }
+  onCancel() {
+    this.setState({ files: [] });
+  }
   handleChange = info => {
     let fileList = [...info.fileList];
 
@@ -84,11 +125,39 @@ class TierTwo extends React.Component {
               <div>
                 <label>Proof of Residence</label>
                 <br />
-                <Upload {...props} fileList={this.state.fileList}>
-                  <Button>
-                    <Icon type="upload" /> Upload
-                  </Button>
-                </Upload>
+                <DropzoneStyle
+                  accept=".pdf,.doc,.docx"
+                  className="Dropzone_apply"
+                  onDrop={this.onDrop.bind(this, "res")}
+                  onFileDialogCancel={this.onCancel.bind(this)}
+                >
+                  {/* {flag_drop === null && ( */}
+                  <div>
+                    <IconS type="download" />
+                    <FileSelectText>Choose file</FileSelectText>
+                  </div>
+                  {/* ) */}}{/* {flag_drop === false && ( */}
+                  <div>
+                    <IconS type="close-square" />
+                    <FileSelectText>Wrong File Selected</FileSelectText>
+                  </div>
+                  {/* ) */}}{/* {flag_drop === true && ( */}
+                  <div>
+                    <IconS type="check-square" />
+                    <FileSelectText>
+                      temp
+                      {/* {fields.resume.name} */}
+                    </FileSelectText>
+                  </div>
+                  {/* ) */}}
+                </DropzoneStyle>
+                <SupportText>Supported format: .doc, .docx, .pdf.</SupportText>
+                {/* {this.validator.message(
+                  "resume",
+                  flag_drop,
+                  "resumeRequired|resumeValid|resumeLimit",
+                  "text-danger-validation"
+                )} */}
               </div>
               <div>
                 <label>Social security Number / Govt. Issued ID Number</label>
