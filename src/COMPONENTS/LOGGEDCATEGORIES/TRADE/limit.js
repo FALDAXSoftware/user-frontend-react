@@ -265,11 +265,11 @@ class Limit extends Component {
           obj["total"] = 0;
           if (this.state.side === "Buy") {
             this.setState({
-              fiatCurrencyValue: this.state.singlefiatCurrencyValue
+              fiatCurrencyValue: 0
             });
           } else if (this.state.side === "Sell") {
             this.setState({
-              fiatCurrencyValue: this.state.singlefiatCurrencyValue
+              fiatCurrencyValue: 0
             });
           }
           // obj["amount"] = Number(this.state.amount).toFixed(3);
@@ -343,11 +343,11 @@ class Limit extends Component {
               () => {
                 if (this.state.side === "Buy") {
                   this.setState({
-                    fiatCryptoValue: this.state.singlefiatCryptoValue
+                    fiatCurrencyValue: 0
                   });
                 } else if (this.state.side === "Sell") {
                   this.setState({
-                    fiatCurrencyValue: this.state.singlefiatCurrencyValue
+                    fiatCurrencyValue: 0
                   });
                 }
               }
