@@ -140,31 +140,6 @@ class TemplateManage extends React.Component {
   componentDidMount() {
     this.setState({ templates: [...this.props.templates] });
   }
-  getPairs = () => {
-    fetch(API_URL + `/users/get-all-pair`, {
-      method: "get",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "Accept-Language": localStorage["i18nextLng"]
-      }
-    })
-      .then(response => response.json())
-      .then(responseData => {
-        if (responseData.status == 200) {
-          console.log("^^^", responseData.data);
-          this.setState(
-            {
-              pairs: responseData.data
-            },
-            () => {
-              console.log(this.state.pairs);
-            }
-          );
-        }
-      })
-      .catch(error => {});
-  };
   onCancle = e => {
     this.setState({ comingSoon: false });
     this.props.onCancle(e);
@@ -292,8 +267,8 @@ class TemplateManage extends React.Component {
                       )}
                     </TempName>
                   ) : (
-                    ""
-                  )}
+                      ""
+                    )}
                   {t.widgets.map((w, windex) => (
                     <TempRow>
                       <WidgetName>
@@ -326,8 +301,8 @@ class TemplateManage extends React.Component {
                             ))}
                         </TemplatePairSelect>
                       ) : (
-                        ""
-                      )}
+                          ""
+                        )}
                     </TempRow>
                   ))}
                 </TemplateTabPane>
