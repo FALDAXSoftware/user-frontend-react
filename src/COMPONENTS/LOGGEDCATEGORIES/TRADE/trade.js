@@ -372,11 +372,21 @@ class Trade extends Component {
     }
   }
   joinRoom = (prevRoom = null) => {
-    console.log(this.state, prevRoom);
-    io.emit("join", {
-      room: this.state.crypto + "-" + this.state.currency,
-      previous_room: prevRoom
-    });
+    console.log("joinRoom^^", this.state, prevRoom);
+    io.emit(
+      "join",
+      {
+        room: this.state.crypto + "-" + this.state.currency,
+        previous_room: prevRoom
+      },
+      () => {
+        console.log(
+          "joinRoom after^^",
+          this.state.crypto + "-" + this.state.currency
+        );
+        console.log("joinRoom after^^", prevRoom);
+      }
+    );
   };
   // created by Meghal Patel at 2019-04-27 15:09.
   //
@@ -389,7 +399,7 @@ class Trade extends Component {
       insLoader: true
     });
     var self = this;
-    // console.log("onInsChange^^^^", self.state.crypto, e.target.value);
+    console.log("onInsChange^^^^", self.state.crypto, e.target.value);
     let cryptoPair = {
       crypto: self.state.crypto,
       currency: e.target.value,
