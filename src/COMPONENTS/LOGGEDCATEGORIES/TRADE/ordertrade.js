@@ -151,18 +151,18 @@ class OrderTrade extends Component {
                           <td>
                             {data.quantity.toFixed(3)} {data.settle_currency}
                           </td>
-                          <td>
+                          {/* <td>
                             {self.props.pending !== 2
                               ? data.order_type === "Market"
                                 ? data.order_type
                                 : data.limit_price.toFixed(5)
                               : data.limit_price.toFixed(5)}
-                          </td>
-                          {/* <td>
-                            {self.props.pending == 2
-                              ? data.limit_price.toFixed(5)
-                              : data.quantity.toFixed(5)}
                           </td> */}
+                          <td>
+                            {self.props.pending != 2
+                              ? "-"
+                              : data.limit_price.toFixed(5)}
+                          </td>
                           <SideType type={data.side}>
                             {self.props.pending !== 2
                               ? Filled.toFixed(5)
