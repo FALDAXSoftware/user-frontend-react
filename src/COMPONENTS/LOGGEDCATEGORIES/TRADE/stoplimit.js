@@ -65,7 +65,7 @@ class StopLimit extends Component {
       singlefiatCryptoValue: "",
       singlefiatCurrencyValue: "",
       fiatCryptoValue: "",
-      fiatCurrencyValue: "",
+      fiatCurrencyValue: 0,
       fiatCurrency: ""
     };
 
@@ -147,8 +147,8 @@ class StopLimit extends Component {
       sellPayAmt: 0,
       buyPayAmt: 0,
       fiatCurrency: "$",
-      fiatCryptoValue: this.props.userBal.cryptoFiat,
-      fiatCurrencyValue: this.props.userBal.currencyFiat,
+      // fiatCryptoValue: this.props.userBal.cryptoFiat,
+      // fiatCurrencyValue: this.props.userBal.currencyFiat,
       singlefiatCryptoValue: this.props.userBal.cryptoFiat,
       singlefiatCurrencyValue: this.props.userBal.currencyFiat
     });
@@ -165,8 +165,8 @@ class StopLimit extends Component {
       sellEstPrice: 0,
       sellPayAmt: 0,
       buyPayAmt: 0,
-      fiatCryptoValue: props.userBal.cryptoFiat,
-      fiatCurrencyValue: props.userBal.currencyFiat,
+      // fiatCryptoValue: props.userBal.cryptoFiat,
+      // fiatCurrencyValue: props.userBal.currencyFiat,
       singlefiatCryptoValue: props.userBal.cryptoFiat,
       singlefiatCurrencyValue: props.userBal.currencyFiat
     });
@@ -197,6 +197,9 @@ class StopLimit extends Component {
 
     let value = e.target.value;
     obj[name] = value;
+    this.setState({
+      fiatCurrencyValue: 0
+    });
     if (name === "side") {
       obj["amount"] = "";
       obj["total"] = 0;
@@ -205,11 +208,11 @@ class StopLimit extends Component {
       this.clearValidation();
       if (e.target.value === "Buy") {
         this.setState({
-          fiatCryptoValue: this.state.singlefiatCryptoValue
+          fiatCurrencyValue: 0
         });
       } else if (e.target.value === "Sell") {
         this.setState({
-          fiatCurrencyValue: this.state.singlefiatCurrencyValue
+          fiatCurrencyValue: 0
         });
       }
     }
@@ -245,10 +248,10 @@ class StopLimit extends Component {
           if (this.state.side === "Buy") {
             if (value > 0 && name === "amount") {
               let fiatValue =
-                parseFloat(this.state.singlefiatCryptoValue) *
+                parseFloat(this.state.singlefiatCurrencyValue) *
                 parseFloat(value).toFixed(8);
               this.setState({
-                fiatCryptoValue: fiatValue
+                fiatCurrencyValue: fiatValue
               });
             }
           } else if (this.state.side === "Sell") {
@@ -265,11 +268,11 @@ class StopLimit extends Component {
           obj["total"] = 0;
           if (this.state.side === "Buy") {
             this.setState({
-              fiatCryptoValue: this.state.singlefiatCryptoValue
+              fiatCurrencyValue: 0
             });
           } else if (this.state.side === "Sell") {
             this.setState({
-              fiatCurrencyValue: this.state.singlefiatCurrencyValue
+              fiatCurrencyValue: 0
             });
           }
         }
@@ -342,11 +345,11 @@ class StopLimit extends Component {
               () => {
                 if (this.state.side === "Buy") {
                   this.setState({
-                    fiatCryptoValue: this.state.singlefiatCryptoValue
+                    fiatCurrencyValue: 0
                   });
                 } else if (this.state.side === "Sell") {
                   this.setState({
-                    fiatCurrencyValue: this.state.singlefiatCurrencyValue
+                    fiatCurrencyValue: 0
                   });
                 }
               }
@@ -372,11 +375,11 @@ class StopLimit extends Component {
               () => {
                 if (this.state.side === "Buy") {
                   this.setState({
-                    fiatCryptoValue: this.state.singlefiatCryptoValue
+                    fiatCurrencyValue: 0
                   });
                 } else if (this.state.side === "Sell") {
                   this.setState({
-                    fiatCurrencyValue: this.state.singlefiatCurrencyValue
+                    fiatCurrencyValue: 0
                   });
                 }
               }

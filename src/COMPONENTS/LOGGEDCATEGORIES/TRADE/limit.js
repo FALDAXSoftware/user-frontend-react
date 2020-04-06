@@ -62,7 +62,7 @@ class Limit extends Component {
       singlefiatCryptoValue: "",
       singlefiatCurrencyValue: "",
       fiatCryptoValue: "",
-      fiatCurrencyValue: "",
+      fiatCurrencyValue: 0,
       fiatCurrency: ""
     };
     this.onChange = this.onChange.bind(this);
@@ -143,8 +143,8 @@ class Limit extends Component {
       sellPayAmt: 0,
       loader: false,
       fiatCurrency: "$",
-      fiatCryptoValue: this.props.userBal.cryptoFiat,
-      fiatCurrencyValue: this.props.userBal.currencyFiat,
+      // fiatCryptoValue: this.props.userBal.cryptoFiat,
+      // fiatCurrencyValue: this.props.userBal.currencyFiat,
       singlefiatCryptoValue: this.props.userBal.cryptoFiat,
       singlefiatCurrencyValue: this.props.userBal.currencyFiat
     });
@@ -155,8 +155,8 @@ class Limit extends Component {
       total: 0,
       limit_price: "",
       userBalFees: props.userBal.fees,
-      fiatCryptoValue: props.userBal.cryptoFiat,
-      fiatCurrencyValue: props.userBal.currencyFiat,
+      // fiatCryptoValue: props.userBal.cryptoFiat,
+      // fiatCurrencyValue: props.userBal.currencyFiat,
       singlefiatCryptoValue: props.userBal.cryptoFiat,
       singlefiatCurrencyValue: props.userBal.currencyFiat
     });
@@ -187,7 +187,9 @@ class Limit extends Component {
     let name = e.target.name;
     let value = e.target.value;
     obj[name] = value;
-
+    this.setState({
+      fiatCurrencyValue: 0
+    });
     if (name === "side") {
       obj["amount"] = "";
       obj["total"] = 0;
@@ -195,11 +197,11 @@ class Limit extends Component {
       this.clearValidation();
       if (e.target.value === "Buy") {
         this.setState({
-          fiatCryptoValue: this.state.singlefiatCryptoValue
+          fiatCurrencyValue: 0
         });
       } else if (e.target.value === "Sell") {
         this.setState({
-          fiatCurrencyValue: this.state.singlefiatCurrencyValue
+          fiatCurrencyValue: 0
         });
       }
     }
@@ -243,10 +245,10 @@ class Limit extends Component {
           if (this.state.side === "Buy") {
             if (value > 0 && name === "amount") {
               let fiatValue =
-                parseFloat(this.state.singlefiatCryptoValue) *
+                parseFloat(this.state.singlefiatCurrencyValue) *
                 parseFloat(value).toFixed(8);
               this.setState({
-                fiatCryptoValue: fiatValue
+                fiatCurrencyValue: fiatValue
               });
             }
           } else if (this.state.side === "Sell") {
@@ -263,11 +265,11 @@ class Limit extends Component {
           obj["total"] = 0;
           if (this.state.side === "Buy") {
             this.setState({
-              fiatCryptoValue: this.state.singlefiatCryptoValue
+              fiatCurrencyValue: 0
             });
           } else if (this.state.side === "Sell") {
             this.setState({
-              fiatCurrencyValue: this.state.singlefiatCurrencyValue
+              fiatCurrencyValue: 0
             });
           }
           // obj["amount"] = Number(this.state.amount).toFixed(3);
@@ -341,11 +343,11 @@ class Limit extends Component {
               () => {
                 if (this.state.side === "Buy") {
                   this.setState({
-                    fiatCryptoValue: this.state.singlefiatCryptoValue
+                    fiatCurrencyValue: 0
                   });
                 } else if (this.state.side === "Sell") {
                   this.setState({
-                    fiatCurrencyValue: this.state.singlefiatCurrencyValue
+                    fiatCurrencyValue: 0
                   });
                 }
               }
@@ -371,11 +373,11 @@ class Limit extends Component {
               () => {
                 if (this.state.side === "Buy") {
                   this.setState({
-                    fiatCryptoValue: this.state.singlefiatCryptoValue
+                    fiatCurrencyValue: 0
                   });
                 } else if (this.state.side === "Sell") {
                   this.setState({
-                    fiatCurrencyValue: this.state.singlefiatCurrencyValue
+                    fiatCurrencyValue: 0
                   });
                 }
               }
