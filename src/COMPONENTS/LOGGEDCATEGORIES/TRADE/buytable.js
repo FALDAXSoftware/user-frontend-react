@@ -293,7 +293,12 @@ class BuyTABLE extends Component {
                   className="scrollbar"
                   hideTracksWhenNotNeeded={true}
                 >
-                  <TableContent cellpadding="10px" cellspacing="0" border="0">
+                  <TableContent
+                    cellpadding="10px"
+                    cellspacing="0"
+                    border="0"
+                    className="buy_sell_table"
+                  >
                     {this.state.result.length ? (
                       <tbody>
                         {this.state.result.map(element => (
