@@ -428,9 +428,11 @@ class Market extends Component {
                     <Col span={24}>
                       <Balance>
                         {this.props.userBal.currency[0]
-                          ? `${this.props.userBal.currency[0].balance.toFixed(
-                              8
-                            )}${" "}`
+                          ? this.props.userBal.currency[0].placed_balance
+                            ? `${this.props.userBal.currency[0].placed_balance.toFixed(
+                                8
+                              )}${" "}`
+                            : `00${" "}`
                           : `00${" "}`}
                         {this.state.currency}
                       </Balance>
@@ -498,9 +500,11 @@ class Market extends Component {
                     <Col span={24}>
                       <Balance>
                         {this.props.userBal.crypto[0]
-                          ? `${this.props.userBal.crypto[0].balance.toFixed(
-                              8
-                            )}${" "}`
+                          ? this.props.userBal.crypto[0].placed_balance
+                            ? `${this.props.userBal.crypto[0].placed_balance.toFixed(
+                                8
+                              )}${" "}`
+                            : `00${" "}`
                           : `00${" "}`}
                         {this.state.crypto}
                       </Balance>

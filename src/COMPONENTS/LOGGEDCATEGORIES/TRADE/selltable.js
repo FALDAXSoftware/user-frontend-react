@@ -274,7 +274,7 @@ class SellTable extends Component {
         <BBC2>SELLING {this.props.crypto}</BBC2>
         <TotalBTC>
           Total: {this.state.lastsum && this.state.lastsum.toFixed(8)}{" "}
-          {this.state.currency}
+          {this.state.crypto}
         </TotalBTC>
         <BuyTable>
           <HistoryWrap1>
@@ -299,7 +299,12 @@ class SellTable extends Component {
                   className="scrollbar"
                   hideTracksWhenNotNeeded={true}
                 >
-                  <TableContent cellpadding="10px" cellspacing="0" border="0">
+                  <TableContent
+                    className="buy_sell_table"
+                    cellpadding="10px"
+                    cellspacing="0"
+                    border="0"
+                  >
                     <tbody>
                       {this.state.result.length ? (
                         this.state.result.map(function(element, index) {
