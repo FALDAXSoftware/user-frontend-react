@@ -15,7 +15,7 @@ import {
   TierRequirements,
   TierUpdate,
   TierVerfied,
-  TierVerifiedWrap
+  TierVerifiedWrap,
 } from "../../STYLED-COMPONENTS/TIER/tierStyle";
 import { Icon } from "antd";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
@@ -30,7 +30,7 @@ class Tier extends Component {
     super(props);
     this.state = {
       loader: true,
-      tierData: []
+      tierData: [],
     };
   }
 
@@ -41,18 +41,18 @@ class Tier extends Component {
         Accept: "application/json",
         "Content-Type": "application/json",
         "Accept-Language": localStorage["i18nextLng"],
-        Authorization: "Bearer " + this.props.isLoggedIn
-      }
+        Authorization: "Bearer " + this.props.isLoggedIn,
+      },
     })
-      .then(response => response.json())
-      .then(responseData => {
+      .then((response) => response.json())
+      .then((responseData) => {
         this.setState({
           tierData: responseData.data,
-          loader: false
+          loader: false,
         });
         // console.log("tierData", responseData.data);
       })
-      .catch(error => {
+      .catch((error) => {
         // console.log(error);
       });
   }
@@ -72,7 +72,7 @@ class Tier extends Component {
                   var liClasses = classNames({
                     "tier-active": tier.is_verified === true,
                     "tier-enabled": tier.is_active === true,
-                    "tier-main": !tier.is_verified && !tier.is_active
+                    "tier-main": !tier.is_verified && !tier.is_active,
                   });
                   return (
                     <TierSubMain key={tier.id} className={liClasses}>
@@ -153,7 +153,7 @@ class Tier extends Component {
                           {tier.requirements
                             ? Object.values(tier.requirements) &&
                               Object.values(tier.requirements).map(
-                                requirement => (
+                                (requirement) => (
                                   <li key={requirement}>
                                     <span className="disc-icon" />
                                     <span>{requirement}</span>
@@ -172,7 +172,15 @@ class Tier extends Component {
                         </TierVerifiedWrap>
                       )}
                       {tier.is_active && (
-                        <Link to={`/tier${tier.id}`}>
+                        <Link
+                          to={{
+                            pathname: `/tier${tier.id}`,
+                            state: {
+                              declined: `${tier.is_declined}`,
+                              underApproval: `${tier.under_approval}`,
+                            },
+                          }}
+                        >
                           <TierUpdate
                             key={tier.id}
                             id={tier.id}
@@ -198,7 +206,7 @@ class Tier extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     ...state,
     isLoggedIn:
@@ -208,7 +216,7 @@ const mapStateToProps = state => {
     profileDetails:
       state.simpleReducer.profileDetails !== undefined
         ? state.simpleReducer.profileDetails.data[0]
-        : ""
+        : "",
   };
 };
 export default connect(mapStateToProps)(withRouter(Tier));
