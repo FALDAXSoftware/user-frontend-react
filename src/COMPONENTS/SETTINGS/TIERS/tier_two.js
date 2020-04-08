@@ -147,7 +147,7 @@ class TierTwo extends React.Component {
   }
   componentDidMount() {
     // console.log("Tier ^^^^", this.props.profileDetails.is_twofactor);
-    console.log("^^^^", this.props.location.state);
+    console.log("^^^^", this.props.location.state.declined);
     this.setState(
       {
         is_twofactor_enabled: this.props.profileDetails.is_twofactor,
