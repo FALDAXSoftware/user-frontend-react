@@ -1050,6 +1050,10 @@ td.column-Email {
 .text-danger-validation {
   color: red;
 }
+.tier-text-danger-validation {
+  color: red;
+  text-align: left;
+}
 .validation-message {
   color: red;
 }

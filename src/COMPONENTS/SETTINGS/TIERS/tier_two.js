@@ -13,6 +13,9 @@ import { globalVariables } from "Globals.js";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import SimpleReactValidator from "simple-react-validator";
+import NumberFormat from "react-number-format";
+import { APIUtility } from "../../../httpHelper";
+import FaldaxLoader from "../../../SHARED-COMPONENTS/FaldaxLoader";
 
 let { API_URL } = globalVariables;
 /* Styled-Components */
@@ -125,6 +128,16 @@ class TierTwo extends React.Component {
       fileTarget: null,
       displayFirst: "none",
       displaySecond: "none",
+      reUpload1: false,
+      reUpload2: false,
+      reUpload3: false,
+      waitingForApproval: false,
+      loader: false,
+      tierID: "",
+      tierData: "",
+      // currentTierData: "",
+      // under_approval: [],
+      // declined: [],
     };
     this.validator = new SimpleReactValidator({
       ssnValid: {
@@ -137,30 +150,68 @@ class TierTwo extends React.Component {
       },
     });
     this.handleProfile = this.handleProfile.bind(this);
+    this.populateData = this.populateData.bind(this);
   }
-  componentWillMount() {
-    // if (this.props.profileDetails) {
-    //   if (!this.props.profileDetails.account_tier == 2) {
-    //     this.props.history.push("/");
-    //   }
-    // }
-  }
-  componentDidMount() {
-    // console.log("Tier ^^^^", this.props.profileDetails.is_twofactor);
-    console.log("^^^^", this.props.location.state.declined);
+  componentWillMount() {}
+  async componentDidMount() {
+    try {
+      await this.getTierDetails();
+    } catch (error) {
+      console.log(error);
+    } finally {
+    }
+    var getID = this.props.location.pathname.split("/tier");
     this.setState(
       {
         is_twofactor_enabled: this.props.profileDetails.is_twofactor,
-        under_approval: this.props.location.state.underApproval,
-        declined: this.props.location.state.declined,
+        tierID: getID[1],
       },
       () => {
-        if (this.state.declined && this.state.declined.length > 0) {
-          console.log("^^", this.state.under_approval);
-          // this.state.declined.map((item, key) => console.log("^^hsdf", item));
-        }
+        this.populateData();
       }
     );
+    // this.setState(
+    //   {
+    //     is_twofactor_enabled: this.props.profileDetails.is_twofactor,
+    //     under_approval: this.props.location.state.underApproval,
+    //     declined: this.props.location.state.declined,
+    //   },
+    //   () => {
+    //     var declined_data = this.state.declined.split(",");
+    //     var under_approval = this.state.under_approval.split(",");
+    //     console.log("^^^^", declined_data.length, declined_data);
+    //     if (under_approval && under_approval.length == 3) {
+    //       this.setState({
+    //         waitingForApproval: true,
+    //       });
+    //     } else {
+    //       this.setState({
+    //         waitingForApproval: false,
+    //       });
+    //     }
+    //     if (declined_data && declined_data.length > 0) {
+    //       declined_data.map((item, key) => {
+    //         console.log("^^hsdf", item);
+    //         switch (item) {
+    //           case "1":
+    //             return this.setState({ reUpload1: true });
+    //           case "2":
+    //             return this.setState({ reUpload2: true });
+    //           case "3":
+    //             return this.setState({ reUpload3: true });
+    //           default:
+    //             return this.setState({
+    //               reUpload1: true,
+    //               reUpload2: true,
+    //               reUpload3: true,
+    //             });
+    //         }
+    //       });
+    //     } else {
+    //       this.setState({ reUpload1: true, reUpload2: true, reUpload3: true });
+    //     }
+    //   }
+    // );
   }
   componentWillReceiveProps(newProps) {
     if (
@@ -171,6 +222,61 @@ class TierTwo extends React.Component {
       this.setState({
         is_twofactor_enabled: newProps.profileDetails.is_twofactor,
       });
+    }
+  }
+  async getTierDetails() {
+    try {
+      this.setState({ loader: true });
+      let result = await APIUtility.getTierDetails(this.props.isLoggedIn);
+      if (result.status == 200) {
+        console.log("result^^^", result.data);
+        this.setState({
+          tierData: result.data,
+        });
+      } else {
+        this.openNotificationWithIcon("error", "Error", result.message);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      this.setState({ loader: false });
+    }
+  }
+  populateData() {
+    let { tierData, tierID } = this.state;
+    let currentTierData = tierData[parseInt(tierID) - 1];
+    let under_approval = currentTierData.under_approval;
+    let declined = currentTierData.is_declined;
+    console.log("^^declined", declined);
+    if (under_approval && under_approval.length == 3) {
+      this.setState({
+        waitingForApproval: true,
+      });
+    } else {
+      this.setState({
+        waitingForApproval: false,
+      });
+    }
+    if (declined && declined.length > 0) {
+      declined.map((item, key) => {
+        console.log("^^hsdf", item);
+        switch (item) {
+          case "1":
+            return this.setState({ reUpload1: true });
+          case "2":
+            return this.setState({ reUpload2: true });
+          case "3":
+            return this.setState({ reUpload3: true });
+          default:
+            return this.setState({
+              reUpload1: true,
+              reUpload2: true,
+              reUpload3: true,
+            });
+        }
+      });
+    } else {
+      this.setState({ reUpload1: true, reUpload2: true, reUpload3: true });
     }
   }
   handleProfile(e) {
@@ -358,13 +464,18 @@ class TierTwo extends React.Component {
     this.setState({ id_number: e.target.value });
   }
   handleSubmit() {
+    this.setState({ loader: true });
     if (this.validator.allValid() && this.state.is_twofactor_enabled) {
       let values = new FormData();
-      // let files = {};
-      // files["valid-id"] = this.state.validID;
-      // files["residence-proof"] = this.state.residenceProof;
-      // values["data"] = this.state.id_number;
-      // values["files"] = files;
+      if (this.state.reUpload1) {
+        values.append("valid_id_flag", true);
+      }
+      if (this.state.reUpload2) {
+        values.append("proof_residence_flag", true);
+      }
+      if (this.state.reUpload3) {
+        values.append("flagReUpload", true);
+      }
       values.append("ssn", this.state.id_number);
       values.append("valid_id", this.state.validID);
       values.append("residence_proof", this.state.residenceProof);
@@ -394,8 +505,10 @@ class TierTwo extends React.Component {
               validID: {},
               residenceProof: {},
               id_number: "",
+              waitingForApproval: true,
             });
           }
+          this.setState({ loader: false });
         })
         .catch((error) => {
           this.setState({ loader: false });
@@ -406,6 +519,12 @@ class TierTwo extends React.Component {
     }
   }
   render() {
+    console.log(
+      "data data data^^",
+      this.state.reUpload1,
+      this.state.reUpload2,
+      this.state.reUpload3
+    );
     let { is_twofactor_enabled } = this.state;
     return (
       <div>
@@ -413,140 +532,161 @@ class TierTwo extends React.Component {
         <TierWrapper>
           <KYCWrap>
             <KYCHead>Tier 2 Upgrade</KYCHead>
-            <TierWrap>
-              {is_twofactor_enabled ? (
-                <div>Enabled</div>
-              ) : (
-                <div>
-                  <span>2FA is mandatory to upgarde to tier 2 account.</span>
-                  <br />
-                  <span>Please click on below link to enable 2FA.</span>
-                  <br />
-                  <a href="/editProfile">Click here</a>
-                </div>
-              )}
-              <div
+            {this.state.waitingForApproval ? (
+              <TierWrap
                 style={{
-                  margin: "0 0 30px 0",
+                  textAlign: "center",
+                  margin: "50px auto",
+                  fontSize: "18px",
                 }}
               >
-                <label>Valid ID</label>
-                <br />
-                <Fileselect1 className="file-select-col">
-                  {/* {console.log(this.state)} */}
-                  <RemoveIcon1
-                    onClick={() => {
-                      this.removeFile("valid-id");
-                    }}
-                    style={{ display: `${this.state.displayFirst}` }}
-                    type={"close"}
-                    theme="outlined"
-                  />
-                  <ButtonUp
-                    style={{
-                      backgroundImage: `url('${this.state.profileImg}')`,
-                    }}
-                    className="file-select-btn"
-                    onClick={() => {
-                      this.handleFileSelectClick("valid-id");
-                    }}
-                  >
-                    <Plus className="plus">
-                      <Icon type={this.state.icon1} theme="outlined" />
-                    </Plus>
-                    <Plustext className="text">Upload</Plustext>
-                  </ButtonUp>
-                  <Fileinput
-                    onChange={this.handleProfile}
-                    type="file"
-                    name="valid-id"
-                    id="valid-id"
-                  />
-                  {this.validator.message(
-                    "valid-id",
-                    this.state.profileImg,
-                    "required",
-                    "text-danger-validation",
-                    {
-                      required: "This field is required.",
-                    }
-                  )}
-                </Fileselect1>
-              </div>
-              <div
-                style={{
-                  margin: "0 0 30px 0",
-                }}
-              >
-                <label>Proof of Residence</label>
-                <br />
-                <Fileselect1 className="file-select-col">
-                  <RemoveIcon1
-                    onClick={() => {
-                      this.removeFile("residence-proof");
-                    }}
-                    style={{ display: `${this.state.displaySecond}` }}
-                    type={"close"}
-                    theme="outlined"
-                  />
-                  <ButtonUp
-                    style={{
-                      backgroundImage: `url('${this.state.profileImg2}')`,
-                    }}
-                    className="file-select-btn"
-                    onClick={() => {
-                      this.handleFileSelectClick("residence-proof");
-                    }}
-                  >
-                    <Plus className="plus">
-                      <Icon type={this.state.icon2} theme="outlined" />
-                    </Plus>
-                    <Plustext className="text">Upload</Plustext>
-                  </ButtonUp>
-                  <Fileinput
-                    onChange={this.handleProfile}
-                    type="file"
-                    name="residence-proof"
-                    id="residence-proof"
-                  />
-                  {this.validator.message(
-                    "residence-proof",
-                    this.state.profileImg2,
-                    "required",
-                    "text-danger-validation",
-                    {
-                      required: "This field is required.",
-                    }
-                  )}
-                </Fileselect1>
-              </div>
-              <div
-                style={{
-                  margin: "0 0 30px 0",
-                }}
-              >
-                <label>Social security Number / Govt. Issued ID Number</label>
-                <br />
-                {/* <Input type="text" value={this.state.id_number} /> */}
-                <SSNInput onChange={this.input_change.bind(this)} />
-                {this.validator.message(
-                  "id_number",
-                  this.state.id_number,
-                  "required",
-                  "text-danger-validation",
-                  {
-                    required: "This field is required.",
-                  }
+                <p>Your submitted documents are under process.</p>
+              </TierWrap>
+            ) : (
+              <TierWrap>
+                {is_twofactor_enabled ? (
+                  <div>Enabled</div>
+                ) : (
+                  <div>
+                    <span>2FA is mandatory to upgarde to tier 2 account.</span>
+                    <br />
+                    <span>Please click on below link to enable 2FA.</span>
+                    <br />
+                    <a href="/editProfile">Click here</a>
+                  </div>
                 )}
-              </div>
-              <input
-                type="button"
-                onClick={this.handleSubmit.bind(this)}
-                value="Submit"
-              />
-            </TierWrap>
+                <div
+                  style={{
+                    margin: "0 0 30px 0",
+                  }}
+                >
+                  <label>Valid ID</label>
+                  <br />
+                  <Fileselect1 className="file-select-col">
+                    {/* {console.log(this.state)} */}
+                    <RemoveIcon1
+                      onClick={() => {
+                        this.removeFile("valid-id");
+                      }}
+                      style={{ display: `${this.state.displayFirst}` }}
+                      type={"close"}
+                      theme="outlined"
+                    />
+                    <ButtonUp
+                      style={{
+                        backgroundImage: `url('${this.state.profileImg}')`,
+                      }}
+                      className="file-select-btn"
+                      onClick={() => {
+                        this.handleFileSelectClick("valid-id");
+                      }}
+                    >
+                      <Plus className="plus">
+                        <Icon type={this.state.icon1} theme="outlined" />
+                      </Plus>
+                      <Plustext className="text">Upload</Plustext>
+                    </ButtonUp>
+                    <Fileinput
+                      onChange={this.handleProfile}
+                      type="file"
+                      name="valid-id"
+                      id="valid-id"
+                      disabled={!this.state.reUpload1}
+                    />
+                    {this.state.reUpload1 &&
+                      this.validator.message(
+                        "valid-id",
+                        this.state.profileImg,
+                        "required",
+                        "tier-text-danger-validation",
+                        {
+                          required: "This field is required.",
+                        }
+                      )}
+                  </Fileselect1>
+                </div>
+                <div
+                  style={{
+                    margin: "0 0 30px 0",
+                  }}
+                >
+                  <label>Proof of Residence</label>
+                  <br />
+                  <Fileselect1 className="file-select-col">
+                    <RemoveIcon1
+                      onClick={() => {
+                        this.removeFile("residence-proof");
+                      }}
+                      style={{ display: `${this.state.displaySecond}` }}
+                      type={"close"}
+                      theme="outlined"
+                    />
+                    <ButtonUp
+                      style={{
+                        backgroundImage: `url('${this.state.profileImg2}')`,
+                      }}
+                      className="file-select-btn"
+                      onClick={() => {
+                        this.handleFileSelectClick("residence-proof");
+                      }}
+                    >
+                      <Plus className="plus">
+                        <Icon type={this.state.icon2} theme="outlined" />
+                      </Plus>
+                      <Plustext className="text">Upload</Plustext>
+                    </ButtonUp>
+                    <Fileinput
+                      onChange={this.handleProfile}
+                      type="file"
+                      name="residence-proof"
+                      id="residence-proof"
+                      disabled={!this.state.reUpload2}
+                    />
+                    {this.state.reUpload2 &&
+                      this.validator.message(
+                        "residence-proof",
+                        this.state.profileImg2,
+                        "required",
+                        "tier-text-danger-validation",
+                        {
+                          required: "This field is required.",
+                        }
+                      )}
+                  </Fileselect1>
+                </div>
+                <div
+                  style={{
+                    margin: "0 0 30px 0",
+                  }}
+                >
+                  <label>Social security Number / Govt. Issued ID Number</label>
+                  <br />
+                  {/* <Input type="text" value={this.state.id_number} /> */}
+                  <SSNInput
+                    disabled={!this.state.reUpload3}
+                    onChange={this.input_change.bind(this)}
+                  />
+                  {this.state.reUpload3 &&
+                    this.validator.message(
+                      "id_number",
+                      this.state.id_number,
+                      "required",
+                      "tier-text-danger-validation",
+                      {
+                        required: "This field is required.",
+                      }
+                    )}
+                </div>
+                <input
+                  type="button"
+                  onClick={this.handleSubmit.bind(this)}
+                  value="Submit"
+                />
+              </TierWrap>
+            )}
           </KYCWrap>
         </TierWrapper>
+        {this.state.loader === true ? <FaldaxLoader /> : ""}
         <FooterHome />
       </div>
     );
