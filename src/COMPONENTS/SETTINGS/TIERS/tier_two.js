@@ -142,7 +142,7 @@ class TierTwo extends React.Component {
     this.validator = new SimpleReactValidator({
       ssnValid: {
         message: "Enter a valid SSN number.",
-        rule: function(val, options) {
+        rule: function (val, options) {
           var re = /^\d{3}-\d{2}-\d{4}$/;
           var bool = re.test(String(val));
           return bool;
@@ -152,7 +152,7 @@ class TierTwo extends React.Component {
     this.handleProfile = this.handleProfile.bind(this);
     this.populateData = this.populateData.bind(this);
   }
-  componentWillMount() {}
+  componentWillMount() { }
   async componentDidMount() {
     try {
       await this.getTierDetails();
@@ -217,7 +217,7 @@ class TierTwo extends React.Component {
     if (
       newProps.profileDetails.is_twofactor &&
       newProps.profileDetails.is_twofactor !==
-        this.props.profileDetails.is_twofactor
+      this.props.profileDetails.is_twofactor
     ) {
       this.setState({
         is_twofactor_enabled: newProps.profileDetails.is_twofactor,
@@ -305,9 +305,9 @@ class TierTwo extends React.Component {
             if (fileType === "image" && fileSize < 4194304) {
               var fr = new FileReader();
               fr.readAsDataURL(file);
-              fr.onload = function() {
+              fr.onload = function () {
                 var img = new Image();
-                img.onload = function() {
+                img.onload = function () {
                   frontWidth = img.width;
                   frontHeight = img.height;
 
@@ -488,8 +488,9 @@ class TierTwo extends React.Component {
       }
 
       values.append("ssn", this.state.id_number);
-      values.append("valid_id", this.state.validID);
-      values.append("residence_proof", this.state.residenceProof);
+      values.append("files", this.state.validID);
+      values.append("files", this.state.residenceProof);
+      // values.append("residence_proof", this.state.residenceProof);
       console.log(
         "Submit tier2 data^^^^",
         this.state.validID,
@@ -554,147 +555,147 @@ class TierTwo extends React.Component {
                 <p>Your submitted documents are under process.</p>
               </TierWrap>
             ) : (
-              <TierWrap>
-                {is_twofactor_enabled ? (
-                  <div>Enabled</div>
-                ) : (
-                  <div>
-                    <span>2FA is mandatory to upgarde to tier 2 account.</span>
-                    <br />
-                    <span>Please click on below link to enable 2FA.</span>
-                    <br />
-                    <a href="/editProfile">Click here</a>
-                  </div>
-                )}
-                <div
-                  style={{
-                    margin: "0 0 30px 0",
-                  }}
-                >
-                  <label>Valid ID</label>
-                  <br />
-                  <Fileselect1 className="file-select-col">
-                    {/* {console.log(this.state)} */}
-                    <RemoveIcon1
-                      onClick={() => {
-                        this.removeFile("valid-id");
-                      }}
-                      style={{ display: `${this.state.displayFirst}` }}
-                      type={"close"}
-                      theme="outlined"
-                    />
-                    <ButtonUp
-                      style={{
-                        backgroundImage: `url('${this.state.profileImg}')`,
-                      }}
-                      className="file-select-btn"
-                      onClick={() => {
-                        this.handleFileSelectClick("valid-id");
-                      }}
-                    >
-                      <Plus className="plus">
-                        <Icon type={this.state.icon1} theme="outlined" />
-                      </Plus>
-                      <Plustext className="text">Upload</Plustext>
-                    </ButtonUp>
-                    <Fileinput
-                      onChange={this.handleProfile}
-                      type="file"
-                      name="valid-id"
-                      id="valid-id"
-                      disabled={!this.state.reUpload1}
-                    />
-                    {this.state.reUpload1 &&
-                      this.validator.message(
-                        "valid-id",
-                        this.state.profileImg,
-                        "required",
-                        "tier-text-danger-validation",
-                        {
-                          required: "This field is required.",
-                        }
-                      )}
-                  </Fileselect1>
-                </div>
-                <div
-                  style={{
-                    margin: "0 0 30px 0",
-                  }}
-                >
-                  <label>Proof of Residence</label>
-                  <br />
-                  <Fileselect1 className="file-select-col">
-                    <RemoveIcon1
-                      onClick={() => {
-                        this.removeFile("residence-proof");
-                      }}
-                      style={{ display: `${this.state.displaySecond}` }}
-                      type={"close"}
-                      theme="outlined"
-                    />
-                    <ButtonUp
-                      style={{
-                        backgroundImage: `url('${this.state.profileImg2}')`,
-                      }}
-                      className="file-select-btn"
-                      onClick={() => {
-                        this.handleFileSelectClick("residence-proof");
-                      }}
-                    >
-                      <Plus className="plus">
-                        <Icon type={this.state.icon2} theme="outlined" />
-                      </Plus>
-                      <Plustext className="text">Upload</Plustext>
-                    </ButtonUp>
-                    <Fileinput
-                      onChange={this.handleProfile}
-                      type="file"
-                      name="residence-proof"
-                      id="residence-proof"
-                      disabled={!this.state.reUpload2}
-                    />
-                    {this.state.reUpload2 &&
-                      this.validator.message(
-                        "residence-proof",
-                        this.state.profileImg2,
-                        "required",
-                        "tier-text-danger-validation",
-                        {
-                          required: "This field is required.",
-                        }
-                      )}
-                  </Fileselect1>
-                </div>
-                <div
-                  style={{
-                    margin: "0 0 30px 0",
-                  }}
-                >
-                  <label>Social security Number / Govt. Issued ID Number</label>
-                  <br />
-                  {/* <Input type="text" value={this.state.id_number} /> */}
-                  <SSNInput
-                    disabled={!this.state.reUpload3}
-                    onChange={this.input_change.bind(this)}
-                  />
-                  {this.state.reUpload3 &&
-                    this.validator.message(
-                      "id_number",
-                      this.state.id_number,
-                      "required",
-                      "tier-text-danger-validation",
-                      {
-                        required: "This field is required.",
-                      }
+                <TierWrap>
+                  {is_twofactor_enabled ? (
+                    <div>Enabled</div>
+                  ) : (
+                      <div>
+                        <span>2FA is mandatory to upgarde to tier 2 account.</span>
+                        <br />
+                        <span>Please click on below link to enable 2FA.</span>
+                        <br />
+                        <a href="/editProfile">Click here</a>
+                      </div>
                     )}
-                </div>
-                <input
-                  type="button"
-                  onClick={this.handleSubmit.bind(this)}
-                  value="Submit"
-                />
-              </TierWrap>
-            )}
+                  <div
+                    style={{
+                      margin: "0 0 30px 0",
+                    }}
+                  >
+                    <label>Valid ID</label>
+                    <br />
+                    <Fileselect1 className="file-select-col">
+                      {/* {console.log(this.state)} */}
+                      <RemoveIcon1
+                        onClick={() => {
+                          this.removeFile("valid-id");
+                        }}
+                        style={{ display: `${this.state.displayFirst}` }}
+                        type={"close"}
+                        theme="outlined"
+                      />
+                      <ButtonUp
+                        style={{
+                          backgroundImage: `url('${this.state.profileImg}')`,
+                        }}
+                        className="file-select-btn"
+                        onClick={() => {
+                          this.handleFileSelectClick("valid-id");
+                        }}
+                      >
+                        <Plus className="plus">
+                          <Icon type={this.state.icon1} theme="outlined" />
+                        </Plus>
+                        <Plustext className="text">Upload</Plustext>
+                      </ButtonUp>
+                      <Fileinput
+                        onChange={this.handleProfile}
+                        type="file"
+                        name="valid-id"
+                        id="valid-id"
+                        disabled={!this.state.reUpload1}
+                      />
+                      {this.state.reUpload1 &&
+                        this.validator.message(
+                          "valid-id",
+                          this.state.profileImg,
+                          "required",
+                          "tier-text-danger-validation",
+                          {
+                            required: "This field is required.",
+                          }
+                        )}
+                    </Fileselect1>
+                  </div>
+                  <div
+                    style={{
+                      margin: "0 0 30px 0",
+                    }}
+                  >
+                    <label>Proof of Residence</label>
+                    <br />
+                    <Fileselect1 className="file-select-col">
+                      <RemoveIcon1
+                        onClick={() => {
+                          this.removeFile("residence-proof");
+                        }}
+                        style={{ display: `${this.state.displaySecond}` }}
+                        type={"close"}
+                        theme="outlined"
+                      />
+                      <ButtonUp
+                        style={{
+                          backgroundImage: `url('${this.state.profileImg2}')`,
+                        }}
+                        className="file-select-btn"
+                        onClick={() => {
+                          this.handleFileSelectClick("residence-proof");
+                        }}
+                      >
+                        <Plus className="plus">
+                          <Icon type={this.state.icon2} theme="outlined" />
+                        </Plus>
+                        <Plustext className="text">Upload</Plustext>
+                      </ButtonUp>
+                      <Fileinput
+                        onChange={this.handleProfile}
+                        type="file"
+                        name="residence-proof"
+                        id="residence-proof"
+                        disabled={!this.state.reUpload2}
+                      />
+                      {this.state.reUpload2 &&
+                        this.validator.message(
+                          "residence-proof",
+                          this.state.profileImg2,
+                          "required",
+                          "tier-text-danger-validation",
+                          {
+                            required: "This field is required.",
+                          }
+                        )}
+                    </Fileselect1>
+                  </div>
+                  <div
+                    style={{
+                      margin: "0 0 30px 0",
+                    }}
+                  >
+                    <label>Social security Number / Govt. Issued ID Number</label>
+                    <br />
+                    {/* <Input type="text" value={this.state.id_number} /> */}
+                    <SSNInput
+                      disabled={!this.state.reUpload3}
+                      onChange={this.input_change.bind(this)}
+                    />
+                    {this.state.reUpload3 &&
+                      this.validator.message(
+                        "id_number",
+                        this.state.id_number,
+                        "required",
+                        "tier-text-danger-validation",
+                        {
+                          required: "This field is required.",
+                        }
+                      )}
+                  </div>
+                  <input
+                    type="button"
+                    onClick={this.handleSubmit.bind(this)}
+                    value="Submit"
+                  />
+                </TierWrap>
+              )}
           </KYCWrap>
         </TierWrapper>
         {this.state.loader === true ? <FaldaxLoader /> : ""}
