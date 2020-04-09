@@ -464,8 +464,8 @@ class TierTwo extends React.Component {
     this.setState({ id_number: e.target.value });
   }
   handleSubmit() {
-    this.setState({ loader: true });
     if (this.validator.allValid() && this.state.is_twofactor_enabled) {
+      this.setState({ loader: true });
       let values = new FormData();
       if (this.state.reUpload1) {
         values.append("valid_id_flag", true);
