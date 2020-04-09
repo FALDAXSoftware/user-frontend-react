@@ -467,15 +467,26 @@ class TierTwo extends React.Component {
     if (this.validator.allValid() && this.state.is_twofactor_enabled) {
       this.setState({ loader: true });
       let values = new FormData();
-      if (this.state.reUpload1) {
+      if (this.state.reUpload1 && !this.state.reUpload3) {
         values.append("valid_id_flag", true);
       }
-      if (this.state.reUpload2) {
+      if (this.state.reUpload2 && !this.state.reUpload3) {
         values.append("proof_residence_flag", true);
       }
       if (this.state.reUpload3) {
-        values.append("flagReUpload", true);
+        values.append("reupload", true);
+        if (this.state.reUpload1) {
+          values.append("valid_id_flag", true);
+        } else {
+          values.append("valid_id_flag", false);
+        }
+        if (this.state.reUpload2) {
+          values.append("proof_residence_flag", true);
+        } else {
+          values.append("proof_residence_flag", false);
+        }
       }
+
       values.append("ssn", this.state.id_number);
       values.append("valid_id", this.state.validID);
       values.append("residence_proof", this.state.residenceProof);
@@ -519,12 +530,12 @@ class TierTwo extends React.Component {
     }
   }
   render() {
-    console.log(
-      "data data data^^",
-      this.state.reUpload1,
-      this.state.reUpload2,
-      this.state.reUpload3
-    );
+    // console.log(
+    //   "data data data^^",
+    //   this.state.reUpload1,
+    //   this.state.reUpload2,
+    //   this.state.reUpload3
+    // );
     let { is_twofactor_enabled } = this.state;
     return (
       <div>

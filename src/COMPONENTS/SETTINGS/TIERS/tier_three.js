@@ -29,6 +29,7 @@ import {
 } from "../../../STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle";
 import { SupportText } from "../../LANDINGCATEGORIES/apply_job";
 import { APIUtility } from "../../../httpHelper";
+import FaldaxLoader from "../../../SHARED-COMPONENTS/FaldaxLoader";
 let { API_URL } = globalVariables;
 /* Styled-Components */
 const KYCWrap = styled.div`
@@ -73,6 +74,7 @@ class TierThree extends React.Component {
       asset_proof: [],
       tierData: "",
       tierID: "",
+      loader: false,
     };
     this.handleProfile = this.handleProfile.bind(this);
     this.populateData = this.populateData.bind(this);
@@ -556,6 +558,7 @@ class TierThree extends React.Component {
             </TierWrap>
           </KYCWrap>
         </TierWrapper>
+        {this.state.loader === true ? <FaldaxLoader /> : ""}
         <FooterHome />
       </div>
     );
