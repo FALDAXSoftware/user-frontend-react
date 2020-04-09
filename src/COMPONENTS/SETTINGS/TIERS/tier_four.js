@@ -6,13 +6,13 @@ import styled from "styled-components";
 /*Import Components*/
 import Navigation from "COMPONENTS/NAVIGATIONS/loggednavigation";
 import FooterHome from "COMPONENTS/LANDING/FOOTERS/footer_home";
-import { TierWrapper } from "./tier_one";
+import { TierWrapper, KYCHead } from "./tier_one";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
 /* Styled-Components */
 const KYCWrap = styled.div`
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#041422" : "#ffffff"};
   margin: auto;
   width: 95%;
@@ -25,13 +25,18 @@ class TierFour extends React.Component {
     super(props);
     this.state = {};
   }
+  // componentWillMount() {
+  //   if (this.props.profileDetails) {
+  //     if (this.props.profileDetails.account_tier == 3) {
+  //       this.props.history.push("/tier4");
+  //     } else {
+  //       this.props.history.push("/");
+  //     }
+  //   }
+  // }
   componentWillMount() {
-    if (this.props.profileDetails) {
-      if (this.props.profileDetails.account_tier == 4) {
-        this.props.history.push("/tier4");
-      } else {
-        this.props.history.push("/");
-      }
+    if (this.props.profileDetails.account_tier !== 3) {
+      this.props.history.push("/");
     }
   }
   componentDidMount() {}
@@ -41,7 +46,9 @@ class TierFour extends React.Component {
       <div>
         <Navigation />
         <TierWrapper>
-          <KYCWrap>Tier4</KYCWrap>
+          <KYCWrap>
+            <KYCHead>Tier 4 Upgrade</KYCHead>
+          </KYCWrap>
         </TierWrapper>
         <FooterHome />
       </div>
@@ -49,7 +56,7 @@ class TierFour extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   // LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
 });
 // export default Conversion;
@@ -63,7 +70,7 @@ function mapStateToProps(state) {
           : ""
         : "",
     theme:
-      state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
+      state.themeReducer.theme !== undefined ? state.themeReducer.theme : "",
   };
 }
 

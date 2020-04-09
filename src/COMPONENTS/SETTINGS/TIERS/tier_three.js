@@ -75,6 +75,10 @@ class TierThree extends React.Component {
       tierData: "",
       tierID: "",
       loader: false,
+      waitingForApproval: false,
+      reUpload1: false,
+      reUpload2: false,
+      verified: false,
     };
     this.handleProfile = this.handleProfile.bind(this);
     this.populateData = this.populateData.bind(this);
@@ -89,7 +93,11 @@ class TierThree extends React.Component {
       },
     });
   }
-
+  componentWillMount() {
+    if (this.props.profileDetails.account_tier !== 2) {
+      this.props.history.push("/");
+    }
+  }
   async componentDidMount() {
     try {
       await this.getTierDetails();
@@ -104,7 +112,7 @@ class TierThree extends React.Component {
         tierID: getID[1],
       },
       () => {
-        // this.populateData();
+        this.populateData();
       }
     );
   }
@@ -132,7 +140,16 @@ class TierThree extends React.Component {
     let under_approval = currentTierData.under_approval;
     let declined = currentTierData.is_declined;
     console.log("^^declined", declined);
-    if (under_approval && under_approval.length == 3) {
+    if (currentTierData.is_verified) {
+      this.setState({
+        verified: true,
+      });
+    } else {
+      this.setState({
+        verified: false,
+      });
+    }
+    if (under_approval && under_approval.length == 2 && declined.length == 0) {
       this.setState({
         waitingForApproval: true,
       });
@@ -149,18 +166,15 @@ class TierThree extends React.Component {
             return this.setState({ reUpload1: true });
           case "2":
             return this.setState({ reUpload2: true });
-          case "3":
-            return this.setState({ reUpload3: true });
           default:
             return this.setState({
               reUpload1: true,
               reUpload2: true,
-              reUpload3: true,
             });
         }
       });
     } else {
-      this.setState({ reUpload1: true, reUpload2: true, reUpload3: true });
+      this.setState({ reUpload1: true, reUpload2: true });
     }
   }
   handleProfile(e) {
@@ -351,8 +365,14 @@ class TierThree extends React.Component {
       });
       console.log("^ajksdhk", this.state.asset_proof, this.state.idcpPhoto);
       let values = new FormData();
-      values.append("idcp", this.state.idcpPhoto);
-      values.append("proof_of_assets_form", this.state.asset_proof);
+      if (this.state.reUpload1) {
+        values.append("idcp_flag", true);
+      }
+      if (this.state.reUpload2) {
+        values.append("proof_of_assets_flag", true);
+      }
+      values.append("files", this.state.idcpPhoto);
+      values.append("files", this.state.asset_proof);
       fetch(API_URL + `/users/upload-tier3-documents`, {
         method: "post",
         headers: {
@@ -373,6 +393,8 @@ class TierThree extends React.Component {
             this.setState({
               idcpPhoto: {},
               asset_proof: [],
+              displayFirst: "",
+              waitingForApproval: true,
             });
           }
           this.setState({
@@ -428,134 +450,169 @@ class TierThree extends React.Component {
     this.setState({ files: [] });
   }
   render() {
-    let { cover_flag } = this.state;
+    let { cover_flag, verified } = this.state;
     return (
       <div>
         <Navigation />
         <TierWrapper>
           <KYCWrap>
             <KYCHead>Tier 3 Upgrade</KYCHead>
-            <TierWrap>
-              <Row
+            {verified ? (
+              <TierWrap
                 style={{
-                  margin: "50px auto 30px",
+                  textAlign: "center",
+                  margin: "50px auto",
+                  fontSize: "18px",
                 }}
-                gutter={16}
               >
-                <Col span={6}>
-                  <div
+                <p>Your account is verified to tier 3.</p>
+              </TierWrap>
+            ) : (
+              <div>
+                {this.state.waitingForApproval ? (
+                  <TierWrap
                     style={{
-                      margin: "0 0 30px 0",
+                      textAlign: "center",
+                      margin: "50px auto",
+                      fontSize: "18px",
                     }}
                   >
-                    <label>IDCP Photo</label>
-                    <br />
-                    <Fileselect1 className="file-select-col">
-                      {/* {console.log(this.state)} */}
-                      <RemoveIcon1
-                        onClick={() => {
-                          this.removeFile("idcp-photo");
-                        }}
-                        style={{ display: `${this.state.displayFirst}` }}
-                        type={"close"}
-                        theme="outlined"
-                      />
-                      <ButtonUp
+                    <p>Your submitted documents are under process.</p>
+                  </TierWrap>
+                ) : (
+                  <TierWrap>
+                    <Row
+                      style={{
+                        margin: "50px auto 30px",
+                      }}
+                      gutter={16}
+                    >
+                      <Col span={6}>
+                        <div
+                          style={{
+                            margin: "0 0 30px 0",
+                          }}
+                        >
+                          <label>IDCP Photo</label>
+                          <br />
+                          <Fileselect1 className="file-select-col">
+                            {/* {console.log(this.state)} */}
+                            <RemoveIcon1
+                              onClick={() => {
+                                this.removeFile("idcp-photo");
+                              }}
+                              style={{ display: `${this.state.displayFirst}` }}
+                              type={"close"}
+                              theme="outlined"
+                            />
+                            <ButtonUp
+                              style={{
+                                backgroundImage: `url('${this.state.profileImg}')`,
+                              }}
+                              className="file-select-btn"
+                              onClick={() => {
+                                this.handleFileSelectClick("idcp-photo");
+                              }}
+                            >
+                              <Plus className="plus">
+                                <Icon
+                                  type={this.state.icon1}
+                                  theme="outlined"
+                                />
+                              </Plus>
+                              <Plustext className="text">Upload</Plustext>
+                            </ButtonUp>
+                            <Fileinput
+                              onChange={this.handleProfile}
+                              type="file"
+                              name="idcp-photo"
+                              id="idcp-photo"
+                              disabled={!this.state.reUpload1}
+                            />
+                            {this.state.reUpload1 &&
+                              this.validator.message(
+                                "idcp-photo",
+                                this.state.profileImg,
+                                "required",
+                                "tier-text-danger-validation",
+                                {
+                                  required: "This field is required.",
+                                }
+                              )}
+                          </Fileselect1>
+                        </div>
+                      </Col>
+                      <Col span={18}>
+                        <div>
+                          <p>Proof of Assets Form</p>
+                          <a
+                            href="https://s3.us-east-2.amazonaws.com/production-static-asset/assets/pdf/FALDAX+Terms+of+Service.pdf"
+                            target="_blank"
+                            download
+                          >
+                            Click here to open Proof of Assets Form
+                          </a>
+                          <br />
+                          <DropzoneStyle
+                            accept=".pdf,.doc,.docx"
+                            className="Dropzone_apply"
+                            onDrop={this.onDrop.bind(this, "asset_proof")}
+                            onFileDialogCancel={this.onCancel.bind(this)}
+                            disabled={!this.state.reUpload2}
+                          >
+                            {cover_flag === null && (
+                              <div>
+                                <IconS type="download" />
+                                <FileSelectText>Choose file</FileSelectText>
+                              </div>
+                            )}
+                            {cover_flag === false && (
+                              <div>
+                                <IconS type="close-square" />
+                                <FileSelectText>
+                                  Wrong File Selected
+                                </FileSelectText>
+                              </div>
+                            )}
+                            {cover_flag === true && (
+                              <div>
+                                <IconS type="check-square" />
+                                <FileSelectText>
+                                  {this.state.asset_proof.name}
+                                </FileSelectText>
+                              </div>
+                            )}
+                          </DropzoneStyle>
+                          <SupportText>
+                            Supported format: .doc, .docx, .pdf.
+                          </SupportText>
+                          {this.state.reUpload2 &&
+                            this.validator.message(
+                              "asset_proof",
+                              cover_flag,
+                              "required",
+                              "tier-text-danger-validation"
+                            )}
+                        </div>
+                      </Col>
+                    </Row>
+                    <Row gutter={16}>
+                      <Col
                         style={{
-                          backgroundImage: `url('${this.state.profileImg}')`,
-                        }}
-                        className="file-select-btn"
-                        onClick={() => {
-                          this.handleFileSelectClick("idcp-photo");
+                          padding: "0 18px",
                         }}
                       >
-                        <Plus className="plus">
-                          <Icon type={this.state.icon1} theme="outlined" />
-                        </Plus>
-                        <Plustext className="text">Upload</Plustext>
-                      </ButtonUp>
-                      <Fileinput
-                        onChange={this.handleProfile}
-                        type="file"
-                        name="idcp-photo"
-                        id="idcp-photo"
-                      />
-                      {this.validator.message(
-                        "idcp-photo",
-                        this.state.profileImg,
-                        "required",
-                        "tier-text-danger-validation",
-                        {
-                          required: "This field is required.",
-                        }
-                      )}
-                    </Fileselect1>
-                  </div>
-                </Col>
-                <Col span={18}>
-                  <div>
-                    <p>Proof of Assets Form</p>
-                    <a
-                      href="https://s3.us-east-2.amazonaws.com/production-static-asset/assets/pdf/FALDAX+Terms+of+Service.pdf"
-                      target="_blank"
-                      download
-                    >
-                      Click here to open Proof of Assets Form
-                    </a>
-                    <br />
-                    <DropzoneStyle
-                      accept=".pdf,.doc,.docx"
-                      className="Dropzone_apply"
-                      onDrop={this.onDrop.bind(this, "asset_proof")}
-                      onFileDialogCancel={this.onCancel.bind(this)}
-                    >
-                      {cover_flag === null && (
-                        <div>
-                          <IconS type="download" />
-                          <FileSelectText>Choose file</FileSelectText>
-                        </div>
-                      )}
-                      {cover_flag === false && (
-                        <div>
-                          <IconS type="close-square" />
-                          <FileSelectText>Wrong File Selected</FileSelectText>
-                        </div>
-                      )}
-                      {cover_flag === true && (
-                        <div>
-                          <IconS type="check-square" />
-                          <FileSelectText>
-                            {this.state.asset_proof.name}
-                          </FileSelectText>
-                        </div>
-                      )}
-                    </DropzoneStyle>
-                    <SupportText>
-                      Supported format: .doc, .docx, .pdf.
-                    </SupportText>
-                    {this.validator.message(
-                      "asset_proof",
-                      cover_flag,
-                      "required",
-                      "tier-text-danger-validation"
-                    )}
-                  </div>
-                </Col>
-              </Row>
-              <Row gutter={16}>
-                <Col
-                  style={{
-                    padding: "0 18px",
-                  }}
-                >
-                  <input
-                    type="button"
-                    onClick={this.handleSubmit.bind(this)}
-                    value="Submit"
-                  />
-                </Col>
-              </Row>
-            </TierWrap>
+                        <input
+                          type="button"
+                          onClick={this.handleSubmit.bind(this)}
+                          value="Submit"
+                        />
+                      </Col>
+                    </Row>
+                  </TierWrap>
+                )}
+              </div>
+            )}
           </KYCWrap>
         </TierWrapper>
         {this.state.loader === true ? <FaldaxLoader /> : ""}
