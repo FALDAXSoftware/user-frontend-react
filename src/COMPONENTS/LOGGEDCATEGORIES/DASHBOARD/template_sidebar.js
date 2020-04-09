@@ -4,13 +4,72 @@ import styled from 'styled-components';
 const { Sider } = Layout;
 const SidebarHeader = styled.h4`
     font-weight: bold;
-    i{
+    i.close{
         position: absolute;
         top: 0;
         right: 0;
         cursor:pointer;
     }
+    i.save{
+        position: absolute;
+        top: 0;
+        right: 30px;
+        cursor:pointer;
+        float: right;
+        font-size: 21px;
+        font-weight: 700;
+        line-height: 1;
+        color: #000;
+        text-shadow: 0 1px 0 #fff;
+        filter: alpha(opacity=20);
+        opacity: .2;
+        :hover {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+            filter: alpha(opacity=50);
+            opacity: .5;
+        }
+    }
+    i.share{
+        position: absolute;
+        top: 0;
+        right: 63px;
+        cursor:pointer;
+        float: right;
+        font-size: 21px;
+        font-weight: 700;
+        line-height: 1;
+        color: #000;
+        text-shadow: 0 1px 0 #fff;
+        filter: alpha(opacity=20);
+        opacity: .2;
+        :hover {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+            filter: alpha(opacity=50);
+            opacity: .5;
+        }
+    }
 `;
+const ExportIcon = styled(Icon)`
+        // cursor:pointer;
+        // font-size: 21px;
+        // font-weight: 700;
+        // line-height: 1;
+        // color: #000;
+        // text-shadow: 0 1px 0 #fff;
+        // filter: alpha(opacity=20);
+        // opacity: .2;
+        // :hover {
+        //     color: #000;
+        //     text-decoration: none;
+        //     cursor: pointer;
+        //     filter: alpha(opacity=50);
+        //     opacity: .5;
+        // }
+`
 class TemplateSideBar extends Component {
     constructor(props) {
         super(props);
@@ -83,13 +142,14 @@ class TemplateSideBar extends Component {
             })
         }
     }
+
     render() {
 
         return (
             <Sider width={250} style={{ transition: "all 1s ease", background: '#fff', marginTop: "90px", marginBottom: "10px", padding: "30px 20px", boxShadow: "-1px 5px 31px -10px rgba(0,0,0,0.53)" }}>
                 <Row>
                     <Col span={24} >
-                        <SidebarHeader>Customize<Icon type="close" onClick={this.props.closeEditing} /></SidebarHeader>
+                        <SidebarHeader>Customize <Icon type="import" className="share" onClick={this.props.onSave} /> <Icon type="save" className="save" onClick={this.props.onSave} /> <Icon type="close" className="close" onClick={this.props.closeEditing} /></SidebarHeader>
                     </Col>
                 </Row>
                 <Divider style={{ margin: "4px 0 24px" }} />
@@ -126,6 +186,13 @@ class TemplateSideBar extends Component {
                                 type="info"
                             // showIcon
                             />
+                        </Col>
+                    </Row>
+                }
+                {!this.state.templates[this.props.selected]?.inbuilt &&
+                    <Row style={{ marginBottom: "15px" }}>
+                        <Col>
+                            <a><ExportIcon type="export" className="share" /> Export Template</a>
                         </Col>
                     </Row>
                 }

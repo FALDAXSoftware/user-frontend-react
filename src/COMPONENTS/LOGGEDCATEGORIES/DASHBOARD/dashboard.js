@@ -99,7 +99,7 @@ class Dashboard extends Component {
       showLayout: false,
       allTemplates: [...inbuiltTemplates],
       currentTemplateIndex: 0,
-      editState: true,
+      editState: false,
       currentTemplate: {
         widgets: [],
         layouts: {}
@@ -478,52 +478,41 @@ class Dashboard extends Component {
     );
   };
   saveToDB = () => {
-    if (timeOutObj) {
-      clearTimeout(timeOutObj);
-      timeOutObj = null
-    }
-    timeOutObj = setTimeout(() => {
-      let dashboard_layout = {};
-      dashboard_layout.currentSelectedTemplate = this.state.currentTemplateIndex;
-      let temp = this.state.allTemplates.filter(e => {
-        if (e.inbuilt) {
-          return false;
-        } else {
-          return true;
+    let dashboard_layout = {};
+    dashboard_layout.currentSelectedTemplate = this.state.currentTemplateIndex;
+    let temp = this.state.allTemplates.filter(e => {
+      if (e.inbuilt) {
+        return false;
+      } else {
+        return true;
+      }
+    });
+    dashboard_layout.templates = temp;
+    fetch(API_URL + `/users/update-users-layout`, {
+      method: "post",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Accept-Language": localStorage["i18nextLng"],
+        Authorization: "Bearer " + this.props.isLoggedIn
+      },
+      body: JSON.stringify({
+        dashboard_layout
+      })
+    })
+      .then(response => response.json())
+      .then(responseData => {
+        if (responseData.status == 200) {
+          console.log("respondata", responseData);
         }
       });
-      dashboard_layout.templates = temp;
-      fetch(API_URL + `/users/update-users-layout`, {
-        method: "post",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "Accept-Language": localStorage["i18nextLng"],
-          Authorization: "Bearer " + this.props.isLoggedIn
-        },
-        body: JSON.stringify({
-          dashboard_layout
-        })
-      })
-        .then(response => response.json())
-        .then(responseData => {
-          if (responseData.status == 200) {
-            console.log("respondata", responseData);
-          }
-        });
-    }, 3000)
+
   };
   closeEditing = () => {
-    let currentTemplate = this.state.currentTemplate;
+    this.getTemplates()
     this.setState(
       {
         editState: false,
-        showLayout: false,
-      },
-      () => {
-        this.setState({
-          showLayout: true
-        });
       }
     );
   };
@@ -535,7 +524,7 @@ class Dashboard extends Component {
         showLayout: false
       },
       () => {
-        this.saveToDB();
+        // this.saveToDB();
         if (this.state.allTemplates[this.state.currentTemplateIndex]) {
           this.setState(
             {
@@ -653,6 +642,7 @@ class Dashboard extends Component {
                 selected={this.state.currentTemplateIndex}
                 onCurrentTemplateChange={this.onCurrentTemplateChange}
                 closeEditing={this.closeEditing}
+                onSave={this.saveToDB}
                 onChange={this.handleTemplateSave} />
             }
             <Content>
