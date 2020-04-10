@@ -45,6 +45,7 @@ import News from "./news";
 import Portfolio from "./portfolio";
 import { inbuiltTemplates } from "./inbuiltTemplate";
 import TemplateSideBar from "./template_sidebar";
+import WhiteBgFaldaxLoader from "../../../SHARED-COMPONENTS/WhiteBgFaldaxLoader";
 const { Content, Footer, Sider } = Layout;
 let { API_URL } = globalVariables;
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
@@ -99,11 +100,15 @@ class Dashboard extends Component {
       showLayout: false,
       allTemplates: [...inbuiltTemplates],
       currentTemplateIndex: 0,
-      editState: false,
+      editState: true,
+      loader: true,
+      isSaving: false,
       currentTemplate: {
         widgets: [],
         layouts: {}
-      }
+      },
+      isSaved: true,
+      currentTemplateManagerTab: 1
     };
 
     io = this.props.io;
@@ -366,7 +371,8 @@ class Dashboard extends Component {
     //   currentTemplate: this.state.allTemplates[0]
     // });
   }
-  getTemplates = () => {
+  getTemplates = (callback = null) => {
+    this.setState({ loader: true })
     fetch(API_URL + `/users/get-users-layout`, {
       method: "get",
       headers: {
@@ -400,9 +406,11 @@ class Dashboard extends Component {
         }
         this.setState({
           showLayout: true,
+          loader: false,
           allTemplates: templates,
           currentTemplateIndex: currentSelectedTemplate,
-          currentTemplate: templates[currentSelectedTemplate]
+          currentTemplate: templates[currentSelectedTemplate],
+          isSaved: true
         });
       })
       .catch(error => { });
@@ -442,13 +450,14 @@ class Dashboard extends Component {
       {
         currentTemplate: {
           ...this.state.currentTemplate,
-          layouts: layouts
+          layouts: layouts,
         },
+        isSaved: false,
         allTemplates,
         // editState: false
       },
       () => {
-        this.saveToDB();
+        // this.saveToDB();
       }
     );
   };
@@ -457,14 +466,32 @@ class Dashboard extends Component {
       {
         currentTemplate: this.state.allTemplates[index],
         currentTemplateIndex: index,
-        showLayout: false
+        showLayout: false,
+        isSaved: false
       },
       () => {
-        this.saveToDB();
+        // this.saveToDB();
         this.setState({ showLayout: true });
       }
     );
   };
+  importTemplate = (template) => {
+    let allTemplates = this.state.allTemplates
+    allTemplates.push(template)
+    let currentTemplateIndex = allTemplates.length - 1
+    this.setState({
+      allTemplates,
+      currentTemplateIndex,
+      currentTemplate: allTemplates[currentTemplateIndex],
+      currentTemplateManagerTab: 1,
+      isSaved: false
+    })
+  }
+  onTemplateManagerTabChange = (currentTab) => {
+    this.setState({
+      currentTemplateManagerTab: currentTab
+    })
+  }
   enableEditLayout = () => {
     this.setState(
       {
@@ -478,6 +505,7 @@ class Dashboard extends Component {
     );
   };
   saveToDB = () => {
+    this.setState({ isSaving: true })
     let dashboard_layout = {};
     dashboard_layout.currentSelectedTemplate = this.state.currentTemplateIndex;
     let temp = this.state.allTemplates.filter(e => {
@@ -504,15 +532,20 @@ class Dashboard extends Component {
       .then(responseData => {
         if (responseData.status == 200) {
           console.log("respondata", responseData);
+          this.setState({ isSaving: false, isSaved: true })
+
         }
       });
 
   };
   closeEditing = () => {
-    this.getTemplates()
     this.setState(
       {
+        showLayout: false,
         editState: false,
+        currentTemplateManagerTab: 1,
+      }, () => {
+        this.getTemplates()
       }
     );
   };
@@ -521,7 +554,8 @@ class Dashboard extends Component {
       {
         allTemplates: templates,
         templateManage: false,
-        showLayout: false
+        showLayout: false,
+        isSaved: false
       },
       () => {
         // this.saveToDB();
@@ -541,6 +575,18 @@ class Dashboard extends Component {
       }
     );
   };
+  deleteTemplate = () => {
+    let allTemplates = this.state.allTemplates
+    allTemplates.splice(this.state.currentTemplateIndex, 1)
+    let currentTemplateIndex = allTemplates.length - 1
+    this.setState({
+      allTemplates,
+      currentTemplateIndex,
+      currentTemplate: allTemplates[currentTemplateIndex],
+      currentTemplateManagerTab: 1,
+      isSaved: false
+    })
+  }
   render() {
     const { renderLayout, layouts } = this.renderLayout();
     const menu = (
@@ -634,6 +680,9 @@ class Dashboard extends Component {
             </Tooltip>
           }
           <LoggedNavigation />
+          {this.state.loader &&
+            <WhiteBgFaldaxLoader />
+          }
           <Layout>
             {this.state.editState &&
               <TemplateSideBar
@@ -643,7 +692,12 @@ class Dashboard extends Component {
                 onCurrentTemplateChange={this.onCurrentTemplateChange}
                 closeEditing={this.closeEditing}
                 onSave={this.saveToDB}
-                onChange={this.handleTemplateSave} />
+                isSaving={this.state.isSaving}
+                isSaved={this.state.isSaved}
+                onChange={this.handleTemplateSave}
+                onTabChange={this.onTemplateManagerTabChange}
+                importTemplate={this.importTemplate}
+                deleteTemplate={this.deleteTemplate} />
             }
             <Content>
 
@@ -671,8 +725,8 @@ class Dashboard extends Component {
                           xxs: 0
                         }}
                         cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
-                        isDraggable={this.state.editState}
-                        isResizable={this.state.editState}
+                        isDraggable={(this.state.editState && this.state.currentTemplateManagerTab == 1)}
+                        isResizable={(this.state.editState && this.state.currentTemplateManagerTab == 1)}
                         onLayoutChange={(layout, layouts) =>
                           this.onLayoutChange(layout, layouts)
                         }
