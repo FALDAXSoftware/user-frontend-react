@@ -2964,5 +2964,43 @@
       "message_type": "Web content",
       "context": "RISING/FALLING Tab of crypto screener"
     }
+  },
+  "trade": {
+    "market_head": {
+      "page": "Header",
+      "message": "\u5e02\u5834",
+      "message_type": "Web content",
+      "context": "menu text of header"
+    },
+    "dashboard_head": {
+      "page": "Header",
+      "message": "\u8a08\u5668\u76e4",
+      "message_type": "Web content",
+      "context": "menu text of header"
+    },
+    "trade_head": {
+      "page": "Header",
+      "message": "\u30c8\u30ec\u30fc\u30c9",
+      "message_type": "Web content",
+      "context": "menu text of header"
+    },
+    "order_type_text": {
+      "page": "History > Trade",
+      "message": "\u53d7\u6ce8\u30bf\u30a4\u30d7",
+      "message_type": "Web content",
+      "context": "text of table"
+    },
+    "limit_price_text": {
+      "page": "History > Trade",
+      "message": "\u5236\u9650\u4fa1\u683c",
+      "message_type": "Web content",
+      "context": "text of table"
+    },
+    "stop_price_text": {
+      "page": "History > Trade",
+      "message": "\u30b9\u30c8\u30c3\u30d7\u4fa1\u683c",
+      "message_type": "Web content",
+      "context": "text of table"
+    }
   }
 }
