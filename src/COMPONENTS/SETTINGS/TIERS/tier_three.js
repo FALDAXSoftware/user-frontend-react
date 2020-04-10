@@ -19,13 +19,13 @@ import {
   ButtonUp,
   Plus,
   Plustext,
-  Fileinput,
+  Fileinput
 } from "./tier_two";
 import { Icon, notification, Row, Col } from "antd";
 import {
   DropzoneStyle,
   IconS,
-  FileSelectText,
+  FileSelectText
 } from "../../../STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle";
 import { SupportText } from "../../LANDINGCATEGORIES/apply_job";
 import { APIUtility } from "../../../httpHelper";
@@ -33,7 +33,7 @@ import FaldaxLoader from "../../../SHARED-COMPONENTS/FaldaxLoader";
 let { API_URL } = globalVariables;
 /* Styled-Components */
 const KYCWrap = styled.div`
-  background-color: ${(props) =>
+  background-color: ${props =>
     props.theme.mode === "dark" ? "#041422" : "#ffffff"};
   margin: auto;
   width: 95%;
@@ -78,7 +78,7 @@ class TierThree extends React.Component {
       waitingForApproval: false,
       reUpload1: false,
       reUpload2: false,
-      verified: false,
+      verified: false
     };
     this.handleProfile = this.handleProfile.bind(this);
     this.populateData = this.populateData.bind(this);
@@ -89,8 +89,8 @@ class TierThree extends React.Component {
           var re = /^\d{3}-\d{2}-\d{4}$/;
           var bool = re.test(String(val));
           return bool;
-        },
-      },
+        }
+      }
     });
   }
   componentWillMount() {
@@ -109,7 +109,7 @@ class TierThree extends React.Component {
     var getID = this.props.location.pathname.split("/tier");
     this.setState(
       {
-        tierID: getID[1],
+        tierID: getID[1]
       },
       () => {
         this.populateData();
@@ -123,7 +123,7 @@ class TierThree extends React.Component {
       if (result.status == 200) {
         console.log("result^^^", result.data);
         this.setState({
-          tierData: result.data,
+          tierData: result.data
         });
       } else {
         this.openNotificationWithIcon("error", "Error", result.message);
@@ -142,20 +142,20 @@ class TierThree extends React.Component {
     console.log("^^declined", declined);
     if (currentTierData.is_verified) {
       this.setState({
-        verified: true,
+        verified: true
       });
     } else {
       this.setState({
-        verified: false,
+        verified: false
       });
     }
     if (under_approval && under_approval.length == 2 && declined.length == 0) {
       this.setState({
-        waitingForApproval: true,
+        waitingForApproval: true
       });
     } else {
       this.setState({
-        waitingForApproval: false,
+        waitingForApproval: false
       });
     }
     if (declined && declined.length > 0) {
@@ -169,7 +169,7 @@ class TierThree extends React.Component {
           default:
             return this.setState({
               reUpload1: true,
-              reUpload2: true,
+              reUpload2: true
             });
         }
       });
@@ -186,7 +186,7 @@ class TierThree extends React.Component {
     _self.setState(
       {
         targetName: name,
-        fileTarget: target,
+        fileTarget: target
       },
       () => {
         var frontWidth, frontHeight;
@@ -212,24 +212,24 @@ class TierThree extends React.Component {
                   if (frontWidth > 450 && frontHeight > 600) {
                     if (_self.state.targetName === "idcp-photo") {
                       _self.setState({ icon1: "check", displayFirst: "" });
-                      reader.onload = (upload) => {
+                      reader.onload = upload => {
                         _self.setState({
                           profileImg: upload.target.result,
                           imageName: file.name,
                           imageType: file.type,
                           profileImage: file,
-                          imagemsg: "",
+                          imagemsg: ""
                         });
                       };
                     } else {
                       _self.setState({ icon2: "check", displaySecond: "" });
-                      reader.onload = (upload) => {
+                      reader.onload = upload => {
                         _self.setState({
                           profileImg2: upload.target.result,
                           imageName2: file.name,
                           imageType2: file.type,
                           profileImage2: file,
-                          imagemsg2: "",
+                          imagemsg2: ""
                         });
                       };
                     }
@@ -250,7 +250,7 @@ class TierThree extends React.Component {
                         imageType: fileType,
                         profileImage: "",
                         icon1: "plus",
-                        displayFirst: "none",
+                        displayFirst: "none"
                       });
                     } else {
                       _self.setState({
@@ -259,7 +259,7 @@ class TierThree extends React.Component {
                         imageType2: fileType,
                         profileImage2: "",
                         icon2: "plus",
-                        displaySecond: "none",
+                        displaySecond: "none"
                       });
                     }
                     _self.openNotificationWithIcon(
@@ -282,7 +282,7 @@ class TierThree extends React.Component {
                   profileImage: "",
                   icon1: "plus",
                   displayFirst: "none",
-                  imagemsg: _self.t("general_1:max_image_size_error.message"),
+                  imagemsg: _self.t("general_1:max_image_size_error.message")
                 });
               } else {
                 _self.setState({
@@ -292,7 +292,7 @@ class TierThree extends React.Component {
                   imagemsg2: _self.t("general_1:max_image_size_error.message"),
                   profileImage2: "",
                   icon2: "plus",
-                  displaySecond: "none",
+                  displaySecond: "none"
                 });
               }
               _self.openNotificationWithIcon(
@@ -331,7 +331,7 @@ class TierThree extends React.Component {
         imagemsg: "",
         icon1: "plus",
         displayFirst: "none",
-        idcpPhoto: "",
+        idcpPhoto: ""
       });
       document.getElementById("idcp-photo").value = "";
     } else {
@@ -343,7 +343,7 @@ class TierThree extends React.Component {
         imagemsg2: "",
         icon2: "plus",
         displaySecond: "none",
-        residenceProof: "",
+        residenceProof: ""
       });
       // document.getElementById("residence-proof").value = "";
     }
@@ -351,7 +351,7 @@ class TierThree extends React.Component {
   openNotificationWithIcon(type, head, desc) {
     notification[type]({
       message: head,
-      description: desc,
+      description: desc
     });
   }
   handleFileSelectClick(val) {
@@ -361,7 +361,7 @@ class TierThree extends React.Component {
   handleSubmit() {
     if (this.validator.allValid()) {
       this.setState({
-        loader: true,
+        loader: true
       });
       console.log("^ajksdhk", this.state.asset_proof, this.state.idcpPhoto);
       let values = new FormData();
@@ -377,12 +377,12 @@ class TierThree extends React.Component {
         method: "post",
         headers: {
           "Accept-Language": localStorage["i18nextLng"],
-          Authorization: "Bearer " + this.props.isLoggedIn,
+          Authorization: "Bearer " + this.props.isLoggedIn
         },
-        body: values,
+        body: values
       })
-        .then((response) => response.json())
-        .then((responseData) => {
+        .then(response => response.json())
+        .then(responseData => {
           if (responseData.status == 200) {
             console.log("^^^^response", responseData);
             this.openNotificationWithIcon(
@@ -394,14 +394,14 @@ class TierThree extends React.Component {
               idcpPhoto: {},
               asset_proof: [],
               displayFirst: "",
-              waitingForApproval: true,
+              waitingForApproval: true
             });
           }
           this.setState({
-            loader: false,
+            loader: false
           });
         })
-        .catch((error) => {
+        .catch(error => {
           this.setState({ loader: false });
         });
     } else {
@@ -423,7 +423,7 @@ class TierThree extends React.Component {
         {
           cover_flag: flag,
           resumeLimit: flagLimit,
-          asset_proof: files[0],
+          asset_proof: files[0]
           // fields: { ...this.state.fields, asset_proof: files[0] },
         },
         () => {
@@ -462,7 +462,7 @@ class TierThree extends React.Component {
                 style={{
                   textAlign: "center",
                   margin: "50px auto",
-                  fontSize: "18px",
+                  fontSize: "18px"
                 }}
               >
                 <p>Your account is verified to tier 3.</p>
@@ -474,7 +474,7 @@ class TierThree extends React.Component {
                     style={{
                       textAlign: "center",
                       margin: "50px auto",
-                      fontSize: "18px",
+                      fontSize: "18px"
                     }}
                   >
                     <p>Your submitted documents are under process.</p>
@@ -483,14 +483,14 @@ class TierThree extends React.Component {
                   <TierWrap>
                     <Row
                       style={{
-                        margin: "50px auto 30px",
+                        margin: "50px auto 30px"
                       }}
                       gutter={16}
                     >
                       <Col span={6}>
                         <div
                           style={{
-                            margin: "0 0 30px 0",
+                            margin: "0 0 30px 0"
                           }}
                         >
                           <label>IDCP Photo</label>
@@ -507,7 +507,7 @@ class TierThree extends React.Component {
                             />
                             <ButtonUp
                               style={{
-                                backgroundImage: `url('${this.state.profileImg}')`,
+                                backgroundImage: `url('${this.state.profileImg}')`
                               }}
                               className="file-select-btn"
                               onClick={() => {
@@ -536,7 +536,7 @@ class TierThree extends React.Component {
                                 "required",
                                 "tier-text-danger-validation",
                                 {
-                                  required: "This field is required.",
+                                  required: "This field is required."
                                 }
                               )}
                           </Fileselect1>
@@ -599,7 +599,7 @@ class TierThree extends React.Component {
                     <Row gutter={16}>
                       <Col
                         style={{
-                          padding: "0 18px",
+                          padding: "0 18px"
                         }}
                       >
                         <input
@@ -622,7 +622,7 @@ class TierThree extends React.Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   // LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
 });
 // export default Conversion;
@@ -636,7 +636,7 @@ function mapStateToProps(state) {
           : ""
         : "",
     theme:
-      state.themeReducer.theme !== undefined ? state.themeReducer.theme : "",
+      state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
   };
 }
 export default connect(
