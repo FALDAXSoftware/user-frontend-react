@@ -343,6 +343,11 @@ class Afterlog extends Component {
             <span> {t("navbar_menu_careers.message")} </span>
           </Exchange>
         </Link> */}
+        <Link to="/paxos">
+          <Exchange color={this.state.selected}>
+            <span> Paxos </span>
+          </Exchange>
+        </Link>
         <DropDownDiv
           // className="Drop-main"
           className="lang-main"
