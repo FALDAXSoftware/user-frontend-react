@@ -104,12 +104,12 @@ const routes = [
     component: () => <Conversion />
     // io: io
   },
-  {
-    exact: false,
-    path: "/crypto-conversion",
-    component: () => <ConversionDetail io={io} />,
-    io: io
-  },
+  // {
+  //   exact: false,
+  //   path: "/crypto-conversion",
+  //   component: () => <ConversionDetail io={io} />,
+  //   io: io
+  // },
   // {`${globalVariables.WordpressSiteURL}/crypto-only-coming-soon`}
   // {
   //   exact: false,
