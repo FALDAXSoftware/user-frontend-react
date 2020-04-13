@@ -1,8 +1,12 @@
 import React from "react";
 import { SpinEx, SpinImg, SpinDiv } from "../STYLED-COMPONENTS/HOMEPAGE/style";
 import { connect } from "react-redux";
-
-class FaldaxLoader extends React.Component {
+import styled from "styled-components";
+const WhiteBgSpinEx = styled(SpinEx)`
+  background-color: #f5f5f5;
+  z-index: 999;
+`
+class WhiteBgFaldaxLoader extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -11,7 +15,7 @@ class FaldaxLoader extends React.Component {
   }
   render() {
     return (
-      <SpinEx className="Ex_spin">
+      <WhiteBgSpinEx className="Ex_spin">
         <SpinDiv>
           {this.state.theme === true ? (
             <SpinImg src="/images/darkLoader.gif" />
@@ -19,7 +23,7 @@ class FaldaxLoader extends React.Component {
               <SpinImg src="/images/lightLoader.gif" />
             )}
         </SpinDiv>
-      </SpinEx>
+      </WhiteBgSpinEx>
     );
   }
 }
@@ -32,4 +36,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(FaldaxLoader);
+export default connect(mapStateToProps)(WhiteBgFaldaxLoader);

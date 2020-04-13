@@ -21,6 +21,31 @@ export const HeadSpan = styled.p`
 `;
 export const ContactWrap = styled.div`
   background-color: #f5f6fa;
+  & .sidebar-layout {
+    background: ${props =>
+      props.theme.mode === "dark" ? "#01090f" : "#f0f2f5"};
+    & .ant-layout-sider {
+      background: ${props =>
+        props.theme.mode === "dark"
+          ? "rgb(4, 27, 44) !important"
+          : "rgb(255, 255, 255)"};
+      border-top-right-radius: 5px;
+      color: ${props => (props.theme.mode === "dark" ? "#fff" : "#000")};
+      border-bottom-right-radius: 5px;
+      & h5 {
+        color: ${props => (props.theme.mode === "dark" ? "#fff" : "#000")};
+      }
+      & .ant-switch {
+        background-color: ${props =>
+          props.theme.mode === "dark"
+            ? "rgb(1, 9, 15)"
+            : "rgba(0, 0, 0, 0.25)"};
+      }
+      & .ant-switch-checked {
+        background-color: #1890ff;
+      }
+    }
+  }
 `;
 export const GreyWrap = styled.div`
   padding-top: 110px;

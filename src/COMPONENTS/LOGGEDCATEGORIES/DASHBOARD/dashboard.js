@@ -13,7 +13,8 @@ import {
   Icon,
   Dropdown,
   Button,
-  Tooltip
+  Tooltip,
+  Layout
 } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquareFull } from "@fortawesome/free-solid-svg-icons";
@@ -43,6 +44,9 @@ import Activity from "./activity";
 import News from "./news";
 import Portfolio from "./portfolio";
 import { inbuiltTemplates } from "./inbuiltTemplate";
+import TemplateSideBar from "./template_sidebar";
+import WhiteBgFaldaxLoader from "../../../SHARED-COMPONENTS/WhiteBgFaldaxLoader";
+const { Content, Footer, Sider } = Layout;
 let { API_URL } = globalVariables;
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 const WhiteBgWrapper = styled.div`
@@ -59,7 +63,16 @@ const WhiteBgWrapper = styled.div`
 `;
 const GreyWrapDashboard = styled(GreyWrap)`
   font-family: "Open sans";
-  padding-top: 120px;
+  // padding-top: 120px;
+`;
+const Overlay = styled.div`
+  background: #00000000;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  border-radius: 5px;
+  top: 0;
+  left: 0;
 `;
 const RGL = styled(ResponsiveReactGridLayout)`
   & .react-resizable-handle::after {
@@ -77,6 +90,7 @@ const RGL = styled(ResponsiveReactGridLayout)`
 const originalLayouts = getFromLS("layouts") || {};
 let io = null;
 let tempLayouts = {};
+let timeOutObj = null;
 class Dashboard extends Component {
   constructor(props) {
     super(props);
@@ -86,11 +100,15 @@ class Dashboard extends Component {
       showLayout: false,
       allTemplates: [...inbuiltTemplates],
       currentTemplateIndex: 0,
-      editState: false,
+      editState: true,
+      loader: true,
+      isSaving: false,
       currentTemplate: {
         widgets: [],
         layouts: {}
-      }
+      },
+      isSaved: true,
+      currentTemplateManagerTab: 1
     };
 
     io = this.props.io;
@@ -123,6 +141,7 @@ class Dashboard extends Component {
               renderLayout.push(
                 <div key={key}>
                   <WhiteBgWrapper>
+                    {this.state.editState && <Overlay />}
                     <Technical
                       options={{
                         interval: "1m",
@@ -148,6 +167,7 @@ class Dashboard extends Component {
             renderLayout.push(
               <div key={element.key}>
                 <WhiteBgWrapper>
+                  {this.state.editState && <Overlay />}
                   <Screener
                     options={{
                       width: "100%",
@@ -169,6 +189,7 @@ class Dashboard extends Component {
             renderLayout.push(
               <div key={element.key}>
                 <WhiteBgWrapper>
+                  {this.state.editState && <Overlay />}
                   <MarketWidget
                     options={{
                       width: "100%",
@@ -196,6 +217,7 @@ class Dashboard extends Component {
               renderLayout.push(
                 <div key={key}>
                   <WhiteBgWrapper style={{ overflow: "hidden" }}>
+                    {this.state.editState && <Overlay />}
                     <MiniGraph
                       crypto={innerElement.split("-")[0]}
                       currency={innerElement.split("-")[1]}
@@ -212,6 +234,7 @@ class Dashboard extends Component {
             renderLayout.push(
               <div key={element.key}>
                 <WhiteBgWrapper>
+                  {this.state.editState && <Overlay />}
                   <Activity />
                 </WhiteBgWrapper>
               </div>
@@ -222,6 +245,7 @@ class Dashboard extends Component {
             renderLayout.push(
               <div key={element.key}>
                 <WhiteBgWrapper>
+                  {this.state.editState && <Overlay />}
                   <Portfolio />
                 </WhiteBgWrapper>
               </div>
@@ -232,6 +256,7 @@ class Dashboard extends Component {
             renderLayout.push(
               <div key={element.key}>
                 <WhiteBgWrapper>
+                  {this.state.editState && <Overlay />}
                   <News />
                 </WhiteBgWrapper>
               </div>
@@ -249,7 +274,8 @@ class Dashboard extends Component {
               renderLayout.push(
                 <div key={key}>
                   <WhiteBgWrapper style={{ overflow: "hidden" }}>
-                    <div style={{ height: "100%", paddingTop: "20px" }}>
+                    {this.state.editState && <Overlay />}
+                    <div style={{ height: "100%" }}>
                       <TradingViewChart
                         crypto={innerElement.split("-")[0]}
                         currency={innerElement.split("-")[1]}
@@ -319,7 +345,6 @@ class Dashboard extends Component {
         i: key
       });
     }
-    console.log("selfLayout", selfLayout);
     return selfLayout;
   };
   componentDidMount() {
@@ -330,7 +355,8 @@ class Dashboard extends Component {
     //   currentTemplate: this.state.allTemplates[0]
     // });
   }
-  getTemplates = () => {
+  getTemplates = (callback = null) => {
+    this.setState({ loader: true });
     fetch(API_URL + `/users/get-users-layout`, {
       method: "get",
       headers: {
@@ -357,11 +383,23 @@ class Dashboard extends Component {
         if (!currentSelectedTemplate) {
           currentSelectedTemplate = 0;
         }
+        console.log(
+          currentSelectedTemplate >= templates.length,
+          currentSelectedTemplate,
+          templates.length,
+          templates
+        );
+
+        if (currentSelectedTemplate >= templates.length) {
+          currentSelectedTemplate = 0;
+        }
         this.setState({
           showLayout: true,
+          loader: false,
           allTemplates: templates,
           currentTemplateIndex: currentSelectedTemplate,
-          currentTemplate: templates[currentSelectedTemplate]
+          currentTemplate: templates[currentSelectedTemplate],
+          isSaved: true
         });
       })
       .catch(error => { });
@@ -392,53 +430,71 @@ class Dashboard extends Component {
   };
   onLayoutChange = (layout, layouts) => {
     console.log(layout);
-
-    tempLayouts = layouts;
+    let allTemplates = this.state.allTemplates;
+    allTemplates[this.state.currentTemplateIndex] = {
+      ...this.state.currentTemplate,
+      layouts: layouts
+    };
+    this.setState(
+      {
+        currentTemplate: {
+          ...this.state.currentTemplate,
+          layouts: layouts
+        },
+        isSaved: false,
+        allTemplates
+        // editState: false
+      },
+      () => {
+        // this.saveToDB();
+      }
+    );
   };
   onCurrentTemplateChange = index => {
     this.setState(
       {
         currentTemplate: this.state.allTemplates[index],
         currentTemplateIndex: index,
-        showLayout: false
+        showLayout: false,
+        isSaved: false
       },
       () => {
-        this.saveToDB();
+        // this.saveToDB();
         this.setState({ showLayout: true });
       }
     );
   };
+  importTemplate = template => {
+    let allTemplates = this.state.allTemplates;
+    allTemplates.push(template);
+    let currentTemplateIndex = allTemplates.length - 1;
+    this.setState({
+      allTemplates,
+      currentTemplateIndex,
+      currentTemplate: allTemplates[currentTemplateIndex],
+      currentTemplateManagerTab: 1,
+      isSaved: false
+    });
+  };
+  onTemplateManagerTabChange = currentTab => {
+    this.setState({
+      currentTemplateManagerTab: currentTab
+    });
+  };
   enableEditLayout = () => {
     this.setState(
       {
-        editState: true
+        editState: true,
+        showLayout: false
       },
       () => {
+        this.setState({ showLayout: true });
         tempLayouts = this.state.currentTemplate.layouts;
       }
     );
   };
-  saveLayout = () => {
-    let allTemplates = this.state.allTemplates;
-    allTemplates[this.state.currentTemplateIndex] = {
-      ...this.state.currentTemplate,
-      layouts: tempLayouts
-    };
-    this.setState(
-      {
-        currentTemplate: {
-          ...this.state.currentTemplate,
-          layouts: tempLayouts
-        },
-        allTemplates,
-        editState: false
-      },
-      () => {
-        this.saveToDB();
-      }
-    );
-  };
   saveToDB = () => {
+    this.setState({ isSaving: true });
     let dashboard_layout = {};
     dashboard_layout.currentSelectedTemplate = this.state.currentTemplateIndex;
     let temp = this.state.allTemplates.filter(e => {
@@ -465,23 +521,19 @@ class Dashboard extends Component {
       .then(responseData => {
         if (responseData.status == 200) {
           console.log("respondata", responseData);
+          this.setState({ isSaving: false, isSaved: true });
         }
       });
   };
-  cancleEdit = () => {
-    let currentTemplate = this.state.currentTemplate;
+  closeEditing = () => {
     this.setState(
       {
+        showLayout: false,
         editState: false,
-        currentTemplate: {
-          widgets: [],
-          layouts: {}
-        }
+        currentTemplateManagerTab: 1
       },
       () => {
-        this.setState({
-          currentTemplate
-        });
+        this.getTemplates();
       }
     );
   };
@@ -490,10 +542,11 @@ class Dashboard extends Component {
       {
         allTemplates: templates,
         templateManage: false,
-        showLayout: false
+        showLayout: false,
+        isSaved: false
       },
       () => {
-        this.saveToDB();
+        // this.saveToDB();
         if (this.state.allTemplates[this.state.currentTemplateIndex]) {
           this.setState(
             {
@@ -509,6 +562,18 @@ class Dashboard extends Component {
         }
       }
     );
+  };
+  deleteTemplate = () => {
+    let allTemplates = [...this.state.allTemplates];
+    allTemplates.splice(this.state.currentTemplateIndex, 1);
+    let currentTemplateIndex = allTemplates.length - 1;
+    this.setState({
+      allTemplates,
+      currentTemplateIndex,
+      currentTemplate: allTemplates[currentTemplateIndex],
+      currentTemplateManagerTab: 1,
+      isSaved: false
+    });
   };
   render() {
     const { renderLayout, layouts } = this.renderLayout();
@@ -544,7 +609,9 @@ class Dashboard extends Component {
         </SubMenu>
         <Menu.Item
           onClick={this.enableEditLayout}
-          disabled={(this.state.editState || this.state.currentTemplate?.inbuilt == true)}
+          disabled={
+            this.state.editState || this.state.currentTemplate?.inbuilt == true
+          }
           key="1"
         >
           Edit Layout
@@ -592,20 +659,38 @@ class Dashboard extends Component {
     return (
       <div>
         <ContactWrap>
-          <SettingDropdown
-            className="dashboard_setting"
-            overlay={menu}
-            placement="bottomLeft"
-            trigger={["click"]}
-            overlayClassName="dropSettings"
-          >
-            <Tooltip placement="left" title="Customize Dashboard">
-              <Icon type="setting" />
+          {!this.state.editState && (
+            <Tooltip placement="right" title="Customize Dashboard">
+              <SettingDropdown
+                className="dashboard_setting"
+                onClick={this.enableEditLayout}
+              >
+                <Icon type="setting" />
+              </SettingDropdown>
             </Tooltip>
-          </SettingDropdown>
+          )}
           <LoggedNavigation />
-          <GreyWrapDashboard>
-            {/* <Row gutter={16}>
+          {this.state.loader && <WhiteBgFaldaxLoader />}
+          <Layout className="sidebar-layout">
+            {this.state.editState && (
+              <TemplateSideBar
+                templates={this.state.allTemplates}
+                pairs={this.state.pairs}
+                selected={this.state.currentTemplateIndex}
+                onCurrentTemplateChange={this.onCurrentTemplateChange}
+                closeEditing={this.closeEditing}
+                onSave={this.saveToDB}
+                isSaving={this.state.isSaving}
+                isSaved={this.state.isSaved}
+                onChange={this.handleTemplateSave}
+                onTabChange={this.onTemplateManagerTabChange}
+                importTemplate={this.importTemplate}
+                deleteTemplate={this.deleteTemplate}
+              />
+            )}
+            <Content>
+              <GreyWrapDashboard>
+                {/* <Row gutter={16}>
               <Col span={24} style={{ textAlign: "right" }}>
                 <Dropdown overlay={menu}>
                   <Button>
@@ -614,32 +699,40 @@ class Dashboard extends Component {
                 </Dropdown>
               </Col>
             </Row> */}
-            <Row>
-              <Col>
-                {this.state.showLayout && (
-                  <RGL
-                    className="layout"
-                    layouts={layouts}
-                    breakpoints={{
-                      lg: 1200,
-                      md: 996,
-                      sm: 768,
-                      xs: 480,
-                      xxs: 0
-                    }}
-                    cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
-                    isDraggable={this.state.editState}
-                    isResizable={this.state.editState}
-                    onLayoutChange={(layout, layouts) =>
-                      this.onLayoutChange(layout, layouts)
-                    }
-                  >
-                    {renderLayout.map(el => el)}
-                  </RGL>
-                )}
-              </Col>
-            </Row>
-          </GreyWrapDashboard>
+                <Row>
+                  <Col>
+                    {this.state.showLayout && (
+                      <RGL
+                        className="layout"
+                        layouts={layouts}
+                        breakpoints={{
+                          lg: 1200,
+                          md: 996,
+                          sm: 768,
+                          xs: 480,
+                          xxs: 0
+                        }}
+                        cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
+                        isDraggable={
+                          this.state.editState &&
+                          this.state.currentTemplateManagerTab == 1
+                        }
+                        isResizable={
+                          this.state.editState &&
+                          this.state.currentTemplateManagerTab == 1
+                        }
+                        onLayoutChange={(layout, layouts) =>
+                          this.onLayoutChange(layout, layouts)
+                        }
+                      >
+                        {renderLayout.map(el => el)}
+                      </RGL>
+                    )}
+                  </Col>
+                </Row>
+              </GreyWrapDashboard>
+            </Content>
+          </Layout>
           <CommonFooter />
         </ContactWrap>
         {this.state.templateManage && this.state.pairs.length > 0 && (
@@ -662,7 +755,9 @@ function mapStateToProps(state) {
     profileDetails:
       state.simpleReducer.profileDetails !== undefined
         ? state.simpleReducer.profileDetails.data[0]
-        : ""
+        : "",
+    theme:
+      state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
   };
 }
 
