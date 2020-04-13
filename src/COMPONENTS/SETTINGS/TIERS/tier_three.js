@@ -30,8 +30,9 @@ import {
 import { SupportText } from "../../LANDINGCATEGORIES/apply_job";
 import { APIUtility } from "../../../httpHelper";
 import FaldaxLoader from "../../../SHARED-COMPONENTS/FaldaxLoader";
-let { API_URL } = globalVariables;
+let { API_URL, Proof_of_assets_form } = globalVariables;
 /* Styled-Components */
+
 const KYCWrap = styled.div`
   background-color: ${props =>
     props.theme.mode === "dark" ? "#041422" : "#ffffff"};
@@ -546,7 +547,7 @@ class TierThree extends React.Component {
                         <div>
                           <p>Proof of Assets Form</p>
                           <a
-                            href="https://s3.us-east-2.amazonaws.com/production-static-asset/assets/pdf/FALDAX+Terms+of+Service.pdf"
+                            href={Proof_of_assets_form}
                             target="_blank"
                             download
                           >

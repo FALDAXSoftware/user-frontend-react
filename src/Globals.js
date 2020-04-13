@@ -15,7 +15,7 @@ export const globalVariables = {
 
   // API_URL: "http://localhost:1440", //Mansi's
 
-  // API_URL: "http://19cac0ed.ngrok.io",
+  // API_URL: "http://a0169a29.ngrok.io/",
 
   // API_URL: "http://7b2d9029.ngrok.io",
 
@@ -62,4 +62,7 @@ export const globalVariables = {
 
   Cookie_policy:
     "https://s3.us-east-2.amazonaws.com/production-static-asset/assets/pdf/FALDAX+Cookie+Policy.pdf",
+
+  Proof_of_assets_form:
+    "https://production-static-asset.s3.us-east-2.amazonaws.com/assets/pdf/FALDAX+Assets+of+Form.pdf"
 };
