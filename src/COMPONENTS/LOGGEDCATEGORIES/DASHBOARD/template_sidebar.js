@@ -245,23 +245,21 @@ class TemplateSideBar extends Component {
                     <Col span={24} >
                         <SidebarHeader>
                             Customize
-                            {!this.state.templates[this.props.selected]?.inbuilt &&
 
-                                <Tooltip title="Share / Import Template">
-                                    <Icon type="share-alt" className="share"
-                                        onClick={() => {
-                                            if (this.props.isSaved) {
-                                                this.changeTab(2)
-                                            } else {
-                                                notification.error({
-                                                    message: "Error",
-                                                    description: "Save template before share"
-                                                })
-                                            }
-                                        }}
-                                    />
-                                </Tooltip>
-                            }
+                            <Tooltip title="Share / Import Template">
+                                <Icon type="share-alt" className="share"
+                                    onClick={() => {
+                                        if (this.props.isSaved) {
+                                            this.changeTab(2)
+                                        } else {
+                                            notification.error({
+                                                message: "Error",
+                                                description: "Save template before share"
+                                            })
+                                        }
+                                    }}
+                                />
+                            </Tooltip>
                             <Tooltip title="Save"><Icon type={this.props.isSaving ? "loading" : "save"} className="save" onClick={() => {
                                 if (!this.props.isSaving && !this.props.isSaved) {
                                     this.props.onSave()
