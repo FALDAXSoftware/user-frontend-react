@@ -39,6 +39,7 @@ import NotFound from "./SHARED-COMPONENTS/NotFound.js";
 import Dashboard from "./COMPONENTS/LOGGEDCATEGORIES/DASHBOARD/dashboard.js";
 import Trade from "./COMPONENTS/LOGGEDCATEGORIES/TRADE/trade.js";
 import Tradingviewchart from "./COMPONENTS/tradingviewchart.js";
+import Paxos from "./COMPONENTS/LOGGEDCATEGORIES/paxos.js";
 // let { API_URL } = globalVariables;
 const socketIOClient = require("socket.io-client");
 // const sailsIOClient = require("sails.io.js");
@@ -104,12 +105,12 @@ const routes = [
     component: () => <Conversion />
     // io: io
   },
-  {
-    exact: false,
-    path: "/crypto-conversion",
-    component: () => <ConversionDetail io={io} />,
-    io: io
-  },
+  // {
+  //   exact: false,
+  //   path: "/crypto-conversion",
+  //   component: () => <ConversionDetail io={io} />,
+  //   io: io
+  // },
   // {`${globalVariables.WordpressSiteURL}/crypto-only-coming-soon`}
   // {
   //   exact: false,
@@ -130,6 +131,11 @@ const routes = [
     exact: false,
     path: "/simplex-exchange",
     component: () => <SimplexExchange />
+  },
+  {
+    exact: false,
+    path: "/paxos",
+    component: () => <Paxos />
   },
   // {
   //   exact: false,

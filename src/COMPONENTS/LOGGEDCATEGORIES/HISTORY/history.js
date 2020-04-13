@@ -153,7 +153,7 @@ class History extends Component {
       loader: false,
       csvFields: [],
       checkedGroupValue: ["SEND", "RECEIVE", "SELL", "BUY"],
-      activeKey: "1",
+      activeKey: "2",
       // csvHeadersTrade: [
       //   { label: "Date", key: "date" },
       //   { label: "Side", key: "side" },
@@ -932,7 +932,7 @@ class History extends Component {
                         onClick={this.resetFilters}
                         className="reset_btn"
                       >
-                        RESET
+                        {t("reset_btn.message")}
                       </EXPButton>
                       {this.state.csvTradeFields !== undefined ? (
                         this.state.csvTradeFields.length > 0 ? (
@@ -942,7 +942,7 @@ class History extends Component {
                               data={this.state.csvTradeFields}
                               headers={this.state.csvHeadersTrade}
                             >
-                              EXPORT
+                              {t("export_btn.message")}
                             </CSVLink>
                           </EXPButton>
                         ) : (
@@ -968,7 +968,7 @@ class History extends Component {
               </HeadHis>
               <HisWrap>
                 <Tabs activeKey={this.state.activeKey} onChange={this.callback}>
-                  <TabPane
+                  {/* <TabPane
                     tab={t(
                       "header:navbar_sub_menu_conversation_crypto_only.message"
                     )}
@@ -1074,7 +1074,7 @@ class History extends Component {
                         )}
                       </HisTable>
                     </Tablediv>
-                  </TabPane>
+                  </TabPane> */}
                   <TabPane
                     tab={this.t(
                       "header:navbar_sub_menu_conversation_credit_card.message"
@@ -1185,19 +1185,24 @@ class History extends Component {
                       </HisTable>
                     </Tablediv>
                   </TabPane>
-                  <TabPane tab="Trade" key="3">
+                  <TabPane tab={this.t("trade:trade_head.message")} key="3">
                     <Tablediv>
                       <HisTable responsive striped condensed>
                         <thead>
                           <tr>
-                            <th>Coin</th>
-                            <th>Date</th>
-                            <th>Filled Price</th>
-                            <th>Amount</th>
-                            <th>Side</th>
-                            <th>Order Type</th>
-                            <th>Limit Price</th>
-                            <th>Stop Price</th>
+                            <th>
+                              {this.t("settings:table_head_coin.message")}
+                            </th>
+                            <th>{this.t("wallet:date_text.message")}</th>
+                            <th>
+                              {this.t("history:filled_text.message")}{" "}
+                              {this.t("history:price_text.message")}
+                            </th>
+                            <th>{this.t("wallet:amount_text.message")}</th>
+                            <th>{this.t("history:side_text.message")}</th>
+                            <th>{this.t("trade:order_type_text.message")}</th>
+                            <th>{this.t("trade:limit_price_text.message")}</th>
+                            <th>{this.t("trade:stop_price_text.message")}</th>
                           </tr>
                         </thead>
                         {/* {console.log(this.state.historyTradeData)} */}
@@ -1246,7 +1251,9 @@ class History extends Component {
                           ) : (
                             <NDF>
                               <tr>
-                                <td colSpan="8">No Data Found</td>
+                                <td colSpan="8">
+                                  {t("support:no_data_found.message")}
+                                </td>
                               </tr>
                             </NDF>
                           )
@@ -1289,5 +1296,6 @@ export default translate([
   "security_tab",
   "footer",
   "header",
-  "support"
+  "support",
+  "trade"
 ])(connect(mapStateToProps, mapDispatchToProps)(History));

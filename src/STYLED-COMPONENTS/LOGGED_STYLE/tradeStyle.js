@@ -778,6 +778,15 @@ export const TableContent = styled(CustomTable)`
     background-color: ${props =>
     props.theme.mode === "dark" ? "#041422" : "#f5f6fa"};
   }
+  &.buy_sell_table {
+    > tbody {
+      > tr {
+        > td {
+          word-break: break-all;
+        }
+      }
+    }
+  }
 `;
 
 /* My orders and Trade */

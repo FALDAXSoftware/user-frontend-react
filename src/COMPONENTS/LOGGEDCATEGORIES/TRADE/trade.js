@@ -39,6 +39,7 @@ import DepthChart from "./depthchart";
 import OrderTrade from "./ordertrade";
 import { globalVariables } from "Globals.js";
 import TradingViewChart from "COMPONENTS/tradingviewchart";
+import { translate } from "react-i18next";
 /* import FaldaxLoader from 'SHARED-COMPONENTS/FaldaxLoader'; */
 
 /* Styled-Components */
@@ -274,6 +275,7 @@ class Trade extends Component {
       loader: false
     };
     io = this.props.io;
+    this.t = this.props.t;
     // io.sails.url = API_URL;
     this.handleChangeOT = this.handleChangeOT.bind(this);
     this.statusChange = this.statusChange.bind(this);
@@ -356,9 +358,13 @@ class Trade extends Component {
         console.log("^^^^data", data);
         this.updateMyOrder(data);
       });
+      this.props.io.on("users-completed-flag", data => {
+        console.log("^^^^dataorderSocket", data);
+        this.orderSocket(this.state.timePeriod, this.state.status);
+      });
       this.orderSocket(this.state.timePeriod, this.state.status);
       this.props.io.on("instrument-data", data => {
-        console.log(data);
+        console.log("instrument-data^^^", data);
         this.updateInstrumentsData(data);
       });
       this.props.io.on("user-wallet-balance", data => {
@@ -368,11 +374,21 @@ class Trade extends Component {
     }
   }
   joinRoom = (prevRoom = null) => {
-    console.log(this.state, prevRoom);
-    io.emit("join", {
-      room: this.state.crypto + "-" + this.state.currency,
-      previous_room: prevRoom
-    });
+    console.log("joinRoom^^", this.state, prevRoom);
+    io.emit(
+      "join",
+      {
+        room: this.state.crypto + "-" + this.state.currency,
+        previous_room: prevRoom
+      },
+      () => {
+        console.log(
+          "joinRoom after^^",
+          this.state.crypto + "-" + this.state.currency
+        );
+        console.log("joinRoom after^^", prevRoom);
+      }
+    );
   };
   // created by Meghal Patel at 2019-04-27 15:09.
   //
@@ -381,8 +397,11 @@ class Trade extends Component {
   //
 
   onInsChange(e) {
+    this.setState({
+      insLoader: true
+    });
     var self = this;
-    // console.log(e.target.value);
+    console.log("onInsChange^^^^", self.state.crypto, e.target.value);
     let cryptoPair = {
       crypto: self.state.crypto,
       currency: e.target.value,
@@ -397,7 +416,7 @@ class Trade extends Component {
         InsData: []
       },
       () => {
-        self.props.cryptoCurrency(cryptoPair);
+        // self.props.cryptoCurrency(cryptoPair);
         // self.getInstrumentData();
         // this.props
         this.joinRoom(
@@ -563,7 +582,9 @@ class Trade extends Component {
   //
 
   updateMyOrder(response) {
-    this.setState({ orderTradeData: response, orderTradeLoader: false });
+    this.setState({ orderTradeData: response, orderTradeLoader: false }, () => {
+      console.log("Trade data^^^", this.state.orderTradeData);
+    });
   }
 
   // created by Meghal Patel at 2019-04-27 15:23.
@@ -622,6 +643,9 @@ class Trade extends Component {
   //
 
   currencyPair(crypto) {
+    this.setState({
+      insLoader: true
+    });
     let cryptoPair = {
       crypto: crypto,
       currency: this.state.InsCurrency,
@@ -1587,7 +1611,9 @@ const mapDispatchToProps = dispatch => ({
   cryptoCurrency: Pair => dispatch(cryptoCurrency(Pair))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Trade);
+export default translate(["conversion"])(
+  connect(mapStateToProps, mapDispatchToProps)(Trade)
+);
 
 function getFromLS(key) {
   let ls = {};

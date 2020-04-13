@@ -31,13 +31,13 @@ import {
   Esti,
   ButtonWrap,
   ButtonETH,
-  FlexWrapDiv
+  FlexWrapDiv,
 } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
 import {
   Approx,
   ApproxBelow,
   WillpayBelow,
-  WillpayBelow2
+  WillpayBelow2,
 } from "../../../STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
 
 // let { API_URL } = globalVariables;
@@ -65,8 +65,8 @@ class StopLimit extends Component {
       singlefiatCryptoValue: "",
       singlefiatCurrencyValue: "",
       fiatCryptoValue: "",
-      fiatCurrencyValue: "",
-      fiatCurrency: ""
+      fiatCurrencyValue: 0,
+      fiatCurrency: "",
     };
 
     this.onChange = this.onChange.bind(this);
@@ -83,32 +83,32 @@ class StopLimit extends Component {
             return false;
           }
         },
-        required: true // optional
+        required: true, // optional
       },
       decimalrestrict3: {
         message:
           "Value must be less than or equal to 3 digits after decimal point.",
-        rule: val => {
+        rule: (val) => {
           var RE = /^\d*\.?\d{0,3}$/;
           if (RE.test(val)) {
             return true;
           } else {
             return false;
           }
-        }
+        },
       },
       decimalrestrict5: {
         message:
           "Value must be less than or equal to 5 digits after decimal point.",
-        rule: val => {
+        rule: (val) => {
           var RE = /^\d*\.?\d{0,5}$/;
           if (RE.test(val)) {
             return true;
           } else {
             return false;
           }
-        }
-      }
+        },
+      },
     });
   }
 
@@ -147,10 +147,10 @@ class StopLimit extends Component {
       sellPayAmt: 0,
       buyPayAmt: 0,
       fiatCurrency: "$",
-      fiatCryptoValue: this.props.userBal.cryptoFiat,
-      fiatCurrencyValue: this.props.userBal.currencyFiat,
+      // fiatCryptoValue: this.props.userBal.cryptoFiat,
+      // fiatCurrencyValue: this.props.userBal.currencyFiat,
       singlefiatCryptoValue: this.props.userBal.cryptoFiat,
-      singlefiatCurrencyValue: this.props.userBal.currencyFiat
+      singlefiatCurrencyValue: this.props.userBal.currencyFiat,
     });
   }
 
@@ -165,10 +165,10 @@ class StopLimit extends Component {
       sellEstPrice: 0,
       sellPayAmt: 0,
       buyPayAmt: 0,
-      fiatCryptoValue: props.userBal.cryptoFiat,
-      fiatCurrencyValue: props.userBal.currencyFiat,
+      // fiatCryptoValue: props.userBal.cryptoFiat,
+      // fiatCurrencyValue: props.userBal.currencyFiat,
       singlefiatCryptoValue: props.userBal.cryptoFiat,
-      singlefiatCurrencyValue: props.userBal.currencyFiat
+      singlefiatCurrencyValue: props.userBal.currencyFiat,
     });
     if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
       if (props.cryptoPair.crypto !== this.state.crypto) {
@@ -197,6 +197,9 @@ class StopLimit extends Component {
 
     let value = e.target.value;
     obj[name] = value;
+    // this.setState({
+    //   fiatCurrencyValue: 0
+    // });
     if (name === "side") {
       obj["amount"] = "";
       obj["total"] = 0;
@@ -205,17 +208,17 @@ class StopLimit extends Component {
       this.clearValidation();
       if (e.target.value === "Buy") {
         this.setState({
-          fiatCryptoValue: this.state.singlefiatCryptoValue
+          fiatCurrencyValue: 0,
         });
       } else if (e.target.value === "Sell") {
         this.setState({
-          fiatCurrencyValue: this.state.singlefiatCurrencyValue
+          fiatCurrencyValue: 0,
         });
       }
     }
     this.setState(
       {
-        ...obj
+        ...obj,
       },
       () => {
         obj = {};
@@ -228,7 +231,7 @@ class StopLimit extends Component {
             self.setState({
               buyPayAmt: this.state.amount * this.props.userBal.buyPay,
               buyEstPrice:
-                this.state.amount * this.props.userBal.buyEstimatedPrice
+                this.state.amount * this.props.userBal.buyEstimatedPrice,
             });
           } else if (this.state.side === "Sell") {
             if (this.validator.allValid()) {
@@ -238,17 +241,20 @@ class StopLimit extends Component {
             self.setState({
               sellPayAmt: this.state.amount * this.props.userBal.sellPay,
               sellEstPrice:
-                this.state.amount * this.props.userBal.sellEstimatedPrice
+                this.state.amount * this.props.userBal.sellEstimatedPrice,
             });
           }
-        } else if (this.state.amount > 0) {
           if (this.state.side === "Buy") {
             if (value > 0 && name === "amount") {
               let fiatValue =
-                parseFloat(this.state.singlefiatCryptoValue) *
+                parseFloat(this.state.singlefiatCurrencyValue) *
                 parseFloat(value).toFixed(8);
               this.setState({
-                fiatCryptoValue: fiatValue
+                fiatCurrencyValue: fiatValue,
+              });
+            } else if (value == 0 && name === "amount") {
+              this.setState({
+                fiatCurrencyValue: 0,
               });
             }
           } else if (this.state.side === "Sell") {
@@ -257,19 +263,44 @@ class StopLimit extends Component {
                 parseFloat(this.state.singlefiatCurrencyValue) *
                 parseFloat(value).toFixed(8);
               this.setState({
-                fiatCurrencyValue: fiatValue
+                fiatCurrencyValue: fiatValue,
+              });
+            } else if (value == 0 && name === "amount") {
+              this.setState({
+                fiatCurrencyValue: 0,
+              });
+            }
+          }
+        } else if (this.state.amount > 0) {
+          if (this.state.side === "Buy") {
+            if (value > 0 && name === "amount") {
+              let fiatValue =
+                parseFloat(this.state.singlefiatCurrencyValue) *
+                parseFloat(value).toFixed(8);
+              this.setState({
+                fiatCurrencyValue: fiatValue,
+              });
+            }
+          } else if (this.state.side === "Sell") {
+            if (value > 0 && name === "amount") {
+              let fiatValue =
+                parseFloat(this.state.singlefiatCurrencyValue) *
+                parseFloat(value).toFixed(8);
+              this.setState({
+                fiatCurrencyValue: fiatValue,
               });
             }
           }
         } else {
+          console.log("herer");
           obj["total"] = 0;
           if (this.state.side === "Buy") {
             this.setState({
-              fiatCryptoValue: this.state.singlefiatCryptoValue
+              fiatCurrencyValue: 0,
             });
           } else if (this.state.side === "Sell") {
             this.setState({
-              fiatCurrencyValue: this.state.singlefiatCurrencyValue
+              fiatCurrencyValue: 0,
             });
           }
         }
@@ -286,7 +317,7 @@ class StopLimit extends Component {
   openNotificationWithIcon(type, head, desc) {
     notification[type]({
       message: head,
-      description: desc
+      description: desc,
     });
   }
 
@@ -307,7 +338,7 @@ class StopLimit extends Component {
         order_type: "StopLimit",
         orderQuantity: self.state.amount,
         limit_price: self.state.limit_price,
-        stop_price: self.state.stop_price
+        stop_price: self.state.stop_price,
       };
       this.setState({ loader: true });
       fetch(
@@ -319,13 +350,13 @@ class StopLimit extends Component {
             Accept: "application/json",
             "Content-Type": "application/json",
             "Accept-Language": localStorage["i18nextLng"],
-            Authorization: "Bearer " + self.props.isLoggedIn
+            Authorization: "Bearer " + self.props.isLoggedIn,
           },
-          body: JSON.stringify(params)
+          body: JSON.stringify(params),
         }
       )
-        .then(response => response.json())
-        .then(responseData => {
+        .then((response) => response.json())
+        .then((responseData) => {
           if (responseData.status === 200) {
             this.setState(
               {
@@ -337,16 +368,16 @@ class StopLimit extends Component {
                 buyPayAmt: 0,
                 sellPayAmt: 0,
                 buyEstPrice: 0,
-                sellEstPrice: 0
+                sellEstPrice: 0,
               },
               () => {
                 if (this.state.side === "Buy") {
                   this.setState({
-                    fiatCryptoValue: this.state.singlefiatCryptoValue
+                    fiatCurrencyValue: 0,
                   });
                 } else if (this.state.side === "Sell") {
                   this.setState({
-                    fiatCurrencyValue: this.state.singlefiatCurrencyValue
+                    fiatCurrencyValue: 0,
                   });
                 }
               }
@@ -367,16 +398,16 @@ class StopLimit extends Component {
                 buyPayAmt: 0,
                 sellPayAmt: 0,
                 buyEstPrice: 0,
-                sellEstPrice: 0
+                sellEstPrice: 0,
               },
               () => {
                 if (this.state.side === "Buy") {
                   this.setState({
-                    fiatCryptoValue: this.state.singlefiatCryptoValue
+                    fiatCurrencyValue: 0,
                   });
                 } else if (this.state.side === "Sell") {
                   this.setState({
-                    fiatCurrencyValue: this.state.singlefiatCurrencyValue
+                    fiatCurrencyValue: 0,
                   });
                 }
               }
@@ -397,10 +428,10 @@ class StopLimit extends Component {
             self.openNotificationWithIcon("error", "Error", responseData.err);
           }
           this.setState({
-            Loader: false
+            loader: false,
           });
         })
-        .catch(error => {
+        .catch((error) => {
           this.setState({ loader: false });
           self.openNotificationWithIcon(
             "error",
@@ -422,7 +453,7 @@ class StopLimit extends Component {
       buyEstPrice,
       buyPayAmt,
       sellEstPrice,
-      sellPayAmt
+      sellPayAmt,
     } = this.state;
     const RadioGroup = Radio.Group;
 
@@ -454,9 +485,11 @@ class StopLimit extends Component {
                     <Col span={24}>
                       <Balance>
                         {this.props.userBal.currency[0]
-                          ? `${this.props.userBal.currency[0].balance.toFixed(
-                              8
-                            )}${" "}`
+                          ? this.props.userBal.currency[0].placed_balance
+                            ? `${this.props.userBal.currency[0].placed_balance.toFixed(
+                                8
+                              )}${" "}`
+                            : `00${" "}`
                           : `00${" "}`}
                         {this.state.currency}
                       </Balance>
@@ -525,9 +558,11 @@ class StopLimit extends Component {
                     <Col span={24}>
                       <Balance>
                         {this.props.userBal.crypto[0]
-                          ? `${this.props.userBal.crypto[0].balance.toFixed(
-                              8
-                            )}${" "}`
+                          ? this.props.userBal.crypto[0].placed_balance
+                            ? `${this.props.userBal.crypto[0].placed_balance.toFixed(
+                                8
+                              )}${" "}`
+                            : `00${" "}`
                           : `00${" "}`}
                         {this.state.crypto}
                       </Balance>
@@ -620,7 +655,7 @@ class StopLimit extends Component {
               {
                 gtzero: "Amount should be greater than zero.",
                 decimalrestrict3:
-                  "Amount must be less than or equal to 3 digits after decimal point."
+                  "Amount must be less than or equal to 3 digits after decimal point.",
               }
             )}
           </TotalWrap>
@@ -647,7 +682,7 @@ class StopLimit extends Component {
                 {
                   gtzero: "Amount should be greater than zero.",
                   decimalrestrict5:
-                    "Amount must be less than or equal to 5 digits after decimal point."
+                    "Amount must be less than or equal to 5 digits after decimal point.",
                 }
               )}
             </TotalWrap>
@@ -673,7 +708,7 @@ class StopLimit extends Component {
                 {
                   gtzero: "Limit Price should be greater than zero.",
                   decimalrestrict5:
-                    "Limit Price must be less than or equal to 5 digits after decimal point."
+                    "Limit Price must be less than or equal to 5 digits after decimal point.",
                 }
               )}
             </TotalWrap>
@@ -691,15 +726,15 @@ class StopLimit extends Component {
               name="total"
               onChange={this.onChange}
             />
-            {this.validator.message(
+            {/* {this.validator.message(
               "Total",
               this.state.total,
               "required|gtzero|numeric",
               "trade-action-validation",
               {
-                gtzero: "Total should be greater than zero."
+                gtzero: "Total should be greater than zero.",
               }
-            )}
+            )} */}
           </TotalWrap>
         </BTCWrap>
         {Object.keys(this.props.userBal).length > 0 ? (
@@ -797,7 +832,7 @@ function mapStateToProps(state) {
     profileDetails:
       state.simpleReducer.profileDetails !== undefined
         ? state.simpleReducer.profileDetails.data[0]
-        : ""
+        : "",
     /* loader:state.simpleReducer.loader?state.simpleReducer.loader:false */
   };
 }
