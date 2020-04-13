@@ -150,7 +150,7 @@ class TemplateSideBar extends Component {
           });
         }
       })
-      .catch(error => {});
+      .catch(error => { });
   };
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (
@@ -267,7 +267,7 @@ class TemplateSideBar extends Component {
           }
         }
       })
-      .catch(error => {});
+      .catch(error => { });
   };
   render() {
     return (
@@ -326,7 +326,7 @@ class TemplateSideBar extends Component {
                         onOk: () => {
                           this.props.closeEditing();
                         },
-                        onCancel: () => {}
+                        onCancel: () => { }
                       });
                     } else {
                       this.props.closeEditing();
@@ -377,7 +377,7 @@ class TemplateSideBar extends Component {
                   <Alert
                     message="If you want customized dashboard, create your own."
                     type="info"
-                    // showIcon
+                  // showIcon
                   />
                 </Col>
               </Row>
