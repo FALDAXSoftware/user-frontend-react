@@ -740,7 +740,7 @@ class LoggedNavigation extends Component {
     const DropdownItems = (
       <Menu className="fixed-drop">
         <Menu.Item key="0">
-          {/* <a
+          <a
             className="tokenlink"
             href={`${globalVariables.WordpressSiteURL}${
               localStorage["i18nextLng"] && localStorage["i18nextLng"] !== "en"
@@ -749,10 +749,10 @@ class LoggedNavigation extends Component {
             }/crypto-only-coming-soon`}
           >
             {t("navbar_sub_menu_conversation_crypto_only.message")}
-          </a> */}
-          <a onClick={this.cryptoAccess}>
-            {t("navbar_sub_menu_conversation_crypto_only.message")}
           </a>
+          {/* <a onClick={this.cryptoAccess}>
+            {t("navbar_sub_menu_conversation_crypto_only.message")}
+          </a> */}
         </Menu.Item>
         <Menu.Item key="1">
           <a onClick={this.simplexAccess}>
@@ -784,7 +784,7 @@ class LoggedNavigation extends Component {
             Trade History
           </a>
         </Menu.Item> */}
-        <Menu.Item key="0">
+        {/* <Menu.Item key="0">
           <a
             onClick={() =>
               this.props.history.push({ pathname: "/history", tradeType: "1" })
@@ -792,7 +792,7 @@ class LoggedNavigation extends Component {
           >
             {t("navbar_sub_menu_conversation_crypto_only.message")}
           </a>
-        </Menu.Item>
+        </Menu.Item> */}
         <Menu.Item key="1">
           <a
             onClick={() =>
@@ -808,7 +808,7 @@ class LoggedNavigation extends Component {
               this.props.history.push({ pathname: "/history", tradeType: "3" })
             }
           >
-            Trade
+            {this.t("trade:trade_head.message")}
           </a>
         </Menu.Item>
         {/* <Menu.Item key="2">
@@ -884,17 +884,17 @@ class LoggedNavigation extends Component {
         >
           <Menuitem key="1">
             <NavLink className="" to="/market">
-              MARKET
+              {this.t("trade:market_head.message")}
             </NavLink>
           </Menuitem>
           <Menuitem key="2" onClick={this.showComing}>
             <NavLink className="" to="/dashboard">
-              DASHBOARD
+              {this.t("trade:dashboard_head.message")}
             </NavLink>
           </Menuitem>
           <Menuitem key="3" onClick={this.tradeAccess}>
             <NavLink className="" to="/trade">
-              Trade
+              {this.t("trade:trade_head.message")}
             </NavLink>
           </Menuitem>
           <Menuitem key="4">
@@ -925,7 +925,7 @@ class LoggedNavigation extends Component {
                 to={{
                   pathname: "/history",
                   state: {
-                    tradeType: "1"
+                    tradeType: "2"
                   }
                 }}
               >
@@ -1005,13 +1005,15 @@ class LoggedNavigation extends Component {
               </DropMenu>
             </a> */}
             <span>
-              <Link to="/market">Market</Link>
+              <Link to="/market">{this.t("trade:market_head.message")}</Link>
             </span>
             <span>
-              <Link to="/dashboard">Dashboard</Link>
+              <Link to="/dashboard">
+                {this.t("trade:dashboard_head.message")}
+              </Link>
             </span>
             <span onClick={this.tradeAccess}>
-              <Link to="/trade">Trade</Link>
+              <Link to="/trade">{this.t("trade:trade_head.message")}</Link>
             </span>
             <a className="DROPSUB">
               <DropMenu mode="inline">
@@ -1020,7 +1022,7 @@ class LoggedNavigation extends Component {
                   title={t("navbar_menu_conversion.message")}
                 >
                   <Menu.Item key="0">
-                    {/* <a
+                    <a
                       className="tokenlink"
                       href={`${globalVariables.WordpressSiteURL}${
                         localStorage["i18nextLng"] &&
@@ -1030,10 +1032,10 @@ class LoggedNavigation extends Component {
                       }/crypto-only-coming-soon`}
                     >
                       {t("navbar_sub_menu_conversation_crypto_only.message")}
-                    </a> */}
-                    <a onClick={this.cryptoAccess}>
-                      {t("navbar_sub_menu_conversation_crypto_only.message")}
                     </a>
+                    {/* <a onClick={this.cryptoAccess}>
+                      {t("navbar_sub_menu_conversation_crypto_only.message")}
+                    </a> */}
                   </Menu.Item>
                   <Menu.Item key="1">
                     <a onClick={this.simplexAccess}>
@@ -1080,7 +1082,7 @@ class LoggedNavigation extends Component {
                       Trade History
                     </a>
                   </Menu.Item> */}
-                  <Menu.Item key="0">
+                  {/* <Menu.Item key="0">
                     <a
                       onClick={() =>
                         this.props.history.push({
@@ -1091,7 +1093,7 @@ class LoggedNavigation extends Component {
                     >
                       {t("navbar_sub_menu_conversation_crypto_only.message")}
                     </a>
-                  </Menu.Item>
+                  </Menu.Item> */}
                   <Menu.Item key="1">
                     <a
                       onClick={() =>
@@ -1113,7 +1115,7 @@ class LoggedNavigation extends Component {
                         })
                       }
                     >
-                      Trade
+                      {this.t("trade:trade_head.message")}
                     </a>
                   </Menu.Item>
                   {/* <Menu.Item key="2">
@@ -1328,6 +1330,10 @@ const mapDispatchToProps = dispatch => ({
   langAction: lang => dispatch(langAction(lang))
 });
 
-export default translate(["header", "footer", "general_1", "general_4"])(
-  connect(mapStateToProps, mapDispatchToProps)(withRouter(LoggedNavigation))
-);
+export default translate([
+  "header",
+  "footer",
+  "general_1",
+  "general_4",
+  "trade"
+])(connect(mapStateToProps, mapDispatchToProps)(withRouter(LoggedNavigation)));
