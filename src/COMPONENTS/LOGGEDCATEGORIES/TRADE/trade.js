@@ -39,6 +39,7 @@ import DepthChart from "./depthchart";
 import OrderTrade from "./ordertrade";
 import { globalVariables } from "Globals.js";
 import TradingViewChart from "COMPONENTS/tradingviewchart";
+import { translate } from "react-i18next";
 /* import FaldaxLoader from 'SHARED-COMPONENTS/FaldaxLoader'; */
 
 /* Styled-Components */
@@ -274,6 +275,7 @@ class Trade extends Component {
       loader: false
     };
     io = this.props.io;
+    this.t = this.props.t;
     // io.sails.url = API_URL;
     this.handleChangeOT = this.handleChangeOT.bind(this);
     this.statusChange = this.statusChange.bind(this);
@@ -1609,7 +1611,9 @@ const mapDispatchToProps = dispatch => ({
   cryptoCurrency: Pair => dispatch(cryptoCurrency(Pair))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Trade);
+export default translate(["conversion"])(
+  connect(mapStateToProps, mapDispatchToProps)(Trade)
+);
 
 function getFromLS(key) {
   let ls = {};

@@ -202,7 +202,7 @@ class Conversion extends React.Component {
             <ContainerConversion>
               <HeadStyle>{this.t("conversion_head.message")}</HeadStyle>
               <RowConStyle>
-                {/* <TokComingSoonWrap
+                <TokComingSoonWrap
                   href={`${globalVariables.WordpressSiteURL}${
                     localStorage["i18nextLng"] &&
                     localStorage["i18nextLng"] !== "en"
@@ -210,9 +210,7 @@ class Conversion extends React.Component {
                       : ""
                   }/crypto-only-coming-soon`}
                 >
-                  <ColConTokStyle
-                  onClick={this.cryptoAccess}
-                  >
+                  <ColConTokStyle onClick={this.cryptoAccess}>
                     <ColHeadConStyle>
                       {this.t(
                         "header:navbar_sub_menu_conversation_crypto_only.message"
@@ -248,8 +246,8 @@ class Conversion extends React.Component {
                   >
                     {this.t("conversion_subhead.message")}
                   </TokComingSoon>
-                </TokComingSoonWrap> */}
-                <ColConStyle onClick={this.cryptoAccess}>
+                </TokComingSoonWrap>
+                {/* <ColConStyle onClick={this.cryptoAccess}>
                   <ColHeadConStyle>
                     {this.t(
                       "header:navbar_sub_menu_conversation_crypto_only.message"
@@ -274,7 +272,7 @@ class Conversion extends React.Component {
                       )}
                     </ConIconWrap>
                   </ColSubRow>
-                </ColConStyle>
+                </ColConStyle> */}
                 <ColConStyle onClick={this.simplexAccess}>
                   <ColHeadConStyle>
                     {this.t(
