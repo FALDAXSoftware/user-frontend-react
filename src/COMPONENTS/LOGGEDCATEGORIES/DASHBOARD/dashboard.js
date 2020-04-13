@@ -100,7 +100,7 @@ class Dashboard extends Component {
       showLayout: false,
       allTemplates: [...inbuiltTemplates],
       currentTemplateIndex: 0,
-      editState: true,
+      editState: false,
       loader: true,
       isSaving: false,
       currentTemplate: {
