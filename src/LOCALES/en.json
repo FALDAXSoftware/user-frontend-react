@@ -3043,6 +3043,132 @@
       "message": "Reset Layout",
       "message_type": "Web content",
       "context": "text of trade screen"
+    },
+    "instruments_text": {
+      "page": "Trade",
+      "message": "INSTRUMENTS",
+      "message_type": "Web content",
+      "context": "text of trade screen"
+    },
+    "limit_head": {
+      "page": "Trade",
+      "message": "Limit",
+      "message_type": "Web content",
+      "context": "Text of trade action"
+    },
+    "stop_limit_head": {
+      "page": "Trade",
+      "message": "Stop Limit",
+      "message_type": "Web content",
+      "context": "Text of trade action"
+    },
+    "my_order_and_trade_head": {
+      "page": "Trade",
+      "message": "MY ORDERS AND TRADES",
+      "message_type": "Web content",
+      "context": "Text of MY ORDERS AND TRADES"
+    },
+    "month_text": {
+      "page": "Trade",
+      "message": "Month",
+      "message_type": "Web content",
+      "context": "Text of dropdown month"
+    },
+    "months_text": {
+      "page": "Trade",
+      "message": "Months",
+      "message_type": "Web content",
+      "context": "Text of dropdown months"
+    },
+    "completed_text": {
+      "page": "Trade",
+      "message": "Completed",
+      "message_type": "Web content",
+      "context": "Text of tab completed"
+    },
+    "pending_text": {
+      "page": "Trade",
+      "message": "Pending",
+      "message_type": "Web content",
+      "context": "Text of tab Pending"
+    },
+    "cancelled_text": {
+      "page": "Trade",
+      "message": "Cancelled",
+      "message_type": "Web content",
+      "context": "Text of tab cancelled"
+    },
+    "change_text": {
+      "page": "Trade",
+      "message": "Change",
+      "message_type": "Web content",
+      "context": "change Text of instrument table head"
+    },
+    "volume_text": {
+      "page": "Trade",
+      "message": "Volume",
+      "message_type": "Web content",
+      "context": "volume Text of instrument table head"
+    },
+    "market_depth_text": {
+      "page": "Trade",
+      "message": "MARKET DEPTH",
+      "message_type": "Web content",
+      "context": "MARKET DEPTH Text of depth chart"
+    },
+    "ask_text": {
+      "page": "Trade",
+      "message": "Ask",
+      "message_type": "Web content",
+      "context": "ask Text of depth chart"
+    },
+    "bid_text": {
+      "page": "Trade",
+      "message": "Bid",
+      "message_type": "Web content",
+      "context": "bid Text of depth chart"
+    },
+    "order_book_text": {
+      "page": "Trade",
+      "message": "ORDER BOOK",
+      "message_type": "Web content",
+      "context": "ORDER BOOK Text of Buy/Sell book"
+    },
+    "buying_text": {
+      "page": "Trade",
+      "message": "BUYING",
+      "message_type": "Web content",
+      "context": "BUYING Text of Buy/Sell book"
+    },
+    "my_size_text": {
+      "page": "Trade",
+      "message": "MY SIZE",
+      "message_type": "Web content",
+      "context": "my size Text of Buy/Sell book"
+    },
+    "selling_text": {
+      "page": "Trade",
+      "message": "SELLING",
+      "message_type": "Web content",
+      "context": "SELLING Text of Buy/Sell book"
+    },
+    "order_history_text": {
+      "page": "Trade",
+      "message": "ORDER HISTORY",
+      "message_type": "Web content",
+      "context": "ORDER HISTORY Text"
+    },
+    "fill_price_text": {
+      "page": "Trade",
+      "message": "Fill Price",
+      "message_type": "Web content",
+      "context": "Fill price Text of order history"
+    },
+    "time_text": {
+      "page": "Trade",
+      "message": "Time",
+      "message_type": "Web content",
+      "context": "Time price Text of order history"
     }
   }
 }

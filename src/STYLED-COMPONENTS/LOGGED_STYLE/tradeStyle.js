@@ -192,6 +192,7 @@ export const RadioSelect = styled(RadioGroup)`
     background-color: ${props =>
       props.theme.mode === "dark" ? "" : "#f5f6fa"};
     font-size: 13px;
+    text-transform: uppercase;
   }
   @media (max-width: 460px) {
     & .ant-radio-button-wrapper {
@@ -765,6 +766,11 @@ export const TableHeader = styled(CustomTable)`
   > thead {
     color: #174c7e;
     height: 35px;
+    tr {
+      th {
+        text-transform: uppercase;
+      }
+    }
   }
 `;
 export const TableContent = styled(CustomTable)`
