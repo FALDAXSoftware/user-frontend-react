@@ -2963,6 +2963,18 @@
       "message": "RISING/FALLING",
       "message_type": "Web content",
       "context": "RISING/FALLING Tab of crypto screener"
+    },
+    "cryptocurrency_market_text": {
+      "page": "Market",
+      "message": "Cryptocurrency Markets",
+      "message_type": "Web content",
+      "context": "copyright text at bottom"
+    },
+    "by_tradingview_text": {
+      "page": "Market",
+      "message": "by TradingView",
+      "message_type": "Web content",
+      "context": "copyright text at bottom"
     }
   },
   "trade": {
@@ -3001,6 +3013,36 @@
       "message": "Stop Price",
       "message_type": "Web content",
       "context": "text of table"
+    },
+    "edit_layout_text": {
+      "page": "Trade",
+      "message": "Edit Layout",
+      "message_type": "Web content",
+      "context": "text of trade screen"
+    },
+    "exit_full_screen_text": {
+      "page": "Trade",
+      "message": "Exit Full Screen",
+      "message_type": "Web content",
+      "context": "text of trade screen"
+    },
+    "full_screen_text": {
+      "page": "Trade",
+      "message": "Full Screen",
+      "message_type": "Web content",
+      "context": "text of trade screen"
+    },
+    "clear_layout_text": {
+      "page": "Trade",
+      "message": "Clear Layout",
+      "message_type": "Web content",
+      "context": "text of trade screen"
+    },
+    "reset_layout_text": {
+      "page": "Trade",
+      "message": "Reset Layout",
+      "message_type": "Web content",
+      "context": "text of trade screen"
     }
   }
 }

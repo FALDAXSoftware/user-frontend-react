@@ -2963,6 +2963,18 @@
       "message": "\u7acb\u4e0a\u308a\u3001\u7acb\u4e0b\u308a",
       "message_type": "Web content",
       "context": "RISING/FALLING Tab of crypto screener"
+    },
+    "cryptocurrency_market_text": {
+      "page": "Market",
+      "message": "Cryptocurrency\u5e02\u5834",
+      "message_type": "Web content",
+      "context": "copyright text at bottom"
+    },
+    "by_tradingview_text": {
+      "page": "Market",
+      "message": "TradingView\u306b\u3088\u3063\u3066",
+      "message_type": "Web content",
+      "context": "copyright text at bottom"
     }
   },
   "trade": {

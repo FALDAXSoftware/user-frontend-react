@@ -78,7 +78,7 @@ const DropDownDiv = styled(Dropdown)`
       display: flex;
       align-items: center;
       font-weight: 600;
-      color: #000;
+      color: ${props => (props.theme.mode === "dark" ? "white" : "black")};
       > img {
         margin: 0 5px 0 0;
       }
