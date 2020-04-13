@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-
+import { translate } from "react-i18next";
 class MarketWidget extends Component {
   constructor(props) {
     super(props);
+    this.t = this.props.t;
     this._ref = React.createRef();
   }
   componentDidMount() {
@@ -23,12 +24,14 @@ class MarketWidget extends Component {
             rel="noopener"
             target="_blank"
           >
-            <span class="blue-text">Cryptocurrency Markets</span>
+            <span class="blue-text">
+              {this.t("cryptocurrency_market_text.message")}
+            </span>
           </a>{" "}
-          by TradingView
+          {this.t("by_tradingview_text.message")}
         </div>
       </div>
     );
   }
 }
-export default MarketWidget;
+export default translate(["market"])(MarketWidget);

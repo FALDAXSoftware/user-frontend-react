@@ -2963,6 +2963,86 @@
       "message": "RISING/FALLING",
       "message_type": "Web content",
       "context": "RISING/FALLING Tab of crypto screener"
+    },
+    "cryptocurrency_market_text": {
+      "page": "Market",
+      "message": "Cryptocurrency Markets",
+      "message_type": "Web content",
+      "context": "copyright text at bottom"
+    },
+    "by_tradingview_text": {
+      "page": "Market",
+      "message": "by TradingView",
+      "message_type": "Web content",
+      "context": "copyright text at bottom"
+    }
+  },
+  "trade": {
+    "market_head": {
+      "page": "Header",
+      "message": "Market",
+      "message_type": "Web content",
+      "context": "menu text of header"
+    },
+    "dashboard_head": {
+      "page": "Header",
+      "message": "Dashboard",
+      "message_type": "Web content",
+      "context": "menu text of header"
+    },
+    "trade_head": {
+      "page": "Header",
+      "message": "Trade",
+      "message_type": "Web content",
+      "context": "menu text of header"
+    },
+    "order_type_text": {
+      "page": "History > Trade",
+      "message": "Order Type",
+      "message_type": "Web content",
+      "context": "text of table"
+    },
+    "limit_price_text": {
+      "page": "History > Trade",
+      "message": "Limit Price",
+      "message_type": "Web content",
+      "context": "text of table"
+    },
+    "stop_price_text": {
+      "page": "History > Trade",
+      "message": "Stop Price",
+      "message_type": "Web content",
+      "context": "text of table"
+    },
+    "edit_layout_text": {
+      "page": "Trade",
+      "message": "Edit Layout",
+      "message_type": "Web content",
+      "context": "text of trade screen"
+    },
+    "exit_full_screen_text": {
+      "page": "Trade",
+      "message": "Exit Full Screen",
+      "message_type": "Web content",
+      "context": "text of trade screen"
+    },
+    "full_screen_text": {
+      "page": "Trade",
+      "message": "Full Screen",
+      "message_type": "Web content",
+      "context": "text of trade screen"
+    },
+    "clear_layout_text": {
+      "page": "Trade",
+      "message": "Clear Layout",
+      "message_type": "Web content",
+      "context": "text of trade screen"
+    },
+    "reset_layout_text": {
+      "page": "Trade",
+      "message": "Reset Layout",
+      "message_type": "Web content",
+      "context": "text of trade screen"
     }
   }
 }
