@@ -543,23 +543,15 @@ class Dashboard extends Component {
         allTemplates: templates,
         templateManage: false,
         showLayout: false,
-        isSaved: false
+        isSaved: false,
+        currentTemplate: templates[this.state.currentTemplateIndex] ? templates[this.state.currentTemplateIndex] : templates[templates.length - 1],
       },
       () => {
         // this.saveToDB();
-        if (this.state.allTemplates[this.state.currentTemplateIndex]) {
-          this.setState(
-            {
-              currentTemplate: this.state.allTemplates[
-                this.state.currentTemplateIndex
-              ],
-              showLayout: true
-            },
-            () => {
-              this.forceUpdate();
-            }
-          );
-        }
+        this.setState(
+          {
+            showLayout: true
+          });
       }
     );
   };
@@ -712,7 +704,7 @@ class Dashboard extends Component {
                           xs: 480,
                           xxs: 0
                         }}
-                        cols={{ lg: 12, md: 12, sm: 6, xs: 4, xxs: 2 }}
+                        cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
                         isDraggable={
                           this.state.editState &&
                           this.state.currentTemplateManagerTab == 1
