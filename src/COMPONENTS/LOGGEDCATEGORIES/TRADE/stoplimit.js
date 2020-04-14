@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import SimpleReactValidator from "simple-react-validator";
 import "antd/dist/antd.css";
 import { Row, Col, Radio, notification, Spin } from "antd";
+import { translate } from "react-i18next";
 
 /* Components */
 import { globalVariables } from "Globals.js";
@@ -31,13 +32,13 @@ import {
   Esti,
   ButtonWrap,
   ButtonETH,
-  FlexWrapDiv,
+  FlexWrapDiv
 } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
 import {
   Approx,
   ApproxBelow,
   WillpayBelow,
-  WillpayBelow2,
+  WillpayBelow2
 } from "../../../STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
 
 // let { API_URL } = globalVariables;
@@ -66,16 +67,16 @@ class StopLimit extends Component {
       singlefiatCurrencyValue: "",
       fiatCryptoValue: "",
       fiatCurrencyValue: 0,
-      fiatCurrency: "",
+      fiatCurrency: ""
     };
-
+    this.t = this.props.t;
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.clearValidation = this.clearValidation.bind(this);
     this.validator = new SimpleReactValidator({
       gtzero: {
         // name the rule
-        message: "Amount must be greater than zero",
+        message: this.t("validations:value_greater_than_0_error.message"),
         rule: (val, params, validator) => {
           if (val > 0) {
             return true;
@@ -83,32 +84,30 @@ class StopLimit extends Component {
             return false;
           }
         },
-        required: true, // optional
+        required: true // optional
       },
       decimalrestrict3: {
-        message:
-          "Value must be less than or equal to 3 digits after decimal point.",
-        rule: (val) => {
+        message: this.t("3_decimal_error.message"),
+        rule: val => {
           var RE = /^\d*\.?\d{0,3}$/;
           if (RE.test(val)) {
             return true;
           } else {
             return false;
           }
-        },
+        }
       },
       decimalrestrict5: {
-        message:
-          "Value must be less than or equal to 5 digits after decimal point.",
-        rule: (val) => {
+        message: this.t("5_decimal_error.message"),
+        rule: val => {
           var RE = /^\d*\.?\d{0,5}$/;
           if (RE.test(val)) {
             return true;
           } else {
             return false;
           }
-        },
-      },
+        }
+      }
     });
   }
 
@@ -150,7 +149,7 @@ class StopLimit extends Component {
       // fiatCryptoValue: this.props.userBal.cryptoFiat,
       // fiatCurrencyValue: this.props.userBal.currencyFiat,
       singlefiatCryptoValue: this.props.userBal.cryptoFiat,
-      singlefiatCurrencyValue: this.props.userBal.currencyFiat,
+      singlefiatCurrencyValue: this.props.userBal.currencyFiat
     });
   }
 
@@ -168,7 +167,7 @@ class StopLimit extends Component {
       // fiatCryptoValue: props.userBal.cryptoFiat,
       // fiatCurrencyValue: props.userBal.currencyFiat,
       singlefiatCryptoValue: props.userBal.cryptoFiat,
-      singlefiatCurrencyValue: props.userBal.currencyFiat,
+      singlefiatCurrencyValue: props.userBal.currencyFiat
     });
     if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
       if (props.cryptoPair.crypto !== this.state.crypto) {
@@ -208,17 +207,17 @@ class StopLimit extends Component {
       this.clearValidation();
       if (e.target.value === "Buy") {
         this.setState({
-          fiatCurrencyValue: 0,
+          fiatCurrencyValue: 0
         });
       } else if (e.target.value === "Sell") {
         this.setState({
-          fiatCurrencyValue: 0,
+          fiatCurrencyValue: 0
         });
       }
     }
     this.setState(
       {
-        ...obj,
+        ...obj
       },
       () => {
         obj = {};
@@ -231,7 +230,7 @@ class StopLimit extends Component {
             self.setState({
               buyPayAmt: this.state.amount * this.props.userBal.buyPay,
               buyEstPrice:
-                this.state.amount * this.props.userBal.buyEstimatedPrice,
+                this.state.amount * this.props.userBal.buyEstimatedPrice
             });
           } else if (this.state.side === "Sell") {
             if (this.validator.allValid()) {
@@ -241,7 +240,7 @@ class StopLimit extends Component {
             self.setState({
               sellPayAmt: this.state.amount * this.props.userBal.sellPay,
               sellEstPrice:
-                this.state.amount * this.props.userBal.sellEstimatedPrice,
+                this.state.amount * this.props.userBal.sellEstimatedPrice
             });
           }
           if (this.state.side === "Buy") {
@@ -250,11 +249,11 @@ class StopLimit extends Component {
                 parseFloat(this.state.singlefiatCurrencyValue) *
                 parseFloat(value).toFixed(8);
               this.setState({
-                fiatCurrencyValue: fiatValue,
+                fiatCurrencyValue: fiatValue
               });
             } else if (value == 0 && name === "amount") {
               this.setState({
-                fiatCurrencyValue: 0,
+                fiatCurrencyValue: 0
               });
             }
           } else if (this.state.side === "Sell") {
@@ -263,11 +262,11 @@ class StopLimit extends Component {
                 parseFloat(this.state.singlefiatCurrencyValue) *
                 parseFloat(value).toFixed(8);
               this.setState({
-                fiatCurrencyValue: fiatValue,
+                fiatCurrencyValue: fiatValue
               });
             } else if (value == 0 && name === "amount") {
               this.setState({
-                fiatCurrencyValue: 0,
+                fiatCurrencyValue: 0
               });
             }
           }
@@ -278,7 +277,7 @@ class StopLimit extends Component {
                 parseFloat(this.state.singlefiatCurrencyValue) *
                 parseFloat(value).toFixed(8);
               this.setState({
-                fiatCurrencyValue: fiatValue,
+                fiatCurrencyValue: fiatValue
               });
             }
           } else if (this.state.side === "Sell") {
@@ -287,7 +286,7 @@ class StopLimit extends Component {
                 parseFloat(this.state.singlefiatCurrencyValue) *
                 parseFloat(value).toFixed(8);
               this.setState({
-                fiatCurrencyValue: fiatValue,
+                fiatCurrencyValue: fiatValue
               });
             }
           }
@@ -296,11 +295,11 @@ class StopLimit extends Component {
           obj["total"] = 0;
           if (this.state.side === "Buy") {
             this.setState({
-              fiatCurrencyValue: 0,
+              fiatCurrencyValue: 0
             });
           } else if (this.state.side === "Sell") {
             this.setState({
-              fiatCurrencyValue: 0,
+              fiatCurrencyValue: 0
             });
           }
         }
@@ -317,7 +316,7 @@ class StopLimit extends Component {
   openNotificationWithIcon(type, head, desc) {
     notification[type]({
       message: head,
-      description: desc,
+      description: desc
     });
   }
 
@@ -338,7 +337,7 @@ class StopLimit extends Component {
         order_type: "StopLimit",
         orderQuantity: self.state.amount,
         limit_price: self.state.limit_price,
-        stop_price: self.state.stop_price,
+        stop_price: self.state.stop_price
       };
       this.setState({ loader: true });
       fetch(
@@ -350,13 +349,13 @@ class StopLimit extends Component {
             Accept: "application/json",
             "Content-Type": "application/json",
             "Accept-Language": localStorage["i18nextLng"],
-            Authorization: "Bearer " + self.props.isLoggedIn,
+            Authorization: "Bearer " + self.props.isLoggedIn
           },
-          body: JSON.stringify(params),
+          body: JSON.stringify(params)
         }
       )
-        .then((response) => response.json())
-        .then((responseData) => {
+        .then(response => response.json())
+        .then(responseData => {
           if (responseData.status === 200) {
             this.setState(
               {
@@ -368,23 +367,23 @@ class StopLimit extends Component {
                 buyPayAmt: 0,
                 sellPayAmt: 0,
                 buyEstPrice: 0,
-                sellEstPrice: 0,
+                sellEstPrice: 0
               },
               () => {
                 if (this.state.side === "Buy") {
                   this.setState({
-                    fiatCurrencyValue: 0,
+                    fiatCurrencyValue: 0
                   });
                 } else if (this.state.side === "Sell") {
                   this.setState({
-                    fiatCurrencyValue: 0,
+                    fiatCurrencyValue: 0
                   });
                 }
               }
             );
             self.openNotificationWithIcon(
               "success",
-              "Success",
+              this.t("validations:success_text.message"),
               responseData.message
             );
           } else if (responseData.status === 201) {
@@ -398,44 +397,48 @@ class StopLimit extends Component {
                 buyPayAmt: 0,
                 sellPayAmt: 0,
                 buyEstPrice: 0,
-                sellEstPrice: 0,
+                sellEstPrice: 0
               },
               () => {
                 if (this.state.side === "Buy") {
                   this.setState({
-                    fiatCurrencyValue: 0,
+                    fiatCurrencyValue: 0
                   });
                 } else if (this.state.side === "Sell") {
                   this.setState({
-                    fiatCurrencyValue: 0,
+                    fiatCurrencyValue: 0
                   });
                 }
               }
             );
             self.openNotificationWithIcon(
               "warning",
-              "Warning",
+              this.t("validations:warning_text.message"),
               responseData.message
             );
           } else if (responseData.status === 500) {
             self.openNotificationWithIcon(
               "error",
-              "Error",
+              this.t("validations:error_text.message"),
               responseData.message
             );
           } else {
             this.setState({ loader: false });
-            self.openNotificationWithIcon("error", "Error", responseData.err);
+            self.openNotificationWithIcon(
+              "error",
+              this.t("validations:error_text.message"),
+              responseData.err
+            );
           }
           this.setState({
-            loader: false,
+            loader: false
           });
         })
-        .catch((error) => {
+        .catch(error => {
           this.setState({ loader: false });
           self.openNotificationWithIcon(
             "error",
-            "Error",
+            this.t("validations:error_text.message"),
             "Something went wrong!"
           );
         });
@@ -453,7 +456,7 @@ class StopLimit extends Component {
       buyEstPrice,
       buyPayAmt,
       sellEstPrice,
-      sellPayAmt,
+      sellPayAmt
     } = this.state;
     const RadioGroup = Radio.Group;
 
@@ -468,8 +471,12 @@ class StopLimit extends Component {
               onChange={this.onChange}
               name="side"
             >
-              <BuySellRadio value="Buy">BUY</BuySellRadio>
-              <BuySellRadio value="Sell">SELL</BuySellRadio>
+              <BuySellRadio value="Buy">
+                {this.t("history:buy_text.message")}
+              </BuySellRadio>
+              <BuySellRadio value="Sell">
+                {this.t("history:sell_text.message")}
+              </BuySellRadio>
             </RadioGroup>
           </BuySell>
         </BuyWrap>
@@ -480,7 +487,7 @@ class StopLimit extends Component {
                 <Col xs={24} sm={12}>
                   <Row>
                     <Col span={24}>
-                      <Balance1>Balance</Balance1>
+                      <Balance1>{this.t("balance_text.message")}</Balance1>
                     </Col>
                     <Col span={24}>
                       <Balance>
@@ -499,7 +506,9 @@ class StopLimit extends Component {
                 <Col xs={24} sm={12}>
                   <Row>
                     <Col span={24}>
-                      <Balance1>Total</Balance1>
+                      <Balance1>
+                        {this.t("conversion:total_text.message")}
+                      </Balance1>
                     </Col>
                     <Col span={24}>
                       <Balance>
@@ -516,7 +525,9 @@ class StopLimit extends Component {
                 <Col xs={24} sm={12}>
                   <Row>
                     <Col span={24}>
-                      <Balance1>In orders</Balance1>
+                      <Balance1>
+                        {this.t("wallet:in_order_text.message")}
+                      </Balance1>
                     </Col>
                     <Col span={24}>
                       <Balance>
@@ -535,7 +546,10 @@ class StopLimit extends Component {
                 <Col xs={24} sm={12}>
                   <Row>
                     <Col span={24}>
-                      <Balance1>Best Ask</Balance1>
+                      <Balance1>
+                        {this.t("best_text.message")}{" "}
+                        {this.t("ask_text.message")}
+                      </Balance1>
                     </Col>
                     <Col span={24}>
                       <Balance>
@@ -553,7 +567,7 @@ class StopLimit extends Component {
                 <Col xs={24} sm={12}>
                   <Row>
                     <Col span={24}>
-                      <Balance1>Balance</Balance1>
+                      <Balance1>{this.t("balance_text.message")}</Balance1>
                     </Col>
                     <Col span={24}>
                       <Balance>
@@ -572,7 +586,9 @@ class StopLimit extends Component {
                 <Col xs={24} sm={12}>
                   <Row>
                     <Col span={24}>
-                      <Balance1>Total</Balance1>
+                      <Balance1>
+                        {this.t("conversion:total_text.message")}
+                      </Balance1>
                     </Col>
                     <Col span={24}>
                       <Balance>
@@ -589,7 +605,9 @@ class StopLimit extends Component {
                 <Col xs={24} sm={12}>
                   <Row>
                     <Col span={24}>
-                      <Balance1>In orders</Balance1>
+                      <Balance1>
+                        {this.t("wallet:in_order_text.message")}
+                      </Balance1>
                     </Col>
                     <Col span={24}>
                       <Balance>
@@ -607,7 +625,10 @@ class StopLimit extends Component {
                 <Col xs={24} sm={12}>
                   <Row>
                     <Col span={24}>
-                      <Balance1>Best Bid</Balance1>
+                      <Balance1>
+                        {this.t("best_text.message")}{" "}
+                        {this.t("bid_text.message")}
+                      </Balance1>
                     </Col>
                     <Col span={24}>
                       <Balance>
@@ -624,7 +645,7 @@ class StopLimit extends Component {
           ""
         )}
         <ETHWrap>
-          <Label>Amount</Label>
+          <Label>{this.t("wallet:amount_text.message")}</Label>
           <TotalWrap>
             <AMTInput
               min="0"
@@ -653,16 +674,17 @@ class StopLimit extends Component {
               "required|gtzero|numeric|decimalrestrict3",
               "trade-action-validation",
               {
-                gtzero: "Amount should be greater than zero.",
-                decimalrestrict3:
-                  "Amount must be less than or equal to 3 digits after decimal point.",
+                required: this.t(
+                  "general_3:validation_amount_required.message"
+                ),
+                numeric: this.t("general_3:validation_amount_numeric.message")
               }
             )}
           </TotalWrap>
         </ETHWrap>
         <FlexWrapDiv>
           <BTCWrap className="width_class">
-            <Label>Stop Price</Label>
+            <Label>{this.t("stop_price_text.message")}</Label>
             <TotalWrap>
               <TotInput
                 min="0"
@@ -680,15 +702,24 @@ class StopLimit extends Component {
                 "required|gtzero|numeric|decimalrestrict5",
                 "trade-action-validation",
                 {
-                  gtzero: "Amount should be greater than zero.",
-                  decimalrestrict5:
-                    "Amount must be less than or equal to 5 digits after decimal point.",
+                  required: `${this.t("stop_price_text.message")}${" "}${this.t(
+                    "validations:field_is_required.message"
+                  )}`,
+                  numeric: `${this.t("stop_price_text.message")}${" "}${this.t(
+                    "must_be_a_number.message"
+                  )}`,
+                  gtzero: `${this.t("stop_price_text.message")}${" "}${this.t(
+                    "should_be_greater_than_0.message"
+                  )}`,
+                  decimalrestrict5: `${this.t(
+                    "stop_price_text.message"
+                  )}${" "}${this.t("5_decimal_error.message")}`
                 }
               )}
             </TotalWrap>
           </BTCWrap>
           <BTCWrap className="width_class">
-            <Label>Limit Price</Label>
+            <Label>{this.t("limit_price_text.message")}</Label>
             <TotalWrap>
               <TotInput
                 min="0"
@@ -706,16 +737,25 @@ class StopLimit extends Component {
                 "required|gtzero|numeric|decimalrestrict5",
                 "trade-action-validation",
                 {
-                  gtzero: "Limit Price should be greater than zero.",
-                  decimalrestrict5:
-                    "Limit Price must be less than or equal to 5 digits after decimal point.",
+                  required: `${this.t(
+                    "limit_price_text.message"
+                  )}${" "}${this.t("validations:field_is_required.message")}`,
+                  numeric: `${this.t("limit_price_text.message")}${" "}${this.t(
+                    "must_be_a_number.message"
+                  )}`,
+                  gtzero: `${this.t("limit_price_text.message")}${" "}${this.t(
+                    "should_be_greater_than_0.message"
+                  )}`,
+                  decimalrestrict5: `${this.t(
+                    "limit_price_text.message"
+                  )}${" "}${this.t("5_decimal_error.message")}`
                 }
               )}
             </TotalWrap>
           </BTCWrap>
         </FlexWrapDiv>
         <BTCWrap>
-          <Label>Total</Label>
+          <Label>{this.t("conversion:total_text.message")}</Label>
           <TotalWrap className="readonly-input">
             <TotInput
               min="0"
@@ -741,27 +781,38 @@ class StopLimit extends Component {
           this.state.side === "Buy" ? (
             <Pay>
               <Approx>
-                <Willpay>You will approximately pay</Willpay>
+                <Willpay>
+                  {this.t("you_approximate_text.message")}{" "}
+                  {this.t("pay_text.message")}
+                </Willpay>
                 <Willpay2>
                   {buyPayAmt.toFixed(8)} {this.state.currency}
                 </Willpay2>
               </Approx>
               <Esti>
                 <ApproxBelow>
-                  <WillpayBelow>Fiat Value</WillpayBelow>
+                  <WillpayBelow>
+                    {this.t(
+                      "settings:deactivate_popup_table_head_fiat_value.message"
+                    )}
+                  </WillpayBelow>
                   <WillpayBelow2>
                     {this.state.fiatCurrency}{" "}
                     {parseFloat(this.state.fiatCurrencyValue).toFixed(8)}
                   </WillpayBelow2>
                 </ApproxBelow>
                 <ApproxBelow>
-                  <WillpayBelow>Estimated Best Price</WillpayBelow>
+                  <WillpayBelow>
+                    {this.t("estimated_best_price_text.message")}
+                  </WillpayBelow>
                   <WillpayBelow2>
                     {buyPayAmt.toFixed(8)} {this.state.currency}
                   </WillpayBelow2>
                 </ApproxBelow>
                 <ApproxBelow>
-                  <WillpayBelow>Fee {userBalFees} %</WillpayBelow>
+                  <WillpayBelow>
+                    {this.t("conversion:fee_text.message")} {userBalFees} %
+                  </WillpayBelow>
                   <WillpayBelow2>
                     {(buyPayAmt - buyEstPrice).toFixed(8)} {this.state.crypto}
                   </WillpayBelow2>
@@ -771,27 +822,38 @@ class StopLimit extends Component {
           ) : (
             <Pay>
               <Approx>
-                <Willpay>You will approximately receive</Willpay>
+                <Willpay>
+                  {this.t("you_approximate_text.message")}{" "}
+                  {this.t("receive_text.message")}
+                </Willpay>
                 <Willpay2>
                   {sellEstPrice.toFixed(8)} {this.state.currency}
                 </Willpay2>
               </Approx>
               <Esti>
                 <ApproxBelow>
-                  <WillpayBelow>Fiat Value</WillpayBelow>
+                  <WillpayBelow>
+                    {this.t(
+                      "settings:deactivate_popup_table_head_fiat_value.message"
+                    )}
+                  </WillpayBelow>
                   <WillpayBelow2>
                     {this.state.fiatCurrency}{" "}
                     {parseFloat(this.state.fiatCurrencyValue).toFixed(8)}
                   </WillpayBelow2>
                 </ApproxBelow>
                 <ApproxBelow>
-                  <WillpayBelow>Estimated Best Price</WillpayBelow>
+                  <WillpayBelow>
+                    {this.t("estimated_best_price_text.message")}
+                  </WillpayBelow>
                   <WillpayBelow2>
                     {sellPayAmt.toFixed(8)} {this.state.currency}
                   </WillpayBelow2>
                 </ApproxBelow>
                 <ApproxBelow>
-                  <WillpayBelow>Fee {userBalFees} %</WillpayBelow>
+                  <WillpayBelow>
+                    {this.t("conversion:fee_text.message")} {userBalFees} %
+                  </WillpayBelow>
                   <WillpayBelow2>
                     {(sellPayAmt - sellEstPrice).toFixed(8)}{" "}
                     {this.state.currency}
@@ -832,9 +894,16 @@ function mapStateToProps(state) {
     profileDetails:
       state.simpleReducer.profileDetails !== undefined
         ? state.simpleReducer.profileDetails.data[0]
-        : "",
+        : ""
     /* loader:state.simpleReducer.loader?state.simpleReducer.loader:false */
   };
 }
 
-export default connect(mapStateToProps)(StopLimit);
+export default translate([
+  "trade",
+  "conversion",
+  "wallet",
+  "validations",
+  "history",
+  "general_3"
+])(connect(mapStateToProps)(StopLimit));

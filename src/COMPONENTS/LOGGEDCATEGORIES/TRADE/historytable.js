@@ -5,6 +5,7 @@ import "antd/dist/antd.css";
 import styled from "styled-components";
 import { Scrollbars } from "react-custom-scrollbars";
 import moment from "moment";
+import { translate } from "react-i18next";
 /* import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; */
 
 /*components*/
@@ -65,6 +66,7 @@ class HistoryTable extends Component {
       currency: this.props.cryptoPair ? this.props.cryptoPair.currency : "BTC",
       loader: false
     };
+    this.t = this.props.t;
     this.historyFunc = this.historyFunc.bind(this);
     this.updateData = this.updateData.bind(this);
   }
@@ -264,11 +266,11 @@ class HistoryTable extends Component {
             >
               <thead>
                 <tr>
-                  <th width="10%">SIDE</th>
-                  <th width="20%">AMOUNT</th>
-                  <th width="20%">FILL PRICE</th>
-                  <th width="25%">TIME</th>
-                  <th width="25%">TOTAL</th>
+                  <th width="10%">{this.t("history:side_text.message")}</th>
+                  <th width="20%">{this.t("wallet:amount_text.message")}</th>
+                  <th width="20%">{this.t("fill_price_text.message")}</th>
+                  <th width="25%">{this.t("time_text.message")}</th>
+                  <th width="25%">{this.t("conversion:total_text.message")}</th>
                 </tr>
               </thead>
             </TableHeader>
@@ -291,7 +293,7 @@ class HistoryTable extends Component {
                   {this.state.data.length > 0 ? (
                     this.historyFunc()
                   ) : (
-                    <NDF>No Data Found</NDF>
+                    <NDF>{this.t("wallet:no_data_found_text.message")}</NDF>
                   )}
                 </tbody>
               </TableContent>
@@ -320,4 +322,6 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(HistoryTable);
+export default translate(["trade", "wallet", "conversion", "history"])(
+  connect(mapStateToProps)(HistoryTable)
+);
