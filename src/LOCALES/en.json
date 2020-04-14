@@ -3168,7 +3168,73 @@
       "page": "Trade",
       "message": "Time",
       "message_type": "Web content",
-      "context": "Time price Text of order history"
+      "context": "Time Text of order history"
+    },
+    "type_text": {
+      "page": "Trade",
+      "message": "Type",
+      "message_type": "Web content",
+      "context": "Type Text of order history"
+    },
+    "unfilled_text": {
+      "page": "Trade",
+      "message": "Unfilled",
+      "message_type": "Web content",
+      "context": "Unfilled Text of order history"
+    },
+    "actions_text": {
+      "page": "Trade",
+      "message": "Actions",
+      "message_type": "Web content",
+      "context": "Actions Text of order history"
+    },
+    "3_decimal_error": {
+      "page": "Trade > market Order",
+      "message": "Value must be less than or equal to 3 digits after decimal point.",
+      "message_type": "Web content",
+      "context": "Value must be less than or equal to 3 digits after decimal point error"
+    },
+    "5_decimal_error": {
+      "page": "Trade > market Order",
+      "message": "Value must be less than or equal to 5 digits after decimal point.",
+      "message_type": "Web content",
+      "context": "Value must be less than or equal to 5 digits after decimal point error"
+    },
+    "balance_text": {
+      "page": "Trade > market Order",
+      "message": "Balance",
+      "message_type": "Web content",
+      "context": "Balance Text of order history"
+    },
+    "best_text": {
+      "page": "Trade > market Order",
+      "message": "Best",
+      "message_type": "Web content",
+      "context": "Best Text of trade action"
+    },
+    "you_approximate_text": {
+      "page": "Trade > market Order",
+      "message": "You will approximately",
+      "message_type": "Web content",
+      "context": "You will approximately Text tradeaction"
+    },
+    "pay_text": {
+      "page": "Trade > market Order",
+      "message": "pay",
+      "message_type": "Web content",
+      "context": "pay Text tradeaction"
+    },
+    "receive_text": {
+      "page": "Trade > market Order",
+      "message": "receive",
+      "message_type": "Web content",
+      "context": "receive Text tradeaction"
+    },
+    "estimated_best_price_text": {
+      "page": "Trade > market Order",
+      "message": "Estimated Best Price",
+      "message_type": "Web content",
+      "context": "receive Text tradeaction"
     }
   }
 }
