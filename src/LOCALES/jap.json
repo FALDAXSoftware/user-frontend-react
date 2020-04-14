@@ -3169,6 +3169,84 @@
       "message": "\u6642\u9593",
       "message_type": "Web content",
       "context": "Time price Text of order history"
+    },
+    "type_text": {
+      "page": "Trade",
+      "message": "\u30bf\u30a4\u30d7",
+      "message_type": "Web content",
+      "context": "Type Text of order history"
+    },
+    "unfilled_text": {
+      "page": "Trade",
+      "message": "\u5145\u586b\u3055\u308c\u3066\u3044\u307e\u305b\u3093",
+      "message_type": "Web content",
+      "context": "Unfilled Text of order history"
+    },
+    "actions_text": {
+      "page": "Trade",
+      "message": "\u884c\u52d5",
+      "message_type": "Web content",
+      "context": "Actions Text of order history"
+    },
+    "3_decimal_error": {
+      "page": "Trade > market Order",
+      "message": "\u5024\u672a\u6e80\u3067\u3042\u308b\u304b\u3001\u5c0f\u6570\u70b9\u4ee5\u4e0b3\u6841\u306b\u7b49\u3057\u304f\u306a\u3051\u308c\u3070\u306a\u308a\u307e\u305b\u3093\u3002",
+      "message_type": "Web content",
+      "context": "Value must be less than or equal to 3 digits after decimal point error"
+    },
+    "5_decimal_error": {
+      "page": "Trade > market Order",
+      "message": "\u5024\u672a\u6e80\u53c8\u306f\u5c0f\u6570\u70b9\u4ee5\u4e0b5\u6841\u306b\u7b49\u3057\u304f\u306a\u3051\u308c\u3070\u306a\u308a\u307e\u305b\u3093\u3002",
+      "message_type": "Web content",
+      "context": "Value must be less than or equal to 5 digits after decimal point error"
+    },
+    "balance_text": {
+      "page": "Trade > market Order",
+      "message": "\u6b8b\u9ad8",
+      "message_type": "Web content",
+      "context": "Balance Text of order history"
+    },
+    "best_text": {
+      "page": "Trade > market Order",
+      "message": "\u30d9\u30b9\u30c8",
+      "message_type": "Web content",
+      "context": "Best Text of trade action"
+    },
+    "you_approximate_text": {
+      "page": "Trade > market Order",
+      "message": "\u3042\u306a\u305f\u306f\u7d04\u610f\u5fd7",
+      "message_type": "Web content",
+      "context": "You will approximately Text tradeaction"
+    },
+    "pay_text": {
+      "page": "Trade > market Order",
+      "message": "\u652f\u6255\u3046",
+      "message_type": "Web content",
+      "context": "pay Text tradeaction"
+    },
+    "receive_text": {
+      "page": "Trade > market Order",
+      "message": "\u53d7\u3051\u53d6\u308a\u307e\u3059",
+      "message_type": "Web content",
+      "context": "receive Text tradeaction"
+    },
+    "estimated_best_price_text": {
+      "page": "Trade > market Order",
+      "message": "\u898b\u7a4d\u30d9\u30b9\u30c8\u30d7\u30e9\u30a4\u30b9",
+      "message_type": "Web content",
+      "context": "receive Text tradeaction"
+    },
+    "must_be_a_number": {
+      "page": "Trade > Limit Order",
+      "message": "\u6570\u3067\u306a\u3051\u308c\u3070\u306a\u308a\u307e\u305b\u3093\u3002",
+      "message_type": "Web content",
+      "context": "validation message for number"
+    },
+    "should_be_greater_than_0": {
+      "page": "Trade > Limit Order",
+      "message": "\u30bc\u30ed\u3088\u308a\u5927\u304d\u304f\u306a\u3051\u308c\u3070\u306a\u308a\u307e\u305b\u3093\u3002",
+      "message_type": "Web content",
+      "context": "validation message for amount greater than 0"
     }
   }
 }

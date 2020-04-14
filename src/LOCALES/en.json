@@ -3196,7 +3196,7 @@
     },
     "5_decimal_error": {
       "page": "Trade > market Order",
-      "message": "Value must be less than or equal to 5 digits after decimal point.",
+      "message": "value must be less than or equal to 5 digits after decimal point.",
       "message_type": "Web content",
       "context": "Value must be less than or equal to 5 digits after decimal point error"
     },
@@ -3235,6 +3235,18 @@
       "message": "Estimated Best Price",
       "message_type": "Web content",
       "context": "receive Text tradeaction"
+    },
+    "must_be_a_number": {
+      "page": "Trade > Limit Order",
+      "message": "must be a number.",
+      "message_type": "Web content",
+      "context": "validation message for number"
+    },
+    "should_be_greater_than_0": {
+      "page": "Trade > Limit Order",
+      "message": "should be greater than zero.",
+      "message_type": "Web content",
+      "context": "validation message for amount greater than 0"
     }
   }
 }

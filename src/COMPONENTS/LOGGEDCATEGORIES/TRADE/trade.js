@@ -568,11 +568,15 @@ class Trade extends Component {
           this.orderSocket(this.state.timePeriod, this.state.status);
           this.openNotificationWithIcon(
             "success",
-            "Successfull",
-            "Your order has been successfully cancelled"
+            this.t("validations:success_text.message"),
+            responseData.message
           );
         } else
-          this.openNotificationWithIcon("error", "Error", responseData.err);
+          this.openNotificationWithIcon(
+            "error",
+            this.t("validations:error_text.message"),
+            responseData.err
+          );
       })
       .catch(error => {});
   }
@@ -1636,7 +1640,8 @@ export default translate([
   "trade",
   "edit_profile_titles",
   "referral",
-  "history"
+  "history",
+  "validations"
 ])(connect(mapStateToProps, mapDispatchToProps)(Trade));
 
 function getFromLS(key) {

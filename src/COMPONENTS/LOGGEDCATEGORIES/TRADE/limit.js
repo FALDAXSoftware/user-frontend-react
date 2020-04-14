@@ -374,7 +374,7 @@ class Limit extends Component {
             );
             self.openNotificationWithIcon(
               "success",
-              "Success",
+              this.t("validations:success_text.message"),
               responseData.message
             );
           } else if (responseData.status === 201) {
@@ -410,12 +410,16 @@ class Limit extends Component {
           } else if (responseData.status === 500) {
             self.openNotificationWithIcon(
               "error",
-              "Error",
+              this.t("validations:error_text.message"),
               responseData.message
             );
           } else {
             this.setState({ loader: false });
-            self.openNotificationWithIcon("error", "Error", responseData.err);
+            self.openNotificationWithIcon(
+              "error",
+              this.t("validations:error_text.message"),
+              responseData.err
+            );
           }
           this.setState({
             loader: false
@@ -425,7 +429,7 @@ class Limit extends Component {
           this.setState({ loader: false });
           self.openNotificationWithIcon(
             "error",
-            "Error",
+            this.t("validations:error_text.message"),
             "Something went wrong!"
           );
         });
@@ -458,8 +462,12 @@ class Limit extends Component {
               onChange={this.onChange}
               name="side"
             >
-              <BuySellRadio value="Buy">BUY</BuySellRadio>
-              <BuySellRadio value="Sell">SELL</BuySellRadio>
+              <BuySellRadio value="Buy">
+                {this.t("history:buy_text.message")}
+              </BuySellRadio>
+              <BuySellRadio value="Sell">
+                {this.t("history:sell_text.message")}
+              </BuySellRadio>
             </RadioGroup>
           </BuySell>
         </BuyWrap>
@@ -471,7 +479,7 @@ class Limit extends Component {
                 <Col xs={24} sm={12}>
                   <Row>
                     <Col span={24}>
-                      <Balance1>Balance</Balance1>
+                      <Balance1>{this.t("balance_text.message")}</Balance1>
                     </Col>
                     <Col span={24}>
                       <Balance>
@@ -490,7 +498,9 @@ class Limit extends Component {
                 <Col xs={24} sm={12}>
                   <Row>
                     <Col span={24}>
-                      <Balance1>Total</Balance1>
+                      <Balance1>
+                        {this.t("conversion:total_text.message")}
+                      </Balance1>
                     </Col>
                     <Col span={24}>
                       <Balance>
@@ -507,7 +517,9 @@ class Limit extends Component {
                 <Col xs={24} sm={12}>
                   <Row>
                     <Col span={24}>
-                      <Balance1>In orders</Balance1>
+                      <Balance1>
+                        {this.t("wallet:in_order_text.message")}
+                      </Balance1>
                     </Col>
                     <Col span={24}>
                       <Balance>
@@ -525,7 +537,10 @@ class Limit extends Component {
                 <Col xs={24} sm={12}>
                   <Row>
                     <Col span={24}>
-                      <Balance1>Best Ask</Balance1>
+                      <Balance1>
+                        {this.t("best_text.message")}{" "}
+                        {this.t("ask_text.message")}
+                      </Balance1>
                     </Col>
                     <Col span={24}>
                       <Balance>
@@ -543,7 +558,7 @@ class Limit extends Component {
                 <Col xs={24} sm={12}>
                   <Row>
                     <Col span={24}>
-                      <Balance1>Balance</Balance1>
+                      <Balance1>{this.t("balance_text.message")}</Balance1>
                     </Col>
                     <Col span={24}>
                       <Balance>
@@ -562,7 +577,9 @@ class Limit extends Component {
                 <Col xs={24} sm={12}>
                   <Row>
                     <Col span={24}>
-                      <Balance1>Total</Balance1>
+                      <Balance1>
+                        {this.t("conversion:total_text.message")}
+                      </Balance1>
                     </Col>
                     <Col span={24}>
                       <Balance>
@@ -579,7 +596,9 @@ class Limit extends Component {
                 <Col xs={24} sm={12}>
                   <Row>
                     <Col span={24}>
-                      <Balance1>In orders</Balance1>
+                      <Balance1>
+                        {this.t("wallet:in_order_text.message")}
+                      </Balance1>
                     </Col>
                     <Col span={24}>
                       <Balance>
@@ -597,7 +616,10 @@ class Limit extends Component {
                 <Col xs={24} sm={12}>
                   <Row>
                     <Col span={24}>
-                      <Balance1>Best Bid</Balance1>
+                      <Balance1>
+                        {this.t("best_text.message")}{" "}
+                        {this.t("bid_text.message")}
+                      </Balance1>
                     </Col>
                     <Col span={24}>
                       <Balance>
@@ -614,7 +636,7 @@ class Limit extends Component {
           ""
         )}
         <ETHWrap>
-          <Label>Amount</Label>
+          <Label>{this.t("wallet:amount_text.message")}</Label>
           <TotalWrap>
             <AMTInput
               min="0"
@@ -632,15 +654,16 @@ class Limit extends Component {
               "required|gtzero|numeric|decimalrestrict3",
               "trade-action-validation",
               {
-                gtzero: "Amount should be greater than zero.",
-                decimalrestrict3:
-                  "Amount must be less than or equal to 3 digits after decimal point."
+                required: this.t(
+                  "general_3:validation_amount_required.message"
+                ),
+                numeric: this.t("general_3:validation_amount_numeric.message")
               }
             )}
           </TotalWrap>
         </ETHWrap>
         <BTCWrap>
-          <Label>Limit Price</Label>
+          <Label>{this.t("limit_price_text.message")}</Label>
           <TotalWrap>
             <TotInput
               min="0"
@@ -658,15 +681,24 @@ class Limit extends Component {
               "required|gtzero|numeric|decimalrestrict5",
               "trade-action-validation",
               {
-                gtzero: "Limit Price should be greater than zero.",
-                decimalrestrict5:
-                  "Limit Price must be less than or equal to 5 digits after decimal point."
+                required: `${this.t("limit_price_text.message")}${" "}${this.t(
+                  "validations:field_is_required.message"
+                )}`,
+                numeric: `${this.t("limit_price_text.message")}${" "}${this.t(
+                  "must_be_a_number.message"
+                )}`,
+                gtzero: `${this.t("limit_price_text.message")}${" "}${this.t(
+                  "should_be_greater_than_0.message"
+                )}`,
+                decimalrestrict5: `${this.t(
+                  "limit_price_text.message"
+                )}${" "}${this.t("5_decimal_error.message")}`
               }
             )}
           </TotalWrap>
         </BTCWrap>
         <BTCWrap>
-          <Label>Total</Label>
+          <Label>{this.t("conversion:total_text.message")}</Label>
           <TotalWrap className="readonly-input">
             <TotInput
               min="0"
@@ -682,27 +714,38 @@ class Limit extends Component {
           this.state.side === "Buy" ? (
             <Pay>
               <Approx>
-                <Willpay>You will approximately pay</Willpay>
+                <Willpay>
+                  {this.t("you_approximate_text.message")}{" "}
+                  {this.t("pay_text.message")}
+                </Willpay>
                 <Willpay2>
                   {buyPayAmt.toFixed(8)} {this.state.currency}
                 </Willpay2>
               </Approx>
               <Esti>
                 <ApproxBelow>
-                  <WillpayBelow>Fiat Value</WillpayBelow>
+                  <WillpayBelow>
+                    {this.t(
+                      "settings:deactivate_popup_table_head_fiat_value.message"
+                    )}
+                  </WillpayBelow>
                   <WillpayBelow2>
                     {this.state.fiatCurrency}{" "}
                     {parseFloat(this.state.fiatCurrencyValue).toFixed(8)}
                   </WillpayBelow2>
                 </ApproxBelow>
                 <ApproxBelow>
-                  <WillpayBelow>Estimated Best Price</WillpayBelow>
+                  <WillpayBelow>
+                    {this.t("estimated_best_price_text.message")}
+                  </WillpayBelow>
                   <WillpayBelow2>
                     {buyPayAmt.toFixed(8)} {this.state.currency}
                   </WillpayBelow2>
                 </ApproxBelow>
                 <ApproxBelow>
-                  <WillpayBelow>Fee {userBalFees} %</WillpayBelow>
+                  <WillpayBelow>
+                    {this.t("conversion:fee_text.message")} {userBalFees} %
+                  </WillpayBelow>
                   <WillpayBelow2>
                     {(buyPayAmt - buyEstPrice).toFixed(8)} {this.state.crypto}
                   </WillpayBelow2>
@@ -712,27 +755,38 @@ class Limit extends Component {
           ) : (
             <Pay>
               <Approx>
-                <Willpay>You will approximately receive</Willpay>
+                <Willpay>
+                  {this.t("you_approximate_text.message")}{" "}
+                  {this.t("receive_text.message")}
+                </Willpay>
                 <Willpay2>
                   {sellEstPrice.toFixed(8)} {this.state.currency}
                 </Willpay2>
               </Approx>
               <Esti>
                 <ApproxBelow>
-                  <WillpayBelow>Fiat Value</WillpayBelow>
+                  <WillpayBelow>
+                    {this.t(
+                      "settings:deactivate_popup_table_head_fiat_value.message"
+                    )}
+                  </WillpayBelow>
                   <WillpayBelow2>
                     {this.state.fiatCurrency}{" "}
                     {parseFloat(this.state.fiatCurrencyValue).toFixed(8)}
                   </WillpayBelow2>
                 </ApproxBelow>
                 <ApproxBelow>
-                  <WillpayBelow>Estimated Best Price</WillpayBelow>
+                  <WillpayBelow>
+                    {this.t("estimated_best_price_text.message")}
+                  </WillpayBelow>
                   <WillpayBelow2>
                     {sellPayAmt.toFixed(8)} {this.state.currency}
                   </WillpayBelow2>
                 </ApproxBelow>
                 <ApproxBelow>
-                  <WillpayBelow>Fee {userBalFees} %</WillpayBelow>
+                  <WillpayBelow>
+                    {this.t("conversion:fee_text.message")} {userBalFees} %
+                  </WillpayBelow>
                   <WillpayBelow2>
                     {(sellPayAmt - sellEstPrice).toFixed(8)}{" "}
                     {this.state.currency}
