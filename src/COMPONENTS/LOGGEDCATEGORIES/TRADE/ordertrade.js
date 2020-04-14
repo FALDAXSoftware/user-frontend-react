@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { Table } from "react-bootstrap";
 import { Icon } from "antd";
 import { Scrollbars } from "react-custom-scrollbars";
+import { translate } from "react-i18next";
 
 /* STYLED-COMPONENTS */
 import {
@@ -69,6 +70,7 @@ export const OTwrap = styled.div``;
 class OrderTrade extends Component {
   constructor(props) {
     super(props);
+    this.t = this.props.t;
     this.cancelOrder = this.cancelOrder.bind(this);
   }
 
@@ -92,23 +94,27 @@ class OrderTrade extends Component {
               {/* <HTable striped responsive> */}
               <thead>
                 <tr>
-                  <th>SIDE</th>
-                  <th>AMOUNT</th>
+                  <th>{this.t("history:side_text.message")}</th>
+                  <th>{this.t("wallet:amount_text.message")}</th>
                   {self.props.pending !== 2 ? (
-                    <th>PRICE</th>
+                    <th>{this.t("history:price_text.message")}</th>
                   ) : (
-                    <th>LIMIT PRICE</th>
+                    <th>{this.t("limit_price_text.message")}</th>
                   )}
                   {self.props.pending !== 2 ? (
-                    <th>UNFILLED</th>
+                    <th>{this.t("unfilled_text.message")}</th>
                   ) : (
-                    <th>STOP PRICE</th>
+                    <th>{this.t("stop_price_text.message")}</th>
                   )}
-                  <th>FILL PRICE</th>
-                  <th>TYPE</th>
-                  <th>TIME</th>
-                  <th>Total</th>
-                  {self.props.pending === 2 ? <th>ACTIONS</th> : ""}
+                  <th>{this.t("fill_price_text.message")}</th>
+                  <th>{this.t("type_text.message")}</th>
+                  <th>{this.t("time_text.message")}</th>
+                  <th>{this.t("conversion:total_text.message")}</th>
+                  {self.props.pending === 2 ? (
+                    <th>{this.t("actions_text.message")}</th>
+                  ) : (
+                    ""
+                  )}
                 </tr>
               </thead>
             </TableHeader>
@@ -204,7 +210,7 @@ class OrderTrade extends Component {
                       );
                     })
                   ) : (
-                    <NDF>No Data Found</NDF>
+                    <NDF>{this.t("support:no_data_found.message")}</NDF>
                   )}
                 </tbody>
               </TableContent>
@@ -216,4 +222,6 @@ class OrderTrade extends Component {
   }
 }
 
-export default OrderTrade;
+export default translate(["trade", "conversion", "wallet", "support"])(
+  OrderTrade
+);
