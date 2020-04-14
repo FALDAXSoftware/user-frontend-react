@@ -25,11 +25,11 @@ export const TierWrapper = styled.div`
   padding-top: 100px;
   padding-bottom: 30px;
   min-height: calc(100vh - 380px);
-  background-color: ${(props) =>
+  background-color: ${props =>
     props.theme.mode === "dark" ? "#01090f" : "#f5f6fa"};
 `;
 const KYCWrap = styled.div`
-  background-color: ${(props) =>
+  background-color: ${props =>
     props.theme.mode === "dark" ? "#041422" : "#ffffff"};
   margin: auto;
   width: 95%;
@@ -37,12 +37,13 @@ const KYCWrap = styled.div`
   padding: 50px 0;
 `;
 export const KYCHead = styled.div`
-  font-size: 20px;
+  font-size: 26px;
   font-family: "Open Sans";
-  font-weight: 600;
-  color: ${(props) =>
+  font-weight: 700;
+  color: ${props =>
     props.theme.mode === "dark" ? "white" : "rgb( 80, 80, 80 )"};
   text-align: center;
+  padding: 0 0 50px 0;
 `;
 const KYCProgress = styled.div`
   width: 26%;
@@ -75,7 +76,7 @@ const KycSucc = styled.div`
   margin: auto;
   font-size: 20px;
   font-family: "Open Sans";
-  color: ${(props) =>
+  color: ${props =>
     props.theme.mode === "dark" ? "white" : "rgb( 80, 80, 80 )"};
   margin-top: 20px;
 `;
@@ -100,7 +101,7 @@ class TierOne extends React.Component {
       nexts: 0,
       is_kyc_done: false,
       countryChange: null,
-      kycData: {},
+      kycData: {}
       // countryAccess: false
     };
   }
@@ -220,7 +221,7 @@ class TierOne extends React.Component {
                 )}
                 {next === 0 && (
                   <KYCForm
-                    back_step={(a) => this.back_step(a)}
+                    back_step={a => this.back_step(a)}
                     next_step={(a, type, ssn) => this.next_step(a, type, ssn)}
                   />
                 )}
@@ -229,7 +230,7 @@ class TierOne extends React.Component {
                     kycData={this.state.kycData}
                     {...this.props}
                     countryFlag={this.state.countryChange}
-                    back_step={(a) => this.back_step(a)}
+                    back_step={a => this.back_step(a)}
                     next_step={(a, type) => this.next_step(a, type)}
                   />
                 )}
@@ -237,7 +238,7 @@ class TierOne extends React.Component {
                   <SSN
                     {...this.props}
                     kycData={this.state.kycData}
-                    back_step={(a) => this.back_step(a)}
+                    back_step={a => this.back_step(a)}
                     next_step={(a, type) => this.next_step(a, type)}
                   />
                 )}
@@ -245,8 +246,8 @@ class TierOne extends React.Component {
                   <DocUpload
                     kycData={this.state.kycData}
                     docText={this.state.docType}
-                    back_step={(a) => this.back_step(a)}
-                    next_step={(a) => this.next_step(a)}
+                    back_step={a => this.back_step(a)}
+                    next_step={a => this.next_step(a)}
                   />
                 )}
               </div>
@@ -301,7 +302,7 @@ class TierOne extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     ...state,
     is_kyc_done:
@@ -321,11 +322,11 @@ const mapStateToProps = (state) => {
     isLoggedIn:
       state.simpleReducer.isLoggedIn !== undefined
         ? state.simpleReducer.isLoggedIn
-        : "",
+        : ""
   };
 };
 
-const mapDispatchToProps = (dispatch) => ({});
+const mapDispatchToProps = dispatch => ({});
 
 export default translate(
   "identity_verification",

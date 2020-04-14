@@ -17,10 +17,17 @@ import NumberFormat from "react-number-format";
 import { APIUtility } from "../../../httpHelper";
 import FaldaxLoader from "../../../SHARED-COMPONENTS/FaldaxLoader";
 
+import {
+  TwoFactorDiv,
+  TierRow,
+  TierDocStatus,
+  TierUpload,
+  TierInput
+} from "../../../STYLED-COMPONENTS/TIER/tierStyle";
 let { API_URL } = globalVariables;
 /* Styled-Components */
 const KYCWrap = styled.div`
-  background-color: ${(props) =>
+  background-color: ${props =>
     props.theme.mode === "dark" ? "#041422" : "#ffffff"};
   margin: auto;
   width: 95%;
@@ -34,12 +41,12 @@ const SSNInput = styled.input`
   padding: 5px;
   background-color: #f8f8f8;
   border: none;
-  color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
+  color: ${props => (props.theme.mode === "dark" ? "white" : "")};
   border-style: solid;
   border-width: 1px;
   border-color: rgb(212, 218, 223);
   border-radius: 5px;
-  background-color: ${(props) =>
+  background-color: ${props =>
     props.theme.mode === "dark" ? "#020f18" : "rgb( 248, 248, 248 )"};
 `;
 export const Fileselect1 = styled.div`
@@ -57,16 +64,16 @@ export const Fileselect1 = styled.div`
   }
 `;
 export const RemoveIcon1 = styled(Icon)`
-  color: ${(props) => (props.theme.mode == "dark" ? "white" : "black")};
+  color: ${props => (props.theme.mode == "dark" ? "white" : "black")};
 `;
 export const ButtonUp = styled.button`
   display: block;
   width: 100%;
   /* margin: 0 auto; */
   height: 145px;
-  background-color: ${(props) =>
+  background-color: ${props =>
     props.theme.mode === "dark" ? "#01090f" : "white"};
-  color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
+  color: ${props => (props.theme.mode === "dark" ? "white" : "")};
   box-shadow: none;
   border: 1px solid rgb(0, 170, 250);
   border-radius: 20px;
@@ -135,7 +142,7 @@ class TierTwo extends React.Component {
       loader: false,
       tierID: "",
       tierData: "",
-      verified: false,
+      verified: false
     };
     this.validator = new SimpleReactValidator({
       ssnValid: {
@@ -144,16 +151,16 @@ class TierTwo extends React.Component {
           var re = /^\d{3}-\d{2}-\d{4}$/;
           var bool = re.test(String(val));
           return bool;
-        },
-      },
+        }
+      }
     });
     this.handleProfile = this.handleProfile.bind(this);
     this.populateData = this.populateData.bind(this);
   }
   componentWillMount() {
-    if (this.props.profileDetails.account_tier !== 1) {
-      this.props.history.push("/");
-    }
+    // if (this.props.profileDetails.account_tier !== 1) {
+    //   this.props.history.push("/");
+    // }
   }
   async componentDidMount() {
     try {
@@ -166,7 +173,7 @@ class TierTwo extends React.Component {
     this.setState(
       {
         is_twofactor_enabled: this.props.profileDetails.is_twofactor,
-        tierID: getID[1],
+        tierID: getID[1]
       },
       () => {
         this.populateData();
@@ -222,7 +229,7 @@ class TierTwo extends React.Component {
         this.props.profileDetails.is_twofactor
     ) {
       this.setState({
-        is_twofactor_enabled: newProps.profileDetails.is_twofactor,
+        is_twofactor_enabled: newProps.profileDetails.is_twofactor
       });
     }
   }
@@ -233,7 +240,7 @@ class TierTwo extends React.Component {
       if (result.status == 200) {
         console.log("result^^^", result.data);
         this.setState({
-          tierData: result.data,
+          tierData: result.data
         });
       } else {
         this.openNotificationWithIcon("error", "Error", result.message);
@@ -252,20 +259,20 @@ class TierTwo extends React.Component {
     console.log("^^declined", declined);
     if (currentTierData.is_verified) {
       this.setState({
-        verified: true,
+        verified: true
       });
     } else {
       this.setState({
-        verified: false,
+        verified: false
       });
     }
     if (under_approval && under_approval.length == 3 && declined.length == 0) {
       this.setState({
-        waitingForApproval: true,
+        waitingForApproval: true
       });
     } else {
       this.setState({
-        waitingForApproval: false,
+        waitingForApproval: false
       });
     }
     if (declined && declined.length > 0) {
@@ -282,7 +289,7 @@ class TierTwo extends React.Component {
             return this.setState({
               reUpload1: true,
               reUpload2: true,
-              reUpload3: true,
+              reUpload3: true
             });
         }
       });
@@ -299,7 +306,7 @@ class TierTwo extends React.Component {
     _self.setState(
       {
         targetName: name,
-        fileTarget: target,
+        fileTarget: target
       },
       () => {
         var frontWidth, frontHeight;
@@ -325,24 +332,24 @@ class TierTwo extends React.Component {
                   if (frontWidth > 450 && frontHeight > 600) {
                     if (_self.state.targetName === "valid-id") {
                       _self.setState({ icon1: "check", displayFirst: "" });
-                      reader.onload = (upload) => {
+                      reader.onload = upload => {
                         _self.setState({
                           profileImg: upload.target.result,
                           imageName: file.name,
                           imageType: file.type,
                           profileImage: file,
-                          imagemsg: "",
+                          imagemsg: ""
                         });
                       };
                     } else {
                       _self.setState({ icon2: "check", displaySecond: "" });
-                      reader.onload = (upload) => {
+                      reader.onload = upload => {
                         _self.setState({
                           profileImg2: upload.target.result,
                           imageName2: file.name,
                           imageType2: file.type,
                           profileImage2: file,
-                          imagemsg2: "",
+                          imagemsg2: ""
                         });
                       };
                     }
@@ -351,7 +358,9 @@ class TierTwo extends React.Component {
                     var DataForm = new FormData();
                     DataForm.append("image", file);
                     if (_self.state.targetName === "valid-id") {
-                      _self.setState({ validID: file });
+                      _self.setState({ validID: file }, () => {
+                        console.log(_self.state.validID.name);
+                      });
                     } else {
                       _self.setState({ residenceProof: file });
                     }
@@ -363,7 +372,7 @@ class TierTwo extends React.Component {
                         imageType: fileType,
                         profileImage: "",
                         icon1: "plus",
-                        displayFirst: "none",
+                        displayFirst: "none"
                       });
                     } else {
                       _self.setState({
@@ -372,7 +381,7 @@ class TierTwo extends React.Component {
                         imageType2: fileType,
                         profileImage2: "",
                         icon2: "plus",
-                        displaySecond: "none",
+                        displaySecond: "none"
                       });
                     }
                     _self.openNotificationWithIcon(
@@ -395,7 +404,7 @@ class TierTwo extends React.Component {
                   profileImage: "",
                   icon1: "plus",
                   displayFirst: "none",
-                  imagemsg: _self.t("general_1:max_image_size_error.message"),
+                  imagemsg: _self.t("general_1:max_image_size_error.message")
                 });
               } else {
                 _self.setState({
@@ -405,7 +414,7 @@ class TierTwo extends React.Component {
                   imagemsg2: _self.t("general_1:max_image_size_error.message"),
                   profileImage2: "",
                   icon2: "plus",
-                  displaySecond: "none",
+                  displaySecond: "none"
                 });
               }
               _self.openNotificationWithIcon(
@@ -444,7 +453,7 @@ class TierTwo extends React.Component {
         imagemsg: "",
         icon1: "plus",
         displayFirst: "none",
-        validID: "",
+        validID: ""
       });
       document.getElementById("valid-id").value = "";
     } else {
@@ -456,7 +465,7 @@ class TierTwo extends React.Component {
         imagemsg2: "",
         icon2: "plus",
         displaySecond: "none",
-        residenceProof: "",
+        residenceProof: ""
       });
       document.getElementById("residence-proof").value = "";
     }
@@ -464,7 +473,7 @@ class TierTwo extends React.Component {
   openNotificationWithIcon(type, head, desc) {
     notification[type]({
       message: head,
-      description: desc,
+      description: desc
     });
   }
   handleFileSelectClick(val) {
@@ -511,12 +520,12 @@ class TierTwo extends React.Component {
         method: "post",
         headers: {
           "Accept-Language": localStorage["i18nextLng"],
-          Authorization: "Bearer " + this.props.isLoggedIn,
+          Authorization: "Bearer " + this.props.isLoggedIn
         },
-        body: values,
+        body: values
       })
-        .then((response) => response.json())
-        .then((responseData) => {
+        .then(response => response.json())
+        .then(responseData => {
           if (responseData.status == 200) {
             console.log("^^^^response", responseData);
             this.openNotificationWithIcon(
@@ -528,12 +537,12 @@ class TierTwo extends React.Component {
               validID: {},
               residenceProof: {},
               id_number: "",
-              waitingForApproval: true,
+              waitingForApproval: true
             });
           }
           this.setState({ loader: false });
         })
-        .catch((error) => {
+        .catch(error => {
           this.setState({ loader: false });
         });
     } else {
@@ -560,7 +569,7 @@ class TierTwo extends React.Component {
                 style={{
                   textAlign: "center",
                   margin: "50px auto",
-                  fontSize: "18px",
+                  fontSize: "18px"
                 }}
               >
                 <p>Your account is verified to tier 2.</p>
@@ -572,7 +581,7 @@ class TierTwo extends React.Component {
                     style={{
                       textAlign: "center",
                       margin: "50px auto",
-                      fontSize: "18px",
+                      fontSize: "18px"
                     }}
                   >
                     <p>Your submitted documents are under process.</p>
@@ -582,25 +591,79 @@ class TierTwo extends React.Component {
                     {is_twofactor_enabled ? (
                       <div>Enabled</div>
                     ) : (
-                      <div>
+                      <TwoFactorDiv>
                         <span>
-                          2FA is mandatory to upgarde to tier 2 account.
+                          Two-factor Authentication(2FA) must be enabled to
+                          upgrade your account to tier 2. Please click the link
+                          below to enable 2FA
                         </span>
-                        <br />
-                        <span>Please click on below link to enable 2FA.</span>
-                        <br />
                         <a href="/editProfile">Click here</a>
-                      </div>
+                      </TwoFactorDiv>
                     )}
-                    <div
-                      style={{
-                        margin: "0 0 30px 0",
-                      }}
-                    >
-                      <label>Valid ID</label>
-                      <br />
-                      <Fileselect1 className="file-select-col">
-                        {/* {console.log(this.state)} */}
+                    <TierRow>
+                      <label>Second Photo ID</label>
+                      <TierUpload>
+                        <TierInput
+                          onChange={this.handleProfile}
+                          type="file"
+                          name="valid-id"
+                          id="valid-id"
+                          disabled={!this.state.reUpload1}
+                        />
+                        {this.state.reUpload1 &&
+                          this.validator.message(
+                            "valid-id",
+                            this.state.profileImg,
+                            "required",
+                            "tier-text-danger-validation",
+                            {
+                              required: "This field is required."
+                            }
+                          )}
+                        {this.state.validID.name ? (
+                          <button className="has_file">
+                            <span>{this.state.validID.name}</span>
+                            <Icon
+                              onClick={() => {
+                                this.removeFile("valid-id");
+                              }}
+                              type="close"
+                            />
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => {
+                              this.handleFileSelectClick("valid-id");
+                            }}
+                          >
+                            <Icon type="upload" />
+                            <span>Upload</span>
+                          </button>
+                        )}
+                        {/* <button
+                          onClick={() => {
+                            this.handleFileSelectClick("valid-id");
+                          }}
+                        >
+                          {this.state.validID.name ? (
+                            <div>
+                              <span>{this.state.validID.name}</span>
+                              <Icon
+                                onClick={() => {
+                                  this.removeFile("valid-id");
+                                }}
+                                type="close-circle"
+                              />
+                            </div>
+                          ) : (
+                            <div>
+                              <Icon type="upload" />
+                              <span>Upload</span>
+                            </div>
+                          )}
+                        </button> */}
+                      </TierUpload>
+                      {/* <Fileselect1 className="file-select-col">
                         <RemoveIcon1
                           onClick={() => {
                             this.removeFile("valid-id");
@@ -611,17 +674,17 @@ class TierTwo extends React.Component {
                         />
                         <ButtonUp
                           style={{
-                            backgroundImage: `url('${this.state.profileImg}')`,
+                            backgroundImage: `url('${this.state.profileImg}')`
                           }}
                           className="file-select-btn"
                           onClick={() => {
                             this.handleFileSelectClick("valid-id");
                           }}
                         >
-                          <Plus className="plus">
+                          {/* <Plus className="plus">
                             <Icon type={this.state.icon1} theme="outlined" />
-                          </Plus>
-                          <Plustext className="text">Upload</Plustext>
+                          </Plus> */}
+                      {/* <Plustext className="text">Upload</Plustext>
                         </ButtonUp>
                         <Fileinput
                           onChange={this.handleProfile}
@@ -637,19 +700,62 @@ class TierTwo extends React.Component {
                             "required",
                             "tier-text-danger-validation",
                             {
-                              required: "This field is required.",
+                              required: "This field is required."
                             }
                           )}
-                      </Fileselect1>
-                    </div>
-                    <div
-                      style={{
-                        margin: "0 0 30px 0",
-                      }}
-                    >
+                      </Fileselect1> */}
+                      <TierDocStatus>
+                        <Icon type="check" />
+                        <span>Verified</span>
+                      </TierDocStatus>
+                    </TierRow>
+                    <TierRow>
                       <label>Proof of Residence</label>
-                      <br />
-                      <Fileselect1 className="file-select-col">
+                      <TierUpload>
+                        <TierInput
+                          onChange={this.handleProfile}
+                          type="file"
+                          name="residence-proof"
+                          id="residence-proof"
+                          disabled={!this.state.reUpload2}
+                        />
+                        {this.state.reUpload2 &&
+                          this.validator.message(
+                            "residence-proof",
+                            this.state.profileImg2,
+                            "required",
+                            "tier-text-danger-validation",
+                            {
+                              required: "This field is required."
+                            }
+                          )}
+                        {this.state.residenceProof.name ? (
+                          <button className="has_file">
+                            <span>{this.state.residenceProof.name}</span>
+                            <Icon
+                              onClick={() => {
+                                this.removeFile("residence-proof");
+                              }}
+                              type="close"
+                            />
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => {
+                              this.handleFileSelectClick("residence-proof");
+                            }}
+                          >
+                            <Icon type="upload" />
+                            <span>Upload</span>
+                          </button>
+                        )}
+                      </TierUpload>
+                      <TierDocStatus>
+                        <Icon type="check" />
+                        <span>Verified</span>
+                      </TierDocStatus>
+                    </TierRow>
+                    {/* <Fileselect1 className="file-select-col">
                         <RemoveIcon1
                           onClick={() => {
                             this.removeFile("residence-proof");
@@ -660,7 +766,7 @@ class TierTwo extends React.Component {
                         />
                         <ButtonUp
                           style={{
-                            backgroundImage: `url('${this.state.profileImg2}')`,
+                            backgroundImage: `url('${this.state.profileImg2}')`
                           }}
                           className="file-select-btn"
                           onClick={() => {
@@ -686,14 +792,14 @@ class TierTwo extends React.Component {
                             "required",
                             "tier-text-danger-validation",
                             {
-                              required: "This field is required.",
+                              required: "This field is required."
                             }
-                          )}
-                      </Fileselect1>
-                    </div>
+                          )} */}
+                    {/* </Fileselect1> */}
+
                     <div
                       style={{
-                        margin: "0 0 30px 0",
+                        margin: "0 0 30px 0"
                       }}
                     >
                       <label>
@@ -712,7 +818,7 @@ class TierTwo extends React.Component {
                           "required",
                           "tier-text-danger-validation",
                           {
-                            required: "This field is required.",
+                            required: "This field is required."
                           }
                         )}
                     </div>
@@ -733,7 +839,7 @@ class TierTwo extends React.Component {
     );
   }
 }
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   // LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
 });
 // export default Conversion;
@@ -747,7 +853,7 @@ function mapStateToProps(state) {
           : ""
         : "",
     theme:
-      state.themeReducer.theme !== undefined ? state.themeReducer.theme : "",
+      state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
   };
 }
 

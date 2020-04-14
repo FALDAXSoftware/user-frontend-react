@@ -522,3 +522,91 @@ export const TierWrap = styled.div`
   width: 50%;
   margin: 0 auto;
 `;
+export const TwoFactorDiv = styled.div`
+  width: 85%;
+  padding: 25px;
+  background: #fcfcfc;
+  border: 1px solid #f3f3f3;
+  border-radius: 4px;
+  text-align: center;
+  margin: 0 0 20px 0;
+  > span {
+    font-weight: 700;
+    font-size: 16px;
+    display: block;
+    opacity: 80%;
+    margin: 0 0 7px 0;
+  }
+  > a {
+    color: #4c84ff;
+    font-weight: 700;
+    font-size: 16px;
+  }
+`;
+export const TierRow = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30px 0px;
+  border-bottom: 1px solid #f0f0f0;
+`;
+export const TierDocStatus = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 10px 15px
+  background: #fefefe;
+  border: 1px solid #d4dadf;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #5a5a5a;
+  > .anticon-check {
+    margin: 0 10px 0 0;
+    color: #2acb3a;
+  }
+`;
+export const TierUpload = styled.div`
+  > input {
+    display: none;
+  }
+  > button:focus {
+    outline: 0;
+  }
+  > button.has_file:hover {
+    cursor: default;
+  }
+  > button {
+    background: #f8f8f8;
+    border: 1px solid #d4dadf;
+    padding: 10px 15px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    min-width: 120px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #505050;
+    opacity: 80%;
+    > .anticon-close {
+      margin: 0 0 0 10px;
+      font-size: 12px;
+      background: #b5b5b5;
+      height: 18px;
+      width: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      color: #fff;
+      font-weight: bold;
+    }
+    > .anticon-upload {
+      margin: 0 10px 0 0;
+    }
+  }
+`;
+export const TierInput = styled.input`
+  display: none;
+`;
