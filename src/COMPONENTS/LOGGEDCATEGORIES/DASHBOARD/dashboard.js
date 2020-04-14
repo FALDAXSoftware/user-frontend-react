@@ -64,6 +64,8 @@ const WhiteBgWrapper = styled.div`
 const GreyWrapDashboard = styled(GreyWrap)`
   font-family: "Open sans";
   // padding-top: 120px;
+  padding-left: 15px;
+    padding-right: 15px;
 `;
 const Overlay = styled.div`
   background: #00000000;
@@ -430,16 +432,15 @@ class Dashboard extends Component {
   };
   onLayoutChange = (layout, layouts) => {
     console.log(layout);
-    let allTemplates = this.state.allTemplates;
+    let allTemplates = JSON.parse(JSON.stringify(this.state.allTemplates));
     allTemplates[this.state.currentTemplateIndex] = {
-      ...this.state.currentTemplate,
-      layouts: layouts
+      ...JSON.parse(JSON.stringify(this.state.currentTemplate)),
+      layouts: { ...layouts }
     };
     this.setState(
       {
         currentTemplate: {
-          ...this.state.currentTemplate,
-          layouts: layouts
+          ...allTemplates[this.state.currentTemplateIndex]
         },
         isSaved: false,
         allTemplates
@@ -543,23 +544,15 @@ class Dashboard extends Component {
         allTemplates: templates,
         templateManage: false,
         showLayout: false,
-        isSaved: false
+        isSaved: false,
+        currentTemplate: templates[this.state.currentTemplateIndex] ? templates[this.state.currentTemplateIndex] : templates[templates.length - 1],
       },
       () => {
         // this.saveToDB();
-        if (this.state.allTemplates[this.state.currentTemplateIndex]) {
-          this.setState(
-            {
-              currentTemplate: this.state.allTemplates[
-                this.state.currentTemplateIndex
-              ],
-              showLayout: true
-            },
-            () => {
-              this.forceUpdate();
-            }
-          );
-        }
+        this.setState(
+          {
+            showLayout: true
+          });
       }
     );
   };
@@ -712,7 +705,7 @@ class Dashboard extends Component {
                           xs: 480,
                           xxs: 0
                         }}
-                        cols={{ lg: 12, md: 12, sm: 6, xs: 4, xxs: 2 }}
+                        cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
                         isDraggable={
                           this.state.editState &&
                           this.state.currentTemplateManagerTab == 1

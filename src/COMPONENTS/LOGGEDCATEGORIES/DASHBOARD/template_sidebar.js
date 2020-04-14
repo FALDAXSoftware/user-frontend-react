@@ -165,12 +165,13 @@ class TemplateSideBar extends Component {
     }
   }
   onWidgetCheckChange = (checked, widgetIndex) => {
-    let templates = this.state.templates;
+    let templates = [...this.state.templates];
     templates[this.props.selected].widgets[widgetIndex].checked = checked;
     this.props.onChange(templates);
   };
   onWidgetDataChange = (value, widgetIndex) => {
-    let templates = this.state.templates;
+    let templates = [...this.state.templates];
+    console.log(templates[this.props.selected].widgets[widgetIndex], value);
     templates[this.props.selected].widgets[widgetIndex].data = value;
     this.props.onChange(templates);
   };
