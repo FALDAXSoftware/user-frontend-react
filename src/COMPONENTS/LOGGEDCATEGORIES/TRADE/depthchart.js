@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { Row, Col } from "antd";
 import "antd/dist/antd.css";
 import { Line } from "react-chartjs-2";
+import { translate } from "react-i18next";
 
 /*STYLED-COMPONENTS*/
 import { Instru2, WrapDepth } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
@@ -25,6 +26,7 @@ class DepthChart extends Component {
       askData: [],
       bidData: []
     };
+    this.t = this.props.t;
     this.updateGraph = this.updateGraph.bind(this);
     this.depthFunc = this.depthFunc.bind(this);
   }
@@ -150,7 +152,7 @@ class DepthChart extends Component {
       type: "line",
       datasets: [
         {
-          label: "Bid",
+          label: `${this.t("bid_text.message")}`,
           backgroundColor: "#dbeed9",
           borderColor: "rgba(93, 193, 78, 1)",
           borderJoinStyle: "miter",
@@ -163,7 +165,7 @@ class DepthChart extends Component {
           data: [...self.state.bidData]
         },
         {
-          label: "Ask",
+          label: `${this.t("ask_text.message")}`,
           backgroundColor: "#fcd3de",
           borderColor: "rgba(229, 90, 122, 1)",
           borderJoinStyle: "miter",
@@ -181,7 +183,8 @@ class DepthChart extends Component {
     return (
       <WrapDepth>
         <Instru2>
-          MARKET DEPTH {this.props.crypto}/{this.props.currency}
+          {this.t("market_depth_text.message")} {this.props.crypto}/
+          {this.props.currency}
         </Instru2>
         <Row>
           <Col xl={24}>
@@ -225,4 +228,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(DepthChart);
+export default translate(["trade"])(connect(mapStateToProps)(DepthChart));
