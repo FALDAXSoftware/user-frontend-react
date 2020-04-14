@@ -18,6 +18,7 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import { globalVariables } from "../../../Globals";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import { translate } from "react-i18next";
 let { API_URL } = globalVariables;
 
 const { Sider } = Layout;
@@ -117,6 +118,7 @@ class TemplateSideBar extends Component {
       code: "",
       importLoading: false
     };
+    this.t = this.props.t;
   }
   componentDidMount() {
     this.setState({ templates: [...this.props.templates] }, () => {
@@ -150,7 +152,7 @@ class TemplateSideBar extends Component {
           });
         }
       })
-      .catch(error => { });
+      .catch(error => {});
   };
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (
@@ -259,8 +261,8 @@ class TemplateSideBar extends Component {
             );
           } else {
             notification.error({
-              message: "Error",
-              description: "Invalid Template Code"
+              message: this.t("validations:error_text.message"),
+              description: this.t("invalid_template_code_error.message")
             });
             this.setState({
               importLoading: false
@@ -268,7 +270,7 @@ class TemplateSideBar extends Component {
           }
         }
       })
-      .catch(error => { });
+      .catch(error => {});
   };
   render() {
     return (
@@ -286,8 +288,8 @@ class TemplateSideBar extends Component {
         <Row>
           <Col span={24}>
             <SidebarHeader>
-              Customize
-              <Tooltip title="Share / Import Template">
+              {this.t("customize_text.message")}
+              <Tooltip title={this.t("share_import_template_text.message")}>
                 <Icon
                   type="share-alt"
                   className="share"
@@ -296,14 +298,18 @@ class TemplateSideBar extends Component {
                       this.changeTab(2);
                     } else {
                       notification.error({
-                        message: "Error",
-                        description: "Save template before share"
+                        message: this.t("validations:error_text.message"),
+                        description: this.t("save_before_share_error.message")
                       });
                     }
                   }}
                 />
               </Tooltip>
-              <Tooltip title="Save">
+              <Tooltip
+                title={this.t(
+                  "edit_profile_titles:subhead_personal_form_save_btn.message"
+                )}
+              >
                 <Icon
                   type={this.props.isSaving ? "loading" : "save"}
                   className="save"
@@ -314,20 +320,21 @@ class TemplateSideBar extends Component {
                   }}
                 />
               </Tooltip>
-              <Tooltip title="Close">
+              <Tooltip title={this.t("close_text.message")}>
                 <Icon
                   type="close"
                   className="close"
                   onClick={() => {
                     if (!this.props.isSaved) {
                       Modal.confirm({
-                        title: "Do you want to close?",
-                        content:
-                          "This page may contains unsaved work. You will lost all unsaved data.",
+                        title: `${this.t(
+                          "close_template_before_save.message"
+                        )}`,
+                        content: `${this.t("unsave_data_popup_desc.message")}`,
                         onOk: () => {
                           this.props.closeEditing();
                         },
-                        onCancel: () => { }
+                        onCancel: () => {}
                       });
                     } else {
                       this.props.closeEditing();
@@ -344,7 +351,7 @@ class TemplateSideBar extends Component {
             <Row gutter={16} style={{ marginBottom: "15px" }}>
               <Col span={24}>
                 <h5>
-                  <b>Templates</b>
+                  <b>{this.t("templates_text.message")}</b>
                 </h5>
               </Col>
               <Col span={24}>
@@ -361,7 +368,7 @@ class TemplateSideBar extends Component {
                         onMouseDown={e => e.preventDefault()}
                         onClick={this.addNewTemplate}
                       >
-                        <Icon type="plus" /> Add item
+                        <Icon type="plus" /> {this.t("add_item_text.message")}
                       </div>
                     </div>
                   )}
@@ -376,9 +383,9 @@ class TemplateSideBar extends Component {
               <Row style={{ marginBottom: "15px" }}>
                 <Col>
                   <Alert
-                    message="If you want customized dashboard, create your own."
+                    message={this.t("note_template_text.message")}
                     type="info"
-                  // showIcon
+                    // showIcon
                   />
                 </Col>
               </Row>
@@ -388,12 +395,12 @@ class TemplateSideBar extends Component {
                 <Row gutter={16} style={{ marginBottom: "15px" }}>
                   <Col span={24}>
                     <h5>
-                      <b>Template Name</b>
+                      <b>{this.t("template_label.message")}</b>
                     </h5>
                   </Col>
                   <Col span={24}>
                     <Input
-                      placeholder="Enter Template Name"
+                      placeholder={this.t("template_name_placeholder.message")}
                       value={this.state.templateName}
                       onChange={this.onNameChange}
                       onBlur={this.handleNameInputBlur}
@@ -406,7 +413,7 @@ class TemplateSideBar extends Component {
               <Row gutter={16}>
                 <Col span={24}>
                   <h5>
-                    <b>Widgets</b>
+                    <b>{this.t("widgets_text.message")}</b>
                   </h5>
                 </Col>
                 <Col span={24}>
@@ -438,7 +445,9 @@ class TemplateSideBar extends Component {
                               onChange={value => {
                                 this.onWidgetDataChange(value, index);
                               }}
-                              placeholder="Select Pair"
+                              placeholder={this.t(
+                                "select_pair_placeholder.message"
+                              )}
                               disabled={
                                 this.state.templates[this.props.selected]
                                   .inbuilt
@@ -467,7 +476,7 @@ class TemplateSideBar extends Component {
                     style={{ width: "100%", textAlign: "center" }}
                     onClick={this.props.deleteTemplate}
                   >
-                    Delete Template
+                    {this.t("delete_template_btn.message")}
                   </Button>
                 </Col>
               </Row>
@@ -478,9 +487,9 @@ class TemplateSideBar extends Component {
           <>
             <Row style={{ marginBottom: "15px" }}>
               <Col>
-                Want to share your{" "}
+                {this.t("want_to_share_text.message")}{" "}
                 <b>{this.state.templates[this.props.selected]?.title}</b>{" "}
-                Template with someone?
+                {this.t("template_with_text.message")}
               </Col>
             </Row>
             <Row style={{ marginBottom: "15px" }}>
@@ -492,7 +501,7 @@ class TemplateSideBar extends Component {
                     loading={this.state.generatingLink}
                     onClick={this.generateCode}
                   >
-                    Generate Code
+                    {this.t("generate_code_btn.message")}
                   </Button>
                 )}
 
@@ -501,9 +510,15 @@ class TemplateSideBar extends Component {
                     <CopyToClipboard
                       text={this.state.link}
                       onCopy={() => {
-                        this.setState({ tooltipTitle: "copied" });
+                        this.setState({
+                          tooltipTitle: `${this.t("copied_text.message")}`
+                        });
                         setTimeout(() => {
-                          this.setState({ tooltipTitle: "click to copy" });
+                          this.setState({
+                            tooltipTitle: `${this.t(
+                              "click_to_copy_text.message"
+                            )}`
+                          });
                         }, 3000);
                       }}
                     >
@@ -518,7 +533,7 @@ class TemplateSideBar extends Component {
             <Divider style={{ margin: "24px 0 24px" }} />
 
             <Row style={{ marginBottom: "15px" }}>
-              <Col>Already have template code? Enter here to Import.</Col>
+              <Col>{this.t("already_have_template_code_text.message")}</Col>
             </Row>
             <Row style={{ marginBottom: "15px" }}>
               <Col>
@@ -538,7 +553,7 @@ class TemplateSideBar extends Component {
                   disabled={!this.state.code}
                   onClick={this.onImport}
                 >
-                  Import
+                  {this.t("import_text.message")}
                 </Button>
               </Col>
             </Row>
@@ -555,7 +570,7 @@ class TemplateSideBar extends Component {
                   }}
                 >
                   <Icon type="arrow-left" />
-                  Back to edit
+                  {this.t("back_to_edit_text.message")}
                 </Button>
               </Col>
             </Row>
@@ -577,4 +592,6 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(TemplateSideBar);
+export default translate(["dashboard", "validations", "edit_profile_titles"])(
+  connect(mapStateToProps)(TemplateSideBar)
+);
