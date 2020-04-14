@@ -64,6 +64,8 @@ const WhiteBgWrapper = styled.div`
 const GreyWrapDashboard = styled(GreyWrap)`
   font-family: "Open sans";
   // padding-top: 120px;
+  padding-left: 15px;
+    padding-right: 15px;
 `;
 const Overlay = styled.div`
   background: #00000000;
@@ -430,16 +432,15 @@ class Dashboard extends Component {
   };
   onLayoutChange = (layout, layouts) => {
     console.log(layout);
-    let allTemplates = this.state.allTemplates;
+    let allTemplates = JSON.parse(JSON.stringify(this.state.allTemplates));
     allTemplates[this.state.currentTemplateIndex] = {
-      ...this.state.currentTemplate,
-      layouts: layouts
+      ...JSON.parse(JSON.stringify(this.state.currentTemplate)),
+      layouts: { ...layouts }
     };
     this.setState(
       {
         currentTemplate: {
-          ...this.state.currentTemplate,
-          layouts: layouts
+          ...allTemplates[this.state.currentTemplateIndex]
         },
         isSaved: false,
         allTemplates
