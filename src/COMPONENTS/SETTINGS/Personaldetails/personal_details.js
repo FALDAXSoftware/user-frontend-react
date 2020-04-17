@@ -275,8 +275,7 @@ const PhoneDiv = styled.div`
       & .selected-flag {
         outline: none;
         font-weight: 600;
-        background-color: ;
-        ${(props) =>
+        background-color: ${(props) =>
           props.theme.mode === "dark"
             ? "#06223c !important"
             : "#f5f6fa !important"};
@@ -299,7 +298,7 @@ const PhoneDiv = styled.div`
     > .intl-tel-input {
       & .selected-flag {
         cursor: not-allowed;
-        #b2b2b236background: #bfbfbf24 !important;
+        background: #bfbfbf24 !important;
         color: ${(props) =>
           props.theme.mode === "dark" ? "#ffffff7a" : "rgba(0, 0, 0, 0.4)"};
       }
@@ -311,7 +310,7 @@ const PhoneDiv = styled.div`
         color: ${(props) =>
           props.theme.mode === "dark" ? "#ffffff7a" : "rgba(0, 0, 0, 0.4)"};
         background-color: ${(props) =>
-          props.theme.mode === "dark" ? " #041422" : "#f5f6fa"};
+          props.theme.mode === "dark" ? " #041422" : "#f5f5f5"};
       }
       & .intl-tel-input.form-control:active,
       .intl-tel-input.form-control:focus,

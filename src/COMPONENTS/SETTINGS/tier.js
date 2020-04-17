@@ -176,12 +176,13 @@ class Tier extends Component {
                           to={{
                             pathname: `/tier${tier.id}`,
                             state: {
-                              declined: `${tier.is_declined}`
-                                ? `${tier.is_declined}`
-                                : "",
-                              underApproval: `${tier.under_approval}`
-                                ? `${tier.under_approval}`
-                                : "",
+                              // tier_id: tier.id,
+                              // account_details: `${tier.account_details}`
+                              //   ? `${tier.account_details.request_id}`
+                              //   : ""
+                              // underApproval: `${tier.under_approval}`
+                              //   ? `${tier.under_approval}`
+                              //   : ""
                             },
                           }}
                         >

@@ -61,13 +61,14 @@ const APIUtility = {
       },
     });
   },
-  getTierDetails: function(token) {
+  getTierDetails: function(token, data) {
     return axios({
-      method: "get",
-      url: API_URL + "/get-tier-details",
+      method: "post",
+      url: API_URL + "/users/get-user-tier-details",
       headers: {
         Authorization: "Bearer " + token,
       },
+      data: data,
     });
   },
   calculateDigitalCurrency: function(token, data) {

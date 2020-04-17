@@ -109,6 +109,55 @@ const PhoneDiv = styled.div`
   & .selected-dial-code {
     color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   }
+  &.mobile_field {
+    > .intl-tel-input {
+      & .selected-flag {
+        outline: none;
+        font-weight: 600;
+        background-color: ${(props) =>
+          props.theme.mode === "dark"
+            ? "#06223c !important"
+            : "#f5f6fa !important"};
+      }
+      & .intl-tel-input.form-control {
+        font-weight: 600;
+        box-shadow: none;
+      }
+      & .intl-tel-input.form-control:focus {
+        box-shadow: none;
+      }
+      & .intl-tel-input.form-control:active,
+      .intl-tel-input.form-control:focus,
+      .intl-tel-input.form-control:hover {
+        border-color: rgb(0, 170, 250);
+      }
+    }
+  }
+  &.mobile_field.disabled {
+    > .intl-tel-input {
+      & .selected-flag {
+        cursor: not-allowed;
+        background: #bfbfbf24 !important;
+        color: ${(props) =>
+          props.theme.mode === "dark" ? "#ffffff7a" : "rgba(0, 0, 0, 0.4)"};
+      }
+      & .selected-dial-code {
+        color: ${(props) =>
+          props.theme.mode === "dark" ? "#ffffff7a" : "rgba(0, 0, 0, 0.4)"};
+      }
+      & .intl-tel-input.form-control {
+        color: ${(props) =>
+          props.theme.mode === "dark" ? "#ffffff7a" : "rgba(0, 0, 0, 0.4)"};
+        background-color: ${(props) =>
+          props.theme.mode === "dark" ? " #041422" : "#f5f5f5"};
+      }
+      & .intl-tel-input.form-control:active,
+      .intl-tel-input.form-control:focus,
+      .intl-tel-input.form-control:hover {
+        border: 1px solid #e2e6ea;
+      }
+    }
+  }
 `;
 const Firstinputkyc = styled(Firstinput)``;
 const Firstnamekyc = styled(Firstname)``;
@@ -935,7 +984,9 @@ class KYCForm extends Component {
         t("validations:field_is_required.message");
     }
     return (
-      <KYCform>
+      <KYCform
+        className={this.props.theme == true ? "profile_details_dark" : ""}
+      >
         <RightColkyc>
           <FirstRowkyc>
             <Col
@@ -1159,7 +1210,7 @@ class KYCForm extends Component {
                 <Postalkyc>
                   {t("identity_verification:subhead_mobile_no.message")}*
                 </Postalkyc>
-                <PhoneDiv>
+                <PhoneDiv className="mobile_field disabled">
                   {/* {console.log(
                     "Test",
                     this.state.mobile,
