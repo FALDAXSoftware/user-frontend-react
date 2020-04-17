@@ -2963,6 +2963,290 @@
       "message": "RISING/FALLING",
       "message_type": "Web content",
       "context": "RISING/FALLING Tab of crypto screener"
+    },
+    "cryptocurrency_market_text": {
+      "page": "Market",
+      "message": "Cryptocurrency Markets",
+      "message_type": "Web content",
+      "context": "copyright text at bottom"
+    },
+    "by_tradingview_text": {
+      "page": "Market",
+      "message": "by TradingView",
+      "message_type": "Web content",
+      "context": "copyright text at bottom"
+    }
+  },
+  "trade": {
+    "market_head": {
+      "page": "Header",
+      "message": "Market",
+      "message_type": "Web content",
+      "context": "menu text of header"
+    },
+    "dashboard_head": {
+      "page": "Header",
+      "message": "Dashboard",
+      "message_type": "Web content",
+      "context": "menu text of header"
+    },
+    "trade_head": {
+      "page": "Header",
+      "message": "Trade",
+      "message_type": "Web content",
+      "context": "menu text of header"
+    },
+    "order_type_text": {
+      "page": "History > Trade",
+      "message": "Order Type",
+      "message_type": "Web content",
+      "context": "text of table"
+    },
+    "limit_price_text": {
+      "page": "History > Trade",
+      "message": "Limit Price",
+      "message_type": "Web content",
+      "context": "text of table"
+    },
+    "stop_price_text": {
+      "page": "History > Trade",
+      "message": "Stop Price",
+      "message_type": "Web content",
+      "context": "text of table"
+    },
+    "edit_layout_text": {
+      "page": "Trade",
+      "message": "Edit Layout",
+      "message_type": "Web content",
+      "context": "text of trade screen"
+    },
+    "exit_full_screen_text": {
+      "page": "Trade",
+      "message": "Exit Full Screen",
+      "message_type": "Web content",
+      "context": "text of trade screen"
+    },
+    "full_screen_text": {
+      "page": "Trade",
+      "message": "Full Screen",
+      "message_type": "Web content",
+      "context": "text of trade screen"
+    },
+    "clear_layout_text": {
+      "page": "Trade",
+      "message": "Clear Layout",
+      "message_type": "Web content",
+      "context": "text of trade screen"
+    },
+    "reset_layout_text": {
+      "page": "Trade",
+      "message": "Reset Layout",
+      "message_type": "Web content",
+      "context": "text of trade screen"
+    },
+    "instruments_text": {
+      "page": "Trade",
+      "message": "INSTRUMENTS",
+      "message_type": "Web content",
+      "context": "text of trade screen"
+    },
+    "limit_head": {
+      "page": "Trade",
+      "message": "Limit",
+      "message_type": "Web content",
+      "context": "Text of trade action"
+    },
+    "stop_limit_head": {
+      "page": "Trade",
+      "message": "Stop Limit",
+      "message_type": "Web content",
+      "context": "Text of trade action"
+    },
+    "my_order_and_trade_head": {
+      "page": "Trade",
+      "message": "MY ORDERS AND TRADES",
+      "message_type": "Web content",
+      "context": "Text of MY ORDERS AND TRADES"
+    },
+    "month_text": {
+      "page": "Trade",
+      "message": "Month",
+      "message_type": "Web content",
+      "context": "Text of dropdown month"
+    },
+    "months_text": {
+      "page": "Trade",
+      "message": "Months",
+      "message_type": "Web content",
+      "context": "Text of dropdown months"
+    },
+    "completed_text": {
+      "page": "Trade",
+      "message": "Completed",
+      "message_type": "Web content",
+      "context": "Text of tab completed"
+    },
+    "pending_text": {
+      "page": "Trade",
+      "message": "Pending",
+      "message_type": "Web content",
+      "context": "Text of tab Pending"
+    },
+    "cancelled_text": {
+      "page": "Trade",
+      "message": "Cancelled",
+      "message_type": "Web content",
+      "context": "Text of tab cancelled"
+    },
+    "change_text": {
+      "page": "Trade",
+      "message": "Change",
+      "message_type": "Web content",
+      "context": "change Text of instrument table head"
+    },
+    "volume_text": {
+      "page": "Trade",
+      "message": "Volume",
+      "message_type": "Web content",
+      "context": "volume Text of instrument table head"
+    },
+    "market_depth_text": {
+      "page": "Trade",
+      "message": "MARKET DEPTH",
+      "message_type": "Web content",
+      "context": "MARKET DEPTH Text of depth chart"
+    },
+    "ask_text": {
+      "page": "Trade",
+      "message": "Ask",
+      "message_type": "Web content",
+      "context": "ask Text of depth chart"
+    },
+    "bid_text": {
+      "page": "Trade",
+      "message": "Bid",
+      "message_type": "Web content",
+      "context": "bid Text of depth chart"
+    },
+    "order_book_text": {
+      "page": "Trade",
+      "message": "ORDER BOOK",
+      "message_type": "Web content",
+      "context": "ORDER BOOK Text of Buy/Sell book"
+    },
+    "buying_text": {
+      "page": "Trade",
+      "message": "BUYING",
+      "message_type": "Web content",
+      "context": "BUYING Text of Buy/Sell book"
+    },
+    "my_size_text": {
+      "page": "Trade",
+      "message": "MY SIZE",
+      "message_type": "Web content",
+      "context": "my size Text of Buy/Sell book"
+    },
+    "selling_text": {
+      "page": "Trade",
+      "message": "SELLING",
+      "message_type": "Web content",
+      "context": "SELLING Text of Buy/Sell book"
+    },
+    "order_history_text": {
+      "page": "Trade",
+      "message": "ORDER HISTORY",
+      "message_type": "Web content",
+      "context": "ORDER HISTORY Text"
+    },
+    "fill_price_text": {
+      "page": "Trade",
+      "message": "Fill Price",
+      "message_type": "Web content",
+      "context": "Fill price Text of order history"
+    },
+    "time_text": {
+      "page": "Trade",
+      "message": "Time",
+      "message_type": "Web content",
+      "context": "Time Text of order history"
+    },
+    "type_text": {
+      "page": "Trade",
+      "message": "Type",
+      "message_type": "Web content",
+      "context": "Type Text of order history"
+    },
+    "unfilled_text": {
+      "page": "Trade",
+      "message": "Unfilled",
+      "message_type": "Web content",
+      "context": "Unfilled Text of order history"
+    },
+    "actions_text": {
+      "page": "Trade",
+      "message": "Actions",
+      "message_type": "Web content",
+      "context": "Actions Text of order history"
+    },
+    "3_decimal_error": {
+      "page": "Trade > market Order",
+      "message": "Value must be less than or equal to 3 digits after decimal point.",
+      "message_type": "Web content",
+      "context": "Value must be less than or equal to 3 digits after decimal point error"
+    },
+    "5_decimal_error": {
+      "page": "Trade > market Order",
+      "message": "value must be less than or equal to 5 digits after decimal point.",
+      "message_type": "Web content",
+      "context": "Value must be less than or equal to 5 digits after decimal point error"
+    },
+    "balance_text": {
+      "page": "Trade > market Order",
+      "message": "Balance",
+      "message_type": "Web content",
+      "context": "Balance Text of order history"
+    },
+    "best_text": {
+      "page": "Trade > market Order",
+      "message": "Best",
+      "message_type": "Web content",
+      "context": "Best Text of trade action"
+    },
+    "you_approximate_text": {
+      "page": "Trade > market Order",
+      "message": "You will approximately",
+      "message_type": "Web content",
+      "context": "You will approximately Text tradeaction"
+    },
+    "pay_text": {
+      "page": "Trade > market Order",
+      "message": "pay",
+      "message_type": "Web content",
+      "context": "pay Text tradeaction"
+    },
+    "receive_text": {
+      "page": "Trade > market Order",
+      "message": "receive",
+      "message_type": "Web content",
+      "context": "receive Text tradeaction"
+    },
+    "estimated_best_price_text": {
+      "page": "Trade > market Order",
+      "message": "Estimated Best Price",
+      "message_type": "Web content",
+      "context": "receive Text tradeaction"
+    },
+    "must_be_a_number": {
+      "page": "Trade > Limit Order",
+      "message": "must be a number.",
+      "message_type": "Web content",
+      "context": "validation message for number"
+    },
+    "should_be_greater_than_0": {
+      "page": "Trade > Limit Order",
+      "message": "should be greater than zero.",
+      "message_type": "Web content",
+      "context": "validation message for amount greater than 0"
     }
   }
 }

@@ -257,7 +257,7 @@ class ChangeEmail extends Component {
         method: "post",
         headers: {
           Accept: "application/json",
-          "Accept-Language": localStorage["i18nextLng"], 
+          "Accept-Language": localStorage["i18nextLng"],
           "Content-Type": "application/json",
           Authorization: "Bearer " + this.props.isLoggedIn
         },
@@ -311,7 +311,7 @@ class ChangeEmail extends Component {
         method: "post",
         headers: {
           Accept: "application/json",
-          "Accept-Language": localStorage["i18nextLng"], 
+          "Accept-Language": localStorage["i18nextLng"],
           "Content-Type": "application/json",
           Authorization: "Bearer " + this.props.isLoggedIn
         },
@@ -332,7 +332,7 @@ class ChangeEmail extends Component {
               loader: false,
               isShowOTP: false,
               errMsg: true,
-              errType: this.t("validations:success_text.message"),
+              errType: "success",
               errMessage: responseData.message,
               newEmail: responseData.data
             });
@@ -347,7 +347,7 @@ class ChangeEmail extends Component {
             this.setState({
               loader: false,
               errMsg: true,
-              errType:"Error",
+              errType: "Error",
               errMessage: responseData.err
             });
           }
@@ -397,8 +397,11 @@ class ChangeEmail extends Component {
 
   openNotificationWithIcon(type) {
     notification[type]({
-      message:this.state.errType.toLowerCase()=="error"?this.t("validations:error_text.message"):this.t("validations:success_text.message"),
-      description:this.state.errMessage
+      message:
+        this.state.errType.toLowerCase() == "error"
+          ? this.t("validations:error_text.message")
+          : this.t("validations:success_text.message"),
+      description: this.state.errMessage
     });
     this.setState({ errMsg: false });
   }

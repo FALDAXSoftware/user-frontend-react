@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import "antd/dist/antd.css";
 import styled, { consolidateStreamedStyles } from "styled-components";
 import { Scrollbars } from "react-custom-scrollbars";
+import { translate } from "react-i18next";
 import { Spin } from "antd";
 
 /*Components  */
@@ -51,6 +52,7 @@ class BuyTABLE extends Component {
       loader: false,
       result: []
     };
+    this.t = this.props.t;
     this.updateData = this.updateData.bind(this);
   }
 
@@ -265,9 +267,12 @@ class BuyTABLE extends Component {
   render() {
     return (
       <div>
-        <BBC>BUYING {this.props.crypto}</BBC>
+        <BBC>
+          {this.t("buying_text.message")} {this.props.crypto}
+        </BBC>
         <TotalBTC>
-          Total: {this.state.lastsum && this.state.lastsum.toFixed(8)}{" "}
+          {this.t("conversion:total_text.message")}:{" "}
+          {this.state.lastsum && this.state.lastsum.toFixed(8)}{" "}
           {this.state.currency}
         </TotalBTC>
         <BuyTable>
@@ -277,10 +282,10 @@ class BuyTABLE extends Component {
                 <TableHeader cellpadding="10px" cellspacing="0" border="0">
                   <thead>
                     <tr>
-                      <th>MY SIZE</th>
-                      <th>AMOUNT</th>
-                      <th>BID</th>
-                      <th>TOTAL</th>
+                      <th>{this.t("my_size_text.message")}</th>
+                      <th>{this.t("wallet:amount_text.message")}</th>
+                      <th>{this.t("bid_text.message")}</th>
+                      <th>{this.t("conversion:total_text.message")}</th>
                     </tr>
                   </thead>
                 </TableHeader>
@@ -293,7 +298,12 @@ class BuyTABLE extends Component {
                   className="scrollbar"
                   hideTracksWhenNotNeeded={true}
                 >
-                  <TableContent cellpadding="10px" cellspacing="0" border="0">
+                  <TableContent
+                    cellpadding="10px"
+                    cellspacing="0"
+                    border="0"
+                    className="buy_sell_table"
+                  >
                     {this.state.result.length ? (
                       <tbody>
                         {this.state.result.map(element => (
@@ -306,7 +316,7 @@ class BuyTABLE extends Component {
                         ))}
                       </tbody>
                     ) : (
-                      <NDF>No Data Found</NDF>
+                      <NDF>{this.t("wallet:no_data_found_text.message")}</NDF>
                     )}
                   </TableContent>
                 </Scrollbars>
@@ -343,4 +353,6 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(BuyTABLE);
+export default translate(["trade", "conversion", "wallet"])(
+  connect(mapStateToProps)(BuyTABLE)
+);

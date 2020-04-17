@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import "antd/dist/antd.css";
 import styled from "styled-components";
 import { Scrollbars } from "react-custom-scrollbars";
+import { translate } from "react-i18next";
 
 /* Components */
 import { globalVariables } from "Globals.js";
@@ -21,6 +22,7 @@ import {
   TableContent,
   ScrollTableContent
 } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
+import { faThinkPeaks } from "@fortawesome/free-brands-svg-icons";
 
 const APP_URL = globalVariables.API_URL;
 
@@ -51,6 +53,7 @@ class SellTable extends Component {
       loader: false,
       result: []
     };
+    this.t = this.props.t;
     this.updateData = this.updateData.bind(this);
   }
 
@@ -271,9 +274,12 @@ class SellTable extends Component {
   render() {
     return (
       <div>
-        <BBC2>SELLING {this.props.crypto}</BBC2>
+        <BBC2>
+          {this.t("selling_text.message")} {this.props.crypto}
+        </BBC2>
         <TotalBTC>
-          Total: {this.state.lastsum && this.state.lastsum.toFixed(8)}{" "}
+          {this.t("conversion:total_text.message")}:{" "}
+          {this.state.lastsum && this.state.lastsum.toFixed(8)}{" "}
           {this.state.crypto}
         </TotalBTC>
         <BuyTable>
@@ -283,10 +289,10 @@ class SellTable extends Component {
                 <TableHeader cellpadding="10px" cellspacing="0" border="0">
                   <thead>
                     <tr>
-                      <th>MY SIZE</th>
-                      <th>AMOUNT</th>
-                      <th>ASK</th>
-                      <th>TOTAL</th>
+                      <th>{this.t("my_size_text.message")}</th>
+                      <th>{this.t("wallet:amount_text.message")}</th>
+                      <th>{this.t("ask_text.message")}</th>
+                      <th>{this.t("conversion:total_text.message")}</th>
                     </tr>
                   </thead>
                 </TableHeader>
@@ -299,7 +305,12 @@ class SellTable extends Component {
                   className="scrollbar"
                   hideTracksWhenNotNeeded={true}
                 >
-                  <TableContent cellpadding="10px" cellspacing="0" border="0">
+                  <TableContent
+                    className="buy_sell_table"
+                    cellpadding="10px"
+                    cellspacing="0"
+                    border="0"
+                  >
                     <tbody>
                       {this.state.result.length ? (
                         this.state.result.map(function(element, index) {
@@ -313,7 +324,7 @@ class SellTable extends Component {
                           );
                         })
                       ) : (
-                        <NDF>No Data Found</NDF>
+                        <NDF>{this.t("wallet:no_data_found_text.message")}</NDF>
                       )}
                     </tbody>
                   </TableContent>
@@ -351,4 +362,6 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(SellTable);
+export default translate(["trade", "conversion", "wallet"])(
+  connect(mapStateToProps)(SellTable)
+);

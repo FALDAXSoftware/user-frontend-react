@@ -39,6 +39,7 @@ import DepthChart from "./depthchart";
 import OrderTrade from "./ordertrade";
 import { globalVariables } from "Globals.js";
 import TradingViewChart from "COMPONENTS/tradingviewchart";
+import { translate } from "react-i18next";
 /* import FaldaxLoader from 'SHARED-COMPONENTS/FaldaxLoader'; */
 
 /* Styled-Components */
@@ -192,52 +193,6 @@ const RGL = styled(ResponsiveReactGridLayout)`
         : ""};
   }
 `;
-const columns = [
-  {
-    title: "Name",
-    dataIndex: "name",
-    className: "tblInsName",
-    sorter: (a, b, sortOrder) => {
-      var nameA = a.name.toUpperCase(); // ignore upper and lowercase
-      var nameB = b.name.toUpperCase(); // ignore upper and lowercase
-      if (nameA < nameB) {
-        return -1;
-      }
-      if (nameA > nameB) {
-        return 1;
-      }
-    }
-  },
-  {
-    title: "Price",
-    dataIndex: "price",
-    defaultSortOrder: "descend",
-    className: "tblInsPrice",
-    sorter: (a, b) => a.price - b.price
-  },
-  {
-    title: "Volume",
-    dataIndex: "volume",
-    defaultSortOrder: "ascend",
-    className: "tblInsVolumn",
-    render: text => text,
-    sorter: (a, b) => a.volume - b.volume,
-    sortDirections: ["descend", "ascend"]
-  },
-  {
-    title: "Change",
-    dataIndex: "change",
-    defaultSortOrder: "ascend",
-    className: "tblInsChange",
-    render: text => {
-      if (text < 0)
-        return <span style={{ color: "red" }}>{Math.abs(text) + "%"}</span>;
-      else
-        return <span style={{ color: "green" }}>{Math.abs(text) + "%"}</span>;
-    },
-    sorter: (a, b) => a.change - b.change
-  }
-];
 
 const TabPane = Tabs.TabPane;
 let io = null;
@@ -274,6 +229,7 @@ class Trade extends Component {
       loader: false
     };
     io = this.props.io;
+    this.t = this.props.t;
     // io.sails.url = API_URL;
     this.handleChangeOT = this.handleChangeOT.bind(this);
     this.statusChange = this.statusChange.bind(this);
@@ -328,6 +284,7 @@ class Trade extends Component {
   }
 
   componentDidMount() {
+    console.log("^^^^", this.state.crypto, this.state.currency);
     var self = this;
     // io.sails.headers = {
     //   Accept: "application/json",
@@ -355,9 +312,13 @@ class Trade extends Component {
         console.log("^^^^data", data);
         this.updateMyOrder(data);
       });
+      this.props.io.on("users-completed-flag", data => {
+        console.log("^^^^dataorderSocket", data);
+        this.orderSocket(this.state.timePeriod, this.state.status);
+      });
       this.orderSocket(this.state.timePeriod, this.state.status);
       this.props.io.on("instrument-data", data => {
-        console.log(data);
+        console.log("instrument-data^^^", data);
         this.updateInstrumentsData(data);
       });
       this.props.io.on("user-wallet-balance", data => {
@@ -367,11 +328,21 @@ class Trade extends Component {
     }
   }
   joinRoom = (prevRoom = null) => {
-    console.log(this.state, prevRoom);
-    io.emit("join", {
-      room: this.state.crypto + "-" + this.state.currency,
-      previous_room: prevRoom
-    });
+    console.log("joinRoom^^", this.state, prevRoom);
+    io.emit(
+      "join",
+      {
+        room: this.state.crypto + "-" + this.state.currency,
+        previous_room: prevRoom
+      },
+      () => {
+        console.log(
+          "joinRoom after^^",
+          this.state.crypto + "-" + this.state.currency
+        );
+        console.log("joinRoom after^^", prevRoom);
+      }
+    );
   };
   // created by Meghal Patel at 2019-04-27 15:09.
   //
@@ -380,8 +351,11 @@ class Trade extends Component {
   //
 
   onInsChange(e) {
+    this.setState({
+      insLoader: true
+    });
     var self = this;
-    // console.log(e.target.value);
+    console.log("onInsChange^^^^", self.state.crypto, e.target.value);
     let cryptoPair = {
       crypto: self.state.crypto,
       currency: e.target.value,
@@ -396,7 +370,7 @@ class Trade extends Component {
         InsData: []
       },
       () => {
-        self.props.cryptoCurrency(cryptoPair);
+        // self.props.cryptoCurrency(cryptoPair);
         // self.getInstrumentData();
         // this.props
         this.joinRoom(
@@ -562,7 +536,9 @@ class Trade extends Component {
   //
 
   updateMyOrder(response) {
-    this.setState({ orderTradeData: response, orderTradeLoader: false });
+    this.setState({ orderTradeData: response, orderTradeLoader: false }, () => {
+      console.log("Trade data^^^", this.state.orderTradeData);
+    });
   }
 
   // created by Meghal Patel at 2019-04-27 15:23.
@@ -592,11 +568,15 @@ class Trade extends Component {
           this.orderSocket(this.state.timePeriod, this.state.status);
           this.openNotificationWithIcon(
             "success",
-            "Successfull",
-            "Your order has been successfully cancelled"
+            this.t("validations:success_text.message"),
+            responseData.message
           );
         } else
-          this.openNotificationWithIcon("error", "Error", responseData.err);
+          this.openNotificationWithIcon(
+            "error",
+            this.t("validations:error_text.message"),
+            responseData.err
+          );
       })
       .catch(error => {});
   }
@@ -621,6 +601,9 @@ class Trade extends Component {
   //
 
   currencyPair(crypto) {
+    this.setState({
+      insLoader: true
+    });
     let cryptoPair = {
       crypto: crypto,
       currency: this.state.InsCurrency,
@@ -1238,6 +1221,54 @@ class Trade extends Component {
 
   render() {
     var self = this;
+    const columns = [
+      {
+        title: `${this.t("referral:referral_table_head_name.message")}`,
+        dataIndex: "name",
+        className: "tblInsName",
+        sorter: (a, b, sortOrder) => {
+          var nameA = a.name.toUpperCase(); // ignore upper and lowercase
+          var nameB = b.name.toUpperCase(); // ignore upper and lowercase
+          if (nameA < nameB) {
+            return -1;
+          }
+          if (nameA > nameB) {
+            return 1;
+          }
+        }
+      },
+      {
+        title: `${this.t("history:price_text.message")}`,
+        dataIndex: "price",
+        defaultSortOrder: "descend",
+        className: "tblInsPrice",
+        sorter: (a, b) => a.price - b.price
+      },
+      {
+        title: `${this.t("volume_text.message")}`,
+        dataIndex: "volume",
+        defaultSortOrder: "ascend",
+        className: "tblInsVolumn",
+        render: text => text,
+        sorter: (a, b) => a.volume - b.volume,
+        sortDirections: ["descend", "ascend"]
+      },
+      {
+        title: `${this.t("change_text.message")}`,
+        dataIndex: "change",
+        defaultSortOrder: "ascend",
+        className: "tblInsChange",
+        render: text => {
+          if (text < 0)
+            return <span style={{ color: "red" }}>{Math.abs(text) + "%"}</span>;
+          else
+            return (
+              <span style={{ color: "green" }}>{Math.abs(text) + "%"}</span>
+            );
+        },
+        sorter: (a, b) => a.change - b.change
+      }
+    ];
     const menu = (
       <Menu className="SettingMenu">
         <Menu.Item
@@ -1245,17 +1276,17 @@ class Trade extends Component {
           disabled={this.state.editState}
           key="1"
         >
-          Edit Layout
+          {this.t("edit_layout_text.message")}
         </Menu.Item>
         {self.state.isFullscreen && (
           <Menu.Item key="2" onClick={this.exitFullScreen}>
             <Icon type="fullscreen-exit" />
-            Exit Full Screen
+            {this.t("exit_full_screen_text.message")}
           </Menu.Item>
         )}
         {!self.state.isFullscreen && (
           <Menu.Item key="2" onClick={this.goFullScreen}>
-            <Icon type="fullscreen" /> Full Screen
+            <Icon type="fullscreen" /> {this.t("full_screen_text.message")}
           </Menu.Item>
         )}
         <Menu.Item
@@ -1263,17 +1294,17 @@ class Trade extends Component {
           disabled={this.state.saveState}
           key="3"
         >
-          Clear Layout
+          {this.t("clear_layout_text.message")}
         </Menu.Item>
         <Menu.Item
           onClick={this.saveLayout.bind(this)}
           disabled={this.state.saveState}
           key="2"
         >
-          Save
+          {this.t("edit_profile_titles:subhead_personal_form_save_btn.message")}
         </Menu.Item>
         <Menu.Item onClick={this.resetLayout.bind(this)} key="4">
-          Reset Layout
+          {this.t("reset_layout_text.message")}
         </Menu.Item>
       </Menu>
     );
@@ -1351,7 +1382,7 @@ class Trade extends Component {
                       ""
                     )}
                     <LeftDiv1>
-                      <Instru>INSTRUMENTS</Instru>
+                      <Instru>{this.t("instruments_text.message")}</Instru>
                       {this.state.InsData.length > 0 ? (
                         <SearchInput
                           onChange={e => this.searchInstu(e)}
@@ -1415,22 +1446,31 @@ class Trade extends Component {
                         onChange={this.callback}
                         className="tardeActionCard"
                       >
-                        <TabPane tab="Market" key="1">
+                        <TabPane tab={this.t("market_head.message")} key="1">
                           <Market
                             MLS={this.state.MLS}
                             userBal={this.state.userBal}
+                            crypto={this.state.crypto}
+                            currency={this.state.currency}
                           />
                         </TabPane>
-                        <TabPane tab="Limit" key="2">
+                        <TabPane tab={this.t("limit_head.message")} key="2">
                           <Limit
                             MLS={this.state.MLS}
                             userBal={this.state.userBal}
+                            crypto={this.state.crypto}
+                            currency={this.state.currency}
                           />
                         </TabPane>
-                        <TabPane tab="Stop-Limit" key="3">
+                        <TabPane
+                          tab={this.t("stop_limit_head.message")}
+                          key="3"
+                        >
                           <StopLimit
                             MLS={this.state.MLS}
                             userBal={this.state.userBal}
+                            crypto={this.state.crypto}
+                            currency={this.state.currency}
                           />
                         </TabPane>
                       </TabsRight>
@@ -1508,7 +1548,9 @@ class Trade extends Component {
                     )} */}
                     <LeftDiv2>
                       <OrderWrap>
-                        <InstruOrder>MY ORDERS AND TRADES</InstruOrder>
+                        <InstruOrder>
+                          {this.t("my_order_and_trade_head.message")}
+                        </InstruOrder>
                         <OrderTradeWrap>
                           <SelectMonth
                             labelInValue
@@ -1516,10 +1558,18 @@ class Trade extends Component {
                             style={{ width: 120, marginRight: "30px" }}
                             onChange={this.handleChangeOT}
                           >
-                            <Option value="1">1 Month</Option>
-                            <Option value="3">3 Months</Option>
-                            <Option value="6">6 Months</Option>
-                            <Option value="12">12 Months</Option>
+                            <Option value="1">
+                              1 {this.t("month_text.message")}
+                            </Option>
+                            <Option value="3">
+                              3 {this.t("months_text.message")}
+                            </Option>
+                            <Option value="6">
+                              6 {this.t("months_text.message")}
+                            </Option>
+                            <Option value="12">
+                              12 {this.t("months_text.message")}
+                            </Option>
                           </SelectMonth>
                           <FIATWrap2>
                             <FIAT>
@@ -1530,9 +1580,15 @@ class Trade extends Component {
                                 buttonStyle="solid"
                                 className="order-tab-select"
                               >
-                                <RadioButton value="a">COMPLETED</RadioButton>
-                                <RadioButton value="b">PENDING</RadioButton>
-                                <RadioButton value="c">CANCELED</RadioButton>
+                                <RadioButton value="a">
+                                  {this.t("completed_text.message")}
+                                </RadioButton>
+                                <RadioButton value="b">
+                                  {this.t("pending_text.message")}
+                                </RadioButton>
+                                <RadioButton value="c">
+                                  {this.t("cancelled_text.message")}
+                                </RadioButton>
                               </RadioSelect>
                             </FIAT>
                           </FIATWrap2>
@@ -1580,7 +1636,13 @@ const mapDispatchToProps = dispatch => ({
   cryptoCurrency: Pair => dispatch(cryptoCurrency(Pair))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Trade);
+export default translate([
+  "trade",
+  "edit_profile_titles",
+  "referral",
+  "history",
+  "validations"
+])(connect(mapStateToProps, mapDispatchToProps)(Trade));
 
 function getFromLS(key) {
   let ls = {};
