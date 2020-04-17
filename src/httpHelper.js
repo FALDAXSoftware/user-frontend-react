@@ -20,8 +20,8 @@ const APIUtility = {
       method: "get",
       url: API_URL + "/users/get-user-thresholds",
       headers: {
-        Authorization: "Bearer " + token
-      }
+        Authorization: "Bearer " + token,
+      },
     });
   },
   setThresholdData: function(token, data) {
@@ -29,9 +29,9 @@ const APIUtility = {
       method: "post",
       url: API_URL + "/users/add-thresholds-limits",
       headers: {
-        Authorization: "Bearer " + token
+        Authorization: "Bearer " + token,
       },
-      data: data
+      data: data,
     });
   },
   getPanicStatus: function(token) {
@@ -39,8 +39,8 @@ const APIUtility = {
       method: "get",
       url: API_URL + "/check-panic-status",
       headers: {
-        Authorization: "Bearer " + token
-      }
+        Authorization: "Bearer " + token,
+      },
     });
   },
   getUserTradeStatus: function(token) {
@@ -48,8 +48,8 @@ const APIUtility = {
       method: "get",
       url: API_URL + "/users/get-user-trade-status",
       headers: {
-        Authorization: "Bearer " + token
-      }
+        Authorization: "Bearer " + token,
+      },
     });
   },
   getCrypto: function(token) {
@@ -57,8 +57,18 @@ const APIUtility = {
       method: "get",
       url: API_URL + "/get-simplex-coin-list",
       headers: {
-        Authorization: "Bearer " + token
-      }
+        Authorization: "Bearer " + token,
+      },
+    });
+  },
+  getTierDetails: function(token, data) {
+    return axios({
+      method: "post",
+      url: API_URL + "/users/get-user-tier-details",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+      data: data,
     });
   },
   calculateDigitalCurrency: function(token, data) {
@@ -67,10 +77,10 @@ const APIUtility = {
       url: API_URL + "/get-qoute-details",
       headers: {
         Authorization: "Bearer " + token,
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      data: data
+      data: data,
     });
-  }
+  },
 };
 export { APIUtility };

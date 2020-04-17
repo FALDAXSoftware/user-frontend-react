@@ -15,7 +15,7 @@ import {
   TierRequirements,
   TierUpdate,
   TierVerfied,
-  TierVerifiedWrap
+  TierVerifiedWrap,
 } from "../../STYLED-COMPONENTS/TIER/tierStyle";
 import { Icon } from "antd";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
@@ -30,7 +30,7 @@ class Tier extends Component {
     super(props);
     this.state = {
       loader: true,
-      tierData: []
+      tierData: [],
     };
   }
 
@@ -40,19 +40,19 @@ class Tier extends Component {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        "Accept-Language": localStorage["i18nextLng"], 
-        Authorization: "Bearer " + this.props.isLoggedIn
-      }
+        "Accept-Language": localStorage["i18nextLng"],
+        Authorization: "Bearer " + this.props.isLoggedIn,
+      },
     })
-      .then(response => response.json())
-      .then(responseData => {
+      .then((response) => response.json())
+      .then((responseData) => {
         this.setState({
           tierData: responseData.data,
-          loader: false
+          loader: false,
         });
         // console.log("tierData", responseData.data);
       })
-      .catch(error => {
+      .catch((error) => {
         // console.log(error);
       });
   }
@@ -72,7 +72,7 @@ class Tier extends Component {
                   var liClasses = classNames({
                     "tier-active": tier.is_verified === true,
                     "tier-enabled": tier.is_active === true,
-                    "tier-main": !tier.is_verified && !tier.is_active
+                    "tier-main": !tier.is_verified && !tier.is_active,
                   });
                   return (
                     <TierSubMain key={tier.id} className={liClasses}>
@@ -86,32 +86,46 @@ class Tier extends Component {
                         <TierUl>
                           <li>
                             <span className="icon-wrap">
-                              <Icon type="check" />
+                              {tier.minimum_activity_thresold ? (
+                                <Icon type="check" />
+                              ) : (
+                                ""
+                              )}
                             </span>
                             <span className="text-wrap">
-                              {tier.minimum_activity_thresold.Account_Age}
+                              {tier.minimum_activity_thresold
+                                ? tier.minimum_activity_thresold.account_change
+                                : ""}
                             </span>
                           </li>
                           <li>
                             <span className="icon-wrap">
-                              <Icon type="check" />
+                              {tier.minimum_activity_thresold ? (
+                                <Icon type="check" />
+                              ) : (
+                                ""
+                              )}
                             </span>
                             <span className="text-wrap">
-                              {
-                                tier.minimum_activity_thresold
-                                  .Minimum_Total_Transactions
-                              }
+                              {tier.minimum_activity_thresold
+                                ? tier.minimum_activity_thresold
+                                    .minimum_total_transactions
+                                : ""}
                             </span>
                           </li>
                           <li>
                             <span className="icon-wrap">
-                              <Icon type="check" />
+                              {tier.minimum_activity_thresold ? (
+                                <Icon type="check" />
+                              ) : (
+                                ""
+                              )}
                             </span>
                             <span className="text-wrap">
-                              {
-                                tier.minimum_activity_thresold
-                                  .Minimum_Total_Value_of_All_Transactions
-                              }
+                              {tier.minimum_activity_thresold
+                                ? tier.minimum_activity_thresold
+                                    .minimum_total_value_transaction
+                                : ""}
                             </span>
                           </li>
                         </TierUl>
@@ -136,15 +150,17 @@ class Tier extends Component {
                       <TierRequirements>
                         <TierSubHeadRequire>Requirements</TierSubHeadRequire>
                         <ul className="requirements">
-                          {Object.values(tier.requirements) &&
-                            Object.values(tier.requirements).map(
-                              requirement => (
-                                <li key={requirement}>
-                                  <span className="disc-icon" />
-                                  <span>{requirement}</span>
-                                </li>
+                          {tier.requirements
+                            ? Object.values(tier.requirements) &&
+                              Object.values(tier.requirements).map(
+                                (requirement) => (
+                                  <li key={requirement}>
+                                    <span className="disc-icon" />
+                                    <span>{requirement}</span>
+                                  </li>
+                                )
                               )
-                            )}
+                            : ""}
                         </ul>
                       </TierRequirements>
                       {tier.is_verified && (
@@ -156,7 +172,20 @@ class Tier extends Component {
                         </TierVerifiedWrap>
                       )}
                       {tier.is_active && (
-                        <Link to={`/tier${tier.id}`}>
+                        <Link
+                          to={{
+                            pathname: `/tier${tier.id}`,
+                            state: {
+                              // tier_id: tier.id,
+                              // account_details: `${tier.account_details}`
+                              //   ? `${tier.account_details.request_id}`
+                              //   : ""
+                              // underApproval: `${tier.under_approval}`
+                              //   ? `${tier.under_approval}`
+                              //   : ""
+                            },
+                          }}
+                        >
                           <TierUpdate
                             key={tier.id}
                             id={tier.id}
@@ -182,13 +211,17 @@ class Tier extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     ...state,
+    isLoggedIn:
+      state.simpleReducer.isLoggedIn !== undefined
+        ? state.simpleReducer.isLoggedIn
+        : "",
     profileDetails:
       state.simpleReducer.profileDetails !== undefined
         ? state.simpleReducer.profileDetails.data[0]
-        : ""
+        : "",
   };
 };
 export default connect(mapStateToProps)(withRouter(Tier));
