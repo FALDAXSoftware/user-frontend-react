@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Dropzone from "react-dropzone";
 
 export const TierMainWrap = styled.div`
   font-family: "Open sans";
@@ -26,15 +27,15 @@ export const TierSubMain = styled.div`
   margin: 0 15px;
   border-radius: 8px;
   border: 2px solid;
-  border-color: ${props =>
+  border-color: ${(props) =>
     props.theme.mode === "dark" ? "#20303e" : "#333333"};
   flex-wrap: wrap;
   // min-height: 770px;
   align-items: flex-start;
   position: relative;
-  opacity: ${props => (props.theme.mode === "dark" ? "0.5" : "0.4")};
+  opacity: ${(props) => (props.theme.mode === "dark" ? "0.5" : "0.4")};
   pointer-events: none;
-  background: ${props => (props.theme.mode === "dark" ? "#01090f" : " ")};
+  background: ${(props) => (props.theme.mode === "dark" ? "#01090f" : " ")};
   @media (max-width: 1200px) {
     width: calc(50% - 30px);
     margin-bottom: 30px;
@@ -54,7 +55,8 @@ export const TierHead = styled.span`
   font-size: 25px;
   font-weight: bold;
   width: 100%;
-  background: ${props => (props.theme.mode === "dark" ? "#20303e" : "#333333")};
+  background: ${(props) =>
+    props.theme.mode === "dark" ? "#20303e" : "#333333"};
   display: inherit;
   justify-content: center;
   color: #fff;
@@ -68,8 +70,8 @@ export const TierSubHead = styled.span`
   text-align: center;
   text-transform: uppercase;
   font-weight: bold;
-  color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "#333333")};
-  font-size: 16px;
+  color: ${(props) => (props.theme.mode === "dark" ? "#ffffff" : "#333333")};
+  font-size: 15px;
   line-height: 18px;
   padding: 20px 0;
 `;
@@ -81,20 +83,22 @@ export const TierUl = styled.ul`
   text-align: left;
   > li {
     padding: 5px 0;
-    font-size: 16px;
+    font-size: 14px;
     display: flex;
     > .icon-wrap {
       font-weight: bold;
       line-height: 16px;
       display: inline-flex;
-      color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "#333333")};
+      color: ${(props) =>
+        props.theme.mode === "dark" ? "#ffffff" : "#333333"};
       width: 25px;
     }
     > .text-wrap {
       width: calc(100% - 25px);
       line-height: 18px;
       display: inline-flex;
-      color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "#333333")};
+      color: ${(props) =>
+        props.theme.mode === "dark" ? "#ffffff" : "#333333"};
     }
   }
 `;
@@ -104,13 +108,13 @@ export const TierWithdrawalHead = styled.div`
   text-transform: uppercase;
   padding: 20px 0 15px;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 15px;
   line-height: 18px;
 `;
 export const TierTable = styled.table`
   width: 100%;
   border: 1px solid;
-  border-color: ${props =>
+  border-color: ${(props) =>
     props.theme.mode === "dark" ? "#eaeaea" : "#e1e1e1"};
   margin-bottom: 30px;
   > thead tr th {
@@ -118,20 +122,20 @@ export const TierTable = styled.table`
     width: 50%;
     background: #e1e1e1;
     font-weight: 600;
-    font-size: 18px;
+    font-size: 16px;
     padding: 5px 0;
     color: #333333;
   }
   > tbody tr td {
     width: 50%;
-    font-size: 18px;
+    font-size: 16px;
     padding: 5px 0;
     font-weight: bold;
     color: #333333;
     border: 1px solid;
-    border-color: ${props =>
+    border-color: ${(props) =>
       props.theme.mode === "dark" ? "#eaeaea" : "#e1e1e1"};
-    background: ${props => (props.theme.mode === "dark" ? "#ffffff" : "")};
+    background: ${(props) => (props.theme.mode === "dark" ? "#ffffff" : "")};
   }
 `;
 export const TierRequirements = styled.div`
@@ -168,11 +172,11 @@ export const TierRequirements = styled.div`
     text-align: left;
     > li {
       display: flex;
-      font-size: 16px;
-      line-height: 18px;
+      font-size: 14px;
+      line-height: 16px;
       padding: 5px 0;
       align-items: flex-start;
-      color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "")};
+      color: ${(props) => (props.theme.mode === "dark" ? "#ffffff" : "")};
       > span:last-child {
         width: calc(100% - 18px);
       }
@@ -183,14 +187,14 @@ export const TierRequirements = styled.div`
     }
     > li .disc-icon {
       content: "";
-      background: ${props =>
+      background: ${(props) =>
         props.theme.mode === "dark" ? "#ffffff" : "#333333"};
       height: 8px;
       display: inline-block;
       width: 8px;
       border-radius: 50%;
       vertical-align: middle;
-      margin: 5px 10px 0 0;
+      margin: 4px 10px 0 0;
     }
   }
 `;
@@ -198,7 +202,7 @@ export const TierSubHeadRequire = styled(TierSubHead)`
   padding: 20px 0;
 `;
 export const TierUpdate = styled.button`
-  background: ${props =>
+  background: ${(props) =>
     props.theme.mode === "dark" ? "#818d95" : "transparent"};
   height: 48px;
   color: #333333;
@@ -207,7 +211,7 @@ export const TierUpdate = styled.button`
   font-weight: bold;
   padding: 0 20px;
   border: 2px solid;
-  border-color: ${props =>
+  border-color: ${(props) =>
     props.theme.mode === "dark" ? "#818d95" : "#333333"};
   border-radius: 30px;
   margin: 0 0 20px;
@@ -248,20 +252,20 @@ export const TierVerfied = styled.span`
   }
 `;
 export const TierInnerWrap = styled.div`
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#041422" : "#ffffff"};
   margin: auto;
   width: 95%;
   border-radius: 7px;
   padding: 50px 0;
-  color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "")};
+  color: ${(props) => (props.theme.mode === "dark" ? "#ffffff" : "")};
 `;
 
 // Tier Info css start
 export const TierInfoWrap = styled.div`
   min-height: calc(100vh - 380px);
   padding-top: 80px;
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#01090f" : "#f5f6fa"};
   display: flex;
   font-family: open sans;
@@ -427,7 +431,7 @@ export const TierCommonHead = styled.div`
   font-size: 20px;
   font-family: "Open Sans";
   font-weight: 600;
-  color: ${props =>
+  color: ${(props) =>
     props.theme.mode === "dark" ? "white" : "rgb( 80, 80, 80 )"};
   text-align: center;
   padding: 0 0 30px 0;
@@ -517,4 +521,281 @@ export const TierStepContent = styled.div`
   padding: 0 0 0 30px;
   display: inherit;
   justify-content: center;
+`;
+export const TierWrap = styled.div`
+  width: 60%;
+  margin: 0 auto;
+  font-family: "Open sans";
+  @media (max-width: 1200px) {
+    width: 90%;
+  }
+  @media (max-width: 900px) {
+    width: 95%;
+  }
+`;
+export const TwoFactorDiv = styled.div`
+  width: 85%;
+  padding: 25px;
+  background: #fcfcfc;
+  border: 1px solid #f3f3f3;
+  border-radius: 4px;
+  text-align: center;
+  margin: 0 auto 20px;
+  > span {
+    font-weight: 700;
+    font-size: 16px;
+    display: block;
+    opacity: 80%;
+    margin: 0 0 7px 0;
+  }
+  > a {
+    color: #4c84ff;
+    font-weight: 700;
+    font-size: 16px;
+  }
+`;
+export const TierRow = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30px 0px;
+  border-bottom: 1px solid #f0f0f0;
+  &.no_border {
+    border: 0;
+  }
+  @media (max-width: 670px) {
+    flex-wrap: wrap;
+  }
+`;
+export const TierLabel = styled.div`
+  display: flex;
+  width: 33.33%;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  font-size: 16px;
+  > label {
+    margin: 0;
+    display: flex;
+    align-self: center;
+    max-width: 90%;
+  }
+  > a {
+    display: flex;
+    width: 100%;
+    // font-weight: bold;
+  }
+  @media (max-width: 670px) {
+    width: 100%;
+    margin: 0 0 20px 0;
+    justify-content: center;
+    > a {
+      justify-content: center;
+    }
+  }
+`;
+export const TierDocBox = styled.div`
+  display: flex;
+  width: 33.33%;
+  justify-content: flex-end;
+  @media (max-width: 670px) {
+    width: 100%;
+    // margin: 0 0 20px 0;
+    justify-content: center;
+  }
+`;
+export const TierDocStatus = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 10px 15px
+  background: #fefefe;
+  border: 1px solid #d4dadf;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #5a5a5a;
+  > .anticon  {
+    margin: 0 10px 0 0;
+  }
+  > .anticon-check {
+    color: #2acb3a;
+  }
+  > .anticon-warning {
+    color: #f98d0f;
+  }
+  > .anticon-close {
+    color: #f90f0f;
+  }
+`;
+export const TierUpload = styled.div`
+  display: flex;
+  align-self: center;
+  justify-content: center;
+  width: 33.33%;
+  flex-wrap: wrap;
+  > button.disabled_btn {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+  > input {
+    display: none;
+  }
+  &.ssn_input {
+    > input {
+      display: block;
+    }
+  }
+  &.ssn_input.disabled {
+    opacity: 0.4;
+  }
+  > button:focus {
+    outline: 0;
+  }
+  > button.has_file:hover {
+    cursor: default;
+  }
+  > button {
+    background: #f8f8f8;
+    border: 1px solid #d4dadf;
+    padding: 10px 15px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    min-width: 120px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #505050;
+    opacity: 80%;
+    > .anticon-close {
+      margin: 0 0 0 10px;
+      font-size: 12px;
+      background: #b5b5b5;
+      padding: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      color: #fff;
+      font-weight: bold;
+    }
+    > .anticon-upload {
+      margin: 0 10px 0 0;
+    }
+  }
+  @media (max-width: 670px) {
+    width: 100%;
+    margin: 0 0 20px 0;
+    justify-content: center;
+  }
+`;
+export const TierInput = styled.input`
+  display: none;
+`;
+export const TierButtonRow = styled.div`
+  padding: 40px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  > input:focus {
+    outline: 0;
+  }
+  > input {
+    height: 48px;
+    border-radius: 36px;
+    padding: 0 25px;
+    border: 1px solid;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    &.cancel_btn {
+      background: #ffffff;
+      color: #4c84ff;
+      border-color: #4c84ff;
+      margin: 0 20px 0 0;
+      box-shadow: 0px 0px 10px 0px rgba(167, 159, 159, 0.74);
+    }
+    &.upload_btn {
+      background: #4c84ff;
+      color: #fff;
+      border-color: #4c84ff;
+      box-shadow: 0px 0px 10px 0px rgba(76, 132, 255, 0.54);
+    }
+    &.disabled {
+      opacity: 0.4;
+    }
+    &.disabled:hover {
+      cursor: not-allowed;
+    }
+  }
+`;
+export const TierDropzoneStyle = styled(Dropzone)`
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+  -webkit-justify-content: space-evenly;
+  -ms-flex-pack: space-evenly;
+  justify-content: space-evenly;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 600;
+  color: #505050;
+  opacity: 80%;
+  padding: 10px 15px;
+  width: 100%;
+  &.has_file {
+    padding-right: 0;
+    width: calc(100% - 43px);
+  }
+  > input {
+    width: 100%;
+  }
+  > div {
+    display: inherit;
+    align-items: center;
+    > i {
+      margin: 0 10px 0 0;
+    }
+  }
+`;
+export const TierDropWrap = styled.div`
+  background: #f8f8f8;
+  border: 1px solid #d4dadf;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  min-width: 120px;
+  &.has_file {
+    > i {
+      margin: 0 10px;
+    }
+  }
+  &:hover {
+    cursor: pointer;
+  }
+  &.disabled_btn {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+  &.disabled_btn:hover {
+    cursor: not-allowed;
+  }
+  > i {
+    margin: 0 0 0 10px;
+    font-size: 12px;
+    background: #b5b5b5;
+    padding: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: #fff;
+    font-weight: bold;
+  }
 `;
