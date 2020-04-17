@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { Tabs, Select } from "antd";
+const { TabPane } = Tabs;
 
 export const ModalAgreeWrap = styled.div`
   width: 90%;
@@ -35,6 +37,9 @@ export const ModalWrap = styled.div`
   width: 465px;
   margin-left: auto;
   margin-right: auto;
+  &.template_modal_wrap {
+    width: 90%;
+  }
   &.kyc-wrap {
     width: 90%;
     padding: 0 0 30px 0;
@@ -137,5 +142,88 @@ export const EmailInput = styled.input`
   padding-left: 5px;
   margin-top: 5px;
   @media (max-width: 576px) {
+  }
+`;
+export const TemplateTab = styled(Tabs)`
+  padding: 30px 0;
+  & .ant-checkbox-group-item {
+    display: block;
+  }
+  > .ant-tabs-bar {
+    > .ant-tabs-nav-container {
+      > .ant-tabs-nav-wrap {
+        > .ant-tabs-nav-scroll {
+          > .ant-tabs-nav {
+            & .ant-tabs-tab {
+              line-height: 1;
+              height: auto;
+              margin: 0 10px 0 0 !important;
+              padding: 12px 10px !important;
+              vertical-align: top;
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+export const TemplateTabPane = styled(TabPane)`
+  & .ant-checkbox-wrapper {
+    display: block;
+    margin: 0 !important;
+  }
+`;
+export const TemplatePairSelect = styled(Select)`
+  margin: 10px 0 0 0;
+  padding: 0 0 0 55px;
+`;
+export const SaveBtn = styled.button`
+  font-size: 13px;
+  font-family: "Open Sans";
+  color: rgb(255, 255, 255);
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+  -moz-transform: matrix(1.2195120140195, 0, 0, 1.20991183157525, 0, 0);
+  -webkit-transform: matrix(1.2195120140195, 0, 0, 1.20991183157525, 0, 0);
+  -ms-transform: matrix(1.2195120140195, 0, 0, 1.20991183157525, 0, 0);
+  border-radius: 24px;
+  background-color: rgb(76, 132, 255);
+  box-shadow: 0px 4px 10px 0px rgba(76, 132, 255, 0.33);
+  height: 40px;
+  border: 0;
+  padding: 0 20px;
+  margin: 30px 0 0px 9px;
+  &:focus {
+    outline: none;
+  }
+`;
+export const WidgetName = styled.div`
+  display: flex;
+  align-items: center;
+  > span {
+    margin: 0 0 0 10px;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 1;
+  }
+`;
+export const TempRow = styled.div`
+  margin: 0 0 10px 0;
+  & .ant-select.ant-select-enabled {
+    margin: 10px 0 10px 0;
+    padding: 0 0 0 55px;
+  }
+`;
+export const TempName = styled.div`
+  margin: 0 0 15px 0;
+  > input {
+    width: 100%;
+    border: 1px solid #e8e8e8;
+    border-radius: 4px;
+    padding: 5px 10px;
+  }
+  > input:focus {
+    outline: none;
   }
 `;

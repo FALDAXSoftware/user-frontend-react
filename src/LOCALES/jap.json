@@ -2006,7 +2006,7 @@
     },
     "otp_6_digit_error": {
       "page": "Edit Profile > Security",
-      "message": "\u3042\u306a\u305f\u306eTwo-Factor\u8a8d\u8a3c\u30b3\u30fc\u30c9\u306f6\u6841\u306e\u6570\u5b57\u3067\u306a\u3051\u308c\u3070\u306a\u308a\u307e\u305b\u3093",
+      "message": "2\u30d5\u30a1\u30af\u30bf\u30fc\u8a8d\u8a3c\u30b3\u30fc\u30c9\u306f\u6570\u5b576\u6841\u3067\u3059\u3002",
       "message_type": "Web content",
       "context": "when otp filed is not a 6 digit number"
     },
@@ -2963,6 +2963,290 @@
       "message": "\u7acb\u4e0a\u308a\u3001\u7acb\u4e0b\u308a",
       "message_type": "Web content",
       "context": "RISING/FALLING Tab of crypto screener"
+    },
+    "cryptocurrency_market_text": {
+      "page": "Market",
+      "message": "Cryptocurrency\u5e02\u5834",
+      "message_type": "Web content",
+      "context": "copyright text at bottom"
+    },
+    "by_tradingview_text": {
+      "page": "Market",
+      "message": "TradingView\u306b\u3088\u3063\u3066",
+      "message_type": "Web content",
+      "context": "copyright text at bottom"
+    }
+  },
+  "trade": {
+    "market_head": {
+      "page": "Header",
+      "message": "\u5e02\u5834",
+      "message_type": "Web content",
+      "context": "menu text of header"
+    },
+    "dashboard_head": {
+      "page": "Header",
+      "message": "\u8a08\u5668\u76e4",
+      "message_type": "Web content",
+      "context": "menu text of header"
+    },
+    "trade_head": {
+      "page": "Header",
+      "message": "\u30c8\u30ec\u30fc\u30c9",
+      "message_type": "Web content",
+      "context": "menu text of header"
+    },
+    "order_type_text": {
+      "page": "History > Trade",
+      "message": "\u53d7\u6ce8\u30bf\u30a4\u30d7",
+      "message_type": "Web content",
+      "context": "text of table"
+    },
+    "limit_price_text": {
+      "page": "History > Trade",
+      "message": "\u5236\u9650\u4fa1\u683c",
+      "message_type": "Web content",
+      "context": "text of table"
+    },
+    "stop_price_text": {
+      "page": "History > Trade",
+      "message": "\u30b9\u30c8\u30c3\u30d7\u4fa1\u683c",
+      "message_type": "Web content",
+      "context": "text of table"
+    },
+    "edit_layout_text": {
+      "page": "Trade",
+      "message": "\u30ec\u30a4\u30a2\u30a6\u30c8\u306e\u7de8\u96c6",
+      "message_type": "Web content",
+      "context": "text of trade screen"
+    },
+    "exit_full_screen_text": {
+      "page": "Trade",
+      "message": "\u30d5\u30eb\u30b9\u30af\u30ea\u30fc\u30f3\u3092\u7d42\u4e86\u3057\u307e\u3059",
+      "message_type": "Web content",
+      "context": "text of trade screen"
+    },
+    "full_screen_text": {
+      "page": "Trade",
+      "message": "\u5168\u753b\u9762\u8868\u793a",
+      "message_type": "Web content",
+      "context": "text of trade screen"
+    },
+    "clear_layout_text": {
+      "page": "Trade",
+      "message": "\u30af\u30ea\u30a2\u30ec\u30a4\u30a2\u30a6\u30c8",
+      "message_type": "Web content",
+      "context": "text of trade screen"
+    },
+    "reset_layout_text": {
+      "page": "Trade",
+      "message": "\u30ea\u30bb\u30c3\u30c8\u30ec\u30a4\u30a2\u30a6\u30c8",
+      "message_type": "Web content",
+      "context": "text of trade screen"
+    },
+    "instruments_text": {
+      "page": "Trade",
+      "message": "INSTRUMENTS",
+      "message_type": "Web content",
+      "context": "text of trade screen"
+    },
+    "limit_head": {
+      "page": "Trade",
+      "message": "\u9650\u5b9a",
+      "message_type": "Web content",
+      "context": "Text of trade action"
+    },
+    "stop_limit_head": {
+      "page": "Trade",
+      "message": "\u30b9\u30c8\u30c3\u30d7\u30ea\u30df\u30c3\u30c8",
+      "message_type": "Web content",
+      "context": "Text of trade action"
+    },
+    "my_order_and_trade_head": {
+      "page": "Trade",
+      "message": "MY\u6ce8\u6587\u3068TRADES",
+      "message_type": "Web content",
+      "context": "Text of MY ORDERS AND TRADES"
+    },
+    "month_text": {
+      "page": "Trade",
+      "message": "\u6708",
+      "message_type": "Web content",
+      "context": "Text of dropdown month"
+    },
+    "months_text": {
+      "page": "Trade",
+      "message": "\u30f6\u6708",
+      "message_type": "Web content",
+      "context": "Text of dropdown months"
+    },
+    "completed_text": {
+      "page": "Trade",
+      "message": "\u5b8c\u6210\u3057\u307e\u3057\u305f",
+      "message_type": "Web content",
+      "context": "Text of tab completed"
+    },
+    "pending_text": {
+      "page": "Trade",
+      "message": "\u4fdd\u7559\u4e2d",
+      "message_type": "Web content",
+      "context": "Text of tab Pending"
+    },
+    "cancelled_text": {
+      "page": "Trade",
+      "message": "\u30ad\u30e3\u30f3\u30bb\u30eb",
+      "message_type": "Web content",
+      "context": "Text of tab cancelled"
+    },
+    "change_text": {
+      "page": "Trade",
+      "message": "\u5909\u5316\u3059\u308b",
+      "message_type": "Web content",
+      "context": "change Text of instrument table head"
+    },
+    "volume_text": {
+      "page": "Trade",
+      "message": "\u30dc\u30ea\u30e5\u30fc\u30e0",
+      "message_type": "Web content",
+      "context": "volume Text of instrument table head"
+    },
+    "market_depth_text": {
+      "page": "Trade",
+      "message": "\u5e02\u5834DEPTH",
+      "message_type": "Web content",
+      "context": "MARKET DEPTH Text of depth chart"
+    },
+    "ask_text": {
+      "page": "Trade",
+      "message": "\u983c\u307f\u307e\u3059",
+      "message_type": "Web content",
+      "context": "ask Text of depth chart"
+    },
+    "bid_text": {
+      "page": "Trade",
+      "message": "\u5165\u672d",
+      "message_type": "Web content",
+      "context": "bid Text of depth chart"
+    },
+    "order_book_text": {
+      "page": "Trade",
+      "message": "ORDER BOOK",
+      "message_type": "Web content",
+      "context": "ORDER BOOK Text of Buy/Sell book"
+    },
+    "buying_text": {
+      "page": "Trade",
+      "message": "BUYING",
+      "message_type": "Web content",
+      "context": "BUYING Text of Buy/Sell book"
+    },
+    "my_size_text": {
+      "page": "Trade",
+      "message": "MY SIZE",
+      "message_type": "Web content",
+      "context": "my size Text of Buy/Sell book"
+    },
+    "selling_text": {
+      "page": "Trade",
+      "message": "\u8ca9\u58f2",
+      "message_type": "Web content",
+      "context": "SELLING Text of Buy/Sell book"
+    },
+    "order_history_text": {
+      "page": "Trade",
+      "message": "\u6ce8\u6587\u5c65\u6b74",
+      "message_type": "Web content",
+      "context": "ORDER HISTORY Text"
+    },
+    "fill_price_text": {
+      "page": "Trade",
+      "message": "\u5857\u308a\u3064\u3076\u3057\u4fa1\u683c",
+      "message_type": "Web content",
+      "context": "Fill price Text of order history"
+    },
+    "time_text": {
+      "page": "Trade",
+      "message": "\u6642\u9593",
+      "message_type": "Web content",
+      "context": "Time price Text of order history"
+    },
+    "type_text": {
+      "page": "Trade",
+      "message": "\u30bf\u30a4\u30d7",
+      "message_type": "Web content",
+      "context": "Type Text of order history"
+    },
+    "unfilled_text": {
+      "page": "Trade",
+      "message": "\u5145\u586b\u3055\u308c\u3066\u3044\u307e\u305b\u3093",
+      "message_type": "Web content",
+      "context": "Unfilled Text of order history"
+    },
+    "actions_text": {
+      "page": "Trade",
+      "message": "\u884c\u52d5",
+      "message_type": "Web content",
+      "context": "Actions Text of order history"
+    },
+    "3_decimal_error": {
+      "page": "Trade > market Order",
+      "message": "\u5024\u672a\u6e80\u3067\u3042\u308b\u304b\u3001\u5c0f\u6570\u70b9\u4ee5\u4e0b3\u6841\u306b\u7b49\u3057\u304f\u306a\u3051\u308c\u3070\u306a\u308a\u307e\u305b\u3093\u3002",
+      "message_type": "Web content",
+      "context": "Value must be less than or equal to 3 digits after decimal point error"
+    },
+    "5_decimal_error": {
+      "page": "Trade > market Order",
+      "message": "\u5024\u672a\u6e80\u53c8\u306f\u5c0f\u6570\u70b9\u4ee5\u4e0b5\u6841\u306b\u7b49\u3057\u304f\u306a\u3051\u308c\u3070\u306a\u308a\u307e\u305b\u3093\u3002",
+      "message_type": "Web content",
+      "context": "Value must be less than or equal to 5 digits after decimal point error"
+    },
+    "balance_text": {
+      "page": "Trade > market Order",
+      "message": "\u6b8b\u9ad8",
+      "message_type": "Web content",
+      "context": "Balance Text of order history"
+    },
+    "best_text": {
+      "page": "Trade > market Order",
+      "message": "\u30d9\u30b9\u30c8",
+      "message_type": "Web content",
+      "context": "Best Text of trade action"
+    },
+    "you_approximate_text": {
+      "page": "Trade > market Order",
+      "message": "\u3042\u306a\u305f\u306f\u7d04\u610f\u5fd7",
+      "message_type": "Web content",
+      "context": "You will approximately Text tradeaction"
+    },
+    "pay_text": {
+      "page": "Trade > market Order",
+      "message": "\u652f\u6255\u3046",
+      "message_type": "Web content",
+      "context": "pay Text tradeaction"
+    },
+    "receive_text": {
+      "page": "Trade > market Order",
+      "message": "\u53d7\u3051\u53d6\u308a\u307e\u3059",
+      "message_type": "Web content",
+      "context": "receive Text tradeaction"
+    },
+    "estimated_best_price_text": {
+      "page": "Trade > market Order",
+      "message": "\u898b\u7a4d\u30d9\u30b9\u30c8\u30d7\u30e9\u30a4\u30b9",
+      "message_type": "Web content",
+      "context": "receive Text tradeaction"
+    },
+    "must_be_a_number": {
+      "page": "Trade > Limit Order",
+      "message": "\u6570\u3067\u306a\u3051\u308c\u3070\u306a\u308a\u307e\u305b\u3093\u3002",
+      "message_type": "Web content",
+      "context": "validation message for number"
+    },
+    "should_be_greater_than_0": {
+      "page": "Trade > Limit Order",
+      "message": "\u30bc\u30ed\u3088\u308a\u5927\u304d\u304f\u306a\u3051\u308c\u3070\u306a\u308a\u307e\u305b\u3093\u3002",
+      "message_type": "Web content",
+      "context": "validation message for amount greater than 0"
     }
   }
 }

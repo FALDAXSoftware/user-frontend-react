@@ -78,7 +78,7 @@ const DropDownDiv = styled(Dropdown)`
       display: flex;
       align-items: center;
       font-weight: 600;
-      color: #000;
+      color: ${props => (props.theme.mode === "dark" ? "white" : "black")};
       > img {
         margin: 0 5px 0 0;
       }
@@ -343,6 +343,11 @@ class Afterlog extends Component {
             <span> {t("navbar_menu_careers.message")} </span>
           </Exchange>
         </Link> */}
+        <Link to="/paxos">
+          <Exchange color={this.state.selected}>
+            <span> Paxos </span>
+          </Exchange>
+        </Link>
         <DropDownDiv
           // className="Drop-main"
           className="lang-main"

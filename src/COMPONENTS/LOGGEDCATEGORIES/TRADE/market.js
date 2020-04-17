@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import SimpleReactValidator from "simple-react-validator";
 import "antd/dist/antd.css";
 import { Row, Col, Radio, notification, Spin } from "antd";
+import { translate } from "react-i18next";
 
 /* STYLED-COMPONENTS */
 import {
@@ -44,8 +45,8 @@ class Market extends Component {
     super(props);
     this.state = {
       side: "Buy",
-      crypto: this.props.cryptoPair ? this.props.cryptoPair.crypto : "XRP",
-      currency: this.props.cryptoPair ? this.props.cryptoPair.currency : "BTC",
+      crypto: this.props.crypto ? this.props.crypto : "XRP",
+      currency: this.props.currency ? this.props.currency : "BTC",
       sellprice: 0.001,
       buyPrice: 0.002,
       amount: "",
@@ -60,16 +61,17 @@ class Market extends Component {
       singlefiatCryptoValue: "",
       singlefiatCurrencyValue: "",
       fiatCryptoValue: "",
-      fiatCurrencyValue: "",
+      fiatCurrencyValue: 0,
       fiatCurrency: ""
     };
+    this.t = this.props.t;
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.clearValidation = this.clearValidation.bind(this);
     this.validator = new SimpleReactValidator({
       gtzero: {
         // name the rule
-        message: "Amount should be greater than zero",
+        message: this.t("validations:value_greater_than_0_error.message"),
         rule: (val, params, validator) => {
           if (val > 0) {
             return true;
@@ -80,8 +82,7 @@ class Market extends Component {
         required: true // optional
       },
       decimalrestrict3: {
-        message:
-          "Amount value must be less than or equal to 3 digits after decimal point.",
+        message: this.t("3_decimal_error.message"),
         rule: val => {
           var RE = /^\d*\.?\d{0,3}$/;
           if (RE.test(val)) {
@@ -96,7 +97,12 @@ class Market extends Component {
   /* Life-Cycle Methods */
 
   componentWillReceiveProps(props, newProps) {
-    console.log("^^^^userdata  pro", props.userBal);
+    console.log(
+      "^^^^userdata  pro",
+      props.userBal,
+      props.crypto,
+      props.currency
+    );
     this.setState({
       userBalFees: props.userBal.fees,
       amount: "",
@@ -105,8 +111,8 @@ class Market extends Component {
       sellPayAmt: 0,
       buyEstPrice: 0,
       sellEstPrice: 0,
-      fiatCryptoValue: props.userBal.cryptoFiat,
-      fiatCurrencyValue: props.userBal.currencyFiat,
+      // fiatCryptoValue: props.userBal.cryptoFiat,
+      // fiatCurrencyValue: props.userBal.currencyFiat,
       singlefiatCryptoValue: props.userBal.cryptoFiat,
       singlefiatCurrencyValue: props.userBal.currencyFiat
     });
@@ -172,7 +178,7 @@ class Market extends Component {
     //     }
     //   }
   }
-  /* 
+  /*
         Page: /trade --> market
         this method is called for clearing validation messages.
     */
@@ -183,7 +189,7 @@ class Market extends Component {
     // rerender to hide messages for the first time
   }
 
-  /* 
+  /*
         Page: /trade --> market
         this method is called to change BUY/SELL side.
     */
@@ -196,7 +202,10 @@ class Market extends Component {
     // this.setState({
     //   amount: e.target.value.toFixed(3)
     // });
-    // console.log("^^^asd,mkasd", e.target.name);
+    this.setState({
+      fiatCurrencyValue: 0
+    });
+    console.log("^^^asd,mkasd", e.target.value);
     this.clearValidation();
     obj[name] = value;
     if (name === "side") {
@@ -210,7 +219,8 @@ class Market extends Component {
           this.state.singlefiatCryptoValue
         );
         this.setState({
-          fiatCryptoValue: this.state.singlefiatCryptoValue
+          // fiatCryptoValue: this.state.singlefiatCryptoValue
+          fiatCurrencyValue: 0
         });
       } else if (e.target.value === "Sell") {
         console.log(
@@ -219,7 +229,8 @@ class Market extends Component {
           this.state.singlefiatCurrencyValue
         );
         this.setState({
-          fiatCurrencyValue: this.state.singlefiatCurrencyValue
+          // fiatCurrencyValue: this.state.singlefiatCurrencyValue
+          fiatCurrencyValue: 0
         });
       }
     }
@@ -239,14 +250,13 @@ class Market extends Component {
             });
             obj["total"] =
               Number(this.state.amount) * this.props.userBal.buyPay;
-            // obj["amount"] = Number(this.state.amount).toFixed(3);
-            // let singlefiatCryptoValue = this.state.singlefiatCryptoValue;
             if (value > 0 && name === "amount") {
               let fiatValue =
-                parseFloat(this.state.singlefiatCryptoValue) *
+                parseFloat(this.state.singlefiatCurrencyValue) *
                 parseFloat(value).toFixed(8);
               this.setState({
-                fiatCryptoValue: fiatValue
+                // fiatCryptoValue: fiatValue
+                fiatCurrencyValue: fiatValue
               });
             }
           } else if (this.state.side === "Sell") {
@@ -271,6 +281,7 @@ class Market extends Component {
           }
         } else {
           obj["total"] = 0;
+
           // obj["amount"] = Number(this.state.amount).toFixed(3);
         }
         self.setState({ ...obj });
@@ -278,7 +289,7 @@ class Market extends Component {
     );
   }
 
-  /* 
+  /*
         Page: /trade --> market
         this method is called for cutom notifications.
     */
@@ -290,7 +301,7 @@ class Market extends Component {
     });
   }
 
-  /* 
+  /*
         Page: /trade --> market
         this method is called when u submit form to BUY/SELL.
     */
@@ -337,11 +348,11 @@ class Market extends Component {
             () => {
               if (this.state.side === "Buy") {
                 this.setState({
-                  fiatCryptoValue: this.state.singlefiatCryptoValue
+                  fiatCurrencyValue: 0
                 });
               } else if (this.state.side === "Sell") {
                 this.setState({
-                  fiatCurrencyValue: this.state.singlefiatCurrencyValue
+                  fiatCurrencyValue: 0
                 });
               }
             }
@@ -349,23 +360,27 @@ class Market extends Component {
           if (responseData.status === 200) {
             self.openNotificationWithIcon(
               "success",
-              "Success",
+              this.t("validations:success_text.message"),
               responseData.message
             );
           } else if (responseData.status === 201) {
             self.openNotificationWithIcon(
               "warning",
-              "Warning",
+              this.t("validations:warning_text.message"),
               responseData.message
             );
           } else if (responseData.status === 500) {
             self.openNotificationWithIcon(
               "error",
-              "Error",
+              this.t("validations:error_text.message"),
               responseData.message
             );
           } else {
-            self.openNotificationWithIcon("error", "Error", responseData.err);
+            self.openNotificationWithIcon(
+              "error",
+              this.t("validations:error_text.message"),
+              responseData.err
+            );
           }
           this.setState({
             Loader: false
@@ -374,7 +389,7 @@ class Market extends Component {
         .catch(error => {
           self.openNotificationWithIcon(
             "error",
-            "Error",
+            this.t("validations:error_text.message"),
             "Something went wrong!"
           );
         });
@@ -405,8 +420,12 @@ class Market extends Component {
               onChange={this.onChange}
               name="side"
             >
-              <BuySellRadio value="Buy">BUY</BuySellRadio>
-              <BuySellRadio value="Sell">SELL</BuySellRadio>
+              <BuySellRadio value="Buy">
+                {this.t("history:buy_text.message")}
+              </BuySellRadio>
+              <BuySellRadio value="Sell">
+                {this.t("history:sell_text.message")}
+              </BuySellRadio>
             </RadioGroup>
           </BuySell>
         </BuyWrap>
@@ -418,7 +437,28 @@ class Market extends Component {
                 <Col xs={24} sm={12}>
                   <Row>
                     <Col span={24}>
-                      <Balance1>Balance</Balance1>
+                      <Balance1>{this.t("balance_text.message")}</Balance1>
+                    </Col>
+                    <Col span={24}>
+                      <Balance>
+                        {this.props.userBal.currency[0]
+                          ? this.props.userBal.currency[0].placed_balance
+                            ? `${this.props.userBal.currency[0].placed_balance.toFixed(
+                                8
+                              )}${" "}`
+                            : `00${" "}`
+                          : `00${" "}`}
+                        {this.state.currency}
+                      </Balance>
+                    </Col>
+                  </Row>
+                </Col>
+                <Col xs={24} sm={12}>
+                  <Row>
+                    <Col span={24}>
+                      <Balance1>
+                        {this.t("conversion:total_text.message")}
+                      </Balance1>
                     </Col>
                     <Col span={24}>
                       <Balance>
@@ -435,24 +475,9 @@ class Market extends Component {
                 <Col xs={24} sm={12}>
                   <Row>
                     <Col span={24}>
-                      <Balance1>Total</Balance1>
-                    </Col>
-                    <Col span={24}>
-                      <Balance>
-                        {this.props.userBal.currency[0]
-                          ? `${this.props.userBal.currency[0].balance.toFixed(
-                              8
-                            )}${" "}`
-                          : `00${" "}`}
-                        {this.state.currency}
-                      </Balance>
-                    </Col>
-                  </Row>
-                </Col>
-                <Col xs={24} sm={12}>
-                  <Row>
-                    <Col span={24}>
-                      <Balance1>In orders</Balance1>
+                      <Balance1>
+                        {this.t("wallet:in_order_text.message")}
+                      </Balance1>
                     </Col>
                     <Col span={24}>
                       <Balance>
@@ -470,12 +495,15 @@ class Market extends Component {
                 <Col xs={24} sm={12}>
                   <Row>
                     <Col span={24}>
-                      <Balance1>Best ask</Balance1>
+                      <Balance1>
+                        {this.t("best_text.message")}{" "}
+                        {this.t("ask_text.message")}
+                      </Balance1>
                     </Col>
                     <Col span={24}>
                       <Balance>
                         {this.props.userBal.buyPay.toFixed(5)}{" "}
-                        {this.state.crypto}
+                        {this.state.currency}
                       </Balance>
                     </Col>
                   </Row>
@@ -488,7 +516,28 @@ class Market extends Component {
                 <Col xs={24} sm={12}>
                   <Row>
                     <Col span={24}>
-                      <Balance1>Balance</Balance1>
+                      <Balance1>{this.t("balance_text.message")}</Balance1>
+                    </Col>
+                    <Col span={24}>
+                      <Balance>
+                        {this.props.userBal.crypto[0]
+                          ? this.props.userBal.crypto[0].placed_balance
+                            ? `${this.props.userBal.crypto[0].placed_balance.toFixed(
+                                8
+                              )}${" "}`
+                            : `00${" "}`
+                          : `00${" "}`}
+                        {this.state.crypto}
+                      </Balance>
+                    </Col>
+                  </Row>
+                </Col>
+                <Col xs={24} sm={12}>
+                  <Row>
+                    <Col span={24}>
+                      <Balance1>
+                        {this.t("conversion:total_text.message")}
+                      </Balance1>
                     </Col>
                     <Col span={24}>
                       <Balance>
@@ -505,24 +554,9 @@ class Market extends Component {
                 <Col xs={24} sm={12}>
                   <Row>
                     <Col span={24}>
-                      <Balance1>Total</Balance1>
-                    </Col>
-                    <Col span={24}>
-                      <Balance>
-                        {this.props.userBal.crypto[0]
-                          ? `${this.props.userBal.crypto[0].balance.toFixed(
-                              8
-                            )}${" "}`
-                          : `00${" "}`}
-                        {this.state.crypto}
-                      </Balance>
-                    </Col>
-                  </Row>
-                </Col>
-                <Col xs={24} sm={12}>
-                  <Row>
-                    <Col span={24}>
-                      <Balance1>In orders</Balance1>
+                      <Balance1>
+                        {this.t("wallet:in_order_text.message")}
+                      </Balance1>
                     </Col>
                     <Col span={24}>
                       <Balance>
@@ -540,7 +574,10 @@ class Market extends Component {
                 <Col xs={24} sm={12}>
                   <Row>
                     <Col span={24}>
-                      <Balance1>Best ask</Balance1>
+                      <Balance1>
+                        {this.t("best_text.message")}{" "}
+                        {this.t("bid_text.message")}
+                      </Balance1>
                     </Col>
                     <Col span={24}>
                       <Balance>
@@ -557,7 +594,7 @@ class Market extends Component {
           ""
         )}
         <ETHWrap>
-          <Label>Amount</Label>
+          <Label>{this.t("wallet:amount_text.message")}</Label>
           <TotalWrap>
             <AMTInput
               min="0"
@@ -573,12 +610,18 @@ class Market extends Component {
               "Amount",
               this.state.amount,
               "required|gtzero|numeric|decimalrestrict3",
-              "trade-action-validation"
+              "trade-action-validation",
+              {
+                required: this.t(
+                  "general_3:validation_amount_required.message"
+                ),
+                numeric: this.t("general_3:validation_amount_numeric.message")
+              }
             )}
           </TotalWrap>
         </ETHWrap>
         <BTCWrap>
-          <Label>Total</Label>
+          <Label>{this.t("conversion:total_text.message")}</Label>
           <TotalWrap className="readonly-input">
             <TotInput
               min="0"
@@ -594,29 +637,41 @@ class Market extends Component {
           this.state.side === "Buy" ? (
             <Pay>
               <Approx>
-                <Willpay>You will approximately pay</Willpay>
+                <Willpay>
+                  {this.t("you_approximate_text.message")}{" "}
+                  {this.t("pay_text.message")}
+                </Willpay>
                 <Willpay2>
                   {buyPayAmt.toFixed(8)} {this.state.currency}
                 </Willpay2>
               </Approx>
               <Esti>
                 <ApproxBelow>
-                  <WillpayBelow>Fiat Value</WillpayBelow>
+                  <WillpayBelow>
+                    {this.t(
+                      "settings:deactivate_popup_table_head_fiat_value.message"
+                    )}
+                  </WillpayBelow>
                   <WillpayBelow2>
                     {this.state.fiatCurrency}{" "}
-                    {parseFloat(this.state.fiatCryptoValue).toFixed(8)}
+                    {parseFloat(this.state.fiatCurrencyValue).toFixed(8)}
                   </WillpayBelow2>
                 </ApproxBelow>
                 <ApproxBelow>
-                  <WillpayBelow>Estimated Best Price</WillpayBelow>
+                  <WillpayBelow>
+                    {this.t("estimated_best_price_text.message")}
+                  </WillpayBelow>
                   <WillpayBelow2>
                     {buyPayAmt.toFixed(8)} {this.state.currency}
                   </WillpayBelow2>
                 </ApproxBelow>
                 <ApproxBelow>
-                  <WillpayBelow>Fee {this.state.userBalFees} %</WillpayBelow>
+                  <WillpayBelow>
+                    {this.t("conversion:fee_text.message")}{" "}
+                    {this.state.userBalFees} %
+                  </WillpayBelow>
                   <WillpayBelow2>
-                    {(buyPayAmt - buyEstPrice).toFixed(8)} {this.state.currency}
+                    {(buyPayAmt - buyEstPrice).toFixed(8)} {this.state.crypto}
                   </WillpayBelow2>
                 </ApproxBelow>
               </Esti>
@@ -624,27 +679,39 @@ class Market extends Component {
           ) : (
             <Pay>
               <Approx>
-                <Willpay>You will approximately receive</Willpay>
+                <Willpay>
+                  {this.t("you_approximate_text.message")}{" "}
+                  {this.t("receive_text.message")}
+                </Willpay>
                 <Willpay2>
                   {sellEstPrice.toFixed(8)} {this.state.currency}
                 </Willpay2>
               </Approx>
               <Esti>
                 <ApproxBelow>
-                  <WillpayBelow>Fiat Value</WillpayBelow>
+                  <WillpayBelow>
+                    {this.t(
+                      "settings:deactivate_popup_table_head_fiat_value.message"
+                    )}
+                  </WillpayBelow>
                   <WillpayBelow2>
                     {this.state.fiatCurrency}{" "}
                     {parseFloat(this.state.fiatCurrencyValue).toFixed(8)}
                   </WillpayBelow2>
                 </ApproxBelow>
                 <ApproxBelow>
-                  <WillpayBelow>Estimated Best Price</WillpayBelow>
+                  <WillpayBelow>
+                    {this.t("estimated_best_price_text.message")}
+                  </WillpayBelow>
                   <WillpayBelow2>
                     {sellPayAmt.toFixed(8)} {this.state.currency}
                   </WillpayBelow2>
                 </ApproxBelow>
                 <ApproxBelow>
-                  <WillpayBelow>Fee {this.state.userBalFees} %</WillpayBelow>
+                  <WillpayBelow>
+                    {this.t("conversion:fee_text.message")}{" "}
+                    {this.state.userBalFees} %
+                  </WillpayBelow>
                   <WillpayBelow2>
                     {(sellPayAmt - sellEstPrice).toFixed(8)}{" "}
                     {this.state.currency}
@@ -694,4 +761,11 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(Market);
+export default translate([
+  "trade",
+  "conversion",
+  "wallet",
+  "validations",
+  "history",
+  "general_3"
+])(connect(mapStateToProps)(Market));

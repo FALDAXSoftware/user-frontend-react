@@ -52,7 +52,7 @@ export const TVBar = styled.div`
     font-weight: "normal";
     font-size: "17px";
     color: ${props =>
-      props.theme.mode === "dark" ? "rgb(217, 217, 217)" : "rgb(85, 85, 85)"};
+    props.theme.mode === "dark" ? "rgb(217, 217, 217)" : "rgb(85, 85, 85)"};
   }
   > div > i {
     cursor: pointer;
@@ -147,7 +147,7 @@ export const SearchInput = styled(Search)`
         border-right:0px;
         border-radius:0px;
         background-color:${props =>
-          props.theme.mode === "dark" ? "#041b2c" : ""}
+    props.theme.mode === "dark" ? "#041b2c" : ""}
         caret-color:${props => (props.theme.mode === "dark" ? "white" : "")}
         color:${props => (props.theme.mode === "dark" ? "white" : "")}
     }
@@ -173,7 +173,7 @@ export const FIATWrap2 = styled.div`
   float: right;
   & .ant-radio-button-wrapper {
     background-color: ${props =>
-      props.theme.mode === "dark" ? "#041422" : ""};
+    props.theme.mode === "dark" ? "#041422" : ""};
     color: ${props => (props.theme.mode === "dark" ? "white" : "")};
   }
   @media (max-width: 535px) {
@@ -190,8 +190,9 @@ export const RadioSelect = styled(RadioGroup)`
   & .ant-radio-button-wrapper {
     font-weight: 600 !important;
     background-color: ${props =>
-      props.theme.mode === "dark" ? "" : "#f5f6fa"};
+    props.theme.mode === "dark" ? "" : "#f5f6fa"};
     font-size: 13px;
+    text-transform: uppercase;
   }
   @media (max-width: 460px) {
     & .ant-radio-button-wrapper {
@@ -274,7 +275,7 @@ export const TableIns = styled(Table)`
     > th {
     color: #174c7e;
     background-color: ${props =>
-      props.theme.mode === "dark" ? "#041422" : ""};
+    props.theme.mode === "dark" ? "#041422" : ""};
     font-weight: bold;
     border-bottom: 0px;
   }
@@ -348,7 +349,7 @@ export const TableIns = styled(Table)`
   }
   & .ant-table-tbody > tr:hover > td {
     background-color: ${props =>
-      props.theme.mode === "dark" ? "#041b2c" : ""};
+    props.theme.mode === "dark" ? "#041b2c" : ""};
   }
   & .ant-table-placeholder {
     position: relative;
@@ -431,6 +432,9 @@ export const Label = styled.label`
 export const MarketWrap = styled.div`
   padding-left: 30px;
   padding-right: 30px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 `;
 export const BuyWrap = styled.div``;
 export const BuySell = styled.div`
@@ -441,9 +445,9 @@ export const BuySell = styled.div`
   text-align: center;
   & .ant-radio-button-wrapper {
     background: ${props =>
-      props.theme.mode === "dark" ? "#041422" : "#f5f6fa"};
+    props.theme.mode === "dark" ? "#041422" : "#f5f6fa"};
     border: ${props =>
-      props.theme.mode === "dark" ? "1px solid #2c3f51" : "1px solid #cad0e6"};
+    props.theme.mode === "dark" ? "1px solid #2c3f51" : "1px solid #cad0e6"};
     color: ${props => (props.theme.mode === "dark" ? "#617090" : "#9e9ea1")};
   }
 `;
@@ -483,10 +487,15 @@ export const Sell = styled(Button)`
   height: 40px;
 `;
 export const BalanceWrap = styled.div`
-  margin-top: 30px;
+  margin-top: 15px;
   > .ant-row {
     > .ant-col {
       padding: 0 10px;
+      width: 50%;
+      float: none;
+      display: inline-block;
+      vertical-align: top;
+      margin: 0 0 0 -2px;
     }
   }
 `;
@@ -531,7 +540,7 @@ export const AMTInput = styled(Input)`
     caret-color: ${props => (props.theme.mode === "dark" ? "white" : "")};
     color: ${props => (props.theme.mode === "dark" ? "white" : "")};
     background-color: ${props =>
-      props.theme.mode === "dark" ? "#041b2c" : ""};
+    props.theme.mode === "dark" ? "#041b2c" : ""};
   }
 `;
 
@@ -554,6 +563,8 @@ export const Willpay2 = styled.span`
   color: ${props => (props.theme.mode === "dark" ? "white" : "#174c7e")};
   font-weight: bold;
   letter-spacing: 1px;
+  max-width: 50%;
+  word-break: break-word;
 `;
 export const TotalWrap = styled.div`
   > .ant-input-group-wrapper > .ant-input-group > .ant-input {
@@ -565,7 +576,7 @@ export const TotalWrap = styled.div`
   }
   > .ant-input-group-wrapper > .ant-input-group > .ant-input-group-addon {
     background-color: ${props =>
-      props.theme.mode === "dark" ? "#041b2c" : "white"};
+    props.theme.mode === "dark" ? "#041b2c" : "white"};
     border-left: 0px;
     color: #c5c5c5;
     letter-spacing: 1px;
@@ -584,7 +595,7 @@ export const TotInput = styled(Input)`
     caret-color: ${props => (props.theme.mode === "dark" ? "white" : "")};
     color: ${props => (props.theme.mode === "dark" ? "white" : "")};
     background-color: ${props =>
-      props.theme.mode === "dark" ? "#041b2c" : ""} !important;
+    props.theme.mode === "dark" ? "#041b2c" : ""} !important;
   }
 `;
 export const Pay = styled.div`
@@ -641,7 +652,7 @@ export const ButtonETH = styled(Button)`
   &:hover,
   &:focus {
     background-color: ${props =>
-      props.side === "Buy" ? "#64ba71" : "#ba6471"};
+    props.side === "Buy" ? "#64ba71" : "#ba6471"};
     color: rgb(255, 255, 255);
     border-color: ${props => (props.side === "Buy" ? "#64ba71" : "#ba6471")};
   }
@@ -661,6 +672,11 @@ export const ButtonWrap = styled.div`
   position: absolute;
   width: calc(100% - 60px);
   bottom: 30px;
+  position: relative;
+  width: 100%;
+  bottom: auto;
+  margin-top: auto;
+  margin-bottom: 10px;
 `;
 export const BBCWrap = styled.div`
   margin-left: 30px;
@@ -721,7 +737,7 @@ export const HistoryWrap1 = styled.div`
 
   &::-webkit-scrollbar-thumb {
     background-color: ${props =>
-      props.theme.mode === "dark" ? "#041624" : ""};
+    props.theme.mode === "dark" ? "#041624" : ""};
     border-radius: 3px;
   }
   &::-webkit-scrollbar-track {
@@ -750,6 +766,11 @@ export const TableHeader = styled(CustomTable)`
   > thead {
     color: #174c7e;
     height: 35px;
+    tr {
+      th {
+        text-transform: uppercase;
+      }
+    }
   }
 `;
 export const TableContent = styled(CustomTable)`
@@ -761,7 +782,16 @@ export const TableContent = styled(CustomTable)`
   }
   > tbody > tr:nth-of-type(even) {
     background-color: ${props =>
-      props.theme.mode === "dark" ? "#041422" : "#f5f6fa"};
+    props.theme.mode === "dark" ? "#041422" : "#f5f6fa"};
+  }
+  &.buy_sell_table {
+    > tbody {
+      > tr {
+        > td {
+          word-break: break-all;
+        }
+      }
+    }
   }
 `;
 
@@ -779,9 +809,9 @@ export const SelectMonth = styled(Select)`
   }
   & .ant-select-selection {
     background-color: ${props =>
-      props.theme.mode === "dark" ? "#041422" : ""};
+    props.theme.mode === "dark" ? "#041422" : ""};
     color: ${props =>
-      props.theme.mode === "dark" ? "white" : "rgba(0, 0, 0, 0.65)"};
+    props.theme.mode === "dark" ? "white" : "rgba(0, 0, 0, 0.65)"};
     > .ant-select-selection__rendered {
       line-height: 38px;
     }
@@ -856,19 +886,22 @@ export const ScrollTableContent = styled.div`
     background-color: rgb(136, 136, 136) !important;
   }
 `;
-export const SettingDropdown = styled(Dropdown)`
-  position: fixed;
-  top: 90px;
-  right: 0px;
-  background: ${props => (props.theme.mode == "dark" ? "#01090f" : "white")};
-  color: #1890ff;
-  cursor: pointer;
-  padding: 7px 7px;
-  font-size: 20px;
-  border: ${props =>
-    props.theme.mode == "dark" ? "1px solid #198fff;" : "1px solid lightgray"};
-  z-index: 9999;
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+export const SettingDropdown = styled(Button)`
+    position: fixed;
+    top: 90px;
+    left: 0px;
+    background: white;
+    color: #1890ff;
+    cursor: pointer;
+    padding: 0px;
+    font-size: 20px !important;
+    /* display: flex; */
+    border: 1px solid lightgray;
+    z-index: 9999;
+    height: 35px;
+    width: 40px;
+    border-radius: 0;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 `;
