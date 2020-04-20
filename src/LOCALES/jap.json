@@ -3248,5 +3248,151 @@
       "message_type": "Web content",
       "context": "validation message for amount greater than 0"
     }
+  },
+  "dashboard": {
+    "invalid_template_code_error": {
+      "page": "Dashboard",
+      "message": "\u7121\u52b9\u306a\u30c6\u30f3\u30d7\u30ec\u30fc\u30c8\u30b3\u30fc\u30c9",
+      "message_type": "Web content",
+      "context": "validation message for Invalid Template Code"
+    },
+    "customize_text": {
+      "page": "Dashboard",
+      "message": "\u30ab\u30b9\u30bf\u30de\u30a4\u30ba",
+      "message_type": "Web content",
+      "context": "Customize text on dashboard screen"
+    },
+    "save_before_share_error": {
+      "page": "Dashboard",
+      "message": "\u30b7\u30a7\u30a2\u3059\u308b\u524d\u306b\u30c6\u30f3\u30d7\u30ec\u30fc\u30c8\u3092\u4fdd\u5b58\u3057\u307e\u3059",
+      "message_type": "Web content",
+      "context": "validation message for Save template before share"
+    },
+    "close_text": {
+      "page": "Dashboard",
+      "message": "\u9589\u3058\u308b",
+      "message_type": "Web content",
+      "context": "Close text on dashboard screen"
+    },
+    "close_template_before_save": {
+      "page": "Dashboard",
+      "message": "\u9589\u3058\u305f\u3044\u3067\u3059\u304b\uff1f",
+      "message_type": "Web content",
+      "context": "Do you want to close text on dashboard screen"
+    },
+    "unsave_data_popup_desc": {
+      "page": "Dashboard",
+      "message": "\u3088\u3044\u3053\u306e\u30da\u30fc\u30b8\u306b\u306f\u3001\u672a\u4fdd\u5b58\u306e\u4f5c\u696d\u304c\u542b\u307e\u308c\u3066\u3044\u307e\u3059\u3002\u3042\u306a\u305f\u306f\u3059\u3079\u3066\u4fdd\u5b58\u3055\u308c\u3066\u3044\u306a\u3044\u30c7\u30fc\u30bf\u304c\u5931\u308f\u308c\u307e\u3059\u3002",
+      "message_type": "Web content",
+      "context": "Unsaved data popup description on dashboard screen"
+    },
+    "templates_text": {
+      "page": "Dashboard",
+      "message": "\u30c6\u30f3\u30d7\u30ec\u30fc\u30c8",
+      "message_type": "Web content",
+      "context": "Templates text on dashboard screen"
+    },
+    "add_item_text": {
+      "page": "Dashboard",
+      "message": "\u30a2\u30a4\u30c6\u30e0\u3092\u8ffd\u52a0\u3057\u307e\u3059\u3002",
+      "message_type": "Web content",
+      "context": "Add item text on dashboard screen"
+    },
+    "note_template_text": {
+      "page": "Dashboard",
+      "message": "\u3042\u306a\u305f\u304c\u30ab\u30b9\u30bf\u30de\u30a4\u30ba\u3055\u308c\u305f\u30c0\u30c3\u30b7\u30e5\u30dc\u30fc\u30c9\u3092\u3057\u305f\u3044\u5834\u5408\u306f\u3001\u72ec\u81ea\u306b\u4f5c\u6210\u3057\u307e\u3059\u3002",
+      "message_type": "Web content",
+      "context": "Note for the templates that are not customizable(default templates)"
+    },
+    "template_label": {
+      "page": "Dashboard",
+      "message": "\u30c6\u30f3\u30d7\u30ec\u30fc\u30c8\u540d",
+      "message_type": "Web content",
+      "context": "Template Name label"
+    },
+    "template_name_placeholder": {
+      "page": "Dashboard",
+      "message": "\u30c6\u30f3\u30d7\u30ec\u30fc\u30c8\u540d\u3092\u5165\u529b\u3057\u307e\u3059\u3002",
+      "message_type": "Web content",
+      "context": "Template Name placeholder"
+    },
+    "widgets_text": {
+      "page": "Dashboard",
+      "message": "\u30a6\u30a3\u30b8\u30a7\u30c3\u30c8",
+      "message_type": "Web content",
+      "context": "Widgets text"
+    },
+    "select_pair_placeholder": {
+      "page": "Dashboard",
+      "message": "\u30bb\u30ec\u30af\u30c8\u30da\u30a2",
+      "message_type": "Web content",
+      "context": "Select Pair placeholder"
+    },
+    "delete_template_btn": {
+      "page": "Dashboard",
+      "message": "\u524a\u9664\u30c6\u30f3\u30d7\u30ec\u30fc\u30c8",
+      "message_type": "Web content",
+      "context": "Delete Template button text"
+    },
+    "want_to_share_text": {
+      "page": "Dashboard",
+      "message": "\u3042\u306a\u305f\u3092\u5171\u6709\u3057\u305f\u3044\u3067\u3059",
+      "message_type": "Web content",
+      "context": "text"
+    },
+    "template_with_text": {
+      "page": "Dashboard",
+      "message": "\u8ab0\u304b\u3068\u30c6\u30f3\u30d7\u30ec\u30fc\u30c8\uff1f",
+      "message_type": "Web content",
+      "context": "text"
+    },
+    "generate_code_btn": {
+      "page": "Dashboard",
+      "message": "\u30b3\u30fc\u30c9\u306e\u751f\u6210",
+      "message_type": "Web content",
+      "context": "Generate Code button text"
+    },
+    "copied_text": {
+      "page": "Dashboard",
+      "message": "\u30b3\u30d4\u30fc\u3055\u308c\u307e\u3057\u305f",
+      "message_type": "Web content",
+      "context": "copied text"
+    },
+    "click_to_copy_text": {
+      "page": "Dashboard",
+      "message": "\u30b3\u30d4\u30fc\u3059\u308b\u306b\u306f\u30af\u30ea\u30c3\u30af\u3057\u3066\u304f\u3060\u3055\u3044",
+      "message_type": "Web content",
+      "context": "Click to copy text"
+    },
+    "already_have_template_code_text": {
+      "page": "Dashboard",
+      "message": "\u3059\u3067\u306b\u30c6\u30f3\u30d7\u30ec\u30fc\u30c8\u30b3\u30fc\u30c9\u3092\u6301\u3063\u3066\u3044\u307e\u3059\u304b\uff1f\u30a4\u30f3\u30dd\u30fc\u30c8\u306b\u3053\u3053\u306b\u5165\u529b\u3057\u307e\u3059\u3002",
+      "message_type": "Web content",
+      "context": "Already have template code? Enter here to Import. text"
+    },
+    "import_text": {
+      "page": "Dashboard",
+      "message": "\u30a4\u30f3\u30dd\u30fc\u30c8",
+      "message_type": "Web content",
+      "context": "Import text"
+    },
+    "back_to_edit_text": {
+      "page": "Dashboard",
+      "message": "\u7de8\u96c6\u306b\u623b\u308a\u307e\u3059",
+      "message_type": "Web content",
+      "context": "Back to edit text"
+    },
+    "share_import_template_text": {
+      "page": "Dashboard",
+      "message": "\u30b7\u30a7\u30a2/\u30c6\u30f3\u30d7\u30ec\u30fc\u30c8\u306e\u30a4\u30f3\u30dd\u30fc\u30c8",
+      "message_type": "Web content",
+      "context": "Share / Import Template text"
+    },
+    "customize_dashboard_text": {
+      "page": "Dashboard",
+      "message": "\u30ab\u30b9\u30bf\u30de\u30a4\u30ba\u30c0\u30c3\u30b7\u30e5\u30dc\u30fc\u30c9",
+      "message_type": "Web content",
+      "context": "Customize Dashboard text"
+    }
   }
 }

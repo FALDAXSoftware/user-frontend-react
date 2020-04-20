@@ -6,7 +6,7 @@ import {
   Radio,
   notification,
   Collapse,
-  Icon
+  Icon,
 } from "antd";
 import { connect } from "react-redux";
 import SimpleReactValidator from "simple-react-validator";
@@ -44,17 +44,17 @@ import {
   ConversionLeftCol,
   CryptoFiatRow,
   CryptoFiatCol,
-  CryptoFiatText
+  CryptoFiatText,
 } from "../../../STYLED-COMPONENTS/CONVERSION/style";
 import {
   VerifyModal,
   NewP,
   OTPInput,
-  ButtonDiv
+  ButtonDiv,
 } from "../../SETTINGS/Account_settings/ip_modal";
 import {
   NewButton,
-  NewInput
+  NewInput,
 } from "../../SETTINGS/changePassword/change_email";
 import { parse } from "@fortawesome/fontawesome-svg-core";
 import { LogoutUser } from "../../../ACTIONS/authActions";
@@ -117,7 +117,7 @@ class ConversionDetail extends React.Component {
       socketTime: 20000,
       disabledButton: true,
       values: {},
-      usdvalues: {}
+      usdvalues: {},
     };
     io = this.props.io;
     this.t = this.props.t;
@@ -133,7 +133,7 @@ class ConversionDetail extends React.Component {
             return false;
           }
         },
-        required: true // optional
+        required: true, // optional
       },
       gtzerofiat: {
         // name the rule
@@ -145,29 +145,29 @@ class ConversionDetail extends React.Component {
             return false;
           }
         },
-        required: true // optional
+        required: true, // optional
       },
       decimalrestrict2: {
         message: this.t("validations:2_decimal_error.message"),
-        rule: val => {
+        rule: (val) => {
           var RE = /^\d*\.?\d{0,2}$/;
           if (RE.test(val)) {
             return true;
           } else {
             return false;
           }
-        }
+        },
       },
       decimalrestrict8: {
         message: this.t("validations:8_decimal_error.message"),
-        rule: val => {
+        rule: (val) => {
           var RE = /^\d*\.?\d{0,8}$/;
           if (RE.test(val)) {
             return true;
           } else {
             return false;
           }
-        }
+        },
       },
       minCryptoValid: {
         message: `${this.t("validations:min_limit_error.message")} ${
@@ -183,8 +183,8 @@ class ConversionDetail extends React.Component {
             return false;
           }
         },
-        required: true // optional
-      }
+        required: true, // optional
+      },
     });
     this.validator2 = new SimpleReactValidator({
       gtzero: {
@@ -197,7 +197,7 @@ class ConversionDetail extends React.Component {
             return false;
           }
         },
-        required: true // optional
+        required: true, // optional
       },
       gtzerofiat: {
         // name the rule
@@ -209,29 +209,29 @@ class ConversionDetail extends React.Component {
             return false;
           }
         },
-        required: true // optional
+        required: true, // optional
       },
       decimalrestrict2: {
         message: this.t("validations:2_decimal_error.message"),
-        rule: val => {
+        rule: (val) => {
           var RE = /^\d*\.?\d{0,2}$/;
           if (RE.test(val)) {
             return true;
           } else {
             return false;
           }
-        }
+        },
       },
       decimalrestrict8: {
         message: this.t("validations:8_decimal_error.message"),
-        rule: val => {
+        rule: (val) => {
           var RE = /^\d*\.?\d{0,8}$/;
           if (RE.test(val)) {
             return true;
           } else {
             return false;
           }
-        }
+        },
       },
       minCurrValid: {
         message: `${this.t("validations:min_limit_error.message")} ${
@@ -244,8 +244,8 @@ class ConversionDetail extends React.Component {
             return false;
           }
         },
-        required: true // optional
-      }
+        required: true, // optional
+      },
     });
     this.validator3 = new SimpleReactValidator({});
     this.getCrypto = this.getCrypto.bind(this);
@@ -297,7 +297,7 @@ class ConversionDetail extends React.Component {
   }
   componentDidMount() {
     if (this.props.io) {
-      this.props.io.on("conversion-data-outgoing", data => {
+      this.props.io.on("conversion-data-outgoing", (data) => {
         console.log("^^^^^Outgoing", data);
         if (data) {
           if (data.is_usd_set) {
@@ -307,7 +307,7 @@ class ConversionDetail extends React.Component {
           }
         } else {
           this.setState({
-            loader: false
+            loader: false,
           });
         }
       });
@@ -370,11 +370,11 @@ class ConversionDetail extends React.Component {
     this.getCrypto();
     if (this.props.profileDetails.is_twofactor) {
       this.setState({
-        checkOTP: true
+        checkOTP: true,
       });
     } else {
       this.setState({
-        checkOTP: false
+        checkOTP: false,
       });
     }
   }
@@ -384,7 +384,7 @@ class ConversionDetail extends React.Component {
   getValuesSocket(showLoader = true) {
     if (showLoader) {
       this.setState({
-        loader: true
+        loader: true,
       });
     }
     if (this.state.includeFees === 1) {
@@ -399,7 +399,7 @@ class ConversionDetail extends React.Component {
         usd_value: "",
         original_pair: this.state.original_pair,
         order_pair: this.state.order_pair,
-        offer_code: this.state.appliedOfferCode
+        offer_code: this.state.appliedOfferCode,
       };
       // console.log(values);
     } else {
@@ -414,7 +414,7 @@ class ConversionDetail extends React.Component {
         usd_value: "",
         original_pair: this.state.original_pair,
         order_pair: this.state.order_pair,
-        offer_code: this.state.appliedOfferCode
+        offer_code: this.state.appliedOfferCode,
       };
     }
     if (
@@ -437,7 +437,7 @@ class ConversionDetail extends React.Component {
         faldaxFeeActual: 0,
         limitPrice: 0,
         networkFee: 0,
-        loader: false
+        loader: false,
       });
     } else if (
       (values.OrderQty === null ||
@@ -464,7 +464,7 @@ class ConversionDetail extends React.Component {
         faldaxFeeActual: 0,
         limitPrice: 0,
         networkFee: 0,
-        loader: false
+        loader: false,
       });
     } else {
       if (this.props.io) {
@@ -484,12 +484,12 @@ class ConversionDetail extends React.Component {
           offer_code: values.offer_code,
           order_pair: values.order_pair,
           original_pair: values.original_pair,
-          usd_value: values.usd_value
+          usd_value: values.usd_value,
         });
         // }
       }
       this.setState({
-        values
+        values,
       });
       // let URL = `/socket/get-conversionDetail?Currency=${values.Currency}&OrdType=${values.OrdType}&OrderQty=${values.OrderQty}&Side=${values.Side}&Symbol=${values.Symbol}&flag=${values.flag}&offer_code=${values.offer_code}&order_pair=${values.order_pair}&original_pair=${values.original_pair}&usd_value=${values.usd_value}`;
       // io.socket.request(
@@ -629,19 +629,19 @@ class ConversionDetail extends React.Component {
       displayCurrency: res.currency,
       Quantity: parseFloat(res.total_value).toFixed(8),
       flag: values.flag,
-      disabledButton: false
+      disabledButton: false,
     });
     if (this.state.includeFees === 1) {
       this.setState({
         sendCurrencyInput: parseFloat(res.currency_value).toFixed(8),
         orderQuantity: parseFloat(res.currency_value).toFixed(8),
-        subTotalJST: parseFloat(res.total_value).toFixed(8)
+        subTotalJST: parseFloat(res.total_value).toFixed(8),
       });
     } else {
       this.setState({
         recieveCurrencyInput: parseFloat(res.total_value).toFixed(8),
         orderQuantity: parseFloat(res.currency_value).toFixed(8),
-        subTotalJST: parseFloat(res.original_value).toFixed(8)
+        subTotalJST: parseFloat(res.original_value).toFixed(8),
       });
     }
     if (this.state.includeFees === 1 && this.state.OrdType === "1") {
@@ -654,7 +654,7 @@ class ConversionDetail extends React.Component {
         sell_currency_amount:
           values.flag == 1
             ? parseFloat(res.currency_value).toFixed(8)
-            : parseFloat(res.currency_value).toFixed(8)
+            : parseFloat(res.currency_value).toFixed(8),
       });
     } else if (this.state.includeFees === 2 && this.state.OrdType === "1") {
       this.setState({
@@ -666,7 +666,7 @@ class ConversionDetail extends React.Component {
         sell_currency_amount:
           values.flag == 1
             ? parseFloat(res.currency_value).toFixed(8)
-            : parseFloat(res.currency_value).toFixed(8)
+            : parseFloat(res.currency_value).toFixed(8),
       });
     } else if (this.state.includeFees === 2 && this.state.OrdType === "2") {
       this.setState({
@@ -678,7 +678,7 @@ class ConversionDetail extends React.Component {
         sell_currency_amount:
           values.flag == 1
             ? parseFloat(res.currency_value).toFixed(8)
-            : parseFloat(res.currency_value).toFixed(8)
+            : parseFloat(res.currency_value).toFixed(8),
       });
     } else if (this.state.includeFees === 1 && this.state.OrdType === "2") {
       this.setState({
@@ -690,13 +690,13 @@ class ConversionDetail extends React.Component {
         sell_currency_amount:
           values.flag == 1
             ? parseFloat(res.currency_value).toFixed(8)
-            : parseFloat(res.currency_value).toFixed(8)
+            : parseFloat(res.currency_value).toFixed(8),
       });
     } else {
       // console.log("no scenario");
     }
     this.setState({
-      loader: false
+      loader: false,
     });
   }
   updateUSDData(data) {
@@ -711,7 +711,7 @@ class ConversionDetail extends React.Component {
       displayCurrency: res.currency,
       Quantity: parseFloat(res.total_value).toFixed(8),
       flag: values.flag,
-      disabledButton: false
+      disabledButton: false,
     });
     if (this.state.includeFees === 1) {
       this.setState({
@@ -720,7 +720,7 @@ class ConversionDetail extends React.Component {
         orderQuantity: parseFloat(res.currency_value).toFixed(8),
         subTotal: parseFloat(res.original_value).toFixed(8),
         totalAmount: parseFloat(res.total_value).toFixed(8),
-        subTotalJST: parseFloat(res.total_value).toFixed(8)
+        subTotalJST: parseFloat(res.total_value).toFixed(8),
       });
     } else {
       this.setState({
@@ -729,7 +729,7 @@ class ConversionDetail extends React.Component {
         orderQuantity: parseFloat(res.currency_value).toFixed(8),
         subTotal: parseFloat(res.original_value).toFixed(8),
         totalAmount: parseFloat(res.total_value).toFixed(8),
-        subTotalJST: parseFloat(res.original_value).toFixed(8)
+        subTotalJST: parseFloat(res.original_value).toFixed(8),
       });
     }
     if (this.state.includeFees === 1 && this.state.OrdType === "1") {
@@ -742,7 +742,7 @@ class ConversionDetail extends React.Component {
         sell_currency_amount:
           values.flag == 1
             ? parseFloat(res.currency_value).toFixed(8)
-            : parseFloat(res.currency_value).toFixed(8)
+            : parseFloat(res.currency_value).toFixed(8),
       });
     } else if (this.state.includeFees === 2 && this.state.OrdType === "1") {
       this.setState({
@@ -754,7 +754,7 @@ class ConversionDetail extends React.Component {
         sell_currency_amount:
           values.flag == 1
             ? parseFloat(res.currency_value).toFixed(8)
-            : parseFloat(res.currency_value).toFixed(8)
+            : parseFloat(res.currency_value).toFixed(8),
       });
     } else if (this.state.includeFees === 2 && this.state.OrdType === "2") {
       this.setState({
@@ -766,7 +766,7 @@ class ConversionDetail extends React.Component {
         sell_currency_amount:
           values.flag == 1
             ? parseFloat(res.currency_value).toFixed(8)
-            : parseFloat(res.currency_value).toFixed(8)
+            : parseFloat(res.currency_value).toFixed(8),
       });
     } else if (this.state.includeFees === 1 && this.state.OrdType === "2") {
       this.setState({
@@ -778,19 +778,19 @@ class ConversionDetail extends React.Component {
         sell_currency_amount:
           values.flag == 1
             ? parseFloat(res.currency_value).toFixed(8)
-            : parseFloat(res.currency_value).toFixed(8)
+            : parseFloat(res.currency_value).toFixed(8),
       });
     } else {
       // console.log("no scenario");
     }
     this.setState({
-      loader: false
+      loader: false,
     });
   }
   getValuesUSDSocket(showLoader = true) {
     if (showLoader) {
       this.setState({
-        loader: true
+        loader: true,
       });
     }
     if (this.state.includeFees === 1) {
@@ -804,7 +804,7 @@ class ConversionDetail extends React.Component {
         usd_value: this.state.fiatJSTValue,
         original_pair: this.state.original_pair,
         order_pair: this.state.order_pair,
-        offer_code: this.state.appliedOfferCode
+        offer_code: this.state.appliedOfferCode,
       };
     } else {
       var values = {
@@ -817,7 +817,7 @@ class ConversionDetail extends React.Component {
         usd_value: this.state.fiatJSTValue,
         original_pair: this.state.original_pair,
         order_pair: this.state.order_pair,
-        offer_code: this.state.appliedOfferCode
+        offer_code: this.state.appliedOfferCode,
       };
     }
     if (
@@ -842,7 +842,7 @@ class ConversionDetail extends React.Component {
         faldaxFeeActual: 0,
         limitPrice: 0,
         networkFee: 0,
-        loader: false
+        loader: false,
       });
     } else if (
       (values.usd_value === null ||
@@ -866,7 +866,7 @@ class ConversionDetail extends React.Component {
         faldaxFeeActual: 0,
         limitPrice: 0,
         networkFee: 0,
-        loader: false
+        loader: false,
       });
     } else {
       if (this.props.io) {
@@ -885,12 +885,12 @@ class ConversionDetail extends React.Component {
           offer_code: values.offer_code,
           order_pair: values.order_pair,
           original_pair: values.original_pair,
-          usd_value: values.usd_value
+          usd_value: values.usd_value,
         });
         // }
       }
       this.setState({
-        usdvalues: values
+        usdvalues: values,
       });
       // let URL = `/socket/get-conversionDetail?Currency=${values.Currency}&OrdType=${values.OrdType}&OrderQty=${values.OrderQty}&Side=${values.Side}&Symbol=${values.Symbol}&flag=${values.flag}&offer_code=${values.offer_code}&order_pair=${values.order_pair}&original_pair=${values.original_pair}&usd_value=${values.usd_value}`;
       // io.socket.request(
@@ -1019,7 +1019,7 @@ class ConversionDetail extends React.Component {
       return false;
     }
     this.setState({
-      disabledButton: true
+      disabledButton: true,
     });
     clearTimeout(this.timeout);
     clearInterval(this.interval);
@@ -1032,16 +1032,16 @@ class ConversionDetail extends React.Component {
       ) {
         if (element.original_pair != element.order_pair) {
           this.setState({
-            OrdType: "2"
+            OrdType: "2",
           });
         } else {
           this.setState({
-            OrdType: "1"
+            OrdType: "1",
           });
         }
         this.setState({
           original_pair: element.original_pair,
-          order_pair: element.order_pair
+          order_pair: element.order_pair,
         });
       }
     });
@@ -1050,7 +1050,7 @@ class ConversionDetail extends React.Component {
       this.setState(
         {
           sendCurrencyInput: e.target.value,
-          showTFAModal: false
+          showTFAModal: false,
         },
         () => {}
       );
@@ -1058,7 +1058,7 @@ class ConversionDetail extends React.Component {
       this.setState(
         {
           sendCurrencyInput: e.target.value,
-          showTFAModal: false
+          showTFAModal: false,
         },
         () => {}
       );
@@ -1071,7 +1071,7 @@ class ConversionDetail extends React.Component {
       return false;
     }
     this.setState({
-      disabledButton: true
+      disabledButton: true,
     });
     clearTimeout(this.timeout);
     clearInterval(this.interval);
@@ -1084,16 +1084,16 @@ class ConversionDetail extends React.Component {
       ) {
         if (element.original_pair != element.order_pair) {
           this.setState({
-            OrdType: "2"
+            OrdType: "2",
           });
         } else {
           this.setState({
-            OrdType: "1"
+            OrdType: "1",
           });
         }
         this.setState({
           original_pair: element.original_pair,
-          order_pair: element.order_pair
+          order_pair: element.order_pair,
         });
       }
     });
@@ -1105,7 +1105,7 @@ class ConversionDetail extends React.Component {
       this.setState(
         {
           recieveCurrencyInput: e.target.value,
-          showTFAModal: false
+          showTFAModal: false,
         },
         () => {
           // clearInterval(this.interval);
@@ -1116,7 +1116,7 @@ class ConversionDetail extends React.Component {
       this.setState(
         {
           recieveCurrencyInput: e.target.value,
-          showTFAModal: false
+          showTFAModal: false,
         },
         () => {
           // console.log("clear", e);
@@ -1132,7 +1132,7 @@ class ConversionDetail extends React.Component {
       return false;
     }
     this.setState({
-      disabledButton: true
+      disabledButton: true,
     });
     clearTimeout(this.timeout);
     // console.log("Fiat Currency Change");
@@ -1146,16 +1146,16 @@ class ConversionDetail extends React.Component {
       ) {
         if (element.original_pair != element.order_pair) {
           this.setState({
-            OrdType: "2"
+            OrdType: "2",
           });
         } else {
           this.setState({
-            OrdType: "1"
+            OrdType: "1",
           });
         }
         this.setState({
           original_pair: element.original_pair,
-          order_pair: element.order_pair
+          order_pair: element.order_pair,
         });
       }
     });
@@ -1168,7 +1168,7 @@ class ConversionDetail extends React.Component {
         this.setState(
           {
             fiatJSTValue: e.target.value,
-            showTFAModal: false
+            showTFAModal: false,
           },
           () => {}
         );
@@ -1176,7 +1176,7 @@ class ConversionDetail extends React.Component {
         this.setState(
           {
             fiatJSTValue: e.target.value,
-            showTFAModal: false
+            showTFAModal: false,
           },
           () => {}
         );
@@ -1188,7 +1188,7 @@ class ConversionDetail extends React.Component {
         this.setState(
           {
             fiatJSTValue: e.target.value,
-            showTFAModal: false
+            showTFAModal: false,
           },
           () => {}
         );
@@ -1196,7 +1196,7 @@ class ConversionDetail extends React.Component {
         this.setState(
           {
             fiatJSTValue: e.target.value,
-            showTFAModal: false
+            showTFAModal: false,
           },
           () => {}
         );
@@ -1680,7 +1680,7 @@ class ConversionDetail extends React.Component {
     // console.log(this.state);
     if (this.state.checkOTP) {
       this.setState({
-        showTFAModal: true
+        showTFAModal: true,
         // loader: false
       });
       let otp1 = otp;
@@ -1704,7 +1704,7 @@ class ConversionDetail extends React.Component {
           sell_currency_amount: this.state.sell_currency_amount,
           otp: otp1,
           flag: this.state.flag,
-          subtotal: this.state.subTotalJST
+          subtotal: this.state.subTotalJST,
         };
         // console.log(values);
       } else {
@@ -1727,7 +1727,7 @@ class ConversionDetail extends React.Component {
           sell_currency_amount: this.state.sell_currency_amount,
           otp: otp1,
           flag: this.state.flag,
-          subtotal: this.state.subTotalJST
+          subtotal: this.state.subTotalJST,
         };
         // console.log(values);
       }
@@ -1737,12 +1737,12 @@ class ConversionDetail extends React.Component {
           Accept: "application/json",
           "Content-Type": "application/json",
           "Accept-Language": localStorage["i18nextLng"],
-          Authorization: "Bearer " + this.props.isLoggedIn
+          Authorization: "Bearer " + this.props.isLoggedIn,
         },
-        body: JSON.stringify(values)
+        body: JSON.stringify(values),
       })
-        .then(response => response.json())
-        .then(responseData => {
+        .then((response) => response.json())
+        .then((responseData) => {
           if (responseData.status === 200) {
             this.openNotificationWithIcon(
               "success",
@@ -1763,7 +1763,7 @@ class ConversionDetail extends React.Component {
               faldaxFeeActual: 0,
               networkFee: 0,
               appliedOfferCode: "",
-              showTFAModal: false
+              showTFAModal: false,
               // loader: false
             });
             this.clearValidation();
@@ -1775,17 +1775,17 @@ class ConversionDetail extends React.Component {
               // console.log(otp);
               this.openNotificationWithIcon(
                 "error",
-                "Error",
+                this.t("validations:error_text.message"),
                 responseData.message
               );
               this.setState({
-                showTFAModal: false
+                showTFAModal: false,
               });
             }
           }
           this.setState({ loader: false });
         })
-        .catch(error => {});
+        .catch((error) => {});
     } else {
       if (this.state.includeFees === 1) {
         var values = {
@@ -1807,7 +1807,7 @@ class ConversionDetail extends React.Component {
           sell_currency_amount: this.state.sell_currency_amount,
           otp: "",
           flag: this.state.flag,
-          subtotal: this.state.subTotalJST
+          subtotal: this.state.subTotalJST,
         };
         // console.log(values);
       } else {
@@ -1830,7 +1830,7 @@ class ConversionDetail extends React.Component {
           sell_currency_amount: this.state.sell_currency_amount,
           otp: "",
           flag: this.state.flag,
-          subtotal: this.state.subTotalJST
+          subtotal: this.state.subTotalJST,
         };
         // console.log(values);
       }
@@ -1840,12 +1840,12 @@ class ConversionDetail extends React.Component {
           Accept: "application/json",
           "Content-Type": "application/json",
           "Accept-Language": localStorage["i18nextLng"],
-          Authorization: "Bearer " + this.props.isLoggedIn
+          Authorization: "Bearer " + this.props.isLoggedIn,
         },
-        body: JSON.stringify(values)
+        body: JSON.stringify(values),
       })
-        .then(response => response.json())
-        .then(responseData => {
+        .then((response) => response.json())
+        .then((responseData) => {
           if (responseData.status === 200) {
             this.openNotificationWithIcon(
               "success",
@@ -1866,28 +1866,28 @@ class ConversionDetail extends React.Component {
               faldaxFeeActual: 0,
               limitPrice: 0,
               networkFee: 0,
-              appliedOfferCode: ""
+              appliedOfferCode: "",
               // loader: false
             });
             this.clearValidation();
           } else {
             this.openNotificationWithIcon(
               "error",
-              "Error",
+              this.t("validations:error_text.message"),
               responseData.message
             );
             this.setState({
-              showTFAModal: false
+              showTFAModal: false,
             });
           }
           this.setState({ loader: false });
         })
-        .catch(error => {});
+        .catch((error) => {});
     }
   }
   getFiatCurrencyList() {
     this.setState({
-      loader: true
+      loader: true,
     });
     fetch(API_URL + `/get-simplex-coin-list`, {
       method: "get",
@@ -1895,25 +1895,25 @@ class ConversionDetail extends React.Component {
         "Accept-Language": localStorage["i18nextLng"],
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: "Bearer " + this.props.isLoggedIn
-      }
+        Authorization: "Bearer " + this.props.isLoggedIn,
+      },
     })
-      .then(response => response.json())
-      .then(responseData => {
+      .then((response) => response.json())
+      .then((responseData) => {
         if (responseData.status == 200) {
           this.setState({
-            fiatCurrencyList: responseData.object.fiat
+            fiatCurrencyList: responseData.object.fiat,
           });
         }
         this.setState({
-          loader: false
+          loader: false,
         });
       })
-      .catch(error => {});
+      .catch((error) => {});
   }
   getCrypto() {
     this.setState({
-      loader: true
+      loader: true,
     });
     fetch(API_URL + `/conversion/get-jst-pair`, {
       method: "get",
@@ -1921,11 +1921,11 @@ class ConversionDetail extends React.Component {
         "Accept-Language": localStorage["i18nextLng"],
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: "Bearer " + this.props.isLoggedIn
-      }
+        Authorization: "Bearer " + this.props.isLoggedIn,
+      },
     })
-      .then(response => response.json())
-      .then(responseData => {
+      .then((response) => response.json())
+      .then((responseData) => {
         if (responseData.status == 200) {
           var cryptoData = responseData.coinList,
             minLimit,
@@ -1945,14 +1945,14 @@ class ConversionDetail extends React.Component {
             JSTPairList: responseData.getJSTPair,
             faldax_fee_value: responseData.faldax_fee.value,
             minCrypto: minLimit,
-            minCurrency: minCurrLimit
+            minCurrency: minCurrLimit,
           });
         }
         this.setState({
-          loader: false
+          loader: false,
         });
       })
-      .catch(error => {});
+      .catch((error) => {});
   }
   handleCryptoChange(value, option) {
     // console.log(
@@ -1960,7 +1960,7 @@ class ConversionDetail extends React.Component {
     //   option.props.selectedData.jst_min_coin_limit
     // );
     this.setState({
-      disabledButton: true
+      disabledButton: true,
     });
     clearInterval(this.interval);
     clearInterval(this.interval1);
@@ -1969,7 +1969,7 @@ class ConversionDetail extends React.Component {
         if (element.coin === this.state.currency) {
           var list = this.state.currencyList.splice(i, 1);
           this.setState({
-            cryptoList: this.state.cryptoList.push(list[0])
+            cryptoList: this.state.cryptoList.push(list[0]),
           });
         }
       });
@@ -1981,12 +1981,12 @@ class ConversionDetail extends React.Component {
         ) {
           this.setState({
             currency: this.state.currencyList[1].coin,
-            minCurrency: this.state.currencyList[1].jst_min_coin_limit
+            minCurrency: this.state.currencyList[1].jst_min_coin_limit,
           });
         } else {
           this.setState({
             currency: this.state.currencyList[0].coin,
-            minCurrency: this.state.currencyList[0].jst_min_coin_limit
+            minCurrency: this.state.currencyList[0].jst_min_coin_limit,
           });
         }
       } else if (value === "LTC") {
@@ -1997,7 +1997,7 @@ class ConversionDetail extends React.Component {
         ) {
           this.setState({
             currency: this.state.currencyList[1].coin,
-            minCurrency: this.state.currencyList[1].jst_min_coin_limit
+            minCurrency: this.state.currencyList[1].jst_min_coin_limit,
           });
         }
         // else if (this.state.currencyList[0].coin === "ETH") {
@@ -2009,7 +2009,7 @@ class ConversionDetail extends React.Component {
         else {
           this.setState({
             currency: this.state.currencyList[0].coin,
-            minCurrency: this.state.currencyList[0].jst_min_coin_limit
+            minCurrency: this.state.currencyList[0].jst_min_coin_limit,
           });
         }
       } else if (value === "ETH") {
@@ -2020,7 +2020,7 @@ class ConversionDetail extends React.Component {
         ) {
           this.setState({
             currency: this.state.currencyList[1].coin,
-            minCurrency: this.state.currencyList[1].jst_min_coin_limit
+            minCurrency: this.state.currencyList[1].jst_min_coin_limit,
           });
         }
         // else if (this.state.currencyList[2].coin === "LTC") {
@@ -2032,13 +2032,13 @@ class ConversionDetail extends React.Component {
         else {
           this.setState({
             currency: this.state.currencyList[0].coin,
-            minCurrency: this.state.currencyList[0].jst_min_coin_limit
+            minCurrency: this.state.currencyList[0].jst_min_coin_limit,
           });
         }
       } else {
         this.setState({
           currency: this.state.currencyList[0].coin,
-          minCurrency: this.state.currencyList[0].jst_min_coin_limit
+          minCurrency: this.state.currencyList[0].jst_min_coin_limit,
         });
       }
     }
@@ -2048,7 +2048,7 @@ class ConversionDetail extends React.Component {
         crypto: value,
         cryptoList: this.state.originalCoinList,
         minCrypto: option.props.selectedData.jst_min_coin_limit,
-        showTFAModal: false
+        showTFAModal: false,
       },
       () => {
         this.state.JSTPairList.map((element, i) => {
@@ -2058,11 +2058,11 @@ class ConversionDetail extends React.Component {
           ) {
             if (element.original_pair != element.order_pair) {
               this.setState({
-                OrdType: "2"
+                OrdType: "2",
               });
             } else {
               this.setState({
-                OrdType: "1"
+                OrdType: "1",
               });
             }
             // console.log(
@@ -2075,14 +2075,15 @@ class ConversionDetail extends React.Component {
             // );
             this.setState({
               original_pair: element.original_pair,
-              order_pair: element.order_pair
+              order_pair: element.order_pair,
             });
           }
         });
         if (this.state.includeFees === 1) {
           this.setState(
             {
-              recieveCurrencyInput: option.props.selectedData.jst_min_coin_limit
+              recieveCurrencyInput:
+                option.props.selectedData.jst_min_coin_limit,
             },
             () => {
               if (this.state.recieveCurrencyInput > 0) {
@@ -2120,17 +2121,17 @@ class ConversionDetail extends React.Component {
   }
   handleFiatChange(value, option) {
     this.setState({
-      disabledButton: true
+      disabledButton: true,
     });
     // console.log(option.props.selectedData.min_limit);
     let prevRoom = this.state.crypto + "-" + this.state.currency;
     this.setState({
-      fiat: value
+      fiat: value,
     });
   }
   handleCurrencyChange(value, option) {
     this.setState({
-      disabledButton: true
+      disabledButton: true,
     });
     clearInterval(this.interval);
     clearInterval(this.interval1);
@@ -2139,7 +2140,7 @@ class ConversionDetail extends React.Component {
         if (element.coin === this.state.crypto) {
           var list1 = this.state.cryptoList.splice(i, 1);
           this.setState({
-            currencyList: this.state.currencyList.push(list1[0])
+            currencyList: this.state.currencyList.push(list1[0]),
           });
         }
       });
@@ -2150,12 +2151,12 @@ class ConversionDetail extends React.Component {
         ) {
           this.setState({
             crypto: this.state.cryptoList[1].coin,
-            minCrypto: this.state.cryptoList[1].jst_min_coin_limit
+            minCrypto: this.state.cryptoList[1].jst_min_coin_limit,
           });
         } else {
           this.setState({
             crypto: this.state.cryptoList[0].coin,
-            minCrypto: this.state.cryptoList[0].jst_min_coin_limit
+            minCrypto: this.state.cryptoList[0].jst_min_coin_limit,
           });
         }
       } else if (value === "LTC") {
@@ -2165,12 +2166,12 @@ class ConversionDetail extends React.Component {
         ) {
           this.setState({
             crypto: this.state.cryptoList[1].coin,
-            minCrypto: this.state.cryptoList[1].jst_min_coin_limit
+            minCrypto: this.state.cryptoList[1].jst_min_coin_limit,
           });
         } else {
           this.setState({
             crypto: this.state.cryptoList[0].coin,
-            minCrypto: this.state.cryptoList[0].jst_min_coin_limit
+            minCrypto: this.state.cryptoList[0].jst_min_coin_limit,
           });
         }
       } else if (value === "ETH") {
@@ -2180,18 +2181,18 @@ class ConversionDetail extends React.Component {
         ) {
           this.setState({
             crypto: this.state.cryptoList[1].coin,
-            minCrypto: this.state.cryptoList[1].jst_min_coin_limit
+            minCrypto: this.state.cryptoList[1].jst_min_coin_limit,
           });
         } else {
           this.setState({
             crypto: this.state.cryptoList[0].coin,
-            minCrypto: this.state.cryptoList[0].jst_min_coin_limit
+            minCrypto: this.state.cryptoList[0].jst_min_coin_limit,
           });
         }
       } else {
         this.setState({
           crypto: this.state.cryptoList[0].coin,
-          minCrypto: this.state.cryptoList[0].jst_min_coin_limit
+          minCrypto: this.state.cryptoList[0].jst_min_coin_limit,
         });
       }
     }
@@ -2201,7 +2202,7 @@ class ConversionDetail extends React.Component {
         currency: value,
         currencyList: this.state.originalCoinList,
         minCurrency: option.props.selectedData.jst_min_coin_limit,
-        showTFAModal: false
+        showTFAModal: false,
       },
       () => {
         this.state.JSTPairList.map((element, i) => {
@@ -2211,11 +2212,11 @@ class ConversionDetail extends React.Component {
           ) {
             if (element.original_pair != element.order_pair) {
               this.setState({
-                OrdType: "2"
+                OrdType: "2",
               });
             } else {
               this.setState({
-                OrdType: "1"
+                OrdType: "1",
               });
             }
             // console.log(
@@ -2228,7 +2229,7 @@ class ConversionDetail extends React.Component {
             // );
             this.setState({
               original_pair: element.original_pair,
-              order_pair: element.order_pair
+              order_pair: element.order_pair,
             });
           }
         });
@@ -2242,7 +2243,7 @@ class ConversionDetail extends React.Component {
         } else {
           this.setState(
             {
-              sendCurrencyInput: option.props.selectedData.jst_min_coin_limit
+              sendCurrencyInput: option.props.selectedData.jst_min_coin_limit,
             },
             () => {
               if (this.state.sendCurrencyInput > 0) {
@@ -2259,7 +2260,7 @@ class ConversionDetail extends React.Component {
   }
   radioChange(e) {
     this.setState({
-      disabledButton: true
+      disabledButton: true,
     });
     this.setState({ loader: true });
     this.clearValidation();
@@ -2272,16 +2273,16 @@ class ConversionDetail extends React.Component {
       ) {
         if (element.original_pair != element.order_pair) {
           this.setState({
-            OrdType: "2"
+            OrdType: "2",
           });
         } else {
           this.setState({
-            OrdType: "1"
+            OrdType: "1",
           });
         }
         this.setState({
           original_pair: element.original_pair,
-          order_pair: element.order_pair
+          order_pair: element.order_pair,
         });
       }
     });
@@ -2297,7 +2298,7 @@ class ConversionDetail extends React.Component {
         fiatJSTValue: 0,
         totalAmount: 0,
         displayCurrency: null,
-        loader: false
+        loader: false,
       },
       () => {
         clearTimeout(this.timeout);
@@ -2307,7 +2308,7 @@ class ConversionDetail extends React.Component {
             this.getValuesSocket(false);
           }, this.state.socketTime);
           this.setState({
-            recieveCurrencyInput: this.state.minCrypto
+            recieveCurrencyInput: this.state.minCrypto,
           });
         } else {
           this.timeout = setTimeout(this.getValuesSocket, 1000);
@@ -2315,7 +2316,7 @@ class ConversionDetail extends React.Component {
             this.getValuesSocket(false);
           }, this.state.socketTime);
           this.setState({
-            sendCurrencyInput: this.state.minCurrency
+            sendCurrencyInput: this.state.minCurrency,
           });
         }
       }
@@ -2360,7 +2361,7 @@ class ConversionDetail extends React.Component {
     this.setState({
       promoCode: e.target.value,
       validPromo: false,
-      offerMsg: ""
+      offerMsg: "",
     });
   }
   checkPromo() {
@@ -2375,32 +2376,32 @@ class ConversionDetail extends React.Component {
           Accept: "application/json",
           "Content-Type": "application/json",
           "Accept-Language": localStorage["i18nextLng"],
-          Authorization: "Bearer " + this.props.isLoggedIn
+          Authorization: "Bearer " + this.props.isLoggedIn,
         },
-        body: JSON.stringify(values)
+        body: JSON.stringify(values),
       })
-        .then(response => response.json())
-        .then(responseData => {
+        .then((response) => response.json())
+        .then((responseData) => {
           if (responseData.status === 200) {
             this.setState({
               offerMsg: responseData.message,
               applyPromoCode: true,
-              validPromo: true
+              validPromo: true,
             });
           } else if (responseData.status === 500) {
             this.setState({
               offerMsg: responseData.err,
-              validPromo: false
+              validPromo: false,
             });
           } else {
             // console.log(responseData);
             this.setState({
-              validPromo: false
+              validPromo: false,
             });
           }
           this.setState({ loader: false });
         })
-        .catch(error => {});
+        .catch((error) => {});
     } else {
       this.validator3.showMessages();
       this.forceUpdate();
@@ -2411,7 +2412,7 @@ class ConversionDetail extends React.Component {
       {
         showPromoModal: false,
         appliedOfferCode: this.state.promoCode,
-        showAppliedPromoModal: false
+        showAppliedPromoModal: false,
       },
       () => {
         this.getValuesSocket();
@@ -2422,21 +2423,21 @@ class ConversionDetail extends React.Component {
     if (this.state.showAppliedPromoModal) {
       this.setState({
         showPromoModal: false,
-        showAppliedPromoModal: false
+        showAppliedPromoModal: false,
         // offerMsg: ""
       });
     } else {
       this.setState({
         showPromoModal: false,
         showAppliedPromoModal: false,
-        offerMsg: ""
+        offerMsg: "",
       });
     }
   }
   openNotificationWithIcon(type, head, desc) {
     notification[type]({
       message: head,
-      description: desc
+      description: desc,
     });
   }
   render() {
@@ -2609,7 +2610,7 @@ class ConversionDetail extends React.Component {
                                 )} ${this.state.minCrypto}`,
                                 numeric: this.t(
                                   "validations:invalid_data_error.message"
-                                )
+                                ),
                               }
                             )}
                           </Col>
@@ -2755,7 +2756,7 @@ class ConversionDetail extends React.Component {
                                 ),
                                 numeric: this.t(
                                   "validations:invalid_data_error.message"
-                                )
+                                ),
                               }
                             )}
                           </Col>
@@ -2930,7 +2931,7 @@ class ConversionDetail extends React.Component {
                                 )} ${this.state.minCurrency}`,
                                 numeric: this.t(
                                   "validations:invalid_data_error.message"
-                                )
+                                ),
                               }
                             )}
                           </Col>
@@ -3093,7 +3094,7 @@ class ConversionDetail extends React.Component {
                                 ),
                                 numeric: this.t(
                                   "validations:invalid_data_error.message"
-                                )
+                                ),
                               }
                             )}
                           </Col>
@@ -3213,7 +3214,7 @@ class ConversionDetail extends React.Component {
                                   this.setState({
                                     showTFAModal: false,
                                     showAppliedPromoModal: true,
-                                    promoCode: this.state.appliedOfferCode
+                                    promoCode: this.state.appliedOfferCode,
                                   });
                                 }}
                               >
@@ -3227,7 +3228,7 @@ class ConversionDetail extends React.Component {
                                     showTFAModal: false,
                                     showPromoModal: true,
                                     offerMsg: "",
-                                    promoCode: ""
+                                    promoCode: "",
                                   });
                                 }}
                               >
@@ -3248,7 +3249,7 @@ class ConversionDetail extends React.Component {
                                     promoCode: "",
                                     offerMsg: "",
                                     applyPromoCode: false,
-                                    validPromo: false
+                                    validPromo: false,
                                   },
                                   () => {
                                     this.getValuesSocket();
@@ -3286,7 +3287,7 @@ class ConversionDetail extends React.Component {
                               {
                                 required: this.t(
                                   "general_1:this_field_required_error.message"
-                                )
+                                ),
                               }
                             )}
                             {this.state.promoCode && (
@@ -3295,7 +3296,7 @@ class ConversionDetail extends React.Component {
                                   this.setState({
                                     promoCode: "",
                                     offerMsg: "",
-                                    validPromo: false
+                                    validPromo: false,
                                   });
                                 }}
                                 className="promo_cross_wrap"
@@ -3359,7 +3360,7 @@ class ConversionDetail extends React.Component {
                               {
                                 required: this.t(
                                   "general_1:this_field_required_error.message"
-                                )
+                                ),
                               }
                             )}
                             {this.state.promoCode && (
@@ -3369,7 +3370,7 @@ class ConversionDetail extends React.Component {
                                     promoCode: "",
                                     appliedOfferCode: "",
                                     offerMsg: "",
-                                    validPromo: false
+                                    validPromo: false,
                                   });
                                 }}
                                 className="promo_cross_wrap"
@@ -3478,7 +3479,7 @@ class ConversionDetail extends React.Component {
           <TFAModal
             visible={this.state.showTFAModal}
             isLoggedIn={this.props.isLoggedIn}
-            submit={otp => this.btnClicked(otp)}
+            submit={(otp) => this.btnClicked(otp)}
           />
           {this.state.loader == true ? <FaldaxLoader /> : ""}
         </ConversionWrap>
@@ -3487,8 +3488,9 @@ class ConversionDetail extends React.Component {
     );
   }
 }
-const mapDispatchToProps = dispatch => ({
-  LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
+const mapDispatchToProps = (dispatch) => ({
+  LogoutUser: (isLoggedIn, user_id) =>
+    dispatch(LogoutUser(isLoggedIn, user_id)),
 });
 
 // export default Conversion;
@@ -3502,7 +3504,7 @@ function mapStateToProps(state) {
           : ""
         : "",
     theme:
-      state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
+      state.themeReducer.theme !== undefined ? state.themeReducer.theme : "",
     /* loader:state.simpleReducer.loader?state.simpleReducer.loader:false */
   };
 }
