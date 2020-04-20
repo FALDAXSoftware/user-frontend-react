@@ -18,7 +18,7 @@ import {
   HistoryWrap1,
   TableHeader,
   TableContent,
-  ScrollTableContent
+  ScrollTableContent,
 } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
 import { SpinSingle } from "STYLED-COMPONENTS/LOGGED_STYLE/dashStyle";
 import { OTwrap } from "./ordertrade";
@@ -38,7 +38,7 @@ const NDF = styled.p`
   text-align: center;
   font-size: 14px;
   font-weight: 600;
-  color: ${props => (props.theme.mode === "dark" ? "white" : "black")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "black")};
   font-family: "Open Sans";
 `;
 class BuyTABLE extends Component {
@@ -50,7 +50,7 @@ class BuyTABLE extends Component {
       currency: this.props.cryptoPair ? this.props.cryptoPair.currency : "BTC",
       lastsum: 0,
       loader: false,
-      result: []
+      result: [],
     };
     this.t = this.props.t;
     this.updateData = this.updateData.bind(this);
@@ -79,7 +79,7 @@ class BuyTABLE extends Component {
     if (this.props.io) {
       this.props.loaderfunc(true);
       this.setState({ loader: true });
-      this.props.io.on("buy-book-data", data => {
+      this.props.io.on("buy-book-data", (data) => {
         // console.log("^^^^data", data);
         this.updateData(data);
       });
@@ -244,7 +244,7 @@ class BuyTABLE extends Component {
           my_size: element.my_size,
           amount: element.quantity,
           bid: element.price,
-          user_id: element.user_id
+          user_id: element.user_id,
           // total: sum,
         });
       }
@@ -260,7 +260,7 @@ class BuyTABLE extends Component {
       loader: false,
       // data: rows,
       lastsum: sum,
-      result: row
+      result: row,
     });
   }
 
@@ -306,9 +306,9 @@ class BuyTABLE extends Component {
                   >
                     {this.state.result.length ? (
                       <tbody>
-                        {this.state.result.map(element => (
+                        {this.state.result.map((element) => (
                           <tr>
-                            <td>{element.my_size}</td>
+                            <td>{element.my_size.toFixed(8)}</td>
                             <td>{element.amount.toFixed(3)}</td>
                             <td>{element.bid.toFixed(5)}</td>
                             <td>{element.total.toFixed(8)}</td>
@@ -348,7 +348,7 @@ function mapStateToProps(state) {
     profileDetails:
       state.simpleReducer.profileDetails !== undefined
         ? state.simpleReducer.profileDetails.data[0]
-        : ""
+        : "",
     /* loader:state.simpleReducer.loader?state.simpleReducer.loader:false */
   };
 }
