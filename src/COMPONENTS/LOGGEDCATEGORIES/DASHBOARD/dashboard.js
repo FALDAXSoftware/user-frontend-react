@@ -32,7 +32,7 @@ import {
   ContactWrap,
   GreyWrap
 } from "STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle";
-import { SettingDropdown } from "../../../STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
+import { SettingButton } from "../../../STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
 import SubMenu from "antd/lib/menu/SubMenu";
 import TemplateManage from "../../../SHARED-COMPONENTS/templateManage";
 import Technical from "../../tv_widgets/technical";
@@ -80,13 +80,13 @@ const Overlay = styled.div`
 const RGL = styled(ResponsiveReactGridLayout)`
   & .react-resizable-handle::after {
     border-right: ${props =>
-      props.theme.mode === "dark"
-        ? "2px solid rgb(255, 255, 255) !important"
-        : ""};
+    props.theme.mode === "dark"
+      ? "2px solid rgb(255, 255, 255) !important"
+      : ""};
     border-bottom: ${props =>
-      props.theme.mode === "dark"
-        ? "2px solid rgb(255, 255, 255) !important"
-        : ""};
+    props.theme.mode === "dark"
+      ? "2px solid rgb(255, 255, 255) !important"
+      : ""};
   }
 `;
 
@@ -153,7 +153,7 @@ class Dashboard extends Component {
                         height: "98%",
                         symbol: `BINANCE:${innerElement.split("-")[0]}${
                           innerElement.split("-")[1]
-                        }`,
+                          }`,
                         showIntervalTabs: true,
                         locale: localStorage["i18nextLng"],
                         colorTheme: this.props.theme ? "dark" : "light",
@@ -405,7 +405,7 @@ class Dashboard extends Component {
           isSaved: true
         });
       })
-      .catch(error => {});
+      .catch(error => { });
   };
   getPairs = () => {
     fetch(API_URL + `/users/get-all-pair`, {
@@ -424,7 +424,7 @@ class Dashboard extends Component {
           });
         }
       })
-      .catch(error => {});
+      .catch(error => { });
   };
   onCancle = e => {
     this.setState({
@@ -661,12 +661,12 @@ class Dashboard extends Component {
               placement="right"
               title={this.t("customize_dashboard_text.message")}
             >
-              <SettingDropdown
+              <SettingButton
                 className="dashboard_setting"
                 onClick={this.enableEditLayout}
               >
                 <Icon type="setting" />
-              </SettingDropdown>
+              </SettingButton>
             </Tooltip>
           )}
           <LoggedNavigation />
