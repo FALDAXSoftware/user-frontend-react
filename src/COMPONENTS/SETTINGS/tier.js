@@ -94,7 +94,7 @@ class Tier extends Component {
                             </span>
                             <span className="text-wrap">
                               {tier.minimum_activity_thresold
-                                ? tier.minimum_activity_thresold.account_change
+                                ? `Account Age: ${tier.minimum_activity_thresold.Account_Age}`
                                 : ""}
                             </span>
                           </li>
@@ -108,8 +108,7 @@ class Tier extends Component {
                             </span>
                             <span className="text-wrap">
                               {tier.minimum_activity_thresold
-                                ? tier.minimum_activity_thresold
-                                    .minimum_total_transactions
+                                ? `Minimum Total Transactions: ${tier.minimum_activity_thresold.Minimum_Total_Transactions}`
                                 : ""}
                             </span>
                           </li>
@@ -123,8 +122,7 @@ class Tier extends Component {
                             </span>
                             <span className="text-wrap">
                               {tier.minimum_activity_thresold
-                                ? tier.minimum_activity_thresold
-                                    .minimum_total_value_transaction
+                                ? `Minimum Total value of all Transactions: ${tier.minimum_activity_thresold.Minimum_Total_Value_of_All_Transactions}`
                                 : ""}
                             </span>
                           </li>

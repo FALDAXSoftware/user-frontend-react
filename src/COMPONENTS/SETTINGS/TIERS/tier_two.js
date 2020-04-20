@@ -171,7 +171,7 @@ class TierTwo extends React.Component {
       this.props.profileDetails.account_tier !== 1 &&
       this.props.profileDetails.account_tier == 2
     ) {
-      // this.props.history.push("/");
+      this.props.history.push("/");
     }
   }
   async componentDidMount() {
