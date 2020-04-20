@@ -20,7 +20,7 @@ import {
   HistoryWrap1,
   TableHeader,
   TableContent,
-  ScrollTableContent
+  ScrollTableContent,
 } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
 import { faThinkPeaks } from "@fortawesome/free-brands-svg-icons";
 
@@ -39,7 +39,7 @@ const NDF = styled.p`
   text-align: center;
   font-size: 14px;
   font-weight: 600;
-  color: ${props => (props.theme.mode === "dark" ? "white" : "black")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "black")};
   font-family: "Open Sans";
 `;
 class SellTable extends Component {
@@ -51,7 +51,7 @@ class SellTable extends Component {
       currency: this.props.cryptoPair ? this.props.cryptoPair.currency : "BTC",
       lastsum: 0,
       loader: false,
-      result: []
+      result: [],
     };
     this.t = this.props.t;
     this.updateData = this.updateData.bind(this);
@@ -62,7 +62,7 @@ class SellTable extends Component {
   componentDidMount() {
     // var self = this;
     if (this.props.io) {
-      this.props.io.on("sell-book-data", data => {
+      this.props.io.on("sell-book-data", (data) => {
         // console.log("^^^^data", data);
         this.updateData(data);
       });
@@ -251,7 +251,7 @@ class SellTable extends Component {
           my_size: element.my_size,
           amount: element.quantity,
           ask: element.price,
-          user_id: element.user_id
+          user_id: element.user_id,
           // total: sum,
         });
       }
@@ -267,7 +267,7 @@ class SellTable extends Component {
       loader: false,
       // data: rows,
       lastsum: sum,
-      result: row
+      result: row,
     });
   }
 
@@ -316,7 +316,7 @@ class SellTable extends Component {
                         this.state.result.map(function(element, index) {
                           return (
                             <tr>
-                              <td>{element.my_size}</td>
+                              <td>{element.my_size.toFixed(8)}</td>
                               <td>{element.amount.toFixed(3)}</td>
                               <td>{element.ask.toFixed(5)}</td>
                               <td>{element.total.toFixed(8)}</td>
@@ -357,7 +357,7 @@ function mapStateToProps(state) {
     profileDetails:
       state.simpleReducer.profileDetails !== undefined
         ? state.simpleReducer.profileDetails.data[0]
-        : ""
+        : "",
     /* loader:state.simpleReducer.loader?state.simpleReducer.loader:false */
   };
 }

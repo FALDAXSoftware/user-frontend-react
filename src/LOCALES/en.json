@@ -3248,5 +3248,151 @@
       "message_type": "Web content",
       "context": "validation message for amount greater than 0"
     }
+  },
+  "dashboard": {
+    "invalid_template_code_error": {
+      "page": "Dashboard",
+      "message": "Invalid Template Code",
+      "message_type": "Web content",
+      "context": "validation message for Invalid Template Code"
+    },
+    "customize_text": {
+      "page": "Dashboard",
+      "message": "Customize",
+      "message_type": "Web content",
+      "context": "Customize text on dashboard screen"
+    },
+    "save_before_share_error": {
+      "page": "Dashboard",
+      "message": "Save template before share",
+      "message_type": "Web content",
+      "context": "validation message for Save template before share"
+    },
+    "close_text": {
+      "page": "Dashboard",
+      "message": "Close",
+      "message_type": "Web content",
+      "context": "Close text on dashboard screen"
+    },
+    "close_template_before_save": {
+      "page": "Dashboard",
+      "message": "Do you want to close?",
+      "message_type": "Web content",
+      "context": "Do you want to close text on dashboard screen"
+    },
+    "unsave_data_popup_desc": {
+      "page": "Dashboard",
+      "message": "This page may contains unsaved work. You will lost all unsaved data.",
+      "message_type": "Web content",
+      "context": "Unsaved data popup description on dashboard screen"
+    },
+    "templates_text": {
+      "page": "Dashboard",
+      "message": "Templates",
+      "message_type": "Web content",
+      "context": "Templates text on dashboard screen"
+    },
+    "add_item_text": {
+      "page": "Dashboard",
+      "message": "Add item",
+      "message_type": "Web content",
+      "context": "Add item text on dashboard screen"
+    },
+    "note_template_text": {
+      "page": "Dashboard",
+      "message": "If you want customized dashboard, create your own.",
+      "message_type": "Web content",
+      "context": "Note for the templates that are not customizable(default templates)"
+    },
+    "template_label": {
+      "page": "Dashboard",
+      "message": "Template Name",
+      "message_type": "Web content",
+      "context": "Template Name label"
+    },
+    "template_name_placeholder": {
+      "page": "Dashboard",
+      "message": "Enter Template Name",
+      "message_type": "Web content",
+      "context": "Template Name placeholder"
+    },
+    "widgets_text": {
+      "page": "Dashboard",
+      "message": "Widgets",
+      "message_type": "Web content",
+      "context": "Widgets text"
+    },
+    "select_pair_placeholder": {
+      "page": "Dashboard",
+      "message": "Select Pair",
+      "message_type": "Web content",
+      "context": "Select Pair placeholder"
+    },
+    "delete_template_btn": {
+      "page": "Dashboard",
+      "message": "Delete Template",
+      "message_type": "Web content",
+      "context": "Delete Template button text"
+    },
+    "want_to_share_text": {
+      "page": "Dashboard",
+      "message": "Want to share your",
+      "message_type": "Web content",
+      "context": "text"
+    },
+    "template_with_text": {
+      "page": "Dashboard",
+      "message": "Template with someone?",
+      "message_type": "Web content",
+      "context": "text"
+    },
+    "generate_code_btn": {
+      "page": "Dashboard",
+      "message": "Generate Code",
+      "message_type": "Web content",
+      "context": "Generate Code button text"
+    },
+    "copied_text": {
+      "page": "Dashboard",
+      "message": "Copied",
+      "message_type": "Web content",
+      "context": "copied text"
+    },
+    "click_to_copy_text": {
+      "page": "Dashboard",
+      "message": "Click to copy",
+      "message_type": "Web content",
+      "context": "Click to copy text"
+    },
+    "already_have_template_code_text": {
+      "page": "Dashboard",
+      "message": "Already have template code? Enter here to Import.",
+      "message_type": "Web content",
+      "context": "Already have template code? Enter here to Import. text"
+    },
+    "import_text": {
+      "page": "Dashboard",
+      "message": "Import",
+      "message_type": "Web content",
+      "context": "Import text"
+    },
+    "back_to_edit_text": {
+      "page": "Dashboard",
+      "message": "Back to edit",
+      "message_type": "Web content",
+      "context": "Back to edit text"
+    },
+    "share_import_template_text": {
+      "page": "Dashboard",
+      "message": "Share / Import Template",
+      "message_type": "Web content",
+      "context": "Share / Import Template text"
+    },
+    "customize_dashboard_text": {
+      "page": "Dashboard",
+      "message": "Customize Dashboard",
+      "message_type": "Web content",
+      "context": "Customize Dashboard text"
+    }
   }
 }

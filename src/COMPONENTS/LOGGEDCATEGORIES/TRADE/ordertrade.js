@@ -12,30 +12,33 @@ import { translate } from "react-i18next";
 import {
   TableHeader,
   TableContent,
-  ScrollTableContent
+  ScrollTableContent,
 } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
 
 export const OrderWrap = styled.div`
   margin-left: 30px;
   margin-right: 30px;
   border: 1px solid #d8d8d8;
+  @media (max-width: 991px) {
+    min-width: 700px;
+  }
   &::-webkit-scrollbar {
     width: 0.5em;
     height: 0.5em;
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: ${props =>
+    background-color: ${(props) =>
       props.theme.mode === "dark" ? "#041624" : ""};
     border-radius: 3px;
   }
   &::-webkit-scrollbar-track {
-    background: ${props => (props.theme.mode === "dark" ? "#072135" : "")};
+    background: ${(props) => (props.theme.mode === "dark" ? "#072135" : "")};
   }
 `;
 export const HTable = styled(Table)`
   > thead {
-    background-color: ${props =>
+    background-color: ${(props) =>
       props.theme.mode === "dark" ? "#041422" : "#f5f6fa"};
     color: #174c7e;
     border: none;
@@ -44,28 +47,32 @@ export const HTable = styled(Table)`
     border: 0px;
   }
   & tbody {
-    color: ${props => (props.theme.mode === "dark" ? "white" : "black")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "black")};
     font-size: 14px;
     font-family: "Open Sans";
     font-weight: 600;
   }
   > tbody > tr:nth-of-type(odd) {
-    background-color: ${props =>
+    background-color: ${(props) =>
       props.theme.mode === "dark" ? "#041422" : "#f9f9f9"};
   }
 `;
 const SideType = styled.td`
-  color: ${props => (props.type === "Sell" ? "#f13239" : "#4fb153")};
+  color: ${(props) => (props.type === "Sell" ? "#f13239" : "#4fb153")};
 `;
 const NDF = styled.p`
   text-align: center;
   font-weight: 600;
   font-size: 17px;
-  color: ${props => (props.theme.mode === "dark" ? "white" : "black")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "black")};
   margin-top: 30px;
   font-family: Open Sans;
 `;
-export const OTwrap = styled.div``;
+export const OTwrap = styled.div`
+  @media (max-width: 991px) {
+    min-width: 700px;
+  }
+`;
 
 class OrderTrade extends Component {
   constructor(props) {
@@ -88,7 +95,7 @@ class OrderTrade extends Component {
     var self = this;
     return (
       <OrderWrap>
-        <OTwrap>
+        <OTwrap className="jsdghfjks">
           <div className="tbl-header">
             <TableHeader cellpadding="10px" cellspacing="0" border="0">
               {/* <HTable striped responsive> */}

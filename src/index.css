@@ -1413,3 +1413,6 @@ div.scrollbar>div:nth-child(3)>div{
 .lang-menu .ant-dropdown-menu-item .lang-menu-item img {
   margin: 0 5px 0 0;
 }
+.selectedIns{
+  background-color: #1890ff21;
+}
