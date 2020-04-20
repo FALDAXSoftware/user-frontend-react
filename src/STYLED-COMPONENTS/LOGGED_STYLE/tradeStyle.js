@@ -886,7 +886,26 @@ export const ScrollTableContent = styled.div`
     background-color: rgb(136, 136, 136) !important;
   }
 `;
-export const SettingDropdown = styled(Button)`
+export const SettingDropdown = styled(Dropdown)`
+  position: fixed;
+  top: 90px;
+  right: 0px;
+  background: ${props => (props.theme.mode == "dark" ? "#01090f" : "white")};
+  color: #1890ff;
+  cursor: pointer;
+  padding: 7px 7px;
+  font-size: 20px;
+  border: ${props =>
+    props.theme.mode == "dark" ? "1px solid #198fff;" : "1px solid lightgray"};
+  z-index: 9999;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+`;
+
+
+
+export const SettingButton = styled(Button)`
     position: fixed;
     top: 90px;
     left: 0px;
