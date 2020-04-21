@@ -15,7 +15,7 @@ export const globalVariables = {
 
   // API_URL: "http://localhost:1440", //Mansi's
 
-  // API_URL: "http://c10a9668.ngrok.io",
+  // API_URL: "http://273f6143.ngrok.io",
 
   // API_URL: "http://7b2d9029.ngrok.io",
 

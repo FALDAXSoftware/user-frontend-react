@@ -7,7 +7,10 @@ import styled from "styled-components";
 import Navigation from "COMPONENTS/NAVIGATIONS/loggednavigation";
 import FooterHome from "COMPONENTS/LANDING/FOOTERS/footer_home";
 import { TierWrapper, KYCHead } from "./tier_one";
-import { TierWrap } from "../../../STYLED-COMPONENTS/TIER/tierStyle";
+import {
+  TierWrap,
+  RejectNote,
+} from "../../../STYLED-COMPONENTS/TIER/tierStyle";
 import { Icon, notification } from "antd";
 import { globalVariables } from "Globals.js";
 import { connect } from "react-redux";
@@ -152,6 +155,9 @@ class TierTwo extends React.Component {
       residenceStatus: "",
       uploadBtnFlag: false,
       requestId: "",
+      validNote: "",
+      residenceNote: "",
+      ssnNote: "",
     };
     this.validator = new SimpleReactValidator({
       ssnValid: {
@@ -258,6 +264,7 @@ class TierTwo extends React.Component {
               this.setState({
                 reUpload1: reupload1,
                 validStatus: validid,
+                validNote: tierDoc.public_note,
               });
               return console.log("TierDoc^^", tierDoc.type, index);
             case 1:
@@ -273,6 +280,7 @@ class TierTwo extends React.Component {
               this.setState({
                 reUpload2: reupload2,
                 residenceStatus: residence,
+                residenceNote: tierDoc.public_note,
               });
               return console.log("TierDoc^^", tierDoc.type, index);
             case 2:
@@ -288,6 +296,7 @@ class TierTwo extends React.Component {
               this.setState({
                 reUpload3: reupload3,
                 ssnStatus: ssn,
+                ssnNote: tierDoc.public_note,
               });
               return console.log("TierDoc^^", tierDoc.type, index);
             case 3:
@@ -769,6 +778,9 @@ class TierTwo extends React.Component {
                       </Fileselect1> */}
                       {this.state.tierData.length > 0 ? (
                         <TierDocBox>
+                          {this.state.validNote && (
+                            <RejectNote>{this.state.validNote}</RejectNote>
+                          )}
                           {this.state.validStatus === null && (
                             <TierDocStatus>
                               <Icon type="warning" />
@@ -841,6 +853,9 @@ class TierTwo extends React.Component {
                       </TierUpload>
                       {this.state.tierData.length > 0 ? (
                         <TierDocBox>
+                          {this.state.residenceNote && (
+                            <RejectNote>{this.state.residenceNote}</RejectNote>
+                          )}
                           {this.state.residenceStatus === null && (
                             <TierDocStatus>
                               <Icon type="warning" />
@@ -937,6 +952,9 @@ class TierTwo extends React.Component {
                       </TierUpload>
                       {this.state.tierData.length > 0 ? (
                         <TierDocBox>
+                          {this.state.ssnNote && (
+                            <RejectNote>{this.state.ssnNote}</RejectNote>
+                          )}
                           {this.state.ssnStatus === null && (
                             <TierDocStatus>
                               <Icon type="warning" />

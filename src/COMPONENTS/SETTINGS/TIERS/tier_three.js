@@ -32,6 +32,7 @@ import {
   TierLabel,
   TierDropzoneStyle,
   TierDropWrap,
+  RejectNote,
 } from "../../../STYLED-COMPONENTS/TIER/tierStyle";
 import { Icon, notification, Row, Col } from "antd";
 import {
@@ -97,6 +98,8 @@ class TierThree extends React.Component {
       assetFormStatus: "",
       uploadBtnFlag: false,
       requestId: "",
+      assetFormNote: "",
+      idcpNote: "",
     };
     this.handleProfile = this.handleProfile.bind(this);
     this.populateData = this.populateData.bind(this);
@@ -191,6 +194,7 @@ class TierThree extends React.Component {
               this.setState({
                 reUpload1: reupload1,
                 idcpStatus: idcpphoto,
+                idcpNote: tierDoc.public_note,
               });
               return console.log("TierDoc^^", tierDoc.type, index);
             case 1:
@@ -206,6 +210,7 @@ class TierThree extends React.Component {
               this.setState({
                 reUpload2: reupload2,
                 assetFormStatus: assetform,
+                assetFormNote: tierDoc.public_note,
               });
               return console.log("TierDoc^^", tierDoc.type, index);
             default:
@@ -616,6 +621,9 @@ class TierThree extends React.Component {
                       </TierUpload>
                       {this.state.tierData.length > 0 ? (
                         <TierDocBox>
+                          {this.state.idcpNote && (
+                            <RejectNote>{this.state.idcpNote}</RejectNote>
+                          )}
                           {this.state.idcpStatus === null && (
                             <TierDocStatus>
                               <Icon type="warning" />
@@ -629,10 +637,13 @@ class TierThree extends React.Component {
                             </TierDocStatus>
                           )}
                           {this.state.idcpStatus === false && (
-                            <TierDocStatus>
-                              <Icon type="close" />
-                              <span>Reupload it</span>
-                            </TierDocStatus>
+                            <div>
+                              <TierDocStatus>
+                                <Icon type="close" />
+                                <span>Reupload it</span>
+                              </TierDocStatus>
+                              <span>{this.state.assetFormNote}</span>
+                            </div>
                           )}
                         </TierDocBox>
                       ) : (
@@ -752,6 +763,9 @@ class TierThree extends React.Component {
                       </TierUpload>
                       {this.state.tierData.length > 0 ? (
                         <TierDocBox>
+                          {this.state.assetFormNote && (
+                            <RejectNote>{this.state.assetFormNote}</RejectNote>
+                          )}
                           {this.state.assetFormStatus === null && (
                             <TierDocStatus>
                               <Icon type="warning" />

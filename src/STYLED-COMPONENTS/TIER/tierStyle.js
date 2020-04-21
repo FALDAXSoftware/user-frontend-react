@@ -597,6 +597,7 @@ export const TierDocBox = styled.div`
   display: flex;
   width: 33.33%;
   justify-content: flex-end;
+  flex-wrap: wrap;
   @media (max-width: 670px) {
     width: 100%;
     // margin: 0 0 20px 0;
@@ -798,4 +799,13 @@ export const TierDropWrap = styled.div`
     color: #fff;
     font-weight: bold;
   }
+`;
+export const RejectNote = styled.span`
+  display: inherit;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-end;
+  font-size: 14px;
+  margin: 0 0 5px 0;
+  text-align: right;
 `;
