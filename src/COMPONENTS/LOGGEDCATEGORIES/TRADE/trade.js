@@ -17,7 +17,7 @@ import {
   notification,
   Icon,
   Menu,
-  Tooltip
+  Tooltip,
 } from "antd";
 import styled from "styled-components";
 import { Responsive, WidthProvider } from "react-grid-layout";
@@ -45,7 +45,7 @@ import { translate } from "react-i18next";
 /* Styled-Components */
 import {
   ContactWrap,
-  GreyWrap
+  GreyWrap,
 } from "STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle";
 import { cryptoCurrency } from "ACTIONS/LOGGEDCAT/tradeActions";
 import {
@@ -67,7 +67,7 @@ import {
   OrderWrap,
   InstruOrder,
   SelectMonth,
-  SettingDropdown
+  SettingDropdown,
 } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
@@ -100,8 +100,8 @@ const GreyWrapTrade = styled(GreyWrap)`
     width: calc(100% - 20px);
     margin: 10px;
     overflow: hidden;
-    background-color: ${props =>
-    props.theme.mode === "dark" ? "#041b2c" : "white"};
+    background-color: ${(props) =>
+      props.theme.mode === "dark" ? "#041b2c" : "white"};
     border-radius: 5px;
     -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -112,8 +112,8 @@ const GreyWrapTrade = styled(GreyWrap)`
     width: calc(100% - 20px);
     margin: 10px;
     overflow: auto;
-    background-color: ${props =>
-    props.theme.mode === "dark" ? "#041b2c" : "white"};
+    background-color: ${(props) =>
+      props.theme.mode === "dark" ? "#041b2c" : "white"};
     border-radius: 5px;
     -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -124,8 +124,8 @@ const GreyWrapTrade = styled(GreyWrap)`
     width: calc(100% - 20px);
     margin: 10px;
     overflow: auto;
-    background-color: ${props =>
-    props.theme.mode === "dark" ? "#041b2c" : "white"};
+    background-color: ${(props) =>
+      props.theme.mode === "dark" ? "#041b2c" : "white"};
     border-radius: 5px;
     -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -136,8 +136,8 @@ const GreyWrapTrade = styled(GreyWrap)`
     width: calc(100% - 20px);
     margin: 10px;
     overflow: auto;
-    background-color: ${props =>
-    props.theme.mode === "dark" ? "#041b2c" : "white"};
+    background-color: ${(props) =>
+      props.theme.mode === "dark" ? "#041b2c" : "white"};
     border-radius: 5px;
     -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -148,8 +148,8 @@ const GreyWrapTrade = styled(GreyWrap)`
     width: calc(100% - 20px);
     margin: 10px;
     overflow: auto;
-    background-color: ${props =>
-    props.theme.mode === "dark" ? "#041b2c" : "white"};
+    background-color: ${(props) =>
+      props.theme.mode === "dark" ? "#041b2c" : "white"};
     border-radius: 5px;
     -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -160,8 +160,8 @@ const GreyWrapTrade = styled(GreyWrap)`
     width: calc(100% - 20px);
     margin: 10px;
     overflow: auto;
-    background-color: ${props =>
-    props.theme.mode === "dark" ? "#041b2c" : "white"};
+    background-color: ${(props) =>
+      props.theme.mode === "dark" ? "#041b2c" : "white"};
     border-radius: 5px;
     -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -172,8 +172,8 @@ const GreyWrapTrade = styled(GreyWrap)`
     width: calc(100% - 20px);
     margin: 10px;
     overflow: auto;
-    background-color: ${props =>
-    props.theme.mode === "dark" ? "#041b2c" : "white"};
+    background-color: ${(props) =>
+      props.theme.mode === "dark" ? "#041b2c" : "white"};
     border-radius: 5px;
     -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -183,14 +183,14 @@ const GreyWrapTrade = styled(GreyWrap)`
 
 const RGL = styled(ResponsiveReactGridLayout)`
   & .react-resizable-handle::after {
-    border-right: ${props =>
-    props.theme.mode === "dark"
-      ? "2px solid rgb(255, 255, 255) !important"
-      : ""};
-    border-bottom: ${props =>
-    props.theme.mode === "dark"
-      ? "2px solid rgb(255, 255, 255) !important"
-      : ""};
+    border-right: ${(props) =>
+      props.theme.mode === "dark"
+        ? "2px solid rgb(255, 255, 255) !important"
+        : ""};
+    border-bottom: ${(props) =>
+      props.theme.mode === "dark"
+        ? "2px solid rgb(255, 255, 255) !important"
+        : ""};
   }
 `;
 
@@ -226,7 +226,7 @@ class Trade extends Component {
       prevlayout: JSON.parse(JSON.stringify(originalLayouts)),
       layouts: JSON.parse(JSON.stringify(originalLayouts)),
       MLS: "",
-      loader: false
+      loader: false,
     };
     io = this.props.io;
     this.t = this.props.t;
@@ -254,7 +254,7 @@ class Trade extends Component {
         this.setState(
           {
             crypto: props.cryptoPair.crypto,
-            prevRoom: props.cryptoPair.prevRoom
+            prevRoom: props.cryptoPair.prevRoom,
           },
           () => {
             // self.orderSocket(self.state.timePeriod, self.state.status);
@@ -269,7 +269,7 @@ class Trade extends Component {
         this.setState(
           {
             currency: props.cryptoPair.currency,
-            prevRoom: props.cryptoPair.prevRoom
+            prevRoom: props.cryptoPair.prevRoom,
           },
           () => {
             // self.orderSocket(self.state.timePeriod, self.state.status);
@@ -305,23 +305,23 @@ class Trade extends Component {
       this.setState({
         insLoader: true,
         userBalLoader: true,
-        orderTradeLoader: true
+        orderTradeLoader: true,
       });
       // this.setState({ userBalLoader: true });
-      this.props.io.on("users-all-trade-data", data => {
+      this.props.io.on("users-all-trade-data", (data) => {
         console.log("^^^^data", data);
         this.updateMyOrder(data);
       });
-      this.props.io.on("users-completed-flag", data => {
+      this.props.io.on("users-completed-flag", (data) => {
         console.log("^^^^dataorderSocket", data);
         this.orderSocket(this.state.timePeriod, this.state.status);
       });
       this.orderSocket(this.state.timePeriod, this.state.status);
-      this.props.io.on("instrument-data", data => {
+      this.props.io.on("instrument-data", (data) => {
         console.log("instrument-data^^^", data);
         this.updateInstrumentsData(data);
       });
-      this.props.io.on("user-wallet-balance", data => {
+      this.props.io.on("user-wallet-balance", (data) => {
         // console.log("^^^^userdata", data);
         this.setState({ userBal: data, userBalLoader: false });
       });
@@ -333,7 +333,7 @@ class Trade extends Component {
       "join",
       {
         room: this.state.crypto + "-" + this.state.currency,
-        previous_room: prevRoom
+        previous_room: prevRoom,
       },
       () => {
         console.log(
@@ -379,8 +379,8 @@ class Trade extends Component {
     //   }
     // );
     this.setState({
-      InsCurrency: e.target.value
-    })
+      InsCurrency: e.target.value,
+    });
   }
 
   // created by Meghal Patel at 2019-04-27 15:10.
@@ -423,23 +423,23 @@ class Trade extends Component {
     let res = {};
     for (let index = 0; index < data.length; index++) {
       const element = data[index];
-      let currency = element.name.split("-")[1]
+      let currency = element.name.split("-")[1];
       if (!res[currency]) {
-        res[currency] = []
+        res[currency] = [];
       }
       res[currency].push({
         name: element.name.split("-")[0],
         currency,
         price: parseFloat(element.last_price).toFixed(5),
         volume: parseFloat(element.volume).toFixed(3),
-        change: parseFloat(element.percentChange).toFixed(5)
+        change: parseFloat(element.percentChange).toFixed(5),
       });
     }
     console.log("instruments -----", res);
 
     this.setState({
       InsData: res,
-      insLoader: false
+      insLoader: false,
     });
   }
 
@@ -451,7 +451,7 @@ class Trade extends Component {
 
   callback(key) {
     this.setState({
-      MLS: key
+      MLS: key,
     });
   }
 
@@ -495,10 +495,11 @@ class Trade extends Component {
 
   orderSocket(month, filter_type) {
     // io.emit("")
+    this.setState({ orderTradeLoader: true });
     console.log({
       month,
       flag: filter_type,
-      pair: `${this.state.crypto}-${this.state.currency}`
+      pair: `${this.state.crypto}-${this.state.currency}`,
     });
     if (this.props.io) {
       console.log(
@@ -510,7 +511,7 @@ class Trade extends Component {
       this.props.io.emit("trade_users_history_event", {
         month: month,
         flag: filter_type,
-        pair: `${this.state.crypto}-${this.state.currency}`
+        pair: `${this.state.crypto}-${this.state.currency}`,
       });
     }
     // var URL;
@@ -564,16 +565,16 @@ class Trade extends Component {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: "Bearer " + this.props.isLoggedIn
+        Authorization: "Bearer " + this.props.isLoggedIn,
       },
       body: JSON.stringify({
         id: id,
         side: side,
-        order_type: type
-      })
+        order_type: type,
+      }),
     })
-      .then(response => response.json())
-      .then(responseData => {
+      .then((response) => response.json())
+      .then((responseData) => {
         if (responseData.status === 200) {
           this.orderSocket(this.state.timePeriod, this.state.status);
           this.openNotificationWithIcon(
@@ -588,7 +589,7 @@ class Trade extends Component {
             responseData.err
           );
       })
-      .catch(error => { });
+      .catch((error) => {});
   }
 
   // created by Meghal Patel at 2019-04-27 15:24.
@@ -600,7 +601,7 @@ class Trade extends Component {
   openNotificationWithIcon(type, head, desc) {
     notification[type]({
       message: head,
-      description: desc
+      description: desc,
     });
   }
 
@@ -612,15 +613,15 @@ class Trade extends Component {
 
   currencyPair(crypto) {
     this.setState({
-      insLoader: true
+      insLoader: true,
     });
     let cryptoPair = {
       crypto: crypto,
       currency: this.state.InsCurrency,
       prevRoom: {
         crypto: this.state.crypto,
-        currency: this.state.InsCurrency
-      }
+        currency: this.state.InsCurrency,
+      },
     };
     this.props.cryptoCurrency(cryptoPair);
   }
@@ -669,7 +670,7 @@ class Trade extends Component {
   searchInstu(e) {
     var search = e.target.value;
     if (search.trim() !== "") {
-      var searchedInstu = this.state.InsData.filter(function (temp) {
+      var searchedInstu = this.state.InsData.filter(function(temp) {
         if (temp.name.toLowerCase().includes(search.toLowerCase())) {
           return true;
         } else {
@@ -750,7 +751,7 @@ class Trade extends Component {
       orderHistoryTableHeight,
       myOrderTableHeight,
       buySellOrderHeight,
-      depthChartHeight
+      depthChartHeight,
     });
   }
 
@@ -765,7 +766,7 @@ class Trade extends Component {
       global.localStorage.setItem(
         "rgl-8",
         JSON.stringify({
-          [key]: value
+          [key]: value,
         })
       );
     }
@@ -826,7 +827,7 @@ class Trade extends Component {
       this.setState({
         saveState: true,
         editState: false,
-        layouts: this.state.prevlayout
+        layouts: this.state.prevlayout,
       });
     } else {
       this.setState({ saveState: false });
@@ -844,7 +845,7 @@ class Trade extends Component {
       this.setState({
         saveState: true,
         editState: false,
-        prevlayout: this.state.layouts
+        prevlayout: this.state.layouts,
       });
       this.saveToLS("layouts", this.state.layouts);
       window.location.reload();
@@ -872,7 +873,7 @@ class Trade extends Component {
               y: 0,
               i: "tradeView",
               minW: 6,
-              minH: 3
+              minH: 3,
             },
             {
               w: 4,
@@ -881,7 +882,7 @@ class Trade extends Component {
               y: 0,
               i: "instruments",
               minW: 4,
-              minH: 2
+              minH: 2,
             },
             {
               w: 4,
@@ -891,7 +892,7 @@ class Trade extends Component {
               i: "tradeAction",
               minW: 3,
               minH: 2,
-              maxH: 5
+              maxH: 5,
             },
             {
               w: 4,
@@ -900,7 +901,7 @@ class Trade extends Component {
               y: 4,
               i: "buysellBook",
               minW: 4,
-              minH: 3
+              minH: 3,
             },
             {
               w: 4,
@@ -910,7 +911,7 @@ class Trade extends Component {
               i: "depthChart",
               minW: 4,
               minH: 4,
-              maxH: 5
+              maxH: 5,
             },
             {
               w: 12,
@@ -919,7 +920,7 @@ class Trade extends Component {
               y: 8,
               i: "orderHistory",
               minW: 4,
-              minH: 2
+              minH: 2,
             },
             {
               w: 12,
@@ -928,8 +929,8 @@ class Trade extends Component {
               y: 11,
               i: "myorder",
               minW: 6,
-              minH: 2
-            }
+              minH: 2,
+            },
           ],
           md: [
             {
@@ -938,7 +939,7 @@ class Trade extends Component {
               y: 0,
               w: 10,
               h: 3,
-              minH: 3
+              minH: 3,
             },
             {
               i: "instruments",
@@ -946,7 +947,7 @@ class Trade extends Component {
               y: 1,
               w: 5,
               h: 2,
-              minW: 5
+              minW: 5,
             },
             {
               i: "tradeAction",
@@ -954,7 +955,7 @@ class Trade extends Component {
               y: 1,
               w: 5,
               h: 2,
-              minW: 3
+              minW: 3,
             },
             {
               i: "buysellBook",
@@ -963,7 +964,7 @@ class Trade extends Component {
               w: 5,
               h: 3,
               minH: 3,
-              minW: 5
+              minW: 5,
             },
             {
               i: "depthChart",
@@ -971,7 +972,7 @@ class Trade extends Component {
               y: 2,
               w: 5,
               h: 2,
-              minW: 5
+              minW: 5,
             },
             {
               i: "orderHistory",
@@ -980,7 +981,7 @@ class Trade extends Component {
               w: 12,
               h: 2,
               minH: 2,
-              minW: 5
+              minW: 5,
             },
             {
               i: "myorder",
@@ -989,8 +990,8 @@ class Trade extends Component {
               w: 10,
               h: 4,
               minW: 5,
-              minH: 4
-            }
+              minH: 4,
+            },
           ],
           sm: [
             {
@@ -999,7 +1000,7 @@ class Trade extends Component {
               y: 0,
               w: 6,
               h: 3,
-              minH: 3
+              minH: 3,
             },
             {
               i: "instruments",
@@ -1007,7 +1008,7 @@ class Trade extends Component {
               y: 1,
               w: 6,
               h: 2,
-              minW: 6
+              minW: 6,
             },
             {
               i: "tradeAction",
@@ -1015,7 +1016,7 @@ class Trade extends Component {
               y: 2,
               w: 6,
               h: 2,
-              minW: 6
+              minW: 6,
             },
             {
               i: "buysellBook",
@@ -1024,7 +1025,7 @@ class Trade extends Component {
               w: 6,
               h: 3,
               minH: 3,
-              minW: 6
+              minW: 6,
             },
             {
               i: "depthChart",
@@ -1032,7 +1033,7 @@ class Trade extends Component {
               y: 4,
               w: 6,
               h: 2,
-              minW: 6
+              minW: 6,
             },
             {
               i: "orderHistory",
@@ -1041,7 +1042,7 @@ class Trade extends Component {
               w: 6,
               h: 2,
               minH: 2,
-              minW: 6
+              minW: 6,
             },
             {
               i: "myorder",
@@ -1049,8 +1050,8 @@ class Trade extends Component {
               y: 6,
               w: 6,
               h: 2,
-              minW: 6
-            }
+              minW: 6,
+            },
           ],
           xs: [
             {
@@ -1059,7 +1060,7 @@ class Trade extends Component {
               y: 0,
               w: 4,
               h: 3,
-              minH: 3
+              minH: 3,
             },
             {
               i: "instruments",
@@ -1067,7 +1068,7 @@ class Trade extends Component {
               y: 1,
               w: 4,
               h: 2,
-              minW: 4
+              minW: 4,
             },
             {
               i: "tradeAction",
@@ -1075,7 +1076,7 @@ class Trade extends Component {
               y: 2,
               w: 4,
               h: 2,
-              minW: 4
+              minW: 4,
             },
             {
               i: "buysellBook",
@@ -1084,7 +1085,7 @@ class Trade extends Component {
               w: 4,
               h: 3,
               minH: 3,
-              minW: 4
+              minW: 4,
             },
             {
               i: "depthChart",
@@ -1092,7 +1093,7 @@ class Trade extends Component {
               y: 4,
               w: 4,
               h: 2,
-              minW: 4
+              minW: 4,
             },
             {
               i: "orderHistory",
@@ -1101,7 +1102,7 @@ class Trade extends Component {
               w: 4,
               h: 2,
               minH: 2,
-              minW: 4
+              minW: 4,
             },
             {
               i: "myorder",
@@ -1109,8 +1110,8 @@ class Trade extends Component {
               y: 5,
               w: 5,
               h: 2,
-              minW: 4
-            }
+              minW: 4,
+            },
           ],
           xxs: [
             {
@@ -1119,7 +1120,7 @@ class Trade extends Component {
               y: 0,
               w: 2,
               h: 3,
-              minH: 3
+              minH: 3,
             },
             {
               i: "instruments",
@@ -1127,7 +1128,7 @@ class Trade extends Component {
               y: 1,
               w: 2,
               h: 2,
-              minW: 2
+              minW: 2,
             },
             {
               i: "tradeAction",
@@ -1135,7 +1136,7 @@ class Trade extends Component {
               y: 2,
               w: 2,
               h: 2,
-              minW: 2
+              minW: 2,
             },
             {
               i: "buysellBook",
@@ -1144,7 +1145,7 @@ class Trade extends Component {
               w: 2,
               h: 3,
               minH: 3,
-              minW: 2
+              minW: 2,
             },
             {
               i: "depthChart",
@@ -1152,7 +1153,7 @@ class Trade extends Component {
               y: 4,
               w: 2,
               h: 2,
-              minW: 2
+              minW: 2,
             },
             {
               i: "orderHistory",
@@ -1161,7 +1162,7 @@ class Trade extends Component {
               w: 2,
               h: 2,
               minH: 2,
-              minW: 2
+              minW: 2,
             },
             {
               i: "myorder",
@@ -1169,10 +1170,10 @@ class Trade extends Component {
               y: 6,
               w: 2,
               h: 2,
-              minW: 2
-            }
-          ]
-        }
+              minW: 2,
+            },
+          ],
+        },
       },
       () => {
         window.location.reload();
@@ -1202,7 +1203,7 @@ class Trade extends Component {
       element.msRequestFullscreen();
     }
     this.setState({
-      isFullscreen: true
+      isFullscreen: true,
     });
   }
 
@@ -1219,7 +1220,7 @@ class Trade extends Component {
     else if (document.msExitFullscreen) document.msExitFullscreen();
 
     this.setState({
-      isFullscreen: false
+      isFullscreen: false,
     });
   }
 
@@ -1245,30 +1246,30 @@ class Trade extends Component {
           if (nameA > nameB) {
             return 1;
           }
-        }
+        },
       },
       {
         title: `${this.t("history:price_text.message")}`,
         dataIndex: "price",
         defaultSortOrder: "descend",
         className: "tblInsPrice",
-        sorter: (a, b) => a.price - b.price
+        sorter: (a, b) => a.price - b.price,
       },
       {
         title: `${this.t("volume_text.message")}`,
         dataIndex: "volume",
         defaultSortOrder: "ascend",
         className: "tblInsVolumn",
-        render: text => text,
+        render: (text) => text,
         sorter: (a, b) => a.volume - b.volume,
-        sortDirections: ["descend", "ascend"]
+        sortDirections: ["descend", "ascend"],
       },
       {
         title: `${this.t("change_text.message")}`,
         dataIndex: "change",
         defaultSortOrder: "ascend",
         className: "tblInsChange",
-        render: text => {
+        render: (text) => {
           if (text < 0)
             return <span style={{ color: "red" }}>{Math.abs(text) + "%"}</span>;
           else
@@ -1276,8 +1277,8 @@ class Trade extends Component {
               <span style={{ color: "green" }}>{Math.abs(text) + "%"}</span>
             );
         },
-        sorter: (a, b) => a.change - b.change
-      }
+        sorter: (a, b) => a.change - b.change,
+      },
     ];
     const menu = (
       <Menu className="SettingMenu">
@@ -1346,7 +1347,7 @@ class Trade extends Component {
                 <div key="tradeView">
                   <div
                     className="tradeView"
-                  // style={{ height: "100%", width: "100%" }}
+                    // style={{ height: "100%", width: "100%" }}
                   >
                     <MainTV>
                       <TVBar>
@@ -1384,18 +1385,18 @@ class Trade extends Component {
                 <div key="instruments">
                   <div
                     className="instruments"
-                  // style={{ height: "100%", width: "100%", overflow: "auto" }}
+                    // style={{ height: "100%", width: "100%", overflow: "auto" }}
                   >
                     {this.state.insLoader === true ? (
                       <Loader color="#1990ff" width="50" height="50" />
                     ) : (
-                        ""
-                      )}
+                      ""
+                    )}
                     <LeftDiv1>
                       <Instru>{this.t("instruments_text.message")}</Instru>
                       {/* {this.state.InsData ? (
                         <SearchInput
-                          onChange={e => this.searchInstu(e)}
+                          onChange={(e) => this.searchInstu(e)}
                           style={{ width: 200 }}
                         />
                       ) : (
@@ -1409,11 +1410,9 @@ class Trade extends Component {
                             buttonStyle="solid"
                             onChange={this.onInsChange}
                           >
-                            {Object.keys(this.state.InsData).map(k => (
+                            {Object.keys(this.state.InsData).map((k) => (
                               <RadioButton value={k}>{k}</RadioButton>
-                            ))
-
-                            }
+                            ))}
                           </RadioSelect>
                         </FIAT>
                       </FIATWrap>
@@ -1422,18 +1421,21 @@ class Trade extends Component {
                           InsCurrency
                           onRow={(record, rowIndex) => {
                             return {
-                              onClick: event => {
+                              onClick: (event) => {
                                 self.currencyPair(record.name);
-                              } // click row
+                              }, // click row
                             };
                           }}
                           pagination={false}
                           columns={columns}
                           rowClassName={(record, index) => {
-                            if (record.name == this.state.crypto && record.currency == this.state.currency) {
-                              return "selectedIns"
+                            if (
+                              record.name == this.state.crypto &&
+                              record.currency == this.state.currency
+                            ) {
+                              return "selectedIns";
                             } else {
-                              return ""
+                              return "";
                             }
                           }}
                           dataSource={
@@ -1449,13 +1451,13 @@ class Trade extends Component {
                 <div key="tradeAction">
                   <div
                     className="tradeAction"
-                  // style={{ height: "100%", width: "100%", overflow: "auto" }}
+                    // style={{ height: "100%", width: "100%", overflow: "auto" }}
                   >
                     {this.state.userBalLoader === true ? (
                       <Loader color="#1990ff" width="50" height="50" />
                     ) : (
-                        ""
-                      )}
+                      ""
+                    )}
                     <RightDiv1>
                       <TabsRight
                         defaultActiveKey="1"
@@ -1496,7 +1498,7 @@ class Trade extends Component {
                 <div key="buysellBook">
                   <div
                     className="buysellBook"
-                  // style={{ height: "100%", width: "100%", overflow: "auto" }}
+                    // style={{ height: "100%", width: "100%", overflow: "auto" }}
                   >
                     {/* {this.state.buySellLoader === true ? (
                       <Loader color="#1990ff" width="50" height="50" />
@@ -1506,7 +1508,7 @@ class Trade extends Component {
                     <BuySell
                       crypto={this.state.crypto}
                       currency={this.state.currency}
-                      buySellLoader={loader => {
+                      buySellLoader={(loader) => {
                         this.buySellLoaderFunc(loader);
                       }}
                       io={io}
@@ -1517,18 +1519,20 @@ class Trade extends Component {
                 <div key="depthChart">
                   <div
                     className="depthChart"
-                  // style={{ height: "100%", width: "100%", overflow: "auto" }}
+                    // style={{ height: "100%", width: "100%", overflow: "auto" }}
                   >
                     {this.state.depthLoader === true ? (
                       <Loader color="#1990ff" width="50" height="50" />
                     ) : (
-                        ""
-                      )}
+                      ""
+                    )}
                     <RightDiv>
                       <DepthChart
                         crypto={this.state.crypto}
                         currency={this.state.currency}
-                        depthLoaderFunc={loader => this.depthLoaderFunc(loader)}
+                        depthLoaderFunc={(loader) =>
+                          this.depthLoaderFunc(loader)
+                        }
                         io={this.props.io}
                         height={this.state.depthChartHeight}
                       />
@@ -1538,16 +1542,16 @@ class Trade extends Component {
                 <div key="orderHistory">
                   <div
                     className="orderHistory"
-                  // style={{ height: "100%", width: "100%", overflow: "auto" }}
+                    // style={{ height: "100%", width: "100%", overflow: "auto" }}
                   >
-                    {/* {this.state.hisLoader === true ? (
+                    {this.state.hisLoader === true ? (
                       <Loader color="#1990ff" width="50" height="50" />
                     ) : (
                       ""
-                    )} */}
+                    )}
                     <OrderHIstory
                       io={io}
-                      hisFunc={loader => this.hisFunc(loader)}
+                      hisFunc={(loader) => this.hisFunc(loader)}
                       height={self.state.orderHistoryTableHeight}
                     />
                   </div>
@@ -1555,13 +1559,13 @@ class Trade extends Component {
                 <div key="myorder">
                   <div
                     className="myorder"
-                  // style={{ height: "100%", width: "100%", overflow: "auto" }}
+                    // style={{ height: "100%", width: "100%", overflow: "auto" }}
                   >
-                    {/* {this.state.orderTradeLoader === true ? (
+                    {this.state.orderTradeLoader === true ? (
                       <Loader color="#1990ff" width="50" height="50" />
                     ) : (
                       ""
-                    )} */}
+                    )}
                     <LeftDiv2>
                       <OrderWrap>
                         <InstruOrder>
@@ -1645,11 +1649,11 @@ function mapStateToProps(state) {
       state.simpleReducer.profileDetails !== undefined
         ? state.simpleReducer.profileDetails.data[0]
         : "",
-    loader: state.simpleReducer.loader ? state.simpleReducer.loader : false
+    loader: state.simpleReducer.loader ? state.simpleReducer.loader : false,
   };
 }
-const mapDispatchToProps = dispatch => ({
-  cryptoCurrency: Pair => dispatch(cryptoCurrency(Pair))
+const mapDispatchToProps = (dispatch) => ({
+  cryptoCurrency: (Pair) => dispatch(cryptoCurrency(Pair)),
 });
 
 export default translate([
@@ -1657,7 +1661,7 @@ export default translate([
   "edit_profile_titles",
   "referral",
   "history",
-  "validations"
+  "validations",
 ])(connect(mapStateToProps, mapDispatchToProps)(Trade));
 
 function getFromLS(key) {
@@ -1674,7 +1678,7 @@ function getFromLS(key) {
               y: 0,
               i: "tradeView",
               minW: 6,
-              minH: 3
+              minH: 3,
             },
             {
               w: 4,
@@ -1683,7 +1687,7 @@ function getFromLS(key) {
               y: 0,
               i: "instruments",
               minW: 4,
-              minH: 2
+              minH: 2,
             },
             {
               w: 4,
@@ -1693,7 +1697,7 @@ function getFromLS(key) {
               i: "tradeAction",
               minW: 3,
               minH: 2,
-              maxH: 5
+              maxH: 5,
             },
             {
               w: 4,
@@ -1702,7 +1706,7 @@ function getFromLS(key) {
               y: 4,
               i: "buysellBook",
               minW: 4,
-              minH: 3
+              minH: 3,
             },
             {
               w: 4,
@@ -1712,7 +1716,7 @@ function getFromLS(key) {
               i: "depthChart",
               minW: 4,
               minH: 4,
-              maxH: 5
+              maxH: 5,
             },
             {
               w: 12,
@@ -1721,7 +1725,7 @@ function getFromLS(key) {
               y: 8,
               i: "orderHistory",
               minW: 4,
-              minH: 2
+              minH: 2,
             },
             {
               w: 12,
@@ -1730,8 +1734,8 @@ function getFromLS(key) {
               y: 11,
               i: "myorder",
               minW: 6,
-              minH: 2
-            }
+              minH: 2,
+            },
           ],
           md: [
             {
@@ -1740,7 +1744,7 @@ function getFromLS(key) {
               y: 0,
               w: 10,
               h: 3,
-              minH: 3
+              minH: 3,
             },
             {
               i: "instruments",
@@ -1748,7 +1752,7 @@ function getFromLS(key) {
               y: 1,
               w: 5,
               h: 2,
-              minW: 5
+              minW: 5,
             },
             {
               i: "tradeAction",
@@ -1756,7 +1760,7 @@ function getFromLS(key) {
               y: 1,
               w: 5,
               h: 2,
-              minW: 3
+              minW: 3,
             },
             {
               i: "buysellBook",
@@ -1765,7 +1769,7 @@ function getFromLS(key) {
               w: 5,
               h: 3,
               minH: 3,
-              minW: 5
+              minW: 5,
             },
             {
               i: "depthChart",
@@ -1773,7 +1777,7 @@ function getFromLS(key) {
               y: 2,
               w: 5,
               h: 2,
-              minW: 5
+              minW: 5,
             },
             {
               i: "orderHistory",
@@ -1782,7 +1786,7 @@ function getFromLS(key) {
               w: 12,
               h: 2,
               minH: 2,
-              minW: 5
+              minW: 5,
             },
             {
               i: "myorder",
@@ -1791,8 +1795,8 @@ function getFromLS(key) {
               w: 10,
               h: 4,
               minW: 5,
-              minH: 4
-            }
+              minH: 4,
+            },
           ],
           sm: [
             {
@@ -1801,7 +1805,7 @@ function getFromLS(key) {
               y: 0,
               w: 6,
               h: 3,
-              minH: 3
+              minH: 3,
             },
             {
               i: "instruments",
@@ -1809,7 +1813,7 @@ function getFromLS(key) {
               y: 1,
               w: 6,
               h: 2,
-              minW: 6
+              minW: 6,
             },
             {
               i: "tradeAction",
@@ -1817,7 +1821,7 @@ function getFromLS(key) {
               y: 2,
               w: 6,
               h: 2,
-              minW: 6
+              minW: 6,
             },
             {
               i: "buysellBook",
@@ -1826,7 +1830,7 @@ function getFromLS(key) {
               w: 6,
               h: 3,
               minH: 3,
-              minW: 6
+              minW: 6,
             },
             {
               i: "depthChart",
@@ -1834,7 +1838,7 @@ function getFromLS(key) {
               y: 4,
               w: 6,
               h: 2,
-              minW: 6
+              minW: 6,
             },
             {
               i: "orderHistory",
@@ -1843,7 +1847,7 @@ function getFromLS(key) {
               w: 6,
               h: 2,
               minH: 2,
-              minW: 6
+              minW: 6,
             },
             {
               i: "myorder",
@@ -1851,8 +1855,8 @@ function getFromLS(key) {
               y: 6,
               w: 6,
               h: 2,
-              minW: 6
-            }
+              minW: 6,
+            },
           ],
           xs: [
             {
@@ -1861,7 +1865,7 @@ function getFromLS(key) {
               y: 0,
               w: 4,
               h: 3,
-              minH: 3
+              minH: 3,
             },
             {
               i: "instruments",
@@ -1869,7 +1873,7 @@ function getFromLS(key) {
               y: 1,
               w: 4,
               h: 2,
-              minW: 4
+              minW: 4,
             },
             {
               i: "tradeAction",
@@ -1877,7 +1881,7 @@ function getFromLS(key) {
               y: 2,
               w: 4,
               h: 2,
-              minW: 4
+              minW: 4,
             },
             {
               i: "buysellBook",
@@ -1886,7 +1890,7 @@ function getFromLS(key) {
               w: 4,
               h: 3,
               minH: 3,
-              minW: 4
+              minW: 4,
             },
             {
               i: "depthChart",
@@ -1894,7 +1898,7 @@ function getFromLS(key) {
               y: 4,
               w: 4,
               h: 2,
-              minW: 4
+              minW: 4,
             },
             {
               i: "orderHistory",
@@ -1903,7 +1907,7 @@ function getFromLS(key) {
               w: 4,
               h: 2,
               minH: 2,
-              minW: 4
+              minW: 4,
             },
             {
               i: "myorder",
@@ -1911,8 +1915,8 @@ function getFromLS(key) {
               y: 5,
               w: 5,
               h: 2,
-              minW: 4
-            }
+              minW: 4,
+            },
           ],
           xxs: [
             {
@@ -1921,7 +1925,7 @@ function getFromLS(key) {
               y: 0,
               w: 2,
               h: 3,
-              minH: 3
+              minH: 3,
             },
             {
               i: "instruments",
@@ -1929,7 +1933,7 @@ function getFromLS(key) {
               y: 1,
               w: 2,
               h: 2,
-              minW: 2
+              minW: 2,
             },
             {
               i: "tradeAction",
@@ -1937,7 +1941,7 @@ function getFromLS(key) {
               y: 2,
               w: 2,
               h: 2,
-              minW: 2
+              minW: 2,
             },
             {
               i: "buysellBook",
@@ -1946,7 +1950,7 @@ function getFromLS(key) {
               w: 2,
               h: 3,
               minH: 3,
-              minW: 2
+              minW: 2,
             },
             {
               i: "depthChart",
@@ -1954,7 +1958,7 @@ function getFromLS(key) {
               y: 4,
               w: 2,
               h: 2,
-              minW: 2
+              minW: 2,
             },
             {
               i: "orderHistory",
@@ -1963,7 +1967,7 @@ function getFromLS(key) {
               w: 2,
               h: 2,
               minH: 2,
-              minW: 2
+              minW: 2,
             },
             {
               i: "myorder",
@@ -1971,10 +1975,10 @@ function getFromLS(key) {
               y: 6,
               w: 2,
               h: 2,
-              minW: 2
-            }
-          ]
-        }
+              minW: 2,
+            },
+          ],
+        },
       };
     } catch (e) {
       /*Ignore*/
