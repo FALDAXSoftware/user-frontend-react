@@ -207,7 +207,7 @@ class Trade extends Component {
       prevRoom: {},
       orderTradeData: {},
       InsCurrency: "BTC",
-      InsData: [],
+      InsData: {},
       searchedInstu: null,
       userBal: {},
       insLoader: false,
@@ -351,33 +351,36 @@ class Trade extends Component {
   //
 
   onInsChange(e) {
+    // this.setState({
+    //   insLoader: true
+    // });
+    // var self = this;
+    // console.log("onInsChange^^^^", self.state.crypto, e.target.value);
+    // let cryptoPair = {
+    //   crypto: self.state.crypto,
+    //   currency: e.target.value,
+    //   prevRoom: {
+    //     crypto: self.state.crypto,
+    //     currency: self.state.InsCurrency
+    //   }
+    // };
+    // this.setState(
+    //   {
+    //     InsCurrency: e.target.value,
+    //     InsData: []
+    //   },
+    //   () => {
+    //     // self.props.cryptoCurrency(cryptoPair);
+    //     // self.getInstrumentData();
+    //     // this.props
+    //     this.joinRoom(
+    //       cryptoPair.prevRoom.crypto + "-" + cryptoPair.prevRoom.currency
+    //     );
+    //   }
+    // );
     this.setState({
-      insLoader: true,
+      InsCurrency: e.target.value,
     });
-    var self = this;
-    console.log("onInsChange^^^^", self.state.crypto, e.target.value);
-    let cryptoPair = {
-      crypto: self.state.crypto,
-      currency: e.target.value,
-      prevRoom: {
-        crypto: self.state.crypto,
-        currency: self.state.InsCurrency,
-      },
-    };
-    this.setState(
-      {
-        InsCurrency: e.target.value,
-        InsData: [],
-      },
-      () => {
-        // self.props.cryptoCurrency(cryptoPair);
-        // self.getInstrumentData();
-        // this.props
-        this.joinRoom(
-          cryptoPair.prevRoom.crypto + "-" + cryptoPair.prevRoom.currency
-        );
-      }
-    );
   }
 
   // created by Meghal Patel at 2019-04-27 15:10.
@@ -417,16 +420,23 @@ class Trade extends Component {
   //
 
   updateInstrumentsData(data) {
-    let res = [];
+    let res = {};
     for (let index = 0; index < data.length; index++) {
       const element = data[index];
-      res.push({
+      let currency = element.name.split("-")[1];
+      if (!res[currency]) {
+        res[currency] = [];
+      }
+      res[currency].push({
         name: element.name.split("-")[0],
+        currency,
         price: parseFloat(element.last_price).toFixed(5),
         volume: parseFloat(element.volume).toFixed(3),
         change: parseFloat(element.percentChange).toFixed(5),
       });
     }
+    console.log("instruments -----", res);
+
     this.setState({
       InsData: res,
       insLoader: false,
@@ -1384,14 +1394,14 @@ class Trade extends Component {
                     )}
                     <LeftDiv1>
                       <Instru>{this.t("instruments_text.message")}</Instru>
-                      {this.state.InsData.length > 0 ? (
+                      {/* {this.state.InsData ? (
                         <SearchInput
                           onChange={(e) => this.searchInstu(e)}
                           style={{ width: 200 }}
                         />
                       ) : (
-                        ""
-                      )}
+                          ""
+                        )} */}
                       <FIATWrap>
                         <FIAT>
                           <RadioSelect
@@ -1400,8 +1410,9 @@ class Trade extends Component {
                             buttonStyle="solid"
                             onChange={this.onInsChange}
                           >
-                            <RadioButton value="BTC">BTC</RadioButton>
-                            <RadioButton value="XRP">XRP</RadioButton>
+                            {Object.keys(this.state.InsData).map((k) => (
+                              <RadioButton value={k}>{k}</RadioButton>
+                            ))}
                           </RadioSelect>
                         </FIAT>
                       </FIATWrap>
@@ -1417,12 +1428,18 @@ class Trade extends Component {
                           }}
                           pagination={false}
                           columns={columns}
+                          rowClassName={(record, index) => {
+                            if (
+                              record.name == this.state.crypto &&
+                              record.currency == this.state.currency
+                            ) {
+                              return "selectedIns";
+                            } else {
+                              return "";
+                            }
+                          }}
                           dataSource={
-                            this.state.searchedInstu === null
-                              ? this.state.InsData
-                              : this.state.searchedInstu.length === 0
-                              ? []
-                              : this.state.searchedInstu
+                            this.state.InsData[this.state.InsCurrency]
                           }
                           onChange={this.onChange}
                           scroll={{ y: self.state.instrumentTableHeight }}
