@@ -83,7 +83,7 @@ export const TierUl = styled.ul`
   text-align: left;
   > li {
     padding: 5px 0;
-    font-size: 14px;
+    font-size: 15px;
     display: flex;
     > .icon-wrap {
       font-weight: bold;
@@ -602,6 +602,17 @@ export const TierDocBox = styled.div`
     width: 100%;
     // margin: 0 0 20px 0;
     justify-content: center;
+  }
+  & .anticon.anticon-message {
+    display: flex;
+    align-self: center;
+    margin: 0 0 0 10px;
+    color: #f90f0f;
+    font-size: 18px;
+    font-weight: 600;
+  }
+  & .anticon.anticon-message:hover {
+    cursor: pointer;
   }
 `;
 export const TierDocStatus = styled.div`

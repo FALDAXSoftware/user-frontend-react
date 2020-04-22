@@ -21,7 +21,7 @@ import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
 import { LogoutUser } from "ACTIONS/authActions";
 import { translate } from "react-i18next";
 
-class UploadCounter extends Component {
+class RejectReason extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -73,35 +73,33 @@ class UploadCounter extends Component {
       <div>
         {/* {this.props.visible && ( */}
         <Modal
-          //   title={
-          //     <div>
-          //       <img alt="FALDAX" src={_COMINGIMG} />{" "}
-          //       <img className="faldax_logo" alt="FALDAX" src={_COMINGIMG2} />
-          //     </div>
-          //   }
+          title={
+            <div>
+              {/* <img alt="FALDAX" src={_COMINGIMG} />{" "}
+              <img className="faldax_logo" alt="FALDAX" src={_COMINGIMG2} /> */}
+              Rejection Reason
+            </div>
+          }
           visible={this.props.visible}
           onOk={(e) => this.handleComing()}
-          // onCancel={e => this.comingCancel(e)}
-          closable={false}
-          maskClosable={false}
+          onCancel={(e) => this.comingCancel(e)}
+          //   closable={false}
+          //   maskClosable={false}
           footer={null}
           //   width="80%"
           //   height="82%"
           //   className="terms-outer-wrap"
         >
-          <ModalAgreeWrap className="counter_main_div">
-            <div>Your files are being uploaded.</div>
-            <Progress
-              type="circle"
-              status="active"
-              strokeColor={{
-                "0%": "#00aafa",
-                "100%": "#0055fa",
-              }}
-              percent={parseFloat(
-                (this.props.upload_flag / this.props.total_file_size) * 100
-              ).toFixed(2)}
-            />
+          <ModalAgreeWrap className="reject_reason_div">
+            {/* <div>{this.props.text}</div> */}
+            <div>
+              orem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard dummy text
+              ever since the 1500s, when an unknown printer took a galley of
+              type and scrambled it to make a type specimen book. It has
+              survived not only five centuries, but also the leap into
+              electronic typesetting, remaining essentially unchanged.
+            </div>
           </ModalAgreeWrap>
         </Modal>
       </div>
@@ -127,5 +125,5 @@ const mapDispatchToProps = (dispatch) => ({
 // export default withRouter(AgreeTerms);
 
 export default translate(["edit_profile_titles", "validations"])(
-  connect(mapStateToProps, mapDispatchToProps)(withRouter(UploadCounter))
+  connect(mapStateToProps, mapDispatchToProps)(withRouter(RejectReason))
 );

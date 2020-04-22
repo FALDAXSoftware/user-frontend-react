@@ -540,6 +540,9 @@ table .ant-table-tbody > tr > td {
 .counter_main_div .ant-progress-inner {
   margin: 0;
 }
+.reject_reason_div {
+  width: 100% !important;
+}
 @media (max-width: 991px) {
   #profile-year {
     width: 85%;

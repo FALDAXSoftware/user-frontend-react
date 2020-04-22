@@ -32,6 +32,7 @@ import {
 import { APIUtility } from "../../../httpHelper";
 import FaldaxLoader from "../../../SHARED-COMPONENTS/FaldaxLoader";
 import UploadCounter from "../../../SHARED-COMPONENTS/UploadCounter";
+import RejectReason from "../../../SHARED-COMPONENTS/RejectReason";
 
 let { API_URL, Proof_of_assets_form } = globalVariables;
 /* Styled-Components */
@@ -105,8 +106,26 @@ class TierFour extends React.Component {
       privacyPolicyStatus: "",
       amlPolicyStatus: "",
       termsOfServiceStatus: "",
+      amlQuestionnaireNote: "",
+      comfortLetterNote: "",
+      boardResolutionNote: "",
+      bankStatementNote: "",
+      corporateInfoNote: "",
+      ownershipFormNote: "",
+      articlesIncorporationNote: "",
+      ownershipControlStructureNote: "",
+      byLawsNote: "",
+      directorListNote: "",
+      activeBusinessProofNote: "",
+      documentAvailabilityPolicyNote: "",
+      cookiesPolicyNote: "",
+      privacyPolicyNote: "",
+      amlPolicyNote: "",
+      termsOfServiceNote: "",
       reUploadFlag: false,
       total_file_size: "",
+      reasonPopup: false,
+      rejectText: "",
     };
     this.validator = new SimpleReactValidator();
     this.populateData = this.populateData.bind(this);
@@ -191,6 +210,7 @@ class TierFour extends React.Component {
               this.setState({
                 reUpload1: reupload1,
                 amlQuestionnaireStatus: aml_questionnaire_status,
+                amlQuestionnaireNote: tierDoc.public_note,
               });
               return console.log("TierDoc^^", tierDoc.type, index);
             case 1:
@@ -206,6 +226,7 @@ class TierFour extends React.Component {
               this.setState({
                 reUpload2: reupload2,
                 comfortLetterStatus: comfort_letter_status,
+                comfortLetterNote: tierDoc.public_note,
               });
               return console.log("TierDoc^^", tierDoc.type, index);
             case 2:
@@ -221,6 +242,7 @@ class TierFour extends React.Component {
               this.setState({
                 reUpload3: reupload3,
                 boardResolutionStatus: board_resolution_status,
+                boardResolutionNote: tierDoc.public_note,
               });
               return console.log("TierDoc^^", tierDoc.type, index);
             case 3:
@@ -236,6 +258,7 @@ class TierFour extends React.Component {
               this.setState({
                 reUpload4: reupload4,
                 bankStatementStatus: bank_statements_status,
+                bankStatementNote: tierDoc.public_note,
               });
               return console.log("TierDoc^^", tierDoc.type, index);
             case 4:
@@ -251,6 +274,7 @@ class TierFour extends React.Component {
               this.setState({
                 reUpload5: reupload5,
                 corporateInfoStatus: corporate_info,
+                corporateInfoNote: tierDoc.public_note,
               });
               return console.log("TierDoc^^", tierDoc.type, index);
             case 5:
@@ -266,6 +290,7 @@ class TierFour extends React.Component {
               this.setState({
                 reUpload6: reupload6,
                 ownershipFormStatus: ownership_form,
+                ownershipFormNote: tierDoc.public_note,
               });
               return console.log("TierDoc^^", tierDoc.type, index);
             case 6:
@@ -281,6 +306,7 @@ class TierFour extends React.Component {
               this.setState({
                 reUpload7: reupload7,
                 articlesIncorporationStatus: articles_of_incorporation,
+                articlesIncorporationNote: tierDoc.public_note,
               });
               return console.log("TierDoc^^", tierDoc.type, index);
             case 7:
@@ -296,6 +322,7 @@ class TierFour extends React.Component {
               this.setState({
                 reUpload8: reupload8,
                 byLawsStatus: bylaws,
+                byLawsNote: tierDoc.public_note,
               });
               return console.log("TierDoc^^", tierDoc.type, index);
             case 8:
@@ -311,6 +338,7 @@ class TierFour extends React.Component {
               this.setState({
                 reUpload9: reupload9,
                 ownershipControlStructureStatus: ownership_control_structure,
+                ownershipControlStructureNote: tierDoc.public_note,
               });
               return console.log("TierDoc^^", tierDoc.type, index);
             case 9:
@@ -326,6 +354,7 @@ class TierFour extends React.Component {
               this.setState({
                 reUpload10: reupload10,
                 directorListStatus: director_list,
+                directorListNote: tierDoc.public_note,
               });
               return console.log("TierDoc^^", tierDoc.type, index);
             case 10:
@@ -341,6 +370,7 @@ class TierFour extends React.Component {
               this.setState({
                 reUpload11: reupload11,
                 activeBusinessProofStatus: active_business_proof,
+                activeBusinessProofNote: tierDoc.public_note,
               });
               return console.log("TierDoc^^", tierDoc.type, index);
             case 11:
@@ -356,6 +386,7 @@ class TierFour extends React.Component {
               this.setState({
                 reUpload12: reupload12,
                 documentAvailabilityPolicyStatus: document_availability_policy,
+                documentAvailabilityPolicyNote: tierDoc.public_note,
               });
               return console.log("TierDoc^^", tierDoc.type, index);
             case 12:
@@ -371,6 +402,7 @@ class TierFour extends React.Component {
               this.setState({
                 reUpload13: reupload13,
                 cookiesPolicyStatus: cookies_policy,
+                cookiesPolicyNote: tierDoc.public_note,
               });
               return console.log("TierDoc^^", tierDoc.type, index);
             case 13:
@@ -386,6 +418,7 @@ class TierFour extends React.Component {
               this.setState({
                 reUpload14: reupload14,
                 privacyPolicyStatus: privacy_policy,
+                privacyPolicyNote: tierDoc.public_note,
               });
               return console.log("TierDoc^^", tierDoc.type, index);
             case 14:
@@ -401,6 +434,7 @@ class TierFour extends React.Component {
               this.setState({
                 reUpload15: reupload15,
                 amlPolicyStatus: aml_policy,
+                amlPolicyNote: tierDoc.public_note,
               });
               return console.log("TierDoc^^", tierDoc.type, index);
             case 15:
@@ -416,6 +450,7 @@ class TierFour extends React.Component {
               this.setState({
                 reUpload16: reupload16,
                 termsOfServiceStatus: terms_of_service,
+                termsOfServiceNote: tierDoc.public_note,
               });
               return console.log("TierDoc^^", tierDoc.type, index);
             default:
@@ -736,7 +771,7 @@ class TierFour extends React.Component {
       console.log("^^Docu", this.state.documents);
       let count = this.state.documents;
       let index = 1;
-      let upload_flag1 = 1;
+      let upload_flag1 = 0;
       if (this.state.reUploadFlag) {
         Object.size = function(obj) {
           var size = 0,
@@ -763,6 +798,16 @@ class TierFour extends React.Component {
           this.setState({
             upload_flag: upload_flag1,
           });
+          if (index == size) {
+            this.setState(
+              {
+                UploadCounter: false,
+              },
+              () => {
+                this.props.history.push("/editProfile");
+              }
+            );
+          }
         }
       } else {
         Object.size = function(obj) {
@@ -782,14 +827,24 @@ class TierFour extends React.Component {
           console.log(`${property}: ${count[property].file}`);
           console.log(`${property}: ${count[property].type}`);
           let result = await this.uploadDocument(index, count[property].file);
-          if (result) {
-            console.log("result tier4", result);
-            if (index == size) {
-              this.setState({
+          if (index == size) {
+            this.setState(
+              {
                 UploadCounter: false,
-              });
-            }
+              },
+              () => {
+                this.props.history.push("/editProfile");
+              }
+            );
           }
+          // if (result) {
+          //   console.log("result tier4", result);
+          //   if (index == size) {
+          //     this.setState({
+          //       UploadCounter: false,
+          //     });
+          //   }
+          // }
           index++;
           upload_flag1++;
           this.setState({
@@ -832,6 +887,11 @@ class TierFour extends React.Component {
     this.validator.hideMessages();
     this.forceUpdate();
   }
+  comingCancel = (e) => {
+    this.setState({
+      reasonPopup: false,
+    });
+  };
   render() {
     let {
       aml_flag,
@@ -962,6 +1022,17 @@ class TierFour extends React.Component {
                         <span>Reupload it</span>
                       </TierDocStatus>
                     )}
+                    {this.state.amlQuestionnaireNote && (
+                      <Icon
+                        type="message"
+                        onClick={() => {
+                          this.setState({
+                            reasonPopup: true,
+                            rejectText: this.state.amlQuestionnaireNote,
+                          });
+                        }}
+                      />
+                    )}
                   </TierDocBox>
                 ) : (
                   <TierDocBox></TierDocBox>
@@ -1070,6 +1141,17 @@ class TierFour extends React.Component {
                         <span>Reupload it</span>
                       </TierDocStatus>
                     )}
+                    {this.state.comfortLetterNote && (
+                      <Icon
+                        type="message"
+                        onClick={() => {
+                          this.setState({
+                            reasonPopup: true,
+                            rejectText: this.state.comfortLetterNote,
+                          });
+                        }}
+                      />
+                    )}
                   </TierDocBox>
                 ) : (
                   <TierDocBox></TierDocBox>
@@ -1176,6 +1258,17 @@ class TierFour extends React.Component {
                         <span>Reupload it</span>
                       </TierDocStatus>
                     )}
+                    {this.state.boardResolutionNote && (
+                      <Icon
+                        type="message"
+                        onClick={() => {
+                          this.setState({
+                            reasonPopup: true,
+                            rejectText: this.state.boardResolutionNote,
+                          });
+                        }}
+                      />
+                    )}
                   </TierDocBox>
                 ) : (
                   <TierDocBox></TierDocBox>
@@ -1278,6 +1371,17 @@ class TierFour extends React.Component {
                         <Icon type="close" />
                         <span>Reupload it</span>
                       </TierDocStatus>
+                    )}
+                    {this.state.bankStatementNote && (
+                      <Icon
+                        type="message"
+                        onClick={() => {
+                          this.setState({
+                            reasonPopup: true,
+                            rejectText: this.state.bankStatementNote,
+                          });
+                        }}
+                      />
                     )}
                   </TierDocBox>
                 ) : (
@@ -1385,6 +1489,17 @@ class TierFour extends React.Component {
                         <span>Reupload it</span>
                       </TierDocStatus>
                     )}
+                    {this.state.corporateInfoNote && (
+                      <Icon
+                        type="message"
+                        onClick={() => {
+                          this.setState({
+                            reasonPopup: true,
+                            rejectText: this.state.corporateInfoNote,
+                          });
+                        }}
+                      />
+                    )}
                   </TierDocBox>
                 ) : (
                   <TierDocBox></TierDocBox>
@@ -1490,6 +1605,17 @@ class TierFour extends React.Component {
                         <Icon type="close" />
                         <span>Reupload it</span>
                       </TierDocStatus>
+                    )}
+                    {this.state.ownershipFormNote && (
+                      <Icon
+                        type="message"
+                        onClick={() => {
+                          this.setState({
+                            reasonPopup: true,
+                            rejectText: this.state.ownershipFormNote,
+                          });
+                        }}
+                      />
                     )}
                   </TierDocBox>
                 ) : (
@@ -1600,6 +1726,17 @@ class TierFour extends React.Component {
                         <span>Reupload it</span>
                       </TierDocStatus>
                     )}
+                    {this.state.articlesIncorporationNote && (
+                      <Icon
+                        type="message"
+                        onClick={() => {
+                          this.setState({
+                            reasonPopup: true,
+                            rejectText: this.state.articlesIncorporationNote,
+                          });
+                        }}
+                      />
+                    )}
                   </TierDocBox>
                 ) : (
                   <TierDocBox></TierDocBox>
@@ -1705,6 +1842,17 @@ class TierFour extends React.Component {
                         <Icon type="close" />
                         <span>Reupload it</span>
                       </TierDocStatus>
+                    )}
+                    {this.state.byLawsNote && (
+                      <Icon
+                        type="message"
+                        onClick={() => {
+                          this.setState({
+                            reasonPopup: true,
+                            rejectText: this.state.byLawsNote,
+                          });
+                        }}
+                      />
                     )}
                   </TierDocBox>
                 ) : (
@@ -1815,6 +1963,18 @@ class TierFour extends React.Component {
                         <span>Reupload it</span>
                       </TierDocStatus>
                     )}
+                    {this.state.ownershipControlStructureNote && (
+                      <Icon
+                        type="message"
+                        onClick={() => {
+                          this.setState({
+                            reasonPopup: true,
+                            rejectText: this.state
+                              .ownershipControlStructureNote,
+                          });
+                        }}
+                      />
+                    )}
                   </TierDocBox>
                 ) : (
                   <TierDocBox></TierDocBox>
@@ -1924,6 +2084,17 @@ class TierFour extends React.Component {
                         <span>Reupload it</span>
                       </TierDocStatus>
                     )}
+                    {this.state.directorListNote && (
+                      <Icon
+                        type="message"
+                        onClick={() => {
+                          this.setState({
+                            reasonPopup: true,
+                            rejectText: this.state.directorListNote,
+                          });
+                        }}
+                      />
+                    )}
                   </TierDocBox>
                 ) : (
                   <TierDocBox></TierDocBox>
@@ -2026,6 +2197,17 @@ class TierFour extends React.Component {
                         <Icon type="close" />
                         <span>Reupload it</span>
                       </TierDocStatus>
+                    )}
+                    {this.state.activeBusinessProofNote && (
+                      <Icon
+                        type="message"
+                        onClick={() => {
+                          this.setState({
+                            reasonPopup: true,
+                            rejectText: this.state.activeBusinessProofNote,
+                          });
+                        }}
+                      />
                     )}
                   </TierDocBox>
                 ) : (
@@ -2133,6 +2315,18 @@ class TierFour extends React.Component {
                         <span>Reupload it</span>
                       </TierDocStatus>
                     )}
+                    {this.state.documentAvailabilityPolicyNote && (
+                      <Icon
+                        type="message"
+                        onClick={() => {
+                          this.setState({
+                            reasonPopup: true,
+                            rejectText: this.state
+                              .documentAvailabilityPolicyNote,
+                          });
+                        }}
+                      />
+                    )}
                   </TierDocBox>
                 ) : (
                   <TierDocBox></TierDocBox>
@@ -2235,6 +2429,17 @@ class TierFour extends React.Component {
                         <Icon type="close" />
                         <span>Reupload it</span>
                       </TierDocStatus>
+                    )}
+                    {this.state.cookiesPolicyNote && (
+                      <Icon
+                        type="message"
+                        onClick={() => {
+                          this.setState({
+                            reasonPopup: true,
+                            rejectText: this.state.cookiesPolicyNote,
+                          });
+                        }}
+                      />
                     )}
                   </TierDocBox>
                 ) : (
@@ -2339,6 +2544,17 @@ class TierFour extends React.Component {
                         <span>Reupload it</span>
                       </TierDocStatus>
                     )}
+                    {this.state.privacyPolicyNote && (
+                      <Icon
+                        type="message"
+                        onClick={() => {
+                          this.setState({
+                            reasonPopup: true,
+                            rejectText: this.state.privacyPolicyNote,
+                          });
+                        }}
+                      />
+                    )}
                   </TierDocBox>
                 ) : (
                   <TierDocBox></TierDocBox>
@@ -2441,6 +2657,17 @@ class TierFour extends React.Component {
                         <Icon type="close" />
                         <span>Reupload it</span>
                       </TierDocStatus>
+                    )}
+                    {this.state.amlPolicyNote && (
+                      <Icon
+                        type="message"
+                        onClick={() => {
+                          this.setState({
+                            reasonPopup: true,
+                            rejectText: this.state.amlPolicyNote,
+                          });
+                        }}
+                      />
                     )}
                   </TierDocBox>
                 ) : (
@@ -2545,6 +2772,17 @@ class TierFour extends React.Component {
                         <span>Reupload it</span>
                       </TierDocStatus>
                     )}
+                    {this.state.termsOfServiceNote && (
+                      <Icon
+                        type="message"
+                        onClick={() => {
+                          this.setState({
+                            reasonPopup: true,
+                            rejectText: this.state.termsOfServiceNote,
+                          });
+                        }}
+                      />
+                    )}
                   </TierDocBox>
                 ) : (
                   <TierDocBox></TierDocBox>
@@ -2578,6 +2816,11 @@ class TierFour extends React.Component {
                 visible={this.state.UploadCounter}
                 upload_flag={this.state.upload_flag}
                 total_file_size={this.state.total_file_size}
+              />
+              <RejectReason
+                visible={this.state.reasonPopup}
+                text={this.state.rejectText}
+                comingCancel={(e) => this.comingCancel(e)}
               />
             </TierWrap>
           </KYCWrap>

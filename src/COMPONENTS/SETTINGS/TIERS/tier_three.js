@@ -43,6 +43,7 @@ import {
 import { SupportText } from "../../LANDINGCATEGORIES/apply_job";
 import { APIUtility } from "../../../httpHelper";
 import FaldaxLoader from "../../../SHARED-COMPONENTS/FaldaxLoader";
+import RejectReason from "../../../SHARED-COMPONENTS/RejectReason";
 let { API_URL, Proof_of_assets_form } = globalVariables;
 /* Styled-Components */
 
@@ -100,6 +101,8 @@ class TierThree extends React.Component {
       requestId: "",
       assetFormNote: "",
       idcpNote: "",
+      reasonPopup: false,
+      rejectText: "",
     };
     this.handleProfile = this.handleProfile.bind(this);
     this.populateData = this.populateData.bind(this);
@@ -227,7 +230,6 @@ class TierThree extends React.Component {
       });
     }
   }
-
   handleProfile(e) {
     var _self = this;
     var e1 = e;
@@ -537,6 +539,11 @@ class TierThree extends React.Component {
   onCancel() {
     this.setState({ files: [] });
   }
+  comingCancel = (e) => {
+    this.setState({
+      reasonPopup: false,
+    });
+  };
   render() {
     let { cover_flag, verified } = this.state;
     return (
@@ -621,9 +628,6 @@ class TierThree extends React.Component {
                       </TierUpload>
                       {this.state.tierData.length > 0 ? (
                         <TierDocBox>
-                          {this.state.idcpNote && (
-                            <RejectNote>{this.state.idcpNote}</RejectNote>
-                          )}
                           {this.state.idcpStatus === null && (
                             <TierDocStatus>
                               <Icon type="warning" />
@@ -644,6 +648,17 @@ class TierThree extends React.Component {
                               </TierDocStatus>
                               <span>{this.state.assetFormNote}</span>
                             </div>
+                          )}
+                          {this.state.idcpNote && (
+                            <Icon
+                              type="message"
+                              onClick={() => {
+                                this.setState({
+                                  reasonPopup: true,
+                                  rejectText: this.state.idcpNote,
+                                });
+                              }}
+                            />
                           )}
                         </TierDocBox>
                       ) : (
@@ -763,9 +778,6 @@ class TierThree extends React.Component {
                       </TierUpload>
                       {this.state.tierData.length > 0 ? (
                         <TierDocBox>
-                          {this.state.assetFormNote && (
-                            <RejectNote>{this.state.assetFormNote}</RejectNote>
-                          )}
                           {this.state.assetFormStatus === null && (
                             <TierDocStatus>
                               <Icon type="warning" />
@@ -783,6 +795,17 @@ class TierThree extends React.Component {
                               <Icon type="close" />
                               <span>Reupload it</span>
                             </TierDocStatus>
+                          )}
+                          {this.state.assetFormNote && (
+                            <Icon
+                              type="message"
+                              onClick={() => {
+                                this.setState({
+                                  reasonPopup: true,
+                                  rejectText: this.state.assetFormNote,
+                                });
+                              }}
+                            />
                           )}
                         </TierDocBox>
                       ) : (
@@ -946,6 +969,11 @@ class TierThree extends React.Component {
               </div>
             )}
           </KYCWrap>
+          <RejectReason
+            visible={this.state.reasonPopup}
+            text={this.state.rejectText}
+            comingCancel={(e) => this.comingCancel(e)}
+          />
         </TierWrapper>
         {this.state.loader === true ? <FaldaxLoader /> : ""}
         <FooterHome />

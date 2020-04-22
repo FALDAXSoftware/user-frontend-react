@@ -11,7 +11,7 @@ import {
   TierWrap,
   RejectNote,
 } from "../../../STYLED-COMPONENTS/TIER/tierStyle";
-import { Icon, notification } from "antd";
+import { Icon, notification, Tooltip } from "antd";
 import { globalVariables } from "Globals.js";
 import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
@@ -30,6 +30,8 @@ import {
   TierDocBox,
   TierLabel,
 } from "../../../STYLED-COMPONENTS/TIER/tierStyle";
+import UploadCounter from "../../../SHARED-COMPONENTS/UploadCounter";
+import RejectReason from "../../../SHARED-COMPONENTS/RejectReason";
 let { API_URL } = globalVariables;
 /* Styled-Components */
 const KYCWrap = styled.div`
@@ -158,6 +160,8 @@ class TierTwo extends React.Component {
       validNote: "",
       residenceNote: "",
       ssnNote: "",
+      reasonPopup: false,
+      rejectText: "",
     };
     this.validator = new SimpleReactValidator({
       ssnValid: {
@@ -607,6 +611,11 @@ class TierTwo extends React.Component {
     this.validator.hideMessages();
     this.forceUpdate();
   }
+  comingCancel = (e) => {
+    this.setState({
+      reasonPopup: false,
+    });
+  };
   render() {
     // console.log(
     //   "data data data^^",
@@ -778,9 +787,6 @@ class TierTwo extends React.Component {
                       </Fileselect1> */}
                       {this.state.tierData.length > 0 ? (
                         <TierDocBox>
-                          {this.state.validNote && (
-                            <RejectNote>{this.state.validNote}</RejectNote>
-                          )}
                           {this.state.validStatus === null && (
                             <TierDocStatus>
                               <Icon type="warning" />
@@ -798,6 +804,17 @@ class TierTwo extends React.Component {
                               <Icon type="close" />
                               <span>Reupload it</span>
                             </TierDocStatus>
+                          )}
+                          {this.state.validNote && (
+                            <Icon
+                              type="message"
+                              onClick={() => {
+                                this.setState({
+                                  reasonPopup: true,
+                                  rejectText: this.state.validNote,
+                                });
+                              }}
+                            />
                           )}
                         </TierDocBox>
                       ) : (
@@ -853,9 +870,6 @@ class TierTwo extends React.Component {
                       </TierUpload>
                       {this.state.tierData.length > 0 ? (
                         <TierDocBox>
-                          {this.state.residenceNote && (
-                            <RejectNote>{this.state.residenceNote}</RejectNote>
-                          )}
                           {this.state.residenceStatus === null && (
                             <TierDocStatus>
                               <Icon type="warning" />
@@ -873,6 +887,18 @@ class TierTwo extends React.Component {
                               <Icon type="close" />
                               <span>Reupload it</span>
                             </TierDocStatus>
+                          )}
+                          {this.state.residenceNote && (
+                            // <RejectNote>{this.state.residenceNote}</RejectNote>
+                            <Icon
+                              type="message"
+                              onClick={() => {
+                                this.setState({
+                                  reasonPopup: true,
+                                  rejectText: this.state.residenceNote,
+                                });
+                              }}
+                            />
                           )}
                         </TierDocBox>
                       ) : (
@@ -952,9 +978,6 @@ class TierTwo extends React.Component {
                       </TierUpload>
                       {this.state.tierData.length > 0 ? (
                         <TierDocBox>
-                          {this.state.ssnNote && (
-                            <RejectNote>{this.state.ssnNote}</RejectNote>
-                          )}
                           {this.state.ssnStatus === null && (
                             <TierDocStatus>
                               <Icon type="warning" />
@@ -972,6 +995,18 @@ class TierTwo extends React.Component {
                               <Icon type="close" />
                               <span>Reupload it</span>
                             </TierDocStatus>
+                          )}
+                          {this.state.ssnNote && (
+                            // <RejectNote>{this.state.ssnNote}</RejectNote>
+                            <Icon
+                              type="message"
+                              onClick={() => {
+                                this.setState({
+                                  reasonPopup: true,
+                                  rejectText: this.state.ssnNote,
+                                });
+                              }}
+                            />
                           )}
                         </TierDocBox>
                       ) : (
@@ -1007,6 +1042,11 @@ class TierTwo extends React.Component {
               </div>
             )}
           </KYCWrap>
+          <RejectReason
+            visible={this.state.reasonPopup}
+            text={this.state.rejectText}
+            comingCancel={(e) => this.comingCancel(e)}
+          />
         </TierWrapper>
         {this.state.loader === true ? <FaldaxLoader /> : ""}
         <FooterHome />
