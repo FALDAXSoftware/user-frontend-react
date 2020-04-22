@@ -839,7 +839,7 @@ class TierFour extends React.Component {
           ).json();
           if (result) {
             console.log("Result^^^^^^", result, size, index);
-            if (index == size + 1) {
+            if (index == size) {
               if (result.status == 200) {
                 this.openNotificationWithIcon(
                   "success",
@@ -851,7 +851,7 @@ class TierFour extends React.Component {
               }
             }
           }
-          if (index == size + 1) {
+          if (index == size) {
             this.setState(
               {
                 UploadCounter: false,
