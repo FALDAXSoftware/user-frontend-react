@@ -193,68 +193,75 @@ class SellTable extends Component {
       let isAdded = false;
       let value = [];
       element["my_size"] = 0;
+      row.push({
+        my_size: element.my_size,
+        amount: element.quantity,
+        ask: element.price,
+        // user_id: element.user_id,
+        // total: sum,
+      });
       // if (element.user_id === self.props.profileDetails.id) {
       //     element["my_size"] = element.quantity;
       // }
-      for (let internalIndex = 0; internalIndex < row.length; internalIndex++) {
-        const internalElement = row[internalIndex];
-        console.log(
-          index,
-          internalIndex,
-          "==========>",
-          internalElement.ask === element.price,
-          element.price,
-          internalElement.ask
-        );
-        if (internalElement.ask === element.price) {
-          row[internalIndex].amount += element.quantity;
-          console.log(
-            "I am inside",
-            data[index],
-            data[internalIndex],
-            Number(internalElement.user_id),
-            self.props.profileDetails.id,
-            Number(internalElement.user_id) == self.props.profileDetails.id
-          );
+      // for (let internalIndex = 0; internalIndex < row.length; internalIndex++) {
+      //   const internalElement = row[internalIndex];
+      //   console.log(
+      //     index,
+      //     internalIndex,
+      //     "==========>",
+      //     internalElement.ask === element.price,
+      //     element.price,
+      //     internalElement.ask
+      //   );
+      //   if (internalElement.ask === element.price) {
+      //     row[internalIndex].amount += element.quantity;
+      //     console.log(
+      //       "I am inside",
+      //       data[index],
+      //       data[internalIndex],
+      //       Number(internalElement.user_id),
+      //       self.props.profileDetails.id,
+      //       Number(internalElement.user_id) == self.props.profileDetails.id
+      //     );
 
-          // if (Number(internalElement.user_id) == self.props.profileDetails.id) {
-          //     console.log("I am inside", data[internalIndex])
-          //     row[internalIndex]["my_size"] = element.my_size + internalElement.my_size;
-          // }
-          isAdded = true;
-          break;
-        }
-      }
-      element.my_size = 0;
-      for (let tempIndex = 0; tempIndex < data.length; tempIndex++) {
-        if (value.includes(element.price)) {
-          if (element.price == data[tempIndex].price) {
-            if (data[tempIndex].user_id == self.props.profileDetails.id) {
-              element.my_size = value.my_size + data[tempIndex].quantity;
-            }
-          }
-          value.my_size = element.my_size;
-        } else {
-          value.push(element.price);
-          if (element.price == data[tempIndex].price) {
-            if (data[tempIndex].user_id == self.props.profileDetails.id) {
-              element.my_size = element.my_size + data[tempIndex].quantity;
-            }
-          }
-          value.my_size = element.my_size;
-        }
-        // value.push(element.price)
-      }
-      console.log(element);
-      if (!isAdded) {
-        row.push({
-          my_size: element.my_size,
-          amount: element.quantity,
-          ask: element.price,
-          user_id: element.user_id,
-          // total: sum,
-        });
-      }
+      //     // if (Number(internalElement.user_id) == self.props.profileDetails.id) {
+      //     //     console.log("I am inside", data[internalIndex])
+      //     //     row[internalIndex]["my_size"] = element.my_size + internalElement.my_size;
+      //     // }
+      //     isAdded = true;
+      //     break;
+      //   }
+      // }
+      // element.my_size = 0;
+      // for (let tempIndex = 0; tempIndex < data.length; tempIndex++) {
+      //   if (value.includes(element.price)) {
+      //     if (element.price == data[tempIndex].price) {
+      //       if (data[tempIndex].user_id == self.props.profileDetails.id) {
+      //         element.my_size = value.my_size + data[tempIndex].quantity;
+      //       }
+      //     }
+      //     value.my_size = element.my_size;
+      //   } else {
+      //     value.push(element.price);
+      //     if (element.price == data[tempIndex].price) {
+      //       if (data[tempIndex].user_id == self.props.profileDetails.id) {
+      //         element.my_size = element.my_size + data[tempIndex].quantity;
+      //       }
+      //     }
+      //     value.my_size = element.my_size;
+      //   }
+      //   // value.push(element.price)
+      // }
+      // console.log(element);
+      // if (!isAdded) {
+      //   row.push({
+      //     my_size: element.my_size,
+      //     amount: element.quantity,
+      //     ask: element.price,
+      //     user_id: element.user_id,
+      //     // total: sum,
+      //   });
+      // }
     }
 
     for (let index = 0; index < row.length; index++) {
@@ -289,7 +296,7 @@ class SellTable extends Component {
                 <TableHeader cellpadding="10px" cellspacing="0" border="0">
                   <thead>
                     <tr>
-                      <th>{this.t("my_size_text.message")}</th>
+                      {/* <th>{this.t("my_size_text.message")}</th> */}
                       <th>{this.t("wallet:amount_text.message")}</th>
                       <th>{this.t("ask_text.message")}</th>
                       <th>{this.t("conversion:total_text.message")}</th>
@@ -313,19 +320,19 @@ class SellTable extends Component {
                   >
                     <tbody>
                       {this.state.result.length ? (
-                        this.state.result.map(function(element, index) {
+                        this.state.result.map(function (element, index) {
                           return (
                             <tr>
-                              <td>{element.my_size.toFixed(8)}</td>
-                              <td>{element.amount.toFixed(3)}</td>
-                              <td>{element.ask.toFixed(5)}</td>
+                              {/* <td>{element.my_size.toFixed(8)}</td> */}
+                              <td>{element.amount.toFixed(8)}</td>
+                              <td>{element.ask.toFixed(8)}</td>
                               <td>{element.total.toFixed(8)}</td>
                             </tr>
                           );
                         })
                       ) : (
-                        <NDF>{this.t("wallet:no_data_found_text.message")}</NDF>
-                      )}
+                          <NDF>{this.t("wallet:no_data_found_text.message")}</NDF>
+                        )}
                     </tbody>
                   </TableContent>
                 </Scrollbars>
@@ -338,8 +345,8 @@ class SellTable extends Component {
             <Spin size="small" />
           </SpinSingle>
         ) : (
-          ""
-        )}
+            ""
+          )}
       </div>
     );
   }
