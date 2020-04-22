@@ -24,7 +24,7 @@ import {
   RejectNote,
 } from "../../../STYLED-COMPONENTS/TIER/tierStyle";
 import { SupportText } from "../../LANDINGCATEGORIES/apply_job";
-import { Icon, Progress } from "antd";
+import { Icon, Progress, notification } from "antd";
 import {
   FileSelectText,
   IconS,
@@ -34,7 +34,18 @@ import FaldaxLoader from "../../../SHARED-COMPONENTS/FaldaxLoader";
 import UploadCounter from "../../../SHARED-COMPONENTS/UploadCounter";
 import RejectReason from "../../../SHARED-COMPONENTS/RejectReason";
 
-let { API_URL, Proof_of_assets_form } = globalVariables;
+let {
+  API_URL,
+  aml_questionnaire,
+  comfort_letter,
+  board_resolution,
+  corporate_filing_info,
+  beneficial_ownership_form,
+  articles_of_incorporation,
+  bylaws_form,
+  ownership_and_control_structure,
+  director_list_form,
+} = globalVariables;
 /* Styled-Components */
 const KYCWrap = styled.div`
   background-color: ${(props) =>
@@ -140,6 +151,14 @@ class TierFour extends React.Component {
   //   }
   // }
   componentWillMount() {
+    if (
+      this.props.profileDetails.account_tier == 0 ||
+      this.props.profileDetails.account_tier == 1 ||
+      this.props.profileDetails.account_tier == 2 ||
+      this.props.profileDetails.account_tier == 4
+    ) {
+      this.props.history.push("/");
+    }
     // if (this.props.profileDetails.account_tier !== 3) {
     //   this.props.history.push("/");
     // }
@@ -164,7 +183,6 @@ class TierFour extends React.Component {
         values
       );
       if (result.status == 200) {
-        console.log("result^^^", result.data);
         this.setState({
           tierData: result.data,
         });
@@ -212,7 +230,7 @@ class TierFour extends React.Component {
                 amlQuestionnaireStatus: aml_questionnaire_status,
                 amlQuestionnaireNote: tierDoc.public_note,
               });
-              return console.log("TierDoc^^", tierDoc.type, index);
+              return;
             case 1:
               let comfort_letter_status = tierDoc.is_approved;
               let reupload2;
@@ -228,7 +246,7 @@ class TierFour extends React.Component {
                 comfortLetterStatus: comfort_letter_status,
                 comfortLetterNote: tierDoc.public_note,
               });
-              return console.log("TierDoc^^", tierDoc.type, index);
+              return;
             case 2:
               let board_resolution_status = tierDoc.is_approved;
               let reupload3;
@@ -244,7 +262,7 @@ class TierFour extends React.Component {
                 boardResolutionStatus: board_resolution_status,
                 boardResolutionNote: tierDoc.public_note,
               });
-              return console.log("TierDoc^^", tierDoc.type, index);
+              return;
             case 3:
               let bank_statements_status = tierDoc.is_approved;
               let reupload4;
@@ -260,7 +278,7 @@ class TierFour extends React.Component {
                 bankStatementStatus: bank_statements_status,
                 bankStatementNote: tierDoc.public_note,
               });
-              return console.log("TierDoc^^", tierDoc.type, index);
+              return;
             case 4:
               let corporate_info = tierDoc.is_approved;
               let reupload5;
@@ -276,7 +294,7 @@ class TierFour extends React.Component {
                 corporateInfoStatus: corporate_info,
                 corporateInfoNote: tierDoc.public_note,
               });
-              return console.log("TierDoc^^", tierDoc.type, index);
+              return;
             case 5:
               let ownership_form = tierDoc.is_approved;
               let reupload6;
@@ -292,7 +310,7 @@ class TierFour extends React.Component {
                 ownershipFormStatus: ownership_form,
                 ownershipFormNote: tierDoc.public_note,
               });
-              return console.log("TierDoc^^", tierDoc.type, index);
+              return;
             case 6:
               let articles_of_incorporation = tierDoc.is_approved;
               let reupload7;
@@ -308,7 +326,7 @@ class TierFour extends React.Component {
                 articlesIncorporationStatus: articles_of_incorporation,
                 articlesIncorporationNote: tierDoc.public_note,
               });
-              return console.log("TierDoc^^", tierDoc.type, index);
+              return;
             case 7:
               let bylaws = tierDoc.is_approved;
               let reupload8;
@@ -324,7 +342,7 @@ class TierFour extends React.Component {
                 byLawsStatus: bylaws,
                 byLawsNote: tierDoc.public_note,
               });
-              return console.log("TierDoc^^", tierDoc.type, index);
+              return;
             case 8:
               let ownership_control_structure = tierDoc.is_approved;
               let reupload9;
@@ -340,7 +358,7 @@ class TierFour extends React.Component {
                 ownershipControlStructureStatus: ownership_control_structure,
                 ownershipControlStructureNote: tierDoc.public_note,
               });
-              return console.log("TierDoc^^", tierDoc.type, index);
+              return;
             case 9:
               let director_list = tierDoc.is_approved;
               let reupload10;
@@ -356,7 +374,7 @@ class TierFour extends React.Component {
                 directorListStatus: director_list,
                 directorListNote: tierDoc.public_note,
               });
-              return console.log("TierDoc^^", tierDoc.type, index);
+              return;
             case 10:
               let active_business_proof = tierDoc.is_approved;
               let reupload11;
@@ -372,7 +390,7 @@ class TierFour extends React.Component {
                 activeBusinessProofStatus: active_business_proof,
                 activeBusinessProofNote: tierDoc.public_note,
               });
-              return console.log("TierDoc^^", tierDoc.type, index);
+              return;
             case 11:
               let document_availability_policy = tierDoc.is_approved;
               let reupload12;
@@ -388,7 +406,7 @@ class TierFour extends React.Component {
                 documentAvailabilityPolicyStatus: document_availability_policy,
                 documentAvailabilityPolicyNote: tierDoc.public_note,
               });
-              return console.log("TierDoc^^", tierDoc.type, index);
+              return;
             case 12:
               let cookies_policy = tierDoc.is_approved;
               let reupload13;
@@ -404,7 +422,7 @@ class TierFour extends React.Component {
                 cookiesPolicyStatus: cookies_policy,
                 cookiesPolicyNote: tierDoc.public_note,
               });
-              return console.log("TierDoc^^", tierDoc.type, index);
+              return;
             case 13:
               let privacy_policy = tierDoc.is_approved;
               let reupload14;
@@ -420,7 +438,7 @@ class TierFour extends React.Component {
                 privacyPolicyStatus: privacy_policy,
                 privacyPolicyNote: tierDoc.public_note,
               });
-              return console.log("TierDoc^^", tierDoc.type, index);
+              return;
             case 14:
               let aml_policy = tierDoc.is_approved;
               let reupload15;
@@ -436,7 +454,7 @@ class TierFour extends React.Component {
                 amlPolicyStatus: aml_policy,
                 amlPolicyNote: tierDoc.public_note,
               });
-              return console.log("TierDoc^^", tierDoc.type, index);
+              return;
             case 15:
               let terms_of_service = tierDoc.is_approved;
               let reupload16;
@@ -452,32 +470,12 @@ class TierFour extends React.Component {
                 termsOfServiceStatus: terms_of_service,
                 termsOfServiceNote: tierDoc.public_note,
               });
-              return console.log("TierDoc^^", tierDoc.type, index);
+              return;
             default:
               return console.log("No case");
           }
         }
       });
-      // this.setState({
-      //   reUploadFlag: false,
-      //   reUpload1: true,
-      //   reUpload2: true,
-      //   reUpload3: true,
-      //   reUpload4: true,
-      //   reUpload5: true,
-      //   reUpload6: true,
-      //   reUpload7: true,
-      //   reUpload8: true,
-      //   reUpload9: true,
-      //   reUpload10: true,
-      //   reUpload11: true,
-      //   reUpload12: true,
-      //   reUpload13: true,
-      //   reUpload14: true,
-      //   reUpload15: true,
-      //   reUpload16: true,
-      //   uploadBtnFlag: true,
-      // });
     } else {
       this.setState({
         reUploadFlag: false,
@@ -746,15 +744,10 @@ class TierFour extends React.Component {
   onCancel() {
     this.setState({ files: [] });
   }
-  async uploadDocument(type, doc) {
+  uploadDocument(type, doc) {
     let values = new FormData();
-    // values.append("type", type);
-    // let query = "";
-    // for (var pair of values.entries()) {
-    //   query = query + pair[0] + "=" + pair[1] + "&";
-    // }
     values.append("files", doc);
-    await fetch(API_URL + `/users/upload-tier4-document?type=${type}`, {
+    return fetch(API_URL + `/users/upload-tier4-document?type=${type}`, {
       method: "post",
       headers: {
         "Accept-Language": localStorage["i18nextLng"],
@@ -768,7 +761,6 @@ class TierFour extends React.Component {
       this.setState({
         UploadCounter: true,
       });
-      console.log("^^Docu", this.state.documents);
       let count = this.state.documents;
       let index = 1;
       let upload_flag1 = 0;
@@ -789,16 +781,32 @@ class TierFour extends React.Component {
         for (const property in count) {
           // console.log(`${property}: ${count[property].file}`);
           // console.log(`${property}: ${count[property].type}`);
-          let result = await this.uploadDocument(
-            count[property].type,
-            count[property].file
-          );
+          let result = await (
+            await this.uploadDocument(
+              count[property].type,
+              count[property].file
+            )
+          ).json();
           index++;
           upload_flag1++;
           this.setState({
             upload_flag: upload_flag1,
           });
-          if (index == size) {
+          if (result) {
+            console.log("Result^^^^^^", result, size, index);
+            if (index == size + 1) {
+              if (result.status == 200) {
+                this.openNotificationWithIcon(
+                  "success",
+                  "Success",
+                  result.data
+                );
+              } else {
+                this.openNotificationWithIcon("error", "Error", result.data);
+              }
+            }
+          }
+          if (index == size + 1) {
             this.setState(
               {
                 UploadCounter: false,
@@ -826,8 +834,24 @@ class TierFour extends React.Component {
         for (const property in count) {
           console.log(`${property}: ${count[property].file}`);
           console.log(`${property}: ${count[property].type}`);
-          let result = await this.uploadDocument(index, count[property].file);
-          if (index == size) {
+          let result = await (
+            await this.uploadDocument(index, count[property].file)
+          ).json();
+          if (result) {
+            console.log("Result^^^^^^", result, size, index);
+            if (index == size + 1) {
+              if (result.status == 200) {
+                this.openNotificationWithIcon(
+                  "success",
+                  "Success",
+                  result.data
+                );
+              } else {
+                this.openNotificationWithIcon("error", "Error", result.data);
+              }
+            }
+          }
+          if (index == size + 1) {
             this.setState(
               {
                 UploadCounter: false,
@@ -856,6 +880,12 @@ class TierFour extends React.Component {
       this.validator.showMessages();
       this.forceUpdate();
     }
+  }
+  openNotificationWithIcon(type, head, desc) {
+    notification[type]({
+      message: head,
+      description: desc,
+    });
   }
   handleCancel() {
     let temp = this.state.documents;
@@ -923,7 +953,7 @@ class TierFour extends React.Component {
               <TierRow>
                 <TierLabel>
                   <label>AML Questionnaire</label>
-                  <a href={Proof_of_assets_form} target="_blank" download>
+                  <a href={aml_questionnaire} target="_blank" download>
                     Click Here to Download the Form
                   </a>
                 </TierLabel>
@@ -1042,7 +1072,7 @@ class TierFour extends React.Component {
               <TierRow>
                 <TierLabel>
                   <label>Comfort Letter</label>
-                  <a href={Proof_of_assets_form} target="_blank" download>
+                  <a href={comfort_letter} target="_blank" download>
                     Click Here to Download the Form
                   </a>
                 </TierLabel>
@@ -1161,7 +1191,7 @@ class TierFour extends React.Component {
               <TierRow>
                 <TierLabel>
                   <label>Board Resolution</label>
-                  <a href={Proof_of_assets_form} target="_blank" download>
+                  <a href={board_resolution} target="_blank" download>
                     Click Here to Download the Form
                   </a>
                 </TierLabel>
@@ -1392,7 +1422,7 @@ class TierFour extends React.Component {
               <TierRow>
                 <TierLabel>
                   <label>Corporate Filing Information</label>
-                  <a href={Proof_of_assets_form} target="_blank" download>
+                  <a href={corporate_filing_info} target="_blank" download>
                     Click Here to Download the Form
                   </a>
                 </TierLabel>
@@ -1509,7 +1539,7 @@ class TierFour extends React.Component {
               <TierRow>
                 <TierLabel>
                   <label>Beneficial Ownership Form</label>
-                  <a href={Proof_of_assets_form} target="_blank" download>
+                  <a href={beneficial_ownership_form} target="_blank" download>
                     Click Here to Download the Form
                   </a>
                 </TierLabel>
@@ -1626,7 +1656,7 @@ class TierFour extends React.Component {
               <TierRow>
                 <TierLabel>
                   <label>Articles of Incorporation</label>
-                  <a href={Proof_of_assets_form} target="_blank" download>
+                  <a href={articles_of_incorporation} target="_blank" download>
                     Click Here to Download the Form
                   </a>
                 </TierLabel>
@@ -1746,7 +1776,7 @@ class TierFour extends React.Component {
               <TierRow>
                 <TierLabel>
                   <label>Bylaws</label>
-                  <a href={Proof_of_assets_form} target="_blank" download>
+                  <a href={bylaws_form} target="_blank" download>
                     Click Here to Download the Form
                   </a>
                 </TierLabel>
@@ -1863,7 +1893,11 @@ class TierFour extends React.Component {
               <TierRow>
                 <TierLabel>
                   <label>Ownership and Control Structure</label>
-                  <a href={Proof_of_assets_form} target="_blank" download>
+                  <a
+                    href={ownership_and_control_structure}
+                    target="_blank"
+                    download
+                  >
                     Click Here to Download the Form
                   </a>
                 </TierLabel>
@@ -1987,7 +2021,7 @@ class TierFour extends React.Component {
                     Directors and Officers List & Personal Info Equivalent to
                     Tier 3 Requirements
                   </label>
-                  <a href={Proof_of_assets_form} target="_blank" download>
+                  <a href={director_list_form} target="_blank" download>
                     Click Here to Download the Form
                   </a>
                 </TierLabel>
