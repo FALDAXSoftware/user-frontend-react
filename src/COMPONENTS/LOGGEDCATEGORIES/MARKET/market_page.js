@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import {
   ContactWrap,
-  GreyWrap
+  GreyWrap,
 } from "../../../STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle";
 import Navigation from "COMPONENTS/NAVIGATIONS/loggednavigation";
 import { Container } from "../../../STYLED-COMPONENTS/HOMEPAGE/style";
@@ -18,7 +18,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 const API_URL = globalVariables.API_URL;
 const WhiteBgWrapper = styled.div`
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#041b2c" : "white"};
   -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
   -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -48,11 +48,11 @@ const RiseText = styled.span`
 const InputSearch = styled(Search)`
   margin-left: auto;
   > input {
-    background-color: ${props =>
+    background-color: ${(props) =>
       props.theme.mode === "dark" ? "#041b2c" : ""};
   }
   & .anticon {
-    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   }
 `;
 const { TabPane } = Tabs;
@@ -65,7 +65,7 @@ class MarketPage extends React.PureComponent {
       tc1: "ETHBTC",
       tc2: "XRPBTC",
       tc3: "LTCBTC",
-      pairs: []
+      pairs: [],
     };
     this.t = this.props.t;
   }
@@ -79,20 +79,20 @@ class MarketPage extends React.PureComponent {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        "Accept-Language": localStorage["i18nextLng"]
-      }
+        "Accept-Language": localStorage["i18nextLng"],
+      },
     })
-      .then(response => response.json())
-      .then(responseData => {
+      .then((response) => response.json())
+      .then((responseData) => {
         if (responseData.status == 200) {
           this.setState({
-            pairs: responseData.data
+            pairs: responseData.data,
           });
         }
       })
-      .catch(error => {});
+      .catch((error) => {});
   };
-  onScreenerTabChange = key => {
+  onScreenerTabChange = (key) => {
     this.setState({ screener_key: key });
   };
   goFullScreen = (id = "body") => {
@@ -198,7 +198,7 @@ class MarketPage extends React.PureComponent {
                                     colorTheme: this.props.theme
                                       ? "dark"
                                       : "light",
-                                    locale: localStorage["i18nextLng"]
+                                    locale: localStorage["i18nextLng"],
                                   }}
                                 />
                               )}
@@ -219,7 +219,7 @@ class MarketPage extends React.PureComponent {
                                     colorTheme: this.props.theme
                                       ? "dark"
                                       : "light",
-                                    locale: localStorage["i18nextLng"]
+                                    locale: localStorage["i18nextLng"],
                                   }}
                                 />
                               )}
@@ -240,7 +240,7 @@ class MarketPage extends React.PureComponent {
                                     colorTheme: this.props.theme
                                       ? "dark"
                                       : "light",
-                                    locale: localStorage["i18nextLng"]
+                                    locale: localStorage["i18nextLng"],
                                   }}
                                 />
                               )}
@@ -261,7 +261,7 @@ class MarketPage extends React.PureComponent {
                                     colorTheme: this.props.theme
                                       ? "dark"
                                       : "light",
-                                    locale: localStorage["i18nextLng"]
+                                    locale: localStorage["i18nextLng"],
                                   }}
                                 />
                               )}
@@ -297,7 +297,7 @@ class MarketPage extends React.PureComponent {
                                 screener_type: "crypto_mkt",
                                 displayCurrency: "USD",
                                 colorTheme: this.props.theme ? "dark" : "light",
-                                locale: localStorage["i18nextLng"]
+                                locale: localStorage["i18nextLng"],
                               }}
                             />
                           </div>
@@ -323,7 +323,7 @@ function mapStateToProps(state) {
     cryptoPair:
       state.walletReducer.cryptoPair !== undefined
         ? state.walletReducer.cryptoPair
-        : ""
+        : "",
     /* loader:state.simpleReducer.loader?state.simpleReducer.loader:false */
   };
 }
