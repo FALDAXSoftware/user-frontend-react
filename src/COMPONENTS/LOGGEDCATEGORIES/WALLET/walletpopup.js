@@ -30,7 +30,7 @@ const WalletModal = styled(Modal)`
     padding: 0px;
   }
   > .ant-modal-content > .ant-modal-body {
-    background-color: ${props =>
+    background-color: ${(props) =>
       props.theme.mode === "dark" ? "#061a2b" : ""};
   }
   > .ant-modal-content > .ant-modal-close > .ant-modal-close-x {
@@ -44,14 +44,14 @@ const WalletModal = styled(Modal)`
     width: 300px !important;
   }
   & .note_text {
-    color: ${props => (props.theme.mode === "dark" ? "white" : "black")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "black")};
   }
 `;
 const Label = styled.label`
   font-size: 16px;
   font-family: "Open Sans";
   display: block;
-  color: ${props =>
+  color: ${(props) =>
     props.theme.mode === "dark" ? "rgb( 255, 255, 255 )" : "black"};
 `;
 const ModalWrap = styled.div`
@@ -82,11 +82,11 @@ const WallInput = styled(Input)`
   height: 48px;
   margin-top: 10px;
   width: 100%;
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#061a2b" : "#f8f8f8"};
   display: block;
-  color: ${props => (props.theme.mode === "dark" ? "white" : "")};
-  caret-color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
+  caret-color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
 `;
 
 const Fee = styled.span`
@@ -94,7 +94,7 @@ const Fee = styled.span`
   flex-wrap: wrap;
   font-size: 16px;
   font-family: "Open Sans";
-  color: ${props => (props.theme.mode === "dark" ? "white" : "black")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "black")};
   > span {
     display: flex;
     width: 100%;
@@ -114,7 +114,7 @@ const TotPay = styled.span`
   display: flex;
   font-size: 16px;
   font-family: "Open Sans";
-  color: ${props => (props.theme.mode === "dark" ? "white" : "black")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "black")};
   > span {
     > b {
       min-width: 150px;
@@ -164,7 +164,7 @@ const TotDiv = styled.div`
     justify-content: flex-start;
     align-items: center;
     font-size: 16px;
-    color: ${props => (props.theme.mode === "dark" ? "white" : "black")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "black")};
     > label {
       display: inherit;
       align-items: center;
@@ -233,7 +233,7 @@ class WalletPopup extends Component {
       sendFields: {
         amount: "",
         destination_address: "",
-        subtotal: 0
+        subtotal: 0,
       },
       disabled: true,
       faldaxFee: 0,
@@ -242,7 +242,7 @@ class WalletPopup extends Component {
       showTFAModal: false,
       withdrawFlag: false,
       availableBalance: "",
-      withdrawMsg: this.t("withdraw_request_is_processed.message")
+      withdrawMsg: this.t("withdraw_request_is_processed.message"),
     };
     this.timeout = null;
     this.validator = new SimpleReactValidator({
@@ -256,29 +256,29 @@ class WalletPopup extends Component {
             return false;
           }
         },
-        required: true // optional
+        required: true, // optional
       },
       amountNumeric: {
         message: this.t("amount_8_precision_validation.message"),
-        rule: val => {
+        rule: (val) => {
           var RE = /^\d+.?\d*$/;
           if (RE.test(val)) {
             return true;
           } else {
             return false;
           }
-        }
+        },
       },
       decimalrestrict: {
         message: this.t("validation_amount_numeric.message"),
-        rule: val => {
+        rule: (val) => {
           var RE = /^\d*\.?\d{0,8}$/;
           if (RE.test(val)) {
             return true;
           } else {
             return false;
           }
-        }
+        },
       },
       minAddress: {
         message: `${this.t(
@@ -294,7 +294,7 @@ class WalletPopup extends Component {
             return false;
           }
         },
-        required: true // optional
+        required: true, // optional
       },
       maxAddress: {
         message: `${this.t(
@@ -307,7 +307,7 @@ class WalletPopup extends Component {
             return false;
           }
         },
-        required: true // optional
+        required: true, // optional
       },
       minLimitCheck: {
         message: `${this.t("amount_gte_validation.message")} ${
@@ -323,7 +323,7 @@ class WalletPopup extends Component {
             return false;
           }
         },
-        required: true // optional
+        required: true, // optional
       },
       maxLimitCheck: {
         message: `${this.t("amount_lte_validation.message")} ${
@@ -339,23 +339,12 @@ class WalletPopup extends Component {
             return false;
           }
         },
-        required: true // optional
+        required: true, // optional
       },
       destinationRequire: {
         message: this.t("validation_destination_address_required.message"),
         required: true,
-        rule: val => {
-          var RE = /.+/;
-          if (RE.test(val)) {
-            return true;
-          } else {
-            return false;
-          }
-        }
-      },
-      amountRequired: {
-        message: this.t("validation_amount_required.message"),
-        rule: val => {
+        rule: (val) => {
           var RE = /.+/;
           if (RE.test(val)) {
             return true;
@@ -363,19 +352,30 @@ class WalletPopup extends Component {
             return false;
           }
         },
-        required: true
+      },
+      amountRequired: {
+        message: this.t("validation_amount_required.message"),
+        rule: (val) => {
+          var RE = /.+/;
+          if (RE.test(val)) {
+            return true;
+          } else {
+            return false;
+          }
+        },
+        required: true,
       },
       allowSpecial: {
         message: this.t("destination_address_validation.message"),
-        rule: val => {
+        rule: (val) => {
           var RE = /^[A-Za-z0-9_/?=]*$/;
           if (RE.test(val)) {
             return true;
           } else {
             return false;
           }
-        }
-      }
+        },
+      },
     });
     this.sendChange = this.sendChange.bind(this);
     this.sendSubmit = this.sendSubmit.bind(this);
@@ -402,18 +402,18 @@ class WalletPopup extends Component {
           Accept: "application/json",
           "Content-Type": "application/json",
           "Accept-Language": localStorage["i18nextLng"],
-          Authorization: "Bearer " + this.props.isLoggedIn
-        }
+          Authorization: "Bearer " + this.props.isLoggedIn,
+        },
       })
-        .then(response => response.json())
-        .then(responseData => {
+        .then((response) => response.json())
+        .then((responseData) => {
           this.setState({
             receive: responseData.receiveCoin,
             loader: false,
-            show: true
+            show: true,
           });
         })
-        .catch(error => {
+        .catch((error) => {
           // console.log(error)
         });
     }
@@ -421,13 +421,13 @@ class WalletPopup extends Component {
       this.setState({
         fiatValue: 0,
         fiatCurrency: this.props.fiatCurrency,
-        singlefiatValue: this.props.fiatValue.toFixed(8)
+        singlefiatValue: this.props.fiatValue.toFixed(8),
       });
     } else {
       this.setState({
         fiatValue: 0,
         fiatCurrency: this.props.fiatCurrency,
-        singlefiatValue: 0
+        singlefiatValue: 0,
       });
     }
   }
@@ -435,7 +435,7 @@ class WalletPopup extends Component {
   // Get Availabel balance API
   getAvailableBalance() {
     this.setState({
-      loader: true
+      loader: true,
     });
     let coin = this.props.coin_code;
     fetch(`${API_URL}/users/get-available-balance?coin=${coin}`, {
@@ -444,24 +444,24 @@ class WalletPopup extends Component {
         Accept: "application/json",
         "Content-Type": "application/json",
         "Accept-Language": localStorage["i18nextLng"],
-        Authorization: "Bearer " + this.props.isLoggedIn
-      }
+        Authorization: "Bearer " + this.props.isLoggedIn,
+      },
     })
-      .then(response => response.json())
-      .then(responseData => {
+      .then((response) => response.json())
+      .then((responseData) => {
         if (responseData.status === 200) {
           // console.log("^^^", responseData);
           this.setState({
-            availableBalance: parseFloat(responseData.data).toFixed(8)
+            availableBalance: parseFloat(responseData.data).toFixed(8),
           });
         } else {
           this.openNotificationWithIcon("error", "Error", responseData.error);
         }
         this.setState({
-          loader: false
+          loader: false,
         });
       })
-      .catch(error => {});
+      .catch((error) => {});
   }
 
   /* 
@@ -495,9 +495,9 @@ class WalletPopup extends Component {
         This method is called when we have to open the modal.
     */
 
-  handleComing = e => {
+  handleComing = (e) => {
     this.setState({
-      comingSoon: false
+      comingSoon: false,
     });
   };
 
@@ -506,9 +506,9 @@ class WalletPopup extends Component {
         This method is called when we have to close the modal.
     */
 
-  comingCancel = e => {
+  comingCancel = (e) => {
     this.setState({
-      comingSoon: false
+      comingSoon: false,
     });
     this.props.comingCancel(e);
   };
@@ -522,7 +522,7 @@ class WalletPopup extends Component {
     notification[type]({
       message: head,
       description: desc,
-      duration: 6
+      duration: 6,
     });
   }
 
@@ -553,12 +553,12 @@ class WalletPopup extends Component {
           Accept: "application/json",
           "Content-Type": "application/json",
           "Accept-Language": localStorage["i18nextLng"],
-          Authorization: "Bearer " + this.props.isLoggedIn
+          Authorization: "Bearer " + this.props.isLoggedIn,
         },
-        body: JSON.stringify(values)
+        body: JSON.stringify(values),
       })
-        .then(response => response.json())
-        .then(responseData => {
+        .then((response) => response.json())
+        .then((responseData) => {
           // console.log("SEND API", responseData)
           if (responseData.status === 200) {
             this.openNotificationWithIcon(
@@ -572,25 +572,25 @@ class WalletPopup extends Component {
             this.setState({
               showTFAModal: false,
               withdrawFlag: true,
-              withdrawMsg: responseData.message
+              withdrawMsg: responseData.message,
             });
           } else if (responseData.status === 202) {
             // alert("here");
             this.setState({
-              showTFAModal: true
+              showTFAModal: true,
             });
           } else if (responseData.status === 403) {
             // this.openNotificationWithIcon("error", "Error", responseData.err);
             let formData = {
               user_id: this.props.profileDetails.id,
-              jwt_token: this.props.isLoggedIn
+              jwt_token: this.props.isLoggedIn,
             };
             this.props.LogoutUser(this.props.isLoggedIn, formData);
             this.openNotificationWithIcon("error", "Error", responseData.err);
           } else {
             if (responseData.status !== 402)
               this.setState({
-                showTFAModal: false
+                showTFAModal: false,
               });
             // console.log(responseData);
             if (responseData.status == 203) {
@@ -616,7 +616,7 @@ class WalletPopup extends Component {
           }
           this.setState({ loader: false });
         })
-        .catch(error => {});
+        .catch((error) => {});
     } else {
       this.setState({ loader: false });
       this.validator.showMessages();
@@ -651,7 +651,7 @@ class WalletPopup extends Component {
         ) {
           this.validator.showMessages();
           this.setState({
-            disabled: true
+            disabled: true,
           });
         }
       }
@@ -660,13 +660,13 @@ class WalletPopup extends Component {
   getFeeValues() {
     // console.log("test");
     this.setState({
-      loader: true
+      loader: true,
     });
     var fields = this.state.sendFields;
     var values = {
       coin: this.props.coin_code,
       amount: this.state.sendFields.amount,
-      address: this.state.sendFields.destination_address
+      address: this.state.sendFields.destination_address,
     };
     fetch(`${API_URL}/wallet/get-network-fee`, {
       method: "post",
@@ -675,12 +675,12 @@ class WalletPopup extends Component {
         "Content-Type": "application/json",
         "Accept-Language": localStorage["i18nextLng"],
         "Accept-Language": localStorage["i18nextLng"],
-        Authorization: "Bearer " + this.props.isLoggedIn
+        Authorization: "Bearer " + this.props.isLoggedIn,
       },
-      body: JSON.stringify(values)
+      body: JSON.stringify(values),
     })
-      .then(response => response.json())
-      .then(responseData => {
+      .then((response) => response.json())
+      .then((responseData) => {
         if (responseData.status === 200) {
           // console.log(responseData);
           let subtotal = parseFloat(
@@ -691,7 +691,7 @@ class WalletPopup extends Component {
           this.setState({
             networkFee: responseData.data,
             disabled: false,
-            sendFields: fields
+            sendFields: fields,
           });
         } else if (responseData.status === 500) {
           this.openNotificationWithIcon(
@@ -707,10 +707,10 @@ class WalletPopup extends Component {
           );
         }
         this.setState({
-          loader: false
+          loader: false,
         });
       })
-      .catch(error => {});
+      .catch((error) => {});
   }
   sendChange(e) {
     if (this.state.loader) {
@@ -735,7 +735,7 @@ class WalletPopup extends Component {
         faldaxFee: 0,
         showTFAModal: false,
         disabled: true,
-        networkFee: 0
+        networkFee: 0,
       });
     } else {
       let subtotal = parseFloat(
@@ -759,7 +759,7 @@ class WalletPopup extends Component {
           sendFields: fields,
           fiatValue: fiatValueamount,
           showTFAModal: false,
-          faldaxFee
+          faldaxFee,
         },
         () => {
           if (
@@ -777,7 +777,7 @@ class WalletPopup extends Component {
           ) {
             this.validator.showMessages();
             this.setState({
-              disabled: true
+              disabled: true,
             });
           }
         }
@@ -820,8 +820,8 @@ class WalletPopup extends Component {
               </TitleDiv>
             }
             visible={this.props.visible}
-            onOk={e => this.handleComing()}
-            onCancel={e => this.comingCancel(e)}
+            onOk={(e) => this.handleComing()}
+            onCancel={(e) => this.comingCancel(e)}
             footer={null}
             className="wallet-popup"
           >
@@ -917,7 +917,10 @@ class WalletPopup extends Component {
                     "amount",
                     this.state.sendFields.amount,
                     "amountRequired|numeric|gtzero|decimalrestrict|minLimitCheck|maxLimitCheck",
-                    "text-danger-validation"
+                    "text-danger-validation",
+                    {
+                      numeric: this.t("validation_amount_numeric.message"),
+                    }
                   )}
                   {/*  <RightInput />
                                     <ButtonToolbarS>
@@ -1028,7 +1031,7 @@ class WalletPopup extends Component {
         <TFAModal
           visible={this.state.showTFAModal}
           isLoggedIn={this.props.isLoggedIn}
-          submit={otp => this.sendSubmit(false, otp)}
+          submit={(otp) => this.sendSubmit(false, otp)}
         />
         {this.state.loader === true ? <FaldaxLoader /> : ""}
       </div>
@@ -1045,12 +1048,13 @@ function mapStateToProps(state) {
         : "",
     isLoggedIn: state.simpleReducer.isLoggedIn
       ? state.simpleReducer.isLoggedIn
-      : ""
+      : "",
   };
 }
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   // Logout: () => dispatch(Logout()),
-  LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
+  LogoutUser: (isLoggedIn, user_id) =>
+    dispatch(LogoutUser(isLoggedIn, user_id)),
 });
 
 export default translate([
@@ -1060,5 +1064,5 @@ export default translate([
   "conversion",
   "edit_profile_titles",
   "settings",
-  "referral"
+  "referral",
 ])(connect(mapStateToProps, mapDispatchToProps)(WalletPopup));

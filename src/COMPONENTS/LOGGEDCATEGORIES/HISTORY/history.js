@@ -17,7 +17,7 @@ import { globalVariables } from "Globals.js";
 /* STYLED-COMPONENTS */
 import {
   ContactWrap,
-  GreyWrap
+  GreyWrap,
 } from "STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle";
 import {
   ContainerContact,
@@ -30,7 +30,7 @@ import {
   EXPButton,
   FontAwesomeIconS,
   Datediv,
-  RangePickerS
+  RangePickerS,
 } from "STYLED-COMPONENTS/LOGGED_STYLE/historyStyle";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
 import { LogoutUser } from "../../../ACTIONS/authActions";
@@ -45,20 +45,20 @@ const Select1 = styled(Select)`
     width: 120px;
   }
   & .ant-select-selection {
-    background-color: ${props =>
+    background-color: ${(props) =>
       props.theme.mode === "dark" ? "#01090f" : ""};
   }
   & .ant-select-arrow > i {
-    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   }
   & .ant-select-selection-selected-value {
-    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   }
   & .ant-select-search__field {
-    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   }
   & .ant-select-search__field {
-    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   }
 `;
 const Select2 = styled(Select)`
@@ -66,29 +66,29 @@ const Select2 = styled(Select)`
     width: 120px;
   }
   & .ant-select-selection {
-    background-color: ${props =>
+    background-color: ${(props) =>
       props.theme.mode === "dark" ? "#01090f" : ""};
   }
   & .ant-select-arrow > i {
-    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   }
   & .ant-select-selection-selected-value {
-    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   }
   & .ant-select-search__field {
-    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   }
 `;
 const CheckboxGroupS = styled(CheckboxGroup)`
   & .ant-checkbox-group-item > span {
-    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   }
 `;
 const NDF = styled.tbody`
   text-align: center;
   font-weight: 600;
   font-size: 17px;
-  color: ${props => (props.theme.mode === "dark" ? "white" : "black")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "black")};
   font-family: "Open Sans";
   height: 500px;
   display: flex !important;
@@ -98,7 +98,7 @@ const NDF = styled.tbody`
   > tr {
     > td {
       border-top: 0 !important;
-      background: ${props =>
+      background: ${(props) =>
         props.theme.mode === "dark" ? "#041422" : "white"};
     }
   }
@@ -113,7 +113,7 @@ const NDF = styled.tbody`
   }
 `;
 const SideBuySell = styled.td`
-  color: ${props => (props.side === true ? "#59b55d" : "#f13e46")} !important;
+  color: ${(props) => (props.side === true ? "#59b55d" : "#f13e46")} !important;
 `;
 
 export const FilterDiv = styled.div`
@@ -170,7 +170,7 @@ class History extends Component {
         { label: "Wallet Address", key: "address" },
         { label: "Payment Id", key: "payment_id" },
         { label: "Quote Id", key: "quote_id" },
-        { label: "Payment Status", key: "simplex_payment_status" }
+        { label: "Payment Status", key: "simplex_payment_status" },
       ],
       csvHeadersJST: [
         { label: "Coin", key: "symbol" },
@@ -180,7 +180,7 @@ class History extends Component {
         { label: "Order Id", key: "order_id" },
         { label: "Filled Price", key: "filled_price" },
         { label: "Amount", key: "amount" },
-        { label: "Fees", key: "fees" }
+        { label: "Fees", key: "fees" },
       ],
       csvHeadersTrade: [
         { label: "Coin", key: "symbol" },
@@ -190,8 +190,8 @@ class History extends Component {
         { label: "Side", key: "side" },
         { label: "Order Type", key: "order_type" },
         { label: "Limit Price", key: "limit_price" },
-        { label: "Stop Price", key: "stop_price" }
-      ]
+        { label: "Stop Price", key: "stop_price" },
+      ],
     };
     this.historyResult = this.historyResult.bind(this);
     this.changeDate = this.changeDate.bind(this);
@@ -242,18 +242,18 @@ class History extends Component {
           Accept: "application/json",
           "Accept-Language": localStorage["i18nextLng"],
           "Content-Type": "application/json",
-          Authorization: "Bearer " + this.props.isLoggedIn
-        }
+          Authorization: "Bearer " + this.props.isLoggedIn,
+        },
       })
-        .then(response => response.json())
-        .then(responseData => {
+        .then((response) => response.json())
+        .then((responseData) => {
           self.setState({
             coinList: responseData.coinList,
             drop1List: responseData.coinList,
-            drop2List: responseData.coinList
+            drop2List: responseData.coinList,
           });
         })
-        .catch(error => {});
+        .catch((error) => {});
     } else if (this.state.activeKey === "2") {
       fetch(API_URL + "/get-simplex-coin-list", {
         method: "get",
@@ -261,16 +261,16 @@ class History extends Component {
           Accept: "application/json",
           "Accept-Language": localStorage["i18nextLng"],
           "Content-Type": "application/json",
-          Authorization: "Bearer " + this.props.isLoggedIn
-        }
+          Authorization: "Bearer " + this.props.isLoggedIn,
+        },
       })
-        .then(response => response.json())
-        .then(responseData => {
+        .then((response) => response.json())
+        .then((responseData) => {
           if (responseData.status === 200) {
             self.setState({
               coinList: responseData.object.coinList,
               drop1List: responseData.object.coinList,
-              drop2List: responseData.object.fiat
+              drop2List: responseData.object.fiat,
             });
           } else if (responseData.status === 403) {
             let tempValue2 = {};
@@ -279,7 +279,7 @@ class History extends Component {
             this.props.LogoutUser(this.props.isLoggedIn, tempValue2);
           }
         })
-        .catch(error => {});
+        .catch((error) => {});
     }
   }
 
@@ -290,7 +290,7 @@ class History extends Component {
         drop1Value: null,
         drop2Value: null,
         toDate: "",
-        fromDate: ""
+        fromDate: "",
       },
       () => {
         this.loadCoinList();
@@ -335,11 +335,11 @@ class History extends Component {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: "Bearer " + this.props.isLoggedIn
-      }
+        Authorization: "Bearer " + this.props.isLoggedIn,
+      },
     })
-      .then(response => response.json())
-      .then(responseData => {
+      .then((response) => response.json())
+      .then((responseData) => {
         this.setState({ loader: false });
         if (responseData.status === 200) {
           // console.log("this.state.activeKey", this.state.activeKey)
@@ -384,12 +384,12 @@ class History extends Component {
               }
               this.setState({
                 historyJSTData: responseData.data,
-                csvJSTFields
+                csvJSTFields,
               });
             } else if (responseData.data.length === 0) {
               this.setState({
                 historyJSTData: responseData.data,
-                csvJSTFields
+                csvJSTFields,
               });
             } else {
               this.openNotificationWithIcon(
@@ -437,12 +437,12 @@ class History extends Component {
               }
               this.setState({
                 historySimplexData: responseData.data,
-                csvSimplexFields
+                csvSimplexFields,
               });
             } else if (responseData.data.length === 0) {
               this.setState({
                 historySimplexData: responseData.data,
-                csvSimplexFields
+                csvSimplexFields,
               });
             } else {
               this.openNotificationWithIcon(
@@ -479,12 +479,12 @@ class History extends Component {
               // console.log(responseData.data);
               this.setState({
                 historyTradeData: responseData.data,
-                csvTradeFields
+                csvTradeFields,
               });
             } else if (responseData.data.length === 0) {
               this.setState({
                 historyTradeData: responseData.data,
-                csvTradeFields
+                csvTradeFields,
               });
             } else {
               this.openNotificationWithIcon(
@@ -513,7 +513,7 @@ class History extends Component {
         }
         this.setState({ loader: false });
       })
-      .catch(error => {});
+      .catch((error) => {});
   }
 
   range(start, end) {
@@ -533,13 +533,13 @@ class History extends Component {
       return {
         disabledHours: () => this.range(0, 60).splice(4, 20),
         disabledMinutes: () => this.range(30, 60),
-        disabledSeconds: () => [55, 56]
+        disabledSeconds: () => [55, 56],
       };
     }
     return {
       disabledHours: () => this.range(0, 60).splice(20, 4),
       disabledMinutes: () => this.range(0, 31),
-      disabledSeconds: () => [55, 56]
+      disabledSeconds: () => [55, 56],
     };
   }
 
@@ -599,7 +599,7 @@ class History extends Component {
       this.setState(
         {
           drop2List: coinList,
-          drop1Value: value
+          drop1Value: value,
         },
         () => {
           self.loadCoinList();
@@ -611,7 +611,7 @@ class History extends Component {
         {
           drop2List: coinList,
           drop1Value: value,
-          drop2Value: null
+          drop2Value: null,
         },
         () => {
           self.loadCoinList();
@@ -634,7 +634,7 @@ class History extends Component {
       this.setState(
         {
           drop1List: coinList,
-          drop2Value: value
+          drop2Value: value,
         },
         () => {
           self.loadCoinList();
@@ -646,7 +646,7 @@ class History extends Component {
         {
           drop1List: coinList,
           drop2Value: value,
-          drop1Value: null
+          drop1Value: null,
         },
         () => {
           self.loadCoinList();
@@ -659,7 +659,7 @@ class History extends Component {
     notification[type]({
       message: head,
       description: desc,
-      duration: 5
+      duration: 5,
     });
   }
 
@@ -674,7 +674,7 @@ class History extends Component {
         receive: true,
         drop1Value: null,
         drop2Value: null,
-        checkedGroupValue: ["SEND", "RECEIVE", "SELL", "BUY"]
+        checkedGroupValue: ["SEND", "RECEIVE", "SELL", "BUY"],
       },
       () => {
         this.loadCoinList();
@@ -688,7 +688,7 @@ class History extends Component {
     const { t } = this.props;
     const options = [
       { label: t("buy_text.message"), value: "BUY" },
-      { label: t("sell_text.message"), value: "SELL" }
+      { label: t("sell_text.message"), value: "SELL" },
     ];
     console.log(self.props.profileData.id);
     return (
@@ -707,7 +707,7 @@ class History extends Component {
                       value={this.state.drop1Value}
                     >
                       {this.state.drop1List &&
-                        this.state.drop1List.map(element => {
+                        this.state.drop1List.map((element) => {
                           if (this.state.activeKey === "1") {
                             if (this.state.drop2Value === "XRP") {
                               if (
@@ -776,7 +776,7 @@ class History extends Component {
                             this.setState(
                               {
                                 drop1Value: temp2,
-                                drop2Value: temp1
+                                drop2Value: temp1,
                               },
                               () => {
                                 this.loadCoinList();
@@ -798,7 +798,7 @@ class History extends Component {
                       value={this.state.drop2Value}
                     >
                       {this.state.drop2List &&
-                        this.state.drop2List.map(element => {
+                        this.state.drop2List.map((element) => {
                           if (this.state.activeKey === "1") {
                             if (this.state.drop1Value === "XRP") {
                               if (
@@ -863,7 +863,7 @@ class History extends Component {
                       disabledTime={this.disabledRangeTime}
                       placeholder={[
                         this.t("start_date_text.message"),
-                        this.t("end_date_text.message")
+                        this.t("end_date_text.message"),
                       ]}
                       onChange={this.changeDate}
                       allowClear={false}
@@ -1151,18 +1151,20 @@ class History extends Component {
                                       {simplex_payment_status ==
                                         "Under Approval" && (
                                         <span className="order-inapproval">
-                                          {simplex_payment_status}
+                                          {self.t(
+                                            "under_approval_text.message"
+                                          )}
                                         </span>
                                       )}
                                       {simplex_payment_status == "Approved" && (
                                         <span className="order-sucess">
-                                          {simplex_payment_status}
+                                          {self.t("approved_text.message")}
                                         </span>
                                       )}
                                       {simplex_payment_status ==
                                         "Cancelled" && (
                                         <span className="order-cancelled">
-                                          {simplex_payment_status}
+                                          {self.t("cancelled_text.message")}
                                         </span>
                                       )}
                                     </td>
@@ -1274,8 +1276,9 @@ class History extends Component {
     );
   }
 }
-const mapDispatchToProps = dispatch => ({
-  LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
+const mapDispatchToProps = (dispatch) => ({
+  LogoutUser: (isLoggedIn, user_id) =>
+    dispatch(LogoutUser(isLoggedIn, user_id)),
 });
 function mapStateToProps(state) {
   return {
@@ -1285,7 +1288,7 @@ function mapStateToProps(state) {
     profileData:
       state.simpleReducer.profileDetails !== undefined
         ? state.simpleReducer.profileDetails.data[0]
-        : {}
+        : {},
   };
 }
 
@@ -1297,5 +1300,5 @@ export default translate([
   "footer",
   "header",
   "support",
-  "trade"
+  "trade",
 ])(connect(mapStateToProps, mapDispatchToProps)(History));
