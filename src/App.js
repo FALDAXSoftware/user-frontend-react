@@ -20,6 +20,7 @@ import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
 import TradeView from "./SHARED-COMPONENTS/TradeView";
 import SimplexView from "./SHARED-COMPONENTS/SimplexView";
 import { globalVariables } from "Globals.js";
+import Paxos from "./COMPONENTS/LOGGEDCATEGORIES/paxos";
 
 let { GOOGLE_SITE_KEY } = globalVariables;
 
@@ -126,47 +127,47 @@ class App extends Component {
       props: props,
       ...rest
     }) => (
-      <Route
-        {...rest}
-        render={props => {
-          // console.log(props, rest, isLoggedIn);
-          if (isLoggedIn) {
-            if (props.location.pathname === "/") {
-              return (
-                <Redirect
-                  to={{
-                    pathname: "/login",
-                    state: { from: props.location }
-                  }}
-                />
-              );
+        <Route
+          {...rest}
+          render={props => {
+            // console.log(props, rest, isLoggedIn);
+            if (isLoggedIn) {
+              if (props.location.pathname === "/") {
+                return (
+                  <Redirect
+                    to={{
+                      pathname: "/login",
+                      state: { from: props.location }
+                    }}
+                  />
+                );
+              } else {
+                return <Component {...props} LogoutUser={LogoutUser} />;
+              }
             } else {
-              return <Component {...props} LogoutUser={LogoutUser} />;
+              if (props.location.pathname === "/") {
+                return (
+                  <Redirect
+                    to={{
+                      pathname: "/login",
+                      state: { from: props.location }
+                    }}
+                  />
+                );
+              } else {
+                return (
+                  <Redirect
+                    to={{
+                      pathname: "/login",
+                      state: { from: props.location }
+                    }}
+                  />
+                );
+              }
             }
-          } else {
-            if (props.location.pathname === "/") {
-              return (
-                <Redirect
-                  to={{
-                    pathname: "/login",
-                    state: { from: props.location }
-                  }}
-                />
-              );
-            } else {
-              return (
-                <Redirect
-                  to={{
-                    pathname: "/login",
-                    state: { from: props.location }
-                  }}
-                />
-              );
-            }
-          }
-        }}
-      />
-    );
+          }}
+        />
+      );
 
     let theme = {
       mode: this.state.theme
@@ -185,6 +186,12 @@ class App extends Component {
                       exact
                       title="Login"
                       component={Login}
+                    />
+                    <Route
+                      path="/paxos"
+                      exact
+                      title="Paxos"
+                      component={Paxos}
                     />
                     <Route
                       path="/reset-password"
