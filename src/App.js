@@ -19,6 +19,7 @@ import AppRouter from "routes";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
 import TradeView from "./SHARED-COMPONENTS/TradeView";
 import SimplexView from "./SHARED-COMPONENTS/SimplexView";
+import SimplexMobile from "./SHARED-COMPONENTS/SimplexMobile";
 import { globalVariables } from "Globals.js";
 import Paxos from "./COMPONENTS/LOGGEDCATEGORIES/paxos";
 
@@ -127,47 +128,47 @@ class App extends Component {
       props: props,
       ...rest
     }) => (
-        <Route
-          {...rest}
-          render={props => {
-            // console.log(props, rest, isLoggedIn);
-            if (isLoggedIn) {
-              if (props.location.pathname === "/") {
-                return (
-                  <Redirect
-                    to={{
-                      pathname: "/login",
-                      state: { from: props.location }
-                    }}
-                  />
-                );
-              } else {
-                return <Component {...props} LogoutUser={LogoutUser} />;
-              }
+      <Route
+        {...rest}
+        render={props => {
+          // console.log(props, rest, isLoggedIn);
+          if (isLoggedIn) {
+            if (props.location.pathname === "/") {
+              return (
+                <Redirect
+                  to={{
+                    pathname: "/login",
+                    state: { from: props.location }
+                  }}
+                />
+              );
             } else {
-              if (props.location.pathname === "/") {
-                return (
-                  <Redirect
-                    to={{
-                      pathname: "/login",
-                      state: { from: props.location }
-                    }}
-                  />
-                );
-              } else {
-                return (
-                  <Redirect
-                    to={{
-                      pathname: "/login",
-                      state: { from: props.location }
-                    }}
-                  />
-                );
-              }
+              return <Component {...props} LogoutUser={LogoutUser} />;
             }
-          }}
-        />
-      );
+          } else {
+            if (props.location.pathname === "/") {
+              return (
+                <Redirect
+                  to={{
+                    pathname: "/login",
+                    state: { from: props.location }
+                  }}
+                />
+              );
+            } else {
+              return (
+                <Redirect
+                  to={{
+                    pathname: "/login",
+                    state: { from: props.location }
+                  }}
+                />
+              );
+            }
+          }
+        }}
+      />
+    );
 
     let theme = {
       mode: this.state.theme
@@ -319,6 +320,11 @@ class App extends Component {
                       path="/exchange-trade1"
                       title="Iframe"
                       component={SimplexView}
+                    />
+                    <Route
+                      path="/simplex-mobile"
+                      title="Simplex for mobile"
+                      component={SimplexMobile}
                     />
                     <RestrictedRoute
                       path="/"
