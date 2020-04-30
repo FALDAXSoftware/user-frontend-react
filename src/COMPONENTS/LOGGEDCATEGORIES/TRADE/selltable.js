@@ -63,7 +63,7 @@ class SellTable extends Component {
     // var self = this;
     if (this.props.io) {
       this.props.io.on("sell-book-data", (data) => {
-        // console.log("^^^^data", data);
+        console.log("^^^^sell-data", data);
         this.updateData(data);
       });
     }
@@ -277,6 +277,7 @@ class SellTable extends Component {
       lastsum: res.total || 0,
       result: row,
     });
+
   }
 
   render() {
@@ -287,7 +288,7 @@ class SellTable extends Component {
         </BBC2>
         <TotalBTC>
           {this.t("conversion:total_text.message")}:{" "}
-          {this.state.lastsum && this.state.lastsum.toFixed(8)}{" "}
+          {this.state.lastsum && parseFloat(this.state.lastsum).toFixed(8)}{" "}
           {this.state.crypto}
         </TotalBTC>
         <BuyTable>

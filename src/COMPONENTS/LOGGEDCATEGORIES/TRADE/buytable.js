@@ -281,7 +281,7 @@ class BuyTABLE extends Component {
         </BBC>
         <TotalBTC>
           {this.t("conversion:total_text.message")}:{" "}
-          {this.state.lastsum && this.state.lastsum.toFixed(8)}{" "}
+          {this.state.lastsum && parseFloat(this.state.lastsum).toFixed(8)}{" "}
           {this.state.currency}
         </TotalBTC>
         <BuyTable>
