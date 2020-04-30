@@ -233,7 +233,7 @@ class OrderTrade extends Component {
                               <span
                                 onClick={() =>
                                   self.cancelOrder(
-                                    data.encript_id,
+                                    data.id,
                                     data.side,
                                     data.order_type
                                   )
