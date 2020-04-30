@@ -82,8 +82,8 @@ const routes = [
   },
   {
     exact: false,
-    path: "/chart",
-    component: () => <Tradingviewchart io={io} />,
+    path: "/chart/:pair",
+    component: (props) => (<Tradingviewchart io={io} />),
   },
   {
     exact: false,
@@ -281,8 +281,8 @@ class AppRouter extends Component {
           })}
           <Route
             component={NotFound}
-            // path="/privacy-policy"
-            // loc="https://meetflo.zendesk.com/hc/en-us/articles/230425728-Privacy-Policies"
+          // path="/privacy-policy"
+          // loc="https://meetflo.zendesk.com/hc/en-us/articles/230425728-Privacy-Policies"
           />
           {/* <Route
   path="/privacy-policy"
