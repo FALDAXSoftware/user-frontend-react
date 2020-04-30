@@ -101,7 +101,7 @@ const GreyWrapTrade = styled(GreyWrap)`
     margin: 10px;
     overflow: hidden;
     background-color: ${(props) =>
-      props.theme.mode === "dark" ? "#041b2c" : "white"};
+    props.theme.mode === "dark" ? "#041b2c" : "white"};
     border-radius: 5px;
     -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -113,7 +113,7 @@ const GreyWrapTrade = styled(GreyWrap)`
     margin: 10px;
     overflow: auto;
     background-color: ${(props) =>
-      props.theme.mode === "dark" ? "#041b2c" : "white"};
+    props.theme.mode === "dark" ? "#041b2c" : "white"};
     border-radius: 5px;
     -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -125,7 +125,7 @@ const GreyWrapTrade = styled(GreyWrap)`
     margin: 10px;
     overflow: auto;
     background-color: ${(props) =>
-      props.theme.mode === "dark" ? "#041b2c" : "white"};
+    props.theme.mode === "dark" ? "#041b2c" : "white"};
     border-radius: 5px;
     -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -137,7 +137,7 @@ const GreyWrapTrade = styled(GreyWrap)`
     margin: 10px;
     overflow: auto;
     background-color: ${(props) =>
-      props.theme.mode === "dark" ? "#041b2c" : "white"};
+    props.theme.mode === "dark" ? "#041b2c" : "white"};
     border-radius: 5px;
     -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -149,7 +149,7 @@ const GreyWrapTrade = styled(GreyWrap)`
     margin: 10px;
     overflow: auto;
     background-color: ${(props) =>
-      props.theme.mode === "dark" ? "#041b2c" : "white"};
+    props.theme.mode === "dark" ? "#041b2c" : "white"};
     border-radius: 5px;
     -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -161,7 +161,7 @@ const GreyWrapTrade = styled(GreyWrap)`
     margin: 10px;
     overflow: auto;
     background-color: ${(props) =>
-      props.theme.mode === "dark" ? "#041b2c" : "white"};
+    props.theme.mode === "dark" ? "#041b2c" : "white"};
     border-radius: 5px;
     -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -173,7 +173,7 @@ const GreyWrapTrade = styled(GreyWrap)`
     margin: 10px;
     overflow: auto;
     background-color: ${(props) =>
-      props.theme.mode === "dark" ? "#041b2c" : "white"};
+    props.theme.mode === "dark" ? "#041b2c" : "white"};
     border-radius: 5px;
     -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -184,13 +184,13 @@ const GreyWrapTrade = styled(GreyWrap)`
 const RGL = styled(ResponsiveReactGridLayout)`
   & .react-resizable-handle::after {
     border-right: ${(props) =>
-      props.theme.mode === "dark"
-        ? "2px solid rgb(255, 255, 255) !important"
-        : ""};
+    props.theme.mode === "dark"
+      ? "2px solid rgb(255, 255, 255) !important"
+      : ""};
     border-bottom: ${(props) =>
-      props.theme.mode === "dark"
-        ? "2px solid rgb(255, 255, 255) !important"
-        : ""};
+    props.theme.mode === "dark"
+      ? "2px solid rgb(255, 255, 255) !important"
+      : ""};
   }
 `;
 
@@ -589,7 +589,7 @@ class Trade extends Component {
             responseData.err
           );
       })
-      .catch((error) => {});
+      .catch((error) => { });
   }
 
   // created by Meghal Patel at 2019-04-27 15:24.
@@ -670,7 +670,7 @@ class Trade extends Component {
   searchInstu(e) {
     var search = e.target.value;
     if (search.trim() !== "") {
-      var searchedInstu = this.state.InsData.filter(function(temp) {
+      var searchedInstu = this.state.InsData.filter(function (temp) {
         if (temp.name.toLowerCase().includes(search.toLowerCase())) {
           return true;
         } else {
@@ -1347,7 +1347,7 @@ class Trade extends Component {
                 <div key="tradeView">
                   <div
                     className="tradeView"
-                    // style={{ height: "100%", width: "100%" }}
+                  // style={{ height: "100%", width: "100%" }}
                   >
                     <MainTV>
                       <TVBar>
@@ -1359,7 +1359,7 @@ class Trade extends Component {
                         <div
                           onClick={() => {
                             window.open(
-                              tvChartURL,
+                              tvChartURL + `/${this.state.crypto}-${this.state.currency}`,
                               "_blank",
                               "location=yes,height=800,width=1000,scrollbars=yes,status=yes"
                             );
@@ -1385,13 +1385,13 @@ class Trade extends Component {
                 <div key="instruments">
                   <div
                     className="instruments"
-                    // style={{ height: "100%", width: "100%", overflow: "auto" }}
+                  // style={{ height: "100%", width: "100%", overflow: "auto" }}
                   >
                     {this.state.insLoader === true ? (
                       <Loader color="#1990ff" width="50" height="50" />
                     ) : (
-                      ""
-                    )}
+                        ""
+                      )}
                     <LeftDiv1>
                       <Instru>{this.t("instruments_text.message")}</Instru>
                       {/* {this.state.InsData ? (
@@ -1451,13 +1451,13 @@ class Trade extends Component {
                 <div key="tradeAction">
                   <div
                     className="tradeAction"
-                    // style={{ height: "100%", width: "100%", overflow: "auto" }}
+                  // style={{ height: "100%", width: "100%", overflow: "auto" }}
                   >
                     {this.state.userBalLoader === true ? (
                       <Loader color="#1990ff" width="50" height="50" />
                     ) : (
-                      ""
-                    )}
+                        ""
+                      )}
                     <RightDiv1>
                       <TabsRight
                         defaultActiveKey="1"
@@ -1498,7 +1498,7 @@ class Trade extends Component {
                 <div key="buysellBook">
                   <div
                     className="buysellBook"
-                    // style={{ height: "100%", width: "100%", overflow: "auto" }}
+                  // style={{ height: "100%", width: "100%", overflow: "auto" }}
                   >
                     {/* {this.state.buySellLoader === true ? (
                       <Loader color="#1990ff" width="50" height="50" />
@@ -1519,13 +1519,13 @@ class Trade extends Component {
                 <div key="depthChart">
                   <div
                     className="depthChart"
-                    // style={{ height: "100%", width: "100%", overflow: "auto" }}
+                  // style={{ height: "100%", width: "100%", overflow: "auto" }}
                   >
                     {this.state.depthLoader === true ? (
                       <Loader color="#1990ff" width="50" height="50" />
                     ) : (
-                      ""
-                    )}
+                        ""
+                      )}
                     <RightDiv>
                       <DepthChart
                         crypto={this.state.crypto}
@@ -1542,13 +1542,13 @@ class Trade extends Component {
                 <div key="orderHistory">
                   <div
                     className="orderHistory"
-                    // style={{ height: "100%", width: "100%", overflow: "auto" }}
+                  // style={{ height: "100%", width: "100%", overflow: "auto" }}
                   >
                     {this.state.hisLoader === true ? (
                       <Loader color="#1990ff" width="50" height="50" />
                     ) : (
-                      ""
-                    )}
+                        ""
+                      )}
                     <OrderHIstory
                       io={io}
                       hisFunc={(loader) => this.hisFunc(loader)}
@@ -1559,13 +1559,13 @@ class Trade extends Component {
                 <div key="myorder">
                   <div
                     className="myorder"
-                    // style={{ height: "100%", width: "100%", overflow: "auto" }}
+                  // style={{ height: "100%", width: "100%", overflow: "auto" }}
                   >
                     {this.state.orderTradeLoader === true ? (
                       <Loader color="#1990ff" width="50" height="50" />
                     ) : (
-                      ""
-                    )}
+                        ""
+                      )}
                     <LeftDiv2>
                       <OrderWrap>
                         <InstruOrder>

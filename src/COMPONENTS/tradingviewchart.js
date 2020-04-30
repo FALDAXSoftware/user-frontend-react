@@ -3,7 +3,9 @@ import React from "react";
 import { connect } from "react-redux";
 import { widget } from "CHARTING_LIB/charting_library.min";
 import { globalVariables } from "Globals.js";
-
+import {
+  withRouter
+} from "react-router-dom";
 import styled from "styled-components";
 const API_URL = globalVariables.API_URL;
 
@@ -113,9 +115,14 @@ class TradingViewChart extends React.Component {
   }
 
   componentDidMount() {
-    console.log("^^^prods", window.location.href);
+    console.log("^^^prods", window.location.href, this.props, this.props.match.params.pair);
     let currency, crypto;
-    if (this.props.cryptoPair.crypto === undefined) {
+
+    if (this.props.match.params.pair) {
+      currency = this.props.match.params.pair.split("-")[1];
+      crypto = this.props.match.params.pair.split("-")[0];
+    }
+    else if (this.props.cryptoPair.crypto === undefined) {
       currency = this.state.currency;
       crypto = this.state.crypto;
     } else {
@@ -200,4 +207,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, null)(TradingViewChart);
+export default withRouter(connect(mapStateToProps, null)(TradingViewChart));
