@@ -191,8 +191,10 @@ class BuyTABLE extends Component {
         SOCKET is called to update buybook table data according to room provided.
     */
 
-  updateData(data) {
+  updateData(res) {
     let self = this;
+    let data = res.data
+
     // console.log("buyrow------------", data);
     const row = [];
     var value = [];
@@ -266,8 +268,8 @@ class BuyTABLE extends Component {
     this.setState({
       loader: false,
       // data: rows,
-      lastsum: sum,
-      result: row,
+      lastsum: res.total || 0,
+      result: row
     });
   }
 

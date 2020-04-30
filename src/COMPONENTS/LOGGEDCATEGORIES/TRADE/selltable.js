@@ -182,8 +182,9 @@ class SellTable extends Component {
         SOCKET is connected and new data will be generated again and again and it will be updated in sell book.
     */
 
-  updateData(data) {
+  updateData(res) {
     let self = this;
+    let data = res.data
     // console.log("buyrow------------", data);
     const row = [];
     let sum = 0;
@@ -273,7 +274,7 @@ class SellTable extends Component {
     this.setState({
       loader: false,
       // data: rows,
-      lastsum: sum,
+      lastsum: res.total || 0,
       result: row,
     });
   }
