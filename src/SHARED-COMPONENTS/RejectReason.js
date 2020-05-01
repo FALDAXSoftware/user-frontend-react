@@ -9,7 +9,7 @@ import {
   Col,
   Button,
   Tabs,
-  Progress,
+  Progress
 } from "antd";
 import { withRouter } from "react-router-dom";
 import { globalVariables } from "Globals.js";
@@ -30,7 +30,7 @@ class RejectReason extends Component {
       email_msg: "",
       loader: false,
       activeKey: "1",
-      visible: false,
+      visible: false
     };
     // this.callback = this.callback.bind(this);
     // this.logout = this.logout.bind(this);
@@ -38,14 +38,14 @@ class RejectReason extends Component {
   componentDidMount() {}
   showCofirmModal = () => {
     this.setState({
-      visible: true,
+      visible: true
     });
   };
 
-  handleOk = (e) => {
+  handleOk = e => {
     this.setState(
       {
-        visible: false,
+        visible: false
       },
       () => {
         this.logout();
@@ -53,16 +53,16 @@ class RejectReason extends Component {
     );
   };
 
-  handleCancel = (e) => {
+  handleCancel = e => {
     this.setState({
-      visible: false,
+      visible: false
     });
   };
-  handleComing = (e) => {
+  handleComing = e => {
     this.setState({ comingSoon: false });
   };
 
-  comingCancel = (e) => {
+  comingCancel = e => {
     this.setState({ comingSoon: false });
     this.props.comingCancel(e);
   };
@@ -81,8 +81,8 @@ class RejectReason extends Component {
             </div>
           }
           visible={this.props.visible}
-          onOk={(e) => this.handleComing()}
-          onCancel={(e) => this.comingCancel(e)}
+          onOk={e => this.handleComing()}
+          onCancel={e => this.comingCancel(e)}
           //   closable={false}
           //   maskClosable={false}
           footer={null}
@@ -92,14 +92,6 @@ class RejectReason extends Component {
         >
           <ModalAgreeWrap className="reject_reason_div">
             <div>{this.props.text}</div>
-            {/* <div>
-              orem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book. It has
-              survived not only five centuries, but also the leap into
-              electronic typesetting, remaining essentially unchanged.
-            </div> */}
           </ModalAgreeWrap>
         </Modal>
       </div>
@@ -112,14 +104,13 @@ function mapStateToProps(state, ownProps) {
     // isLoggedIn: state.simpleReducer.isLoggedIn ? true : false,
     profileDetails: state.simpleReducer.profileDetails
       ? state.simpleReducer.profileDetails.data[0]
-      : "",
+      : ""
   };
 }
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   //Logout: () => dispatch(Logout()),
-  LogoutUser: (isLoggedIn, user_id) =>
-    dispatch(LogoutUser(isLoggedIn, user_id)),
+  LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
 });
 
 // export default withRouter(AgreeTerms);

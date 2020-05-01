@@ -65,13 +65,13 @@ const KYCProgress = styled.div`
     display: none;
   }
 `;
-const DoneWrap = styled.div`
+export const DoneWrap = styled.div`
   text-align: center;
   > .icon-display {
     font-size: 50px;
   }
 `;
-const KycSucc = styled.div`
+export const KycSucc = styled.div`
   width: 80%;
   margin: auto;
   font-size: 20px;

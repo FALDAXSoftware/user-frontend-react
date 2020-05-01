@@ -15,7 +15,7 @@ export const globalVariables = {
 
   // API_URL: "http://localhost:1440", //Mansi's
 
-  // API_URL: "http://06c2d2f9.ngrok.io",
+  API_URL: "http://1c864280.ngrok.io",
 
   // API_URL: "http://7b2d9029.ngrok.io",
 
@@ -32,13 +32,13 @@ export const globalVariables = {
   // API_URL: "https://mainnet-backend.faldax.com", //Pre-Production URL
 
   // API_URL: "http://991e8fb6.ngrok.io/api/v1/tradding/",
-  API_URL: "https://pre-prod-backend.faldax.com", //Pre-Production URL
+  // API_URL: "https://pre-prod-backend.faldax.com", //Pre-Production URL
 
   TRADE_URL: "https://preprod-trade.faldax.com",
 
   //    TRADE_URL: "https://dev-trade.faldax.com", // DEV url
 
-  // TRADE_URL: "http://localhost:3006/"
+  // TRADE_URL: "http://localhost:3006/"s
 
   // API_URL: "https://api.faldax.com", // Live URL
 

@@ -11,6 +11,7 @@ import {
   TierWrap,
   RejectNote,
 } from "../../../STYLED-COMPONENTS/TIER/tierStyle";
+import { DoneWrap, KycSucc } from "./tier_one";
 import { Icon, notification, Tooltip } from "antd";
 import { globalVariables } from "Globals.js";
 import { connect } from "react-redux";
@@ -162,11 +163,14 @@ class TierTwo extends React.Component {
       ssnNote: "",
       reasonPopup: false,
       rejectText: "",
+      forceRejectStatus: false,
+      forceAcceptedStatus: false,
+      forceRejectNote: "",
     };
     this.validator = new SimpleReactValidator({
       ssnValid: {
         message: "Enter a valid SSN number.",
-        rule: function(val, options) {
+        rule: function (val, options) {
           var re = /^\d{3}-\d{2}-\d{4}$/;
           var bool = re.test(String(val));
           return bool;
@@ -233,6 +237,15 @@ class TierTwo extends React.Component {
         console.log("result^^^", result.data);
         this.setState({
           tierData: result.data,
+        });
+      } else if (result.status == 202) {
+        this.setState({
+          forceRejectStatus: true,
+          forceRejectNote: result.data.public_note,
+        });
+      } else if (result.status == 203) {
+        this.setState({
+          forceAcceptedStatus: true,
         });
       } else {
         this.openNotificationWithIcon("error", "Error", result.message);
@@ -354,9 +367,9 @@ class TierTwo extends React.Component {
             if (fileType === "image" && fileSize < 4194304) {
               var fr = new FileReader();
               fr.readAsDataURL(file);
-              fr.onload = function() {
+              fr.onload = function () {
                 var img = new Image();
-                img.onload = function() {
+                img.onload = function () {
                   frontWidth = img.width;
                   frontHeight = img.height;
 
@@ -631,14 +644,20 @@ class TierTwo extends React.Component {
     //   this.state.reUpload2,
     //   this.state.reUpload3
     // );
-    let { is_twofactor_enabled, verified } = this.state;
+    let {
+      is_twofactor_enabled,
+      forceRejectStatus,
+      forceRejectNote,
+      forceAcceptedStatus,
+    } = this.state;
     return (
       <div>
         <Navigation />
         <TierWrapper>
           <KYCWrap>
             <KYCHead>Tier 2 Upgrade</KYCHead>
-            {verified ? (
+
+            {forceRejectStatus ? (
               <TierWrap
                 style={{
                   textAlign: "center",
@@ -646,19 +665,40 @@ class TierTwo extends React.Component {
                   fontSize: "18px",
                 }}
               >
-                <p>Your account is verified to tier 2.</p>
+                <p>
+                  Your request for tier upgrade is rejected by admin due to
+                  below reason.
+                </p>
+                <p>{forceRejectNote}</p>
+                <p>
+                  Feel free to contact us <Link to="/open-ticket">here</Link>
+                </p>
               </TierWrap>
             ) : (
               <div>
-                {this.state.waitingForApproval ? (
+                {forceAcceptedStatus ? (
                   <TierWrap
                     style={{
                       textAlign: "center",
-                      margin: "50px auto",
                       fontSize: "18px",
                     }}
                   >
-                    <p>Your submitted documents are under process.</p>
+                    <DoneWrap>
+                      <Icon
+                        className="icon-display"
+                        type="check-circle"
+                        theme="twoTone"
+                        twoToneColor="#52c41a"
+                      />
+                      <KycSucc>
+                        <span>
+                          <b>Verification Completed.</b>
+                          <br />
+                          <br />
+                          Your Account is Verified successfully to Tier 2.
+                        </span>
+                      </KycSucc>
+                    </DoneWrap>
                   </TierWrap>
                 ) : (
                   <TierWrap>

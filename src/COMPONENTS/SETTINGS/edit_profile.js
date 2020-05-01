@@ -28,11 +28,11 @@ let { API_URL } = globalVariables;
 export const ProfileWrapper = styled.div`
   padding-top: 100px;
   padding-bottom: 30px;
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#01090f" : "#f5f6fa"};
 `;
 export const ProfileDiv = styled.div`
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#041422" : "#ffffff"};
   margin: auto;
   width: 95%;
@@ -47,13 +47,13 @@ const TabsStyle = styled(Tabs)`
     background-color: rgb(0, 170, 250);
   }
   & .ant-tabs-tab-prev-icon > i {
-    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   }
   & .ant-tabs-tab-prev-icon > i {
-    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   }
   & .ant-tabs-tab-next-icon > i {
-    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   }
 `;
 
@@ -61,18 +61,18 @@ class Editprofile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeKey: "1",
+      activeKey: "4",
       user2fastatus: "",
       totalUSDOfWallet: "",
       walletCoins: "",
-      countryAccess: false
+      countryAccess: false,
     };
     this.callback = this.callback.bind(this);
     this.getWalletSummary = this.getWalletSummary.bind(this);
   }
   callback(key) {
     this.setState({
-      activeKey: key
+      activeKey: key,
     });
     if (key == "4") {
       if (
@@ -80,11 +80,11 @@ class Editprofile extends Component {
         this.props.profileDetails.is_kyc_done != "2"
       ) {
         this.setState({
-          countryAccess: true
+          countryAccess: true,
         });
       } else {
         this.setState({
-          countryAccess: false
+          countryAccess: false,
         });
       }
     }
@@ -96,11 +96,11 @@ class Editprofile extends Component {
       this.props.profileDetails.is_kyc_done != "2"
     ) {
       this.setState({
-        countryAccess: true
+        countryAccess: true,
       });
     } else {
       this.setState({
-        countryAccess: false
+        countryAccess: false,
       });
     }
   }
@@ -115,11 +115,11 @@ class Editprofile extends Component {
         newProps.profileDetails.is_kyc_done != "2"
       ) {
         this.setState({
-          countryAccess: true
+          countryAccess: true,
         });
       } else {
         this.setState({
-          countryAccess: false
+          countryAccess: false,
         });
       }
     }
@@ -133,18 +133,18 @@ class Editprofile extends Component {
         newProps.profileDetails.is_kyc_done != "2"
       ) {
         this.setState({
-          countryAccess: true
+          countryAccess: true,
         });
       } else {
         this.setState({
-          countryAccess: false
+          countryAccess: false,
         });
       }
     }
   }
   getWalletSummary() {
     this.setState({
-      loader: true
+      loader: true,
     });
     fetch(API_URL + `/user/deleteAccountCheck`, {
       method: "get",
@@ -152,32 +152,32 @@ class Editprofile extends Component {
         Accept: "application/json",
         "Content-Type": "application/json",
         "Accept-Language": localStorage["i18nextLng"],
-        Authorization: "Bearer " + this.props.isLoggedIn
-      }
+        Authorization: "Bearer " + this.props.isLoggedIn,
+      },
     })
-      .then(response => response.json())
-      .then(responseData => {
+      .then((response) => response.json())
+      .then((responseData) => {
         if (responseData.status == 201) {
           this.setState({
             totalUSDOfWallet: responseData.usd_price.toFixed(2),
             walletCoins: responseData.data,
             user2fastatus: responseData.user2fastatus,
-            loader: false
+            loader: false,
           });
         } else if (responseData.status == 200) {
           this.setState({
             walletCoins: null,
             user2fastatus: responseData.user2fastatus,
-            loader: false
+            loader: false,
           });
         }
       })
-      .catch(error => {});
+      .catch((error) => {});
   }
-  comingCancel = e => {
+  comingCancel = (e) => {
     this.setState(
       {
-        countryAccess: false
+        countryAccess: false,
       },
       () => {
         this.props.history.push("/editProfile");
@@ -205,7 +205,7 @@ class Editprofile extends Component {
               <TabPane tab={t("head_settings.message")} key="3">
                 {this.state.countryAccess ? (
                   <CompleteProfile
-                    comingCancel={e => this.comingCancel(e)}
+                    comingCancel={(e) => this.comingCancel(e)}
                     visible={this.state.countryAccess}
                   />
                 ) : (
@@ -226,7 +226,7 @@ class Editprofile extends Component {
               <TabPane tab={t("head_identity_verification.message")} key="4">
                 {this.state.countryAccess ? (
                   <CompleteProfile
-                    comingCancel={e => this.comingCancel(e)}
+                    comingCancel={(e) => this.comingCancel(e)}
                     visible={this.state.countryAccess}
                   />
                 ) : (
@@ -256,7 +256,7 @@ function mapStateToProps(state) {
         ? state.simpleReducer.profileDetails.data[0]
         : "",
     theme:
-      state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
+      state.themeReducer.theme !== undefined ? state.themeReducer.theme : "",
   };
 }
 
