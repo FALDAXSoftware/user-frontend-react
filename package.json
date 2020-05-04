@@ -20,7 +20,7 @@
     "i18next": "10.4.1",
     "i18next-browser-languagedetector": "^2.1.0",
     "i18next-xhr-backend": "^1.5.1",
-    "moment": "2.18.1",
+    "moment": "2.25.1",
     "moment-locales-webpack-plugin": "1.2.0",
     "moment-timezone": "0.5.13",
     "rc-form": "^2.2.2",
