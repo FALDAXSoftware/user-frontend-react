@@ -184,7 +184,7 @@ class SellTable extends Component {
 
   updateData(res) {
     let self = this;
-    let data = res.data
+    let data = res.data;
     // console.log("buyrow------------", data);
     const row = [];
     let sum = 0;
@@ -277,7 +277,6 @@ class SellTable extends Component {
       lastsum: res.total || 0,
       result: row,
     });
-
   }
 
   render() {
@@ -321,20 +320,21 @@ class SellTable extends Component {
                     border="0"
                   >
                     <tbody>
+                      {console.log("^^^selltabel", this.state.result)}
                       {this.state.result.length ? (
                         this.state.result.map(function (element, index) {
                           return (
                             <tr>
                               {/* <td>{element.my_size.toFixed(8)}</td> */}
-                              <td>{element.amount.toFixed(8)}</td>
-                              <td>{element.ask.toFixed(8)}</td>
-                              <td>{element.total.toFixed(8)}</td>
+                              <td>{element.amount?.toFixed(8)}</td>
+                              <td>{element.ask?.toFixed(8)}</td>
+                              <td>{element.total?.toFixed(8)}</td>
                             </tr>
                           );
                         })
                       ) : (
-                          <NDF>{this.t("wallet:no_data_found_text.message")}</NDF>
-                        )}
+                        <NDF>{this.t("wallet:no_data_found_text.message")}</NDF>
+                      )}
                     </tbody>
                   </TableContent>
                 </Scrollbars>
@@ -347,8 +347,8 @@ class SellTable extends Component {
             <Spin size="small" />
           </SpinSingle>
         ) : (
-            ""
-          )}
+          ""
+        )}
       </div>
     );
   }
