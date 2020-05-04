@@ -193,7 +193,7 @@ class BuyTABLE extends Component {
 
   updateData(res) {
     let self = this;
-    let data = res.data
+    let data = res.data;
 
     // console.log("buyrow------------", data);
     const row = [];
@@ -269,7 +269,7 @@ class BuyTABLE extends Component {
       loader: false,
       // data: rows,
       lastsum: res.total || 0,
-      result: row
+      result: row,
     });
   }
 
@@ -318,15 +318,15 @@ class BuyTABLE extends Component {
                         {this.state.result.map((element) => (
                           <tr>
                             {/* <td>{element.my_size.toFixed(8)}</td> */}
-                            <td>{element.amount.toFixed(8)}</td>
-                            <td>{element.bid.toFixed(8)}</td>
-                            <td>{element.total.toFixed(8)}</td>
+                            <td>{element.amount?.toFixed(8)}</td>
+                            <td>{element.bid?.toFixed(8)}</td>
+                            <td>{element.total?.toFixed(8)}</td>
                           </tr>
                         ))}
                       </tbody>
                     ) : (
-                        <NDF>{this.t("wallet:no_data_found_text.message")}</NDF>
-                      )}
+                      <NDF>{this.t("wallet:no_data_found_text.message")}</NDF>
+                    )}
                   </TableContent>
                 </Scrollbars>
               </ScrollTableContent>
@@ -338,8 +338,8 @@ class BuyTABLE extends Component {
             <Spin size="small" />
           </SpinSingle>
         ) : (
-            ""
-          )}
+          ""
+        )}
       </div>
     );
   }
