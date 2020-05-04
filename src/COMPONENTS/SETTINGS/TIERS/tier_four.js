@@ -8,9 +8,10 @@ import Navigation from "COMPONENTS/NAVIGATIONS/loggednavigation";
 import FooterHome from "COMPONENTS/LANDING/FOOTERS/footer_home";
 import { TierWrapper, KYCHead } from "./tier_one";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import { globalVariables } from "Globals.js";
 import SimpleReactValidator from "simple-react-validator";
+import { DoneWrap, KycSucc } from "./tier_one";
 import {
   TierWrap,
   TierRow,
@@ -137,6 +138,9 @@ class TierFour extends React.Component {
       total_file_size: "",
       reasonPopup: false,
       rejectText: "",
+      forceRejectStatus: false,
+      forceAcceptedStatus: false,
+      forceRejectNote: "",
     };
     this.validator = new SimpleReactValidator();
     this.populateData = this.populateData.bind(this);
@@ -151,14 +155,14 @@ class TierFour extends React.Component {
   //   }
   // }
   componentWillMount() {
-    if (
-      this.props.profileDetails.account_tier == 0 ||
-      this.props.profileDetails.account_tier == 1 ||
-      this.props.profileDetails.account_tier == 2 ||
-      this.props.profileDetails.account_tier == 4
-    ) {
-      this.props.history.push("/");
-    }
+    // if (
+    //   this.props.profileDetails.account_tier == 0 ||
+    //   this.props.profileDetails.account_tier == 1 ||
+    //   this.props.profileDetails.account_tier == 2 ||
+    //   this.props.profileDetails.account_tier == 4
+    // ) {
+    //   this.props.history.push("/");
+    // }
     // if (this.props.profileDetails.account_tier !== 3) {
     //   this.props.history.push("/");
     // }
@@ -185,6 +189,15 @@ class TierFour extends React.Component {
       if (result.status == 200) {
         this.setState({
           tierData: result.data,
+        });
+      } else if (result.status == 202) {
+        this.setState({
+          forceRejectStatus: true,
+          forceRejectNote: result.data.public_note,
+        });
+      } else if (result.status == 203) {
+        this.setState({
+          forceAcceptedStatus: true,
         });
       } else {
         this.openNotificationWithIcon("error", "Error", result.message);
@@ -765,7 +778,7 @@ class TierFour extends React.Component {
       let index = 1;
       let upload_flag1 = 0;
       if (this.state.reUploadFlag) {
-        Object.size = function(obj) {
+        Object.size = function (obj) {
           var size = 0,
             key;
           for (key in obj) {
@@ -818,7 +831,7 @@ class TierFour extends React.Component {
           }
         }
       } else {
-        Object.size = function(obj) {
+        Object.size = function (obj) {
           var size = 0,
             key;
           for (key in obj) {
@@ -941,6 +954,9 @@ class TierFour extends React.Component {
       privacy_policy_flag,
       aml_policy_flag,
       terms_of_service_flag,
+      forceRejectStatus,
+      forceRejectNote,
+      forceAcceptedStatus,
     } = this.state;
     return (
       <div>
@@ -948,1915 +964,2028 @@ class TierFour extends React.Component {
         <TierWrapper>
           <KYCWrap>
             <KYCHead>Tier 4 Upgrade</KYCHead>
-            <TierWrap>
-              {/* AML Questionnaire */}
-              <TierRow>
-                <TierLabel>
-                  <label>AML Questionnaire</label>
-                  <a href={aml_questionnaire} target="_blank" download>
-                    Click Here to Download the Form
-                  </a>
-                </TierLabel>
-                <TierUpload>
-                  <TierDropWrap
-                    className={
-                      documents.aml_questionnaire &&
-                      documents.aml_questionnaire.file &&
-                      documents.aml_questionnaire.file.name
-                        ? "has_file"
-                        : !this.state.reUpload1
-                        ? "disabled_btn"
-                        : ""
-                    }
+            {forceRejectStatus ? (
+              <TierWrap
+                style={{
+                  textAlign: "center",
+                  margin: "50px auto",
+                  fontSize: "18px",
+                }}
+              >
+                <p>
+                  Your request for tier upgrade is rejected by admin due to
+                  below reason.
+                </p>
+                <p>{forceRejectNote}</p>
+                <p>
+                  Feel free to contact us <Link to="/open-ticket">here</Link>
+                </p>
+              </TierWrap>
+            ) : (
+              <div>
+                {forceAcceptedStatus ? (
+                  <TierWrap
+                    style={{
+                      textAlign: "center",
+                      fontSize: "18px",
+                    }}
                   >
-                    <TierDropzoneStyle
-                      accept=".pdf,.doc,.docx"
-                      className={
-                        documents.aml_questionnaire &&
-                        documents.aml_questionnaire.file &&
-                        documents.aml_questionnaire.file.name
-                          ? "tier_dropzone has_file"
-                          : "tier_dropzone"
-                      }
-                      multiple={false}
-                      onDrop={this.onDrop.bind(this, "aml_questionnaire")}
-                      onFileDialogCancel={this.onCancel.bind(this)}
-                      disabled={!this.state.reUpload1}
-                    >
-                      {aml_flag === null && (
-                        <div>
-                          <IconS type="upload" />
-                          <FileSelectText>Upload</FileSelectText>
-                        </div>
-                      )}
-                      {aml_flag === false && (
-                        <div>
-                          {/* <IconS type="close-square" /> */}
-                          <FileSelectText>Wrong File Selected</FileSelectText>
-                        </div>
-                      )}
-                      {aml_flag === true && (
-                        <div>
-                          {/* <IconS type="check-square" /> */}
-                          <FileSelectText>
-                            {documents.aml_questionnaire.file.name}
-                          </FileSelectText>
-                        </div>
-                      )}
-                    </TierDropzoneStyle>
-                    {documents.aml_questionnaire &&
-                      documents.aml_questionnaire.file &&
-                      documents.aml_questionnaire.file.name && (
-                        <Icon
-                          className="drop_zone_icon"
-                          onClick={() => {
-                            let temp = documents;
-                            temp["aml_questionnaire"] = {};
-                            this.setState({
-                              documents: temp,
-                              aml_flag: null,
-                            });
-                          }}
-                          type="close"
-                        />
-                      )}
-                  </TierDropWrap>
-                  <SupportText className="tier_support_text">
-                    Supported format: .doc, .docx, .pdf.
-                  </SupportText>
-                  {this.state.reUpload1 &&
-                    this.validator.message(
-                      "aml_questionnaire",
-                      aml_flag,
-                      "required",
-                      "tier-text-danger-validation"
-                    )}
-                </TierUpload>
-                {this.state.tierData.length > 0 ? (
-                  <TierDocBox>
-                    {this.state.amlQuestionnaireStatus === null && (
-                      <TierDocStatus>
-                        <Icon type="warning" />
-                        <span>Under Approval</span>
-                      </TierDocStatus>
-                    )}
-                    {this.state.amlQuestionnaireStatus === true && (
-                      <TierDocStatus>
-                        <Icon type="check" />
-                        <span>Verified</span>
-                      </TierDocStatus>
-                    )}
-                    {this.state.amlQuestionnaireStatus === false && (
-                      <TierDocStatus>
-                        <Icon type="close" />
-                        <span>Reupload it</span>
-                      </TierDocStatus>
-                    )}
-                    {this.state.amlQuestionnaireNote && (
+                    <DoneWrap>
                       <Icon
-                        type="message"
-                        onClick={() => {
-                          this.setState({
-                            reasonPopup: true,
-                            rejectText: this.state.amlQuestionnaireNote,
-                          });
-                        }}
+                        className="icon-display"
+                        type="check-circle"
+                        theme="twoTone"
+                        twoToneColor="#52c41a"
                       />
-                    )}
-                  </TierDocBox>
+                      <KycSucc>
+                        <span>
+                          <b>Verification Completed.</b>
+                          <br />
+                          <br />
+                          Your Account is Verified successfully to Tier 4.
+                        </span>
+                      </KycSucc>
+                    </DoneWrap>
+                  </TierWrap>
                 ) : (
-                  <TierDocBox></TierDocBox>
-                )}
-              </TierRow>
-              {/* Comfort Letter */}
-              <TierRow>
-                <TierLabel>
-                  <label>Comfort Letter</label>
-                  <a href={comfort_letter} target="_blank" download>
-                    Click Here to Download the Form
-                  </a>
-                </TierLabel>
-                <TierUpload>
-                  <TierDropWrap
-                    className={
-                      documents.comfort_letter &&
-                      documents.comfort_letter.file &&
-                      documents.comfort_letter.file.name
-                        ? "has_file"
-                        : !this.state.reUpload2
-                        ? "disabled_btn"
-                        : ""
-                    }
-                  >
-                    <TierDropzoneStyle
-                      accept=".pdf,.doc,.docx"
-                      className={
-                        documents.comfort_letter &&
-                        documents.comfort_letter.file &&
-                        documents.comfort_letter.file.name
-                          ? "tier_dropzone has_file"
-                          : "tier_dropzone"
-                      }
-                      multiple={false}
-                      onDrop={this.onDrop.bind(this, "comfort_letter")}
-                      onFileDialogCancel={this.onCancel.bind(this)}
-                      disabled={!this.state.reUpload2}
-                    >
-                      {comfort_flag === null && (
-                        <div>
-                          <IconS type="upload" />
-                          <FileSelectText>Upload</FileSelectText>
-                        </div>
+                  <TierWrap>
+                    {/* AML Questionnaire */}
+                    <TierRow>
+                      <TierLabel>
+                        <label>AML Questionnaire</label>
+                        <a href={aml_questionnaire} target="_blank" download>
+                          Click Here to Download the Form
+                        </a>
+                      </TierLabel>
+                      <TierUpload>
+                        <TierDropWrap
+                          className={
+                            documents.aml_questionnaire &&
+                            documents.aml_questionnaire.file &&
+                            documents.aml_questionnaire.file.name
+                              ? "has_file"
+                              : !this.state.reUpload1
+                              ? "disabled_btn"
+                              : ""
+                          }
+                        >
+                          <TierDropzoneStyle
+                            accept=".pdf,.doc,.docx"
+                            className={
+                              documents.aml_questionnaire &&
+                              documents.aml_questionnaire.file &&
+                              documents.aml_questionnaire.file.name
+                                ? "tier_dropzone has_file"
+                                : "tier_dropzone"
+                            }
+                            multiple={false}
+                            onDrop={this.onDrop.bind(this, "aml_questionnaire")}
+                            onFileDialogCancel={this.onCancel.bind(this)}
+                            disabled={!this.state.reUpload1}
+                          >
+                            {aml_flag === null && (
+                              <div>
+                                <IconS type="upload" />
+                                <FileSelectText>Upload</FileSelectText>
+                              </div>
+                            )}
+                            {aml_flag === false && (
+                              <div>
+                                {/* <IconS type="close-square" /> */}
+                                <FileSelectText>
+                                  Wrong File Selected
+                                </FileSelectText>
+                              </div>
+                            )}
+                            {aml_flag === true && (
+                              <div>
+                                {/* <IconS type="check-square" /> */}
+                                <FileSelectText>
+                                  {documents.aml_questionnaire.file.name}
+                                </FileSelectText>
+                              </div>
+                            )}
+                          </TierDropzoneStyle>
+                          {documents.aml_questionnaire &&
+                            documents.aml_questionnaire.file &&
+                            documents.aml_questionnaire.file.name && (
+                              <Icon
+                                className="drop_zone_icon"
+                                onClick={() => {
+                                  let temp = documents;
+                                  temp["aml_questionnaire"] = {};
+                                  this.setState({
+                                    documents: temp,
+                                    aml_flag: null,
+                                  });
+                                }}
+                                type="close"
+                              />
+                            )}
+                        </TierDropWrap>
+                        <SupportText className="tier_support_text">
+                          Supported format: .doc, .docx, .pdf.
+                        </SupportText>
+                        {this.state.reUpload1 &&
+                          this.validator.message(
+                            "aml_questionnaire",
+                            aml_flag,
+                            "required",
+                            "tier-text-danger-validation"
+                          )}
+                      </TierUpload>
+                      {this.state.tierData.length > 0 ? (
+                        <TierDocBox>
+                          {this.state.amlQuestionnaireStatus === null && (
+                            <TierDocStatus>
+                              <Icon type="warning" />
+                              <span>Under Approval</span>
+                            </TierDocStatus>
+                          )}
+                          {this.state.amlQuestionnaireStatus === true && (
+                            <TierDocStatus>
+                              <Icon type="check" />
+                              <span>Verified</span>
+                            </TierDocStatus>
+                          )}
+                          {this.state.amlQuestionnaireStatus === false && (
+                            <TierDocStatus>
+                              <Icon type="close" />
+                              <span>Reupload it</span>
+                            </TierDocStatus>
+                          )}
+                          {this.state.amlQuestionnaireNote && (
+                            <Icon
+                              type="message"
+                              onClick={() => {
+                                this.setState({
+                                  reasonPopup: true,
+                                  rejectText: this.state.amlQuestionnaireNote,
+                                });
+                              }}
+                            />
+                          )}
+                        </TierDocBox>
+                      ) : (
+                        <TierDocBox></TierDocBox>
                       )}
-                      {comfort_flag === false && (
-                        <div>
-                          {/* <IconS type="close-square" /> */}
-                          <FileSelectText>Wrong File Selected</FileSelectText>
-                        </div>
+                    </TierRow>
+                    {/* Comfort Letter */}
+                    <TierRow>
+                      <TierLabel>
+                        <label>Comfort Letter</label>
+                        <a href={comfort_letter} target="_blank" download>
+                          Click Here to Download the Form
+                        </a>
+                      </TierLabel>
+                      <TierUpload>
+                        <TierDropWrap
+                          className={
+                            documents.comfort_letter &&
+                            documents.comfort_letter.file &&
+                            documents.comfort_letter.file.name
+                              ? "has_file"
+                              : !this.state.reUpload2
+                              ? "disabled_btn"
+                              : ""
+                          }
+                        >
+                          <TierDropzoneStyle
+                            accept=".pdf,.doc,.docx"
+                            className={
+                              documents.comfort_letter &&
+                              documents.comfort_letter.file &&
+                              documents.comfort_letter.file.name
+                                ? "tier_dropzone has_file"
+                                : "tier_dropzone"
+                            }
+                            multiple={false}
+                            onDrop={this.onDrop.bind(this, "comfort_letter")}
+                            onFileDialogCancel={this.onCancel.bind(this)}
+                            disabled={!this.state.reUpload2}
+                          >
+                            {comfort_flag === null && (
+                              <div>
+                                <IconS type="upload" />
+                                <FileSelectText>Upload</FileSelectText>
+                              </div>
+                            )}
+                            {comfort_flag === false && (
+                              <div>
+                                {/* <IconS type="close-square" /> */}
+                                <FileSelectText>
+                                  Wrong File Selected
+                                </FileSelectText>
+                              </div>
+                            )}
+                            {comfort_flag === true && (
+                              <div>
+                                {/* <IconS type="check-square" /> */}
+                                <FileSelectText>
+                                  {documents.comfort_letter.file.name}
+                                </FileSelectText>
+                              </div>
+                            )}
+                          </TierDropzoneStyle>
+                          {documents.comfort_letter &&
+                            documents.comfort_letter.file &&
+                            documents.comfort_letter.file.name && (
+                              <Icon
+                                className="drop_zone_icon"
+                                onClick={() => {
+                                  let temp = documents;
+                                  temp["comfort_letter"] = {};
+                                  this.setState({
+                                    documents: temp,
+                                    comfort_flag: null,
+                                  });
+                                }}
+                                type="close"
+                              />
+                            )}
+                        </TierDropWrap>
+                        <SupportText className="tier_support_text">
+                          Supported format: .doc, .docx, .pdf.
+                        </SupportText>
+                        {this.state.reUpload2 &&
+                          this.validator.message(
+                            "comfort_letter",
+                            comfort_flag,
+                            "required",
+                            "tier-text-danger-validation"
+                          )}
+                      </TierUpload>
+                      {this.state.tierData.length > 0 ? (
+                        <TierDocBox>
+                          {this.state.comfortLetterStatus === null && (
+                            <TierDocStatus>
+                              <Icon type="warning" />
+                              <span>Under Approval</span>
+                            </TierDocStatus>
+                          )}
+                          {this.state.comfortLetterStatus === true && (
+                            <TierDocStatus>
+                              <Icon type="check" />
+                              <span>Verified</span>
+                            </TierDocStatus>
+                          )}
+                          {this.state.comfortLetterStatus === false && (
+                            <TierDocStatus>
+                              <Icon type="close" />
+                              <span>Reupload it</span>
+                            </TierDocStatus>
+                          )}
+                          {this.state.comfortLetterNote && (
+                            <Icon
+                              type="message"
+                              onClick={() => {
+                                this.setState({
+                                  reasonPopup: true,
+                                  rejectText: this.state.comfortLetterNote,
+                                });
+                              }}
+                            />
+                          )}
+                        </TierDocBox>
+                      ) : (
+                        <TierDocBox></TierDocBox>
                       )}
-                      {comfort_flag === true && (
-                        <div>
-                          {/* <IconS type="check-square" /> */}
-                          <FileSelectText>
-                            {documents.comfort_letter.file.name}
-                          </FileSelectText>
-                        </div>
+                    </TierRow>
+                    {/* Board Resolution */}
+                    <TierRow>
+                      <TierLabel>
+                        <label>Board Resolution</label>
+                        <a href={board_resolution} target="_blank" download>
+                          Click Here to Download the Form
+                        </a>
+                      </TierLabel>
+                      <TierUpload>
+                        <TierDropWrap
+                          className={
+                            documents.board_resolution &&
+                            documents.board_resolution.file &&
+                            documents.board_resolution.file.name
+                              ? "has_file"
+                              : !this.state.reUpload3
+                              ? "disabled_btn"
+                              : ""
+                          }
+                        >
+                          <TierDropzoneStyle
+                            accept=".pdf,.doc,.docx"
+                            className={
+                              documents.board_resolution &&
+                              documents.board_resolution.file &&
+                              documents.board_resolution.file.name
+                                ? "tier_dropzone has_file"
+                                : "tier_dropzone"
+                            }
+                            multiple={false}
+                            onDrop={this.onDrop.bind(this, "board_resolution")}
+                            onFileDialogCancel={this.onCancel.bind(this)}
+                            disabled={!this.state.reUpload3}
+                          >
+                            {board_flag === null && (
+                              <div>
+                                <IconS type="upload" />
+                                <FileSelectText>Upload</FileSelectText>
+                              </div>
+                            )}
+                            {board_flag === false && (
+                              <div>
+                                <FileSelectText>
+                                  Wrong File Selected
+                                </FileSelectText>
+                              </div>
+                            )}
+                            {board_flag === true && (
+                              <div>
+                                <FileSelectText>
+                                  {documents.board_resolution.file.name}
+                                </FileSelectText>
+                              </div>
+                            )}
+                          </TierDropzoneStyle>
+                          {documents.board_resolution &&
+                            documents.board_resolution.file &&
+                            documents.board_resolution.file.name && (
+                              <Icon
+                                className="drop_zone_icon"
+                                onClick={() => {
+                                  let temp = documents;
+                                  temp["board_resolution"] = {};
+                                  this.setState({
+                                    documents: temp,
+                                    board_flag: null,
+                                  });
+                                }}
+                                type="close"
+                              />
+                            )}
+                        </TierDropWrap>
+                        <SupportText className="tier_support_text">
+                          Supported format: .doc, .docx, .pdf.
+                        </SupportText>
+                        {this.state.reUpload3 &&
+                          this.validator.message(
+                            "board_resolution",
+                            board_flag,
+                            "required",
+                            "tier-text-danger-validation"
+                          )}
+                      </TierUpload>
+                      {this.state.tierData.length > 0 ? (
+                        <TierDocBox>
+                          {this.state.boardResolutionStatus === null && (
+                            <TierDocStatus>
+                              <Icon type="warning" />
+                              <span>Under Approval</span>
+                            </TierDocStatus>
+                          )}
+                          {this.state.boardResolutionStatus === true && (
+                            <TierDocStatus>
+                              <Icon type="check" />
+                              <span>Verified</span>
+                            </TierDocStatus>
+                          )}
+                          {this.state.boardResolutionStatus === false && (
+                            <TierDocStatus>
+                              <Icon type="close" />
+                              <span>Reupload it</span>
+                            </TierDocStatus>
+                          )}
+                          {this.state.boardResolutionNote && (
+                            <Icon
+                              type="message"
+                              onClick={() => {
+                                this.setState({
+                                  reasonPopup: true,
+                                  rejectText: this.state.boardResolutionNote,
+                                });
+                              }}
+                            />
+                          )}
+                        </TierDocBox>
+                      ) : (
+                        <TierDocBox></TierDocBox>
                       )}
-                    </TierDropzoneStyle>
-                    {documents.comfort_letter &&
-                      documents.comfort_letter.file &&
-                      documents.comfort_letter.file.name && (
-                        <Icon
-                          className="drop_zone_icon"
-                          onClick={() => {
-                            let temp = documents;
-                            temp["comfort_letter"] = {};
-                            this.setState({
-                              documents: temp,
-                              comfort_flag: null,
-                            });
-                          }}
-                          type="close"
-                        />
+                    </TierRow>
+                    {/* 2 Months Bank Statements */}
+                    <TierRow>
+                      <TierLabel>
+                        <label>2 Months Bank Statements</label>
+                      </TierLabel>
+                      <TierUpload>
+                        <TierDropWrap
+                          className={
+                            documents.bank_statements &&
+                            documents.bank_statements.file &&
+                            documents.bank_statements.file.name
+                              ? "has_file"
+                              : !this.state.reUpload4
+                              ? "disabled_btn"
+                              : ""
+                          }
+                        >
+                          <TierDropzoneStyle
+                            accept=".pdf,.doc,.docx"
+                            className={
+                              documents.bank_statements &&
+                              documents.bank_statements.file &&
+                              documents.bank_statements.file.name
+                                ? "tier_dropzone has_file"
+                                : "tier_dropzone"
+                            }
+                            multiple={false}
+                            onDrop={this.onDrop.bind(this, "bank_statements")}
+                            onFileDialogCancel={this.onCancel.bind(this)}
+                            disabled={!this.state.reUpload4}
+                          >
+                            {bank_flag === null && (
+                              <div>
+                                <IconS type="upload" />
+                                <FileSelectText>Upload</FileSelectText>
+                              </div>
+                            )}
+                            {bank_flag === false && (
+                              <div>
+                                <FileSelectText>
+                                  Wrong File Selected
+                                </FileSelectText>
+                              </div>
+                            )}
+                            {bank_flag === true && (
+                              <div>
+                                <FileSelectText>
+                                  {documents.bank_statements.file.name}
+                                </FileSelectText>
+                              </div>
+                            )}
+                          </TierDropzoneStyle>
+                          {documents.bank_statements &&
+                            documents.bank_statements.file &&
+                            documents.bank_statements.file.name && (
+                              <Icon
+                                className="drop_zone_icon"
+                                onClick={() => {
+                                  let temp = documents;
+                                  temp["bank_statements"] = {};
+                                  this.setState({
+                                    documents: temp,
+                                    bank_flag: null,
+                                  });
+                                }}
+                                type="close"
+                              />
+                            )}
+                        </TierDropWrap>
+                        <SupportText className="tier_support_text">
+                          Supported format: .doc, .docx, .pdf.
+                        </SupportText>
+                        {this.state.reUpload4 &&
+                          this.validator.message(
+                            "bank_statements",
+                            bank_flag,
+                            "required",
+                            "tier-text-danger-validation"
+                          )}
+                      </TierUpload>
+                      {this.state.tierData.length > 0 ? (
+                        <TierDocBox>
+                          {this.state.bankStatementStatus === null && (
+                            <TierDocStatus>
+                              <Icon type="warning" />
+                              <span>Under Approval</span>
+                            </TierDocStatus>
+                          )}
+                          {this.state.bankStatementStatus === true && (
+                            <TierDocStatus>
+                              <Icon type="check" />
+                              <span>Verified</span>
+                            </TierDocStatus>
+                          )}
+                          {this.state.bankStatementStatus === false && (
+                            <TierDocStatus>
+                              <Icon type="close" />
+                              <span>Reupload it</span>
+                            </TierDocStatus>
+                          )}
+                          {this.state.bankStatementNote && (
+                            <Icon
+                              type="message"
+                              onClick={() => {
+                                this.setState({
+                                  reasonPopup: true,
+                                  rejectText: this.state.bankStatementNote,
+                                });
+                              }}
+                            />
+                          )}
+                        </TierDocBox>
+                      ) : (
+                        <TierDocBox></TierDocBox>
                       )}
-                  </TierDropWrap>
-                  <SupportText className="tier_support_text">
-                    Supported format: .doc, .docx, .pdf.
-                  </SupportText>
-                  {this.state.reUpload2 &&
-                    this.validator.message(
-                      "comfort_letter",
-                      comfort_flag,
-                      "required",
-                      "tier-text-danger-validation"
-                    )}
-                </TierUpload>
-                {this.state.tierData.length > 0 ? (
-                  <TierDocBox>
-                    {this.state.comfortLetterStatus === null && (
-                      <TierDocStatus>
-                        <Icon type="warning" />
-                        <span>Under Approval</span>
-                      </TierDocStatus>
-                    )}
-                    {this.state.comfortLetterStatus === true && (
-                      <TierDocStatus>
-                        <Icon type="check" />
-                        <span>Verified</span>
-                      </TierDocStatus>
-                    )}
-                    {this.state.comfortLetterStatus === false && (
-                      <TierDocStatus>
-                        <Icon type="close" />
-                        <span>Reupload it</span>
-                      </TierDocStatus>
-                    )}
-                    {this.state.comfortLetterNote && (
-                      <Icon
-                        type="message"
-                        onClick={() => {
-                          this.setState({
-                            reasonPopup: true,
-                            rejectText: this.state.comfortLetterNote,
-                          });
-                        }}
+                    </TierRow>
+                    {/* Corporate Filing Information */}
+                    <TierRow>
+                      <TierLabel>
+                        <label>Corporate Filing Information</label>
+                        <a
+                          href={corporate_filing_info}
+                          target="_blank"
+                          download
+                        >
+                          Click Here to Download the Form
+                        </a>
+                      </TierLabel>
+                      <TierUpload>
+                        <TierDropWrap
+                          className={
+                            documents.corporate_info &&
+                            documents.corporate_info.file &&
+                            documents.corporate_info.file.name
+                              ? "has_file"
+                              : !this.state.reUpload5
+                              ? "disabled_btn"
+                              : ""
+                          }
+                        >
+                          <TierDropzoneStyle
+                            accept=".pdf,.doc,.docx"
+                            className={
+                              documents.corporate_info &&
+                              documents.corporate_info.file &&
+                              documents.corporate_info.file.name
+                                ? "tier_dropzone has_file"
+                                : "tier_dropzone"
+                            }
+                            multiple={false}
+                            onDrop={this.onDrop.bind(this, "corporate_info")}
+                            onFileDialogCancel={this.onCancel.bind(this)}
+                            disabled={!this.state.reUpload5}
+                          >
+                            {corporate_flag === null && (
+                              <div>
+                                <IconS type="upload" />
+                                <FileSelectText>Upload</FileSelectText>
+                              </div>
+                            )}
+                            {corporate_flag === false && (
+                              <div>
+                                <FileSelectText>
+                                  Wrong File Selected
+                                </FileSelectText>
+                              </div>
+                            )}
+                            {corporate_flag === true && (
+                              <div>
+                                <FileSelectText>
+                                  {documents.corporate_info.file.name}
+                                </FileSelectText>
+                              </div>
+                            )}
+                          </TierDropzoneStyle>
+                          {documents.corporate_info &&
+                            documents.corporate_info.file &&
+                            documents.corporate_info.file.name && (
+                              <Icon
+                                className="drop_zone_icon"
+                                onClick={() => {
+                                  let temp = documents;
+                                  temp["corporate_info"] = {};
+                                  this.setState({
+                                    documents: temp,
+                                    corporate_flag: null,
+                                  });
+                                }}
+                                type="close"
+                              />
+                            )}
+                        </TierDropWrap>
+                        <SupportText className="tier_support_text">
+                          Supported format: .doc, .docx, .pdf.
+                        </SupportText>
+                        {this.state.reUpload5 &&
+                          this.validator.message(
+                            "corporate_info",
+                            corporate_flag,
+                            "required",
+                            "tier-text-danger-validation"
+                          )}
+                      </TierUpload>
+                      {this.state.tierData.length > 0 ? (
+                        <TierDocBox>
+                          {this.state.corporateInfoStatus === null && (
+                            <TierDocStatus>
+                              <Icon type="warning" />
+                              <span>Under Approval</span>
+                            </TierDocStatus>
+                          )}
+                          {this.state.corporateInfoStatus === true && (
+                            <TierDocStatus>
+                              <Icon type="check" />
+                              <span>Verified</span>
+                            </TierDocStatus>
+                          )}
+                          {this.state.corporateInfoStatus === false && (
+                            <TierDocStatus>
+                              <Icon type="close" />
+                              <span>Reupload it</span>
+                            </TierDocStatus>
+                          )}
+                          {this.state.corporateInfoNote && (
+                            <Icon
+                              type="message"
+                              onClick={() => {
+                                this.setState({
+                                  reasonPopup: true,
+                                  rejectText: this.state.corporateInfoNote,
+                                });
+                              }}
+                            />
+                          )}
+                        </TierDocBox>
+                      ) : (
+                        <TierDocBox></TierDocBox>
+                      )}
+                    </TierRow>
+                    {/* Beneficial Ownership Form */}
+                    <TierRow>
+                      <TierLabel>
+                        <label>Beneficial Ownership Form</label>
+                        <a
+                          href={beneficial_ownership_form}
+                          target="_blank"
+                          download
+                        >
+                          Click Here to Download the Form
+                        </a>
+                      </TierLabel>
+                      <TierUpload>
+                        <TierDropWrap
+                          className={
+                            documents.ownership_form &&
+                            documents.ownership_form.file &&
+                            documents.ownership_form.file.name
+                              ? "has_file"
+                              : !this.state.reUpload6
+                              ? "disabled_btn"
+                              : ""
+                          }
+                        >
+                          <TierDropzoneStyle
+                            accept=".pdf,.doc,.docx"
+                            className={
+                              documents.ownership_form &&
+                              documents.ownership_form.file &&
+                              documents.ownership_form.file.name
+                                ? "tier_dropzone has_file"
+                                : "tier_dropzone"
+                            }
+                            multiple={false}
+                            onDrop={this.onDrop.bind(this, "ownership_form")}
+                            onFileDialogCancel={this.onCancel.bind(this)}
+                            disabled={!this.state.reUpload6}
+                          >
+                            {ownership_flag === null && (
+                              <div>
+                                <IconS type="upload" />
+                                <FileSelectText>Upload</FileSelectText>
+                              </div>
+                            )}
+                            {ownership_flag === false && (
+                              <div>
+                                <FileSelectText>
+                                  Wrong File Selected
+                                </FileSelectText>
+                              </div>
+                            )}
+                            {ownership_flag === true && (
+                              <div>
+                                <FileSelectText>
+                                  {documents.ownership_form.file.name}
+                                </FileSelectText>
+                              </div>
+                            )}
+                          </TierDropzoneStyle>
+                          {documents.ownership_form &&
+                            documents.ownership_form.file &&
+                            documents.ownership_form.file.name && (
+                              <Icon
+                                className="drop_zone_icon"
+                                onClick={() => {
+                                  let temp = documents;
+                                  temp["ownership_form"] = [];
+                                  this.setState({
+                                    documents: temp,
+                                    ownership_flag: null,
+                                  });
+                                }}
+                                type="close"
+                              />
+                            )}
+                        </TierDropWrap>
+                        <SupportText className="tier_support_text">
+                          Supported format: .doc, .docx, .pdf.
+                        </SupportText>
+                        {this.state.reUpload6 &&
+                          this.validator.message(
+                            "ownership_form",
+                            ownership_flag,
+                            "required",
+                            "tier-text-danger-validation"
+                          )}
+                      </TierUpload>
+                      {this.state.tierData.length > 0 ? (
+                        <TierDocBox>
+                          {this.state.ownershipFormStatus === null && (
+                            <TierDocStatus>
+                              <Icon type="warning" />
+                              <span>Under Approval</span>
+                            </TierDocStatus>
+                          )}
+                          {this.state.ownershipFormStatus === true && (
+                            <TierDocStatus>
+                              <Icon type="check" />
+                              <span>Verified</span>
+                            </TierDocStatus>
+                          )}
+                          {this.state.ownershipFormStatus === false && (
+                            <TierDocStatus>
+                              <Icon type="close" />
+                              <span>Reupload it</span>
+                            </TierDocStatus>
+                          )}
+                          {this.state.ownershipFormNote && (
+                            <Icon
+                              type="message"
+                              onClick={() => {
+                                this.setState({
+                                  reasonPopup: true,
+                                  rejectText: this.state.ownershipFormNote,
+                                });
+                              }}
+                            />
+                          )}
+                        </TierDocBox>
+                      ) : (
+                        <TierDocBox></TierDocBox>
+                      )}
+                    </TierRow>
+                    {/* Articles of Incorporation */}
+                    <TierRow>
+                      <TierLabel>
+                        <label>Articles of Incorporation</label>
+                        <a
+                          href={articles_of_incorporation}
+                          target="_blank"
+                          download
+                        >
+                          Click Here to Download the Form
+                        </a>
+                      </TierLabel>
+                      <TierUpload>
+                        <TierDropWrap
+                          className={
+                            documents.articles_of_incorporation &&
+                            documents.articles_of_incorporation.file &&
+                            documents.articles_of_incorporation.file.name
+                              ? "has_file"
+                              : !this.state.reUpload7
+                              ? "disabled_btn"
+                              : ""
+                          }
+                        >
+                          <TierDropzoneStyle
+                            accept=".pdf,.doc,.docx"
+                            className={
+                              documents.articles_of_incorporation &&
+                              documents.articles_of_incorporation.file &&
+                              documents.articles_of_incorporation.file.name
+                                ? "tier_dropzone has_file"
+                                : "tier_dropzone"
+                            }
+                            multiple={false}
+                            onDrop={this.onDrop.bind(
+                              this,
+                              "articles_of_incorporation"
+                            )}
+                            onFileDialogCancel={this.onCancel.bind(this)}
+                            disabled={!this.state.reUpload7}
+                          >
+                            {articles_flag === null && (
+                              <div>
+                                <IconS type="upload" />
+                                <FileSelectText>Upload</FileSelectText>
+                              </div>
+                            )}
+                            {articles_flag === false && (
+                              <div>
+                                <FileSelectText>
+                                  Wrong File Selected
+                                </FileSelectText>
+                              </div>
+                            )}
+                            {articles_flag === true && (
+                              <div>
+                                <FileSelectText>
+                                  {
+                                    documents.articles_of_incorporation.file
+                                      .name
+                                  }
+                                </FileSelectText>
+                              </div>
+                            )}
+                          </TierDropzoneStyle>
+                          {documents.articles_of_incorporation &&
+                            documents.articles_of_incorporation.file &&
+                            documents.articles_of_incorporation.file.name && (
+                              <Icon
+                                className="drop_zone_icon"
+                                onClick={() => {
+                                  let temp = documents;
+                                  temp["articles_of_incorporation"] = [];
+                                  this.setState({
+                                    documents: temp,
+                                    articles_flag: null,
+                                  });
+                                }}
+                                type="close"
+                              />
+                            )}
+                        </TierDropWrap>
+                        <SupportText className="tier_support_text">
+                          Supported format: .doc, .docx, .pdf.
+                        </SupportText>
+                        {this.state.reUpload7 &&
+                          this.validator.message(
+                            "articles_of_incorporation",
+                            articles_flag,
+                            "required",
+                            "tier-text-danger-validation"
+                          )}
+                      </TierUpload>
+                      {this.state.tierData.length > 0 ? (
+                        <TierDocBox>
+                          {this.state.articlesIncorporationStatus === null && (
+                            <TierDocStatus>
+                              <Icon type="warning" />
+                              <span>Under Approval</span>
+                            </TierDocStatus>
+                          )}
+                          {this.state.articlesIncorporationStatus === true && (
+                            <TierDocStatus>
+                              <Icon type="check" />
+                              <span>Verified</span>
+                            </TierDocStatus>
+                          )}
+                          {this.state.articlesIncorporationStatus === false && (
+                            <TierDocStatus>
+                              <Icon type="close" />
+                              <span>Reupload it</span>
+                            </TierDocStatus>
+                          )}
+                          {this.state.articlesIncorporationNote && (
+                            <Icon
+                              type="message"
+                              onClick={() => {
+                                this.setState({
+                                  reasonPopup: true,
+                                  rejectText: this.state
+                                    .articlesIncorporationNote,
+                                });
+                              }}
+                            />
+                          )}
+                        </TierDocBox>
+                      ) : (
+                        <TierDocBox></TierDocBox>
+                      )}
+                    </TierRow>
+                    {/* Bylaws */}
+                    <TierRow>
+                      <TierLabel>
+                        <label>Bylaws</label>
+                        <a href={bylaws_form} target="_blank" download>
+                          Click Here to Download the Form
+                        </a>
+                      </TierLabel>
+                      <TierUpload>
+                        <TierDropWrap
+                          className={
+                            documents.bylaws &&
+                            documents.bylaws.file &&
+                            documents.bylaws.file.name
+                              ? "has_file"
+                              : !this.state.reUpload8
+                              ? "disabled_btn"
+                              : ""
+                          }
+                        >
+                          <TierDropzoneStyle
+                            accept=".pdf,.doc,.docx"
+                            className={
+                              documents.bylaws &&
+                              documents.bylaws.file &&
+                              documents.bylaws.file.name
+                                ? "tier_dropzone has_file"
+                                : "tier_dropzone"
+                            }
+                            multiple={false}
+                            onDrop={this.onDrop.bind(this, "bylaws")}
+                            onFileDialogCancel={this.onCancel.bind(this)}
+                            disabled={!this.state.reUpload8}
+                          >
+                            {bylaws_flag === null && (
+                              <div>
+                                <IconS type="upload" />
+                                <FileSelectText>Upload</FileSelectText>
+                              </div>
+                            )}
+                            {bylaws_flag === false && (
+                              <div>
+                                <FileSelectText>
+                                  Wrong File Selected
+                                </FileSelectText>
+                              </div>
+                            )}
+                            {bylaws_flag === true && (
+                              <div>
+                                <FileSelectText>
+                                  {documents.bylaws.file.name}
+                                </FileSelectText>
+                              </div>
+                            )}
+                          </TierDropzoneStyle>
+                          {documents.bylaws &&
+                            documents.bylaws.file &&
+                            documents.bylaws.file.name && (
+                              <Icon
+                                className="drop_zone_icon"
+                                onClick={() => {
+                                  let temp = documents;
+                                  temp["bylaws"] = [];
+                                  this.setState({
+                                    documents: temp,
+                                    bylaws_flag: null,
+                                  });
+                                }}
+                                type="close"
+                              />
+                            )}
+                        </TierDropWrap>
+                        <SupportText className="tier_support_text">
+                          Supported format: .doc, .docx, .pdf.
+                        </SupportText>
+                        {this.state.reUpload8 &&
+                          this.validator.message(
+                            "bylaws",
+                            bylaws_flag,
+                            "required",
+                            "tier-text-danger-validation"
+                          )}
+                      </TierUpload>
+                      {this.state.tierData.length > 0 ? (
+                        <TierDocBox>
+                          {this.state.byLawsStatus === null && (
+                            <TierDocStatus>
+                              <Icon type="warning" />
+                              <span>Under Approval</span>
+                            </TierDocStatus>
+                          )}
+                          {this.state.byLawsStatus === true && (
+                            <TierDocStatus>
+                              <Icon type="check" />
+                              <span>Verified</span>
+                            </TierDocStatus>
+                          )}
+                          {this.state.byLawsStatus === false && (
+                            <TierDocStatus>
+                              <Icon type="close" />
+                              <span>Reupload it</span>
+                            </TierDocStatus>
+                          )}
+                          {this.state.byLawsNote && (
+                            <Icon
+                              type="message"
+                              onClick={() => {
+                                this.setState({
+                                  reasonPopup: true,
+                                  rejectText: this.state.byLawsNote,
+                                });
+                              }}
+                            />
+                          )}
+                        </TierDocBox>
+                      ) : (
+                        <TierDocBox></TierDocBox>
+                      )}
+                    </TierRow>
+                    {/* Ownership and Control Structure */}
+                    <TierRow>
+                      <TierLabel>
+                        <label>Ownership and Control Structure</label>
+                        <a
+                          href={ownership_and_control_structure}
+                          target="_blank"
+                          download
+                        >
+                          Click Here to Download the Form
+                        </a>
+                      </TierLabel>
+                      <TierUpload>
+                        <TierDropWrap
+                          className={
+                            documents.ownership_control_structure &&
+                            documents.ownership_control_structure.file &&
+                            documents.ownership_control_structure.file.name
+                              ? "has_file"
+                              : !this.state.reUpload9
+                              ? "disabled_btn"
+                              : ""
+                          }
+                        >
+                          <TierDropzoneStyle
+                            accept=".pdf,.doc,.docx"
+                            className={
+                              documents.ownership_control_structure &&
+                              documents.ownership_control_structure.file &&
+                              documents.ownership_control_structure.file.name
+                                ? "tier_dropzone has_file"
+                                : "tier_dropzone"
+                            }
+                            multiple={false}
+                            onDrop={this.onDrop.bind(
+                              this,
+                              "ownership_control_structure"
+                            )}
+                            onFileDialogCancel={this.onCancel.bind(this)}
+                            disabled={!this.state.reUpload9}
+                          >
+                            {ownership_control_structure_flag === null && (
+                              <div>
+                                <IconS type="upload" />
+                                <FileSelectText>Upload</FileSelectText>
+                              </div>
+                            )}
+                            {ownership_control_structure_flag === false && (
+                              <div>
+                                <FileSelectText>
+                                  Wrong File Selected
+                                </FileSelectText>
+                              </div>
+                            )}
+                            {ownership_control_structure_flag === true && (
+                              <div>
+                                <FileSelectText>
+                                  {
+                                    documents.ownership_control_structure.file
+                                      .name
+                                  }
+                                </FileSelectText>
+                              </div>
+                            )}
+                          </TierDropzoneStyle>
+                          {documents.ownership_control_structure &&
+                            documents.ownership_control_structure.file &&
+                            documents.ownership_control_structure.file.name && (
+                              <Icon
+                                className="drop_zone_icon"
+                                onClick={() => {
+                                  let temp = documents;
+                                  temp["ownership_control_structure"] = [];
+                                  this.setState({
+                                    documents: temp,
+                                    ownership_control_structure_flag: null,
+                                  });
+                                }}
+                                type="close"
+                              />
+                            )}
+                        </TierDropWrap>
+                        <SupportText className="tier_support_text">
+                          Supported format: .doc, .docx, .pdf.
+                        </SupportText>
+                        {this.state.reUpload9 &&
+                          this.validator.message(
+                            "ownership_control_structure",
+                            ownership_control_structure_flag,
+                            "required",
+                            "tier-text-danger-validation"
+                          )}
+                      </TierUpload>
+                      {this.state.tierData.length > 0 ? (
+                        <TierDocBox>
+                          {this.state.ownershipControlStructureStatus ===
+                            null && (
+                            <TierDocStatus>
+                              <Icon type="warning" />
+                              <span>Under Approval</span>
+                            </TierDocStatus>
+                          )}
+                          {this.state.ownershipControlStructureStatus ===
+                            true && (
+                            <TierDocStatus>
+                              <Icon type="check" />
+                              <span>Verified</span>
+                            </TierDocStatus>
+                          )}
+                          {this.state.ownershipControlStructureStatus ===
+                            false && (
+                            <TierDocStatus>
+                              <Icon type="close" />
+                              <span>Reupload it</span>
+                            </TierDocStatus>
+                          )}
+                          {this.state.ownershipControlStructureNote && (
+                            <Icon
+                              type="message"
+                              onClick={() => {
+                                this.setState({
+                                  reasonPopup: true,
+                                  rejectText: this.state
+                                    .ownershipControlStructureNote,
+                                });
+                              }}
+                            />
+                          )}
+                        </TierDocBox>
+                      ) : (
+                        <TierDocBox></TierDocBox>
+                      )}
+                    </TierRow>
+                    {/* Directors and Officers List & Personal Info Equivalent to Tier 3 Requirements */}
+                    <TierRow>
+                      <TierLabel>
+                        <label>
+                          Directors and Officers List & Personal Info Equivalent
+                          to Tier 3 Requirements
+                        </label>
+                        <a href={director_list_form} target="_blank" download>
+                          Click Here to Download the Form
+                        </a>
+                      </TierLabel>
+                      <TierUpload>
+                        <TierDropWrap
+                          className={
+                            documents.director_list &&
+                            documents.director_list.file &&
+                            documents.director_list.file.name
+                              ? "has_file"
+                              : !this.state.reUpload10
+                              ? "disabled_btn"
+                              : ""
+                          }
+                        >
+                          <TierDropzoneStyle
+                            accept=".pdf,.doc,.docx"
+                            className={
+                              documents.director_list &&
+                              documents.director_list.file &&
+                              documents.director_list.file.name
+                                ? "tier_dropzone has_file"
+                                : "tier_dropzone"
+                            }
+                            multiple={false}
+                            onDrop={this.onDrop.bind(this, "director_list")}
+                            onFileDialogCancel={this.onCancel.bind(this)}
+                            disabled={!this.state.reUpload10}
+                          >
+                            {director_list_flag === null && (
+                              <div>
+                                <IconS type="upload" />
+                                <FileSelectText>Upload</FileSelectText>
+                              </div>
+                            )}
+                            {director_list_flag === false && (
+                              <div>
+                                <FileSelectText>
+                                  Wrong File Selected
+                                </FileSelectText>
+                              </div>
+                            )}
+                            {director_list_flag === true && (
+                              <div>
+                                <FileSelectText>
+                                  {documents.director_list.file.name}
+                                </FileSelectText>
+                              </div>
+                            )}
+                          </TierDropzoneStyle>
+                          {documents.director_list &&
+                            documents.director_list.file &&
+                            documents.director_list.file.name && (
+                              <Icon
+                                className="drop_zone_icon"
+                                onClick={() => {
+                                  let temp = documents;
+                                  temp["director_list"] = [];
+                                  this.setState({
+                                    documents: temp,
+                                    director_list_flag: null,
+                                  });
+                                }}
+                                type="close"
+                              />
+                            )}
+                        </TierDropWrap>
+                        <SupportText className="tier_support_text">
+                          Supported format: .doc, .docx, .pdf.
+                        </SupportText>
+                        {this.state.reUpload10 &&
+                          this.validator.message(
+                            "director_list",
+                            director_list_flag,
+                            "required",
+                            "tier-text-danger-validation"
+                          )}
+                      </TierUpload>
+                      {this.state.tierData.length > 0 ? (
+                        <TierDocBox>
+                          {this.state.directorListStatus === null && (
+                            <TierDocStatus>
+                              <Icon type="warning" />
+                              <span>Under Approval</span>
+                            </TierDocStatus>
+                          )}
+                          {this.state.directorListStatus === true && (
+                            <TierDocStatus>
+                              <Icon type="check" />
+                              <span>Verified</span>
+                            </TierDocStatus>
+                          )}
+                          {this.state.directorListStatus === false && (
+                            <TierDocStatus>
+                              <Icon type="close" />
+                              <span>Reupload it</span>
+                            </TierDocStatus>
+                          )}
+                          {this.state.directorListNote && (
+                            <Icon
+                              type="message"
+                              onClick={() => {
+                                this.setState({
+                                  reasonPopup: true,
+                                  rejectText: this.state.directorListNote,
+                                });
+                              }}
+                            />
+                          )}
+                        </TierDocBox>
+                      ) : (
+                        <TierDocBox></TierDocBox>
+                      )}
+                    </TierRow>
+                    {/* Proof of Active Business Address */}
+                    <TierRow>
+                      <TierLabel>
+                        <label>Proof of Active Business Address</label>
+                      </TierLabel>
+                      <TierUpload>
+                        <TierDropWrap
+                          className={
+                            documents.active_business_proof &&
+                            documents.active_business_proof.file &&
+                            documents.active_business_proof.file.name
+                              ? "has_file"
+                              : !this.state.reUpload11
+                              ? "disabled_btn"
+                              : ""
+                          }
+                        >
+                          <TierDropzoneStyle
+                            accept=".pdf,.doc,.docx"
+                            className={
+                              documents.active_business_proof &&
+                              documents.active_business_proof.file &&
+                              documents.active_business_proof.file.name
+                                ? "tier_dropzone has_file"
+                                : "tier_dropzone"
+                            }
+                            multiple={false}
+                            onDrop={this.onDrop.bind(
+                              this,
+                              "active_business_proof"
+                            )}
+                            onFileDialogCancel={this.onCancel.bind(this)}
+                            disabled={!this.state.reUpload11}
+                          >
+                            {active_business_proof_flag === null && (
+                              <div>
+                                <IconS type="upload" />
+                                <FileSelectText>Upload</FileSelectText>
+                              </div>
+                            )}
+                            {active_business_proof_flag === false && (
+                              <div>
+                                <FileSelectText>
+                                  Wrong File Selected
+                                </FileSelectText>
+                              </div>
+                            )}
+                            {active_business_proof_flag === true && (
+                              <div>
+                                <FileSelectText>
+                                  {documents.active_business_proof.file.name}
+                                </FileSelectText>
+                              </div>
+                            )}
+                          </TierDropzoneStyle>
+                          {documents.active_business_proof &&
+                            documents.active_business_proof.file &&
+                            documents.active_business_proof.file.name && (
+                              <Icon
+                                className="drop_zone_icon"
+                                onClick={() => {
+                                  let temp = documents;
+                                  temp["active_business_proof"] = [];
+                                  this.setState({
+                                    documents: temp,
+                                    active_business_proof_flag: null,
+                                  });
+                                }}
+                                type="close"
+                              />
+                            )}
+                        </TierDropWrap>
+                        <SupportText className="tier_support_text">
+                          Supported format: .doc, .docx, .pdf.
+                        </SupportText>
+                        {this.state.reUpload11 &&
+                          this.validator.message(
+                            "active_business_proof",
+                            active_business_proof_flag,
+                            "required",
+                            "tier-text-danger-validation"
+                          )}
+                      </TierUpload>
+                      {this.state.tierData.length > 0 ? (
+                        <TierDocBox>
+                          {this.state.activeBusinessProofStatus === null && (
+                            <TierDocStatus>
+                              <Icon type="warning" />
+                              <span>Under Approval</span>
+                            </TierDocStatus>
+                          )}
+                          {this.state.activeBusinessProofStatus === true && (
+                            <TierDocStatus>
+                              <Icon type="check" />
+                              <span>Verified</span>
+                            </TierDocStatus>
+                          )}
+                          {this.state.activeBusinessProofStatus === false && (
+                            <TierDocStatus>
+                              <Icon type="close" />
+                              <span>Reupload it</span>
+                            </TierDocStatus>
+                          )}
+                          {this.state.activeBusinessProofNote && (
+                            <Icon
+                              type="message"
+                              onClick={() => {
+                                this.setState({
+                                  reasonPopup: true,
+                                  rejectText: this.state
+                                    .activeBusinessProofNote,
+                                });
+                              }}
+                            />
+                          )}
+                        </TierDocBox>
+                      ) : (
+                        <TierDocBox></TierDocBox>
+                      )}
+                    </TierRow>
+                    {/* Document Availability Policy */}
+                    <TierRow>
+                      <TierLabel>
+                        <label>Document Availability Policy</label>
+                      </TierLabel>
+                      <TierUpload>
+                        <TierDropWrap
+                          className={
+                            documents.document_availability_policy &&
+                            documents.document_availability_policy.file &&
+                            documents.document_availability_policy.file.name
+                              ? "has_file"
+                              : !this.state.reUpload12
+                              ? "disabled_btn"
+                              : ""
+                          }
+                        >
+                          <TierDropzoneStyle
+                            accept=".pdf,.doc,.docx"
+                            className={
+                              documents.document_availability_policy &&
+                              documents.document_availability_policy.file &&
+                              documents.document_availability_policy.file.name
+                                ? "tier_dropzone has_file"
+                                : "tier_dropzone"
+                            }
+                            multiple={false}
+                            onDrop={this.onDrop.bind(
+                              this,
+                              "document_availability_policy"
+                            )}
+                            onFileDialogCancel={this.onCancel.bind(this)}
+                            disabled={!this.state.reUpload12}
+                          >
+                            {document_availability_policy_flag === null && (
+                              <div>
+                                <IconS type="upload" />
+                                <FileSelectText>Upload</FileSelectText>
+                              </div>
+                            )}
+                            {document_availability_policy_flag === false && (
+                              <div>
+                                <FileSelectText>
+                                  Wrong File Selected
+                                </FileSelectText>
+                              </div>
+                            )}
+                            {document_availability_policy_flag === true && (
+                              <div>
+                                <FileSelectText>
+                                  {
+                                    documents.document_availability_policy.file
+                                      .name
+                                  }
+                                </FileSelectText>
+                              </div>
+                            )}
+                          </TierDropzoneStyle>
+                          {documents.document_availability_policy &&
+                            documents.document_availability_policy.file &&
+                            documents.document_availability_policy.file
+                              .name && (
+                              <Icon
+                                className="drop_zone_icon"
+                                onClick={() => {
+                                  let temp = documents;
+                                  temp["document_availability_policy"] = [];
+                                  this.setState({
+                                    documents: temp,
+                                    document_availability_policy_flag: null,
+                                  });
+                                }}
+                                type="close"
+                              />
+                            )}
+                        </TierDropWrap>
+                        <SupportText className="tier_support_text">
+                          Supported format: .doc, .docx, .pdf.
+                        </SupportText>
+                        {this.state.reUpload12 &&
+                          this.validator.message(
+                            "document_availability_policy",
+                            document_availability_policy_flag,
+                            "required",
+                            "tier-text-danger-validation"
+                          )}
+                      </TierUpload>
+                      {this.state.tierData.length > 0 ? (
+                        <TierDocBox>
+                          {this.state.documentAvailabilityPolicyStatus ===
+                            null && (
+                            <TierDocStatus>
+                              <Icon type="warning" />
+                              <span>Under Approval</span>
+                            </TierDocStatus>
+                          )}
+                          {this.state.documentAvailabilityPolicyStatus ===
+                            true && (
+                            <TierDocStatus>
+                              <Icon type="check" />
+                              <span>Verified</span>
+                            </TierDocStatus>
+                          )}
+                          {this.state.documentAvailabilityPolicyStatus ===
+                            false && (
+                            <TierDocStatus>
+                              <Icon type="close" />
+                              <span>Reupload it</span>
+                            </TierDocStatus>
+                          )}
+                          {this.state.documentAvailabilityPolicyNote && (
+                            <Icon
+                              type="message"
+                              onClick={() => {
+                                this.setState({
+                                  reasonPopup: true,
+                                  rejectText: this.state
+                                    .documentAvailabilityPolicyNote,
+                                });
+                              }}
+                            />
+                          )}
+                        </TierDocBox>
+                      ) : (
+                        <TierDocBox></TierDocBox>
+                      )}
+                    </TierRow>
+                    {/* Cookies Policy */}
+                    <TierRow>
+                      <TierLabel>
+                        <label>Cookies Policy</label>
+                      </TierLabel>
+                      <TierUpload>
+                        <TierDropWrap
+                          className={
+                            documents.cookies_policy &&
+                            documents.cookies_policy.file &&
+                            documents.cookies_policy.file.name
+                              ? "has_file"
+                              : !this.state.reUpload13
+                              ? "disabled_btn"
+                              : ""
+                          }
+                        >
+                          <TierDropzoneStyle
+                            accept=".pdf,.doc,.docx"
+                            className={
+                              documents.cookies_policy &&
+                              documents.cookies_policy.file &&
+                              documents.cookies_policy.file.name
+                                ? "tier_dropzone has_file"
+                                : "tier_dropzone"
+                            }
+                            multiple={false}
+                            onDrop={this.onDrop.bind(this, "cookies_policy")}
+                            onFileDialogCancel={this.onCancel.bind(this)}
+                            disabled={!this.state.reUpload13}
+                          >
+                            {cookies_policy_flag === null && (
+                              <div>
+                                <IconS type="upload" />
+                                <FileSelectText>Upload</FileSelectText>
+                              </div>
+                            )}
+                            {cookies_policy_flag === false && (
+                              <div>
+                                <FileSelectText>
+                                  Wrong File Selected
+                                </FileSelectText>
+                              </div>
+                            )}
+                            {cookies_policy_flag === true && (
+                              <div>
+                                <FileSelectText>
+                                  {documents.cookies_policy.file.name}
+                                </FileSelectText>
+                              </div>
+                            )}
+                          </TierDropzoneStyle>
+                          {documents.cookies_policy &&
+                            documents.cookies_policy.file &&
+                            documents.cookies_policy.file.name && (
+                              <Icon
+                                className="drop_zone_icon"
+                                onClick={() => {
+                                  let temp = documents;
+                                  temp["cookies_policy"] = [];
+                                  this.setState({
+                                    documents: temp,
+                                    cookies_policy_flag: null,
+                                  });
+                                }}
+                                type="close"
+                              />
+                            )}
+                        </TierDropWrap>
+                        <SupportText className="tier_support_text">
+                          Supported format: .doc, .docx, .pdf.
+                        </SupportText>
+                        {this.state.reUpload13 &&
+                          this.validator.message(
+                            "cookies_policy",
+                            cookies_policy_flag,
+                            "required",
+                            "tier-text-danger-validation"
+                          )}
+                      </TierUpload>
+                      {this.state.tierData.length > 0 ? (
+                        <TierDocBox>
+                          {this.state.cookiesPolicyStatus === null && (
+                            <TierDocStatus>
+                              <Icon type="warning" />
+                              <span>Under Approval</span>
+                            </TierDocStatus>
+                          )}
+                          {this.state.cookiesPolicyStatus === true && (
+                            <TierDocStatus>
+                              <Icon type="check" />
+                              <span>Verified</span>
+                            </TierDocStatus>
+                          )}
+                          {this.state.cookiesPolicyStatus === false && (
+                            <TierDocStatus>
+                              <Icon type="close" />
+                              <span>Reupload it</span>
+                            </TierDocStatus>
+                          )}
+                          {this.state.cookiesPolicyNote && (
+                            <Icon
+                              type="message"
+                              onClick={() => {
+                                this.setState({
+                                  reasonPopup: true,
+                                  rejectText: this.state.cookiesPolicyNote,
+                                });
+                              }}
+                            />
+                          )}
+                        </TierDocBox>
+                      ) : (
+                        <TierDocBox></TierDocBox>
+                      )}
+                    </TierRow>
+                    {/* Privacy Policy */}
+                    <TierRow>
+                      <TierLabel>
+                        <label>Privacy Policy</label>
+                      </TierLabel>
+                      <TierUpload>
+                        <TierDropWrap
+                          className={
+                            documents.privacy_policy &&
+                            documents.privacy_policy.file &&
+                            documents.privacy_policy.file.name
+                              ? "has_file"
+                              : !this.state.reUpload14
+                              ? "disabled_btn"
+                              : ""
+                          }
+                        >
+                          <TierDropzoneStyle
+                            accept=".pdf,.doc,.docx"
+                            className={
+                              documents.privacy_policy &&
+                              documents.privacy_policy.file &&
+                              documents.privacy_policy.file.name
+                                ? "tier_dropzone has_file"
+                                : "tier_dropzone"
+                            }
+                            multiple={false}
+                            onDrop={this.onDrop.bind(this, "privacy_policy")}
+                            onFileDialogCancel={this.onCancel.bind(this)}
+                            disabled={!this.state.reUpload14}
+                          >
+                            {privacy_policy_flag === null && (
+                              <div>
+                                <IconS type="upload" />
+                                <FileSelectText>Upload</FileSelectText>
+                              </div>
+                            )}
+                            {privacy_policy_flag === false && (
+                              <div>
+                                <FileSelectText>
+                                  Wrong File Selected
+                                </FileSelectText>
+                              </div>
+                            )}
+                            {privacy_policy_flag === true && (
+                              <div>
+                                <FileSelectText>
+                                  {documents.privacy_policy.file.name}
+                                </FileSelectText>
+                              </div>
+                            )}
+                          </TierDropzoneStyle>
+                          {documents.privacy_policy &&
+                            documents.privacy_policy.file &&
+                            documents.privacy_policy.file.name && (
+                              <Icon
+                                className="drop_zone_icon"
+                                onClick={() => {
+                                  let temp = documents;
+                                  temp["privacy_policy"] = [];
+                                  this.setState({
+                                    documents: temp,
+                                    privacy_policy_flag: null,
+                                  });
+                                }}
+                                type="close"
+                              />
+                            )}
+                        </TierDropWrap>
+                        <SupportText className="tier_support_text">
+                          Supported format: .doc, .docx, .pdf.
+                        </SupportText>
+                        {this.state.reUpload14 &&
+                          this.validator.message(
+                            "privacy_policy",
+                            privacy_policy_flag,
+                            "required",
+                            "tier-text-danger-validation"
+                          )}
+                      </TierUpload>
+                      {this.state.tierData.length > 0 ? (
+                        <TierDocBox>
+                          {this.state.privacyPolicyStatus === null && (
+                            <TierDocStatus>
+                              <Icon type="warning" />
+                              <span>Under Approval</span>
+                            </TierDocStatus>
+                          )}
+                          {this.state.privacyPolicyStatus === true && (
+                            <TierDocStatus>
+                              <Icon type="check" />
+                              <span>Verified</span>
+                            </TierDocStatus>
+                          )}
+                          {this.state.privacyPolicyStatus === false && (
+                            <TierDocStatus>
+                              <Icon type="close" />
+                              <span>Reupload it</span>
+                            </TierDocStatus>
+                          )}
+                          {this.state.privacyPolicyNote && (
+                            <Icon
+                              type="message"
+                              onClick={() => {
+                                this.setState({
+                                  reasonPopup: true,
+                                  rejectText: this.state.privacyPolicyNote,
+                                });
+                              }}
+                            />
+                          )}
+                        </TierDocBox>
+                      ) : (
+                        <TierDocBox></TierDocBox>
+                      )}
+                    </TierRow>
+                    {/* AML Policy */}
+                    <TierRow>
+                      <TierLabel>
+                        <label>AML Policy</label>
+                      </TierLabel>
+                      <TierUpload>
+                        <TierDropWrap
+                          className={
+                            documents.aml_policy &&
+                            documents.aml_policy.file &&
+                            documents.aml_policy.file.name
+                              ? "has_file"
+                              : !this.state.reUpload15
+                              ? "disabled_btn"
+                              : ""
+                          }
+                        >
+                          <TierDropzoneStyle
+                            accept=".pdf,.doc,.docx"
+                            className={
+                              documents.aml_policy &&
+                              documents.aml_policy.file &&
+                              documents.aml_policy.file.name
+                                ? "tier_dropzone has_file"
+                                : "tier_dropzone"
+                            }
+                            multiple={false}
+                            onDrop={this.onDrop.bind(this, "aml_policy")}
+                            onFileDialogCancel={this.onCancel.bind(this)}
+                            disabled={!this.state.reUpload15}
+                          >
+                            {aml_policy_flag === null && (
+                              <div>
+                                <IconS type="upload" />
+                                <FileSelectText>Upload</FileSelectText>
+                              </div>
+                            )}
+                            {aml_policy_flag === false && (
+                              <div>
+                                <FileSelectText>
+                                  Wrong File Selected
+                                </FileSelectText>
+                              </div>
+                            )}
+                            {aml_policy_flag === true && (
+                              <div>
+                                <FileSelectText>
+                                  {documents.aml_policy.file.name}
+                                </FileSelectText>
+                              </div>
+                            )}
+                          </TierDropzoneStyle>
+                          {documents.aml_policy &&
+                            documents.aml_policy.file &&
+                            documents.aml_policy.file.name && (
+                              <Icon
+                                className="drop_zone_icon"
+                                onClick={() => {
+                                  let temp = documents;
+                                  temp["aml_policy"] = [];
+                                  this.setState({
+                                    documents: temp,
+                                    aml_policy_flag: null,
+                                  });
+                                }}
+                                type="close"
+                              />
+                            )}
+                        </TierDropWrap>
+                        <SupportText className="tier_support_text">
+                          Supported format: .doc, .docx, .pdf.
+                        </SupportText>
+                        {this.state.reUpload15 &&
+                          this.validator.message(
+                            "aml_policy",
+                            aml_policy_flag,
+                            "required",
+                            "tier-text-danger-validation"
+                          )}
+                      </TierUpload>
+                      {this.state.tierData.length > 0 ? (
+                        <TierDocBox>
+                          {this.state.amlPolicyStatus === null && (
+                            <TierDocStatus>
+                              <Icon type="warning" />
+                              <span>Under Approval</span>
+                            </TierDocStatus>
+                          )}
+                          {this.state.amlPolicyStatus === true && (
+                            <TierDocStatus>
+                              <Icon type="check" />
+                              <span>Verified</span>
+                            </TierDocStatus>
+                          )}
+                          {this.state.amlPolicyStatus === false && (
+                            <TierDocStatus>
+                              <Icon type="close" />
+                              <span>Reupload it</span>
+                            </TierDocStatus>
+                          )}
+                          {this.state.amlPolicyNote && (
+                            <Icon
+                              type="message"
+                              onClick={() => {
+                                this.setState({
+                                  reasonPopup: true,
+                                  rejectText: this.state.amlPolicyNote,
+                                });
+                              }}
+                            />
+                          )}
+                        </TierDocBox>
+                      ) : (
+                        <TierDocBox></TierDocBox>
+                      )}
+                    </TierRow>
+                    {/* Terms of Service */}
+                    <TierRow>
+                      <TierLabel>
+                        <label>Terms of Service</label>
+                      </TierLabel>
+                      <TierUpload>
+                        <TierDropWrap
+                          className={
+                            documents.terms_of_service &&
+                            documents.terms_of_service.file &&
+                            documents.terms_of_service.file.name
+                              ? "has_file"
+                              : !this.state.reUpload16
+                              ? "disabled_btn"
+                              : ""
+                          }
+                        >
+                          <TierDropzoneStyle
+                            accept=".pdf,.doc,.docx"
+                            className={
+                              documents.terms_of_service &&
+                              documents.terms_of_service.file &&
+                              documents.terms_of_service.file.name
+                                ? "tier_dropzone has_file"
+                                : "tier_dropzone"
+                            }
+                            multiple={false}
+                            onDrop={this.onDrop.bind(this, "terms_of_service")}
+                            onFileDialogCancel={this.onCancel.bind(this)}
+                            disabled={!this.state.reUpload16}
+                          >
+                            {terms_of_service_flag === null && (
+                              <div>
+                                <IconS type="upload" />
+                                <FileSelectText>Upload</FileSelectText>
+                              </div>
+                            )}
+                            {terms_of_service_flag === false && (
+                              <div>
+                                <FileSelectText>
+                                  Wrong File Selected
+                                </FileSelectText>
+                              </div>
+                            )}
+                            {terms_of_service_flag === true && (
+                              <div>
+                                <FileSelectText>
+                                  {documents.terms_of_service.file.name}
+                                </FileSelectText>
+                              </div>
+                            )}
+                          </TierDropzoneStyle>
+                          {documents.terms_of_service &&
+                            documents.terms_of_service.file &&
+                            documents.terms_of_service.file.name && (
+                              <Icon
+                                className="drop_zone_icon"
+                                onClick={() => {
+                                  let temp = documents;
+                                  temp["terms_of_service"] = [];
+                                  this.setState({
+                                    documents: temp,
+                                    terms_of_service_flag: null,
+                                  });
+                                }}
+                                type="close"
+                              />
+                            )}
+                        </TierDropWrap>
+                        <SupportText className="tier_support_text">
+                          Supported format: .doc, .docx, .pdf.
+                        </SupportText>
+                        {this.state.reUpload16 &&
+                          this.validator.message(
+                            "terms_of_service",
+                            terms_of_service_flag,
+                            "required",
+                            "tier-text-danger-validation"
+                          )}
+                      </TierUpload>
+                      {this.state.tierData.length > 0 ? (
+                        <TierDocBox>
+                          {this.state.termsOfServiceStatus === null && (
+                            <TierDocStatus>
+                              <Icon type="warning" />
+                              <span>Under Approval</span>
+                            </TierDocStatus>
+                          )}
+                          {this.state.termsOfServiceStatus === true && (
+                            <TierDocStatus>
+                              <Icon type="check" />
+                              <span>Verified</span>
+                            </TierDocStatus>
+                          )}
+                          {this.state.termsOfServiceStatus === false && (
+                            <TierDocStatus>
+                              <Icon type="close" />
+                              <span>Reupload it</span>
+                            </TierDocStatus>
+                          )}
+                          {this.state.termsOfServiceNote && (
+                            <Icon
+                              type="message"
+                              onClick={() => {
+                                this.setState({
+                                  reasonPopup: true,
+                                  rejectText: this.state.termsOfServiceNote,
+                                });
+                              }}
+                            />
+                          )}
+                        </TierDocBox>
+                      ) : (
+                        <TierDocBox></TierDocBox>
+                      )}
+                    </TierRow>
+                    <TierButtonRow>
+                      <input
+                        type="button"
+                        className={
+                          this.state.uploadBtnFlag
+                            ? "cancel_btn"
+                            : "cancel_btn disabled"
+                        }
+                        disabled={!this.state.uploadBtnFlag}
+                        onClick={this.handleCancel.bind(this)}
+                        value="Cancel"
                       />
-                    )}
-                  </TierDocBox>
-                ) : (
-                  <TierDocBox></TierDocBox>
-                )}
-              </TierRow>
-              {/* Board Resolution */}
-              <TierRow>
-                <TierLabel>
-                  <label>Board Resolution</label>
-                  <a href={board_resolution} target="_blank" download>
-                    Click Here to Download the Form
-                  </a>
-                </TierLabel>
-                <TierUpload>
-                  <TierDropWrap
-                    className={
-                      documents.board_resolution &&
-                      documents.board_resolution.file &&
-                      documents.board_resolution.file.name
-                        ? "has_file"
-                        : !this.state.reUpload3
-                        ? "disabled_btn"
-                        : ""
-                    }
-                  >
-                    <TierDropzoneStyle
-                      accept=".pdf,.doc,.docx"
-                      className={
-                        documents.board_resolution &&
-                        documents.board_resolution.file &&
-                        documents.board_resolution.file.name
-                          ? "tier_dropzone has_file"
-                          : "tier_dropzone"
-                      }
-                      multiple={false}
-                      onDrop={this.onDrop.bind(this, "board_resolution")}
-                      onFileDialogCancel={this.onCancel.bind(this)}
-                      disabled={!this.state.reUpload3}
-                    >
-                      {board_flag === null && (
-                        <div>
-                          <IconS type="upload" />
-                          <FileSelectText>Upload</FileSelectText>
-                        </div>
-                      )}
-                      {board_flag === false && (
-                        <div>
-                          <FileSelectText>Wrong File Selected</FileSelectText>
-                        </div>
-                      )}
-                      {board_flag === true && (
-                        <div>
-                          <FileSelectText>
-                            {documents.board_resolution.file.name}
-                          </FileSelectText>
-                        </div>
-                      )}
-                    </TierDropzoneStyle>
-                    {documents.board_resolution &&
-                      documents.board_resolution.file &&
-                      documents.board_resolution.file.name && (
-                        <Icon
-                          className="drop_zone_icon"
-                          onClick={() => {
-                            let temp = documents;
-                            temp["board_resolution"] = {};
-                            this.setState({
-                              documents: temp,
-                              board_flag: null,
-                            });
-                          }}
-                          type="close"
-                        />
-                      )}
-                  </TierDropWrap>
-                  <SupportText className="tier_support_text">
-                    Supported format: .doc, .docx, .pdf.
-                  </SupportText>
-                  {this.state.reUpload3 &&
-                    this.validator.message(
-                      "board_resolution",
-                      board_flag,
-                      "required",
-                      "tier-text-danger-validation"
-                    )}
-                </TierUpload>
-                {this.state.tierData.length > 0 ? (
-                  <TierDocBox>
-                    {this.state.boardResolutionStatus === null && (
-                      <TierDocStatus>
-                        <Icon type="warning" />
-                        <span>Under Approval</span>
-                      </TierDocStatus>
-                    )}
-                    {this.state.boardResolutionStatus === true && (
-                      <TierDocStatus>
-                        <Icon type="check" />
-                        <span>Verified</span>
-                      </TierDocStatus>
-                    )}
-                    {this.state.boardResolutionStatus === false && (
-                      <TierDocStatus>
-                        <Icon type="close" />
-                        <span>Reupload it</span>
-                      </TierDocStatus>
-                    )}
-                    {this.state.boardResolutionNote && (
-                      <Icon
-                        type="message"
-                        onClick={() => {
-                          this.setState({
-                            reasonPopup: true,
-                            rejectText: this.state.boardResolutionNote,
-                          });
-                        }}
+                      <input
+                        type="button"
+                        className={
+                          this.state.uploadBtnFlag
+                            ? "upload_btn"
+                            : "upload_btn disabled"
+                        }
+                        onClick={this.handleSubmit.bind(this)}
+                        value="Upload"
+                        disabled={!this.state.uploadBtnFlag}
                       />
-                    )}
-                  </TierDocBox>
-                ) : (
-                  <TierDocBox></TierDocBox>
+                    </TierButtonRow>
+
+                    <UploadCounter
+                      visible={this.state.UploadCounter}
+                      upload_flag={this.state.upload_flag}
+                      total_file_size={this.state.total_file_size}
+                    />
+                    <RejectReason
+                      visible={this.state.reasonPopup}
+                      text={this.state.rejectText}
+                      comingCancel={(e) => this.comingCancel(e)}
+                    />
+                  </TierWrap>
                 )}
-              </TierRow>
-              {/* 2 Months Bank Statements */}
-              <TierRow>
-                <TierLabel>
-                  <label>2 Months Bank Statements</label>
-                </TierLabel>
-                <TierUpload>
-                  <TierDropWrap
-                    className={
-                      documents.bank_statements &&
-                      documents.bank_statements.file &&
-                      documents.bank_statements.file.name
-                        ? "has_file"
-                        : !this.state.reUpload4
-                        ? "disabled_btn"
-                        : ""
-                    }
-                  >
-                    <TierDropzoneStyle
-                      accept=".pdf,.doc,.docx"
-                      className={
-                        documents.bank_statements &&
-                        documents.bank_statements.file &&
-                        documents.bank_statements.file.name
-                          ? "tier_dropzone has_file"
-                          : "tier_dropzone"
-                      }
-                      multiple={false}
-                      onDrop={this.onDrop.bind(this, "bank_statements")}
-                      onFileDialogCancel={this.onCancel.bind(this)}
-                      disabled={!this.state.reUpload4}
-                    >
-                      {bank_flag === null && (
-                        <div>
-                          <IconS type="upload" />
-                          <FileSelectText>Upload</FileSelectText>
-                        </div>
-                      )}
-                      {bank_flag === false && (
-                        <div>
-                          <FileSelectText>Wrong File Selected</FileSelectText>
-                        </div>
-                      )}
-                      {bank_flag === true && (
-                        <div>
-                          <FileSelectText>
-                            {documents.bank_statements.file.name}
-                          </FileSelectText>
-                        </div>
-                      )}
-                    </TierDropzoneStyle>
-                    {documents.bank_statements &&
-                      documents.bank_statements.file &&
-                      documents.bank_statements.file.name && (
-                        <Icon
-                          className="drop_zone_icon"
-                          onClick={() => {
-                            let temp = documents;
-                            temp["bank_statements"] = {};
-                            this.setState({
-                              documents: temp,
-                              bank_flag: null,
-                            });
-                          }}
-                          type="close"
-                        />
-                      )}
-                  </TierDropWrap>
-                  <SupportText className="tier_support_text">
-                    Supported format: .doc, .docx, .pdf.
-                  </SupportText>
-                  {this.state.reUpload4 &&
-                    this.validator.message(
-                      "bank_statements",
-                      bank_flag,
-                      "required",
-                      "tier-text-danger-validation"
-                    )}
-                </TierUpload>
-                {this.state.tierData.length > 0 ? (
-                  <TierDocBox>
-                    {this.state.bankStatementStatus === null && (
-                      <TierDocStatus>
-                        <Icon type="warning" />
-                        <span>Under Approval</span>
-                      </TierDocStatus>
-                    )}
-                    {this.state.bankStatementStatus === true && (
-                      <TierDocStatus>
-                        <Icon type="check" />
-                        <span>Verified</span>
-                      </TierDocStatus>
-                    )}
-                    {this.state.bankStatementStatus === false && (
-                      <TierDocStatus>
-                        <Icon type="close" />
-                        <span>Reupload it</span>
-                      </TierDocStatus>
-                    )}
-                    {this.state.bankStatementNote && (
-                      <Icon
-                        type="message"
-                        onClick={() => {
-                          this.setState({
-                            reasonPopup: true,
-                            rejectText: this.state.bankStatementNote,
-                          });
-                        }}
-                      />
-                    )}
-                  </TierDocBox>
-                ) : (
-                  <TierDocBox></TierDocBox>
-                )}
-              </TierRow>
-              {/* Corporate Filing Information */}
-              <TierRow>
-                <TierLabel>
-                  <label>Corporate Filing Information</label>
-                  <a href={corporate_filing_info} target="_blank" download>
-                    Click Here to Download the Form
-                  </a>
-                </TierLabel>
-                <TierUpload>
-                  <TierDropWrap
-                    className={
-                      documents.corporate_info &&
-                      documents.corporate_info.file &&
-                      documents.corporate_info.file.name
-                        ? "has_file"
-                        : !this.state.reUpload5
-                        ? "disabled_btn"
-                        : ""
-                    }
-                  >
-                    <TierDropzoneStyle
-                      accept=".pdf,.doc,.docx"
-                      className={
-                        documents.corporate_info &&
-                        documents.corporate_info.file &&
-                        documents.corporate_info.file.name
-                          ? "tier_dropzone has_file"
-                          : "tier_dropzone"
-                      }
-                      multiple={false}
-                      onDrop={this.onDrop.bind(this, "corporate_info")}
-                      onFileDialogCancel={this.onCancel.bind(this)}
-                      disabled={!this.state.reUpload5}
-                    >
-                      {corporate_flag === null && (
-                        <div>
-                          <IconS type="upload" />
-                          <FileSelectText>Upload</FileSelectText>
-                        </div>
-                      )}
-                      {corporate_flag === false && (
-                        <div>
-                          <FileSelectText>Wrong File Selected</FileSelectText>
-                        </div>
-                      )}
-                      {corporate_flag === true && (
-                        <div>
-                          <FileSelectText>
-                            {documents.corporate_info.file.name}
-                          </FileSelectText>
-                        </div>
-                      )}
-                    </TierDropzoneStyle>
-                    {documents.corporate_info &&
-                      documents.corporate_info.file &&
-                      documents.corporate_info.file.name && (
-                        <Icon
-                          className="drop_zone_icon"
-                          onClick={() => {
-                            let temp = documents;
-                            temp["corporate_info"] = {};
-                            this.setState({
-                              documents: temp,
-                              corporate_flag: null,
-                            });
-                          }}
-                          type="close"
-                        />
-                      )}
-                  </TierDropWrap>
-                  <SupportText className="tier_support_text">
-                    Supported format: .doc, .docx, .pdf.
-                  </SupportText>
-                  {this.state.reUpload5 &&
-                    this.validator.message(
-                      "corporate_info",
-                      corporate_flag,
-                      "required",
-                      "tier-text-danger-validation"
-                    )}
-                </TierUpload>
-                {this.state.tierData.length > 0 ? (
-                  <TierDocBox>
-                    {this.state.corporateInfoStatus === null && (
-                      <TierDocStatus>
-                        <Icon type="warning" />
-                        <span>Under Approval</span>
-                      </TierDocStatus>
-                    )}
-                    {this.state.corporateInfoStatus === true && (
-                      <TierDocStatus>
-                        <Icon type="check" />
-                        <span>Verified</span>
-                      </TierDocStatus>
-                    )}
-                    {this.state.corporateInfoStatus === false && (
-                      <TierDocStatus>
-                        <Icon type="close" />
-                        <span>Reupload it</span>
-                      </TierDocStatus>
-                    )}
-                    {this.state.corporateInfoNote && (
-                      <Icon
-                        type="message"
-                        onClick={() => {
-                          this.setState({
-                            reasonPopup: true,
-                            rejectText: this.state.corporateInfoNote,
-                          });
-                        }}
-                      />
-                    )}
-                  </TierDocBox>
-                ) : (
-                  <TierDocBox></TierDocBox>
-                )}
-              </TierRow>
-              {/* Beneficial Ownership Form */}
-              <TierRow>
-                <TierLabel>
-                  <label>Beneficial Ownership Form</label>
-                  <a href={beneficial_ownership_form} target="_blank" download>
-                    Click Here to Download the Form
-                  </a>
-                </TierLabel>
-                <TierUpload>
-                  <TierDropWrap
-                    className={
-                      documents.ownership_form &&
-                      documents.ownership_form.file &&
-                      documents.ownership_form.file.name
-                        ? "has_file"
-                        : !this.state.reUpload6
-                        ? "disabled_btn"
-                        : ""
-                    }
-                  >
-                    <TierDropzoneStyle
-                      accept=".pdf,.doc,.docx"
-                      className={
-                        documents.ownership_form &&
-                        documents.ownership_form.file &&
-                        documents.ownership_form.file.name
-                          ? "tier_dropzone has_file"
-                          : "tier_dropzone"
-                      }
-                      multiple={false}
-                      onDrop={this.onDrop.bind(this, "ownership_form")}
-                      onFileDialogCancel={this.onCancel.bind(this)}
-                      disabled={!this.state.reUpload6}
-                    >
-                      {ownership_flag === null && (
-                        <div>
-                          <IconS type="upload" />
-                          <FileSelectText>Upload</FileSelectText>
-                        </div>
-                      )}
-                      {ownership_flag === false && (
-                        <div>
-                          <FileSelectText>Wrong File Selected</FileSelectText>
-                        </div>
-                      )}
-                      {ownership_flag === true && (
-                        <div>
-                          <FileSelectText>
-                            {documents.ownership_form.file.name}
-                          </FileSelectText>
-                        </div>
-                      )}
-                    </TierDropzoneStyle>
-                    {documents.ownership_form &&
-                      documents.ownership_form.file &&
-                      documents.ownership_form.file.name && (
-                        <Icon
-                          className="drop_zone_icon"
-                          onClick={() => {
-                            let temp = documents;
-                            temp["ownership_form"] = [];
-                            this.setState({
-                              documents: temp,
-                              ownership_flag: null,
-                            });
-                          }}
-                          type="close"
-                        />
-                      )}
-                  </TierDropWrap>
-                  <SupportText className="tier_support_text">
-                    Supported format: .doc, .docx, .pdf.
-                  </SupportText>
-                  {this.state.reUpload6 &&
-                    this.validator.message(
-                      "ownership_form",
-                      ownership_flag,
-                      "required",
-                      "tier-text-danger-validation"
-                    )}
-                </TierUpload>
-                {this.state.tierData.length > 0 ? (
-                  <TierDocBox>
-                    {this.state.ownershipFormStatus === null && (
-                      <TierDocStatus>
-                        <Icon type="warning" />
-                        <span>Under Approval</span>
-                      </TierDocStatus>
-                    )}
-                    {this.state.ownershipFormStatus === true && (
-                      <TierDocStatus>
-                        <Icon type="check" />
-                        <span>Verified</span>
-                      </TierDocStatus>
-                    )}
-                    {this.state.ownershipFormStatus === false && (
-                      <TierDocStatus>
-                        <Icon type="close" />
-                        <span>Reupload it</span>
-                      </TierDocStatus>
-                    )}
-                    {this.state.ownershipFormNote && (
-                      <Icon
-                        type="message"
-                        onClick={() => {
-                          this.setState({
-                            reasonPopup: true,
-                            rejectText: this.state.ownershipFormNote,
-                          });
-                        }}
-                      />
-                    )}
-                  </TierDocBox>
-                ) : (
-                  <TierDocBox></TierDocBox>
-                )}
-              </TierRow>
-              {/* Articles of Incorporation */}
-              <TierRow>
-                <TierLabel>
-                  <label>Articles of Incorporation</label>
-                  <a href={articles_of_incorporation} target="_blank" download>
-                    Click Here to Download the Form
-                  </a>
-                </TierLabel>
-                <TierUpload>
-                  <TierDropWrap
-                    className={
-                      documents.articles_of_incorporation &&
-                      documents.articles_of_incorporation.file &&
-                      documents.articles_of_incorporation.file.name
-                        ? "has_file"
-                        : !this.state.reUpload7
-                        ? "disabled_btn"
-                        : ""
-                    }
-                  >
-                    <TierDropzoneStyle
-                      accept=".pdf,.doc,.docx"
-                      className={
-                        documents.articles_of_incorporation &&
-                        documents.articles_of_incorporation.file &&
-                        documents.articles_of_incorporation.file.name
-                          ? "tier_dropzone has_file"
-                          : "tier_dropzone"
-                      }
-                      multiple={false}
-                      onDrop={this.onDrop.bind(
-                        this,
-                        "articles_of_incorporation"
-                      )}
-                      onFileDialogCancel={this.onCancel.bind(this)}
-                      disabled={!this.state.reUpload7}
-                    >
-                      {articles_flag === null && (
-                        <div>
-                          <IconS type="upload" />
-                          <FileSelectText>Upload</FileSelectText>
-                        </div>
-                      )}
-                      {articles_flag === false && (
-                        <div>
-                          <FileSelectText>Wrong File Selected</FileSelectText>
-                        </div>
-                      )}
-                      {articles_flag === true && (
-                        <div>
-                          <FileSelectText>
-                            {documents.articles_of_incorporation.file.name}
-                          </FileSelectText>
-                        </div>
-                      )}
-                    </TierDropzoneStyle>
-                    {documents.articles_of_incorporation &&
-                      documents.articles_of_incorporation.file &&
-                      documents.articles_of_incorporation.file.name && (
-                        <Icon
-                          className="drop_zone_icon"
-                          onClick={() => {
-                            let temp = documents;
-                            temp["articles_of_incorporation"] = [];
-                            this.setState({
-                              documents: temp,
-                              articles_flag: null,
-                            });
-                          }}
-                          type="close"
-                        />
-                      )}
-                  </TierDropWrap>
-                  <SupportText className="tier_support_text">
-                    Supported format: .doc, .docx, .pdf.
-                  </SupportText>
-                  {this.state.reUpload7 &&
-                    this.validator.message(
-                      "articles_of_incorporation",
-                      articles_flag,
-                      "required",
-                      "tier-text-danger-validation"
-                    )}
-                </TierUpload>
-                {this.state.tierData.length > 0 ? (
-                  <TierDocBox>
-                    {this.state.articlesIncorporationStatus === null && (
-                      <TierDocStatus>
-                        <Icon type="warning" />
-                        <span>Under Approval</span>
-                      </TierDocStatus>
-                    )}
-                    {this.state.articlesIncorporationStatus === true && (
-                      <TierDocStatus>
-                        <Icon type="check" />
-                        <span>Verified</span>
-                      </TierDocStatus>
-                    )}
-                    {this.state.articlesIncorporationStatus === false && (
-                      <TierDocStatus>
-                        <Icon type="close" />
-                        <span>Reupload it</span>
-                      </TierDocStatus>
-                    )}
-                    {this.state.articlesIncorporationNote && (
-                      <Icon
-                        type="message"
-                        onClick={() => {
-                          this.setState({
-                            reasonPopup: true,
-                            rejectText: this.state.articlesIncorporationNote,
-                          });
-                        }}
-                      />
-                    )}
-                  </TierDocBox>
-                ) : (
-                  <TierDocBox></TierDocBox>
-                )}
-              </TierRow>
-              {/* Bylaws */}
-              <TierRow>
-                <TierLabel>
-                  <label>Bylaws</label>
-                  <a href={bylaws_form} target="_blank" download>
-                    Click Here to Download the Form
-                  </a>
-                </TierLabel>
-                <TierUpload>
-                  <TierDropWrap
-                    className={
-                      documents.bylaws &&
-                      documents.bylaws.file &&
-                      documents.bylaws.file.name
-                        ? "has_file"
-                        : !this.state.reUpload8
-                        ? "disabled_btn"
-                        : ""
-                    }
-                  >
-                    <TierDropzoneStyle
-                      accept=".pdf,.doc,.docx"
-                      className={
-                        documents.bylaws &&
-                        documents.bylaws.file &&
-                        documents.bylaws.file.name
-                          ? "tier_dropzone has_file"
-                          : "tier_dropzone"
-                      }
-                      multiple={false}
-                      onDrop={this.onDrop.bind(this, "bylaws")}
-                      onFileDialogCancel={this.onCancel.bind(this)}
-                      disabled={!this.state.reUpload8}
-                    >
-                      {bylaws_flag === null && (
-                        <div>
-                          <IconS type="upload" />
-                          <FileSelectText>Upload</FileSelectText>
-                        </div>
-                      )}
-                      {bylaws_flag === false && (
-                        <div>
-                          <FileSelectText>Wrong File Selected</FileSelectText>
-                        </div>
-                      )}
-                      {bylaws_flag === true && (
-                        <div>
-                          <FileSelectText>
-                            {documents.bylaws.file.name}
-                          </FileSelectText>
-                        </div>
-                      )}
-                    </TierDropzoneStyle>
-                    {documents.bylaws &&
-                      documents.bylaws.file &&
-                      documents.bylaws.file.name && (
-                        <Icon
-                          className="drop_zone_icon"
-                          onClick={() => {
-                            let temp = documents;
-                            temp["bylaws"] = [];
-                            this.setState({
-                              documents: temp,
-                              bylaws_flag: null,
-                            });
-                          }}
-                          type="close"
-                        />
-                      )}
-                  </TierDropWrap>
-                  <SupportText className="tier_support_text">
-                    Supported format: .doc, .docx, .pdf.
-                  </SupportText>
-                  {this.state.reUpload8 &&
-                    this.validator.message(
-                      "bylaws",
-                      bylaws_flag,
-                      "required",
-                      "tier-text-danger-validation"
-                    )}
-                </TierUpload>
-                {this.state.tierData.length > 0 ? (
-                  <TierDocBox>
-                    {this.state.byLawsStatus === null && (
-                      <TierDocStatus>
-                        <Icon type="warning" />
-                        <span>Under Approval</span>
-                      </TierDocStatus>
-                    )}
-                    {this.state.byLawsStatus === true && (
-                      <TierDocStatus>
-                        <Icon type="check" />
-                        <span>Verified</span>
-                      </TierDocStatus>
-                    )}
-                    {this.state.byLawsStatus === false && (
-                      <TierDocStatus>
-                        <Icon type="close" />
-                        <span>Reupload it</span>
-                      </TierDocStatus>
-                    )}
-                    {this.state.byLawsNote && (
-                      <Icon
-                        type="message"
-                        onClick={() => {
-                          this.setState({
-                            reasonPopup: true,
-                            rejectText: this.state.byLawsNote,
-                          });
-                        }}
-                      />
-                    )}
-                  </TierDocBox>
-                ) : (
-                  <TierDocBox></TierDocBox>
-                )}
-              </TierRow>
-              {/* Ownership and Control Structure */}
-              <TierRow>
-                <TierLabel>
-                  <label>Ownership and Control Structure</label>
-                  <a
-                    href={ownership_and_control_structure}
-                    target="_blank"
-                    download
-                  >
-                    Click Here to Download the Form
-                  </a>
-                </TierLabel>
-                <TierUpload>
-                  <TierDropWrap
-                    className={
-                      documents.ownership_control_structure &&
-                      documents.ownership_control_structure.file &&
-                      documents.ownership_control_structure.file.name
-                        ? "has_file"
-                        : !this.state.reUpload9
-                        ? "disabled_btn"
-                        : ""
-                    }
-                  >
-                    <TierDropzoneStyle
-                      accept=".pdf,.doc,.docx"
-                      className={
-                        documents.ownership_control_structure &&
-                        documents.ownership_control_structure.file &&
-                        documents.ownership_control_structure.file.name
-                          ? "tier_dropzone has_file"
-                          : "tier_dropzone"
-                      }
-                      multiple={false}
-                      onDrop={this.onDrop.bind(
-                        this,
-                        "ownership_control_structure"
-                      )}
-                      onFileDialogCancel={this.onCancel.bind(this)}
-                      disabled={!this.state.reUpload9}
-                    >
-                      {ownership_control_structure_flag === null && (
-                        <div>
-                          <IconS type="upload" />
-                          <FileSelectText>Upload</FileSelectText>
-                        </div>
-                      )}
-                      {ownership_control_structure_flag === false && (
-                        <div>
-                          <FileSelectText>Wrong File Selected</FileSelectText>
-                        </div>
-                      )}
-                      {ownership_control_structure_flag === true && (
-                        <div>
-                          <FileSelectText>
-                            {documents.ownership_control_structure.file.name}
-                          </FileSelectText>
-                        </div>
-                      )}
-                    </TierDropzoneStyle>
-                    {documents.ownership_control_structure &&
-                      documents.ownership_control_structure.file &&
-                      documents.ownership_control_structure.file.name && (
-                        <Icon
-                          className="drop_zone_icon"
-                          onClick={() => {
-                            let temp = documents;
-                            temp["ownership_control_structure"] = [];
-                            this.setState({
-                              documents: temp,
-                              ownership_control_structure_flag: null,
-                            });
-                          }}
-                          type="close"
-                        />
-                      )}
-                  </TierDropWrap>
-                  <SupportText className="tier_support_text">
-                    Supported format: .doc, .docx, .pdf.
-                  </SupportText>
-                  {this.state.reUpload9 &&
-                    this.validator.message(
-                      "ownership_control_structure",
-                      ownership_control_structure_flag,
-                      "required",
-                      "tier-text-danger-validation"
-                    )}
-                </TierUpload>
-                {this.state.tierData.length > 0 ? (
-                  <TierDocBox>
-                    {this.state.ownershipControlStructureStatus === null && (
-                      <TierDocStatus>
-                        <Icon type="warning" />
-                        <span>Under Approval</span>
-                      </TierDocStatus>
-                    )}
-                    {this.state.ownershipControlStructureStatus === true && (
-                      <TierDocStatus>
-                        <Icon type="check" />
-                        <span>Verified</span>
-                      </TierDocStatus>
-                    )}
-                    {this.state.ownershipControlStructureStatus === false && (
-                      <TierDocStatus>
-                        <Icon type="close" />
-                        <span>Reupload it</span>
-                      </TierDocStatus>
-                    )}
-                    {this.state.ownershipControlStructureNote && (
-                      <Icon
-                        type="message"
-                        onClick={() => {
-                          this.setState({
-                            reasonPopup: true,
-                            rejectText: this.state
-                              .ownershipControlStructureNote,
-                          });
-                        }}
-                      />
-                    )}
-                  </TierDocBox>
-                ) : (
-                  <TierDocBox></TierDocBox>
-                )}
-              </TierRow>
-              {/* Directors and Officers List & Personal Info Equivalent to Tier 3 Requirements */}
-              <TierRow>
-                <TierLabel>
-                  <label>
-                    Directors and Officers List & Personal Info Equivalent to
-                    Tier 3 Requirements
-                  </label>
-                  <a href={director_list_form} target="_blank" download>
-                    Click Here to Download the Form
-                  </a>
-                </TierLabel>
-                <TierUpload>
-                  <TierDropWrap
-                    className={
-                      documents.director_list &&
-                      documents.director_list.file &&
-                      documents.director_list.file.name
-                        ? "has_file"
-                        : !this.state.reUpload10
-                        ? "disabled_btn"
-                        : ""
-                    }
-                  >
-                    <TierDropzoneStyle
-                      accept=".pdf,.doc,.docx"
-                      className={
-                        documents.director_list &&
-                        documents.director_list.file &&
-                        documents.director_list.file.name
-                          ? "tier_dropzone has_file"
-                          : "tier_dropzone"
-                      }
-                      multiple={false}
-                      onDrop={this.onDrop.bind(this, "director_list")}
-                      onFileDialogCancel={this.onCancel.bind(this)}
-                      disabled={!this.state.reUpload10}
-                    >
-                      {director_list_flag === null && (
-                        <div>
-                          <IconS type="upload" />
-                          <FileSelectText>Upload</FileSelectText>
-                        </div>
-                      )}
-                      {director_list_flag === false && (
-                        <div>
-                          <FileSelectText>Wrong File Selected</FileSelectText>
-                        </div>
-                      )}
-                      {director_list_flag === true && (
-                        <div>
-                          <FileSelectText>
-                            {documents.director_list.file.name}
-                          </FileSelectText>
-                        </div>
-                      )}
-                    </TierDropzoneStyle>
-                    {documents.director_list &&
-                      documents.director_list.file &&
-                      documents.director_list.file.name && (
-                        <Icon
-                          className="drop_zone_icon"
-                          onClick={() => {
-                            let temp = documents;
-                            temp["director_list"] = [];
-                            this.setState({
-                              documents: temp,
-                              director_list_flag: null,
-                            });
-                          }}
-                          type="close"
-                        />
-                      )}
-                  </TierDropWrap>
-                  <SupportText className="tier_support_text">
-                    Supported format: .doc, .docx, .pdf.
-                  </SupportText>
-                  {this.state.reUpload10 &&
-                    this.validator.message(
-                      "director_list",
-                      director_list_flag,
-                      "required",
-                      "tier-text-danger-validation"
-                    )}
-                </TierUpload>
-                {this.state.tierData.length > 0 ? (
-                  <TierDocBox>
-                    {this.state.directorListStatus === null && (
-                      <TierDocStatus>
-                        <Icon type="warning" />
-                        <span>Under Approval</span>
-                      </TierDocStatus>
-                    )}
-                    {this.state.directorListStatus === true && (
-                      <TierDocStatus>
-                        <Icon type="check" />
-                        <span>Verified</span>
-                      </TierDocStatus>
-                    )}
-                    {this.state.directorListStatus === false && (
-                      <TierDocStatus>
-                        <Icon type="close" />
-                        <span>Reupload it</span>
-                      </TierDocStatus>
-                    )}
-                    {this.state.directorListNote && (
-                      <Icon
-                        type="message"
-                        onClick={() => {
-                          this.setState({
-                            reasonPopup: true,
-                            rejectText: this.state.directorListNote,
-                          });
-                        }}
-                      />
-                    )}
-                  </TierDocBox>
-                ) : (
-                  <TierDocBox></TierDocBox>
-                )}
-              </TierRow>
-              {/* Proof of Active Business Address */}
-              <TierRow>
-                <TierLabel>
-                  <label>Proof of Active Business Address</label>
-                </TierLabel>
-                <TierUpload>
-                  <TierDropWrap
-                    className={
-                      documents.active_business_proof &&
-                      documents.active_business_proof.file &&
-                      documents.active_business_proof.file.name
-                        ? "has_file"
-                        : !this.state.reUpload11
-                        ? "disabled_btn"
-                        : ""
-                    }
-                  >
-                    <TierDropzoneStyle
-                      accept=".pdf,.doc,.docx"
-                      className={
-                        documents.active_business_proof &&
-                        documents.active_business_proof.file &&
-                        documents.active_business_proof.file.name
-                          ? "tier_dropzone has_file"
-                          : "tier_dropzone"
-                      }
-                      multiple={false}
-                      onDrop={this.onDrop.bind(this, "active_business_proof")}
-                      onFileDialogCancel={this.onCancel.bind(this)}
-                      disabled={!this.state.reUpload11}
-                    >
-                      {active_business_proof_flag === null && (
-                        <div>
-                          <IconS type="upload" />
-                          <FileSelectText>Upload</FileSelectText>
-                        </div>
-                      )}
-                      {active_business_proof_flag === false && (
-                        <div>
-                          <FileSelectText>Wrong File Selected</FileSelectText>
-                        </div>
-                      )}
-                      {active_business_proof_flag === true && (
-                        <div>
-                          <FileSelectText>
-                            {documents.active_business_proof.file.name}
-                          </FileSelectText>
-                        </div>
-                      )}
-                    </TierDropzoneStyle>
-                    {documents.active_business_proof &&
-                      documents.active_business_proof.file &&
-                      documents.active_business_proof.file.name && (
-                        <Icon
-                          className="drop_zone_icon"
-                          onClick={() => {
-                            let temp = documents;
-                            temp["active_business_proof"] = [];
-                            this.setState({
-                              documents: temp,
-                              active_business_proof_flag: null,
-                            });
-                          }}
-                          type="close"
-                        />
-                      )}
-                  </TierDropWrap>
-                  <SupportText className="tier_support_text">
-                    Supported format: .doc, .docx, .pdf.
-                  </SupportText>
-                  {this.state.reUpload11 &&
-                    this.validator.message(
-                      "active_business_proof",
-                      active_business_proof_flag,
-                      "required",
-                      "tier-text-danger-validation"
-                    )}
-                </TierUpload>
-                {this.state.tierData.length > 0 ? (
-                  <TierDocBox>
-                    {this.state.activeBusinessProofStatus === null && (
-                      <TierDocStatus>
-                        <Icon type="warning" />
-                        <span>Under Approval</span>
-                      </TierDocStatus>
-                    )}
-                    {this.state.activeBusinessProofStatus === true && (
-                      <TierDocStatus>
-                        <Icon type="check" />
-                        <span>Verified</span>
-                      </TierDocStatus>
-                    )}
-                    {this.state.activeBusinessProofStatus === false && (
-                      <TierDocStatus>
-                        <Icon type="close" />
-                        <span>Reupload it</span>
-                      </TierDocStatus>
-                    )}
-                    {this.state.activeBusinessProofNote && (
-                      <Icon
-                        type="message"
-                        onClick={() => {
-                          this.setState({
-                            reasonPopup: true,
-                            rejectText: this.state.activeBusinessProofNote,
-                          });
-                        }}
-                      />
-                    )}
-                  </TierDocBox>
-                ) : (
-                  <TierDocBox></TierDocBox>
-                )}
-              </TierRow>
-              {/* Document Availability Policy */}
-              <TierRow>
-                <TierLabel>
-                  <label>Document Availability Policy</label>
-                </TierLabel>
-                <TierUpload>
-                  <TierDropWrap
-                    className={
-                      documents.document_availability_policy &&
-                      documents.document_availability_policy.file &&
-                      documents.document_availability_policy.file.name
-                        ? "has_file"
-                        : !this.state.reUpload12
-                        ? "disabled_btn"
-                        : ""
-                    }
-                  >
-                    <TierDropzoneStyle
-                      accept=".pdf,.doc,.docx"
-                      className={
-                        documents.document_availability_policy &&
-                        documents.document_availability_policy.file &&
-                        documents.document_availability_policy.file.name
-                          ? "tier_dropzone has_file"
-                          : "tier_dropzone"
-                      }
-                      multiple={false}
-                      onDrop={this.onDrop.bind(
-                        this,
-                        "document_availability_policy"
-                      )}
-                      onFileDialogCancel={this.onCancel.bind(this)}
-                      disabled={!this.state.reUpload12}
-                    >
-                      {document_availability_policy_flag === null && (
-                        <div>
-                          <IconS type="upload" />
-                          <FileSelectText>Upload</FileSelectText>
-                        </div>
-                      )}
-                      {document_availability_policy_flag === false && (
-                        <div>
-                          <FileSelectText>Wrong File Selected</FileSelectText>
-                        </div>
-                      )}
-                      {document_availability_policy_flag === true && (
-                        <div>
-                          <FileSelectText>
-                            {documents.document_availability_policy.file.name}
-                          </FileSelectText>
-                        </div>
-                      )}
-                    </TierDropzoneStyle>
-                    {documents.document_availability_policy &&
-                      documents.document_availability_policy.file &&
-                      documents.document_availability_policy.file.name && (
-                        <Icon
-                          className="drop_zone_icon"
-                          onClick={() => {
-                            let temp = documents;
-                            temp["document_availability_policy"] = [];
-                            this.setState({
-                              documents: temp,
-                              document_availability_policy_flag: null,
-                            });
-                          }}
-                          type="close"
-                        />
-                      )}
-                  </TierDropWrap>
-                  <SupportText className="tier_support_text">
-                    Supported format: .doc, .docx, .pdf.
-                  </SupportText>
-                  {this.state.reUpload12 &&
-                    this.validator.message(
-                      "document_availability_policy",
-                      document_availability_policy_flag,
-                      "required",
-                      "tier-text-danger-validation"
-                    )}
-                </TierUpload>
-                {this.state.tierData.length > 0 ? (
-                  <TierDocBox>
-                    {this.state.documentAvailabilityPolicyStatus === null && (
-                      <TierDocStatus>
-                        <Icon type="warning" />
-                        <span>Under Approval</span>
-                      </TierDocStatus>
-                    )}
-                    {this.state.documentAvailabilityPolicyStatus === true && (
-                      <TierDocStatus>
-                        <Icon type="check" />
-                        <span>Verified</span>
-                      </TierDocStatus>
-                    )}
-                    {this.state.documentAvailabilityPolicyStatus === false && (
-                      <TierDocStatus>
-                        <Icon type="close" />
-                        <span>Reupload it</span>
-                      </TierDocStatus>
-                    )}
-                    {this.state.documentAvailabilityPolicyNote && (
-                      <Icon
-                        type="message"
-                        onClick={() => {
-                          this.setState({
-                            reasonPopup: true,
-                            rejectText: this.state
-                              .documentAvailabilityPolicyNote,
-                          });
-                        }}
-                      />
-                    )}
-                  </TierDocBox>
-                ) : (
-                  <TierDocBox></TierDocBox>
-                )}
-              </TierRow>
-              {/* Cookies Policy */}
-              <TierRow>
-                <TierLabel>
-                  <label>Cookies Policy</label>
-                </TierLabel>
-                <TierUpload>
-                  <TierDropWrap
-                    className={
-                      documents.cookies_policy &&
-                      documents.cookies_policy.file &&
-                      documents.cookies_policy.file.name
-                        ? "has_file"
-                        : !this.state.reUpload13
-                        ? "disabled_btn"
-                        : ""
-                    }
-                  >
-                    <TierDropzoneStyle
-                      accept=".pdf,.doc,.docx"
-                      className={
-                        documents.cookies_policy &&
-                        documents.cookies_policy.file &&
-                        documents.cookies_policy.file.name
-                          ? "tier_dropzone has_file"
-                          : "tier_dropzone"
-                      }
-                      multiple={false}
-                      onDrop={this.onDrop.bind(this, "cookies_policy")}
-                      onFileDialogCancel={this.onCancel.bind(this)}
-                      disabled={!this.state.reUpload13}
-                    >
-                      {cookies_policy_flag === null && (
-                        <div>
-                          <IconS type="upload" />
-                          <FileSelectText>Upload</FileSelectText>
-                        </div>
-                      )}
-                      {cookies_policy_flag === false && (
-                        <div>
-                          <FileSelectText>Wrong File Selected</FileSelectText>
-                        </div>
-                      )}
-                      {cookies_policy_flag === true && (
-                        <div>
-                          <FileSelectText>
-                            {documents.cookies_policy.file.name}
-                          </FileSelectText>
-                        </div>
-                      )}
-                    </TierDropzoneStyle>
-                    {documents.cookies_policy &&
-                      documents.cookies_policy.file &&
-                      documents.cookies_policy.file.name && (
-                        <Icon
-                          className="drop_zone_icon"
-                          onClick={() => {
-                            let temp = documents;
-                            temp["cookies_policy"] = [];
-                            this.setState({
-                              documents: temp,
-                              cookies_policy_flag: null,
-                            });
-                          }}
-                          type="close"
-                        />
-                      )}
-                  </TierDropWrap>
-                  <SupportText className="tier_support_text">
-                    Supported format: .doc, .docx, .pdf.
-                  </SupportText>
-                  {this.state.reUpload13 &&
-                    this.validator.message(
-                      "cookies_policy",
-                      cookies_policy_flag,
-                      "required",
-                      "tier-text-danger-validation"
-                    )}
-                </TierUpload>
-                {this.state.tierData.length > 0 ? (
-                  <TierDocBox>
-                    {this.state.cookiesPolicyStatus === null && (
-                      <TierDocStatus>
-                        <Icon type="warning" />
-                        <span>Under Approval</span>
-                      </TierDocStatus>
-                    )}
-                    {this.state.cookiesPolicyStatus === true && (
-                      <TierDocStatus>
-                        <Icon type="check" />
-                        <span>Verified</span>
-                      </TierDocStatus>
-                    )}
-                    {this.state.cookiesPolicyStatus === false && (
-                      <TierDocStatus>
-                        <Icon type="close" />
-                        <span>Reupload it</span>
-                      </TierDocStatus>
-                    )}
-                    {this.state.cookiesPolicyNote && (
-                      <Icon
-                        type="message"
-                        onClick={() => {
-                          this.setState({
-                            reasonPopup: true,
-                            rejectText: this.state.cookiesPolicyNote,
-                          });
-                        }}
-                      />
-                    )}
-                  </TierDocBox>
-                ) : (
-                  <TierDocBox></TierDocBox>
-                )}
-              </TierRow>
-              {/* Privacy Policy */}
-              <TierRow>
-                <TierLabel>
-                  <label>Privacy Policy</label>
-                </TierLabel>
-                <TierUpload>
-                  <TierDropWrap
-                    className={
-                      documents.privacy_policy &&
-                      documents.privacy_policy.file &&
-                      documents.privacy_policy.file.name
-                        ? "has_file"
-                        : !this.state.reUpload14
-                        ? "disabled_btn"
-                        : ""
-                    }
-                  >
-                    <TierDropzoneStyle
-                      accept=".pdf,.doc,.docx"
-                      className={
-                        documents.privacy_policy &&
-                        documents.privacy_policy.file &&
-                        documents.privacy_policy.file.name
-                          ? "tier_dropzone has_file"
-                          : "tier_dropzone"
-                      }
-                      multiple={false}
-                      onDrop={this.onDrop.bind(this, "privacy_policy")}
-                      onFileDialogCancel={this.onCancel.bind(this)}
-                      disabled={!this.state.reUpload14}
-                    >
-                      {privacy_policy_flag === null && (
-                        <div>
-                          <IconS type="upload" />
-                          <FileSelectText>Upload</FileSelectText>
-                        </div>
-                      )}
-                      {privacy_policy_flag === false && (
-                        <div>
-                          <FileSelectText>Wrong File Selected</FileSelectText>
-                        </div>
-                      )}
-                      {privacy_policy_flag === true && (
-                        <div>
-                          <FileSelectText>
-                            {documents.privacy_policy.file.name}
-                          </FileSelectText>
-                        </div>
-                      )}
-                    </TierDropzoneStyle>
-                    {documents.privacy_policy &&
-                      documents.privacy_policy.file &&
-                      documents.privacy_policy.file.name && (
-                        <Icon
-                          className="drop_zone_icon"
-                          onClick={() => {
-                            let temp = documents;
-                            temp["privacy_policy"] = [];
-                            this.setState({
-                              documents: temp,
-                              privacy_policy_flag: null,
-                            });
-                          }}
-                          type="close"
-                        />
-                      )}
-                  </TierDropWrap>
-                  <SupportText className="tier_support_text">
-                    Supported format: .doc, .docx, .pdf.
-                  </SupportText>
-                  {this.state.reUpload14 &&
-                    this.validator.message(
-                      "privacy_policy",
-                      privacy_policy_flag,
-                      "required",
-                      "tier-text-danger-validation"
-                    )}
-                </TierUpload>
-                {this.state.tierData.length > 0 ? (
-                  <TierDocBox>
-                    {this.state.privacyPolicyStatus === null && (
-                      <TierDocStatus>
-                        <Icon type="warning" />
-                        <span>Under Approval</span>
-                      </TierDocStatus>
-                    )}
-                    {this.state.privacyPolicyStatus === true && (
-                      <TierDocStatus>
-                        <Icon type="check" />
-                        <span>Verified</span>
-                      </TierDocStatus>
-                    )}
-                    {this.state.privacyPolicyStatus === false && (
-                      <TierDocStatus>
-                        <Icon type="close" />
-                        <span>Reupload it</span>
-                      </TierDocStatus>
-                    )}
-                    {this.state.privacyPolicyNote && (
-                      <Icon
-                        type="message"
-                        onClick={() => {
-                          this.setState({
-                            reasonPopup: true,
-                            rejectText: this.state.privacyPolicyNote,
-                          });
-                        }}
-                      />
-                    )}
-                  </TierDocBox>
-                ) : (
-                  <TierDocBox></TierDocBox>
-                )}
-              </TierRow>
-              {/* AML Policy */}
-              <TierRow>
-                <TierLabel>
-                  <label>AML Policy</label>
-                </TierLabel>
-                <TierUpload>
-                  <TierDropWrap
-                    className={
-                      documents.aml_policy &&
-                      documents.aml_policy.file &&
-                      documents.aml_policy.file.name
-                        ? "has_file"
-                        : !this.state.reUpload15
-                        ? "disabled_btn"
-                        : ""
-                    }
-                  >
-                    <TierDropzoneStyle
-                      accept=".pdf,.doc,.docx"
-                      className={
-                        documents.aml_policy &&
-                        documents.aml_policy.file &&
-                        documents.aml_policy.file.name
-                          ? "tier_dropzone has_file"
-                          : "tier_dropzone"
-                      }
-                      multiple={false}
-                      onDrop={this.onDrop.bind(this, "aml_policy")}
-                      onFileDialogCancel={this.onCancel.bind(this)}
-                      disabled={!this.state.reUpload15}
-                    >
-                      {aml_policy_flag === null && (
-                        <div>
-                          <IconS type="upload" />
-                          <FileSelectText>Upload</FileSelectText>
-                        </div>
-                      )}
-                      {aml_policy_flag === false && (
-                        <div>
-                          <FileSelectText>Wrong File Selected</FileSelectText>
-                        </div>
-                      )}
-                      {aml_policy_flag === true && (
-                        <div>
-                          <FileSelectText>
-                            {documents.aml_policy.file.name}
-                          </FileSelectText>
-                        </div>
-                      )}
-                    </TierDropzoneStyle>
-                    {documents.aml_policy &&
-                      documents.aml_policy.file &&
-                      documents.aml_policy.file.name && (
-                        <Icon
-                          className="drop_zone_icon"
-                          onClick={() => {
-                            let temp = documents;
-                            temp["aml_policy"] = [];
-                            this.setState({
-                              documents: temp,
-                              aml_policy_flag: null,
-                            });
-                          }}
-                          type="close"
-                        />
-                      )}
-                  </TierDropWrap>
-                  <SupportText className="tier_support_text">
-                    Supported format: .doc, .docx, .pdf.
-                  </SupportText>
-                  {this.state.reUpload15 &&
-                    this.validator.message(
-                      "aml_policy",
-                      aml_policy_flag,
-                      "required",
-                      "tier-text-danger-validation"
-                    )}
-                </TierUpload>
-                {this.state.tierData.length > 0 ? (
-                  <TierDocBox>
-                    {this.state.amlPolicyStatus === null && (
-                      <TierDocStatus>
-                        <Icon type="warning" />
-                        <span>Under Approval</span>
-                      </TierDocStatus>
-                    )}
-                    {this.state.amlPolicyStatus === true && (
-                      <TierDocStatus>
-                        <Icon type="check" />
-                        <span>Verified</span>
-                      </TierDocStatus>
-                    )}
-                    {this.state.amlPolicyStatus === false && (
-                      <TierDocStatus>
-                        <Icon type="close" />
-                        <span>Reupload it</span>
-                      </TierDocStatus>
-                    )}
-                    {this.state.amlPolicyNote && (
-                      <Icon
-                        type="message"
-                        onClick={() => {
-                          this.setState({
-                            reasonPopup: true,
-                            rejectText: this.state.amlPolicyNote,
-                          });
-                        }}
-                      />
-                    )}
-                  </TierDocBox>
-                ) : (
-                  <TierDocBox></TierDocBox>
-                )}
-              </TierRow>
-              {/* Terms of Service */}
-              <TierRow>
-                <TierLabel>
-                  <label>Terms of Service</label>
-                </TierLabel>
-                <TierUpload>
-                  <TierDropWrap
-                    className={
-                      documents.terms_of_service &&
-                      documents.terms_of_service.file &&
-                      documents.terms_of_service.file.name
-                        ? "has_file"
-                        : !this.state.reUpload16
-                        ? "disabled_btn"
-                        : ""
-                    }
-                  >
-                    <TierDropzoneStyle
-                      accept=".pdf,.doc,.docx"
-                      className={
-                        documents.terms_of_service &&
-                        documents.terms_of_service.file &&
-                        documents.terms_of_service.file.name
-                          ? "tier_dropzone has_file"
-                          : "tier_dropzone"
-                      }
-                      multiple={false}
-                      onDrop={this.onDrop.bind(this, "terms_of_service")}
-                      onFileDialogCancel={this.onCancel.bind(this)}
-                      disabled={!this.state.reUpload16}
-                    >
-                      {terms_of_service_flag === null && (
-                        <div>
-                          <IconS type="upload" />
-                          <FileSelectText>Upload</FileSelectText>
-                        </div>
-                      )}
-                      {terms_of_service_flag === false && (
-                        <div>
-                          <FileSelectText>Wrong File Selected</FileSelectText>
-                        </div>
-                      )}
-                      {terms_of_service_flag === true && (
-                        <div>
-                          <FileSelectText>
-                            {documents.terms_of_service.file.name}
-                          </FileSelectText>
-                        </div>
-                      )}
-                    </TierDropzoneStyle>
-                    {documents.terms_of_service &&
-                      documents.terms_of_service.file &&
-                      documents.terms_of_service.file.name && (
-                        <Icon
-                          className="drop_zone_icon"
-                          onClick={() => {
-                            let temp = documents;
-                            temp["terms_of_service"] = [];
-                            this.setState({
-                              documents: temp,
-                              terms_of_service_flag: null,
-                            });
-                          }}
-                          type="close"
-                        />
-                      )}
-                  </TierDropWrap>
-                  <SupportText className="tier_support_text">
-                    Supported format: .doc, .docx, .pdf.
-                  </SupportText>
-                  {this.state.reUpload16 &&
-                    this.validator.message(
-                      "terms_of_service",
-                      terms_of_service_flag,
-                      "required",
-                      "tier-text-danger-validation"
-                    )}
-                </TierUpload>
-                {this.state.tierData.length > 0 ? (
-                  <TierDocBox>
-                    {this.state.termsOfServiceStatus === null && (
-                      <TierDocStatus>
-                        <Icon type="warning" />
-                        <span>Under Approval</span>
-                      </TierDocStatus>
-                    )}
-                    {this.state.termsOfServiceStatus === true && (
-                      <TierDocStatus>
-                        <Icon type="check" />
-                        <span>Verified</span>
-                      </TierDocStatus>
-                    )}
-                    {this.state.termsOfServiceStatus === false && (
-                      <TierDocStatus>
-                        <Icon type="close" />
-                        <span>Reupload it</span>
-                      </TierDocStatus>
-                    )}
-                    {this.state.termsOfServiceNote && (
-                      <Icon
-                        type="message"
-                        onClick={() => {
-                          this.setState({
-                            reasonPopup: true,
-                            rejectText: this.state.termsOfServiceNote,
-                          });
-                        }}
-                      />
-                    )}
-                  </TierDocBox>
-                ) : (
-                  <TierDocBox></TierDocBox>
-                )}
-              </TierRow>
-              <TierButtonRow>
-                <input
-                  type="button"
-                  className={
-                    this.state.uploadBtnFlag
-                      ? "cancel_btn"
-                      : "cancel_btn disabled"
-                  }
-                  disabled={!this.state.uploadBtnFlag}
-                  onClick={this.handleCancel.bind(this)}
-                  value="Cancel"
-                />
-                <input
-                  type="button"
-                  className={
-                    this.state.uploadBtnFlag
-                      ? "upload_btn"
-                      : "upload_btn disabled"
-                  }
-                  onClick={this.handleSubmit.bind(this)}
-                  value="Upload"
-                  disabled={!this.state.uploadBtnFlag}
-                />
-              </TierButtonRow>
-              <UploadCounter
-                visible={this.state.UploadCounter}
-                upload_flag={this.state.upload_flag}
-                total_file_size={this.state.total_file_size}
-              />
-              <RejectReason
-                visible={this.state.reasonPopup}
-                text={this.state.rejectText}
-                comingCancel={(e) => this.comingCancel(e)}
-              />
-            </TierWrap>
+              </div>
+            )}
           </KYCWrap>
         </TierWrapper>
         {this.state.loader === true ? <FaldaxLoader /> : ""}

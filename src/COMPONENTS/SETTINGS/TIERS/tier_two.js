@@ -953,47 +953,6 @@ class TierTwo extends React.Component {
                         <TierDocBox></TierDocBox>
                       )}
                     </TierRow>
-                    {/* <Fileselect1 className="file-select-col">
-                        <RemoveIcon1
-                          onClick={() => {
-                            this.removeFile("residence-proof");
-                          }}
-                          style={{ display: `${this.state.displaySecond}` }}
-                          type={"close"}
-                          theme="outlined"
-                        />
-                        <ButtonUp
-                          style={{
-                            backgroundImage: `url('${this.state.profileImg2}')`
-                          }}
-                          className="file-select-btn"
-                          onClick={() => {
-                            this.handleFileSelectClick("residence-proof");
-                          }}
-                        >
-                          <Plus className="plus">
-                            <Icon type={this.state.icon2} theme="outlined" />
-                          </Plus>
-                          <Plustext className="text">Upload</Plustext>
-                        </ButtonUp>
-                        <Fileinput
-                          onChange={this.handleProfile}
-                          type="file"
-                          name="residence-proof"
-                          id="residence-proof"
-                          disabled={!this.state.reUpload2}
-                        />
-                        {this.state.reUpload2 &&
-                          this.validator.message(
-                            "residence-proof",
-                            this.state.profileImg2,
-                            "required",
-                            "tier-text-danger-validation",
-                            {
-                              required: "This field is required."
-                            }
-                          )} */}
-                    {/* </Fileselect1> */}
 
                     <TierRow className="no_border">
                       <TierLabel>

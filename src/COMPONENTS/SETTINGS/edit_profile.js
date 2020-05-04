@@ -61,7 +61,7 @@ class Editprofile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeKey: "4",
+      activeKey: "1",
       user2fastatus: "",
       totalUSDOfWallet: "",
       walletCoins: "",
