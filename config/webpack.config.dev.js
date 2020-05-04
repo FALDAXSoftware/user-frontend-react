@@ -242,7 +242,16 @@ module.exports = {
     // solution that requires the user to opt into importing specific locales.
     // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
     // You can remove this if you don't use Moment.js:
+    //new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /de|fr|hu/),
     new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /de|fr|hu/),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'node-static',
+      filename: 'node-static.js',
+      minChunks(module, count) {
+          var context = module.context;
+          return context && context.indexOf('node_modules') >= 0;
+      },
+    }),
     //new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
   ],
   // Some libraries import Node modules but don't use them in the browser.
