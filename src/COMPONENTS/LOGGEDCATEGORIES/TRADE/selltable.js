@@ -20,7 +20,7 @@ import {
   HistoryWrap1,
   TableHeader,
   TableContent,
-  ScrollTableContent
+  ScrollTableContent,
 } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
 import { faThinkPeaks } from "@fortawesome/free-brands-svg-icons";
 
@@ -39,7 +39,7 @@ const NDF = styled.p`
   text-align: center;
   font-size: 14px;
   font-weight: 600;
-  color: ${props => (props.theme.mode === "dark" ? "white" : "black")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "black")};
   font-family: "Open Sans";
 `;
 class SellTable extends Component {
@@ -51,7 +51,7 @@ class SellTable extends Component {
       currency: this.props.cryptoPair ? this.props.cryptoPair.currency : "BTC",
       lastsum: 0,
       loader: false,
-      result: []
+      result: [],
     };
     this.t = this.props.t;
     this.updateData = this.updateData.bind(this);
@@ -62,8 +62,8 @@ class SellTable extends Component {
   componentDidMount() {
     // var self = this;
     if (this.props.io) {
-      this.props.io.on("sell-book-data", data => {
-        // console.log("^^^^data", data);
+      this.props.io.on("sell-book-data", (data) => {
+        console.log("^^^^sell-data", data);
         this.updateData(data);
       });
     }
@@ -182,8 +182,9 @@ class SellTable extends Component {
         SOCKET is connected and new data will be generated again and again and it will be updated in sell book.
     */
 
-  updateData(data) {
+  updateData(res) {
     let self = this;
+    let data = res.data;
     // console.log("buyrow------------", data);
     const row = [];
     let sum = 0;
@@ -193,68 +194,75 @@ class SellTable extends Component {
       let isAdded = false;
       let value = [];
       element["my_size"] = 0;
+      row.push({
+        my_size: element.my_size,
+        amount: element.quantity,
+        ask: element.price,
+        // user_id: element.user_id,
+        // total: sum,
+      });
       // if (element.user_id === self.props.profileDetails.id) {
       //     element["my_size"] = element.quantity;
       // }
-      for (let internalIndex = 0; internalIndex < row.length; internalIndex++) {
-        const internalElement = row[internalIndex];
-        console.log(
-          index,
-          internalIndex,
-          "==========>",
-          internalElement.ask === element.price,
-          element.price,
-          internalElement.ask
-        );
-        if (internalElement.ask === element.price) {
-          row[internalIndex].amount += element.quantity;
-          console.log(
-            "I am inside",
-            data[index],
-            data[internalIndex],
-            Number(internalElement.user_id),
-            self.props.profileDetails.id,
-            Number(internalElement.user_id) == self.props.profileDetails.id
-          );
+      // for (let internalIndex = 0; internalIndex < row.length; internalIndex++) {
+      //   const internalElement = row[internalIndex];
+      //   console.log(
+      //     index,
+      //     internalIndex,
+      //     "==========>",
+      //     internalElement.ask === element.price,
+      //     element.price,
+      //     internalElement.ask
+      //   );
+      //   if (internalElement.ask === element.price) {
+      //     row[internalIndex].amount += element.quantity;
+      //     console.log(
+      //       "I am inside",
+      //       data[index],
+      //       data[internalIndex],
+      //       Number(internalElement.user_id),
+      //       self.props.profileDetails.id,
+      //       Number(internalElement.user_id) == self.props.profileDetails.id
+      //     );
 
-          // if (Number(internalElement.user_id) == self.props.profileDetails.id) {
-          //     console.log("I am inside", data[internalIndex])
-          //     row[internalIndex]["my_size"] = element.my_size + internalElement.my_size;
-          // }
-          isAdded = true;
-          break;
-        }
-      }
-      element.my_size = 0;
-      for (let tempIndex = 0; tempIndex < data.length; tempIndex++) {
-        if (value.includes(element.price)) {
-          if (element.price == data[tempIndex].price) {
-            if (data[tempIndex].user_id == self.props.profileDetails.id) {
-              element.my_size = value.my_size + data[tempIndex].quantity;
-            }
-          }
-          value.my_size = element.my_size;
-        } else {
-          value.push(element.price);
-          if (element.price == data[tempIndex].price) {
-            if (data[tempIndex].user_id == self.props.profileDetails.id) {
-              element.my_size = element.my_size + data[tempIndex].quantity;
-            }
-          }
-          value.my_size = element.my_size;
-        }
-        // value.push(element.price)
-      }
-      console.log(element);
-      if (!isAdded) {
-        row.push({
-          my_size: element.my_size,
-          amount: element.quantity,
-          ask: element.price,
-          user_id: element.user_id
-          // total: sum,
-        });
-      }
+      //     // if (Number(internalElement.user_id) == self.props.profileDetails.id) {
+      //     //     console.log("I am inside", data[internalIndex])
+      //     //     row[internalIndex]["my_size"] = element.my_size + internalElement.my_size;
+      //     // }
+      //     isAdded = true;
+      //     break;
+      //   }
+      // }
+      // element.my_size = 0;
+      // for (let tempIndex = 0; tempIndex < data.length; tempIndex++) {
+      //   if (value.includes(element.price)) {
+      //     if (element.price == data[tempIndex].price) {
+      //       if (data[tempIndex].user_id == self.props.profileDetails.id) {
+      //         element.my_size = value.my_size + data[tempIndex].quantity;
+      //       }
+      //     }
+      //     value.my_size = element.my_size;
+      //   } else {
+      //     value.push(element.price);
+      //     if (element.price == data[tempIndex].price) {
+      //       if (data[tempIndex].user_id == self.props.profileDetails.id) {
+      //         element.my_size = element.my_size + data[tempIndex].quantity;
+      //       }
+      //     }
+      //     value.my_size = element.my_size;
+      //   }
+      //   // value.push(element.price)
+      // }
+      // console.log(element);
+      // if (!isAdded) {
+      //   row.push({
+      //     my_size: element.my_size,
+      //     amount: element.quantity,
+      //     ask: element.price,
+      //     user_id: element.user_id,
+      //     // total: sum,
+      //   });
+      // }
     }
 
     for (let index = 0; index < row.length; index++) {
@@ -266,8 +274,8 @@ class SellTable extends Component {
     this.setState({
       loader: false,
       // data: rows,
-      lastsum: sum,
-      result: row
+      lastsum: res.total || 0,
+      result: row,
     });
   }
 
@@ -279,7 +287,7 @@ class SellTable extends Component {
         </BBC2>
         <TotalBTC>
           {this.t("conversion:total_text.message")}:{" "}
-          {this.state.lastsum && this.state.lastsum.toFixed(8)}{" "}
+          {this.state.lastsum && parseFloat(this.state.lastsum).toFixed(8)}{" "}
           {this.state.crypto}
         </TotalBTC>
         <BuyTable>
@@ -289,7 +297,7 @@ class SellTable extends Component {
                 <TableHeader cellpadding="10px" cellspacing="0" border="0">
                   <thead>
                     <tr>
-                      <th>{this.t("my_size_text.message")}</th>
+                      {/* <th>{this.t("my_size_text.message")}</th> */}
                       <th>{this.t("wallet:amount_text.message")}</th>
                       <th>{this.t("ask_text.message")}</th>
                       <th>{this.t("conversion:total_text.message")}</th>
@@ -312,14 +320,15 @@ class SellTable extends Component {
                     border="0"
                   >
                     <tbody>
+                      {console.log("^^^selltabel", this.state.result)}
                       {this.state.result.length ? (
-                        this.state.result.map(function(element, index) {
+                        this.state.result.map(function (element, index) {
                           return (
                             <tr>
-                              <td>{element.my_size}</td>
-                              <td>{element.amount.toFixed(3)}</td>
-                              <td>{element.ask.toFixed(5)}</td>
-                              <td>{element.total.toFixed(8)}</td>
+                              {/* <td>{element.my_size.toFixed(8)}</td> */}
+                              <td>{element.amount?.toFixed(8)}</td>
+                              <td>{element.ask?.toFixed(8)}</td>
+                              <td>{element.total?.toFixed(8)}</td>
                             </tr>
                           );
                         })
@@ -357,7 +366,7 @@ function mapStateToProps(state) {
     profileDetails:
       state.simpleReducer.profileDetails !== undefined
         ? state.simpleReducer.profileDetails.data[0]
-        : ""
+        : "",
     /* loader:state.simpleReducer.loader?state.simpleReducer.loader:false */
   };
 }

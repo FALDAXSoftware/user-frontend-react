@@ -363,8 +363,11 @@ export const Save = styled(Button)`
   margin-left: 10px;
   width: 15%;
   height: 40px;
+  @media (max-width: 1366px) {
+    width: calc(25% - 30px);
+  }
   @media (max-width: 1200px) {
-    width: 20%;
+    width: calc(25% - 30px);
   }
   @media (max-width: 990px) {
     width: calc(20% - 30px);

@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import { Row, Col } from "antd";
+import { Row, Col, Button, Icon } from "antd";
 import "antd/dist/antd.css";
 import { Line } from "react-chartjs-2";
 import { translate } from "react-i18next";
@@ -24,7 +24,8 @@ class DepthChart extends Component {
       currency: this.props.currency,
       loader: false,
       askData: [],
-      bidData: []
+      bidData: [],
+      zoom: 1
     };
     this.t = this.props.t;
     this.updateGraph = this.updateGraph.bind(this);
@@ -36,7 +37,7 @@ class DepthChart extends Component {
   componentDidMount() {
     if (this.props.io) {
       this.props.io.on("depth-chart-data", data => {
-        // console.log("^^^^data", data);
+        console.log("^^^^data", data);
         this.updateGraph(data);
       });
     }
@@ -145,8 +146,37 @@ class DepthChart extends Component {
 
     this.props.depthLoaderFunc(false);
   }
+  zoomIn = () => {
+    let zoom = this.state.zoom
+    if (zoom <= 4) {
+      this.setState({
+        zoom: zoom + 1
+      })
+    }
+  }
+  zoomOut = () => {
+    let zoom = this.state.zoom
+    if (zoom > 1) {
+      this.setState({
+        zoom: zoom - 1
+      })
+    }
+  }
   render() {
     var self = this;
+    let bidData = [...self.state.bidData]
+    let askData = [...self.state.askData]
+    console.log(bidData, askData, self.state.zoom);
+    let ask_lenght = Math.ceil(askData.length / self.state.zoom)
+    let bid_length = Math.ceil(bidData.length / self.state.zoom)
+    if (self.state.zoom > 1) {
+      let min_length = Math.min(ask_lenght, bid_length)
+      ask_lenght = min_length
+      bid_length = min_length
+    }
+    bidData = bidData.slice(0, bid_length)
+    askData = askData.slice(0, ask_lenght)
+    console.log(bidData, askData);
 
     let graphData = {
       type: "line",
@@ -162,7 +192,7 @@ class DepthChart extends Component {
           pointHitRadius: 2,
           steppedLine: true,
           pointRadius: 0.2,
-          data: [...self.state.bidData]
+          data: [...bidData]
         },
         {
           label: `${this.t("ask_text.message")}`,
@@ -175,16 +205,17 @@ class DepthChart extends Component {
           pointHitRadius: 2,
           pointRadius: 0.2,
           steppedLine: true,
-          data: [...this.state.askData]
+          data: [...askData]
         }
       ]
     };
 
     return (
       <WrapDepth>
-        <Instru2>
+        <Instru2 style={{ width: "calc(100% - 20px)" }}>
           {this.t("market_depth_text.message")} {this.props.crypto}/
           {this.props.currency}
+          <div className="controlls"><Button size="small" type="primary" onClick={this.zoomIn}><Icon type="plus" /></Button><Button size="small" type="primary" onClick={this.zoomOut}><Icon type="minus" /></Button></div>
         </Instru2>
         <Row>
           <Col xl={24}>
@@ -193,6 +224,7 @@ class DepthChart extends Component {
                 height={this.props.height}
                 data={graphData}
                 options={{
+                  animation: false,
                   responsive: true,
                   maintainAspectRatio: false,
                   legend: {

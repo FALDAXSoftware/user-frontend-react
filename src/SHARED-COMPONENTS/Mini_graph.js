@@ -11,7 +11,7 @@ let { _AMAZONBUCKET } = globalVariables;
 const SOCKET_HOST = globalVariables.SOCKET_HOST;
 /* Styled componets */
 const GraphWrapper = styled.div`
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#041b2c" : "#fff"};
   padding: 12.5px;
   width: 100%;
@@ -20,13 +20,14 @@ const GraphWrapper = styled.div`
 const ImageWrapper = styled.img`
   width: 25px;
   height: 25px;
-  background-color: ${props => (props.theme.mode === "dark" ? "#041b2c" : "")};
+  background-color: ${(props) =>
+    props.theme.mode === "dark" ? "#041b2c" : ""};
 `;
 
 const SpanCoinName = styled.span`
   font-size: 16px;
   font-family: "Open sans";
-  color: ${props =>
+  color: ${(props) =>
     props.theme.mode === "dark" ? "#617090" : "rgba( 0, 0, 0, 0.231 )"};
   font-weight: bold;
   line-height: 1.125;
@@ -41,20 +42,24 @@ const SpanCoinNameWrapper = styled.div`
 const SpanCoinPrice = styled.span`
   font-size: 20px;
   font-family: "Open sans";
-  color: ${props => (props.theme.mode === "dark" ? "white" : "rgb( 0, 0, 0 )")};
+  color: ${(props) =>
+    props.theme.mode === "dark" ? "white" : "rgb( 0, 0, 0 )"};
   font-weight: bold;
   line-height: 1.1;
   text-align: left;
   line-height: 25px;
+  word-break: break-word;
+  padding: 0 12px 0 0;
+  display: inherit;
 `;
 
 const SpanCoinPercentage = styled.span`
     font-size: 14px;
     font-family: "Open sans";
-    color: ${props =>
-    props.value === 0
-      ? props => (props.theme.mode === "dark" ? "white" : "black")
-      : props.value <= 0
+    color: ${(props) =>
+      props.value === 0
+        ? (props) => (props.theme.mode === "dark" ? "white" : "black")
+        : props.value <= 0
         ? "red"
         : "#34a539"}
     line-height: 1.286;
@@ -99,10 +104,10 @@ class Mini_graph extends React.Component {
             pointHoverBorderWidth: 1,
             pointRadius: 1,
             pointHitRadius: 10,
-            data: []
-          }
-        ]
-      }
+            data: [],
+          },
+        ],
+      },
     };
     this.updateGraph = this.updateGraph.bind(this);
   }
@@ -123,19 +128,19 @@ class Mini_graph extends React.Component {
   miniGraph() {
     fetch(
       SOCKET_HOST +
-      `/api/v1/tradding/get-chart-data-graph?symbol=${this.props.crypto}-${this.props.currency}`,
+        `/api/v1/tradding/get-chart-data-graph?symbol=${this.props.crypto}-${this.props.currency}`,
       {
         method: "get",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
           "Accept-Language": localStorage["i18nextLng"],
-          Authorization: "Bearer " + this.props.isLoggedIn
-        }
+          Authorization: "Bearer " + this.props.isLoggedIn,
+        },
       }
     )
-      .then(response => response.json())
-      .then(responseData => {
+      .then((response) => response.json())
+      .then((responseData) => {
         if (responseData.status == 200) {
           // console.log("here", responseData.data);
           this.updateGraph(responseData.data);
@@ -143,7 +148,7 @@ class Mini_graph extends React.Component {
         }
         // this.setState({ loader: false });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
     // var self = this;
@@ -195,7 +200,7 @@ class Mini_graph extends React.Component {
     let timeStampArray = [];
     // console.log("^^^", data);
     data = data[0];
-    data.tradeChartDetails.map(element => {
+    data.tradeChartDetails.map((element) => {
       dataArray.push(element.fill_price);
       timeStampArray.push(moment.utc(element.created_at).unix());
     });
@@ -213,7 +218,7 @@ class Mini_graph extends React.Component {
 
     this.setState(
       {
-        data: graphOptions
+        data: graphOptions,
       },
       () => {
         // self.refs.chart.chartInstance.data.datasets[0].data = dataArray;
@@ -245,9 +250,9 @@ class Mini_graph extends React.Component {
           pointHoverBorderWidth: 1,
           pointRadius: 0,
           pointHitRadius: 1,
-          data: [...this.state.data.datasets[0].data]
-        }
-      ]
+          data: [...this.state.data.datasets[0].data],
+        },
+      ],
     };
 
     const { coinName, image, price, percentage } = this.state.data;
@@ -261,7 +266,6 @@ class Mini_graph extends React.Component {
           </SpanCoinNameWrapper>
         </Row>
         <Row>
-
           <Col xs={24} md={16}>
             <SpanCoinPrice>
               {price ? `${price.toFixed(5)}` : "0"}
@@ -286,29 +290,29 @@ class Mini_graph extends React.Component {
               data={graphData}
               options={{
                 tooltips: {
-                  enabled: false
+                  enabled: false,
                 },
                 legend: {
-                  display: false
+                  display: false,
                 },
                 scales: {
                   xAxes: [
                     {
                       display: false,
                       scaleLabel: {
-                        display: false
-                      }
-                    }
+                        display: false,
+                      },
+                    },
                   ],
                   yAxes: [
                     {
                       display: false,
                       scaleLabel: {
-                        display: false
-                      }
-                    }
-                  ]
-                }
+                        display: false,
+                      },
+                    },
+                  ],
+                },
               }}
               height={100}
               redraw={true}
@@ -329,7 +333,7 @@ function mapStateToProps(state) {
     cryptoPair:
       state.walletReducer.cryptoPair !== undefined
         ? state.walletReducer.cryptoPair
-        : ""
+        : "",
     /* loader:state.simpleReducer.loader?state.simpleReducer.loader:false */
   };
 }
