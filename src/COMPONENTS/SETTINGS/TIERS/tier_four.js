@@ -166,6 +166,13 @@ class TierFour extends React.Component {
     // if (this.props.profileDetails.account_tier !== 3) {
     //   this.props.history.push("/");
     // }
+    if (
+      this.props.location.state === undefined ||
+      this.props.location.state.flag === "" ||
+      this.props.location.state.flag === null
+    ) {
+      this.props.history.push("/");
+    }
   }
   async componentDidMount() {
     try {

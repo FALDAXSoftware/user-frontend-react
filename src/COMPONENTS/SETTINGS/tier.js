@@ -34,8 +34,12 @@ class Tier extends Component {
     this.state = {
       loader: true,
       tierData: [],
-      tierUpgradePopup: true,
+      tierUpgradePopup: false,
       userUpgradeData: "",
+      minimumAccountAge: "",
+      minimumNumberOfTrades: "",
+      minimumTradeValue: "",
+      minimumWalletBalance: "",
     };
     self = this;
   }
@@ -84,12 +88,30 @@ class Tier extends Component {
       .then((response) => response.json())
       .then((responseData) => {
         if (responseData.status === 200) {
-          this.props.history.push(`tier${id}`);
+          // this.props.history.push(`tier${id}`);
+          this.props.history.push({
+            pathname: `tier${id}`,
+            state: {
+              flag: true,
+            },
+          });
         } else if (responseData.status === 202) {
-          console.log("responseData^^^", responseData);
+          console.log(
+            "responseData^^^",
+            responseData,
+            this.state.tierData[id].minimum_activity_thresold.Account_Age
+          );
           this.setState({
             userUpgradeData: responseData.data,
             tierUpgradePopup: true,
+            minimumAccountAge: this.state.tierData[id].minimum_activity_thresold
+              .Account_Age,
+            minimumNumberOfTrades: this.state.tierData[id]
+              .minimum_activity_thresold.Minimum_Total_Transactions,
+            minimumTradeValue: this.state.tierData[id].minimum_activity_thresold
+              .Minimum_Total_Value_of_All_Transactions,
+            minimumWalletBalance: this.state.tierData[id].requirements_two
+              .Total_Wallet_Balance,
           });
         } else {
           this.openNotificationWithIcon("error", "Error", responseData.err);
@@ -334,6 +356,10 @@ class Tier extends Component {
           <TierUpgradeInfo
             visible={this.state.tierUpgradePopup}
             userUpgradeData={this.state.userUpgradeData}
+            minimumAccountAge={this.state.minimumAccountAge}
+            minimumNumberOfTrades={this.state.minimumNumberOfTrades}
+            minimumTradeValue={this.state.minimumTradeValue}
+            minimumWalletBalance={this.state.minimumWalletBalance}
             comingCancel={(e) => this.comingCancel(e)}
           />
         </TierMainWrap>

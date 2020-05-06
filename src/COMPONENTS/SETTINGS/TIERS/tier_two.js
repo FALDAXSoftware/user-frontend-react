@@ -188,6 +188,13 @@ class TierTwo extends React.Component {
     //   this.props.history.push("/");
     // }
     if (
+      this.props.location.state === undefined ||
+      this.props.location.state.flag === "" ||
+      this.props.location.state.flag === null
+    ) {
+      this.props.history.push("/");
+    }
+    if (
       this.props.profileDetails.account_tier == 0 ||
       this.props.profileDetails.account_tier == 2 ||
       this.props.profileDetails.account_tier == 3 ||
@@ -275,8 +282,9 @@ class TierTwo extends React.Component {
               requestId: tierDoc.request_id,
             });
           }
-          switch (index) {
-            case 0:
+          console.log("jhfgsd^^^^", parseInt(tierDoc.type));
+          switch (parseInt(tierDoc.type)) {
+            case 1:
               let validid = tierDoc.is_approved;
               let reupload1;
               if (tierDoc.is_approved === null) {
@@ -292,7 +300,7 @@ class TierTwo extends React.Component {
                 validNote: tierDoc.public_note,
               });
               return console.log("TierDoc^^", tierDoc.type, index);
-            case 1:
+            case 2:
               let residence = tierDoc.is_approved;
               let reupload2;
               if (tierDoc.is_approved === null) {
@@ -308,7 +316,7 @@ class TierTwo extends React.Component {
                 residenceNote: tierDoc.public_note,
               });
               return console.log("TierDoc^^", tierDoc.type, index);
-            case 2:
+            case 3:
               let ssn = tierDoc.is_approved;
               let reupload3;
               if (tierDoc.is_approved === null) {
@@ -324,7 +332,7 @@ class TierTwo extends React.Component {
                 ssnNote: tierDoc.public_note,
               });
               return console.log("TierDoc^^", tierDoc.type, index);
-            case 3:
+            case 4:
               return console.log("TierDoc^^", tierDoc.type, index);
             default:
               return console.log("No case");
@@ -598,6 +606,8 @@ class TierTwo extends React.Component {
                 this.props.history.push("/editProfile");
               }
             );
+          } else if (responseData.status == 500) {
+            this.openNotificationWithIcon("error", "Error", responseData.error);
           }
           this.setState({ loader: false });
         })
