@@ -32,6 +32,7 @@ import {
   TierLabel,
   TierDropzoneStyle,
   TierDropWrap,
+  RejectNote,
 } from "../../../STYLED-COMPONENTS/TIER/tierStyle";
 import { Icon, notification, Row, Col } from "antd";
 import {
@@ -42,6 +43,8 @@ import {
 import { SupportText } from "../../LANDINGCATEGORIES/apply_job";
 import { APIUtility } from "../../../httpHelper";
 import FaldaxLoader from "../../../SHARED-COMPONENTS/FaldaxLoader";
+import RejectReason from "../../../SHARED-COMPONENTS/RejectReason";
+import { DoneWrap, KycSucc } from "./tier_one";
 let { API_URL, Proof_of_assets_form } = globalVariables;
 /* Styled-Components */
 
@@ -97,13 +100,20 @@ class TierThree extends React.Component {
       assetFormStatus: "",
       uploadBtnFlag: false,
       requestId: "",
+      assetFormNote: "",
+      idcpNote: "",
+      reasonPopup: false,
+      rejectText: "",
+      forceRejectStatus: false,
+      forceRejectNote: "",
+      forceAcceptedStatus: false,
     };
     this.handleProfile = this.handleProfile.bind(this);
     this.populateData = this.populateData.bind(this);
     this.validator = new SimpleReactValidator({
       ssnValid: {
         message: "Enter a valid SSN number.",
-        rule: function(val, options) {
+        rule: function (val, options) {
           var re = /^\d{3}-\d{2}-\d{4}$/;
           var bool = re.test(String(val));
           return bool;
@@ -112,18 +122,33 @@ class TierThree extends React.Component {
     });
   }
   componentWillMount() {
+    // if (
+    //   this.props.profileDetails.account_tier !== 2 &&
+    //   this.props.profileDetails.account_tier == 3
+    // ) {
+    //   this.props.history.push("/");
+    // }
+    // if (this.props.profileDetails.account_tier == 1) {
+    //   this.props.history.push("/");
+    // }
+    // if (this.props.profileDetails.account_tier == 0) {
+    //   this.props.history.push("/");
+    // }
     if (
-      this.props.profileDetails.account_tier !== 2 &&
-      this.props.profileDetails.account_tier == 3
+      this.props.location.state === undefined ||
+      this.props.location.state.flag === "" ||
+      this.props.location.state.flag === null
     ) {
       this.props.history.push("/");
     }
-    if (this.props.profileDetails.account_tier == 1) {
+    if (
+      this.props.profileDetails.account_tier == 0 ||
+      this.props.profileDetails.account_tier == 1 ||
+      this.props.profileDetails.account_tier == 3 ||
+      this.props.profileDetails.account_tier == 4
+    ) {
       this.props.history.push("/");
     }
-    // if (this.props.profileDetails.account_tier !== 2) {
-    //   this.props.history.push("/");
-    // }
   }
   async componentDidMount() {
     try {
@@ -148,6 +173,15 @@ class TierThree extends React.Component {
         console.log("result^^^", result.data);
         this.setState({
           tierData: result.data,
+        });
+      } else if (result.status == 202) {
+        this.setState({
+          forceRejectStatus: true,
+          forceRejectNote: result.data.public_note,
+        });
+      } else if (result.status == 203) {
+        this.setState({
+          forceAcceptedStatus: true,
         });
       } else {
         this.openNotificationWithIcon("error", "Error", result.message);
@@ -177,8 +211,8 @@ class TierThree extends React.Component {
               requestId: tierDoc.request_id,
             });
           }
-          switch (index) {
-            case 0:
+          switch (parseInt(tierDoc.type)) {
+            case 1:
               let idcpphoto = tierDoc.is_approved;
               let reupload1;
               if (tierDoc.is_approved === null) {
@@ -191,9 +225,10 @@ class TierThree extends React.Component {
               this.setState({
                 reUpload1: reupload1,
                 idcpStatus: idcpphoto,
+                idcpNote: tierDoc.public_note,
               });
               return console.log("TierDoc^^", tierDoc.type, index);
-            case 1:
+            case 2:
               let assetform = tierDoc.is_approved;
               let reupload2;
               if (tierDoc.is_approved === null) {
@@ -206,6 +241,7 @@ class TierThree extends React.Component {
               this.setState({
                 reUpload2: reupload2,
                 assetFormStatus: assetform,
+                assetFormNote: tierDoc.public_note,
               });
               return console.log("TierDoc^^", tierDoc.type, index);
             default:
@@ -222,7 +258,6 @@ class TierThree extends React.Component {
       });
     }
   }
-
   handleProfile(e) {
     var _self = this;
     var e1 = e;
@@ -249,9 +284,9 @@ class TierThree extends React.Component {
             if (fileType === "image" && fileSize < 4194304) {
               var fr = new FileReader();
               fr.readAsDataURL(file);
-              fr.onload = function() {
+              fr.onload = function () {
                 var img = new Image();
-                img.onload = function() {
+                img.onload = function () {
                   frontWidth = img.width;
                   frontHeight = img.height;
 
@@ -532,15 +567,26 @@ class TierThree extends React.Component {
   onCancel() {
     this.setState({ files: [] });
   }
+  comingCancel = (e) => {
+    this.setState({
+      reasonPopup: false,
+    });
+  };
   render() {
-    let { cover_flag, verified } = this.state;
+    let {
+      cover_flag,
+      verified,
+      forceRejectStatus,
+      forceRejectNote,
+      forceAcceptedStatus,
+    } = this.state;
     return (
       <div>
         <Navigation />
         <TierWrapper>
           <KYCWrap>
             <KYCHead>Tier 3 Upgrade</KYCHead>
-            {verified ? (
+            {forceRejectStatus ? (
               <TierWrap
                 style={{
                   textAlign: "center",
@@ -548,19 +594,40 @@ class TierThree extends React.Component {
                   fontSize: "18px",
                 }}
               >
-                <p>Your account is verified to tier 3.</p>
+                <p>
+                  Your request for tier upgrade is rejected by admin due to
+                  below reason.
+                </p>
+                <p>{forceRejectNote}</p>
+                <p>
+                  Feel free to contact us <Link to="/open-ticket">here</Link>
+                </p>
               </TierWrap>
             ) : (
               <div>
-                {this.state.waitingForApproval ? (
+                {forceAcceptedStatus ? (
                   <TierWrap
                     style={{
                       textAlign: "center",
-                      margin: "50px auto",
                       fontSize: "18px",
                     }}
                   >
-                    <p>Your submitted documents are under process.</p>
+                    <DoneWrap>
+                      <Icon
+                        className="icon-display"
+                        type="check-circle"
+                        theme="twoTone"
+                        twoToneColor="#52c41a"
+                      />
+                      <KycSucc>
+                        <span>
+                          <b>Verification Completed.</b>
+                          <br />
+                          <br />
+                          Your Account is Verified successfully to Tier 2.
+                        </span>
+                      </KycSucc>
+                    </DoneWrap>
                   </TierWrap>
                 ) : (
                   <TierWrap>
@@ -629,10 +696,24 @@ class TierThree extends React.Component {
                             </TierDocStatus>
                           )}
                           {this.state.idcpStatus === false && (
-                            <TierDocStatus>
-                              <Icon type="close" />
-                              <span>Reupload it</span>
-                            </TierDocStatus>
+                            <div>
+                              <TierDocStatus>
+                                <Icon type="close" />
+                                <span>Reupload it</span>
+                              </TierDocStatus>
+                              <span>{this.state.assetFormNote}</span>
+                            </div>
+                          )}
+                          {this.state.idcpNote && (
+                            <Icon
+                              type="message"
+                              onClick={() => {
+                                this.setState({
+                                  reasonPopup: true,
+                                  rejectText: this.state.idcpNote,
+                                });
+                              }}
+                            />
                           )}
                         </TierDocBox>
                       ) : (
@@ -769,6 +850,17 @@ class TierThree extends React.Component {
                               <Icon type="close" />
                               <span>Reupload it</span>
                             </TierDocStatus>
+                          )}
+                          {this.state.assetFormNote && (
+                            <Icon
+                              type="message"
+                              onClick={() => {
+                                this.setState({
+                                  reasonPopup: true,
+                                  rejectText: this.state.assetFormNote,
+                                });
+                              }}
+                            />
                           )}
                         </TierDocBox>
                       ) : (
@@ -932,6 +1024,11 @@ class TierThree extends React.Component {
               </div>
             )}
           </KYCWrap>
+          <RejectReason
+            visible={this.state.reasonPopup}
+            text={this.state.rejectText}
+            comingCancel={(e) => this.comingCancel(e)}
+          />
         </TierWrapper>
         {this.state.loader === true ? <FaldaxLoader /> : ""}
         <FooterHome />

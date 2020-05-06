@@ -7,8 +7,12 @@ import styled from "styled-components";
 import Navigation from "COMPONENTS/NAVIGATIONS/loggednavigation";
 import FooterHome from "COMPONENTS/LANDING/FOOTERS/footer_home";
 import { TierWrapper, KYCHead } from "./tier_one";
-import { TierWrap } from "../../../STYLED-COMPONENTS/TIER/tierStyle";
-import { Icon, notification } from "antd";
+import {
+  TierWrap,
+  RejectNote,
+} from "../../../STYLED-COMPONENTS/TIER/tierStyle";
+import { DoneWrap, KycSucc } from "./tier_one";
+import { Icon, notification, Tooltip } from "antd";
 import { globalVariables } from "Globals.js";
 import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
@@ -27,6 +31,8 @@ import {
   TierDocBox,
   TierLabel,
 } from "../../../STYLED-COMPONENTS/TIER/tierStyle";
+import UploadCounter from "../../../SHARED-COMPONENTS/UploadCounter";
+import RejectReason from "../../../SHARED-COMPONENTS/RejectReason";
 let { API_URL } = globalVariables;
 /* Styled-Components */
 const KYCWrap = styled.div`
@@ -152,11 +158,19 @@ class TierTwo extends React.Component {
       residenceStatus: "",
       uploadBtnFlag: false,
       requestId: "",
+      validNote: "",
+      residenceNote: "",
+      ssnNote: "",
+      reasonPopup: false,
+      rejectText: "",
+      forceRejectStatus: false,
+      forceAcceptedStatus: false,
+      forceRejectNote: "",
     };
     this.validator = new SimpleReactValidator({
       ssnValid: {
         message: "Enter a valid SSN number.",
-        rule: function(val, options) {
+        rule: function (val, options) {
           var re = /^\d{3}-\d{2}-\d{4}$/;
           var bool = re.test(String(val));
           return bool;
@@ -167,11 +181,26 @@ class TierTwo extends React.Component {
     this.populateData = this.populateData.bind(this);
   }
   componentWillMount() {
+    // if (
+    //   this.props.profileDetails.account_tier !== 1 &&
+    //   this.props.profileDetails.account_tier == 2
+    // ) {
+    //   this.props.history.push("/");
+    // }
     if (
-      this.props.profileDetails.account_tier !== 1 &&
-      this.props.profileDetails.account_tier == 2
+      this.props.location.state === undefined ||
+      this.props.location.state.flag === "" ||
+      this.props.location.state.flag === null
     ) {
-      // this.props.history.push("/");
+      this.props.history.push("/");
+    }
+    if (
+      this.props.profileDetails.account_tier == 0 ||
+      this.props.profileDetails.account_tier == 2 ||
+      this.props.profileDetails.account_tier == 3 ||
+      this.props.profileDetails.account_tier == 4
+    ) {
+      this.props.history.push("/");
     }
   }
   async componentDidMount() {
@@ -216,6 +245,15 @@ class TierTwo extends React.Component {
         this.setState({
           tierData: result.data,
         });
+      } else if (result.status == 202) {
+        this.setState({
+          forceRejectStatus: true,
+          forceRejectNote: result.data.public_note,
+        });
+      } else if (result.status == 203) {
+        this.setState({
+          forceAcceptedStatus: true,
+        });
       } else {
         this.openNotificationWithIcon("error", "Error", result.message);
       }
@@ -244,8 +282,9 @@ class TierTwo extends React.Component {
               requestId: tierDoc.request_id,
             });
           }
-          switch (index) {
-            case 0:
+          console.log("jhfgsd^^^^", parseInt(tierDoc.type));
+          switch (parseInt(tierDoc.type)) {
+            case 1:
               let validid = tierDoc.is_approved;
               let reupload1;
               if (tierDoc.is_approved === null) {
@@ -258,9 +297,10 @@ class TierTwo extends React.Component {
               this.setState({
                 reUpload1: reupload1,
                 validStatus: validid,
+                validNote: tierDoc.public_note,
               });
               return console.log("TierDoc^^", tierDoc.type, index);
-            case 1:
+            case 2:
               let residence = tierDoc.is_approved;
               let reupload2;
               if (tierDoc.is_approved === null) {
@@ -273,9 +313,10 @@ class TierTwo extends React.Component {
               this.setState({
                 reUpload2: reupload2,
                 residenceStatus: residence,
+                residenceNote: tierDoc.public_note,
               });
               return console.log("TierDoc^^", tierDoc.type, index);
-            case 2:
+            case 3:
               let ssn = tierDoc.is_approved;
               let reupload3;
               if (tierDoc.is_approved === null) {
@@ -288,9 +329,10 @@ class TierTwo extends React.Component {
               this.setState({
                 reUpload3: reupload3,
                 ssnStatus: ssn,
+                ssnNote: tierDoc.public_note,
               });
               return console.log("TierDoc^^", tierDoc.type, index);
-            case 3:
+            case 4:
               return console.log("TierDoc^^", tierDoc.type, index);
             default:
               return console.log("No case");
@@ -333,9 +375,9 @@ class TierTwo extends React.Component {
             if (fileType === "image" && fileSize < 4194304) {
               var fr = new FileReader();
               fr.readAsDataURL(file);
-              fr.onload = function() {
+              fr.onload = function () {
                 var img = new Image();
-                img.onload = function() {
+                img.onload = function () {
                   frontWidth = img.width;
                   frontHeight = img.height;
 
@@ -564,6 +606,8 @@ class TierTwo extends React.Component {
                 this.props.history.push("/editProfile");
               }
             );
+          } else if (responseData.status == 500) {
+            this.openNotificationWithIcon("error", "Error", responseData.error);
           }
           this.setState({ loader: false });
         })
@@ -598,6 +642,11 @@ class TierTwo extends React.Component {
     this.validator.hideMessages();
     this.forceUpdate();
   }
+  comingCancel = (e) => {
+    this.setState({
+      reasonPopup: false,
+    });
+  };
   render() {
     // console.log(
     //   "data data data^^",
@@ -605,14 +654,20 @@ class TierTwo extends React.Component {
     //   this.state.reUpload2,
     //   this.state.reUpload3
     // );
-    let { is_twofactor_enabled, verified } = this.state;
+    let {
+      is_twofactor_enabled,
+      forceRejectStatus,
+      forceRejectNote,
+      forceAcceptedStatus,
+    } = this.state;
     return (
       <div>
         <Navigation />
         <TierWrapper>
           <KYCWrap>
             <KYCHead>Tier 2 Upgrade</KYCHead>
-            {verified ? (
+
+            {forceRejectStatus ? (
               <TierWrap
                 style={{
                   textAlign: "center",
@@ -620,19 +675,40 @@ class TierTwo extends React.Component {
                   fontSize: "18px",
                 }}
               >
-                <p>Your account is verified to tier 2.</p>
+                <p>
+                  Your request for tier upgrade is rejected by admin due to
+                  below reason.
+                </p>
+                <p>{forceRejectNote}</p>
+                <p>
+                  Feel free to contact us <Link to="/open-ticket">here</Link>
+                </p>
               </TierWrap>
             ) : (
               <div>
-                {this.state.waitingForApproval ? (
+                {forceAcceptedStatus ? (
                   <TierWrap
                     style={{
                       textAlign: "center",
-                      margin: "50px auto",
                       fontSize: "18px",
                     }}
                   >
-                    <p>Your submitted documents are under process.</p>
+                    <DoneWrap>
+                      <Icon
+                        className="icon-display"
+                        type="check-circle"
+                        theme="twoTone"
+                        twoToneColor="#52c41a"
+                      />
+                      <KycSucc>
+                        <span>
+                          <b>Verification Completed.</b>
+                          <br />
+                          <br />
+                          Your Account is Verified successfully to Tier 2.
+                        </span>
+                      </KycSucc>
+                    </DoneWrap>
                   </TierWrap>
                 ) : (
                   <TierWrap>
@@ -787,6 +863,17 @@ class TierTwo extends React.Component {
                               <span>Reupload it</span>
                             </TierDocStatus>
                           )}
+                          {this.state.validNote && (
+                            <Icon
+                              type="message"
+                              onClick={() => {
+                                this.setState({
+                                  reasonPopup: true,
+                                  rejectText: this.state.validNote,
+                                });
+                              }}
+                            />
+                          )}
                         </TierDocBox>
                       ) : (
                         <TierDocBox></TierDocBox>
@@ -859,52 +946,23 @@ class TierTwo extends React.Component {
                               <span>Reupload it</span>
                             </TierDocStatus>
                           )}
+                          {this.state.residenceNote && (
+                            // <RejectNote>{this.state.residenceNote}</RejectNote>
+                            <Icon
+                              type="message"
+                              onClick={() => {
+                                this.setState({
+                                  reasonPopup: true,
+                                  rejectText: this.state.residenceNote,
+                                });
+                              }}
+                            />
+                          )}
                         </TierDocBox>
                       ) : (
                         <TierDocBox></TierDocBox>
                       )}
                     </TierRow>
-                    {/* <Fileselect1 className="file-select-col">
-                        <RemoveIcon1
-                          onClick={() => {
-                            this.removeFile("residence-proof");
-                          }}
-                          style={{ display: `${this.state.displaySecond}` }}
-                          type={"close"}
-                          theme="outlined"
-                        />
-                        <ButtonUp
-                          style={{
-                            backgroundImage: `url('${this.state.profileImg2}')`
-                          }}
-                          className="file-select-btn"
-                          onClick={() => {
-                            this.handleFileSelectClick("residence-proof");
-                          }}
-                        >
-                          <Plus className="plus">
-                            <Icon type={this.state.icon2} theme="outlined" />
-                          </Plus>
-                          <Plustext className="text">Upload</Plustext>
-                        </ButtonUp>
-                        <Fileinput
-                          onChange={this.handleProfile}
-                          type="file"
-                          name="residence-proof"
-                          id="residence-proof"
-                          disabled={!this.state.reUpload2}
-                        />
-                        {this.state.reUpload2 &&
-                          this.validator.message(
-                            "residence-proof",
-                            this.state.profileImg2,
-                            "required",
-                            "tier-text-danger-validation",
-                            {
-                              required: "This field is required."
-                            }
-                          )} */}
-                    {/* </Fileselect1> */}
 
                     <TierRow className="no_border">
                       <TierLabel>
@@ -955,6 +1013,18 @@ class TierTwo extends React.Component {
                               <span>Reupload it</span>
                             </TierDocStatus>
                           )}
+                          {this.state.ssnNote && (
+                            // <RejectNote>{this.state.ssnNote}</RejectNote>
+                            <Icon
+                              type="message"
+                              onClick={() => {
+                                this.setState({
+                                  reasonPopup: true,
+                                  rejectText: this.state.ssnNote,
+                                });
+                              }}
+                            />
+                          )}
                         </TierDocBox>
                       ) : (
                         <TierDocBox></TierDocBox>
@@ -989,6 +1059,11 @@ class TierTwo extends React.Component {
               </div>
             )}
           </KYCWrap>
+          <RejectReason
+            visible={this.state.reasonPopup}
+            text={this.state.rejectText}
+            comingCancel={(e) => this.comingCancel(e)}
+          />
         </TierWrapper>
         {this.state.loader === true ? <FaldaxLoader /> : ""}
         <FooterHome />

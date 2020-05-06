@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Tabs, Select } from "antd";
+
 const { TabPane } = Tabs;
 
 export const ModalAgreeWrap = styled.div`
@@ -224,6 +225,99 @@ export const TempName = styled.div`
     padding: 5px 10px;
   }
   > input:focus {
+    outline: none;
+  }
+`;
+export const UpgradeTable = styled.table`
+  width: 100%;
+  font-family: "Open sans";
+  border: 1px solid #c6dfff;
+  &.wallet-popup {
+    margin: 25px 0 0 0;
+    > thead {
+      > tr {
+        > th {
+          padding: 5px;
+        }
+      }
+    }
+    > tbody {
+      > tr {
+        > td {
+          padding: 5px;
+        }
+      }
+    }
+  }
+  > thead {
+    > tr {
+      > th {
+        font-size: 14px;
+        font-weight: normal;
+        color: ${(props) =>
+          props.theme.mode == "dark" ? "#617090" : "#a3a3a3"};
+        padding: 10px;
+        border: 1px solid #c6dfff;
+        border-left: 0;
+        border-right: 0;
+        width: 25%;
+      }
+      > th.title {
+        width: 50%;
+      }
+    }
+  }
+  > tbody {
+    > tr.limit_exceed {
+      > td.center {
+        text-align: center;
+      }
+    }
+    > tr {
+      > td {
+        font-size: 14px;
+        font-weight: 600;
+        color: ${(props) =>
+          props.theme.mode == "dark" ? "#ffffff" : "#000000"};
+        padding: 10px;
+        border: 1px solid #c6dfff;
+        border-left: 0;
+        border-right: 0;
+      }
+      > td.red {
+        color: red;
+      }
+      > td.green {
+        color: green;
+      }
+    }
+  }
+`;
+export const SpanOr = styled.div`
+  text-align: center;
+  padding: 20px 0;
+  font-weight: bold;
+`;
+export const BtnLink = styled.div`
+  width: 100%;
+  text-align: center;
+  padding: 20px 0 0 0;
+  & button {
+    background: transparent;
+    height: 48px;
+    color: #333333;
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 0 20px;
+    border: 2px solid;
+    border-color: #333333;
+    border-radius: 30px;
+    border-color: #3b88f2;
+    background: #4c84ff;
+    color: #fff;
+  }
+  & button:focus {
     outline: none;
   }
 `;

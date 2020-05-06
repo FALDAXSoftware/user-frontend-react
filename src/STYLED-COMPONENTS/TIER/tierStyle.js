@@ -27,15 +27,15 @@ export const TierSubMain = styled.div`
   margin: 0 15px;
   border-radius: 8px;
   border: 2px solid;
-  border-color: ${(props) =>
+  border-color: ${props =>
     props.theme.mode === "dark" ? "#20303e" : "#333333"};
   flex-wrap: wrap;
   // min-height: 770px;
   align-items: flex-start;
   position: relative;
-  opacity: ${(props) => (props.theme.mode === "dark" ? "0.5" : "0.4")};
+  opacity: ${props => (props.theme.mode === "dark" ? "0.5" : "0.4")};
   pointer-events: none;
-  background: ${(props) => (props.theme.mode === "dark" ? "#01090f" : " ")};
+  background: ${props => (props.theme.mode === "dark" ? "#01090f" : " ")};
   @media (max-width: 1200px) {
     width: calc(50% - 30px);
     margin-bottom: 30px;
@@ -55,8 +55,7 @@ export const TierHead = styled.span`
   font-size: 25px;
   font-weight: bold;
   width: 100%;
-  background: ${(props) =>
-    props.theme.mode === "dark" ? "#20303e" : "#333333"};
+  background: ${props => (props.theme.mode === "dark" ? "#20303e" : "#333333")};
   display: inherit;
   justify-content: center;
   color: #fff;
@@ -70,10 +69,16 @@ export const TierSubHead = styled.span`
   text-align: center;
   text-transform: uppercase;
   font-weight: bold;
-  color: ${(props) => (props.theme.mode === "dark" ? "#ffffff" : "#333333")};
+  color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "#333333")};
   font-size: 15px;
   line-height: 18px;
   padding: 20px 0;
+`;
+export const OrSpan = styled.span`
+  width: 100%;
+  font-weight: bold;
+  padding: 10px 0;
+  color: #000;
 `;
 export const TierUl = styled.ul`
   padding: 0;
@@ -83,22 +88,30 @@ export const TierUl = styled.ul`
   text-align: left;
   > li {
     padding: 5px 0;
-    font-size: 14px;
+    font-size: 15px;
     display: flex;
     > .icon-wrap {
       font-weight: bold;
       line-height: 16px;
       display: inline-flex;
-      color: ${(props) =>
-        props.theme.mode === "dark" ? "#ffffff" : "#333333"};
+      color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "#333333")};
       width: 25px;
     }
     > .text-wrap {
-      width: calc(100% - 25px);
+      width: 100%;
+      font-size: 14px;
       line-height: 18px;
       display: inline-flex;
-      color: ${(props) =>
-        props.theme.mode === "dark" ? "#ffffff" : "#333333"};
+      color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "#333333")};
+      justify-content: space-between;
+      align-items: center;
+      > span:first-child {
+        font-weight: 500;
+        width: 78%;
+      }
+      > span:last-child {
+        font-weight: bold;
+      }
     }
   }
 `;
@@ -114,7 +127,7 @@ export const TierWithdrawalHead = styled.div`
 export const TierTable = styled.table`
   width: 100%;
   border: 1px solid;
-  border-color: ${(props) =>
+  border-color: ${props =>
     props.theme.mode === "dark" ? "#eaeaea" : "#e1e1e1"};
   margin-bottom: 30px;
   > thead tr th {
@@ -122,20 +135,20 @@ export const TierTable = styled.table`
     width: 50%;
     background: #e1e1e1;
     font-weight: 600;
-    font-size: 16px;
+    font-size: 14px;
     padding: 5px 0;
     color: #333333;
   }
   > tbody tr td {
     width: 50%;
-    font-size: 16px;
+    font-size: 14px;
     padding: 5px 0;
     font-weight: bold;
     color: #333333;
     border: 1px solid;
-    border-color: ${(props) =>
+    border-color: ${props =>
       props.theme.mode === "dark" ? "#eaeaea" : "#e1e1e1"};
-    background: ${(props) => (props.theme.mode === "dark" ? "#ffffff" : "")};
+    background: ${props => (props.theme.mode === "dark" ? "#ffffff" : "")};
   }
 `;
 export const TierRequirements = styled.div`
@@ -176,7 +189,7 @@ export const TierRequirements = styled.div`
       line-height: 16px;
       padding: 5px 0;
       align-items: flex-start;
-      color: ${(props) => (props.theme.mode === "dark" ? "#ffffff" : "")};
+      color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "")};
       > span:last-child {
         width: calc(100% - 18px);
       }
@@ -187,7 +200,7 @@ export const TierRequirements = styled.div`
     }
     > li .disc-icon {
       content: "";
-      background: ${(props) =>
+      background: ${props =>
         props.theme.mode === "dark" ? "#ffffff" : "#333333"};
       height: 8px;
       display: inline-block;
@@ -202,7 +215,7 @@ export const TierSubHeadRequire = styled(TierSubHead)`
   padding: 20px 0;
 `;
 export const TierUpdate = styled.button`
-  background: ${(props) =>
+  background: ${props =>
     props.theme.mode === "dark" ? "#818d95" : "transparent"};
   height: 48px;
   color: #333333;
@@ -211,10 +224,13 @@ export const TierUpdate = styled.button`
   font-weight: bold;
   padding: 0 20px;
   border: 2px solid;
-  border-color: ${(props) =>
+  border-color: ${props =>
     props.theme.mode === "dark" ? "#818d95" : "#333333"};
   border-radius: 30px;
   margin: 0 0 20px;
+  &:focus {
+    outline: none;
+  }
 `;
 export const TierVerifiedWrap = styled.span`
   width: 100%;
@@ -252,20 +268,20 @@ export const TierVerfied = styled.span`
   }
 `;
 export const TierInnerWrap = styled.div`
-  background-color: ${(props) =>
+  background-color: ${props =>
     props.theme.mode === "dark" ? "#041422" : "#ffffff"};
   margin: auto;
   width: 95%;
   border-radius: 7px;
   padding: 50px 0;
-  color: ${(props) => (props.theme.mode === "dark" ? "#ffffff" : "")};
+  color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "")};
 `;
 
 // Tier Info css start
 export const TierInfoWrap = styled.div`
   min-height: calc(100vh - 380px);
   padding-top: 80px;
-  background-color: ${(props) =>
+  background-color: ${props =>
     props.theme.mode === "dark" ? "#01090f" : "#f5f6fa"};
   display: flex;
   font-family: open sans;
@@ -431,7 +447,7 @@ export const TierCommonHead = styled.div`
   font-size: 20px;
   font-family: "Open Sans";
   font-weight: 600;
-  color: ${(props) =>
+  color: ${props =>
     props.theme.mode === "dark" ? "white" : "rgb( 80, 80, 80 )"};
   text-align: center;
   padding: 0 0 30px 0;
@@ -597,10 +613,22 @@ export const TierDocBox = styled.div`
   display: flex;
   width: 33.33%;
   justify-content: flex-end;
+  flex-wrap: wrap;
   @media (max-width: 670px) {
     width: 100%;
     // margin: 0 0 20px 0;
     justify-content: center;
+  }
+  & .anticon.anticon-message {
+    display: flex;
+    align-self: center;
+    margin: 0 0 0 10px;
+    color: #f90f0f;
+    font-size: 18px;
+    font-weight: 600;
+  }
+  & .anticon.anticon-message:hover {
+    cursor: pointer;
   }
 `;
 export const TierDocStatus = styled.div`
@@ -798,4 +826,13 @@ export const TierDropWrap = styled.div`
     color: #fff;
     font-weight: bold;
   }
+`;
+export const RejectNote = styled.span`
+  display: inherit;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-end;
+  font-size: 14px;
+  margin: 0 0 5px 0;
+  text-align: right;
 `;
