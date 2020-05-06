@@ -33,7 +33,7 @@ const BorderedHistoryWrap = styled(HistoryWrap)`
 
   &::-webkit-scrollbar-thumb {
     background-color: ${props =>
-      props.theme.mode === "dark" ? "#041624" : ""};
+    props.theme.mode === "dark" ? "#041624" : ""};
     border-radius: 3px;
   }
   &::-webkit-scrollbar-track {
@@ -204,12 +204,12 @@ class HistoryTable extends Component {
           {element.side}
         </SideType>
         <td width="20%">
-          {element.amount !== undefined ? element.amount.toFixed(3) : ""}
+          {element.amount !== undefined ? element.amount.toFixed(8) : ""}
         </td>
         {index + 1 < me.state.data.length ? (
           element.fill_price >= me.state.data[index + 1].fill_price ? (
             <td width="20%">
-              {element.fill_price.toFixed(5)}{" "}
+              {element.fill_price.toFixed(8)}{" "}
               {this.props.theme !== true ? (
                 <img
                   alt="UP-Right"
@@ -217,34 +217,34 @@ class HistoryTable extends Component {
                   src="/images/up-right.png"
                 />
               ) : (
-                <img
-                  alt="UP-Right"
-                  className="img-display"
-                  src="/images/up_white.png"
-                />
-              )}
+                  <img
+                    alt="UP-Right"
+                    className="img-display"
+                    src="/images/up_white.png"
+                  />
+                )}
             </td>
           ) : (
-            <td width="20%">
-              {element.fill_price.toFixed(5)}{" "}
-              {this.props.theme !== true ? (
-                <img
-                  alt="UP-Right"
-                  className="img-display"
-                  src="/images/down-right.png"
-                />
-              ) : (
-                <img
-                  alt="UP-Right"
-                  className="img-display"
-                  src="/images/down_white.png"
-                />
-              )}
-            </td>
-          )
+              <td width="20%">
+                {element.fill_price.toFixed(8)}{" "}
+                {this.props.theme !== true ? (
+                  <img
+                    alt="UP-Right"
+                    className="img-display"
+                    src="/images/down-right.png"
+                  />
+                ) : (
+                    <img
+                      alt="UP-Right"
+                      className="img-display"
+                      src="/images/down_white.png"
+                    />
+                  )}
+              </td>
+            )
         ) : (
-          <td>{element.fill_price} </td>
-        )}
+            <td>{element.fill_price} </td>
+          )}
         <td width="25%">{element.time}</td>
         <td width="25%">{element.total.toFixed(8)}</td>
       </tr>
@@ -293,8 +293,8 @@ class HistoryTable extends Component {
                   {this.state.data.length > 0 ? (
                     this.historyFunc()
                   ) : (
-                    <NDF>{this.t("wallet:no_data_found_text.message")}</NDF>
-                  )}
+                      <NDF>{this.t("wallet:no_data_found_text.message")}</NDF>
+                    )}
                 </tbody>
               </TableContent>
             </Scrollbars>

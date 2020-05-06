@@ -1023,7 +1023,10 @@ class WalletPopup extends Component {
                     "amount",
                     this.state.sendFields.amount,
                     "amountRequired|numeric|gtzero|decimalrestrict|minLimitCheck|maxLimitCheck",
-                    "text-danger-validation"
+                    "text-danger-validation",
+                    {
+                      numeric: this.t("validation_amount_numeric.message"),
+                    }
                   )}
                   <TotDiv className="available_balance">
                     <label>{this.t("avail_balance_to_send.message")}: </label>

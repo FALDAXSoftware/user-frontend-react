@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import moment from "moment";
 import styled from "styled-components";
 import "antd/dist/antd.css";
+import { translate } from "react-i18next";
 import {
   Row,
   Col,
@@ -31,7 +32,7 @@ import {
   ContactWrap,
   GreyWrap
 } from "STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle";
-import { SettingDropdown } from "../../../STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
+import { SettingButton } from "../../../STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
 import SubMenu from "antd/lib/menu/SubMenu";
 import TemplateManage from "../../../SHARED-COMPONENTS/templateManage";
 import Technical from "../../tv_widgets/technical";
@@ -65,7 +66,7 @@ const GreyWrapDashboard = styled(GreyWrap)`
   font-family: "Open sans";
   // padding-top: 120px;
   padding-left: 15px;
-    padding-right: 15px;
+  padding-right: 15px;
 `;
 const Overlay = styled.div`
   background: #00000000;
@@ -112,7 +113,7 @@ class Dashboard extends Component {
       isSaved: true,
       currentTemplateManagerTab: 1
     };
-
+    this.t = this.props.t;
     io = this.props.io;
   }
 
@@ -545,14 +546,15 @@ class Dashboard extends Component {
         templateManage: false,
         showLayout: false,
         isSaved: false,
-        currentTemplate: templates[this.state.currentTemplateIndex] ? templates[this.state.currentTemplateIndex] : templates[templates.length - 1],
+        currentTemplate: templates[this.state.currentTemplateIndex]
+          ? templates[this.state.currentTemplateIndex]
+          : templates[templates.length - 1]
       },
       () => {
         // this.saveToDB();
-        this.setState(
-          {
-            showLayout: true
-          });
+        this.setState({
+          showLayout: true
+        });
       }
     );
   };
@@ -607,7 +609,7 @@ class Dashboard extends Component {
           }
           key="1"
         >
-          Edit Layout
+          {this.t("trade:edit_layout_text.message")}
         </Menu.Item>
         {/* {this.state.isFullscreen && (
           <Menu.Item
@@ -638,14 +640,16 @@ class Dashboard extends Component {
           disabled={!this.state.editState}
           key="2"
         >
-          Save
+          {this.t("edit_profile_titles:subhead_personal_form_save_btn.message")}
         </Menu.Item>
         <Menu.Item
           disabled={!this.state.editState}
           onClick={this.cancleEdit}
           key="4"
         >
-          Cancel
+          {this.t(
+            "edit_profile_titles:subhead_personal_form_cancel_btn.message"
+          )}
         </Menu.Item>
       </Menu>
     );
@@ -653,13 +657,16 @@ class Dashboard extends Component {
       <div>
         <ContactWrap>
           {!this.state.editState && (
-            <Tooltip placement="right" title="Customize Dashboard">
-              <SettingDropdown
+            <Tooltip
+              placement="right"
+              title={this.t("customize_dashboard_text.message")}
+            >
+              <SettingButton
                 className="dashboard_setting"
                 onClick={this.enableEditLayout}
               >
                 <Icon type="setting" />
-              </SettingDropdown>
+              </SettingButton>
             </Tooltip>
           )}
           <LoggedNavigation />
@@ -754,7 +761,9 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(Dashboard);
+export default translate(["dashboard", "trade", "edit_profile_titles"])(
+  connect(mapStateToProps)(Dashboard)
+);
 function getFromLS(key) {
   let ls = {};
   if (global.localStorage) {

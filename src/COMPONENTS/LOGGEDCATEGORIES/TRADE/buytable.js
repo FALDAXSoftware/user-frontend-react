@@ -18,7 +18,7 @@ import {
   HistoryWrap1,
   TableHeader,
   TableContent,
-  ScrollTableContent
+  ScrollTableContent,
 } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
 import { SpinSingle } from "STYLED-COMPONENTS/LOGGED_STYLE/dashStyle";
 import { OTwrap } from "./ordertrade";
@@ -38,7 +38,7 @@ const NDF = styled.p`
   text-align: center;
   font-size: 14px;
   font-weight: 600;
-  color: ${props => (props.theme.mode === "dark" ? "white" : "black")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "black")};
   font-family: "Open Sans";
 `;
 class BuyTABLE extends Component {
@@ -50,7 +50,7 @@ class BuyTABLE extends Component {
       currency: this.props.cryptoPair ? this.props.cryptoPair.currency : "BTC",
       lastsum: 0,
       loader: false,
-      result: []
+      result: [],
     };
     this.t = this.props.t;
     this.updateData = this.updateData.bind(this);
@@ -79,8 +79,8 @@ class BuyTABLE extends Component {
     if (this.props.io) {
       this.props.loaderfunc(true);
       this.setState({ loader: true });
-      this.props.io.on("buy-book-data", data => {
-        // console.log("^^^^data", data);
+      this.props.io.on("buy-book-data", (data) => {
+        console.log("^^^^buy data", data);
         this.updateData(data);
       });
     }
@@ -191,8 +191,10 @@ class BuyTABLE extends Component {
         SOCKET is called to update buybook table data according to room provided.
     */
 
-  updateData(data) {
+  updateData(res) {
     let self = this;
+    let data = res.data;
+
     // console.log("buyrow------------", data);
     const row = [];
     var value = [];
@@ -201,53 +203,60 @@ class BuyTABLE extends Component {
       const element = data[index];
       let isAdded = false;
       element["my_size"] = 0;
+      row.push({
+        my_size: element.my_size,
+        amount: element.quantity,
+        bid: element.price,
+        // user_id: element.user_id,
+        // total: sum,
+      });
       // if (element.user_id === self.props.profileDetails.id) {
       //     element["my_size"] = element.quantity;
       // }
 
-      for (let internalIndex = 0; internalIndex < row.length; internalIndex++) {
-        const internalElement = row[internalIndex];
-        if (internalElement.bid === element.price) {
-          row[internalIndex].amount += element.quantity;
-          // console.log(element, internalElement);
+      // for (let internalIndex = 0; internalIndex < row.length; internalIndex++) {
+      //   const internalElement = row[internalIndex];
+      //   if (internalElement.bid === element.price) {
+      //     row[internalIndex].amount += element.quantity;
+      //     // console.log(element, internalElement);
 
-          // if (internalElement.user_id === self.props.profileDetails.id) {
-          // row[internalIndex]["my_size"] = element.my_size + internalElement.my_size;
-          // }
-          isAdded = true;
-          break;
-        }
-      }
-      element.my_size = 0;
-      for (let tempIndex = 0; tempIndex < data.length; tempIndex++) {
-        if (value.includes(element.price)) {
-          if (element.price == data[tempIndex].price) {
-            if (data[tempIndex].user_id == self.props.profileDetails.id) {
-              element.my_size = value.my_size + data[tempIndex].quantity;
-            }
-          }
-          value.my_size = element.my_size;
-        } else {
-          value.push(element.price);
-          if (element.price == data[tempIndex].price) {
-            if (data[tempIndex].user_id == self.props.profileDetails.id) {
-              element.my_size = element.my_size + data[tempIndex].quantity;
-            }
-          }
-          value.my_size = element.my_size;
-        }
-        // value.push(element.price)
-      }
-      console.log(element);
-      if (!isAdded) {
-        row.push({
-          my_size: element.my_size,
-          amount: element.quantity,
-          bid: element.price,
-          user_id: element.user_id
-          // total: sum,
-        });
-      }
+      //     // if (internalElement.user_id === self.props.profileDetails.id) {
+      //     // row[internalIndex]["my_size"] = element.my_size + internalElement.my_size;
+      //     // }
+      //     isAdded = true;
+      //     break;
+      //   }
+      // }
+      // element.my_size = 0;
+      // for (let tempIndex = 0; tempIndex < data.length; tempIndex++) {
+      //   if (value.includes(element.price)) {
+      //     if (element.price == data[tempIndex].price) {
+      //       if (data[tempIndex].user_id == self.props.profileDetails.id) {
+      //         element.my_size = value.my_size + data[tempIndex].quantity;
+      //       }
+      //     }
+      //     value.my_size = element.my_size;
+      //   } else {
+      //     value.push(element.price);
+      //     if (element.price == data[tempIndex].price) {
+      //       if (data[tempIndex].user_id == self.props.profileDetails.id) {
+      //         element.my_size = element.my_size + data[tempIndex].quantity;
+      //       }
+      //     }
+      //     value.my_size = element.my_size;
+      //   }
+      //   // value.push(element.price)
+      // }
+      // console.log(element);
+      // if (!isAdded) {
+      //   row.push({
+      //     my_size: element.my_size,
+      //     amount: element.quantity,
+      //     bid: element.price,
+      //     // user_id: element.user_id,
+      //     // total: sum,
+      //   });
+      // }
     }
 
     for (let index = 0; index < row.length; index++) {
@@ -259,8 +268,8 @@ class BuyTABLE extends Component {
     this.setState({
       loader: false,
       // data: rows,
-      lastsum: sum,
-      result: row
+      lastsum: res.total || 0,
+      result: row,
     });
   }
 
@@ -272,7 +281,7 @@ class BuyTABLE extends Component {
         </BBC>
         <TotalBTC>
           {this.t("conversion:total_text.message")}:{" "}
-          {this.state.lastsum && this.state.lastsum.toFixed(8)}{" "}
+          {this.state.lastsum && parseFloat(this.state.lastsum).toFixed(8)}{" "}
           {this.state.currency}
         </TotalBTC>
         <BuyTable>
@@ -282,7 +291,7 @@ class BuyTABLE extends Component {
                 <TableHeader cellpadding="10px" cellspacing="0" border="0">
                   <thead>
                     <tr>
-                      <th>{this.t("my_size_text.message")}</th>
+                      {/* <th>{this.t("my_size_text.message")}</th> */}
                       <th>{this.t("wallet:amount_text.message")}</th>
                       <th>{this.t("bid_text.message")}</th>
                       <th>{this.t("conversion:total_text.message")}</th>
@@ -306,12 +315,12 @@ class BuyTABLE extends Component {
                   >
                     {this.state.result.length ? (
                       <tbody>
-                        {this.state.result.map(element => (
+                        {this.state.result.map((element) => (
                           <tr>
-                            <td>{element.my_size}</td>
-                            <td>{element.amount.toFixed(3)}</td>
-                            <td>{element.bid.toFixed(5)}</td>
-                            <td>{element.total.toFixed(8)}</td>
+                            {/* <td>{element.my_size.toFixed(8)}</td> */}
+                            <td>{element.amount?.toFixed(8)}</td>
+                            <td>{element.bid?.toFixed(8)}</td>
+                            <td>{element.total?.toFixed(8)}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -348,7 +357,7 @@ function mapStateToProps(state) {
     profileDetails:
       state.simpleReducer.profileDetails !== undefined
         ? state.simpleReducer.profileDetails.data[0]
-        : ""
+        : "",
     /* loader:state.simpleReducer.loader?state.simpleReducer.loader:false */
   };
 }

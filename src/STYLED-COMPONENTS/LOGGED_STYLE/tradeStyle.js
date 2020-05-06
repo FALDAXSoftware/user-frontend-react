@@ -7,7 +7,7 @@ import {
   Checkbox,
   Dropdown,
   Radio,
-  Select
+  Select,
 } from "antd";
 import styled from "styled-components";
 import { DropdownButton, ButtonToolbar } from "react-bootstrap";
@@ -33,39 +33,39 @@ export const EditButton = styled(Button)`
   margin-right: 15px;
 `;
 export const MainTV = styled.div`
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#2e3141" : "white"};
   height: calc(100% - 38px);
 `;
 export const TVBar = styled.div`
   display: flex;
   align-items: center;
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#041b2c" : "white"};
   width: calc(100% - 12px);
   margin: 0 auto;
-  border-bottom: ${props =>
+  border-bottom: ${(props) =>
     props.theme.mode === "dark" ? "1px solid #2e3141" : "1px solid #eceff1"};
   height: 38px;
   padding: 0px 6px;
   > div > span {
     font-weight: "normal";
     font-size: "17px";
-    color: ${props =>
+    color: ${(props) =>
     props.theme.mode === "dark" ? "rgb(217, 217, 217)" : "rgb(85, 85, 85)"};
   }
   > div > i {
     cursor: pointer;
     font-size: 26px;
-    color: ${props => (props.theme.mode === "dark" ? "#687786;" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "#687786;" : "")};
   }
 `;
 export const LeftDiv = styled.div`
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#041b2c" : "white"};
   padding-top: 25px;
   padding-bottom: 34px;
-  box-shadow: ${props =>
+  box-shadow: ${(props) =>
     props.theme.mode === "dark" ? "" : "0px 0px 5px 5px rgb(241, 241, 241)"};
   border-radius: 5px;
   @media (max-width: 991px) {
@@ -90,7 +90,7 @@ export const SwitchS = styled(Switch)`
 export const LeftDiv1 = styled(LeftDiv)`
   padding-top: 30px;
   padding-bottom: 8px;
-  box-shadow: ${props =>
+  box-shadow: ${(props) =>
     props.theme.mode === "dark" ? "" : "0px 0px 5px 5px rgb(241, 241, 241)"};
   border-radius: 5px;
   height: 100%;
@@ -105,7 +105,7 @@ export const LeftDiv2 = styled(LeftDiv)`
   padding-top: 30px;
   margin-right: 0px;
   padding-bottom: 22px;
-  box-shadow: ${props =>
+  box-shadow: ${(props) =>
     props.theme.mode === "dark" ? "" : "0px 0px 5px 5px rgb(241, 241, 241)"};
   border-radius: 5px;
   height: 100%;
@@ -115,7 +115,7 @@ export const Instru = styled.p`
   font-size: 18px;
   font-weight: bold;
   margin-left: 30px;
-  color: ${props => (props.theme.mode === "dark" ? "white" : "#333333")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "#333333")};
   @media (max-width: 575px) {
     display: block;
   }
@@ -132,7 +132,7 @@ export const SearchInput = styled(Search)`
     }
     >.ant-input-suffix>i
     {
-        color:${props => (props.theme.mode === "dark" ? "white" : "")};
+        color:${(props) => (props.theme.mode === "dark" ? "white" : "")};
     }
     >.ant-input:focus
     {
@@ -146,10 +146,10 @@ export const SearchInput = styled(Search)`
         border-left:0px;
         border-right:0px;
         border-radius:0px;
-        background-color:${props =>
+        background-color:${(props) =>
     props.theme.mode === "dark" ? "#041b2c" : ""}
-        caret-color:${props => (props.theme.mode === "dark" ? "white" : "")}
-        color:${props => (props.theme.mode === "dark" ? "white" : "")}
+        caret-color:${(props) => (props.theme.mode === "dark" ? "white" : "")}
+        color:${(props) => (props.theme.mode === "dark" ? "white" : "")}
     }
     @media(max-width:575px)
     {
@@ -172,9 +172,9 @@ export const FIATWrap2 = styled.div`
   display: inline-block;
   float: right;
   & .ant-radio-button-wrapper {
-    background-color: ${props =>
+    background-color: ${(props) =>
     props.theme.mode === "dark" ? "#041422" : ""};
-    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   }
   @media (max-width: 535px) {
     margin-top: 20px;
@@ -189,7 +189,7 @@ export const RadioSelect = styled(RadioGroup)`
   font-family: "Open Sans";
   & .ant-radio-button-wrapper {
     font-weight: 600 !important;
-    background-color: ${props =>
+    background-color: ${(props) =>
     props.theme.mode === "dark" ? "" : "#f5f6fa"};
     font-size: 13px;
     text-transform: uppercase;
@@ -203,9 +203,9 @@ export const RadioSelect = styled(RadioGroup)`
 export const Sect = styled(Button)`
   display: inline-block;
   padding: 10px 15px;
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#041422" : "#f5f6fa"};
-  color: ${props => (props.theme.mode === "dark" ? "#617090" : "")};
+  color: ${(props) => (props.theme.mode === "dark" ? "#617090" : "")};
   border: none;
   height: auto;
   border-radius: 0px;
@@ -219,9 +219,9 @@ export const Sect = styled(Button)`
   }
 `;
 export const RightDiv = styled.div`
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#041b2c" : "white"};
-  box-shadow: ${props =>
+  box-shadow: ${(props) =>
     props.theme.mode === "dark" ? "" : "0px 0px 5px 5px rgb(241, 241, 241)"};
   border-radius: 5px;
   height: auto;
@@ -243,7 +243,7 @@ export const InstruTable = styled.div`
 `;
 export const TableIns = styled(Table)`
   & .ant-table-column-sorter {
-    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   }
   > .ant-spin-nested-loading
     > .ant-spin-container
@@ -251,7 +251,7 @@ export const TableIns = styled(Table)`
     > .ant-table-content
     > .ant-table-scroll
     > .ant-table-header {
-    background: ${props => (props.theme.mode === "dark" ? "#041422" : "")};
+    background: ${(props) => (props.theme.mode === "dark" ? "#041422" : "")};
     margin-bottom: 0px !important;
     overflow-x: hidden;
   }
@@ -274,7 +274,7 @@ export const TableIns = styled(Table)`
     > tr
     > th {
     color: #174c7e;
-    background-color: ${props =>
+    background-color: ${(props) =>
     props.theme.mode === "dark" ? "#041422" : ""};
     font-weight: bold;
     border-bottom: 0px;
@@ -289,7 +289,7 @@ export const TableIns = styled(Table)`
     > .ant-table-tbody
     > tr
     > td {
-    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
     background-color: transparent;
     font-size: 14px;
     font-weight: 600;
@@ -348,7 +348,7 @@ export const TableIns = styled(Table)`
     cursor: pointer;
   }
   & .ant-table-tbody > tr:hover > td {
-    background-color: ${props =>
+    background-color: ${(props) =>
     props.theme.mode === "dark" ? "#041b2c" : ""};
   }
   & .ant-table-placeholder {
@@ -359,7 +359,7 @@ export const TableIns = styled(Table)`
     text-align: center;
     font-size: 14px;
     font-weight: 600;
-    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
     z-index: 1;
     font-family: "Open Sans";
   }
@@ -427,7 +427,7 @@ export const TabsRight = styled(Tabs)`
 /* Market Style */
 
 export const Label = styled.label`
-  color: ${props => (props.theme.mode === "dark" ? "white" : "#333")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "#333")};
 `;
 export const MarketWrap = styled.div`
   padding-left: 30px;
@@ -444,11 +444,11 @@ export const BuySell = styled.div`
   height: auto;
   text-align: center;
   & .ant-radio-button-wrapper {
-    background: ${props =>
+    background: ${(props) =>
     props.theme.mode === "dark" ? "#041422" : "#f5f6fa"};
-    border: ${props =>
+    border: ${(props) =>
     props.theme.mode === "dark" ? "1px solid #2c3f51" : "1px solid #cad0e6"};
-    color: ${props => (props.theme.mode === "dark" ? "#617090" : "#9e9ea1")};
+    color: ${(props) => (props.theme.mode === "dark" ? "#617090" : "#9e9ea1")};
   }
 `;
 export const BuySellRadio = styled(RadioButton)`
@@ -464,9 +464,9 @@ export const BuySellRadio = styled(RadioButton)`
 `;
 export const Buy = styled(Button)`
   display: inline-block;
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#041422" : "#f5f6fa"};
-  color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   width: 50%;
   height: 40px;
   border-top-right-radius: 0px !important;
@@ -478,9 +478,9 @@ export const Buy = styled(Button)`
 `;
 export const Sell = styled(Button)`
   display: inline-block;
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#041422" : "#f5f6fa"};
-  color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   width: 50%;
   border-top-left-radius: 0px !important;
   border-bottom-left-radius: 0px !important;
@@ -500,7 +500,7 @@ export const BalanceWrap = styled.div`
   }
 `;
 export const Balance = styled.p`
-  color: ${props => (props.theme.mode === "dark" ? "white" : "#174c7e")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "#174c7e")};
   font-weight: bold;
   word-break: break-word;
   font-size: 14px;
@@ -509,20 +509,20 @@ export const Balance = styled.p`
   margin: 0 0 20px 0;
 `;
 export const Balance1 = styled.p`
-  color: ${props => (props.theme.mode === "dark" ? "#617090" : "#7f7f7f")};
+  color: ${(props) => (props.theme.mode === "dark" ? "#617090" : "#7f7f7f")};
   font-weight: normal;
   font-size: 12px;
   margin: 0 0 5px 0;
   line-height: 1;
 `;
 export const Total = styled.p`
-  color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   word-break: break-word;
   font-size: 13px;
 `;
 export const CheckWrap = styled.div`
   > .ant-checkbox-wrapper > span {
-    color: ${props => (props.theme.mode === "dark" ? "#617090" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "#617090" : "")};
   }
 `;
 export const ETHWrap = styled.div`
@@ -537,9 +537,9 @@ export const AMTInput = styled(Input)`
     width: 100%;
     border-radius: 5px;
     border-radius: 1px solid #cad0e6;
-    caret-color: ${props => (props.theme.mode === "dark" ? "white" : "")};
-    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
-    background-color: ${props =>
+    caret-color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
+    background-color: ${(props) =>
     props.theme.mode === "dark" ? "#041b2c" : ""};
   }
 `;
@@ -555,12 +555,12 @@ export const Willpay = styled.span`
   font-size: 12px;
   font-family: "Open Sans";
   font-weight: 600;
-  color: ${props => (props.theme.mode === "dark" ? "white" : "#333")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "#333")};
 `;
 export const Willpay2 = styled.span`
   font-size: 20px;
   // font-family: "NotoSansThai";
-  color: ${props => (props.theme.mode === "dark" ? "white" : "#174c7e")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "#174c7e")};
   font-weight: bold;
   letter-spacing: 1px;
   max-width: 50%;
@@ -575,7 +575,7 @@ export const TotalWrap = styled.div`
     border: 1px solid #cad0e6;
   }
   > .ant-input-group-wrapper > .ant-input-group > .ant-input-group-addon {
-    background-color: ${props =>
+    background-color: ${(props) =>
     props.theme.mode === "dark" ? "#041b2c" : "white"};
     border-left: 0px;
     color: #c5c5c5;
@@ -592,16 +592,16 @@ export const TotInput = styled(Input)`
     width: 100%;
     border-radius: 5px;
     border-radius: 1px solid #cad0e6;
-    caret-color: ${props => (props.theme.mode === "dark" ? "white" : "")};
-    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
-    background-color: ${props =>
+    caret-color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
+    background-color: ${(props) =>
     props.theme.mode === "dark" ? "#041b2c" : ""} !important;
   }
 `;
 export const Pay = styled.div`
   margin-top: 20px;
   padding: 0 10px;
-  color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
 `;
 export const Approx = styled.div`
   display: flex;
@@ -624,13 +624,13 @@ export const WillpayBelow = styled.div`
   line-height: 1;
   font-weight: 600;
   font-size: 12px;
-  color: ${props => (props.theme.mode === "dark" ? "white" : "#333")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "#333")};
 `;
 export const WillpayBelow2 = styled.div`
   line-height: 1;
   font-weight: bold;
   font-size: 14px;
-  color: ${props => (props.theme.mode === "dark" ? "white" : "#333")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "#333")};
   letter-spacing: 1px;
 `;
 export const Best = styled.span`
@@ -639,8 +639,9 @@ export const Best = styled.span`
   color: rgba(51, 51, 51, 0.8);
 `;
 export const ButtonETH = styled(Button)`
-  background-color: ${props => (props.side === "Buy" ? "#64ba71" : "#ba6471")};
-  border-color: ${props => (props.side === "Buy" ? "#64ba71" : "#ba6471")};
+  background-color: ${(props) =>
+    props.side === "Buy" ? "#64ba71" : "#ba6471"};
+  border-color: ${(props) => (props.side === "Buy" ? "#64ba71" : "#ba6471")};
   font-size: 15px;
   font-family: "Open Sans";
   color: rgb(255, 255, 255);
@@ -651,17 +652,17 @@ export const ButtonETH = styled(Button)`
   // margin-bottom: 30px;
   &:hover,
   &:focus {
-    background-color: ${props =>
+    background-color: ${(props) =>
     props.side === "Buy" ? "#64ba71" : "#ba6471"};
     color: rgb(255, 255, 255);
-    border-color: ${props => (props.side === "Buy" ? "#64ba71" : "#ba6471")};
+    border-color: ${(props) => (props.side === "Buy" ? "#64ba71" : "#ba6471")};
   }
 `;
 export const StopCheck = styled(Checkbox)`
   font-size: 14px;
   font-family: "Open Sans";
   font-weight: 600;
-  color: ${props =>
+  color: ${(props) =>
     props.theme.mode === "dark" ? "white" : "rgb( 127, 127, 127 )"};
 `;
 export const FlexWrapDiv = styled.div`
@@ -685,7 +686,7 @@ export const BBCWrap = styled.div`
 export const BBC = styled.span`
   font-size: 16px;
   font-family: "Open Sans";
-  color: rgb(76, 132, 255);
+  color: #64ba71;
   text-transform: uppercase;
   font-weight: 600;
 `;
@@ -695,7 +696,7 @@ export const TotalBTC = styled.span`
   font-size: 13px;
   font-family: "Open Sans";
   font-weight: 600;
-  color: ${props =>
+  color: ${(props) =>
     props.theme.mode === "dark" ? "white" : "rgb( 51, 51, 51 )"};
 `;
 export const BuyTable = styled.div`
@@ -723,6 +724,12 @@ export const BBC2 = styled(BBC)`
 export const Instru2 = styled(Instru)`
   margin-top: 25px;
   margin-left: 10px;
+  & .controlls{
+    float:right
+    button{
+      margin:0 5px;
+    }
+  }
 `;
 
 export const WrapDepth = styled.div``;
@@ -736,12 +743,12 @@ export const HistoryWrap1 = styled.div`
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: ${props =>
+    background-color: ${(props) =>
     props.theme.mode === "dark" ? "#041624" : ""};
     border-radius: 3px;
   }
   &::-webkit-scrollbar-track {
-    background: ${props => (props.theme.mode === "dark" ? "#072135" : "")};
+    background: ${(props) => (props.theme.mode === "dark" ? "#072135" : "")};
   }
 `;
 export const CustomTable = styled.table`
@@ -761,7 +768,7 @@ export const CustomTable = styled.table`
   font-family: "Open Sans";
 `;
 export const TableHeader = styled(CustomTable)`
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#041422" : "#f5f6fa"};
   > thead {
     color: #174c7e;
@@ -775,13 +782,13 @@ export const TableHeader = styled(CustomTable)`
 `;
 export const TableContent = styled(CustomTable)`
   > tbody {
-    color: ${props => (props.theme.mode === "dark" ? "white" : "black")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "black")};
     font-size: 14px;
     font-family: "Open Sans";
     font-weight: 600;
   }
   > tbody > tr:nth-of-type(even) {
-    background-color: ${props =>
+    background-color: ${(props) =>
     props.theme.mode === "dark" ? "#041422" : "#f5f6fa"};
   }
   &.buy_sell_table {
@@ -808,16 +815,16 @@ export const SelectMonth = styled(Select)`
     line-height: 40px !important;
   }
   & .ant-select-selection {
-    background-color: ${props =>
+    background-color: ${(props) =>
     props.theme.mode === "dark" ? "#041422" : ""};
-    color: ${props =>
+    color: ${(props) =>
     props.theme.mode === "dark" ? "white" : "rgba(0, 0, 0, 0.65)"};
     > .ant-select-selection__rendered {
       line-height: 38px;
     }
   }
   & .anticon {
-    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   }
 `;
 export const InstruOrder = styled(Instru)`
@@ -843,8 +850,9 @@ export const ButtonToolbarOne = styled(ButtonToolbar)`
   }
 `;
 export const DropdownButtonOne = styled(DropdownButton)`
-  background-color: ${props => (props.theme.mode === "dark" ? "#01090f" : "")};
-  color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+  background-color: ${(props) =>
+    props.theme.mode === "dark" ? "#01090f" : ""};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   width: 100 %;
   text-align: left;
   > .caret {
@@ -886,22 +894,39 @@ export const ScrollTableContent = styled.div`
     background-color: rgb(136, 136, 136) !important;
   }
 `;
-export const SettingDropdown = styled(Button)`
-    position: fixed;
-    top: 90px;
-    left: 0px;
-    background: white;
-    color: #1890ff;
-    cursor: pointer;
-    padding: 0px;
-    font-size: 20px !important;
-    /* display: flex; */
-    border: 1px solid lightgray;
-    z-index: 9999;
-    height: 35px;
-    width: 40px;
-    border-radius: 0;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+export const SettingDropdown = styled(Dropdown)`
+  position: fixed;
+  top: 90px;
+  right: 0px;
+  background: ${(props) => (props.theme.mode == "dark" ? "#01090f" : "white")};
+  color: #1890ff;
+  cursor: pointer;
+  padding: 7px 7px;
+  font-size: 20px;
+  border: ${(props) =>
+    props.theme.mode == "dark" ? "1px solid #198fff;" : "1px solid lightgray"};
+  z-index: 9999;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+`;
+
+export const SettingButton = styled(Button)`
+  position: fixed;
+  top: 90px;
+  left: 0px;
+  background: white;
+  color: #1890ff;
+  cursor: pointer;
+  padding: 0px;
+  font-size: 20px !important;
+  /* display: flex; */
+  border: 1px solid lightgray;
+  z-index: 9999;
+  height: 35px;
+  width: 40px;
+  border-radius: 0;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 `;

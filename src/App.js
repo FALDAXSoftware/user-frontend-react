@@ -19,7 +19,9 @@ import AppRouter from "routes";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
 import TradeView from "./SHARED-COMPONENTS/TradeView";
 import SimplexView from "./SHARED-COMPONENTS/SimplexView";
+import SimplexMobile from "./SHARED-COMPONENTS/SimplexMobile";
 import { globalVariables } from "Globals.js";
+import Paxos from "./COMPONENTS/LOGGEDCATEGORIES/paxos";
 
 let { GOOGLE_SITE_KEY } = globalVariables;
 
@@ -187,6 +189,12 @@ class App extends Component {
                       component={Login}
                     />
                     <Route
+                      path="/paxos"
+                      exact
+                      title="Paxos"
+                      component={Paxos}
+                    />
+                    <Route
                       path="/reset-password"
                       title="Reset Password"
                       component={ResetPassword}
@@ -312,6 +320,11 @@ class App extends Component {
                       path="/exchange-trade1"
                       title="Iframe"
                       component={SimplexView}
+                    />
+                    <Route
+                      path="/simplex-mobile"
+                      title="Simplex for mobile"
+                      component={SimplexMobile}
                     />
                     <RestrictedRoute
                       path="/"
