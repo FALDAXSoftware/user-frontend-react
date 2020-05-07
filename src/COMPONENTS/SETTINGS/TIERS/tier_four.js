@@ -10,7 +10,7 @@ import { TierWrapper, KYCHead } from "./tier_one";
 import { connect } from "react-redux";
 import { withRouter, Link } from "react-router-dom";
 import { globalVariables } from "Globals.js";
-import SimpleReactValidator from "simple-react-validator";
+import SimpleReactvalidator from "simple-react-validator";
 import { DoneWrap, KycSucc } from "./tier_one";
 import {
   TierWrap,
@@ -142,7 +142,7 @@ class TierFour extends React.Component {
       forceAcceptedStatus: false,
       forceRejectNote: "",
     };
-    this.validator = new SimpleReactValidator();
+    this.validator1 = new SimpleReactvalidator({});
     this.populateData = this.populateData.bind(this);
   }
   // componentWillMount() {
@@ -216,7 +216,42 @@ class TierFour extends React.Component {
     }
   }
   populateData() {
-    console.log("^^^tierdata", this.state.tierData.length);
+    if (this.state.tierData.length < 16) {
+      this.setState({
+        reUploadFlag: true,
+        reUpload1: true,
+        reUpload2: true,
+        reUpload3: true,
+        reUpload4: true,
+        reUpload5: true,
+        reUpload6: true,
+        reUpload7: true,
+        reUpload8: true,
+        reUpload9: true,
+        reUpload10: true,
+        reUpload11: true,
+        reUpload12: true,
+        reUpload13: true,
+        reUpload14: true,
+        reUpload15: true,
+        reUpload16: true,
+        uploadBtnFlag: true,
+      });
+      let tierData = this.state.tierData;
+      tierData.map((tierDoc, index) => {
+        // console.log("tierdoc^^^", tierDoc.type);
+        // let object = {};
+        // object[`reUpload${tierDoc.type}`] = false;
+        // this.setState({
+        //   ...object,
+        // });
+        if (tierDoc.request_id) {
+          this.setState({
+            requestId: tierDoc.request_id,
+          });
+        }
+      });
+    }
     if (this.state.tierData.length > 0) {
       this.setState({
         reUploadFlag: true,
@@ -234,8 +269,8 @@ class TierFour extends React.Component {
               requestId: tierDoc.request_id,
             });
           }
-          switch (index) {
-            case 0:
+          switch (parseInt(tierDoc.type)) {
+            case 1:
               let aml_questionnaire_status = tierDoc.is_approved;
               let reupload1;
               if (tierDoc.is_approved === null) {
@@ -251,7 +286,7 @@ class TierFour extends React.Component {
                 amlQuestionnaireNote: tierDoc.public_note,
               });
               return;
-            case 1:
+            case 2:
               let comfort_letter_status = tierDoc.is_approved;
               let reupload2;
               if (tierDoc.is_approved === null) {
@@ -267,7 +302,7 @@ class TierFour extends React.Component {
                 comfortLetterNote: tierDoc.public_note,
               });
               return;
-            case 2:
+            case 3:
               let board_resolution_status = tierDoc.is_approved;
               let reupload3;
               if (tierDoc.is_approved === null) {
@@ -283,7 +318,7 @@ class TierFour extends React.Component {
                 boardResolutionNote: tierDoc.public_note,
               });
               return;
-            case 3:
+            case 4:
               let bank_statements_status = tierDoc.is_approved;
               let reupload4;
               if (tierDoc.is_approved === null) {
@@ -299,7 +334,7 @@ class TierFour extends React.Component {
                 bankStatementNote: tierDoc.public_note,
               });
               return;
-            case 4:
+            case 5:
               let corporate_info = tierDoc.is_approved;
               let reupload5;
               if (tierDoc.is_approved === null) {
@@ -315,7 +350,7 @@ class TierFour extends React.Component {
                 corporateInfoNote: tierDoc.public_note,
               });
               return;
-            case 5:
+            case 6:
               let ownership_form = tierDoc.is_approved;
               let reupload6;
               if (tierDoc.is_approved === null) {
@@ -331,7 +366,7 @@ class TierFour extends React.Component {
                 ownershipFormNote: tierDoc.public_note,
               });
               return;
-            case 6:
+            case 7:
               let articles_of_incorporation = tierDoc.is_approved;
               let reupload7;
               if (tierDoc.is_approved === null) {
@@ -347,7 +382,7 @@ class TierFour extends React.Component {
                 articlesIncorporationNote: tierDoc.public_note,
               });
               return;
-            case 7:
+            case 8:
               let bylaws = tierDoc.is_approved;
               let reupload8;
               if (tierDoc.is_approved === null) {
@@ -363,7 +398,7 @@ class TierFour extends React.Component {
                 byLawsNote: tierDoc.public_note,
               });
               return;
-            case 8:
+            case 9:
               let ownership_control_structure = tierDoc.is_approved;
               let reupload9;
               if (tierDoc.is_approved === null) {
@@ -379,7 +414,7 @@ class TierFour extends React.Component {
                 ownershipControlStructureNote: tierDoc.public_note,
               });
               return;
-            case 9:
+            case 10:
               let director_list = tierDoc.is_approved;
               let reupload10;
               if (tierDoc.is_approved === null) {
@@ -395,7 +430,7 @@ class TierFour extends React.Component {
                 directorListNote: tierDoc.public_note,
               });
               return;
-            case 10:
+            case 11:
               let active_business_proof = tierDoc.is_approved;
               let reupload11;
               if (tierDoc.is_approved === null) {
@@ -411,7 +446,7 @@ class TierFour extends React.Component {
                 activeBusinessProofNote: tierDoc.public_note,
               });
               return;
-            case 11:
+            case 12:
               let document_availability_policy = tierDoc.is_approved;
               let reupload12;
               if (tierDoc.is_approved === null) {
@@ -427,7 +462,7 @@ class TierFour extends React.Component {
                 documentAvailabilityPolicyNote: tierDoc.public_note,
               });
               return;
-            case 12:
+            case 13:
               let cookies_policy = tierDoc.is_approved;
               let reupload13;
               if (tierDoc.is_approved === null) {
@@ -443,7 +478,7 @@ class TierFour extends React.Component {
                 cookiesPolicyNote: tierDoc.public_note,
               });
               return;
-            case 13:
+            case 14:
               let privacy_policy = tierDoc.is_approved;
               let reupload14;
               if (tierDoc.is_approved === null) {
@@ -459,7 +494,7 @@ class TierFour extends React.Component {
                 privacyPolicyNote: tierDoc.public_note,
               });
               return;
-            case 14:
+            case 15:
               let aml_policy = tierDoc.is_approved;
               let reupload15;
               if (tierDoc.is_approved === null) {
@@ -475,7 +510,7 @@ class TierFour extends React.Component {
                 amlPolicyNote: tierDoc.public_note,
               });
               return;
-            case 15:
+            case 16:
               let terms_of_service = tierDoc.is_approved;
               let reupload16;
               if (tierDoc.is_approved === null) {
@@ -777,7 +812,7 @@ class TierFour extends React.Component {
     });
   }
   async handleSubmit() {
-    if (this.validator.allValid()) {
+    if (this.validator1.allValid()) {
       this.setState({
         UploadCounter: true,
       });
@@ -799,8 +834,6 @@ class TierFour extends React.Component {
           total_file_size: size,
         });
         for (const property in count) {
-          // console.log(`${property}: ${count[property].file}`);
-          // console.log(`${property}: ${count[property].type}`);
           let result = await (
             await this.uploadDocument(
               count[property].type,
@@ -821,6 +854,8 @@ class TierFour extends React.Component {
                   "Success",
                   result.data
                 );
+              } else if (result.status == 500) {
+                this.openNotificationWithIcon("error", "Error", result.error);
               } else {
                 this.openNotificationWithIcon("error", "Error", result.data);
               }
@@ -866,6 +901,8 @@ class TierFour extends React.Component {
                   "Success",
                   result.data
                 );
+              } else if (result.status == 500) {
+                this.openNotificationWithIcon("error", "Error", result.error);
               } else {
                 this.openNotificationWithIcon("error", "Error", result.data);
               }
@@ -897,7 +934,8 @@ class TierFour extends React.Component {
         }
       }
     } else {
-      this.validator.showMessages();
+      console.log("Not valid^^^^^^");
+      this.validator1.showMessages();
       this.forceUpdate();
     }
   }
@@ -934,7 +972,7 @@ class TierFour extends React.Component {
         console.log("On Cancel", this.state.documents);
       }
     );
-    this.validator.hideMessages();
+    this.validator1.hideMessages();
     this.forceUpdate();
   }
   comingCancel = (e) => {
@@ -943,6 +981,7 @@ class TierFour extends React.Component {
     });
   };
   render() {
+    // console.log("render^^^", this.state.reUpload1);
     let {
       aml_flag,
       comfort_flag,
@@ -1093,13 +1132,14 @@ class TierFour extends React.Component {
                         <SupportText className="tier_support_text">
                           Supported format: .doc, .docx, .pdf.
                         </SupportText>
-                        {this.state.reUpload1 &&
-                          this.validator.message(
-                            "aml_questionnaire",
-                            aml_flag,
-                            "required",
-                            "tier-text-danger-validation"
-                          )}
+                        {this.state.reUpload1
+                          ? this.validator1.message(
+                              "aml_questionnaire",
+                              aml_flag,
+                              "required",
+                              "tier-text-danger-validation"
+                            )
+                          : delete this.validator1.fields["aml_questionnaire"]}
                       </TierUpload>
                       {this.state.tierData.length > 0 ? (
                         <TierDocBox>
@@ -1214,13 +1254,14 @@ class TierFour extends React.Component {
                         <SupportText className="tier_support_text">
                           Supported format: .doc, .docx, .pdf.
                         </SupportText>
-                        {this.state.reUpload2 &&
-                          this.validator.message(
-                            "comfort_letter",
-                            comfort_flag,
-                            "required",
-                            "tier-text-danger-validation"
-                          )}
+                        {this.state.reUpload2
+                          ? this.validator1.message(
+                              "comfort_letter",
+                              comfort_flag,
+                              "required",
+                              "tier-text-danger-validation"
+                            )
+                          : delete this.validator1.fields["comfort_letter"]}
                       </TierUpload>
                       {this.state.tierData.length > 0 ? (
                         <TierDocBox>
@@ -1333,13 +1374,14 @@ class TierFour extends React.Component {
                         <SupportText className="tier_support_text">
                           Supported format: .doc, .docx, .pdf.
                         </SupportText>
-                        {this.state.reUpload3 &&
-                          this.validator.message(
-                            "board_resolution",
-                            board_flag,
-                            "required",
-                            "tier-text-danger-validation"
-                          )}
+                        {this.state.reUpload3
+                          ? this.validator1.message(
+                              "board_resolution",
+                              board_flag,
+                              "required",
+                              "tier-text-danger-validation"
+                            )
+                          : delete this.validator1.fields["board_resolution"]}
                       </TierUpload>
                       {this.state.tierData.length > 0 ? (
                         <TierDocBox>
@@ -1449,13 +1491,14 @@ class TierFour extends React.Component {
                         <SupportText className="tier_support_text">
                           Supported format: .doc, .docx, .pdf.
                         </SupportText>
-                        {this.state.reUpload4 &&
-                          this.validator.message(
-                            "bank_statements",
-                            bank_flag,
-                            "required",
-                            "tier-text-danger-validation"
-                          )}
+                        {this.state.reUpload4
+                          ? this.validator1.message(
+                              "bank_statements",
+                              bank_flag,
+                              "required",
+                              "tier-text-danger-validation"
+                            )
+                          : delete this.validator1.fields["bank_statements"]}
                       </TierUpload>
                       {this.state.tierData.length > 0 ? (
                         <TierDocBox>
@@ -1572,13 +1615,14 @@ class TierFour extends React.Component {
                         <SupportText className="tier_support_text">
                           Supported format: .doc, .docx, .pdf.
                         </SupportText>
-                        {this.state.reUpload5 &&
-                          this.validator.message(
-                            "corporate_info",
-                            corporate_flag,
-                            "required",
-                            "tier-text-danger-validation"
-                          )}
+                        {this.state.reUpload5
+                          ? this.validator1.message(
+                              "corporate_info",
+                              corporate_flag,
+                              "required",
+                              "tier-text-danger-validation"
+                            )
+                          : delete this.validator1.fields["corporate_info"]}
                       </TierUpload>
                       {this.state.tierData.length > 0 ? (
                         <TierDocBox>
@@ -1695,13 +1739,14 @@ class TierFour extends React.Component {
                         <SupportText className="tier_support_text">
                           Supported format: .doc, .docx, .pdf.
                         </SupportText>
-                        {this.state.reUpload6 &&
-                          this.validator.message(
-                            "ownership_form",
-                            ownership_flag,
-                            "required",
-                            "tier-text-danger-validation"
-                          )}
+                        {this.state.reUpload6
+                          ? this.validator1.message(
+                              "ownership_form",
+                              ownership_flag,
+                              "required",
+                              "tier-text-danger-validation"
+                            )
+                          : delete this.validator1.fields["ownership_form"]}
                       </TierUpload>
                       {this.state.tierData.length > 0 ? (
                         <TierDocBox>
@@ -1824,13 +1869,16 @@ class TierFour extends React.Component {
                         <SupportText className="tier_support_text">
                           Supported format: .doc, .docx, .pdf.
                         </SupportText>
-                        {this.state.reUpload7 &&
-                          this.validator.message(
-                            "articles_of_incorporation",
-                            articles_flag,
-                            "required",
-                            "tier-text-danger-validation"
-                          )}
+                        {this.state.reUpload7
+                          ? this.validator1.message(
+                              "articles_of_incorporation",
+                              articles_flag,
+                              "required",
+                              "tier-text-danger-validation"
+                            )
+                          : delete this.validator1.fields[
+                              "articles_of_incorporation"
+                            ]}
                       </TierUpload>
                       {this.state.tierData.length > 0 ? (
                         <TierDocBox>
@@ -1944,13 +1992,14 @@ class TierFour extends React.Component {
                         <SupportText className="tier_support_text">
                           Supported format: .doc, .docx, .pdf.
                         </SupportText>
-                        {this.state.reUpload8 &&
-                          this.validator.message(
-                            "bylaws",
-                            bylaws_flag,
-                            "required",
-                            "tier-text-danger-validation"
-                          )}
+                        {this.state.reUpload8
+                          ? this.validator1.message(
+                              "bylaws",
+                              bylaws_flag,
+                              "required",
+                              "tier-text-danger-validation"
+                            )
+                          : delete this.validator1.fields["bylaws"]}
                       </TierUpload>
                       {this.state.tierData.length > 0 ? (
                         <TierDocBox>
@@ -2073,13 +2122,16 @@ class TierFour extends React.Component {
                         <SupportText className="tier_support_text">
                           Supported format: .doc, .docx, .pdf.
                         </SupportText>
-                        {this.state.reUpload9 &&
-                          this.validator.message(
-                            "ownership_control_structure",
-                            ownership_control_structure_flag,
-                            "required",
-                            "tier-text-danger-validation"
-                          )}
+                        {this.state.reUpload9
+                          ? this.validator1.message(
+                              "ownership_control_structure",
+                              ownership_control_structure_flag,
+                              "required",
+                              "tier-text-danger-validation"
+                            )
+                          : delete this.validator1.fields[
+                              "ownership_control_structure"
+                            ]}
                       </TierUpload>
                       {this.state.tierData.length > 0 ? (
                         <TierDocBox>
@@ -2199,13 +2251,14 @@ class TierFour extends React.Component {
                         <SupportText className="tier_support_text">
                           Supported format: .doc, .docx, .pdf.
                         </SupportText>
-                        {this.state.reUpload10 &&
-                          this.validator.message(
-                            "director_list",
-                            director_list_flag,
-                            "required",
-                            "tier-text-danger-validation"
-                          )}
+                        {this.state.reUpload10
+                          ? this.validator1.message(
+                              "director_list",
+                              director_list_flag,
+                              "required",
+                              "tier-text-danger-validation"
+                            )
+                          : delete this.validator1.fields["director_list"]}
                       </TierUpload>
                       {this.state.tierData.length > 0 ? (
                         <TierDocBox>
@@ -2318,13 +2371,16 @@ class TierFour extends React.Component {
                         <SupportText className="tier_support_text">
                           Supported format: .doc, .docx, .pdf.
                         </SupportText>
-                        {this.state.reUpload11 &&
-                          this.validator.message(
-                            "active_business_proof",
-                            active_business_proof_flag,
-                            "required",
-                            "tier-text-danger-validation"
-                          )}
+                        {this.state.reUpload11
+                          ? this.validator1.message(
+                              "active_business_proof",
+                              active_business_proof_flag,
+                              "required",
+                              "tier-text-danger-validation"
+                            )
+                          : delete this.validator1.fields[
+                              "active_business_proof"
+                            ]}
                       </TierUpload>
                       {this.state.tierData.length > 0 ? (
                         <TierDocBox>
@@ -2442,13 +2498,16 @@ class TierFour extends React.Component {
                         <SupportText className="tier_support_text">
                           Supported format: .doc, .docx, .pdf.
                         </SupportText>
-                        {this.state.reUpload12 &&
-                          this.validator.message(
-                            "document_availability_policy",
-                            document_availability_policy_flag,
-                            "required",
-                            "tier-text-danger-validation"
-                          )}
+                        {this.state.reUpload12
+                          ? this.validator1.message(
+                              "document_availability_policy",
+                              document_availability_policy_flag,
+                              "required",
+                              "tier-text-danger-validation"
+                            )
+                          : delete this.validator1.fields[
+                              "document_availability_policy"
+                            ]}
                       </TierUpload>
                       {this.state.tierData.length > 0 ? (
                         <TierDocBox>
@@ -2562,13 +2621,14 @@ class TierFour extends React.Component {
                         <SupportText className="tier_support_text">
                           Supported format: .doc, .docx, .pdf.
                         </SupportText>
-                        {this.state.reUpload13 &&
-                          this.validator.message(
-                            "cookies_policy",
-                            cookies_policy_flag,
-                            "required",
-                            "tier-text-danger-validation"
-                          )}
+                        {this.state.reUpload13
+                          ? this.validator1.message(
+                              "cookies_policy",
+                              cookies_policy_flag,
+                              "required",
+                              "tier-text-danger-validation"
+                            )
+                          : delete this.validator1.fields["cookies_policy"]}
                       </TierUpload>
                       {this.state.tierData.length > 0 ? (
                         <TierDocBox>
@@ -2678,13 +2738,14 @@ class TierFour extends React.Component {
                         <SupportText className="tier_support_text">
                           Supported format: .doc, .docx, .pdf.
                         </SupportText>
-                        {this.state.reUpload14 &&
-                          this.validator.message(
-                            "privacy_policy",
-                            privacy_policy_flag,
-                            "required",
-                            "tier-text-danger-validation"
-                          )}
+                        {this.state.reUpload14
+                          ? this.validator1.message(
+                              "privacy_policy",
+                              privacy_policy_flag,
+                              "required",
+                              "tier-text-danger-validation"
+                            )
+                          : delete this.validator1.fields["privacy_policy"]}
                       </TierUpload>
                       {this.state.tierData.length > 0 ? (
                         <TierDocBox>
@@ -2794,13 +2855,14 @@ class TierFour extends React.Component {
                         <SupportText className="tier_support_text">
                           Supported format: .doc, .docx, .pdf.
                         </SupportText>
-                        {this.state.reUpload15 &&
-                          this.validator.message(
-                            "aml_policy",
-                            aml_policy_flag,
-                            "required",
-                            "tier-text-danger-validation"
-                          )}
+                        {this.state.reUpload15
+                          ? this.validator1.message(
+                              "aml_policy",
+                              aml_policy_flag,
+                              "required",
+                              "tier-text-danger-validation"
+                            )
+                          : delete this.validator1.fields["aml_policy"]}
                       </TierUpload>
                       {this.state.tierData.length > 0 ? (
                         <TierDocBox>
@@ -2910,13 +2972,14 @@ class TierFour extends React.Component {
                         <SupportText className="tier_support_text">
                           Supported format: .doc, .docx, .pdf.
                         </SupportText>
-                        {this.state.reUpload16 &&
-                          this.validator.message(
-                            "terms_of_service",
-                            terms_of_service_flag,
-                            "required",
-                            "tier-text-danger-validation"
-                          )}
+                        {this.state.reUpload16
+                          ? this.validator1.message(
+                              "terms_of_service",
+                              terms_of_service_flag,
+                              "required",
+                              "tier-text-danger-validation"
+                            )
+                          : delete this.validator1.fields["terms_of_service"]}
                       </TierUpload>
                       {this.state.tierData.length > 0 ? (
                         <TierDocBox>

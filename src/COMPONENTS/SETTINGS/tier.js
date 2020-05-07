@@ -309,41 +309,44 @@ class Tier extends Component {
                             : ""}
                         </ul>
                       </TierRequirements>
-                      {tier.is_verified && (
+                      {/* {tier.is_verified && (
                         <TierVerifiedWrap>
                           <TierVerfied className="verified">
                             <Icon type="check" />
                             Verified
                           </TierVerfied>
                         </TierVerifiedWrap>
+                      )} */}
+                      {tier.is_verified && (
+                        <Link
+                          to={{
+                            pathname: `/tier${tier.id}`,
+                            state: {
+                              flag: true,
+                            },
+                          }}
+                        >
+                          <TierUpdate className="upgrade-btn verified">
+                            Verified
+                          </TierUpdate>
+                        </Link>
                       )}
                       {tier.is_active && (
-                        <a
-                        // to={{
-                        //   pathname: `/tier${tier.id}`,
-                        //   state: {
-                        //     // tier_id: tier.id,
-                        //     // account_details: `${tier.account_details}`
-                        //     //   ? `${tier.account_details.request_id}`
-                        //     //   : ""
-                        //     // underApproval: `${tier.under_approval}`
-                        //     //   ? `${tier.under_approval}`
-                        //     //   : ""
-                        //   }
-                        // }}
+                        <TierUpdate
+                          onClick={() => {
+                            self.checkTierRequirements(tier.id);
+                          }}
+                          key={tier.id}
+                          id={tier.id}
+                          data-id={tier.id}
+                          className="upgrade-btn"
                         >
-                          <TierUpdate
-                            onClick={() => {
-                              self.checkTierRequirements(tier.id);
-                            }}
-                            key={tier.id}
-                            id={tier.id}
-                            data-id={tier.id}
-                            className="upgrade-btn"
-                          >
-                            Upgrade
-                          </TierUpdate>
-                        </a>
+                          {tier.account_details
+                            ? tier.account_details.approved == null
+                              ? "Under Approval"
+                              : "Upgrade"
+                            : "Upgrade"}
+                        </TierUpdate>
                       )}
                       {!tier.is_active && !tier.is_verified && (
                         <TierUpdate className="upgrade-btn">Upgrade</TierUpdate>

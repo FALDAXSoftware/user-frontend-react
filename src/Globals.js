@@ -15,7 +15,7 @@ export const globalVariables = {
 
   // API_URL: "http://localhost:1440", //Mansi's
 
-  // API_URL: "http://0770e374.ngrok.io",
+  // API_URL: "http://df43ca3f.ngrok.io",
 
   // API_URL: "http://7b2d9029.ngrok.io",
 
@@ -68,29 +68,29 @@ export const globalVariables = {
     "https://production-static-asset.s3.us-east-2.amazonaws.com/assets/pdf/FALDAX+Assets+of+Form.pdf",
 
   aml_questionnaire:
-    "https://s3.us-east-2.amazonaws.com/assets/pdf/FALDAX AML Questionnaire.pdf",
+    "https://production-static-asset.s3.us-east-2.amazonaws.com/assets/pdf/FALDAX AML Questionnaire.pdf",
 
   comfort_letter:
-    "https://s3.us-east-2.amazonaws.com/assets/pdf/FALDAX Comfort Letter.pdf",
+    "https://production-static-asset.s3.us-east-2.amazonaws.com/assets/pdf/FALDAX Comfort Letter.pdf",
 
   board_resolution:
-    "https://s3.us-east-2.amazonaws.com/assets/pdf/FALDAX Board Resolution.pdf",
+    "https://production-static-asset.s3.us-east-2.amazonaws.com/assets/pdf/FALDAX Board Resolution.pdf",
 
   corporate_filing_info:
-    "https://s3.us-east-2.amazonaws.com/assets/pdf/FALDAX Corporate Filing Information.pdf",
+    "https://production-static-asset.s3.us-east-2.amazonaws.com/assets/pdf/FALDAX Corporate Filing Information.pdf",
 
   beneficial_ownership_form:
-    "https://s3.us-east-2.amazonaws.com/assets/pdf/FALDAX Beneficial Ownership Form.pdf",
+    "https://production-static-asset.s3.us-east-2.amazonaws.com/assets/pdf/FALDAX Beneficial Ownership Form.pdf",
 
   articles_of_incorporation:
-    "https://s3.us-east-2.amazonaws.com/assets/pdf/FALDAX Articles of Incorporation.pdf",
+    "https://production-static-asset.s3.us-east-2.amazonaws.com/assets/pdf/FALDAX Articles of Incorporation.pdf",
 
   bylaws_form:
-    "https://s3.us-east-2.amazonaws.com/assets/pdf/FALDAX Bylaws.pdf",
+    "https://production-static-asset.s3.us-east-2.amazonaws.com/assets/pdf/FALDAX Bylaws.pdf",
 
   ownership_and_control_structure:
-    "https://s3.us-east-2.amazonaws.com/assets/pdf/FALDAX Ownership and Control Structure.pdf",
+    "https://production-static-asset.s3.us-east-2.amazonaws.com/assets/pdf/FALDAX Ownership and Control Structure.pdf",
 
   director_list_form:
-    "https://s3.us-east-2.amazonaws.com/assets/pdf/FALDAX Directors and Officers List & Personal Info Equivalent to Tier 3 Requirements.pdf",
+    "https://production-static-asset.s3.us-east-2.amazonaws.com/assets/pdf/FALDAX Directors and Officers List & Personal Info Equivalent to Tier 3 Requirements.pdf",
 };
