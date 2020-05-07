@@ -141,14 +141,14 @@ class TierThree extends React.Component {
     ) {
       this.props.history.push("/");
     }
-    if (
-      this.props.profileDetails.account_tier == 0 ||
-      this.props.profileDetails.account_tier == 1 ||
-      this.props.profileDetails.account_tier == 3 ||
-      this.props.profileDetails.account_tier == 4
-    ) {
-      this.props.history.push("/");
-    }
+    // if (
+    //   this.props.profileDetails.account_tier == 0 ||
+    //   this.props.profileDetails.account_tier == 1 ||
+    //   this.props.profileDetails.account_tier == 3 ||
+    //   this.props.profileDetails.account_tier == 4
+    // ) {
+    //   this.props.history.push("/");
+    // }
   }
   async componentDidMount() {
     try {
