@@ -194,14 +194,14 @@ class TierTwo extends React.Component {
     ) {
       this.props.history.push("/");
     }
-    if (
-      this.props.profileDetails.account_tier == 0 ||
-      this.props.profileDetails.account_tier == 2 ||
-      this.props.profileDetails.account_tier == 3 ||
-      this.props.profileDetails.account_tier == 4
-    ) {
-      this.props.history.push("/");
-    }
+    // if (
+    //   this.props.profileDetails.account_tier == 0 ||
+    //   this.props.profileDetails.account_tier == 2 ||
+    //   this.props.profileDetails.account_tier == 3 ||
+    //   this.props.profileDetails.account_tier == 4
+    // ) {
+    //   this.props.history.push("/");
+    // }
   }
   async componentDidMount() {
     try {
