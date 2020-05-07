@@ -193,7 +193,7 @@ class TierThree extends React.Component {
     }
   }
   populateData() {
-    if (this.state.tierData.length < 2) {
+    if (this.state.tierData.length < 2 && this.state.tierData.length > 0) {
       this.setState({
         reUploadFlag: true,
         reUpload1: true,
