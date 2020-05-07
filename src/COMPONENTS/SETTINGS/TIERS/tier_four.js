@@ -886,7 +886,12 @@ class TierFour extends React.Component {
               UploadCounter: false,
             },
             () => {
-              this.props.history.push("/tier4");
+              this.props.history.push({
+                pathname: "tier4",
+                state: {
+                  flag: true,
+                },
+              });
             }
           );
         }
@@ -954,7 +959,12 @@ class TierFour extends React.Component {
               UploadCounter: false,
             },
             () => {
-              this.props.history.push("/tier4");
+              this.props.history.push({
+                pathname: "tier4",
+                state: {
+                  flag: true,
+                },
+              });
             }
           );
         }
