@@ -123,33 +123,41 @@ class SimplexExchange extends React.Component {
   componentWillMount() {
     if (
       this.props.location.state === undefined ||
-      this.props.location.state.currencyToPay === "" ||
-      this.props.location.state.currencyToPay === null
+      this.props.location.state.flag === "" ||
+      this.props.location.state.flag === null
     ) {
-      this.setState({
-        currencyToPay: null,
-        currencyToGet: null,
-        crypto: "XRP",
-        currency: "USD",
-        quote_id: null,
-        address: null,
-        cryptoCode: null,
-        wallet_details: null,
-        coin_name: null,
-      });
-      this.props.history.push("/simplex");
+      this.props.history.push("/conversion");
     } else {
-      this.setState({
-        currencyToPay: this.props.location.state.currencyToPay,
-        currencyToGet: this.props.location.state.currencyToGet,
-        crypto: this.props.location.state.crypto,
-        currency: this.props.location.state.currency,
-        quote_id: this.props.location.state.id,
-        address: this.props.location.state.wallet_address,
-        cryptoCode: this.props.location.state.crypto_code,
-        wallet_details: this.props.location.state.wallet_address,
-        coin_name: this.props.location.state.coin_name,
-      });
+      if (
+        this.props.location.state === undefined ||
+        this.props.location.state.currencyToPay === "" ||
+        this.props.location.state.currencyToPay === null
+      ) {
+        this.setState({
+          currencyToPay: null,
+          currencyToGet: null,
+          crypto: "XRP",
+          currency: "USD",
+          quote_id: null,
+          address: null,
+          cryptoCode: null,
+          wallet_details: null,
+          coin_name: null,
+        });
+        this.props.history.push("/simplex");
+      } else {
+        this.setState({
+          currencyToPay: this.props.location.state.currencyToPay,
+          currencyToGet: this.props.location.state.currencyToGet,
+          crypto: this.props.location.state.crypto,
+          currency: this.props.location.state.currency,
+          quote_id: this.props.location.state.id,
+          address: this.props.location.state.wallet_address,
+          cryptoCode: this.props.location.state.crypto_code,
+          wallet_details: this.props.location.state.wallet_address,
+          coin_name: this.props.location.state.coin_name,
+        });
+      }
     }
   }
 
