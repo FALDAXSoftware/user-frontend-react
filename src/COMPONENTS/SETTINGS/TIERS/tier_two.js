@@ -265,7 +265,7 @@ class TierTwo extends React.Component {
   }
   populateData() {
     console.log("^^^tierdata", this.state.tierData, this.state.tierData.length);
-    if (this.state.tierData.length < 4) {
+    if (this.state.tierData.length < 4 && this.state.tierData.length > 0) {
       console.log("Tier length^^^^", this.state.tierData.length);
       this.setState({
         reUploadFlag: false,
