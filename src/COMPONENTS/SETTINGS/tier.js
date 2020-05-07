@@ -344,6 +344,8 @@ class Tier extends Component {
                           {tier.account_details
                             ? tier.account_details.approved == null
                               ? "Under Approval"
+                              : tier.account_details.approved == false
+                              ? "Rejected"
                               : "Upgrade"
                             : "Upgrade"}
                         </TierUpdate>
