@@ -835,44 +835,60 @@ class TierFour extends React.Component {
         this.setState({
           total_file_size: size,
         });
-        for (const property in count) {
-          let result = await (
-            await this.uploadDocument(
-              count[property].type,
-              count[property].file
-            )
-          ).json();
-          index++;
-          upload_flag1++;
-          this.setState({
-            upload_flag: upload_flag1,
-          });
-          if (result) {
-            console.log("Result^^^^^^", result, size, index);
-            if (index == size + 1) {
-              if (result.status == 200) {
-                this.openNotificationWithIcon(
-                  "success",
-                  "Success",
-                  result.data
-                );
-              } else if (result.status == 500) {
-                this.openNotificationWithIcon("error", "Error", result.error);
-              } else {
-                this.openNotificationWithIcon("error", "Error", result.data);
+        try {
+          for (const property in count) {
+            let result = await (
+              await this.uploadDocument(
+                count[property].type,
+                count[property].file
+              )
+            ).json();
+            index++;
+            upload_flag1++;
+            this.setState({
+              upload_flag: upload_flag1,
+            });
+            if (result) {
+              console.log("Result^^^^^^", result, size, index);
+              if (index == size + 1) {
+                if (result.status == 200) {
+                  this.openNotificationWithIcon(
+                    "success",
+                    "Success",
+                    result.data
+                  );
+                } else if (result.status == 500) {
+                  this.openNotificationWithIcon("error", "Error", result.error);
+                } else {
+                  this.openNotificationWithIcon("error", "Error", result.data);
+                }
               }
             }
+            if (index == size + 1) {
+              this.setState(
+                {
+                  UploadCounter: false,
+                },
+                () => {
+                  this.props.history.push("/editProfile");
+                }
+              );
+            }
           }
-          if (index == size + 1) {
-            this.setState(
-              {
-                UploadCounter: false,
-              },
-              () => {
-                this.props.history.push("/editProfile");
-              }
-            );
-          }
+        } catch (error) {
+          this.openNotificationWithIcon(
+            "error",
+            "Error",
+            "Please reupload you documents."
+          );
+          this.setState(
+            {
+              UploadCounter: false,
+            },
+            () => {
+              this.props.history.push("/tier4");
+            }
+          );
         }
       } else {
         Object.size = function (obj) {
@@ -888,51 +904,59 @@ class TierFour extends React.Component {
         this.setState({
           total_file_size: size,
         });
-        for (const property in count) {
-          console.log(`${property}: ${count[property].file}`);
-          console.log(`${property}: ${count[property].type}`);
-          let result = await (
-            await this.uploadDocument(index, count[property].file)
-          ).json();
-          if (result) {
-            console.log("Result^^^^^^", result, size, index);
-            if (index == size) {
-              if (result.status == 200) {
-                this.openNotificationWithIcon(
-                  "success",
-                  "Success",
-                  result.data
-                );
-              } else if (result.status == 500) {
-                this.openNotificationWithIcon("error", "Error", result.error);
-              } else {
-                this.openNotificationWithIcon("error", "Error", result.data);
+        try {
+          for (const property in count) {
+            console.log(`${property}: ${count[property].file}`);
+            console.log(`${property}: ${count[property].type}`);
+            let result = await (
+              await this.uploadDocument(index, count[property].file)
+            ).json();
+            if (result) {
+              console.log("Result^^^^^^", result, size, index);
+              if (index == size) {
+                if (result.status == 200) {
+                  this.openNotificationWithIcon(
+                    "success",
+                    "Success",
+                    result.data
+                  );
+                } else if (result.status == 500) {
+                  this.openNotificationWithIcon("error", "Error", result.error);
+                } else {
+                  this.openNotificationWithIcon("error", "Error", result.data);
+                }
               }
             }
+            if (index == size) {
+              this.setState(
+                {
+                  UploadCounter: false,
+                },
+                () => {
+                  this.props.history.push("/editProfile");
+                }
+              );
+            }
+            index++;
+            upload_flag1++;
+            this.setState({
+              upload_flag: upload_flag1,
+            });
           }
-          if (index == size) {
-            this.setState(
-              {
-                UploadCounter: false,
-              },
-              () => {
-                this.props.history.push("/editProfile");
-              }
-            );
-          }
-          // if (result) {
-          //   console.log("result tier4", result);
-          //   if (index == size) {
-          //     this.setState({
-          //       UploadCounter: false,
-          //     });
-          //   }
-          // }
-          index++;
-          upload_flag1++;
-          this.setState({
-            upload_flag: upload_flag1,
-          });
+        } catch (error) {
+          this.openNotificationWithIcon(
+            "error",
+            "Error",
+            "Please reupload your documents."
+          );
+          this.setState(
+            {
+              UploadCounter: false,
+            },
+            () => {
+              this.props.history.push("/tier4");
+            }
+          );
         }
       }
     } else {
