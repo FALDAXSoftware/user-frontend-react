@@ -200,7 +200,9 @@ class TierFour extends React.Component {
       } else if (result.status == 202) {
         this.setState({
           forceRejectStatus: true,
-          forceRejectNote: result.data.public_note,
+          forceRejectNote: result.data.public_note
+            ? result.data.public_note
+            : "",
         });
       } else if (result.status == 203) {
         this.setState({
@@ -216,7 +218,7 @@ class TierFour extends React.Component {
     }
   }
   populateData() {
-    if (this.state.tierData.length < 16) {
+    if (this.state.tierData.length < 16 && this.state.tierData.length > 0) {
       this.setState({
         reUploadFlag: true,
         reUpload1: true,
