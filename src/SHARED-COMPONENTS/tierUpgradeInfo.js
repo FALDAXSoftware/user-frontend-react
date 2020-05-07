@@ -40,19 +40,53 @@ class TierUpgradeInfo extends Component {
       visible: false,
       response1: "",
       response2: "",
-      //   data: {
-      //     requirement_1: {["test"="2","test2":3]}
-
-      //     ,
-      //     requirement_2: {
-      //       userWalletFiatRemaining: 18254.292680700004
-      //     }
-      //   }
+      ageCheck: false,
+      tradeCountCheck: false,
+      tradeTotalFiatCheck: false,
+      tradeWalletCheck: false,
+      minimumAccountAge: "",
+      minimumNumberOfTrades: "",
+      minimumTradeValue: "",
+      minimumWalletBalance: "",
     };
     // this.callback = this.callback.bind(this);
     // this.logout = this.logout.bind(this);
   }
+  componentWillReceiveProps(props) {
+    if (props) {
+      console.log("test props^^", props.userUpgradeData);
+      var requirement_1 = props.userUpgradeData.requirement_1;
+      var requirement_2 = props.userUpgradeData.requirement_2;
+      let temp1 = [];
+      for (var key in requirement_1) {
+        temp1[`${key}`] = requirement_1[key];
+      }
+      this.setState({ response1: temp1 });
+      let temp2 = [];
+      for (var key1 in requirement_2) {
+        temp2[`${key1}`] = requirement_2[key1];
+      }
+      this.setState({
+        response2: temp2,
+        ageCheck: props.userUpgradeData.req1_ageCheck,
+        tradeCountCheck: props.userUpgradeData.req1_tradeCountCheck,
+        tradeTotalFiatCheck: props.userUpgradeData.req1_tradeTotalFiatCheck,
+        tradeWalletCheck: props.userUpgradeData.req2_tradeWalletCheck,
+        minimumAccountAge: props.minimumAccountAge,
+        minimumNumberOfTrades: props.minimumNumberOfTrades
+          ? props.minimumNumberOfTrades
+          : "0",
+        minimumTradeValue: props.minimumTradeValue
+          ? props.minimumTradeValue
+          : "0",
+        minimumWalletBalance: props.minimumWalletBalance
+          ? props.minimumWalletBalance
+          : "0",
+      });
+    }
+  }
   componentDidMount() {
+    console.log("test^^", this.props.userUpgradeData);
     // var requirement_1 = this.props.userUpgradeData.requirement_1;
     // var requirement_2 = this.props.userUpgradeData.requirement_2;
     var requirement_1 = {
@@ -74,9 +108,29 @@ class TierUpgradeInfo extends Component {
     for (var key1 in requirement_2) {
       temp2[`${key1}`] = requirement_2[key1];
     }
-    this.setState({ response2: temp2 }, () => {
-      console.log("requireq1^^^", this.state.response2);
-    });
+    this.setState(
+      {
+        response2: temp2,
+        ageCheck: this.props.userUpgradeData.req1_ageCheck,
+        tradeCountCheck: this.props.userUpgradeData.req1_tradeCountCheck,
+        tradeTotalFiatCheck: this.props.userUpgradeData
+          .req1_tradeTotalFiatCheck,
+        tradeWalletCheck: this.props.userUpgradeData.req2_tradeWalletCheck,
+        minimumAccountAge: this.props.minimumAccountAge,
+        minimumNumberOfTrades: this.props.minimumNumberOfTrades
+          ? this.props.minimumNumberOfTrades
+          : "0",
+        minimumTradeValue: this.props.minimumTradeValue
+          ? this.props.minimumTradeValue
+          : "0",
+        minimumWalletBalance: this.props.minimumWalletBalance
+          ? this.props.minimumWalletBalance
+          : "0",
+      },
+      () => {
+        console.log("requireq1^^^", this.state.response2);
+      }
+    );
   }
   showCofirmModal = () => {
     this.setState({
@@ -111,7 +165,18 @@ class TierUpgradeInfo extends Component {
 
   render() {
     let { t } = this.props;
-    let { response1, response2 } = this.state;
+    let {
+      response1,
+      response2,
+      ageCheck,
+      tradeCountCheck,
+      tradeTotalFiatCheck,
+      tradeWalletCheck,
+      minimumAccountAge,
+      minimumNumberOfTrades,
+      minimumTradeValue,
+      minimumWalletBalance,
+    } = this.state;
     return (
       <div>
         {/* {this.props.visible && ( */}
@@ -150,22 +215,37 @@ class TierUpgradeInfo extends Component {
               <tbody>
                 <tr>
                   <td className="title">Minimum Account Age (Days)</td>
-                  <td>30</td>
-                  <td className="red">{response1.ageRemaining}</td>
+                  <td>{minimumAccountAge}</td>
+                  <td className={ageCheck ? "green" : "red"}>
+                    {response1.ageRemaining}
+                  </td>
                 </tr>
                 <tr>
                   <td className="title">Minimum Number of Trades</td>
-                  <td>100</td>
-                  <td className="green">{response1.tradeCountRemaining}</td>
+                  <td>{minimumNumberOfTrades}</td>
+                  <td className={tradeCountCheck ? "green" : "red"}>
+                    {response1.tradeCountRemaining}
+                  </td>
                 </tr>
                 <tr>
                   <td className="title">Minimum Total USD Value of Trades</td>
-                  <td>$5,000.00</td>
-                  <td className="red">
+                  <td>
                     <NumberFormat
-                      value={`${parseFloat(
+                      value={`${parseFloat(minimumTradeValue).toFixed(2)}`}
+                      displayType={"text"}
+                      thousandSeparator={true}
+                      prefix="$"
+                    />
+                  </td>
+                  <td className={tradeTotalFiatCheck ? "green" : "red"}>
+                    <NumberFormat
+                      value={
                         response1.tradeTotalFiatRemaining
-                      ).toFixed(2)}`}
+                          ? `${parseFloat(
+                              response1.tradeTotalFiatRemaining
+                            ).toFixed(2)}`
+                          : "0"
+                      }
                       displayType={"text"}
                       thousandSeparator={true}
                       prefix="$"
@@ -192,12 +272,23 @@ class TierUpgradeInfo extends Component {
               <tbody>
                 <tr>
                   <td className="title">Total Wallet USD value</td>
-                  <td>$10,000.00</td>
-                  <td className="red">
+                  <td>
                     <NumberFormat
-                      value={`${parseFloat(
+                      value={`${parseFloat(minimumWalletBalance).toFixed(2)}`}
+                      displayType={"text"}
+                      thousandSeparator={true}
+                      prefix="$"
+                    />
+                  </td>
+                  <td className={tradeWalletCheck ? "green" : "red"}>
+                    <NumberFormat
+                      value={
                         response2.userWalletFiatRemaining
-                      ).toFixed(2)}`}
+                          ? `${parseFloat(
+                              response2.userWalletFiatRemaining
+                            ).toFixed(2)}`
+                          : "0"
+                      }
                       displayType={"text"}
                       thousandSeparator={true}
                       prefix="$"

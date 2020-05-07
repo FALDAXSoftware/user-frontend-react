@@ -232,12 +232,30 @@ export const UpgradeTable = styled.table`
   width: 100%;
   font-family: "Open sans";
   border: 1px solid #c6dfff;
+  &.wallet-popup {
+    margin: 25px 0 0 0;
+    > thead {
+      > tr {
+        > th {
+          padding: 5px;
+        }
+      }
+    }
+    > tbody {
+      > tr {
+        > td {
+          padding: 5px;
+        }
+      }
+    }
+  }
   > thead {
     > tr {
       > th {
         font-size: 14px;
         font-weight: normal;
-        color: #a3a3a3;
+        color: ${(props) =>
+          props.theme.mode == "dark" ? "#617090" : "#a3a3a3"};
         padding: 10px;
         border: 1px solid #c6dfff;
         border-left: 0;
@@ -250,11 +268,17 @@ export const UpgradeTable = styled.table`
     }
   }
   > tbody {
+    > tr.limit_exceed {
+      > td.center {
+        text-align: center;
+      }
+    }
     > tr {
       > td {
         font-size: 14px;
         font-weight: 600;
-        color: #000000;
+        color: ${(props) =>
+          props.theme.mode == "dark" ? "#ffffff" : "#000000"};
         padding: 10px;
         border: 1px solid #c6dfff;
         border-left: 0;
