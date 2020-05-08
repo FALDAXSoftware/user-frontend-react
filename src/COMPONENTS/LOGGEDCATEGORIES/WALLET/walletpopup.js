@@ -670,6 +670,9 @@ class WalletPopup extends Component {
             disabled: true,
           });
         }
+        this.setState({
+          showDeatils: false,
+        });
       }
     });
   }
@@ -834,6 +837,7 @@ class WalletPopup extends Component {
         showTFAModal: false,
         disabled: true,
         networkFee: 0,
+        showDeatils: false,
       });
     } else {
       let subtotal = parseFloat(
@@ -870,13 +874,18 @@ class WalletPopup extends Component {
               await this.getFeeValues();
             }, 1500);
             // this.getAvailableBalance();
-          } else if (
-            this.state.sendFields.amount &&
-            this.state.sendFields.destination_address
-          ) {
-            this.validator.showMessages();
+          } else {
+            if (
+              this.state.sendFields.amount &&
+              this.state.sendFields.destination_address
+            ) {
+              this.validator.showMessages();
+              this.setState({
+                disabled: true,
+              });
+            }
             this.setState({
-              disabled: true,
+              showDeatils: false,
             });
           }
         }

@@ -194,14 +194,14 @@ class TierTwo extends React.Component {
     ) {
       this.props.history.push("/");
     }
-    if (
-      this.props.profileDetails.account_tier == 0 ||
-      this.props.profileDetails.account_tier == 2 ||
-      this.props.profileDetails.account_tier == 3 ||
-      this.props.profileDetails.account_tier == 4
-    ) {
-      this.props.history.push("/");
-    }
+    // if (
+    //   this.props.profileDetails.account_tier == 0 ||
+    //   this.props.profileDetails.account_tier == 2 ||
+    //   this.props.profileDetails.account_tier == 3 ||
+    //   this.props.profileDetails.account_tier == 4
+    // ) {
+    //   this.props.history.push("/");
+    // }
   }
   async componentDidMount() {
     try {
@@ -264,7 +264,25 @@ class TierTwo extends React.Component {
     }
   }
   populateData() {
-    console.log("^^^tierdata", this.state.tierData);
+    console.log("^^^tierdata", this.state.tierData, this.state.tierData.length);
+    if (this.state.tierData.length < 4 && this.state.tierData.length > 0) {
+      console.log("Tier length^^^^", this.state.tierData.length);
+      this.setState({
+        reUploadFlag: false,
+        reUpload1: true,
+        reUpload2: true,
+        reUpload3: true,
+        uploadBtnFlag: true,
+      });
+      let tierData = this.state.tierData;
+      tierData.map((tierDoc, index) => {
+        if (tierDoc.request_id) {
+          this.setState({
+            requestId: tierDoc.request_id,
+          });
+        }
+      });
+    }
     if (this.state.tierData.length > 0) {
       this.setState({
         reUploadFlag: true,
@@ -769,16 +787,17 @@ class TierTwo extends React.Component {
                           id="valid-id"
                           disabled={!this.state.reUpload1}
                         />
-                        {this.state.reUpload1 &&
-                          this.validator.message(
-                            "valid-id",
-                            this.state.profileImg,
-                            "required",
-                            "tier-text-danger-validation",
-                            {
-                              required: "This field is required.",
-                            }
-                          )}
+                        {this.state.reUpload1
+                          ? this.validator.message(
+                              "valid-id",
+                              this.state.profileImg,
+                              "required",
+                              "tier-text-danger-validation",
+                              {
+                                required: "This field is required.",
+                              }
+                            )
+                          : delete this.validator.fields["valid-id"]}
                         {/* <button
                           onClick={() => {
                             this.handleFileSelectClick("valid-id");
@@ -915,16 +934,17 @@ class TierTwo extends React.Component {
                           id="residence-proof"
                           disabled={!this.state.reUpload2}
                         />
-                        {this.state.reUpload2 &&
-                          this.validator.message(
-                            "residence-proof",
-                            this.state.profileImg2,
-                            "required",
-                            "tier-text-danger-validation",
-                            {
-                              required: "This field is required.",
-                            }
-                          )}
+                        {this.state.reUpload2
+                          ? this.validator.message(
+                              "residence-proof",
+                              this.state.profileImg2,
+                              "required",
+                              "tier-text-danger-validation",
+                              {
+                                required: "This field is required.",
+                              }
+                            )
+                          : delete this.validator.fields["residence-proof"]}
                       </TierUpload>
                       {this.state.tierData.length > 0 ? (
                         <TierDocBox>
@@ -982,16 +1002,20 @@ class TierTwo extends React.Component {
                           value={this.state.id_number}
                           onChange={this.input_change.bind(this)}
                         />
-                        {this.state.reUpload3 &&
-                          this.validator.message(
-                            "id_number",
-                            this.state.id_number,
-                            "required",
-                            "tier-text-danger-validation",
-                            {
-                              required: "This field is required.",
-                            }
-                          )}
+                        {this.state.reUpload3
+                          ? this.validator.message(
+                              "id_number",
+                              this.state.id_number,
+                              "required|alpha_num|min:4|max:20",
+                              "tier-text-danger-validation",
+                              {
+                                required: "This field is required.",
+                                // alphanum: "This field is required.",
+                                // min: "This field is required.",
+                                // max: "This field is required.",
+                              }
+                            )
+                          : delete this.validator.fields["id_number"]}
                       </TierUpload>
                       {this.state.tierData.length > 0 ? (
                         <TierDocBox>

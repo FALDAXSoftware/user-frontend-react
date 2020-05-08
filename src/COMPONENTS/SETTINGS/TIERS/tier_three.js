@@ -141,14 +141,14 @@ class TierThree extends React.Component {
     ) {
       this.props.history.push("/");
     }
-    if (
-      this.props.profileDetails.account_tier == 0 ||
-      this.props.profileDetails.account_tier == 1 ||
-      this.props.profileDetails.account_tier == 3 ||
-      this.props.profileDetails.account_tier == 4
-    ) {
-      this.props.history.push("/");
-    }
+    // if (
+    //   this.props.profileDetails.account_tier == 0 ||
+    //   this.props.profileDetails.account_tier == 1 ||
+    //   this.props.profileDetails.account_tier == 3 ||
+    //   this.props.profileDetails.account_tier == 4
+    // ) {
+    //   this.props.history.push("/");
+    // }
   }
   async componentDidMount() {
     try {
@@ -193,7 +193,28 @@ class TierThree extends React.Component {
     }
   }
   populateData() {
-    console.log("^^^tierdata", this.state.tierData.length);
+    if (this.state.tierData.length < 2 && this.state.tierData.length > 0) {
+      this.setState({
+        reUploadFlag: true,
+        reUpload1: true,
+        reUpload2: true,
+        uploadBtnFlag: true,
+      });
+      let tierData = this.state.tierData;
+      tierData.map((tierDoc, index) => {
+        // console.log("tierdoc^^^", tierDoc.type);
+        // let object = {};
+        // object[`reUpload${tierDoc.type}`] = false;
+        // this.setState({
+        //   ...object,
+        // });
+        if (tierDoc.request_id) {
+          this.setState({
+            requestId: tierDoc.request_id,
+          });
+        }
+      });
+    }
     if (this.state.tierData.length > 0) {
       this.setState({
         reUploadFlag: true,
@@ -490,6 +511,8 @@ class TierThree extends React.Component {
                 this.props.history.push("/editProfile");
               }
             );
+          } else if (responseData.status == 500) {
+            this.openNotificationWithIcon("error", "Error", responseData.error);
           }
           this.setState({
             loader: false,
@@ -670,16 +693,17 @@ class TierThree extends React.Component {
                           id="idcp-photo"
                           disabled={!this.state.reUpload1}
                         />
-                        {this.state.reUpload1 &&
-                          this.validator.message(
-                            "idcp-photo",
-                            this.state.profileImg,
-                            "required",
-                            "tier-text-danger-validation",
-                            {
-                              required: "This field is required.",
-                            }
-                          )}
+                        {this.state.reUpload1
+                          ? this.validator.message(
+                              "idcp-photo",
+                              this.state.profileImg,
+                              "required",
+                              "tier-text-danger-validation",
+                              {
+                                required: "This field is required.",
+                              }
+                            )
+                          : delete this.validator.fields["idcp-photo"]}
                       </TierUpload>
                       {this.state.tierData.length > 0 ? (
                         <TierDocBox>
@@ -823,13 +847,14 @@ class TierThree extends React.Component {
                         <SupportText className="tier_support_text">
                           Supported format: .doc, .docx, .pdf.
                         </SupportText>
-                        {this.state.reUpload2 &&
-                          this.validator.message(
-                            "asset_proof",
-                            cover_flag,
-                            "required",
-                            "tier-text-danger-validation"
-                          )}
+                        {this.state.reUpload2
+                          ? this.validator.message(
+                              "asset_proof",
+                              cover_flag,
+                              "required",
+                              "tier-text-danger-validation"
+                            )
+                          : delete this.validator.fields["asset_proof"]}
                       </TierUpload>
                       {this.state.tierData.length > 0 ? (
                         <TierDocBox>
