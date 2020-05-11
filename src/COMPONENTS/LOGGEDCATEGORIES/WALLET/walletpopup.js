@@ -19,6 +19,7 @@ import TFAModal from "SHARED-COMPONENTS/TFAModal";
 import { parse } from "@fortawesome/fontawesome-svg-core";
 import NumberFormat from "react-number-format";
 import { LogoutUser } from "../../../ACTIONS/authActions";
+import { UpgradeTable } from "STYLED-COMPONENTS/SHARED-STYLES/sharedStyle";
 
 let { API_URL } = globalVariables;
 const WalletModal = styled(Modal)`
@@ -58,7 +59,7 @@ const ModalWrap = styled.div`
   width: 100%;
   margin-left: auto;
   margin-right: auto;
-  padding-bottom: 60px;
+  padding-bottom: 50px;
 `;
 const TitleDiv = styled.div`
   background-color: #4c84ff;
@@ -76,7 +77,7 @@ const Title = styled.span`
   text-transform: uppercase;
 `;
 const Rediv = styled.div`
-  margin-top: 35px;
+  margin-top: 20px;
 `;
 const WallInput = styled(Input)`
   height: 48px;
@@ -145,14 +146,14 @@ const CopyToClipboardCSS = styled(CopyToClipboard)`
 `;
 const SendWrap = styled.div`
   text-align: center;
-  margin-top: 60px;
+  margin-top: 50px;
   display: block;
   @media (max-width: 767px) {
     padding-top: 20px;
   }
 `;
 const TotDiv = styled.div`
-  margin-top: 45px;
+  margin-top: 20px;
   width: 100%;
   // width: 462px;
   display: flex;
@@ -164,6 +165,7 @@ const TotDiv = styled.div`
     justify-content: flex-start;
     align-items: center;
     font-size: 16px;
+    font-family: "Open Sans";
     color: ${(props) => (props.theme.mode === "dark" ? "white" : "black")};
     > label {
       display: inherit;
@@ -243,6 +245,14 @@ class WalletPopup extends Component {
       withdrawFlag: false,
       availableBalance: "",
       withdrawMsg: this.t("withdraw_request_is_processed.message"),
+      limitExceeded: false,
+      dailyLimit: "",
+      monthlyLimit: "",
+      dailyLimitLeft: "",
+      monthlyLimitLeft: "",
+      dailyLimitAfter: "",
+      monthlyLimitAfter: "",
+      showDeatils: false,
     };
     this.timeout = null;
     this.validator = new SimpleReactValidator({
@@ -386,6 +396,7 @@ class WalletPopup extends Component {
     this.sendAddressChange = this.sendAddressChange.bind(this);
     this.getFeeValues = this.getFeeValues.bind(this);
     this.getAvailableBalance = this.getAvailableBalance.bind(this);
+    this.getTierLimits = this.getTierLimits.bind(this);
   }
 
   /* Life Cycle Methods */
@@ -393,6 +404,7 @@ class WalletPopup extends Component {
   componentDidMount() {
     // console.log(this.props);
     this.getAvailableBalance();
+    // this.getTierLimits();
     if (this.props.title === "RECEIVE") {
       this.setState({ loader: true });
       // console.log(this.props.coin_code)
@@ -434,34 +446,37 @@ class WalletPopup extends Component {
 
   // Get Availabel balance API
   getAvailableBalance() {
-    this.setState({
-      loader: true,
-    });
-    let coin = this.props.coin_code;
-    fetch(`${API_URL}/users/get-available-balance?coin=${coin}`, {
-      method: "get",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "Accept-Language": localStorage["i18nextLng"],
-        Authorization: "Bearer " + this.props.isLoggedIn,
-      },
-    })
-      .then((response) => response.json())
-      .then((responseData) => {
-        if (responseData.status === 200) {
-          // console.log("^^^", responseData);
-          this.setState({
-            availableBalance: parseFloat(responseData.data).toFixed(8),
-          });
-        } else {
-          this.openNotificationWithIcon("error", "Error", responseData.error);
-        }
-        this.setState({
-          loader: false,
-        });
+    return new Promise((resolve, reject) => {
+      this.setState({
+        loader: true,
+      });
+      let coin = this.props.coin_code;
+      fetch(`${API_URL}/users/get-available-balance?coin=${coin}`, {
+        method: "get",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Accept-Language": localStorage["i18nextLng"],
+          Authorization: "Bearer " + this.props.isLoggedIn,
+        },
       })
-      .catch((error) => {});
+        .then((response) => response.json())
+        .then((responseData) => {
+          if (responseData.status === 200) {
+            // console.log("^^^", responseData);
+            this.setState({
+              availableBalance: parseFloat(responseData.data).toFixed(8),
+            });
+          } else {
+            this.openNotificationWithIcon("error", "Error", responseData.error);
+          }
+          this.setState({
+            loader: false,
+          });
+          resolve();
+        })
+        .catch((error) => {});
+    });
   }
 
   /* 
@@ -474,7 +489,7 @@ class WalletPopup extends Component {
     // Copy to clipboard example
     document.querySelectorAll(
       ".ant-input-search-button"
-    )[0].onclick = function() {
+    )[0].onclick = function () {
       // Select the content
       if (document.querySelectorAll(".receive_add > input")[0]) {
         document.querySelectorAll(".receive_add > input")[0].select();
@@ -639,9 +654,10 @@ class WalletPopup extends Component {
     // fields["subtotal"] = subtotal;
     this.setState({ sendFields: fields, showTFAModal: false }, () => {
       if (this.state.sendFields.amount && this.validator.allValid()) {
-        this.timeout = setTimeout(() => {
-          this.getFeeValues();
-          this.getAvailableBalance();
+        this.timeout = setTimeout(async () => {
+          // await this.getAvailableBalance();
+          await this.getTierLimits();
+          await this.getFeeValues();
         }, 1500);
         // this.getAvailableBalance();
       } else {
@@ -654,63 +670,148 @@ class WalletPopup extends Component {
             disabled: true,
           });
         }
+        this.setState({
+          showDeatils: false,
+        });
       }
+    });
+  }
+  getTierLimits() {
+    return new Promise((resolve, reject) => {
+      this.setState({
+        loader: true,
+      });
+      var values = {
+        coin: this.props.coin_code,
+        amount: this.state.sendFields.amount,
+      };
+      fetch(`${API_URL}/users/check-transaction-limit`, {
+        method: "post",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Accept-Language": localStorage["i18nextLng"],
+          "Accept-Language": localStorage["i18nextLng"],
+          Authorization: "Bearer " + this.props.isLoggedIn,
+        },
+        body: JSON.stringify(values),
+      })
+        .then((response) => response.json())
+        .then((responseData) => {
+          if (responseData.status === 200) {
+            this.setState({
+              dailyLimit: responseData.data.daily_limit_actual,
+              monthlyLimit: responseData.data.monthly_limit_actual,
+              dailyLimitLeft: responseData.data.daily_limit_left,
+              monthlyLimitLeft: responseData.data.monthly_limit_left,
+              dailyLimitAfter:
+                responseData.data.current_limit_left_daily_amount,
+              monthlyLimitAfter:
+                responseData.data.current_limit_left_montly_amount,
+              limitExceeded: false,
+              showDeatils: true,
+            });
+          } else if (responseData.status === 201) {
+            // this.openNotificationWithIcon(
+            //   "warning",
+            //   "Warning",
+            //   responseData.message
+            // );
+            this.setState({
+              dailyLimit: responseData.data.daily_limit_actual,
+              monthlyLimit: responseData.data.monthly_limit_actual,
+              dailyLimitLeft: responseData.data.daily_limit_left,
+              monthlyLimitLeft: responseData.data.monthly_limit_left,
+              limitExceeded: true,
+              showDeatils: true,
+            });
+          } else if (responseData.status === 500) {
+            this.openNotificationWithIcon(
+              "error",
+              this.t("validations:error_text.message"),
+              responseData.err
+            );
+          } else {
+            this.openNotificationWithIcon(
+              "error",
+              this.t("validations:error_text.message"),
+              responseData.message
+            );
+          }
+          this.setState({
+            loader: false,
+          });
+          resolve();
+        })
+        .catch((error) => {});
     });
   }
   getFeeValues() {
     // console.log("test");
-    this.setState({
-      loader: true,
-    });
-    var fields = this.state.sendFields;
-    var values = {
-      coin: this.props.coin_code,
-      amount: this.state.sendFields.amount,
-      address: this.state.sendFields.destination_address,
-    };
-    fetch(`${API_URL}/wallet/get-network-fee`, {
-      method: "post",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "Accept-Language": localStorage["i18nextLng"],
-        "Accept-Language": localStorage["i18nextLng"],
-        Authorization: "Bearer " + this.props.isLoggedIn,
-      },
-      body: JSON.stringify(values),
-    })
-      .then((response) => response.json())
-      .then((responseData) => {
-        if (responseData.status === 200) {
-          // console.log(responseData);
-          let subtotal = parseFloat(
-            parseFloat(this.state.sendFields.subtotal) +
-              parseFloat(responseData.data)
-          ).toFixed(8);
-          fields["subtotal"] = subtotal;
-          this.setState({
-            networkFee: responseData.data,
-            disabled: false,
-            sendFields: fields,
-          });
-        } else if (responseData.status === 500) {
-          this.openNotificationWithIcon(
-            "error",
-            this.t("validations:error_text.message"),
-            responseData.err
-          );
-        } else {
-          this.openNotificationWithIcon(
-            "error",
-            this.t("validations:error_text.message"),
-            responseData.message
-          );
-        }
-        this.setState({
-          loader: false,
-        });
+    return new Promise((resolve, reject) => {
+      this.setState({
+        loader: true,
+      });
+      var fields = this.state.sendFields;
+      var values = {
+        coin: this.props.coin_code,
+        amount: this.state.sendFields.amount,
+        address: this.state.sendFields.destination_address,
+      };
+      fetch(`${API_URL}/wallet/get-network-fee`, {
+        method: "post",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Accept-Language": localStorage["i18nextLng"],
+          "Accept-Language": localStorage["i18nextLng"],
+          Authorization: "Bearer " + this.props.isLoggedIn,
+        },
+        body: JSON.stringify(values),
       })
-      .catch((error) => {});
+        .then((response) => response.json())
+        .then((responseData) => {
+          if (responseData.status === 200) {
+            // console.log(responseData);
+            let subtotal = parseFloat(
+              parseFloat(this.state.sendFields.subtotal) +
+                parseFloat(responseData.data)
+            ).toFixed(8);
+            fields["subtotal"] = subtotal;
+            this.setState({
+              networkFee: responseData.data,
+              // disabled: false,
+              sendFields: fields,
+            });
+            if (this.state.limitExceeded) {
+              this.setState({
+                disabled: true,
+              });
+            } else {
+              this.setState({
+                disabled: false,
+              });
+            }
+          } else if (responseData.status === 500) {
+            this.openNotificationWithIcon(
+              "error",
+              this.t("validations:error_text.message"),
+              responseData.err
+            );
+          } else {
+            this.openNotificationWithIcon(
+              "error",
+              this.t("validations:error_text.message"),
+              responseData.message
+            );
+          }
+          this.setState({
+            loader: false,
+          });
+          resolve();
+        })
+        .catch((error) => {});
+    });
   }
   sendChange(e) {
     if (this.state.loader) {
@@ -736,6 +837,7 @@ class WalletPopup extends Component {
         showTFAModal: false,
         disabled: true,
         networkFee: 0,
+        showDeatils: false,
       });
     } else {
       let subtotal = parseFloat(
@@ -766,18 +868,24 @@ class WalletPopup extends Component {
             this.state.sendFields.destination_address &&
             this.validator.allValid()
           ) {
-            this.timeout = setTimeout(() => {
-              this.getFeeValues();
-              this.getAvailableBalance();
+            this.timeout = setTimeout(async () => {
+              // await this.getAvailableBalance();
+              await this.getTierLimits();
+              await this.getFeeValues();
             }, 1500);
             // this.getAvailableBalance();
-          } else if (
-            this.state.sendFields.amount &&
-            this.state.sendFields.destination_address
-          ) {
-            this.validator.showMessages();
+          } else {
+            if (
+              this.state.sendFields.amount &&
+              this.state.sendFields.destination_address
+            ) {
+              this.validator.showMessages();
+              this.setState({
+                disabled: true,
+              });
+            }
             this.setState({
-              disabled: true,
+              showDeatils: false,
             });
           }
         }
@@ -795,7 +903,7 @@ class WalletPopup extends Component {
     let _this = this;
     _this.openNotificationWithIcon(
       "success",
-      this.t("validation:success_text.message"),
+      this.t("validations:success_text.message"),
       this.t("transaction_cancel.message")
     );
     _this.comingCancel();
@@ -803,6 +911,15 @@ class WalletPopup extends Component {
 
   render() {
     let amount = Number(this.state.sendFields.amount);
+    let {
+      dailyLimit,
+      monthlyLimit,
+      dailyLimitLeft,
+      monthlyLimitLeft,
+      dailyLimitAfter,
+      monthlyLimitAfter,
+      showDeatils,
+    } = this.state;
     return (
       <div>
         {(this.props.title === "RECEIVE" &&
@@ -893,7 +1010,6 @@ class WalletPopup extends Component {
                     onChange={this.sendAddressChange}
                     placeholder="37NFX8KWAQbaodUG6pE1hNUH1dXgkpzbyZ"
                   />
-                  {/* <Scan>Scan QR</Scan> */}
                   {this.validator.message(
                     "destination_address",
                     this.state.sendFields.destination_address,
@@ -903,7 +1019,6 @@ class WalletPopup extends Component {
                 </Rediv>
                 <Rediv>
                   <Label>{this.t("wallet:amount_text.message")}</Label>
-                  {/* <Sec_wrap> */}
                   <WallInput
                     type="text"
                     min="0"
@@ -922,17 +1037,6 @@ class WalletPopup extends Component {
                       numeric: this.t("validation_amount_numeric.message"),
                     }
                   )}
-                  {/*  <RightInput />
-                                    <ButtonToolbarS>
-                                        <DropdownButtonS title="USD" id="dropdown-size-medium">
-                                            <MenuItem eventKey="1">Action</MenuItem>
-                                            <MenuItem eventKey="2">Another action</MenuItem>
-                                            <MenuItem eventKey="3">Something else here</MenuItem>
-                                            <MenuItem eventKey="4">Separated link</MenuItem>
-                                        </DropdownButtonS>
-                                    </ButtonToolbarS> */}
-                  {/* </Sec_wrap> */}
-                  {/* {console.log("^^^", this.state.faldaxFee)} */}
                   <TotDiv className="available_balance">
                     <label>{this.t("avail_balance_to_send.message")}: </label>
                     <span>
@@ -942,71 +1046,184 @@ class WalletPopup extends Component {
                         thousandSeparator={true}
                       />{" "}
                       {this.props.coin_code}
-                      {/* {this.state.availableBalance} {this.props.coin_code} */}
                     </span>
                   </TotDiv>
-                  <TotDiv>
-                    <Fee>
-                      <span>
+                  {showDeatils ? (
+                    <TotDiv>
+                      <Fee>
                         <span>
-                          <b>
-                            FALDAX {this.t("conversion:fee_text.message")}{" "}
-                            {`(${this.props.coinFee}%)`}:{" "}
-                          </b>
-                          {/* {this.props.coinFee ? `${this.props.coinFee} %` : 0} */}
-                          {this.props.coinFee
-                            ? `${this.state.faldaxFee}${" "}${
-                                this.props.coin_code
-                              }`
-                            : 0}
+                          <span>
+                            <b>
+                              FALDAX {this.t("conversion:fee_text.message")}{" "}
+                              {`(${this.props.coinFee}%)`}:{" "}
+                            </b>
+                            {this.props.coinFee
+                              ? `${this.state.faldaxFee}${" "}${
+                                  this.props.coin_code
+                                }`
+                              : 0}
+                          </span>
                         </span>
-                      </span>
-                      <span>
                         <span>
-                          <b>
-                            {this.t("conversion:network_text.message")}{" "}
-                            {this.t("conversion:fee_text.message")}*:
-                          </b>
-                          {this.props.coinFee
-                            ? `${this.state.networkFee}${" "}${
-                                this.props.coin_code
-                              }`
-                            : 0}
+                          <span>
+                            <b>
+                              {this.t("conversion:network_text.message")}{" "}
+                              {this.t("conversion:fee_text.message")}*:
+                            </b>
+                            {this.props.coinFee
+                              ? `${this.state.networkFee}${" "}${
+                                  this.props.coin_code
+                                }`
+                              : 0}
+                          </span>
                         </span>
-                      </span>
-                      <span>
-                        {/* {this.props.fiatValue
+                        <span>
+                          {/* {this.props.fiatValue
                           ? `${this.props.fiatValue.toFixed(2)} USD`
                           : 0} */}
-                        {/* <span>
+                          {/* <span>
                           <b>Fiat Value: </b>
                           {this.state.fiatValue} USD
                         </span> */}
-                        <span>
-                          <b>{this.t("wallet_total_payout_text.message")}: </b>
-                          {`${this.state.sendFields.subtotal}
+                          <span>
+                            <b>
+                              {this.t("wallet_total_payout_text.message")}:{" "}
+                            </b>
+                            {`${this.state.sendFields.subtotal}
                           ${this.props.coin_code}`}
+                          </span>
                         </span>
-                      </span>
-                    </Fee>
-                    <TotPay>
-                      {/* <b>Total Payout:</b> {subtotal.toFixed(8)}{" "} */}
-                      {/* <span>
-                        <b>Total Payout: </b> {this.state.sendFields.subtotal}{" "}
-                        {this.props.coin_code}
-                      </span> */}
-                      <span>
-                        <b>
-                          {this.t(
-                            "settings:deactivate_popup_table_head_fiat_value.message"
-                          )}
-                          :{" "}
-                        </b>
-                        {this.state.fiatCurrency} {this.state.fiatValue}
-                      </span>
-                    </TotPay>
-                  </TotDiv>
+                      </Fee>
+                      <TotPay>
+                        <span>
+                          <b>
+                            {this.t(
+                              "settings:deactivate_popup_table_head_fiat_value.message"
+                            )}
+                            :{" "}
+                          </b>
+                          <NumberFormat
+                            value={
+                              this.state.fiatValue
+                                ? parseFloat(this.state.fiatValue).toFixed(2)
+                                : "0"
+                            }
+                            displayType={"text"}
+                            thousandSeparator={true}
+                            prefix="$"
+                          />
+                        </span>
+                      </TotPay>
+                    </TotDiv>
+                  ) : (
+                    ""
+                  )}
                 </Rediv>
+                {showDeatils ? (
+                  <UpgradeTable className="wallet-popup">
+                    <thead>
+                      <tr>
+                        <th></th>
+                        <th>Daily</th>
+                        <th>Monthly</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Tier Limit:</td>
+                        <td>
+                          <NumberFormat
+                            value={
+                              dailyLimit
+                                ? parseFloat(dailyLimit).toFixed(2)
+                                : "0"
+                            }
+                            displayType={"text"}
+                            thousandSeparator={true}
+                            prefix="$"
+                          />
+                        </td>
+                        <td>
+                          <NumberFormat
+                            value={
+                              monthlyLimit
+                                ? parseFloat(monthlyLimit).toFixed(2)
+                                : "0"
+                            }
+                            displayType={"text"}
+                            thousandSeparator={true}
+                            prefix="$"
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Available Limit:</td>
+                        <td>
+                          <NumberFormat
+                            value={
+                              dailyLimitLeft
+                                ? parseFloat(dailyLimitLeft).toFixed(2)
+                                : "0"
+                            }
+                            displayType={"text"}
+                            thousandSeparator={true}
+                            prefix="$"
+                          />
+                        </td>
+                        <td>
+                          <NumberFormat
+                            value={
+                              monthlyLimitLeft
+                                ? parseFloat(monthlyLimitLeft).toFixed(2)
+                                : "0"
+                            }
+                            displayType={"text"}
+                            thousandSeparator={true}
+                            prefix="$"
+                          />
+                        </td>
+                      </tr>
+                      {this.state.limitExceeded ? (
+                        <tr className="limit_exceed">
+                          <td>Limit after transfer:</td>
+                          <td className="center" colSpan="2">
+                            Limit Exceeded
+                          </td>
+                        </tr>
+                      ) : (
+                        <tr>
+                          <td>Limit after transfer:</td>
+                          <td>
+                            <NumberFormat
+                              value={
+                                dailyLimitAfter
+                                  ? parseFloat(dailyLimitAfter).toFixed(2)
+                                  : "0"
+                              }
+                              displayType={"text"}
+                              thousandSeparator={true}
+                              prefix="$"
+                            />
+                          </td>
+                          <td>
+                            <NumberFormat
+                              value={
+                                monthlyLimitAfter
+                                  ? parseFloat(monthlyLimitAfter).toFixed(2)
+                                  : "0"
+                              }
+                              displayType={"text"}
+                              thousandSeparator={true}
+                              prefix="$"
+                            />
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </UpgradeTable>
+                ) : (
+                  ""
+                )}
                 <SendWrap>
                   <SendButton
                     disabled={this.state.disabled}

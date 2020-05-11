@@ -75,6 +75,12 @@ export const TierSubHead = styled.span`
   line-height: 18px;
   padding: 20px 0;
 `;
+export const OrSpan = styled.span`
+  width: 100%;
+  font-weight: bold;
+  padding: 10px 0;
+  color: #000;
+`;
 export const TierUl = styled.ul`
   padding: 0;
   margin: 0;
@@ -83,7 +89,7 @@ export const TierUl = styled.ul`
   text-align: left;
   > li {
     padding: 5px 0;
-    font-size: 14px;
+    font-size: 15px;
     display: flex;
     > .icon-wrap {
       font-weight: bold;
@@ -94,11 +100,21 @@ export const TierUl = styled.ul`
       width: 25px;
     }
     > .text-wrap {
-      width: calc(100% - 25px);
+      width: 100%;
+      font-size: 14px;
       line-height: 18px;
       display: inline-flex;
       color: ${(props) =>
         props.theme.mode === "dark" ? "#ffffff" : "#333333"};
+      justify-content: space-between;
+      align-items: center;
+      > span:first-child {
+        font-weight: 500;
+        width: 78%;
+      }
+      > span:last-child {
+        font-weight: bold;
+      }
     }
   }
 `;
@@ -122,13 +138,13 @@ export const TierTable = styled.table`
     width: 50%;
     background: #e1e1e1;
     font-weight: 600;
-    font-size: 16px;
+    font-size: 14px;
     padding: 5px 0;
     color: #333333;
   }
   > tbody tr td {
     width: 50%;
-    font-size: 16px;
+    font-size: 14px;
     padding: 5px 0;
     font-weight: bold;
     color: #333333;
@@ -215,6 +231,14 @@ export const TierUpdate = styled.button`
     props.theme.mode === "dark" ? "#818d95" : "#333333"};
   border-radius: 30px;
   margin: 0 0 20px;
+  &:focus {
+    outline: none;
+  }
+  &.verified {
+    background: #33e321;
+    border-color: #33e321;
+    color: #fff;
+  }
 `;
 export const TierVerifiedWrap = styled.span`
   width: 100%;
@@ -597,10 +621,22 @@ export const TierDocBox = styled.div`
   display: flex;
   width: 33.33%;
   justify-content: flex-end;
+  flex-wrap: wrap;
   @media (max-width: 670px) {
     width: 100%;
     // margin: 0 0 20px 0;
     justify-content: center;
+  }
+  & .anticon.anticon-message {
+    display: flex;
+    align-self: center;
+    margin: 0 0 0 10px;
+    color: #f90f0f;
+    font-size: 18px;
+    font-weight: 600;
+  }
+  & .anticon.anticon-message:hover {
+    cursor: pointer;
   }
 `;
 export const TierDocStatus = styled.div`
@@ -798,4 +834,13 @@ export const TierDropWrap = styled.div`
     color: #fff;
     font-weight: bold;
   }
+`;
+export const RejectNote = styled.span`
+  display: inherit;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-end;
+  font-size: 14px;
+  margin: 0 0 5px 0;
+  text-align: right;
 `;

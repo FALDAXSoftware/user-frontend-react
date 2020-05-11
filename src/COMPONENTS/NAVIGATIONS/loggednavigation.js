@@ -26,7 +26,7 @@ import {
   _FALDAXWHITE,
   _WHITELOGO,
   _FALDAX,
-  _WALLPAPER
+  _WALLPAPER,
 } from "CONSTANTS/images";
 const { Header } = Layout;
 const API_URL = globalVariables.API_URL;
@@ -105,15 +105,15 @@ const Headermain = styled(Header)`
   width: 100%;
   padding: 0;
   text-align: left;
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#041422" : "white"};
-  box-shadow: ${props =>
+  box-shadow: ${(props) =>
     props.theme.mode === "dark" ? "" : "0px 3px #f7f7f7"};
   height: 80px;
   display: flex;
   align-items: center;
   & .color_important {
-    color: ${props =>
+    color: ${(props) =>
       props.theme.mode === "dark" ? "#fff !important" : "black !important"};
     @media (min-width: 2000px) {
       font-size: 20px;
@@ -135,7 +135,7 @@ const Menumain = styled(Menu)`
   text-align: right;
   border-bottom: 0px;
   vertical-align: middle;
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#041422" : "white"};
   @media (max-width: 1200px) {
     display: none;
@@ -148,7 +148,7 @@ const Menuitem = styled(Menu.Item)`
   padding: 0px 18px;
   font-size: 13px;
   font-family: "Open sans";
-  color: ${props => (props.theme.mode === "dark" ? "white" : "black")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "black")};
   font-weight: bold;
   text-transform: uppercase;
   vertical-align: unset;
@@ -293,7 +293,7 @@ const RightCol = styled.div`
     margin-left:auto;
 `;
 const NavLink = styled(Link)`
-  color: ${props =>
+  color: ${(props) =>
     props.theme.mode === "dark" ? "white" : "black"} !important;
   &:hover {
     color: #1890ff !important;
@@ -343,7 +343,7 @@ const Open = styled.span`
   font-size: 30px;
   cursor: pointer;
   margin-top: 10px;
-  color: ${props => (props.theme.mode === "dark" ? "white" : "black")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "black")};
   @media (max-width: 1200px) {
     display: inline-block;
     margin-right: 15px;
@@ -367,7 +367,7 @@ class LoggedNavigation extends Component {
       completeKYC: false,
       completeProfile: false,
       panicEnabled: false,
-      panic_status: false
+      panic_status: false,
       // langValue: this.props.language
     };
     // this.tradeAccess = this.tradeAccess.bind(this);
@@ -467,7 +467,7 @@ class LoggedNavigation extends Component {
   logout() {
     let formData = {
       user_id: this.props.profileDetails.id,
-      jwt_token: this.props.isLoggedIn
+      jwt_token: this.props.isLoggedIn,
     };
     this.props.LogoutUser(this.props.isLoggedIn, formData);
     //this.props.Logout();
@@ -487,7 +487,7 @@ class LoggedNavigation extends Component {
         It is called to open modal of Coming Soon.
     */
 
-  handleComing = e => {
+  handleComing = (e) => {
     this.setState({ comingSoon: false });
   };
 
@@ -496,13 +496,13 @@ class LoggedNavigation extends Component {
         It is called to open modal of Coming Soon.
     */
 
-  comingCancel = e => {
+  comingCancel = (e) => {
     this.setState({
       comingSoon: false,
       countryAccess: false,
       completeKYC: false,
       panicEnabled: false,
-      completeProfile: false
+      completeProfile: false,
     });
   };
 
@@ -522,12 +522,12 @@ class LoggedNavigation extends Component {
         headers: {
           Accept: "application/json",
           "Accept-Language": localStorage["i18nextLng"],
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(values)
+        body: JSON.stringify(values),
       })
-        .then(response => response.json())
-        .then(responseData => {
+        .then((response) => response.json())
+        .then((responseData) => {
           if (responseData.status === 500) {
             this.openNotification1();
           } else {
@@ -535,7 +535,7 @@ class LoggedNavigation extends Component {
             this.setState({ visible: false, email_msg: "" });
           }
         })
-        .catch(error => {
+        .catch((error) => {
           /* console.log(error) */
         });
     } else {
@@ -552,7 +552,7 @@ class LoggedNavigation extends Component {
 
   panicStatus() {
     this.setState({
-      loader: true
+      loader: true,
     });
     fetch(API_URL + `/check-panic-status`, {
       method: "get",
@@ -560,26 +560,26 @@ class LoggedNavigation extends Component {
         Accept: "application/json",
         "Content-Type": "application/json",
         "Accept-Language": localStorage["i18nextLng"],
-        Authorization: "Bearer " + this.props.isLoggedIn
-      }
+        Authorization: "Bearer " + this.props.isLoggedIn,
+      },
     })
-      .then(response => response.json())
-      .then(responseData => {
+      .then((response) => response.json())
+      .then((responseData) => {
         if (responseData.status === 200) {
           // console.log("responsedata 200", responseData.data);
           this.setState({
             panic_status: JSON.parse(responseData.data),
             // panic_status: true,
-            loader: false
+            loader: false,
           });
         } else {
           this.setState({
             panic_status: false,
-            loader: false
+            loader: false,
           });
         }
       })
-      .catch(error => {});
+      .catch((error) => {});
   }
   cryptoAccess() {
     if (this.state.panic_status === true) {
@@ -609,11 +609,15 @@ class LoggedNavigation extends Component {
     }
   }
   walletAccess() {
-    if (this.props.profileDetails.is_user_updated) {
-      if (this.props.location.pathname !== "/wallet")
-        this.props.history.push("/wallet");
+    if (this.props.isLoggedIn) {
+      if (this.props.profileDetails.is_user_updated) {
+        if (this.props.location.pathname !== "/wallet")
+          this.props.history.push("/wallet");
+      } else {
+        this.setState({ completeProfile: true });
+      }
     } else {
-      this.setState({ completeProfile: true });
+      this.props.history.push("/login");
     }
   }
   simplexAccess() {
@@ -634,7 +638,12 @@ class LoggedNavigation extends Component {
         // console.log("I am here", this.props.location.pathname);
         // this.props.history.push('/trade');
         if (this.props.location.pathname !== "/simplex")
-          this.props.history.push("/simplex");
+          this.props.history.push({
+            pathname: "/simplex",
+            state: {
+              flag: true,
+            },
+          });
       } else {
         if (
           this.props.profileDetails.is_allowed === false &&
@@ -727,7 +736,7 @@ class LoggedNavigation extends Component {
     const radioStyle = {
       display: "block",
       height: "30px",
-      lineHeight: "30px"
+      lineHeight: "30px",
     };
     const { t } = this.props;
     let prof_name =
@@ -925,8 +934,8 @@ class LoggedNavigation extends Component {
                 to={{
                   pathname: "/history",
                   state: {
-                    tradeType: "2"
-                  }
+                    tradeType: "2",
+                  },
                 }}
               >
                 {t("navbar_menu_history.message")}
@@ -1099,7 +1108,7 @@ class LoggedNavigation extends Component {
                       onClick={() =>
                         this.props.history.push({
                           pathname: "/history",
-                          tradeType: "2"
+                          tradeType: "2",
                         })
                       }
                     >
@@ -1111,7 +1120,7 @@ class LoggedNavigation extends Component {
                       onClick={() =>
                         this.props.history.push({
                           pathname: "/history",
-                          tradeType: "3"
+                          tradeType: "3",
                         })
                       }
                     >
@@ -1286,23 +1295,23 @@ class LoggedNavigation extends Component {
           </SideNav>
         </ReactSwipeEvents>
         <ComingSoon
-          comingCancel={e => this.comingCancel(e)}
+          comingCancel={(e) => this.comingCancel(e)}
           visible={this.state.comingSoon}
         />
         <CountryAccess
-          comingCancel={e => this.comingCancel(e)}
+          comingCancel={(e) => this.comingCancel(e)}
           visible={this.state.countryAccess}
         />
         <CompleteKYC
-          comingCancel={e => this.comingCancel(e)}
+          comingCancel={(e) => this.comingCancel(e)}
           visible={this.state.completeKYC}
         />
         <PanicEnabled
-          comingCancel={e => this.comingCancel(e)}
+          comingCancel={(e) => this.comingCancel(e)}
           visible={this.state.panicEnabled}
         />
         <CompleteProfile
-          comingCancel={e => this.comingCancel(e)}
+          comingCancel={(e) => this.comingCancel(e)}
           visible={this.state.completeProfile}
         />
       </Headermain>
@@ -1318,16 +1327,17 @@ function mapStateToProps(state) {
           ? state.simpleReducer.profileDetails.data[0]
           : ""
         : "",
+    isLoggedIn: state.simpleReducer.isLoggedIn,
     theme:
       state.themeReducer.theme !== undefined ? state.themeReducer.theme : "",
-    language: state.themeReducer.lang
+    language: state.themeReducer.lang,
   };
 }
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   // Logout: () => dispatch(Logout()),
   LogoutUser: (isLoggedIn, user_id) =>
     dispatch(LogoutUser(isLoggedIn, user_id)),
-  langAction: lang => dispatch(langAction(lang))
+  langAction: (lang) => dispatch(langAction(lang)),
 });
 
 export default translate([
@@ -1335,5 +1345,5 @@ export default translate([
   "footer",
   "general_1",
   "general_4",
-  "trade"
+  "trade",
 ])(connect(mapStateToProps, mapDispatchToProps)(withRouter(LoggedNavigation)));

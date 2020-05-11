@@ -40,7 +40,7 @@ export const MYWallet = styled.div`
   > span {
     font-size: 20px;
     font-family: "Open Sans";
-    color: ${props =>
+    color: ${(props) =>
       props.theme.mode === "dark" ? "white" : "rgb( 51, 51, 51 )"};
     font-weight: bold;
     text-transform: uppercase;
@@ -64,7 +64,7 @@ export const Total = styled.div`
 export const Tot = styled.span`
   font-size: 18px;
   font-family: "Open Sans";
-  color: ${props =>
+  color: ${(props) =>
     props.theme.mode === "dark" ? "#828a91" : "rgba( 80, 80, 80, 0.502 )"};
   font-weight: 600;
 `;
@@ -72,7 +72,7 @@ export const Money = styled.span`
   font-size: 36px;
   padding-left: 15px;
   font-family: "Open Sans";
-  color: ${props =>
+  color: ${(props) =>
     props.theme.mode === "dark" ? "white" : "rgb( 80, 80, 80 )"};
   font-weight: 600;
   @media (max-width: 767px) {
@@ -82,7 +82,7 @@ export const Money = styled.span`
 export const Currency = styled.span`
   font-size: 18px;
   font-family: "Open Sans";
-  color: ${props =>
+  color: ${(props) =>
     props.theme.mode === "dark" ? "white" : "rgb( 80, 80, 80 )"};
   font-weight: 600;
   padding-left: 10px;
@@ -102,7 +102,7 @@ export const Tableofcoin = styled(Table)`
   margin-top: 25px;
 `;
 export const Head = styled.tr`
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#061a2b" : "#f5f6fa"};
   font-size: 13px;
   font-family: "Open Sans";
@@ -113,8 +113,8 @@ export const Head = styled.tr`
   > th {
     text-align: left !important;
     vertical-align: middle !important;
-    padding-left: ${props => (props.wallet ? "" : "45px !important")};
-    text-align: ${props => (props.wallet ? "center" : "")};
+    padding-left: ${(props) => (props.wallet ? "" : "45px !important")};
+    text-align: ${(props) => (props.wallet ? "center" : "")};
   }
   @media (max-width: 1160px) {
     > th {
@@ -141,7 +141,7 @@ export const SubHead = styled.th`
   }
 `;
 export const Col1 = styled.tr`
-  height: ${props => (props.wallet ? "70px" : "90px")};
+  height: ${(props) => (props.wallet ? "70px" : "90px")};
   &.tableofcoinupper {
     td:first-child {
       text-align: left;
@@ -168,12 +168,12 @@ export const Col1 = styled.tr`
       }
     }
     vertical-align: middle !important;
-    padding-left: ${props => (props.wallet ? "" : "45px !important")};
-    text-align: ${props => (props.wallet ? "center" : "")};
-    font-size: ${props => (props.wallet ? "14px" : "")};
-    font-family: ${props => (props.wallet ? "Open Sans" : "")};
-    font-weight: ${props => (props.wallet ? "600" : "")};
-    color: ${props =>
+    padding-left: ${(props) => (props.wallet ? "" : "45px !important")};
+    text-align: ${(props) => (props.wallet ? "center" : "")};
+    font-size: ${(props) => (props.wallet ? "14px" : "")};
+    font-family: ${(props) => (props.wallet ? "Open Sans" : "")};
+    font-weight: ${(props) => (props.wallet ? "600" : "")};
+    color: ${(props) =>
       props.wallet
         ? props.theme.mode === "dark"
           ? "white"
@@ -219,7 +219,7 @@ export const Bit = styled.p`
 export const BitPrice = styled.p`
   font-size: 20px;
   font-family: "Open Sans";
-  color: ${props =>
+  color: ${(props) =>
     props.theme.mode === "dark" ? "white" : "rgb( 51, 51, 51 )"};
   font-weight: 600;
   text-transform: uppercase;
@@ -234,7 +234,7 @@ export const BitPrice = styled.p`
 export const Price = styled.p`
   font-size: 19.993px;
   font-family: "Open Sans";
-  color: ${props =>
+  color: ${(props) =>
     props.theme.mode === "dark" ? "white" : "rgba( 51, 51, 51, 0.702 )"};
   font-weight: 600;
   vertical-align: middle;
@@ -277,12 +277,12 @@ export const DetailWrap = styled.div`
 export const Address = styled.div`
   font-size: 13.995px;
   font-family: "Open Sans";
-  color: ${props =>
+  color: ${(props) =>
     props.theme.mode === "dark" ? "#68727a" : "rgba( 33, 33, 33, 0.502 )"};
   margin-left: 15px;
   word-break: break-all;
   > b {
-    color: ${props =>
+    color: ${(props) =>
       props.theme.mode === "dark"
         ? "white !important"
         : "rgba( 33, 33, 33, 0.502 )"};
@@ -319,7 +319,7 @@ export const BTCAmt = styled.span`
   font-family: "Open Sans";
   line-height: 1.2;
   word-break: break-all;
-  color: ${props =>
+  color: ${(props) =>
     props.theme.mode === "dark" ? "white" : "rgb( 80, 80, 80 )"};
   @media (max-width: 767px) {
     font-size: 40px;
@@ -329,7 +329,7 @@ export const BTC = styled.span`
   font-size: 34.89px;
   font-family: "Open Sans";
   word-break: break-word;
-  color: ${props =>
+  color: ${(props) =>
     props.theme.mode === "dark" ? "white" : "rgb( 80, 80, 80 )"};
   text-transform: uppercase;
   @media (max-width: 767px) {
@@ -374,12 +374,14 @@ export const SendButton = styled(Button)`
 `;
 export const DepButton = styled(SendButton)`
   margin-left: 20px;
+  text-transform: uppercase;
   @media (max-width: 427px) {
     margin-left: 0px;
   }
 `;
 export const WithButton = styled(SendButton)`
   margin-left: 20px;
+  text-transform: uppercase;
   @media (max-width: 427px) {
     margin-left: 0px;
   }
@@ -392,7 +394,7 @@ export const TransTable = styled.div`
 export const TransTitle = styled.p`
   font-size: 20px;
   font-family: "Open Sans";
-  color: ${props =>
+  color: ${(props) =>
     props.theme.mode === "dark" ? "white" : "rgb( 51, 51, 51 )"};
   padding-left: 25px;
   margin-top: 30px;
@@ -402,14 +404,14 @@ export const TransTitle = styled.p`
 export const WalletCoin = styled(SearchCoin)`
   margin-top: 0px;
   & .ant-select-selection--single {
-    background-color: ${props =>
+    background-color: ${(props) =>
       props.theme.mode === "dark" ? "#041421" : "white"};
   }
   & .ant-select-selection-selected-value {
-    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   }
   & .ant-select-arrow {
-    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   }
   & .select-display {
     width: 100%;
@@ -459,7 +461,7 @@ export const PendingWrap = styled.div`
 export const PendingPara = styled.div`
   margin-top: 20px;
   font-size: 20px;
-  color: ${props => (props.theme.mode == "dark" ? "white" : "#00000069")};
+  color: ${(props) => (props.theme.mode == "dark" ? "white" : "#00000069")};
   & p {
     margin-top: 20px;
   }

@@ -22,7 +22,7 @@ import {
   ConversionDropDown,
   DropDownOption,
   DropIcon,
-  ConversionSubmitBtn
+  ConversionSubmitBtn,
 } from "../../../STYLED-COMPONENTS/CONVERSION/style";
 import {
   SimRightCol,
@@ -31,7 +31,7 @@ import {
   SimHead,
   SimSubHead,
   SimLastRow,
-  SimTopHead
+  SimTopHead,
 } from "../../../STYLED-COMPONENTS/SIMPLEX/simplexStyle";
 import { LogoutUser } from "../../../ACTIONS/authActions";
 
@@ -57,7 +57,7 @@ class Simplex extends React.Component {
       coin_name: "",
       btnDisabled: true,
       is_kyc_done: "",
-      is_allowed: ""
+      is_allowed: "",
     };
     this.t = this.props.t;
     this.validator1 = new SimpleReactValidator({
@@ -70,7 +70,7 @@ class Simplex extends React.Component {
             return false;
           }
         },
-        required: true // optional
+        required: true, // optional
       },
       maxCurrencyValid: {
         message: this.t("validations:simplex_max_limit_error.message"),
@@ -81,7 +81,7 @@ class Simplex extends React.Component {
             return true;
           }
         },
-        required: true // optional
+        required: true, // optional
       },
       gtzero: {
         // name the rule
@@ -93,7 +93,7 @@ class Simplex extends React.Component {
             return false;
           }
         },
-        required: true // optional
+        required: true, // optional
       },
       // onlyNumber: {
       //   message: "Please enter valid number",
@@ -109,15 +109,15 @@ class Simplex extends React.Component {
       // },
       decimalrestrict2: {
         message: this.t("2_decimal_error.message"),
-        rule: val => {
+        rule: (val) => {
           var RE = /^\d*\.?\d{0,2}$/;
           if (RE.test(val)) {
             return true;
           } else {
             return false;
           }
-        }
-      }
+        },
+      },
     });
     this.timeout = null;
     // this.handleCurrencyGetChange = this.handleCurrencyGetChange.bind(this);
@@ -131,6 +131,13 @@ class Simplex extends React.Component {
   }
 
   componentWillMount() {
+    if (
+      this.props.location.state === undefined ||
+      this.props.location.state.flag === "" ||
+      this.props.location.state.flag === null
+    ) {
+      this.props.history.push("/conversion");
+    }
     // if (
     //   this.props.profileDetails.is_allowed === true &&
     //   this.props.profileDetails.is_kyc_done === 2
@@ -156,24 +163,24 @@ class Simplex extends React.Component {
 
   getCrypto() {
     this.setState({
-      loader: true
+      loader: true,
     });
     fetch(API_URL + `/get-simplex-coin-list`, {
       method: "get",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        "Accept-Language": localStorage["i18nextLng"], 
-        Authorization: "Bearer " + this.props.isLoggedIn
-      }
+        "Accept-Language": localStorage["i18nextLng"],
+        Authorization: "Bearer " + this.props.isLoggedIn,
+      },
     })
-      .then(response => response.json())
-      .then(responseData => {
+      .then((response) => response.json())
+      .then((responseData) => {
         if (responseData.status == 200) {
           // console.log("responsedata 200", responseData.object.coinList);
           this.setState({
             currencyList: responseData.object.fiat,
-            cryptoList: responseData.object.coinList
+            cryptoList: responseData.object.coinList,
           });
         } else if (responseData.status === 403) {
           let tempValue2 = {};
@@ -183,11 +190,11 @@ class Simplex extends React.Component {
         }
         this.setState({ loader: false });
       })
-      .catch(error => {});
+      .catch((error) => {});
   }
   calculateDigitalCurrency() {
     this.setState({
-      loader: true
+      loader: true,
     });
     if (
       this.state.currencyToPay === "" ||
@@ -196,7 +203,7 @@ class Simplex extends React.Component {
     ) {
       this.setState({
         loader: false,
-        currencyToGet: null
+        currencyToGet: null,
       });
       // this.validator1.showMessages();
     } else {
@@ -204,24 +211,24 @@ class Simplex extends React.Component {
         digital_currency: this.state.crypto,
         fiat_currency: this.state.currency,
         requested_currency: this.state.currency,
-        requested_amount: this.state.currencyToPay
+        requested_amount: this.state.currencyToPay,
       };
       fetch(`${API_URL}/get-qoute-details`, {
         method: "post",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          "Accept-Language": localStorage["i18nextLng"], 
-          Authorization: "Bearer " + this.props.isLoggedIn
+          "Accept-Language": localStorage["i18nextLng"],
+          Authorization: "Bearer " + this.props.isLoggedIn,
         },
-        body: JSON.stringify(values)
+        body: JSON.stringify(values),
       })
-        .then(response => response.json())
-        .then(responseData => {
+        .then((response) => response.json())
+        .then((responseData) => {
           if (responseData.status === 200) {
             if (responseData.data.error) {
               this.setState({
-                loader: false
+                loader: false,
               });
             } else {
               if (responseData.walletDetails === undefined) {
@@ -232,7 +239,7 @@ class Simplex extends React.Component {
                   crypto_code: responseData.coinDetails.coin_code,
                   wallet_address: "",
                   coin_name: "",
-                  btnDisabled: false
+                  btnDisabled: false,
                 });
               } else {
                 this.setState({
@@ -241,7 +248,7 @@ class Simplex extends React.Component {
                   quote_id: responseData.data.quote_id,
                   wallet_address: responseData.walletDetails.receive_address,
                   coin_name: responseData.coinDetails.coin_name,
-                  btnDisabled: false
+                  btnDisabled: false,
                 });
               }
             }
@@ -261,7 +268,7 @@ class Simplex extends React.Component {
             );
           }
         })
-        .catch(error => {});
+        .catch((error) => {});
     }
   }
   handleCurrencyPayChange(e) {
@@ -272,14 +279,14 @@ class Simplex extends React.Component {
     }
     this.setState(
       {
-        currencyToPay: e.target.value
+        currencyToPay: e.target.value,
       },
       () => {
         if (this.validator1.allValid()) {
           this.timeout = setTimeout(this.calculateDigitalCurrency, 1500);
         } else {
           this.setState({
-            currencyToGet: ""
+            currencyToGet: "",
           });
           this.validator1.showMessages();
           this.forceUpdate();
@@ -315,7 +322,7 @@ class Simplex extends React.Component {
   handleCurrencyChange(value) {
     this.setState(
       {
-        currency: value
+        currency: value,
       },
       () => {
         this.calculateDigitalCurrency();
@@ -325,7 +332,7 @@ class Simplex extends React.Component {
   handleCryptoChange(value) {
     this.setState(
       {
-        crypto: value
+        crypto: value,
       },
       () => {
         this.calculateDigitalCurrency();
@@ -345,8 +352,9 @@ class Simplex extends React.Component {
           currency: this.state.currency,
           wallet_address: this.state.wallet_address,
           crypto_code: this.state.crypto_code,
-          coin_name: this.state.coin_name
-        }
+          coin_name: this.state.coin_name,
+          flag: true,
+        },
       });
     } else {
       this.validator1.showMessages();
@@ -356,7 +364,7 @@ class Simplex extends React.Component {
   openNotificationWithIcon(type, head, desc) {
     notification[type]({
       message: head,
-      description: desc
+      description: desc,
     });
   }
   render() {
@@ -378,7 +386,7 @@ class Simplex extends React.Component {
                       type="text"
                       placeholder="0"
                       value={this.state.currencyToPay}
-                      onChange={e => {
+                      onChange={(e) => {
                         this.handleCurrencyPayChange(e);
                       }}
                     />
@@ -393,7 +401,7 @@ class Simplex extends React.Component {
                         ),
                         numeric: this.t(
                           "general_3:validation_amount_numeric.message"
-                        )
+                        ),
                       }
                     )}
                   </Col>
@@ -505,8 +513,9 @@ class Simplex extends React.Component {
     );
   }
 }
-const mapDispatchToProps = dispatch => ({
-  LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
+const mapDispatchToProps = (dispatch) => ({
+  LogoutUser: (isLoggedIn, user_id) =>
+    dispatch(LogoutUser(isLoggedIn, user_id)),
 });
 // export default Conversion;
 function mapStateToProps(state) {
@@ -519,7 +528,7 @@ function mapStateToProps(state) {
           : ""
         : "",
     theme:
-      state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
+      state.themeReducer.theme !== undefined ? state.themeReducer.theme : "",
     /* loader:state.simpleReducer.loader?state.simpleReducer.loader:false */
   };
 }

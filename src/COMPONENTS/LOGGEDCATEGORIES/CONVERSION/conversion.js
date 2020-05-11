@@ -16,7 +16,7 @@ import { translate } from "react-i18next";
 // Styled components
 import {
   ContactWrap,
-  GreyWrap
+  GreyWrap,
 } from "STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle";
 import {
   HeadStyle,
@@ -30,7 +30,7 @@ import {
   ColSubRow,
   ConIconWrap,
   ConArrowWrap,
-  TokComingSoon
+  TokComingSoon,
 } from "../../../STYLED-COMPONENTS/CONVERSION/style";
 import { APIUtility } from "../../../httpHelper";
 import { getProfileDataAction } from "../../../ACTIONS/SETTINGS/settingActions";
@@ -48,7 +48,7 @@ class Conversion extends React.Component {
       panicEnabled: false,
       panic_status: false,
       is_kyc_done: "",
-      is_allowed: ""
+      is_allowed: "",
       // showConversion: false
     };
     this.t = this.props.t;
@@ -85,14 +85,14 @@ class Conversion extends React.Component {
       if (result2.status == 200) {
         this.setState({
           is_allowed: result2.data.is_allowed,
-          is_kyc_done: result2.data.is_kyc_done
+          is_kyc_done: result2.data.is_kyc_done,
         });
       } else {
         // console.log("result2.data.is_allowed^^^", result2.data.is_allowed);
         // console.log("result2.data.is_allowed^^^", result2);
         this.setState({
           is_allowed: result2.data.is_allowed,
-          is_kyc_done: result2.data.is_kyc_done
+          is_kyc_done: result2.data.is_kyc_done,
         });
       }
     } catch (error) {
@@ -110,12 +110,12 @@ class Conversion extends React.Component {
       this.tokenAccess();
     }
   }
-  comingCancel = e => {
+  comingCancel = (e) => {
     this.setState({
       comingSoon: false,
       countryAccess: false,
       completeKYC: false,
-      panicEnabled: false
+      panicEnabled: false,
     });
   };
   cryptoAccess() {
@@ -145,7 +145,13 @@ class Conversion extends React.Component {
     } else {
       if (this.state.is_allowed === true && this.state.is_kyc_done === 2) {
         if (this.props.location.pathname !== "/simplex")
-          this.props.history.push("/simplex");
+          // this.props.history.push("/simplex");
+          this.props.history.push({
+            pathname: "/simplex",
+            state: {
+              flag: true,
+            },
+          });
       } else {
         if (this.state.is_allowed === false && this.state.is_kyc_done !== 2) {
           this.setState({ completeKYC: true });
@@ -373,19 +379,19 @@ class Conversion extends React.Component {
           </GreyWrap>
           <CommonFooter />
           <ComingSoon
-            comingCancel={e => this.comingCancel(e)}
+            comingCancel={(e) => this.comingCancel(e)}
             visible={this.state.comingSoon}
           />
           <CountryAccess
-            comingCancel={e => this.comingCancel(e)}
+            comingCancel={(e) => this.comingCancel(e)}
             visible={this.state.countryAccess}
           />
           <CompleteKYC
-            comingCancel={e => this.comingCancel(e)}
+            comingCancel={(e) => this.comingCancel(e)}
             visible={this.state.completeKYC}
           />
           <PanicEnabled
-            comingCancel={e => this.comingCancel(e)}
+            comingCancel={(e) => this.comingCancel(e)}
             visible={this.state.panicEnabled}
           />
           {this.state.loader === true ? <FaldaxLoader /> : ""}
@@ -406,11 +412,12 @@ function mapStateToProps(state) {
         : "",
     isLoggedIn: state.simpleReducer.isLoggedIn,
     theme:
-      state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
+      state.themeReducer.theme !== undefined ? state.themeReducer.theme : "",
   };
 }
-const mapDispatchToProps = dispatch => ({
-  getProfileDataAction: isLoggedIn => dispatch(getProfileDataAction(isLoggedIn))
+const mapDispatchToProps = (dispatch) => ({
+  getProfileDataAction: (isLoggedIn) =>
+    dispatch(getProfileDataAction(isLoggedIn)),
 });
 
 export default translate(["conversion", "header"])(
