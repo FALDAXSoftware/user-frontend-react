@@ -48,6 +48,7 @@ class TierUpgradeInfo extends Component {
       minimumNumberOfTrades: "",
       minimumTradeValue: "",
       minimumWalletBalance: "",
+      tier_id: "",
     };
     // this.callback = this.callback.bind(this);
     // this.logout = this.logout.bind(this);
@@ -82,6 +83,7 @@ class TierUpgradeInfo extends Component {
         minimumWalletBalance: props.minimumWalletBalance
           ? props.minimumWalletBalance
           : "0",
+        tier_id: props.tier_id,
       });
     }
   }
@@ -126,6 +128,7 @@ class TierUpgradeInfo extends Component {
         minimumWalletBalance: this.props.minimumWalletBalance
           ? this.props.minimumWalletBalance
           : "0",
+        tier_id: this.props.tier_id,
       },
       () => {
         console.log("requireq1^^^", this.state.response2);
@@ -176,6 +179,7 @@ class TierUpgradeInfo extends Component {
       minimumNumberOfTrades,
       minimumTradeValue,
       minimumWalletBalance,
+      tier_id,
     } = this.state;
     return (
       <div>
@@ -200,8 +204,8 @@ class TierUpgradeInfo extends Component {
         >
           <ModalAgreeWrap className="reject_reason_div">
             <p>
-              Before upgrading to Tier 2 account, Please fulfill any of the
-              below requirement set.
+              Before upgrading to Tier {tier_id} account, Please fulfill any of
+              the below requirement set.
             </p>
             {/* <h5>Requirement set 1</h5> */}
             <UpgradeTable>
@@ -260,7 +264,6 @@ class TierUpgradeInfo extends Component {
               </Link>
             </BtnLink>
             <SpanOr>Or</SpanOr>
-            {/* <h5>Requirement set 2</h5> */}
             <UpgradeTable>
               <thead>
                 <tr>
@@ -302,61 +305,6 @@ class TierUpgradeInfo extends Component {
                 <button>Add Funds to Wallet</button>
               </Link>
             </BtnLink>
-            {/* <TierUpgradeUl>
-              {response1.ageRemaining ? (
-                <li>
-                  <span>Account Age Remaining (Days):</span>
-                  <span>{response1.ageRemaining}</span>
-                </li>
-              ) : (
-                ""
-              )}
-              {response1.tradeCountRemaining ? (
-                <li>
-                  <span>Trade Count Remaining:</span>
-                  <span>{response1.tradeCountRemaining}</span>
-                </li>
-              ) : (
-                ""
-              )}
-              {response1.tradeTotalFiatRemaining ? (
-                <li>
-                  <span>Trade Total Fiat Remaining:</span>
-                  <span>
-                    <NumberFormat
-                      value={`${parseFloat(
-                        response1.tradeTotalFiatRemaining
-                      ).toFixed(2)}`}
-                      displayType={"text"}
-                      thousandSeparator={true}
-                      prefix="$"
-                    />
-                  </span>
-                </li>
-              ) : (
-                ""
-              )}
-            </TierUpgradeUl> */}
-            {/* <h5>Requirement set 2</h5>
-            <TierUpgradeUl>
-              {response2.userWalletFiatRemaining ? (
-                <li>
-                  <span>Total Wallet USD value:</span>
-                  <span>
-                    <NumberFormat
-                      value={`${parseFloat(
-                        response2.userWalletFiatRemaining
-                      ).toFixed(2)}`}
-                      displayType={"text"}
-                      thousandSeparator={true}
-                      prefix="$"
-                    />
-                  </span>
-                </li>
-              ) : (
-                ""
-              )}
-            </TierUpgradeUl> */}
           </ModalAgreeWrap>
         </Modal>
       </div>

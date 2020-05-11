@@ -173,6 +173,9 @@ const TotDiv = styled.div`
       justify-content: center;
       margin: 0;
     }
+    > label.red {
+      color: red;
+    }
     > span {
       margin: 0 0 0 10px;
       text-transform: uppercase;
@@ -253,6 +256,7 @@ class WalletPopup extends Component {
       dailyLimitAfter: "",
       monthlyLimitAfter: "",
       showDeatils: false,
+      limitUnlimited: false,
     };
     this.timeout = null;
     this.validator = new SimpleReactValidator({
@@ -725,6 +729,16 @@ class WalletPopup extends Component {
               limitExceeded: true,
               showDeatils: true,
             });
+          } else if (responseData.status === 202) {
+            this.setState({
+              dailyLimit: responseData.data.daily_limit_actual,
+              monthlyLimit: responseData.data.monthly_limit_actual,
+              dailyLimitLeft: responseData.data.daily_limit_left,
+              monthlyLimitLeft: responseData.data.monthly_limit_left,
+              limitUnlimited: true,
+              showDeatils: true,
+              limitExceeded: false,
+            });
           } else if (responseData.status === 500) {
             this.openNotificationWithIcon(
               "error",
@@ -1038,7 +1052,15 @@ class WalletPopup extends Component {
                     }
                   )}
                   <TotDiv className="available_balance">
-                    <label>{this.t("avail_balance_to_send.message")}: </label>
+                    <label
+                      className={
+                        parseFloat(this.state.availableBalance) == 0
+                          ? "red"
+                          : ""
+                      }
+                    >
+                      {this.t("avail_balance_to_send.message")}:{" "}
+                    </label>
                     <span>
                       <NumberFormat
                         value={this.state.availableBalance}
@@ -1132,55 +1154,71 @@ class WalletPopup extends Component {
                       <tr>
                         <td>Tier Limit:</td>
                         <td>
-                          <NumberFormat
-                            value={
-                              dailyLimit
-                                ? parseFloat(dailyLimit).toFixed(2)
-                                : "0"
-                            }
-                            displayType={"text"}
-                            thousandSeparator={true}
-                            prefix="$"
-                          />
+                          {this.state.limitUnlimited ? (
+                            dailyLimit
+                          ) : (
+                            <NumberFormat
+                              value={
+                                dailyLimit
+                                  ? parseFloat(dailyLimit).toFixed(2)
+                                  : "0"
+                              }
+                              displayType={"text"}
+                              thousandSeparator={true}
+                              prefix="$"
+                            />
+                          )}
                         </td>
                         <td>
-                          <NumberFormat
-                            value={
-                              monthlyLimit
-                                ? parseFloat(monthlyLimit).toFixed(2)
-                                : "0"
-                            }
-                            displayType={"text"}
-                            thousandSeparator={true}
-                            prefix="$"
-                          />
+                          {this.state.limitUnlimited ? (
+                            monthlyLimit
+                          ) : (
+                            <NumberFormat
+                              value={
+                                monthlyLimit
+                                  ? parseFloat(monthlyLimit).toFixed(2)
+                                  : "0"
+                              }
+                              displayType={"text"}
+                              thousandSeparator={true}
+                              prefix="$"
+                            />
+                          )}
                         </td>
                       </tr>
                       <tr>
                         <td>Available Limit:</td>
                         <td>
-                          <NumberFormat
-                            value={
-                              dailyLimitLeft
-                                ? parseFloat(dailyLimitLeft).toFixed(2)
-                                : "0"
-                            }
-                            displayType={"text"}
-                            thousandSeparator={true}
-                            prefix="$"
-                          />
+                          {this.state.limitUnlimited ? (
+                            dailyLimitLeft
+                          ) : (
+                            <NumberFormat
+                              value={
+                                dailyLimitLeft
+                                  ? parseFloat(dailyLimitLeft).toFixed(2)
+                                  : "0"
+                              }
+                              displayType={"text"}
+                              thousandSeparator={true}
+                              prefix="$"
+                            />
+                          )}
                         </td>
                         <td>
-                          <NumberFormat
-                            value={
-                              monthlyLimitLeft
-                                ? parseFloat(monthlyLimitLeft).toFixed(2)
-                                : "0"
-                            }
-                            displayType={"text"}
-                            thousandSeparator={true}
-                            prefix="$"
-                          />
+                          {this.state.limitUnlimited ? (
+                            monthlyLimitLeft
+                          ) : (
+                            <NumberFormat
+                              value={
+                                monthlyLimitLeft
+                                  ? parseFloat(monthlyLimitLeft).toFixed(2)
+                                  : "0"
+                              }
+                              displayType={"text"}
+                              thousandSeparator={true}
+                              prefix="$"
+                            />
+                          )}
                         </td>
                       </tr>
                       {this.state.limitExceeded ? (
@@ -1190,6 +1228,8 @@ class WalletPopup extends Component {
                             Limit Exceeded
                           </td>
                         </tr>
+                      ) : this.state.limitUnlimited ? (
+                        ""
                       ) : (
                         <tr>
                           <td>Limit after transfer:</td>

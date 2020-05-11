@@ -101,18 +101,46 @@ class Tier extends Component {
             responseData,
             this.state.tierData[id].minimum_activity_thresold.Account_Age
           );
-          this.setState({
-            userUpgradeData: responseData.data,
-            tierUpgradePopup: true,
-            minimumAccountAge: this.state.tierData[id].minimum_activity_thresold
-              .Account_Age,
-            minimumNumberOfTrades: this.state.tierData[id]
-              .minimum_activity_thresold.Minimum_Total_Transactions,
-            minimumTradeValue: this.state.tierData[id].minimum_activity_thresold
-              .Minimum_Total_Value_of_All_Transactions,
-            minimumWalletBalance: this.state.tierData[id].requirements_two
-              .Total_Wallet_Balance,
-          });
+          let id_value = parseInt(id) - 1;
+          this.setState(
+            {
+              userUpgradeData: responseData.data,
+              tierUpgradePopup: true,
+              minimumAccountAge: this.state.tierData[id_value]
+                .minimum_activity_thresold.Account_Age,
+              minimumNumberOfTrades: this.state.tierData[id_value]
+                .minimum_activity_thresold.Minimum_Total_Transactions,
+              minimumTradeValue: this.state.tierData[id_value]
+                .minimum_activity_thresold
+                .Minimum_Total_Value_of_All_Transactions,
+              minimumWalletBalance: this.state.tierData[id_value]
+                .requirements_two.Total_Wallet_Balance,
+              tier_id: id_value,
+            },
+            () => {
+              console.log(
+                "minimumAccountAge",
+                this.state.tierData[id_value],
+                this.state.tierData[id_value].minimum_activity_thresold
+                  .Account_Age
+              );
+              console.log(
+                "minimumNumberOfTrades",
+                this.state.tierData[id_value].minimum_activity_thresold
+                  .Minimum_Total_Transactions
+              );
+              console.log(
+                "minimumTradeValue",
+                this.state.tierData[id_value].minimum_activity_thresold
+                  .Minimum_Total_Value_of_All_Transactions
+              );
+              console.log(
+                "minimumWalletBalance",
+                this.state.tierData[id_value].requirements_two
+                  .Total_Wallet_Balance
+              );
+            }
+          );
         } else {
           this.openNotificationWithIcon("error", "Error", responseData.err);
         }
