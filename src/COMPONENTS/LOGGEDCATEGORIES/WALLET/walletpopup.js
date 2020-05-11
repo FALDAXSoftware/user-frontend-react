@@ -173,7 +173,7 @@ const TotDiv = styled.div`
       justify-content: center;
       margin: 0;
     }
-    > label.red {
+    > span.red {
       color: red;
     }
     > span {
@@ -1052,16 +1052,14 @@ class WalletPopup extends Component {
                     }
                   )}
                   <TotDiv className="available_balance">
-                    <label
+                    <label>{this.t("avail_balance_to_send.message")}: </label>
+                    <span
                       className={
                         parseFloat(this.state.availableBalance) == 0
                           ? "red"
                           : ""
                       }
                     >
-                      {this.t("avail_balance_to_send.message")}:{" "}
-                    </label>
-                    <span>
                       <NumberFormat
                         value={this.state.availableBalance}
                         displayType={"text"}
@@ -1266,7 +1264,13 @@ class WalletPopup extends Component {
                 )}
                 <SendWrap>
                   <SendButton
-                    disabled={this.state.disabled}
+                    disabled={
+                      this.state.disabled
+                        ? true
+                        : parseFloat(this.state.availableBalance) == 0
+                        ? true
+                        : ""
+                    }
                     onClick={this.sendSubmit}
                   >{`${this.t("wallet:send_btn.message")} ${
                     this.props.coin_code

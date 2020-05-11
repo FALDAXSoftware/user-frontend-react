@@ -48,7 +48,7 @@ class TierUpgradeInfo extends Component {
       minimumNumberOfTrades: "",
       minimumTradeValue: "",
       minimumWalletBalance: "",
-      tier_id: "",
+      tierId: "",
     };
     // this.callback = this.callback.bind(this);
     // this.logout = this.logout.bind(this);
@@ -83,8 +83,9 @@ class TierUpgradeInfo extends Component {
         minimumWalletBalance: props.minimumWalletBalance
           ? props.minimumWalletBalance
           : "0",
-        tier_id: props.tier_id,
+        tierId: props.current_tier_id,
       });
+      console.log("sdafsdf", props.current_tier_id);
     }
   }
   componentDidMount() {
@@ -128,10 +129,10 @@ class TierUpgradeInfo extends Component {
         minimumWalletBalance: this.props.minimumWalletBalance
           ? this.props.minimumWalletBalance
           : "0",
-        tier_id: this.props.tier_id,
+        tierId: this.props.current_tier_id,
       },
       () => {
-        console.log("requireq1^^^", this.state.response2);
+        console.log("requireq1^^^", this.props.current_tier_id);
       }
     );
   }
@@ -167,6 +168,7 @@ class TierUpgradeInfo extends Component {
   };
 
   render() {
+    console.log("sfhdjkf", this.state.tierId);
     let { t } = this.props;
     let {
       response1,
@@ -179,7 +181,7 @@ class TierUpgradeInfo extends Component {
       minimumNumberOfTrades,
       minimumTradeValue,
       minimumWalletBalance,
-      tier_id,
+      tierId,
     } = this.state;
     return (
       <div>
@@ -204,7 +206,7 @@ class TierUpgradeInfo extends Component {
         >
           <ModalAgreeWrap className="reject_reason_div">
             <p>
-              Before upgrading to Tier {tier_id} account, Please fulfill any of
+              Before upgrading to Tier {tierId} account, Please fulfill any of
               the below requirement set.
             </p>
             {/* <h5>Requirement set 1</h5> */}

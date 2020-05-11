@@ -40,6 +40,7 @@ class Tier extends Component {
       minimumNumberOfTrades: "",
       minimumTradeValue: "",
       minimumWalletBalance: "",
+      current_tier_id: "",
     };
     self = this;
   }
@@ -115,30 +116,10 @@ class Tier extends Component {
                 .Minimum_Total_Value_of_All_Transactions,
               minimumWalletBalance: this.state.tierData[id_value]
                 .requirements_two.Total_Wallet_Balance,
-              tier_id: id_value,
+              current_tier_id: id,
             },
             () => {
-              console.log(
-                "minimumAccountAge",
-                this.state.tierData[id_value],
-                this.state.tierData[id_value].minimum_activity_thresold
-                  .Account_Age
-              );
-              console.log(
-                "minimumNumberOfTrades",
-                this.state.tierData[id_value].minimum_activity_thresold
-                  .Minimum_Total_Transactions
-              );
-              console.log(
-                "minimumTradeValue",
-                this.state.tierData[id_value].minimum_activity_thresold
-                  .Minimum_Total_Value_of_All_Transactions
-              );
-              console.log(
-                "minimumWalletBalance",
-                this.state.tierData[id_value].requirements_two
-                  .Total_Wallet_Balance
-              );
+              console.log("minimumAccountAge", this.state.current_tier_id);
             }
           );
         } else {
@@ -393,6 +374,7 @@ class Tier extends Component {
             minimumNumberOfTrades={this.state.minimumNumberOfTrades}
             minimumTradeValue={this.state.minimumTradeValue}
             minimumWalletBalance={this.state.minimumWalletBalance}
+            current_tier_id={this.state.current_tier_id}
             comingCancel={(e) => this.comingCancel(e)}
           />
         </TierMainWrap>
