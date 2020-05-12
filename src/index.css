@@ -1429,3 +1429,7 @@ div.scrollbar>div:nth-child(3)>div{
 .selectedIns{
   background-color: #1890ff21;
 }
+#depthChartContainer{
+  width: 95%;
+  height: 100%;
+}

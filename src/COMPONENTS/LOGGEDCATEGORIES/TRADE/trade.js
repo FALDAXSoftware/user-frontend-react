@@ -69,6 +69,7 @@ import {
   SelectMonth,
   SettingDropdown,
 } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
+import DepthChartAm from "./depth_ammchart";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 const originalLayouts = getFromLS("layouts") || {};
@@ -317,16 +318,37 @@ class Trade extends Component {
         this.orderSocket(this.state.timePeriod, this.state.status);
       });
       this.orderSocket(this.state.timePeriod, this.state.status);
-      this.props.io.on("instrument-data", (data) => {
-        console.log("instrument-data^^^", data);
-        this.updateInstrumentsData(data);
-      });
+      this.getInstrumentData();
+      setInterval(() => {
+        this.getInstrumentData();
+      }, 10000);
+      // this.props.io.on("instrument-data", (data) => {
+      //   console.log("instrument-data^^^", data);
+      //   this.updateInstrumentsData(data);
+      // });
       this.props.io.on("user-wallet-balance", (data) => {
         console.log("^^^^userdata", data);
         this.setState({ userBal: data, userBalLoader: false });
       });
     }
   }
+  getInstrumentData = () => {
+    fetch(SOCKET_HOST + `/api/v1/tradding/get-instrument-data`, {
+      method: "get",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Accept-Language": localStorage["i18nextLng"]
+      }
+    })
+      .then(response => response.json())
+      .then(responseData => {
+        if (responseData.status == 200) {
+          this.updateInstrumentsData(responseData.data);
+        }
+      })
+      .catch(error => { });
+  };
   joinRoom = (prevRoom = null) => {
     console.log("joinRoom^^", this.state, prevRoom);
     io.emit(
@@ -433,6 +455,7 @@ class Trade extends Component {
         price: parseFloat(element.last_price).toFixed(5),
         volume: parseFloat(element.volume).toFixed(3),
         change: parseFloat(element.percentChange).toFixed(5),
+        pairName: element.name
       });
     }
     console.log("instruments -----", res);
@@ -612,9 +635,9 @@ class Trade extends Component {
   //
 
   currencyPair(crypto) {
-    this.setState({
-      insLoader: true,
-    });
+    // this.setState({
+    //   insLoader: true,
+    // });
     let cryptoPair = {
       crypto: crypto,
       currency: this.state.InsCurrency,
@@ -1235,7 +1258,7 @@ class Trade extends Component {
     const columns = [
       {
         title: `${this.t("referral:referral_table_head_name.message")}`,
-        dataIndex: "name",
+        dataIndex: "pairName",
         className: "tblInsName",
         sorter: (a, b, sortOrder) => {
           var nameA = a.name.toUpperCase(); // ignore upper and lowercase
@@ -1247,6 +1270,7 @@ class Trade extends Component {
             return 1;
           }
         },
+        render: (text) => (text.replace("-", "/"))
       },
       {
         title: `${this.t("history:price_text.message")}`,
@@ -1353,7 +1377,7 @@ class Trade extends Component {
                       <TVBar>
                         <div>
                           <span>
-                            {this.state.crypto}-{this.state.currency}
+                            {this.state.crypto}/{this.state.currency}
                           </span>
                         </div>
                         <div
@@ -1527,12 +1551,18 @@ class Trade extends Component {
                         ""
                       )}
                     <RightDiv>
-                      <DepthChart
+                      {/* <DepthChart
                         crypto={this.state.crypto}
                         currency={this.state.currency}
                         depthLoaderFunc={(loader) =>
                           this.depthLoaderFunc(loader)
                         }
+                        io={this.props.io}
+                        height={this.state.depthChartHeight}
+                      /> */}
+                      <DepthChartAm
+                        crypto={this.state.crypto}
+                        currency={this.state.currency}
                         io={this.props.io}
                         height={this.state.depthChartHeight}
                       />
