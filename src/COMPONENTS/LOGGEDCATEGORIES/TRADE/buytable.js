@@ -282,7 +282,7 @@ class BuyTABLE extends Component {
         <TotalBTC>
           {this.t("conversion:total_text.message")}:{" "}
           {this.state.lastsum && parseFloat(this.state.lastsum).toFixed(8)}{" "}
-          {this.state.currency}
+          {this.props.currency}
         </TotalBTC>
         <BuyTable>
           <HistoryWrap1>
@@ -292,9 +292,9 @@ class BuyTABLE extends Component {
                   <thead>
                     <tr>
                       {/* <th>{this.t("my_size_text.message")}</th> */}
-                      <th>{this.t("wallet:amount_text.message")} ({this.state.crypto})</th>
-                      <th>{this.t("bid_text.message")} ({this.state.currency})</th>
-                      <th>{this.t("conversion:total_text.message")} ({this.state.currency})</th>
+                      <th>{this.t("wallet:amount_text.message")} ({this.props.crypto})</th>
+                      <th>{this.t("bid_text.message")} ({this.props.currency})</th>
+                      <th>{this.t("conversion:total_text.message")} ({this.props.currency})</th>
                     </tr>
                   </thead>
                 </TableHeader>
