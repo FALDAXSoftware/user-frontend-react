@@ -165,13 +165,6 @@ class Tier extends Component {
                         </TierSubHead>
                         <TierUl>
                           <li>
-                            {/* <span className="icon-wrap">
-                              {tier.minimum_activity_thresold ? (
-                                <Icon type="check" />
-                              ) : (
-                                ""
-                              )}
-                            </span> */}
                             {tier.minimum_activity_thresold ? (
                               <span className="text-wrap">
                                 <span>Minimum Account Age (Days):</span>
@@ -184,13 +177,6 @@ class Tier extends Component {
                             )}
                           </li>
                           <li>
-                            {/* <span className="icon-wrap">
-                              {tier.minimum_activity_thresold ? (
-                                <Icon type="check" />
-                              ) : (
-                                ""
-                              )}
-                            </span> */}
                             {tier.minimum_activity_thresold ? (
                               <span className="text-wrap">
                                 <span>Minimum Number of Trades:</span>
@@ -206,13 +192,6 @@ class Tier extends Component {
                             )}
                           </li>
                           <li>
-                            {/* <span className="icon-wrap">
-                              {tier.minimum_activity_thresold ? (
-                                <Icon type="check" />
-                              ) : (
-                                ""
-                              )}
-                            </span> */}
                             {tier.minimum_activity_thresold ? (
                               <span className="text-wrap">
                                 <span>Minimum Total USD Value of Trades: </span>
@@ -230,17 +209,22 @@ class Tier extends Component {
                               ""
                             )}
                           </li>
+                          <li>
+                            <span class="text-wrap">
+                              <span>Deposit Cryptocurrencies:</span>
+                              <span>Unlimited</span>
+                            </span>
+                          </li>
+                          <li>
+                            <span class="text-wrap">
+                              <span>Trade:</span>
+                              <span>Unlimited</span>
+                            </span>
+                          </li>
                         </TierUl>
                         <OrSpan>OR</OrSpan>
                         <TierUl>
                           <li>
-                            {/* <span className="icon-wrap">
-                              {tier.requirements_two ? (
-                                <Icon type="check" />
-                              ) : (
-                                ""
-                              )}
-                            </span> */}
                             {tier.requirements_two ? (
                               <span className="text-wrap">
                                 <span>Total Wallet Balance: </span>

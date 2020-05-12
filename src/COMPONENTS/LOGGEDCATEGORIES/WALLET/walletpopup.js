@@ -660,7 +660,7 @@ class WalletPopup extends Component {
       if (this.state.sendFields.amount && this.validator.allValid()) {
         this.timeout = setTimeout(async () => {
           // await this.getAvailableBalance();
-          await this.getTierLimits();
+          // await this.getTierLimits();
           await this.getFeeValues();
         }, 1500);
         // this.getAvailableBalance();
@@ -687,7 +687,8 @@ class WalletPopup extends Component {
       });
       var values = {
         coin: this.props.coin_code,
-        amount: this.state.sendFields.amount,
+        // amount: this.state.sendFields.amount,
+        amount: this.state.sendFields.subtotal,
       };
       fetch(`${API_URL}/users/check-transaction-limit`, {
         method: "post",
@@ -819,9 +820,11 @@ class WalletPopup extends Component {
               responseData.message
             );
           }
-          this.setState({
-            loader: false,
-          });
+          // code here for getting limits
+          this.getTierLimits();
+          // this.setState({
+          //   loader: false,
+          // });
           resolve();
         })
         .catch((error) => {});
@@ -884,7 +887,7 @@ class WalletPopup extends Component {
           ) {
             this.timeout = setTimeout(async () => {
               // await this.getAvailableBalance();
-              await this.getTierLimits();
+              // await this.getTierLimits();
               await this.getFeeValues();
             }, 1500);
             // this.getAvailableBalance();
