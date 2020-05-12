@@ -333,7 +333,7 @@ class Trade extends Component {
     }
   }
   getInstrumentData = () => {
-    fetch(SOCKET_HOST + `api/v1/tradding/get-instrument-data`, {
+    fetch(SOCKET_HOST + `/api/v1/tradding/get-instrument-data`, {
       method: "get",
       headers: {
         Accept: "application/json",
