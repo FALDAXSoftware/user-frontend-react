@@ -243,7 +243,7 @@ class Tier extends Component {
                           </li>
                         </TierUl>
                         <TierWithdrawalHead className="withdrawal">
-                          Withdrawl Limits Orders
+                          Withdrawal Limits Orders
                         </TierWithdrawalHead>
                         <TierTable>
                           <thead>
