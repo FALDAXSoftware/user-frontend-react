@@ -288,7 +288,7 @@ class SellTable extends Component {
         <TotalBTC>
           {this.t("conversion:total_text.message")}:{" "}
           {this.state.lastsum && parseFloat(this.state.lastsum).toFixed(8)}{" "}
-          {this.state.crypto}
+          {this.props.crypto}
         </TotalBTC>
         <BuyTable>
           <HistoryWrap1>
@@ -298,9 +298,9 @@ class SellTable extends Component {
                   <thead>
                     <tr>
                       {/* <th>{this.t("my_size_text.message")}</th> */}
-                      <th>{this.t("wallet:amount_text.message")}</th>
-                      <th>{this.t("ask_text.message")}</th>
-                      <th>{this.t("conversion:total_text.message")}</th>
+                      <th>{this.t("wallet:amount_text.message")} ({this.props.crypto})</th>
+                      <th>{this.t("ask_text.message")} ({this.props.currency})</th>
+                      <th>{this.t("conversion:total_text.message")} ({this.props.currency})</th>
                     </tr>
                   </thead>
                 </TableHeader>
@@ -333,8 +333,8 @@ class SellTable extends Component {
                           );
                         })
                       ) : (
-                        <NDF>{this.t("wallet:no_data_found_text.message")}</NDF>
-                      )}
+                          <NDF>{this.t("wallet:no_data_found_text.message")}</NDF>
+                        )}
                     </tbody>
                   </TableContent>
                 </Scrollbars>
@@ -347,8 +347,8 @@ class SellTable extends Component {
             <Spin size="small" />
           </SpinSingle>
         ) : (
-          ""
-        )}
+            ""
+          )}
       </div>
     );
   }
