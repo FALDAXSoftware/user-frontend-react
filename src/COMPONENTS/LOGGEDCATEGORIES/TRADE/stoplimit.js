@@ -145,7 +145,7 @@ class StopLimit extends Component {
       sellEstPrice: 0,
       sellPayAmt: 0,
       buyPayAmt: 0,
-      fiatCurrency: "$",
+      fiatCurrency: "USD",
       // fiatCryptoValue: this.props.userBal.cryptoFiat,
       // fiatCurrencyValue: this.props.userBal.currencyFiat,
       singlefiatCryptoValue: this.props.userBal.cryptoFiat,
@@ -247,7 +247,7 @@ class StopLimit extends Component {
             if (value > 0 && name === "amount") {
               let fiatValue =
                 parseFloat(this.state.singlefiatCurrencyValue) *
-                parseFloat(value).toFixed(8);
+                parseFloat(obj["total"]).toFixed(8);
               this.setState({
                 fiatCurrencyValue: fiatValue,
               });
@@ -260,7 +260,7 @@ class StopLimit extends Component {
             if (value > 0 && name === "amount") {
               let fiatValue =
                 parseFloat(this.state.singlefiatCurrencyValue) *
-                parseFloat(value).toFixed(8);
+                parseFloat(obj["total"]).toFixed(8);
               this.setState({
                 fiatCurrencyValue: fiatValue,
               });
@@ -800,8 +800,7 @@ class StopLimit extends Component {
                     )}
                   </WillpayBelow>
                   <WillpayBelow2>
-                    {this.state.fiatCurrency}{" "}
-                    {parseFloat(this.state.fiatCurrencyValue).toFixed(8)}
+                    {parseFloat(this.state.fiatCurrencyValue).toFixed(8)} {" "} {this.state.fiatCurrency}
                   </WillpayBelow2>
                 </ApproxBelow>
                 <ApproxBelow>
@@ -841,8 +840,7 @@ class StopLimit extends Component {
                       )}
                     </WillpayBelow>
                     <WillpayBelow2>
-                      {this.state.fiatCurrency}{" "}
-                      {parseFloat(this.state.fiatCurrencyValue).toFixed(8)}
+                      {parseFloat(this.state.fiatCurrencyValue).toFixed(8)} {" "} {this.state.fiatCurrency}
                     </WillpayBelow2>
                   </ApproxBelow>
                   <ApproxBelow>

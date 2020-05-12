@@ -150,7 +150,7 @@ class Market extends Component {
     }
     this.setState({
       // fiatValue: this.props.userBal.cryptoFiat,
-      fiatCurrency: "$"
+      fiatCurrency: "USD"
     });
     //   if (this.state.panic_status === true) {
     //     this.setState({ panicEnabled: true });
@@ -252,8 +252,7 @@ class Market extends Component {
               Number(this.state.amount) * this.props.userBal.buyPay;
             if (value > 0 && name === "amount") {
               let fiatValue =
-                parseFloat(this.state.singlefiatCurrencyValue) *
-                parseFloat(value).toFixed(8);
+                parseFloat(this.state.singlefiatCurrencyValue) * parseFloat(obj["total"]).toFixed(8);
               this.setState({
                 // fiatCryptoValue: fiatValue
                 fiatCurrencyValue: fiatValue
@@ -273,7 +272,7 @@ class Market extends Component {
             if (value > 0 && name === "amount") {
               let fiatValue =
                 parseFloat(this.state.singlefiatCurrencyValue) *
-                parseFloat(value).toFixed(8);
+                parseFloat(obj["total"]).toFixed(8);
               this.setState({
                 fiatCurrencyValue: fiatValue
               });
@@ -653,8 +652,7 @@ class Market extends Component {
                     )}
                   </WillpayBelow>
                   <WillpayBelow2>
-                    {this.state.fiatCurrency}{" "}
-                    {parseFloat(this.state.fiatCurrencyValue).toFixed(8)}
+                    {parseFloat(this.state.fiatCurrencyValue).toFixed(8)} {" "} {this.state.fiatCurrency}
                   </WillpayBelow2>
                 </ApproxBelow>
                 <ApproxBelow>
@@ -695,8 +693,7 @@ class Market extends Component {
                       )}
                     </WillpayBelow>
                     <WillpayBelow2>
-                      {this.state.fiatCurrency}{" "}
-                      {parseFloat(this.state.fiatCurrencyValue).toFixed(8)}
+                      {parseFloat(this.state.fiatCurrencyValue).toFixed(8)} {" "} {this.state.fiatCurrency}
                     </WillpayBelow2>
                   </ApproxBelow>
                   <ApproxBelow>
