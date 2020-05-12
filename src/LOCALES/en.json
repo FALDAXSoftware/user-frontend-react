@@ -3394,5 +3394,145 @@
       "message_type": "Web content",
       "context": "Customize Dashboard text"
     }
+  },
+  "tiers": {
+    "tier_text": {
+      "page": "Tiers",
+      "message": "Tier",
+      "message_type": "Web content",
+      "context": "Tier text for label"
+    },
+    "Minimum_account_activity_thresholds_text": {
+      "page": "Tiers",
+      "message": "Minimum Account Activity Thresholds",
+      "message_type": "Web content",
+      "context": "Minimum Account Activity Thresholds text for label"
+    },
+    "Minimum_account_age_text": {
+      "page": "Tiers",
+      "message": "Minimum Account Age (Days)",
+      "message_type": "Web content",
+      "context": "Minimum Account Age (Days) text for label"
+    },
+    "Minimum_no_of_trades_text": {
+      "page": "Tiers",
+      "message": "Minimum Number of Trades",
+      "message_type": "Web content",
+      "context": "Minimum Number of Trades text for label"
+    },
+    "Minimum_total_value_of_trades_text": {
+      "page": "Tiers",
+      "message": "Minimum Total USD Value of Trades",
+      "message_type": "Web content",
+      "context": "Minimum Total USD Value of Trades text for label"
+    },
+    "deposit_cryptocurrencies_text": {
+      "page": "Tiers",
+      "message": "Deposit Cryptocurrencies",
+      "message_type": "Web content",
+      "context": "Deposit Cryptocurrencies text for label"
+    },
+    "unlimited_text": {
+      "page": "Tiers",
+      "message": "Unlimited",
+      "message_type": "Web content",
+      "context": "Unlimited text for value"
+    },
+    "total_wallet_balance_text": {
+      "page": "Tiers",
+      "message": "Total Wallet Balance",
+      "message_type": "Web content",
+      "context": "Total Wallet Balance text for label"
+    },
+    "withdrawal_limits_orders_text": {
+      "page": "Tiers",
+      "message": "Withdrawal Limits Orders",
+      "message_type": "Web content",
+      "context": "Withdrawal Limits Orders text for label"
+    },
+    "daily_text": {
+      "page": "Tiers",
+      "message": "Daily",
+      "message_type": "Web content",
+      "context": "Daily text for label"
+    },
+    "monthly_text": {
+      "page": "Tiers",
+      "message": "Monthly",
+      "message_type": "Web content",
+      "context": "Monthly text for label"
+    },
+    "requirements_text": {
+      "page": "Tiers",
+      "message": "Requirements",
+      "message_type": "Web content",
+      "context": "Requirements text for label"
+    },
+    "rejected_text": {
+      "page": "Tiers",
+      "message": "Rejected",
+      "message_type": "Web content",
+      "context": "Rejected text for label"
+    },
+    "upgrade_text": {
+      "page": "Tiers",
+      "message": "Upgrade",
+      "message_type": "Web content",
+      "context": "Upgrade text for label"
+    },
+    "tier_upgrade_info_text": {
+      "page": "Tier upgrade info Popup",
+      "message": "Tier Upgrade Info",
+      "message_type": "Web content",
+      "context": "Tier Upgrade Info text for label of popup"
+    },
+    "tier_popup_subtext1_text": {
+      "page": "Tier upgrade info Popup",
+      "message": "Before upgrading to Tier ",
+      "message_type": "Web content",
+      "context": "Before upgrading to Tier text for subtext of popup"
+    },
+    "tier_popup_subtext2_text": {
+      "page": "Tier upgrade info Popup",
+      "message": " account, Please fulfill any of the below requirement set.",
+      "message_type": "Web content",
+      "context": "subtext of popup"
+    },
+    "title_text": {
+      "page": "Tier upgrade info Popup",
+      "message": "Title",
+      "message_type": "Web content",
+      "context": "Title text of popup table"
+    },
+    "requirement_text": {
+      "page": "Tier upgrade info Popup",
+      "message": "Requirement",
+      "message_type": "Web content",
+      "context": "Requirement text for label"
+    },
+    "your_data_text": {
+      "page": "Tier upgrade info Popup",
+      "message": "Your Data",
+      "message_type": "Web content",
+      "context": "Your Data text for popup table"
+    },
+    "trade_now_text": {
+      "page": "Tier upgrade info Popup",
+      "message": "Trade Now",
+      "message_type": "Web content",
+      "context": "Trade Now btn text for popup table"
+    },
+    "total_value_of_trades_text": {
+      "page": "Tier upgrade info Popup",
+      "message": "Total USD Value of Trades",
+      "message_type": "Web content",
+      "context": "Total USD Value of Trades text for label"
+    },
+    "add_funds_to_wallet_text": {
+      "page": "Tier upgrade info Popup",
+      "message": "Add Funds to Wallet",
+      "message_type": "Web content",
+      "context": "Add Funds to Wallet btn text"
+    }
   }
 }
