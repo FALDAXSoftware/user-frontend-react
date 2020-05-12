@@ -1094,7 +1094,9 @@ class TierFour extends React.Component {
                     {/* AML Questionnaire */}
                     <TierRow>
                       <TierLabel>
-                        <label>AML Questionnaire</label>
+                        <label>
+                          {this.t("aml_questionnaire_text.message")}
+                        </label>
                         <a href={aml_questionnaire} target="_blank" download>
                           {this.t("click_to_download_text.message")}
                         </a>
@@ -1227,7 +1229,7 @@ class TierFour extends React.Component {
                     {/* Comfort Letter */}
                     <TierRow>
                       <TierLabel>
-                        <label>Comfort Letter</label>
+                        <label>{this.t("comfort_letter_text.message")}</label>
                         <a href={comfort_letter} target="_blank" download>
                           {this.t("click_to_download_text.message")}
                         </a>
@@ -1360,7 +1362,7 @@ class TierFour extends React.Component {
                     {/* Board Resolution */}
                     <TierRow>
                       <TierLabel>
-                        <label>Board Resolution</label>
+                        <label>{this.t("board_resolution_text.message")}</label>
                         <a href={board_resolution} target="_blank" download>
                           {this.t("click_to_download_text.message")}
                         </a>
@@ -1619,7 +1621,9 @@ class TierFour extends React.Component {
                     {/* Corporate Filing Information */}
                     <TierRow>
                       <TierLabel>
-                        <label>Corporate Filing Information</label>
+                        <label>
+                          {this.t("corporate_filing_information_text.message")}
+                        </label>
                         <a
                           href={corporate_filing_info}
                           target="_blank"
@@ -1754,7 +1758,9 @@ class TierFour extends React.Component {
                     {/* Beneficial Ownership Form */}
                     <TierRow>
                       <TierLabel>
-                        <label>Beneficial Ownership Form</label>
+                        <label>
+                          {this.t("beneficial_ownership_form_text.message")}
+                        </label>
                         <a
                           href={beneficial_ownership_form}
                           target="_blank"
@@ -1889,7 +1895,9 @@ class TierFour extends React.Component {
                     {/* Articles of Incorporation */}
                     <TierRow>
                       <TierLabel>
-                        <label>Articles of Incorporation</label>
+                        <label>
+                          {this.t("articles_of_incorporation_text.message")}
+                        </label>
                         <a
                           href={articles_of_incorporation}
                           target="_blank"
@@ -2033,7 +2041,7 @@ class TierFour extends React.Component {
                     {/* Bylaws */}
                     <TierRow>
                       <TierLabel>
-                        <label>Bylaws</label>
+                        <label>{this.t("bylaws_text.message")}</label>
                         <a href={bylaws_form} target="_blank" download>
                           {this.t("click_to_download_text.message")}
                         </a>
@@ -2164,7 +2172,11 @@ class TierFour extends React.Component {
                     {/* Ownership and Control Structure */}
                     <TierRow>
                       <TierLabel>
-                        <label>Ownership and Control Structure</label>
+                        <label>
+                          {this.t(
+                            "ownership_and_control_structure_text.message"
+                          )}
+                        </label>
                         <a
                           href={ownership_and_control_structure}
                           target="_blank"
@@ -2311,10 +2323,7 @@ class TierFour extends React.Component {
                     {/* Directors and Officers List & Personal Info Equivalent to Tier 3 Requirements */}
                     <TierRow>
                       <TierLabel>
-                        <label>
-                          Directors and Officers List & Personal Info Equivalent
-                          to Tier 3 Requirements
-                        </label>
+                        <label>{this.t("director_list_text.message")}</label>
                         <a href={director_list_form} target="_blank" download>
                           {this.t("click_to_download_text.message")}
                         </a>
@@ -2445,7 +2454,9 @@ class TierFour extends React.Component {
                     {/* Proof of Active Business Address */}
                     <TierRow>
                       <TierLabel>
-                        <label>Proof of Active Business Address</label>
+                        <label>
+                          {this.t("active_business_proof_text.message")}
+                        </label>
                       </TierLabel>
                       <TierUpload>
                         <TierDropWrap
@@ -2579,7 +2590,9 @@ class TierFour extends React.Component {
                     {/* Document Availability Policy */}
                     <TierRow>
                       <TierLabel>
-                        <label>Document Availability Policy</label>
+                        <label>
+                          {this.t("document_availability_policy_text.message")}
+                        </label>
                       </TierLabel>
                       <TierUpload>
                         <TierDropWrap
@@ -2720,7 +2733,7 @@ class TierFour extends React.Component {
                     {/* Cookies Policy */}
                     <TierRow>
                       <TierLabel>
-                        <label>Cookies Policy</label>
+                        <label>{this.t("cookies_policy_text.message")}</label>
                       </TierLabel>
                       <TierUpload>
                         <TierDropWrap
@@ -2848,7 +2861,7 @@ class TierFour extends React.Component {
                     {/* Privacy Policy */}
                     <TierRow>
                       <TierLabel>
-                        <label>Privacy Policy</label>
+                        <label>{this.t("privacy_policy_text.message")}</label>
                       </TierLabel>
                       <TierUpload>
                         <TierDropWrap
@@ -2976,7 +2989,7 @@ class TierFour extends React.Component {
                     {/* AML Policy */}
                     <TierRow>
                       <TierLabel>
-                        <label>AML Policy</label>
+                        <label>{this.t("aml_policy_text.message")}</label>
                       </TierLabel>
                       <TierUpload>
                         <TierDropWrap
@@ -3104,7 +3117,7 @@ class TierFour extends React.Component {
                     {/* Terms of Service */}
                     <TierRow>
                       <TierLabel>
-                        <label>Terms of Service</label>
+                        <label>{this.t("terms_of_service_text.message")}</label>
                       </TierLabel>
                       <TierUpload>
                         <TierDropWrap

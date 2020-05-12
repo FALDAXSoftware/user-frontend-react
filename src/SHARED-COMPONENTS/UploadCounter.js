@@ -32,6 +32,7 @@ class UploadCounter extends Component {
       activeKey: "1",
       visible: false,
     };
+    this.t = this.props.t;
     // this.callback = this.callback.bind(this);
     // this.logout = this.logout.bind(this);
   }
@@ -90,7 +91,7 @@ class UploadCounter extends Component {
           //   className="terms-outer-wrap"
         >
           <ModalAgreeWrap className="counter_main_div">
-            <div>Your files are being uploaded.</div>
+            <div>{this.t("your_files_uploaded_text.message")}</div>
             <Progress
               type="circle"
               status="active"
@@ -126,6 +127,6 @@ const mapDispatchToProps = (dispatch) => ({
 
 // export default withRouter(AgreeTerms);
 
-export default translate(["edit_profile_titles", "validations"])(
+export default translate(["tiers"])(
   connect(mapStateToProps, mapDispatchToProps)(withRouter(UploadCounter))
 );

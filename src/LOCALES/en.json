@@ -3623,6 +3623,144 @@
       "message": "Click Here to Download the Form",
       "message_type": "Web content",
       "context": "Click Here to Download the Form text"
+    },
+    "rejection_reason_text": {
+      "page": "Tiers",
+      "message": "Rejection Reason",
+      "message_type": "Web content",
+      "context": "Rejection Reason text"
+    },
+    "rejection_reason_text": {
+      "page": "Tiers",
+      "message": "Rejection Reason",
+      "message_type": "Web content",
+      "context": "Rejection Reason text"
+    },
+    "your_files_uploaded_text": {
+      "page": "Tiers",
+      "message": "Your files are being uploaded.",
+      "message_type": "Web content",
+      "context": "Your files are being uploaded. text"
+    },
+    "aml_questionnaire_text": {
+      "page": "Tier 4",
+      "message": "AML Questionnaire",
+      "message_type": "Web content",
+      "context": "AML Questionnaire label text"
+    },
+    "comfort_letter_text": {
+      "page": "Tier 4",
+      "message": "Comfort Letter",
+      "message_type": "Web content",
+      "context": "Comfort Letter label text"
+    },
+    "board_resolution_text": {
+      "page": "Tier 4",
+      "message": "Board Resolution",
+      "message_type": "Web content",
+      "context": "Board Resolution label text"
+    },
+    "2_months_bank_statements_text": {
+      "page": "Tier 4",
+      "message": "2 Months Bank Statements",
+      "message_type": "Web content",
+      "context": "2 Months Bank Statements label text"
+    },
+    "corporate_filing_information_text": {
+      "page": "Tier 4",
+      "message": "Corporate Filing Information",
+      "message_type": "Web content",
+      "context": "Corporate Filing Information label text"
+    },
+    "beneficial_ownership_form_text": {
+      "page": "Tier 4",
+      "message": "Beneficial Ownership Form",
+      "message_type": "Web content",
+      "context": "Beneficial Ownership Form label text"
+    },
+    "articles_of_incorporation_text": {
+      "page": "Tier 4",
+      "message": "Articles of Incorporation",
+      "message_type": "Web content",
+      "context": "Articles of Incorporation label text"
+    },
+    "bylaws_text": {
+      "page": "Tier 4",
+      "message": "Bylaws",
+      "message_type": "Web content",
+      "context": "Bylaws label text"
+    },
+    "ownership_and_control_structure_text": {
+      "page": "Tier 4",
+      "message": "Ownership and Control Structure",
+      "message_type": "Web content",
+      "context": "Ownership and Control Structure label text"
+    },
+    "director_list_text": {
+      "page": "Tier 4",
+      "message": "Directors and Officers List & Personal Info Equivalent to Tier 3 Requirements",
+      "message_type": "Web content",
+      "context": "Directors and Officers List & Personal Info Equivalent to Tier 3 Requirements"
+    },
+    "active_business_proof_text": {
+      "page": "Tier 4",
+      "message": "Proof of Active Business Address",
+      "message_type": "Web content",
+      "context": "Proof of Active Business Address label text"
+    },
+    "document_availability_policy_text": {
+      "page": "Tier 4",
+      "message": "Document Availability Policy",
+      "message_type": "Web content",
+      "context": "Document Availability Policy label text"
+    },
+    "cookies_policy_text": {
+      "page": "Tier 4",
+      "message": "Cookies Policy",
+      "message_type": "Web content",
+      "context": "Cookies Policy label text"
+    },
+    "privacy_policy_text": {
+      "page": "Tier 4",
+      "message": "Privacy Policy",
+      "message_type": "Web content",
+      "context": "Privacy Policy label text"
+    },
+    "aml_policy_text": {
+      "page": "Tier 4",
+      "message": "AML Policy",
+      "message_type": "Web content",
+      "context": "AML Policy label text"
+    },
+    "terms_of_service_text": {
+      "page": "Tier 4",
+      "message": "Terms of Service",
+      "message_type": "Web content",
+      "context": "Terms of Service label text"
+    },
+    "tier_limit_text": {
+      "page": "Wallet Popup",
+      "message": "Tier Limit",
+      "message_type": "Web content",
+      "context": "Tier Limit label text"
+    },
+    "available_limit_text": {
+      "page": "Wallet Popup",
+      "message": "Available Limit",
+      "message_type": "Web content",
+      "context": "Available Limit label text"
+    },
+    "limit_after_transfer_text": {
+      "page": "Wallet Popup",
+      "message": "Limit after transfer",
+      "message_type": "Web content",
+      "context": "Limit after transfer label text"
+    },
+    "limit_exceeded_text": {
+      "page": "Wallet Popup",
+      "message": "Limit Exceeded",
+      "message_type": "Web content",
+      "context": "Limit Exceeded label text"
     }
   }
 }

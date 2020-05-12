@@ -472,7 +472,11 @@ class WalletPopup extends Component {
               availableBalance: parseFloat(responseData.data).toFixed(8),
             });
           } else {
-            this.openNotificationWithIcon("error", "Error", responseData.error);
+            this.openNotificationWithIcon(
+              "error",
+              this.t("validations:error_text.message"),
+              responseData.error
+            );
           }
           this.setState({
             loader: false,
@@ -582,7 +586,7 @@ class WalletPopup extends Component {
           if (responseData.status === 200) {
             this.openNotificationWithIcon(
               "success",
-              "Successfully Sent",
+              this.t("validations:success_text.message"),
               responseData.message
             );
             this.props.walletDetailsApi();
@@ -599,13 +603,17 @@ class WalletPopup extends Component {
               showTFAModal: true,
             });
           } else if (responseData.status === 403) {
-            // this.openNotificationWithIcon("error", "Error", responseData.err);
+            // this.openNotificationWithIcon("error",  this.t("validations:error_text.message"), responseData.err);
             let formData = {
               user_id: this.props.profileDetails.id,
               jwt_token: this.props.isLoggedIn,
             };
             this.props.LogoutUser(this.props.isLoggedIn, formData);
-            this.openNotificationWithIcon("error", "Error", responseData.err);
+            this.openNotificationWithIcon(
+              "error",
+              this.t("validations:error_text.message"),
+              responseData.err
+            );
           } else {
             if (responseData.status !== 402)
               this.setState({
@@ -980,7 +988,9 @@ class WalletPopup extends Component {
                           <RefInput
                             value={this.state.receive.receive_address}
                             className={this.state.receiveAdd}
-                            placeholder="Referral"
+                            placeholder={this.t(
+                              "edit_profile_titles:head_referral.message"
+                            )}
                             enterButton={this.t("referral:copy_btn.message")}
                             size="large"
                             onSearch={(e, value) => this.SearchText(e, value)}
@@ -1166,7 +1176,8 @@ class WalletPopup extends Component {
                               }
                               displayType={"text"}
                               thousandSeparator={true}
-                              prefix="$"
+                              // prefix="$"
+                              suffix=" USD"
                             />
                           )}
                         </td>
