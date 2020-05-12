@@ -3533,6 +3533,96 @@
       "message": "Add Funds to Wallet",
       "message_type": "Web content",
       "context": "Add Funds to Wallet btn text"
+    },
+    "reject_reason_note": {
+      "page": "Tiers",
+      "message": "Your request for tier upgrade is rejected by admin due to below reason.",
+      "message_type": "Web content",
+      "context": "reject reason text"
+    },
+    "feel_free_note": {
+      "page": "Tiers",
+      "message": "Feel free to contact us",
+      "message_type": "Web content",
+      "context": "reject reason subtext"
+    },
+    "verified_tier_note": {
+      "page": "Tiers",
+      "message": "Your Account is Verified successfully to Tier",
+      "message_type": "Web content",
+      "context": "Your Account is Verified successfully to Tier text"
+    },
+    "2fa_note": {
+      "page": "Tiers",
+      "message": "Two-factor Authentication(2FA) must be enabled to upgrade your account to tier 2.",
+      "message_type": "Web content",
+      "context": "2fa note as tier upgrade requirement"
+    },
+    "2fa_note_2": {
+      "page": "Tiers",
+      "message": "Please click the link below to enable 2FA",
+      "message_type": "Web content",
+      "context": "2fa note as tier upgrade requirement"
+    },
+    "second_photo_text": {
+      "page": "Tiers",
+      "message": "Second Photo ID",
+      "message_type": "Web content",
+      "context": "Second Photo ID label text"
+    },
+    "see_details_text": {
+      "page": "Tiers",
+      "message": "See Details",
+      "message_type": "Web content",
+      "context": "See details label text"
+    },
+    "reupload_it_text": {
+      "page": "Tiers",
+      "message": "Reupload it",
+      "message_type": "Web content",
+      "context": "Reupload it status text"
+    },
+    "proof_of_residence_text": {
+      "page": "Tiers",
+      "message": "Proof of Residence",
+      "message_type": "Web content",
+      "context": "Proof of Residence label text"
+    },
+    "govt_issued_number_text": {
+      "page": "Tiers",
+      "message": "Govt. Issued ID Number",
+      "message_type": "Web content",
+      "context": "Govt. Issued ID Number label text"
+    },
+    "validate_not_gt_20_ch": {
+      "page": "Tiers",
+      "message": "may not be greater than 20 characters.",
+      "message_type": "Web content",
+      "context": "Field Validation"
+    },
+    "min_2_error": {
+      "page": "Tiers",
+      "message": "must be at least 6 characters.",
+      "message_type": "Web content",
+      "context": "Minimum 2 error"
+    },
+    "idcp_label_text": {
+      "page": "Tiers",
+      "message": "ID Confirmation Photo",
+      "message_type": "Web content",
+      "context": "ID Confirmation Photo label text"
+    },
+    "proof_of_assets_form_text": {
+      "page": "Tiers",
+      "message": "Proof of Assets Form",
+      "message_type": "Web content",
+      "context": "Proof of Assets Form label text"
+    },
+    "click_to_download_text": {
+      "page": "Tiers",
+      "message": "Click Here to Download the Form",
+      "message_type": "Web content",
+      "context": "Click Here to Download the Form text"
     }
   }
 }
