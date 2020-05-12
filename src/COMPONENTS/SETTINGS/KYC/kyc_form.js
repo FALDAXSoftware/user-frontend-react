@@ -1314,7 +1314,7 @@ class KYCForm extends Component {
                 type="primary"
                 onClick={this.onSubmit}
               >
-                Next
+                {t("identity_verification:subhead_btn_next.message")}
               </Savekyc>
             </Col>
           </FifthRowkyc>

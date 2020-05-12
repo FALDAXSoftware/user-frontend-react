@@ -12,6 +12,7 @@ import { withRouter, Link } from "react-router-dom";
 import { globalVariables } from "Globals.js";
 import SimpleReactvalidator from "simple-react-validator";
 import { DoneWrap, KycSucc } from "./tier_one";
+import { translate } from "react-i18next";
 import {
   TierWrap,
   TierRow,
@@ -142,30 +143,11 @@ class TierFour extends React.Component {
       forceAcceptedStatus: false,
       forceRejectNote: "",
     };
+    this.t = this.props.t;
     this.validator1 = new SimpleReactvalidator({});
     this.populateData = this.populateData.bind(this);
   }
-  // componentWillMount() {
-  //   if (this.props.profileDetails) {
-  //     if (this.props.profileDetails.account_tier == 3) {
-  //       this.props.history.push("/tier4");
-  //     } else {
-  //       this.props.history.push("/");
-  //     }
-  //   }
-  // }
   componentWillMount() {
-    // if (
-    //   this.props.profileDetails.account_tier == 0 ||
-    //   this.props.profileDetails.account_tier == 1 ||
-    //   this.props.profileDetails.account_tier == 2 ||
-    //   this.props.profileDetails.account_tier == 4
-    // ) {
-    //   this.props.history.push("/");
-    // }
-    // if (this.props.profileDetails.account_tier !== 3) {
-    //   this.props.history.push("/");
-    // }
     if (
       this.props.location.state === undefined ||
       this.props.location.state.flag === "" ||
@@ -209,7 +191,11 @@ class TierFour extends React.Component {
           forceAcceptedStatus: true,
         });
       } else {
-        this.openNotificationWithIcon("error", "Error", result.message);
+        this.openNotificationWithIcon(
+          "error",
+          this.t("validations:error_text.message"),
+          result.message
+        );
       }
     } catch (error) {
       console.log(error);
@@ -854,13 +840,21 @@ class TierFour extends React.Component {
                 if (result.status == 200) {
                   this.openNotificationWithIcon(
                     "success",
-                    "Success",
+                    this.t("validations:success_text.message"),
                     result.data
                   );
                 } else if (result.status == 500) {
-                  this.openNotificationWithIcon("error", "Error", result.error);
+                  this.openNotificationWithIcon(
+                    "error",
+                    this.t("validations:error_text.message"),
+                    result.error
+                  );
                 } else {
-                  this.openNotificationWithIcon("error", "Error", result.data);
+                  this.openNotificationWithIcon(
+                    "error",
+                    this.t("validations:error_text.message"),
+                    result.data
+                  );
                 }
               }
             }
@@ -878,7 +872,7 @@ class TierFour extends React.Component {
         } catch (error) {
           this.openNotificationWithIcon(
             "error",
-            "Error",
+            this.t("validations:error_text.message"),
             "Please reupload you documents."
           );
           this.setState(
@@ -917,18 +911,25 @@ class TierFour extends React.Component {
               await this.uploadDocument(index, count[property].file)
             ).json();
             if (result) {
-              console.log("Result^^^^^^", result, size, index);
               if (index == size) {
                 if (result.status == 200) {
                   this.openNotificationWithIcon(
                     "success",
-                    "Success",
+                    this.t("validations:success_text.message"),
                     result.data
                   );
                 } else if (result.status == 500) {
-                  this.openNotificationWithIcon("error", "Error", result.error);
+                  this.openNotificationWithIcon(
+                    "error",
+                    this.t("validations:error_text.message"),
+                    result.error
+                  );
                 } else {
-                  this.openNotificationWithIcon("error", "Error", result.data);
+                  this.openNotificationWithIcon(
+                    "error",
+                    this.t("validations:error_text.message"),
+                    result.data
+                  );
                 }
               }
             }
@@ -951,7 +952,7 @@ class TierFour extends React.Component {
         } catch (error) {
           this.openNotificationWithIcon(
             "error",
-            "Error",
+            this.t("validations:error_text.message"),
             "Please reupload your documents."
           );
           this.setState(
@@ -970,7 +971,6 @@ class TierFour extends React.Component {
         }
       }
     } else {
-      console.log("Not valid^^^^^^");
       this.validator1.showMessages();
       this.forceUpdate();
     }
@@ -984,30 +984,25 @@ class TierFour extends React.Component {
   handleCancel() {
     let temp = this.state.documents;
     temp = {};
-    this.setState(
-      {
-        aml_flag: null,
-        comfort_flag: null,
-        board_flag: null,
-        bank_flag: null,
-        corporate_flag: null,
-        ownership_flag: null,
-        articles_flag: null,
-        bylaws_flag: null,
-        ownership_control_structure_flag: null,
-        director_list_flag: null,
-        active_business_proof_flag: null,
-        document_availability_policy_flag: null,
-        cookies_policy_flag: null,
-        privacy_policy_flag: null,
-        aml_policy_flag: null,
-        terms_of_service_flag: null,
-        documents: temp,
-      },
-      () => {
-        console.log("On Cancel", this.state.documents);
-      }
-    );
+    this.setState({
+      aml_flag: null,
+      comfort_flag: null,
+      board_flag: null,
+      bank_flag: null,
+      corporate_flag: null,
+      ownership_flag: null,
+      articles_flag: null,
+      bylaws_flag: null,
+      ownership_control_structure_flag: null,
+      director_list_flag: null,
+      active_business_proof_flag: null,
+      document_availability_policy_flag: null,
+      cookies_policy_flag: null,
+      privacy_policy_flag: null,
+      aml_policy_flag: null,
+      terms_of_service_flag: null,
+      documents: temp,
+    });
     this.validator1.hideMessages();
     this.forceUpdate();
   }
@@ -1045,7 +1040,10 @@ class TierFour extends React.Component {
         <Navigation />
         <TierWrapper>
           <KYCWrap>
-            <KYCHead>Tier 4 Upgrade</KYCHead>
+            <KYCHead>
+              {this.t("tiers:tier_text.message")} 4{" "}
+              {this.t("tiers:upgrade_text.message")}
+            </KYCHead>
             {forceRejectStatus ? (
               <TierWrap
                 style={{
@@ -1054,13 +1052,11 @@ class TierFour extends React.Component {
                   fontSize: "18px",
                 }}
               >
-                <p>
-                  Your request for tier upgrade is rejected by admin due to
-                  below reason.
-                </p>
+                <p>{this.t("reject_reason_note.message")}</p>
                 <p>{forceRejectNote}</p>
                 <p>
-                  Feel free to contact us <Link to="/open-ticket">here</Link>
+                  {this.t("feel_free_note.message")}{" "}
+                  <Link to="/open-ticket">here</Link>
                 </p>
               </TierWrap>
             ) : (
@@ -1081,10 +1077,14 @@ class TierFour extends React.Component {
                       />
                       <KycSucc>
                         <span>
-                          <b>Verification Completed.</b>
+                          <b>
+                            {this.t(
+                              "identity_verification:kyc_verified_text.message"
+                            )}
+                          </b>
                           <br />
                           <br />
-                          Your Account is Verified successfully to Tier 4.
+                          {this.t("verified_tier_note.message")} 4.
                         </span>
                       </KycSucc>
                     </DoneWrap>
@@ -1096,7 +1096,7 @@ class TierFour extends React.Component {
                       <TierLabel>
                         <label>AML Questionnaire</label>
                         <a href={aml_questionnaire} target="_blank" download>
-                          Click Here to Download the Form
+                          {this.t("click_to_download_text.message")}
                         </a>
                       </TierLabel>
                       <TierUpload>
@@ -1128,14 +1128,16 @@ class TierFour extends React.Component {
                             {aml_flag === null && (
                               <div>
                                 <IconS type="upload" />
-                                <FileSelectText>Upload</FileSelectText>
+                                <FileSelectText>
+                                  {this.t("general_4:upload_text.message")}
+                                </FileSelectText>
                               </div>
                             )}
                             {aml_flag === false && (
                               <div>
                                 {/* <IconS type="close-square" /> */}
                                 <FileSelectText>
-                                  Wrong File Selected
+                                  {this.t("apply_job:wrong_file_text.message")}
                                 </FileSelectText>
                               </div>
                             )}
@@ -1166,14 +1168,19 @@ class TierFour extends React.Component {
                             )}
                         </TierDropWrap>
                         <SupportText className="tier_support_text">
-                          Supported format: .doc, .docx, .pdf.
+                          {this.t("apply_job:supported_formats_text.message")}
                         </SupportText>
                         {this.state.reUpload1
                           ? this.validator1.message(
                               "aml_questionnaire",
                               aml_flag,
                               "required",
-                              "tier-text-danger-validation"
+                              "tier-text-danger-validation",
+                              {
+                                required: this.t(
+                                  "general_1:this_field_required_error.message"
+                                ),
+                              }
                             )
                           : delete this.validator1.fields["aml_questionnaire"]}
                       </TierUpload>
@@ -1182,19 +1189,23 @@ class TierFour extends React.Component {
                           {this.state.amlQuestionnaireStatus === null && (
                             <TierDocStatus>
                               <Icon type="warning" />
-                              <span>Under Approval</span>
+                              <span>
+                                {this.t("history:under_approval_text.message")}
+                              </span>
                             </TierDocStatus>
                           )}
                           {this.state.amlQuestionnaireStatus === true && (
                             <TierDocStatus>
                               <Icon type="check" />
-                              <span>Verified</span>
+                              <span>
+                                {this.t("login_page:verified_text.message")}
+                              </span>
                             </TierDocStatus>
                           )}
                           {this.state.amlQuestionnaireStatus === false && (
                             <TierDocStatus>
                               <Icon type="close" />
-                              <span>Reupload it</span>
+                              <span>{this.t("reupload_it_text.message")}</span>
                             </TierDocStatus>
                           )}
                           {this.state.amlQuestionnaireNote && (
@@ -1218,7 +1229,7 @@ class TierFour extends React.Component {
                       <TierLabel>
                         <label>Comfort Letter</label>
                         <a href={comfort_letter} target="_blank" download>
-                          Click Here to Download the Form
+                          {this.t("click_to_download_text.message")}
                         </a>
                       </TierLabel>
                       <TierUpload>
@@ -1250,14 +1261,16 @@ class TierFour extends React.Component {
                             {comfort_flag === null && (
                               <div>
                                 <IconS type="upload" />
-                                <FileSelectText>Upload</FileSelectText>
+                                <FileSelectText>
+                                  {this.t("general_4:upload_text.message")}
+                                </FileSelectText>
                               </div>
                             )}
                             {comfort_flag === false && (
                               <div>
                                 {/* <IconS type="close-square" /> */}
                                 <FileSelectText>
-                                  Wrong File Selected
+                                  {this.t("apply_job:wrong_file_text.message")}
                                 </FileSelectText>
                               </div>
                             )}
@@ -1288,14 +1301,19 @@ class TierFour extends React.Component {
                             )}
                         </TierDropWrap>
                         <SupportText className="tier_support_text">
-                          Supported format: .doc, .docx, .pdf.
+                          {this.t("apply_job:supported_formats_text.message")}
                         </SupportText>
                         {this.state.reUpload2
                           ? this.validator1.message(
                               "comfort_letter",
                               comfort_flag,
                               "required",
-                              "tier-text-danger-validation"
+                              "tier-text-danger-validation",
+                              {
+                                required: this.t(
+                                  "general_1:this_field_required_error.message"
+                                ),
+                              }
                             )
                           : delete this.validator1.fields["comfort_letter"]}
                       </TierUpload>
@@ -1304,19 +1322,23 @@ class TierFour extends React.Component {
                           {this.state.comfortLetterStatus === null && (
                             <TierDocStatus>
                               <Icon type="warning" />
-                              <span>Under Approval</span>
+                              <span>
+                                {this.t("history:under_approval_text.message")}
+                              </span>
                             </TierDocStatus>
                           )}
                           {this.state.comfortLetterStatus === true && (
                             <TierDocStatus>
                               <Icon type="check" />
-                              <span>Verified</span>
+                              <span>
+                                {this.t("login_page:verified_text.message")}
+                              </span>
                             </TierDocStatus>
                           )}
                           {this.state.comfortLetterStatus === false && (
                             <TierDocStatus>
                               <Icon type="close" />
-                              <span>Reupload it</span>
+                              <span>{this.t("reupload_it_text.message")}</span>
                             </TierDocStatus>
                           )}
                           {this.state.comfortLetterNote && (
@@ -1340,7 +1362,7 @@ class TierFour extends React.Component {
                       <TierLabel>
                         <label>Board Resolution</label>
                         <a href={board_resolution} target="_blank" download>
-                          Click Here to Download the Form
+                          {this.t("click_to_download_text.message")}
                         </a>
                       </TierLabel>
                       <TierUpload>
@@ -1372,13 +1394,15 @@ class TierFour extends React.Component {
                             {board_flag === null && (
                               <div>
                                 <IconS type="upload" />
-                                <FileSelectText>Upload</FileSelectText>
+                                <FileSelectText>
+                                  {this.t("general_4:upload_text.message")}
+                                </FileSelectText>
                               </div>
                             )}
                             {board_flag === false && (
                               <div>
                                 <FileSelectText>
-                                  Wrong File Selected
+                                  {this.t("apply_job:wrong_file_text.message")}
                                 </FileSelectText>
                               </div>
                             )}
@@ -1408,14 +1432,19 @@ class TierFour extends React.Component {
                             )}
                         </TierDropWrap>
                         <SupportText className="tier_support_text">
-                          Supported format: .doc, .docx, .pdf.
+                          {this.t("apply_job:supported_formats_text.message")}
                         </SupportText>
                         {this.state.reUpload3
                           ? this.validator1.message(
                               "board_resolution",
                               board_flag,
                               "required",
-                              "tier-text-danger-validation"
+                              "tier-text-danger-validation",
+                              {
+                                required: this.t(
+                                  "general_1:this_field_required_error.message"
+                                ),
+                              }
                             )
                           : delete this.validator1.fields["board_resolution"]}
                       </TierUpload>
@@ -1424,19 +1453,23 @@ class TierFour extends React.Component {
                           {this.state.boardResolutionStatus === null && (
                             <TierDocStatus>
                               <Icon type="warning" />
-                              <span>Under Approval</span>
+                              <span>
+                                {this.t("history:under_approval_text.message")}
+                              </span>
                             </TierDocStatus>
                           )}
                           {this.state.boardResolutionStatus === true && (
                             <TierDocStatus>
                               <Icon type="check" />
-                              <span>Verified</span>
+                              <span>
+                                {this.t("login_page:verified_text.message")}
+                              </span>
                             </TierDocStatus>
                           )}
                           {this.state.boardResolutionStatus === false && (
                             <TierDocStatus>
                               <Icon type="close" />
-                              <span>Reupload it</span>
+                              <span>{this.t("reupload_it_text.message")}</span>
                             </TierDocStatus>
                           )}
                           {this.state.boardResolutionNote && (
@@ -1489,13 +1522,15 @@ class TierFour extends React.Component {
                             {bank_flag === null && (
                               <div>
                                 <IconS type="upload" />
-                                <FileSelectText>Upload</FileSelectText>
+                                <FileSelectText>
+                                  {this.t("general_4:upload_text.message")}
+                                </FileSelectText>
                               </div>
                             )}
                             {bank_flag === false && (
                               <div>
                                 <FileSelectText>
-                                  Wrong File Selected
+                                  {this.t("apply_job:wrong_file_text.message")}
                                 </FileSelectText>
                               </div>
                             )}
@@ -1525,14 +1560,19 @@ class TierFour extends React.Component {
                             )}
                         </TierDropWrap>
                         <SupportText className="tier_support_text">
-                          Supported format: .doc, .docx, .pdf.
+                          {this.t("apply_job:supported_formats_text.message")}
                         </SupportText>
                         {this.state.reUpload4
                           ? this.validator1.message(
                               "bank_statements",
                               bank_flag,
                               "required",
-                              "tier-text-danger-validation"
+                              "tier-text-danger-validation",
+                              {
+                                required: this.t(
+                                  "general_1:this_field_required_error.message"
+                                ),
+                              }
                             )
                           : delete this.validator1.fields["bank_statements"]}
                       </TierUpload>
@@ -1541,19 +1581,23 @@ class TierFour extends React.Component {
                           {this.state.bankStatementStatus === null && (
                             <TierDocStatus>
                               <Icon type="warning" />
-                              <span>Under Approval</span>
+                              <span>
+                                {this.t("history:under_approval_text.message")}
+                              </span>
                             </TierDocStatus>
                           )}
                           {this.state.bankStatementStatus === true && (
                             <TierDocStatus>
                               <Icon type="check" />
-                              <span>Verified</span>
+                              <span>
+                                {this.t("login_page:verified_text.message")}
+                              </span>
                             </TierDocStatus>
                           )}
                           {this.state.bankStatementStatus === false && (
                             <TierDocStatus>
                               <Icon type="close" />
-                              <span>Reupload it</span>
+                              <span>{this.t("reupload_it_text.message")}</span>
                             </TierDocStatus>
                           )}
                           {this.state.bankStatementNote && (
@@ -1581,7 +1625,7 @@ class TierFour extends React.Component {
                           target="_blank"
                           download
                         >
-                          Click Here to Download the Form
+                          {this.t("click_to_download_text.message")}
                         </a>
                       </TierLabel>
                       <TierUpload>
@@ -1613,13 +1657,15 @@ class TierFour extends React.Component {
                             {corporate_flag === null && (
                               <div>
                                 <IconS type="upload" />
-                                <FileSelectText>Upload</FileSelectText>
+                                <FileSelectText>
+                                  {this.t("general_4:upload_text.message")}
+                                </FileSelectText>
                               </div>
                             )}
                             {corporate_flag === false && (
                               <div>
                                 <FileSelectText>
-                                  Wrong File Selected
+                                  {this.t("apply_job:wrong_file_text.message")}
                                 </FileSelectText>
                               </div>
                             )}
@@ -1649,14 +1695,19 @@ class TierFour extends React.Component {
                             )}
                         </TierDropWrap>
                         <SupportText className="tier_support_text">
-                          Supported format: .doc, .docx, .pdf.
+                          {this.t("apply_job:supported_formats_text.message")}
                         </SupportText>
                         {this.state.reUpload5
                           ? this.validator1.message(
                               "corporate_info",
                               corporate_flag,
                               "required",
-                              "tier-text-danger-validation"
+                              "tier-text-danger-validation",
+                              {
+                                required: this.t(
+                                  "general_1:this_field_required_error.message"
+                                ),
+                              }
                             )
                           : delete this.validator1.fields["corporate_info"]}
                       </TierUpload>
@@ -1665,19 +1716,23 @@ class TierFour extends React.Component {
                           {this.state.corporateInfoStatus === null && (
                             <TierDocStatus>
                               <Icon type="warning" />
-                              <span>Under Approval</span>
+                              <span>
+                                {this.t("history:under_approval_text.message")}
+                              </span>
                             </TierDocStatus>
                           )}
                           {this.state.corporateInfoStatus === true && (
                             <TierDocStatus>
                               <Icon type="check" />
-                              <span>Verified</span>
+                              <span>
+                                {this.t("login_page:verified_text.message")}
+                              </span>
                             </TierDocStatus>
                           )}
                           {this.state.corporateInfoStatus === false && (
                             <TierDocStatus>
                               <Icon type="close" />
-                              <span>Reupload it</span>
+                              <span>{this.t("reupload_it_text.message")}</span>
                             </TierDocStatus>
                           )}
                           {this.state.corporateInfoNote && (
@@ -1705,7 +1760,7 @@ class TierFour extends React.Component {
                           target="_blank"
                           download
                         >
-                          Click Here to Download the Form
+                          {this.t("click_to_download_text.message")}
                         </a>
                       </TierLabel>
                       <TierUpload>
@@ -1737,13 +1792,15 @@ class TierFour extends React.Component {
                             {ownership_flag === null && (
                               <div>
                                 <IconS type="upload" />
-                                <FileSelectText>Upload</FileSelectText>
+                                <FileSelectText>
+                                  {this.t("general_4:upload_text.message")}
+                                </FileSelectText>
                               </div>
                             )}
                             {ownership_flag === false && (
                               <div>
                                 <FileSelectText>
-                                  Wrong File Selected
+                                  {this.t("apply_job:wrong_file_text.message")}
                                 </FileSelectText>
                               </div>
                             )}
@@ -1773,14 +1830,19 @@ class TierFour extends React.Component {
                             )}
                         </TierDropWrap>
                         <SupportText className="tier_support_text">
-                          Supported format: .doc, .docx, .pdf.
+                          {this.t("apply_job:supported_formats_text.message")}
                         </SupportText>
                         {this.state.reUpload6
                           ? this.validator1.message(
                               "ownership_form",
                               ownership_flag,
                               "required",
-                              "tier-text-danger-validation"
+                              "tier-text-danger-validation",
+                              {
+                                required: this.t(
+                                  "general_1:this_field_required_error.message"
+                                ),
+                              }
                             )
                           : delete this.validator1.fields["ownership_form"]}
                       </TierUpload>
@@ -1789,19 +1851,23 @@ class TierFour extends React.Component {
                           {this.state.ownershipFormStatus === null && (
                             <TierDocStatus>
                               <Icon type="warning" />
-                              <span>Under Approval</span>
+                              <span>
+                                {this.t("history:under_approval_text.message")}
+                              </span>
                             </TierDocStatus>
                           )}
                           {this.state.ownershipFormStatus === true && (
                             <TierDocStatus>
                               <Icon type="check" />
-                              <span>Verified</span>
+                              <span>
+                                {this.t("login_page:verified_text.message")}
+                              </span>
                             </TierDocStatus>
                           )}
                           {this.state.ownershipFormStatus === false && (
                             <TierDocStatus>
                               <Icon type="close" />
-                              <span>Reupload it</span>
+                              <span>{this.t("reupload_it_text.message")}</span>
                             </TierDocStatus>
                           )}
                           {this.state.ownershipFormNote && (
@@ -1829,7 +1895,7 @@ class TierFour extends React.Component {
                           target="_blank"
                           download
                         >
-                          Click Here to Download the Form
+                          {this.t("click_to_download_text.message")}
                         </a>
                       </TierLabel>
                       <TierUpload>
@@ -1864,13 +1930,15 @@ class TierFour extends React.Component {
                             {articles_flag === null && (
                               <div>
                                 <IconS type="upload" />
-                                <FileSelectText>Upload</FileSelectText>
+                                <FileSelectText>
+                                  {this.t("general_4:upload_text.message")}
+                                </FileSelectText>
                               </div>
                             )}
                             {articles_flag === false && (
                               <div>
                                 <FileSelectText>
-                                  Wrong File Selected
+                                  {this.t("apply_job:wrong_file_text.message")}
                                 </FileSelectText>
                               </div>
                             )}
@@ -1903,14 +1971,19 @@ class TierFour extends React.Component {
                             )}
                         </TierDropWrap>
                         <SupportText className="tier_support_text">
-                          Supported format: .doc, .docx, .pdf.
+                          {this.t("apply_job:supported_formats_text.message")}
                         </SupportText>
                         {this.state.reUpload7
                           ? this.validator1.message(
                               "articles_of_incorporation",
                               articles_flag,
                               "required",
-                              "tier-text-danger-validation"
+                              "tier-text-danger-validation",
+                              {
+                                required: this.t(
+                                  "general_1:this_field_required_error.message"
+                                ),
+                              }
                             )
                           : delete this.validator1.fields[
                               "articles_of_incorporation"
@@ -1921,19 +1994,23 @@ class TierFour extends React.Component {
                           {this.state.articlesIncorporationStatus === null && (
                             <TierDocStatus>
                               <Icon type="warning" />
-                              <span>Under Approval</span>
+                              <span>
+                                {this.t("history:under_approval_text.message")}
+                              </span>
                             </TierDocStatus>
                           )}
                           {this.state.articlesIncorporationStatus === true && (
                             <TierDocStatus>
                               <Icon type="check" />
-                              <span>Verified</span>
+                              <span>
+                                {this.t("login_page:verified_text.message")}
+                              </span>
                             </TierDocStatus>
                           )}
                           {this.state.articlesIncorporationStatus === false && (
                             <TierDocStatus>
                               <Icon type="close" />
-                              <span>Reupload it</span>
+                              <span>{this.t("reupload_it_text.message")}</span>
                             </TierDocStatus>
                           )}
                           {this.state.articlesIncorporationNote && (
@@ -1958,7 +2035,7 @@ class TierFour extends React.Component {
                       <TierLabel>
                         <label>Bylaws</label>
                         <a href={bylaws_form} target="_blank" download>
-                          Click Here to Download the Form
+                          {this.t("click_to_download_text.message")}
                         </a>
                       </TierLabel>
                       <TierUpload>
@@ -1990,13 +2067,15 @@ class TierFour extends React.Component {
                             {bylaws_flag === null && (
                               <div>
                                 <IconS type="upload" />
-                                <FileSelectText>Upload</FileSelectText>
+                                <FileSelectText>
+                                  {this.t("general_4:upload_text.message")}
+                                </FileSelectText>
                               </div>
                             )}
                             {bylaws_flag === false && (
                               <div>
                                 <FileSelectText>
-                                  Wrong File Selected
+                                  {this.t("apply_job:wrong_file_text.message")}
                                 </FileSelectText>
                               </div>
                             )}
@@ -2026,14 +2105,19 @@ class TierFour extends React.Component {
                             )}
                         </TierDropWrap>
                         <SupportText className="tier_support_text">
-                          Supported format: .doc, .docx, .pdf.
+                          {this.t("apply_job:supported_formats_text.message")}
                         </SupportText>
                         {this.state.reUpload8
                           ? this.validator1.message(
                               "bylaws",
                               bylaws_flag,
                               "required",
-                              "tier-text-danger-validation"
+                              "tier-text-danger-validation",
+                              {
+                                required: this.t(
+                                  "general_1:this_field_required_error.message"
+                                ),
+                              }
                             )
                           : delete this.validator1.fields["bylaws"]}
                       </TierUpload>
@@ -2042,19 +2126,23 @@ class TierFour extends React.Component {
                           {this.state.byLawsStatus === null && (
                             <TierDocStatus>
                               <Icon type="warning" />
-                              <span>Under Approval</span>
+                              <span>
+                                {this.t("history:under_approval_text.message")}
+                              </span>
                             </TierDocStatus>
                           )}
                           {this.state.byLawsStatus === true && (
                             <TierDocStatus>
                               <Icon type="check" />
-                              <span>Verified</span>
+                              <span>
+                                {this.t("login_page:verified_text.message")}
+                              </span>
                             </TierDocStatus>
                           )}
                           {this.state.byLawsStatus === false && (
                             <TierDocStatus>
                               <Icon type="close" />
-                              <span>Reupload it</span>
+                              <span>{this.t("reupload_it_text.message")}</span>
                             </TierDocStatus>
                           )}
                           {this.state.byLawsNote && (
@@ -2082,7 +2170,7 @@ class TierFour extends React.Component {
                           target="_blank"
                           download
                         >
-                          Click Here to Download the Form
+                          {this.t("click_to_download_text.message")}
                         </a>
                       </TierLabel>
                       <TierUpload>
@@ -2117,13 +2205,15 @@ class TierFour extends React.Component {
                             {ownership_control_structure_flag === null && (
                               <div>
                                 <IconS type="upload" />
-                                <FileSelectText>Upload</FileSelectText>
+                                <FileSelectText>
+                                  {this.t("general_4:upload_text.message")}
+                                </FileSelectText>
                               </div>
                             )}
                             {ownership_control_structure_flag === false && (
                               <div>
                                 <FileSelectText>
-                                  Wrong File Selected
+                                  {this.t("apply_job:wrong_file_text.message")}
                                 </FileSelectText>
                               </div>
                             )}
@@ -2156,14 +2246,19 @@ class TierFour extends React.Component {
                             )}
                         </TierDropWrap>
                         <SupportText className="tier_support_text">
-                          Supported format: .doc, .docx, .pdf.
+                          {this.t("apply_job:supported_formats_text.message")}
                         </SupportText>
                         {this.state.reUpload9
                           ? this.validator1.message(
                               "ownership_control_structure",
                               ownership_control_structure_flag,
                               "required",
-                              "tier-text-danger-validation"
+                              "tier-text-danger-validation",
+                              {
+                                required: this.t(
+                                  "general_1:this_field_required_error.message"
+                                ),
+                              }
                             )
                           : delete this.validator1.fields[
                               "ownership_control_structure"
@@ -2175,21 +2270,25 @@ class TierFour extends React.Component {
                             null && (
                             <TierDocStatus>
                               <Icon type="warning" />
-                              <span>Under Approval</span>
+                              <span>
+                                {this.t("history:under_approval_text.message")}
+                              </span>
                             </TierDocStatus>
                           )}
                           {this.state.ownershipControlStructureStatus ===
                             true && (
                             <TierDocStatus>
                               <Icon type="check" />
-                              <span>Verified</span>
+                              <span>
+                                {this.t("login_page:verified_text.message")}
+                              </span>
                             </TierDocStatus>
                           )}
                           {this.state.ownershipControlStructureStatus ===
                             false && (
                             <TierDocStatus>
                               <Icon type="close" />
-                              <span>Reupload it</span>
+                              <span>{this.t("reupload_it_text.message")}</span>
                             </TierDocStatus>
                           )}
                           {this.state.ownershipControlStructureNote && (
@@ -2217,7 +2316,7 @@ class TierFour extends React.Component {
                           to Tier 3 Requirements
                         </label>
                         <a href={director_list_form} target="_blank" download>
-                          Click Here to Download the Form
+                          {this.t("click_to_download_text.message")}
                         </a>
                       </TierLabel>
                       <TierUpload>
@@ -2249,13 +2348,15 @@ class TierFour extends React.Component {
                             {director_list_flag === null && (
                               <div>
                                 <IconS type="upload" />
-                                <FileSelectText>Upload</FileSelectText>
+                                <FileSelectText>
+                                  {this.t("general_4:upload_text.message")}
+                                </FileSelectText>
                               </div>
                             )}
                             {director_list_flag === false && (
                               <div>
                                 <FileSelectText>
-                                  Wrong File Selected
+                                  {this.t("apply_job:wrong_file_text.message")}
                                 </FileSelectText>
                               </div>
                             )}
@@ -2285,14 +2386,19 @@ class TierFour extends React.Component {
                             )}
                         </TierDropWrap>
                         <SupportText className="tier_support_text">
-                          Supported format: .doc, .docx, .pdf.
+                          {this.t("apply_job:supported_formats_text.message")}
                         </SupportText>
                         {this.state.reUpload10
                           ? this.validator1.message(
                               "director_list",
                               director_list_flag,
                               "required",
-                              "tier-text-danger-validation"
+                              "tier-text-danger-validation",
+                              {
+                                required: this.t(
+                                  "general_1:this_field_required_error.message"
+                                ),
+                              }
                             )
                           : delete this.validator1.fields["director_list"]}
                       </TierUpload>
@@ -2301,19 +2407,23 @@ class TierFour extends React.Component {
                           {this.state.directorListStatus === null && (
                             <TierDocStatus>
                               <Icon type="warning" />
-                              <span>Under Approval</span>
+                              <span>
+                                {this.t("history:under_approval_text.message")}
+                              </span>
                             </TierDocStatus>
                           )}
                           {this.state.directorListStatus === true && (
                             <TierDocStatus>
                               <Icon type="check" />
-                              <span>Verified</span>
+                              <span>
+                                {this.t("login_page:verified_text.message")}
+                              </span>
                             </TierDocStatus>
                           )}
                           {this.state.directorListStatus === false && (
                             <TierDocStatus>
                               <Icon type="close" />
-                              <span>Reupload it</span>
+                              <span>{this.t("reupload_it_text.message")}</span>
                             </TierDocStatus>
                           )}
                           {this.state.directorListNote && (
@@ -2369,13 +2479,15 @@ class TierFour extends React.Component {
                             {active_business_proof_flag === null && (
                               <div>
                                 <IconS type="upload" />
-                                <FileSelectText>Upload</FileSelectText>
+                                <FileSelectText>
+                                  {this.t("general_4:upload_text.message")}
+                                </FileSelectText>
                               </div>
                             )}
                             {active_business_proof_flag === false && (
                               <div>
                                 <FileSelectText>
-                                  Wrong File Selected
+                                  {this.t("apply_job:wrong_file_text.message")}
                                 </FileSelectText>
                               </div>
                             )}
@@ -2405,14 +2517,19 @@ class TierFour extends React.Component {
                             )}
                         </TierDropWrap>
                         <SupportText className="tier_support_text">
-                          Supported format: .doc, .docx, .pdf.
+                          {this.t("apply_job:supported_formats_text.message")}
                         </SupportText>
                         {this.state.reUpload11
                           ? this.validator1.message(
                               "active_business_proof",
                               active_business_proof_flag,
                               "required",
-                              "tier-text-danger-validation"
+                              "tier-text-danger-validation",
+                              {
+                                required: this.t(
+                                  "general_1:this_field_required_error.message"
+                                ),
+                              }
                             )
                           : delete this.validator1.fields[
                               "active_business_proof"
@@ -2423,19 +2540,23 @@ class TierFour extends React.Component {
                           {this.state.activeBusinessProofStatus === null && (
                             <TierDocStatus>
                               <Icon type="warning" />
-                              <span>Under Approval</span>
+                              <span>
+                                {this.t("history:under_approval_text.message")}
+                              </span>
                             </TierDocStatus>
                           )}
                           {this.state.activeBusinessProofStatus === true && (
                             <TierDocStatus>
                               <Icon type="check" />
-                              <span>Verified</span>
+                              <span>
+                                {this.t("login_page:verified_text.message")}
+                              </span>
                             </TierDocStatus>
                           )}
                           {this.state.activeBusinessProofStatus === false && (
                             <TierDocStatus>
                               <Icon type="close" />
-                              <span>Reupload it</span>
+                              <span>{this.t("reupload_it_text.message")}</span>
                             </TierDocStatus>
                           )}
                           {this.state.activeBusinessProofNote && (
@@ -2492,13 +2613,15 @@ class TierFour extends React.Component {
                             {document_availability_policy_flag === null && (
                               <div>
                                 <IconS type="upload" />
-                                <FileSelectText>Upload</FileSelectText>
+                                <FileSelectText>
+                                  {this.t("general_4:upload_text.message")}
+                                </FileSelectText>
                               </div>
                             )}
                             {document_availability_policy_flag === false && (
                               <div>
                                 <FileSelectText>
-                                  Wrong File Selected
+                                  {this.t("apply_job:wrong_file_text.message")}
                                 </FileSelectText>
                               </div>
                             )}
@@ -2532,14 +2655,19 @@ class TierFour extends React.Component {
                             )}
                         </TierDropWrap>
                         <SupportText className="tier_support_text">
-                          Supported format: .doc, .docx, .pdf.
+                          {this.t("apply_job:supported_formats_text.message")}
                         </SupportText>
                         {this.state.reUpload12
                           ? this.validator1.message(
                               "document_availability_policy",
                               document_availability_policy_flag,
                               "required",
-                              "tier-text-danger-validation"
+                              "tier-text-danger-validation",
+                              {
+                                required: this.t(
+                                  "general_1:this_field_required_error.message"
+                                ),
+                              }
                             )
                           : delete this.validator1.fields[
                               "document_availability_policy"
@@ -2551,21 +2679,25 @@ class TierFour extends React.Component {
                             null && (
                             <TierDocStatus>
                               <Icon type="warning" />
-                              <span>Under Approval</span>
+                              <span>
+                                {this.t("history:under_approval_text.message")}
+                              </span>
                             </TierDocStatus>
                           )}
                           {this.state.documentAvailabilityPolicyStatus ===
                             true && (
                             <TierDocStatus>
                               <Icon type="check" />
-                              <span>Verified</span>
+                              <span>
+                                {this.t("login_page:verified_text.message")}
+                              </span>
                             </TierDocStatus>
                           )}
                           {this.state.documentAvailabilityPolicyStatus ===
                             false && (
                             <TierDocStatus>
                               <Icon type="close" />
-                              <span>Reupload it</span>
+                              <span>{this.t("reupload_it_text.message")}</span>
                             </TierDocStatus>
                           )}
                           {this.state.documentAvailabilityPolicyNote && (
@@ -2619,13 +2751,15 @@ class TierFour extends React.Component {
                             {cookies_policy_flag === null && (
                               <div>
                                 <IconS type="upload" />
-                                <FileSelectText>Upload</FileSelectText>
+                                <FileSelectText>
+                                  {this.t("general_4:upload_text.message")}
+                                </FileSelectText>
                               </div>
                             )}
                             {cookies_policy_flag === false && (
                               <div>
                                 <FileSelectText>
-                                  Wrong File Selected
+                                  {this.t("apply_job:wrong_file_text.message")}
                                 </FileSelectText>
                               </div>
                             )}
@@ -2655,14 +2789,19 @@ class TierFour extends React.Component {
                             )}
                         </TierDropWrap>
                         <SupportText className="tier_support_text">
-                          Supported format: .doc, .docx, .pdf.
+                          {this.t("apply_job:supported_formats_text.message")}
                         </SupportText>
                         {this.state.reUpload13
                           ? this.validator1.message(
                               "cookies_policy",
                               cookies_policy_flag,
                               "required",
-                              "tier-text-danger-validation"
+                              "tier-text-danger-validation",
+                              {
+                                required: this.t(
+                                  "general_1:this_field_required_error.message"
+                                ),
+                              }
                             )
                           : delete this.validator1.fields["cookies_policy"]}
                       </TierUpload>
@@ -2671,19 +2810,23 @@ class TierFour extends React.Component {
                           {this.state.cookiesPolicyStatus === null && (
                             <TierDocStatus>
                               <Icon type="warning" />
-                              <span>Under Approval</span>
+                              <span>
+                                {this.t("history:under_approval_text.message")}
+                              </span>
                             </TierDocStatus>
                           )}
                           {this.state.cookiesPolicyStatus === true && (
                             <TierDocStatus>
                               <Icon type="check" />
-                              <span>Verified</span>
+                              <span>
+                                {this.t("login_page:verified_text.message")}
+                              </span>
                             </TierDocStatus>
                           )}
                           {this.state.cookiesPolicyStatus === false && (
                             <TierDocStatus>
                               <Icon type="close" />
-                              <span>Reupload it</span>
+                              <span>{this.t("reupload_it_text.message")}</span>
                             </TierDocStatus>
                           )}
                           {this.state.cookiesPolicyNote && (
@@ -2736,13 +2879,15 @@ class TierFour extends React.Component {
                             {privacy_policy_flag === null && (
                               <div>
                                 <IconS type="upload" />
-                                <FileSelectText>Upload</FileSelectText>
+                                <FileSelectText>
+                                  {this.t("general_4:upload_text.message")}
+                                </FileSelectText>
                               </div>
                             )}
                             {privacy_policy_flag === false && (
                               <div>
                                 <FileSelectText>
-                                  Wrong File Selected
+                                  {this.t("apply_job:wrong_file_text.message")}
                                 </FileSelectText>
                               </div>
                             )}
@@ -2772,14 +2917,19 @@ class TierFour extends React.Component {
                             )}
                         </TierDropWrap>
                         <SupportText className="tier_support_text">
-                          Supported format: .doc, .docx, .pdf.
+                          {this.t("apply_job:supported_formats_text.message")}
                         </SupportText>
                         {this.state.reUpload14
                           ? this.validator1.message(
                               "privacy_policy",
                               privacy_policy_flag,
                               "required",
-                              "tier-text-danger-validation"
+                              "tier-text-danger-validation",
+                              {
+                                required: this.t(
+                                  "general_1:this_field_required_error.message"
+                                ),
+                              }
                             )
                           : delete this.validator1.fields["privacy_policy"]}
                       </TierUpload>
@@ -2788,19 +2938,23 @@ class TierFour extends React.Component {
                           {this.state.privacyPolicyStatus === null && (
                             <TierDocStatus>
                               <Icon type="warning" />
-                              <span>Under Approval</span>
+                              <span>
+                                {this.t("history:under_approval_text.message")}
+                              </span>
                             </TierDocStatus>
                           )}
                           {this.state.privacyPolicyStatus === true && (
                             <TierDocStatus>
                               <Icon type="check" />
-                              <span>Verified</span>
+                              <span>
+                                {this.t("login_page:verified_text.message")}
+                              </span>
                             </TierDocStatus>
                           )}
                           {this.state.privacyPolicyStatus === false && (
                             <TierDocStatus>
                               <Icon type="close" />
-                              <span>Reupload it</span>
+                              <span>{this.t("reupload_it_text.message")}</span>
                             </TierDocStatus>
                           )}
                           {this.state.privacyPolicyNote && (
@@ -2853,13 +3007,15 @@ class TierFour extends React.Component {
                             {aml_policy_flag === null && (
                               <div>
                                 <IconS type="upload" />
-                                <FileSelectText>Upload</FileSelectText>
+                                <FileSelectText>
+                                  {this.t("general_4:upload_text.message")}
+                                </FileSelectText>
                               </div>
                             )}
                             {aml_policy_flag === false && (
                               <div>
                                 <FileSelectText>
-                                  Wrong File Selected
+                                  {this.t("apply_job:wrong_file_text.message")}
                                 </FileSelectText>
                               </div>
                             )}
@@ -2889,14 +3045,19 @@ class TierFour extends React.Component {
                             )}
                         </TierDropWrap>
                         <SupportText className="tier_support_text">
-                          Supported format: .doc, .docx, .pdf.
+                          {this.t("apply_job:supported_formats_text.message")}
                         </SupportText>
                         {this.state.reUpload15
                           ? this.validator1.message(
                               "aml_policy",
                               aml_policy_flag,
                               "required",
-                              "tier-text-danger-validation"
+                              "tier-text-danger-validation",
+                              {
+                                required: this.t(
+                                  "general_1:this_field_required_error.message"
+                                ),
+                              }
                             )
                           : delete this.validator1.fields["aml_policy"]}
                       </TierUpload>
@@ -2905,19 +3066,23 @@ class TierFour extends React.Component {
                           {this.state.amlPolicyStatus === null && (
                             <TierDocStatus>
                               <Icon type="warning" />
-                              <span>Under Approval</span>
+                              <span>
+                                {this.t("history:under_approval_text.message")}
+                              </span>
                             </TierDocStatus>
                           )}
                           {this.state.amlPolicyStatus === true && (
                             <TierDocStatus>
                               <Icon type="check" />
-                              <span>Verified</span>
+                              <span>
+                                {this.t("login_page:verified_text.message")}
+                              </span>
                             </TierDocStatus>
                           )}
                           {this.state.amlPolicyStatus === false && (
                             <TierDocStatus>
                               <Icon type="close" />
-                              <span>Reupload it</span>
+                              <span>{this.t("reupload_it_text.message")}</span>
                             </TierDocStatus>
                           )}
                           {this.state.amlPolicyNote && (
@@ -2970,13 +3135,15 @@ class TierFour extends React.Component {
                             {terms_of_service_flag === null && (
                               <div>
                                 <IconS type="upload" />
-                                <FileSelectText>Upload</FileSelectText>
+                                <FileSelectText>
+                                  {this.t("general_4:upload_text.message")}
+                                </FileSelectText>
                               </div>
                             )}
                             {terms_of_service_flag === false && (
                               <div>
                                 <FileSelectText>
-                                  Wrong File Selected
+                                  {this.t("apply_job:wrong_file_text.message")}
                                 </FileSelectText>
                               </div>
                             )}
@@ -3006,14 +3173,19 @@ class TierFour extends React.Component {
                             )}
                         </TierDropWrap>
                         <SupportText className="tier_support_text">
-                          Supported format: .doc, .docx, .pdf.
+                          {this.t("apply_job:supported_formats_text.message")}
                         </SupportText>
                         {this.state.reUpload16
                           ? this.validator1.message(
                               "terms_of_service",
                               terms_of_service_flag,
                               "required",
-                              "tier-text-danger-validation"
+                              "tier-text-danger-validation",
+                              {
+                                required: this.t(
+                                  "general_1:this_field_required_error.message"
+                                ),
+                              }
                             )
                           : delete this.validator1.fields["terms_of_service"]}
                       </TierUpload>
@@ -3022,19 +3194,23 @@ class TierFour extends React.Component {
                           {this.state.termsOfServiceStatus === null && (
                             <TierDocStatus>
                               <Icon type="warning" />
-                              <span>Under Approval</span>
+                              <span>
+                                {this.t("history:under_approval_text.message")}
+                              </span>
                             </TierDocStatus>
                           )}
                           {this.state.termsOfServiceStatus === true && (
                             <TierDocStatus>
                               <Icon type="check" />
-                              <span>Verified</span>
+                              <span>
+                                {this.t("login_page:verified_text.message")}
+                              </span>
                             </TierDocStatus>
                           )}
                           {this.state.termsOfServiceStatus === false && (
                             <TierDocStatus>
                               <Icon type="close" />
-                              <span>Reupload it</span>
+                              <span>{this.t("reupload_it_text.message")}</span>
                             </TierDocStatus>
                           )}
                           {this.state.termsOfServiceNote && (
@@ -3063,7 +3239,9 @@ class TierFour extends React.Component {
                         }
                         disabled={!this.state.uploadBtnFlag}
                         onClick={this.handleCancel.bind(this)}
-                        value="Cancel"
+                        value={this.t(
+                          "edit_profile_titles:subhead_personal_form_cancel_btn.message"
+                        )}
                       />
                       <input
                         type="button"
@@ -3073,7 +3251,7 @@ class TierFour extends React.Component {
                             : "upload_btn disabled"
                         }
                         onClick={this.handleSubmit.bind(this)}
-                        value="Upload"
+                        value={this.t("general_4:upload_text.message")}
                         disabled={!this.state.uploadBtnFlag}
                       />
                     </TierButtonRow>
@@ -3119,7 +3297,15 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(TierFour));
+export default translate([
+  "tiers",
+  "general_4",
+  "general_1",
+  "validations",
+  "security_tab",
+  "settings",
+  "login_page",
+  "edit_profile_titles",
+  "general_3",
+  "apply_job",
+])(connect(mapStateToProps, mapDispatchToProps)(withRouter(TierFour)));
