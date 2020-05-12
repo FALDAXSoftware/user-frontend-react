@@ -292,9 +292,9 @@ class BuyTABLE extends Component {
                   <thead>
                     <tr>
                       {/* <th>{this.t("my_size_text.message")}</th> */}
-                      <th>{this.t("wallet:amount_text.message")}</th>
-                      <th>{this.t("bid_text.message")}</th>
-                      <th>{this.t("conversion:total_text.message")}</th>
+                      <th>{this.t("wallet:amount_text.message")} ({this.state.crypto})</th>
+                      <th>{this.t("bid_text.message")} ({this.state.currency})</th>
+                      <th>{this.t("conversion:total_text.message")} ({this.state.currency})</th>
                     </tr>
                   </thead>
                 </TableHeader>
@@ -325,22 +325,24 @@ class BuyTABLE extends Component {
                         ))}
                       </tbody>
                     ) : (
-                      <NDF>{this.t("wallet:no_data_found_text.message")}</NDF>
-                    )}
+                        <NDF>{this.t("wallet:no_data_found_text.message")}</NDF>
+                      )}
                   </TableContent>
                 </Scrollbars>
               </ScrollTableContent>
             </OTwrap2>
           </HistoryWrap1>
-        </BuyTable>
-        {this.state.Loader === true ? (
-          <SpinSingle className="Single_spin">
-            <Spin size="small" />
-          </SpinSingle>
-        ) : (
-          ""
-        )}
-      </div>
+        </BuyTable >
+        {
+          this.state.Loader === true ? (
+            <SpinSingle className="Single_spin">
+              <Spin size="small" />
+            </SpinSingle>
+          ) : (
+              ""
+            )
+        }
+      </div >
     );
   }
 }
