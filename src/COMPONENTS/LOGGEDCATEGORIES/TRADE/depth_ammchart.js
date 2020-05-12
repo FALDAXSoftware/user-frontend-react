@@ -174,7 +174,7 @@ class DepthChartAm extends Component {
                         currency: props.currency
                     },
                     () => {
-                        chart.dataSource.url = `${SOCKET_HOST}api/v1/tradding/depth-chart-details?symbol=${this.props.crypto}-${this.props.currency}`;
+                        chart.dataSource.url = `${SOCKET_HOST}/api/v1/tradding/depth-chart-details?symbol=${this.props.crypto}-${this.props.currency}`;
                         chart.dataSource.load();
                     }
                 );
