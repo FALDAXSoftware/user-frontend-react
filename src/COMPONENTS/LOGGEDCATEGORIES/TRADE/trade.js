@@ -322,7 +322,7 @@ class Trade extends Component {
         this.updateInstrumentsData(data);
       });
       this.props.io.on("user-wallet-balance", (data) => {
-        // console.log("^^^^userdata", data);
+        console.log("^^^^userdata", data);
         this.setState({ userBal: data, userBalLoader: false });
       });
     }
