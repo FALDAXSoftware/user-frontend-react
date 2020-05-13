@@ -204,7 +204,7 @@ class Simplex extends React.Component {
           tempValue2["jwt_token"] = this.props.isLoggedIn;
           this.props.LogoutUser(this.props.isLoggedIn, tempValue2);
         }
-        // this.setState({ loader: false });
+        this.setState({ loader: false });
       })
       .catch((error) => {});
   }
