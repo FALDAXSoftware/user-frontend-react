@@ -45,8 +45,8 @@ class Simplex extends React.Component {
       loader: false,
       currencyToPay: null,
       currencyToGet: null,
-      minCurrency: "50",
-      maxCurrency: "20000",
+      minCurrency: "",
+      maxCurrency: "",
       cryptoList: [],
       crypto: "BTC",
       currency: "USD",
@@ -62,7 +62,10 @@ class Simplex extends React.Component {
     this.t = this.props.t;
     this.validator1 = new SimpleReactValidator({
       minCurrencyValid: {
-        message: this.t("validations:simplex_min_limit_error.message"),
+        // message: this.t("validations:simplex_min_limit_error.message"),
+        message: `${this.t("general_3:amount_gte_validation.message")} ${
+          this.state.minCurrency
+        }`,
         rule: (val, params, validator) => {
           if (parseFloat(val) >= parseFloat(this.state.minCurrency)) {
             return true;
@@ -73,7 +76,9 @@ class Simplex extends React.Component {
         required: true, // optional
       },
       maxCurrencyValid: {
-        message: this.t("validations:simplex_max_limit_error.message"),
+        message: `${this.t("general_3:amount_lte_validation.message")} ${
+          this.state.maxCurrency
+        }`,
         rule: (val, params, validator) => {
           if (parseFloat(val) > parseFloat(this.state.maxCurrency)) {
             return false;
@@ -178,9 +183,20 @@ class Simplex extends React.Component {
       .then((responseData) => {
         if (responseData.status == 200) {
           // console.log("responsedata 200", responseData.object.coinList);
+          var cryptoData = responseData.object.fiat,
+            minLimit,
+            maxLimit;
+          for (var i = 0; i < cryptoData.length; i++) {
+            if (cryptoData[i].coin == this.state.currency) {
+              minLimit = cryptoData[i].min_limit;
+              maxLimit = cryptoData[i].max_limit;
+            }
+          }
           this.setState({
             currencyList: responseData.object.fiat,
             cryptoList: responseData.object.coinList,
+            minCurrency: minLimit,
+            maxCurrency: maxLimit,
           });
         } else if (responseData.status === 403) {
           let tempValue2 = {};
@@ -188,7 +204,7 @@ class Simplex extends React.Component {
           tempValue2["jwt_token"] = this.props.isLoggedIn;
           this.props.LogoutUser(this.props.isLoggedIn, tempValue2);
         }
-        this.setState({ loader: false });
+        // this.setState({ loader: false });
       })
       .catch((error) => {});
   }
@@ -320,9 +336,21 @@ class Simplex extends React.Component {
   }
 
   handleCurrencyChange(value) {
+    var cryptoData = this.state.currencyList,
+      minLimit,
+      maxLimit;
+    for (var i = 0; i < cryptoData.length; i++) {
+      if (cryptoData[i].coin == value) {
+        minLimit = cryptoData[i].min_limit;
+        maxLimit = cryptoData[i].max_limit;
+      }
+    }
     this.setState(
       {
         currency: value,
+        minCurrency: minLimit,
+        maxCurrency: maxLimit,
+        currencyToPay: minLimit,
       },
       () => {
         this.calculateDigitalCurrency();
@@ -402,6 +430,12 @@ class Simplex extends React.Component {
                         numeric: this.t(
                           "general_3:validation_amount_numeric.message"
                         ),
+                        minCurrencyValid: `${this.t(
+                          "general_3:amount_gte_validation.message"
+                        )} ${this.state.minCurrency}`,
+                        maxCurrencyValid: `${this.t(
+                          "general_3:amount_lte_validation.message"
+                        )} ${this.state.maxCurrency}`,
                       }
                     )}
                   </Col>
@@ -409,6 +443,7 @@ class Simplex extends React.Component {
                     {this.state.currencyList &&
                       this.state.currencyList.length > 0 && (
                         <ConversionDropDown
+                          showSearch
                           defaultValue={this.state.currency}
                           onChange={this.handleCurrencyChange}
                         >
@@ -422,7 +457,7 @@ class Simplex extends React.Component {
                               >
                                 {" "}
                                 <DropIcon
-                                  src={cur.coin_icon}
+                                  src={`${_AMAZONBUCKET}${cur.coin_icon}`}
                                   height="20px"
                                 />{" "}
                                 {cur.coin}
@@ -447,6 +482,7 @@ class Simplex extends React.Component {
                   <Col xs={12} sm={12} md={8} className="value-display">
                     {this.state.cryptoList && this.state.cryptoList.length > 0 && (
                       <ConversionDropDown
+                        showSearch
                         defaultValue={this.state.crypto}
                         onChange={this.handleCryptoChange}
                       >

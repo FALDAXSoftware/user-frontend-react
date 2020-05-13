@@ -1,7 +1,7 @@
 /* BUilt-in Packages */
 import styled from "styled-components";
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import "antd/dist/antd.css";
 import { Button, Menu, Modal, Dropdown, Icon, Input, Tooltip } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -22,6 +22,18 @@ import * as allCoinsData from "ACTIONS/LOGGEDCAT/walletActions";
 import { globalVariables } from "Globals.js";
 
 /* Styled-Components */
+const LoginButton = styled(Button)`
+  font-size: 14px;
+  font-family: "Open Sans";
+  color: rgb(255, 255, 255);
+  color: white;
+  height: 40px;
+  background-color: #4c84ff;
+  margin: 0 22px 0 0;
+  @media (max-width: 450px) {
+    height: 35px;
+  }
+`;
 const RightDiv = styled.div`
   float: right;
   display: flex;
@@ -32,7 +44,7 @@ const UserName = styled.div`
   display: inline-block;
   font-size: 13px;
   font-family: "Open sans";
-  color: ${props => (props.theme.mode === "dark" ? "white" : "black")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "black")};
   font-weight: 600;
   @media (max-width: 576px) {
     display: none;
@@ -47,13 +59,16 @@ const Open = styled.span`
   font-size: 30px;
   cursor: pointer;
   margin-top: 10px;
-  color: ${props => (props.theme.mode === "dark" ? "white" : "black")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "black")};
   @media (max-width: 1200px) {
     display: inline-block;
     margin-right: 15px;
   }
   @media (max-width: 576px) {
     margin-top: 12px;
+  }
+  @media (max-width: 450px) {
+    margin-top: 0;
   }
 `;
 const HeaderAvatar = styled.div`
@@ -78,7 +93,7 @@ const DropDownDiv = styled(Dropdown)`
       display: flex;
       align-items: center;
       font-weight: 600;
-      color: ${props => (props.theme.mode === "dark" ? "white" : "black")};
+      color: ${(props) => (props.theme.mode === "dark" ? "white" : "black")};
       > img {
         margin: 0 5px 0 0;
       }
@@ -100,7 +115,7 @@ const DropDownDiv = styled(Dropdown)`
     margin-top: 10px;
   }
   @media (max-width: 360px) {
-    display: none;
+    // display: none;
   }
   @media (max-width: 576px) {
     margin-right: 10px;
@@ -134,7 +149,7 @@ class Afterlog extends Component {
     this.state = {
       comingSoon: false,
       selected: false,
-      fontColor: ""
+      fontColor: "",
     };
     this.t = this.props.t;
   }
@@ -148,13 +163,13 @@ class Afterlog extends Component {
           this.setState({
             fontColor: "black",
             themeIcon: faMoon,
-            iconTitle: this.t("general_4:change_to_night_text.message")
+            iconTitle: this.t("general_4:change_to_night_text.message"),
           });
         else
           this.setState({
             fontColor: "white",
             themeIcon: faSun,
-            iconTitle: this.t("general_4:change_to_day_text.message")
+            iconTitle: this.t("general_4:change_to_day_text.message"),
           });
       }
     }
@@ -166,13 +181,13 @@ class Afterlog extends Component {
           this.setState({
             fontColor: "black",
             themeIcon: faMoon,
-            iconTitle: this.t("general_4:change_to_night_text.message")
+            iconTitle: this.t("general_4:change_to_night_text.message"),
           });
         else
           this.setState({
             fontColor: "white",
             themeIcon: faSun,
-            iconTitle: this.t("general_4:change_to_day_text.message")
+            iconTitle: this.t("general_4:change_to_day_text.message"),
           });
       }
     }
@@ -186,7 +201,7 @@ class Afterlog extends Component {
             It is modal of Coming Soon.
     */
 
-  handleComing = e => {
+  handleComing = (e) => {
     this.setState({ comingSoon: false });
   };
 
@@ -198,7 +213,7 @@ class Afterlog extends Component {
             It is called when we click close button on Modal.
     */
 
-  comingCancel = e => {
+  comingCancel = (e) => {
     this.setState({ comingSoon: false });
   };
 
@@ -215,7 +230,7 @@ class Afterlog extends Component {
   logout() {
     let formData = {
       user_id: this.props.profileDetails.id,
-      jwt_token: this.props.isLoggedIn
+      jwt_token: this.props.isLoggedIn,
     };
     this.props.actions.allCoins.allCoinsData();
     this.props.actions.wallet.walletData();
@@ -233,19 +248,19 @@ class Afterlog extends Component {
       flag = false;
       this.setState({
         themeIcon: faSun,
-        iconTitle: this.t("general_4:change_to_night_text.message")
+        iconTitle: this.t("general_4:change_to_night_text.message"),
       });
     } else {
       this.setState({
         themeIcon: faMoon,
-        iconTitle: this.t("general_4:change_to_day_text.message")
+        iconTitle: this.t("general_4:change_to_day_text.message"),
       });
       flag = true;
     }
     this.props.actions.theme.darkTheme(flag);
   }
 
-  onChange = e => {
+  onChange = (e) => {
     // Pages that redirect from WordPress with lng params
     let lngQueryParamsUrls = [
       "/open-ticket",
@@ -253,7 +268,7 @@ class Afterlog extends Component {
       "/crypto-conversion",
       "/conversion",
       "/editProfile",
-      "/careers"
+      "/careers",
     ];
     // remove queryParams in case of found from list else reload component.
     if (lngQueryParamsUrls.indexOf(window.location.pathname) != -1) {
@@ -370,28 +385,40 @@ class Afterlog extends Component {
             )}
           </div>
         </DropDownDiv>
-        <DropDownDiv
-          className="Drop-main"
-          overlay={DropdownItems}
-          trigger={["click"]}
-        >
-          <AnchorName className="ant-dropdown-link" href="#">
-            <HeaderAvatar
-              style={{ backgroundImage: "url('" + Avatar_img + "')" }}
-            />
-            <UserName>
-              {this.props.prof_name}
-              <DownIcon type="caret-down" theme="outlined" />
-            </UserName>
-          </AnchorName>
-        </DropDownDiv>
+        {this.props.isLoggedIn ? (
+          <DropDownDiv
+            className="Drop-main"
+            overlay={DropdownItems}
+            trigger={["click"]}
+          >
+            <AnchorName className="ant-dropdown-link" href="#">
+              <HeaderAvatar
+                style={{ backgroundImage: "url('" + Avatar_img + "')" }}
+              />
+              <UserName>
+                {this.props.prof_name}
+                <DownIcon type="caret-down" theme="outlined" />
+              </UserName>
+            </AnchorName>
+          </DropDownDiv>
+        ) : (
+          <LoginButton
+            onClick={() => {
+              console.log("ashgd");
+              this.props.history.push("/");
+            }}
+          >
+            Login
+          </LoginButton>
+        )}
+
         <Open onClick={() => this.openNav()}>&#9776;</Open>
         <div>
           <Modal
             title={<img alt="modal logo" src={_FOOTERLOGO} />}
             visible={this.state.comingSoon}
-            onOk={e => this.handleComing()}
-            onCancel={e => this.comingCancel(e)}
+            onOk={(e) => this.handleComing()}
+            onCancel={(e) => this.comingCancel(e)}
             footer={null}
             width={520}
             height={150}
@@ -413,7 +440,7 @@ class Afterlog extends Component {
                 placeholder="Please enter your email address"
                 // style={{ color: "#00a7ff", borderColor: "#00a7ff" }}
                 value={this.state.email_address}
-                onChange={e => {
+                onChange={(e) => {
                   this.setState({ email_address: e.target.value });
                 }}
               />
@@ -446,7 +473,7 @@ function mapStateToProps(state) {
       ? state.simpleReducer.isLoggedIn
       : "",
     theme:
-      state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
+      state.themeReducer.theme !== undefined ? state.themeReducer.theme : "",
   };
 }
 
@@ -456,12 +483,12 @@ function mapDispatchToProps(dispatch) {
       auth: bindActionCreators(LogoutUser, dispatch),
       theme: bindActionCreators(darkTheme, dispatch),
       wallet: bindActionCreators(walletData, dispatch),
-      allCoins: bindActionCreators(allCoinsData, dispatch)
+      allCoins: bindActionCreators(allCoinsData, dispatch),
       //LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
-    }
+    },
   };
 }
 
 export default translate(["header", "general_4"])(
-  connect(mapStateToProps, mapDispatchToProps)(Afterlog)
+  connect(mapStateToProps, mapDispatchToProps)(withRouter(Afterlog))
 );
