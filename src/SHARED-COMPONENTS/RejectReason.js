@@ -9,7 +9,7 @@ import {
   Col,
   Button,
   Tabs,
-  Progress
+  Progress,
 } from "antd";
 import { withRouter } from "react-router-dom";
 import { globalVariables } from "Globals.js";
@@ -30,22 +30,23 @@ class RejectReason extends Component {
       email_msg: "",
       loader: false,
       activeKey: "1",
-      visible: false
+      visible: false,
     };
+    this.t = this.props.t;
     // this.callback = this.callback.bind(this);
     // this.logout = this.logout.bind(this);
   }
   componentDidMount() {}
   showCofirmModal = () => {
     this.setState({
-      visible: true
+      visible: true,
     });
   };
 
-  handleOk = e => {
+  handleOk = (e) => {
     this.setState(
       {
-        visible: false
+        visible: false,
       },
       () => {
         this.logout();
@@ -53,16 +54,16 @@ class RejectReason extends Component {
     );
   };
 
-  handleCancel = e => {
+  handleCancel = (e) => {
     this.setState({
-      visible: false
+      visible: false,
     });
   };
-  handleComing = e => {
+  handleComing = (e) => {
     this.setState({ comingSoon: false });
   };
 
-  comingCancel = e => {
+  comingCancel = (e) => {
     this.setState({ comingSoon: false });
     this.props.comingCancel(e);
   };
@@ -77,12 +78,12 @@ class RejectReason extends Component {
             <div>
               {/* <img alt="FALDAX" src={_COMINGIMG} />{" "}
               <img className="faldax_logo" alt="FALDAX" src={_COMINGIMG2} /> */}
-              Rejection Reason
+              {this.t("rejection_reason_text.message")}
             </div>
           }
           visible={this.props.visible}
-          onOk={e => this.handleComing()}
-          onCancel={e => this.comingCancel(e)}
+          onOk={(e) => this.handleComing()}
+          onCancel={(e) => this.comingCancel(e)}
           //   closable={false}
           //   maskClosable={false}
           footer={null}
@@ -104,17 +105,18 @@ function mapStateToProps(state, ownProps) {
     // isLoggedIn: state.simpleReducer.isLoggedIn ? true : false,
     profileDetails: state.simpleReducer.profileDetails
       ? state.simpleReducer.profileDetails.data[0]
-      : ""
+      : "",
   };
 }
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   //Logout: () => dispatch(Logout()),
-  LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
+  LogoutUser: (isLoggedIn, user_id) =>
+    dispatch(LogoutUser(isLoggedIn, user_id)),
 });
 
 // export default withRouter(AgreeTerms);
 
-export default translate(["edit_profile_titles", "validations"])(
+export default translate(["tiers"])(
   connect(mapStateToProps, mapDispatchToProps)(withRouter(RejectReason))
 );

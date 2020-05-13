@@ -142,7 +142,7 @@ class Limit extends Component {
       buyPayAmt: 0,
       sellPayAmt: 0,
       loader: false,
-      fiatCurrency: "$",
+      fiatCurrency: "USD",
       // fiatCryptoValue: this.props.userBal.cryptoFiat,
       // fiatCurrencyValue: this.props.userBal.currencyFiat,
       singlefiatCryptoValue: this.props.userBal.cryptoFiat,
@@ -246,7 +246,7 @@ class Limit extends Component {
             if (value > 0 && name === "amount") {
               let fiatValue =
                 parseFloat(this.state.singlefiatCurrencyValue) *
-                parseFloat(value).toFixed(8);
+                parseFloat(obj["total"]).toFixed(8);
               this.setState({
                 fiatCurrencyValue: fiatValue,
               });
@@ -255,7 +255,7 @@ class Limit extends Component {
             if (value > 0 && name === "amount") {
               let fiatValue =
                 parseFloat(this.state.singlefiatCurrencyValue) *
-                parseFloat(value).toFixed(8);
+                parseFloat(obj["total"]).toFixed(8);
               this.setState({
                 fiatCurrencyValue: fiatValue,
               });
@@ -735,8 +735,7 @@ class Limit extends Component {
                     )}
                   </WillpayBelow>
                   <WillpayBelow2>
-                    {this.state.fiatCurrency}{" "}
-                    {parseFloat(this.state.fiatCurrencyValue).toFixed(8)}
+                    {parseFloat(this.state.fiatCurrencyValue).toFixed(8)} {" "} {this.state.fiatCurrency}
                   </WillpayBelow2>
                 </ApproxBelow>
                 <ApproxBelow>
@@ -776,8 +775,7 @@ class Limit extends Component {
                       )}
                     </WillpayBelow>
                     <WillpayBelow2>
-                      {this.state.fiatCurrency}{" "}
-                      {parseFloat(this.state.fiatCurrencyValue).toFixed(8)}
+                      {parseFloat(this.state.fiatCurrencyValue).toFixed(8)} {" "} {this.state.fiatCurrency}
                     </WillpayBelow2>
                   </ApproxBelow>
                   <ApproxBelow>

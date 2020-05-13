@@ -91,6 +91,9 @@ const SubMenuNav = styled(SubMenu)`
 const FALDAX = styled.img`
   cursor: pointer;
   margin-left: 10px;
+  @media (max-width: 450px) {
+    max-width: 50%;
+  }
 `;
 const Logo = styled.div`
   display: inline-flex;
@@ -167,6 +170,9 @@ const Menuitem = styled(Menu.Item)`
 ` */
 const FALDAXLOGO = styled.img`
   padding-left: 22px;
+  @media (max-width: 450px) {
+    max-width: 25%;
+  }
 `;
 const SideNav = styled.div`
   height: 100%;

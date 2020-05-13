@@ -23,7 +23,7 @@ export function profileupdateAction(isLoggedIn, form) {
           dispatch(profileupdatedData(responseData));
           dispatch(getProfileDataAction(isLoggedIn));
         }
-        dispatch(removeLoader());
+        // dispatch(removeLoader());
       })
       .catch((error) => {
         dispatch(removeLoader());
