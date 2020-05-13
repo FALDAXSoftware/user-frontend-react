@@ -3762,5 +3762,235 @@
       "message_type": "Web content",
       "context": "Limit Exceeded label text"
     }
+  },
+  "static_info_pages": {
+    "image_requirements_text": {
+      "page": "Tier Image Information",
+      "message": "Image requirements",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "for_id_documents_text": {
+      "page": "Tier Image Information",
+      "message": " for ID documents",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "for_intermediate_text": {
+      "page": "Tier Image Information",
+      "message": "For Intermediate and Pro level verification, we only accept",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "valid_id_documents_text": {
+      "page": "Tier Image Information",
+      "message": "valid government-issued ID documents.",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "acceptable_id_scan_text": {
+      "page": "Tier Image Information",
+      "message": "What is an acceptable ID scan/photo",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "reason_for_rejection_text": {
+      "page": "Tier Image Information",
+      "message": "Reasons for rejection",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "full_color_image_text": {
+      "page": "Tier Image Information",
+      "message": "Full color image",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "image_black_and_white_text": {
+      "page": "Tier Image Information",
+      "message": "Image is black & white (or grayscale)",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "all_details_on_id_text": {
+      "page": "Tier Image Information",
+      "message": "All details on ID are readable",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "image_watermark_text": {
+      "page": "Tier Image Information",
+      "message": "Image has a watermark",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "image_blurred_text": {
+      "page": "Tier Image Information",
+      "message": "Image is blurred",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "image_obfuscation_text": {
+      "page": "Tier Image Information",
+      "message": "Image has any other obfuscation",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "id_is_well_lit_text": {
+      "page": "Tier Image Information",
+      "message": "ID is well lit",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "id_glare_reflections_text": {
+      "page": "Tier Image Information",
+      "message": "ID details are obscured by light glare or reflections (be careful with flash!)",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "id_in_good_shape_text": {
+      "page": "Tier Image Information",
+      "message": "ID is in good shape",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "id_torn_holes_text": {
+      "page": "Tier Image Information",
+      "message": "ID is torn, badly damaged, or has holes",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "id_upright_text": {
+      "page": "Tier Image Information",
+      "message": "ID is in upright position",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "id_rotated_text": {
+      "page": "Tier Image Information",
+      "message": "ID is rotated sideways or upside-down",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "id_occupies_most_image_text": {
+      "page": "Tier Image Information",
+      "message": "ID occupies most of the image",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "too_much_space_text": {
+      "page": "Tier Image Information",
+      "message": "Too much space around the ID",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "background_visible_text": {
+      "page": "Tier Image Information",
+      "message": "Background is visible all around the ID by 1-2 cm (1/2'-1')",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "id_edge_cropped_text": {
+      "page": "Tier Image Information",
+      "message": "ID edge is cropped (even if 'just a little bit')",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "us_image_requirement_text": {
+      "page": "Tier Image Information",
+      "message": "US Image requirements",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "background_color_text": {
+      "page": "Tier Image Information",
+      "message": "Background is a contrasting color (e.g. dark for light colored ID)",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "similar_color_id_text": {
+      "page": "Tier Image Information",
+      "message": "Background is the same or similar color as the ID",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "good_scan_photo_text": {
+      "page": "Tier Image Information",
+      "message": "How can I take a good scan/photo",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "click_here_for_tips_text": {
+      "page": "Tier Image Information",
+      "message": "Click here for tips on how to get the scan/photo just right.",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "technical_parameters_text": {
+      "page": "Tier Image Information",
+      "message": "You will also need to make sure that your photo/scan meets our technical parameters.",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "good_examples_text": {
+      "page": "Tier Image Information",
+      "message": "Good examples",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "ideal_photo_scan_text": {
+      "page": "Tier Image Information",
+      "message": "An ideal scan/photo of an ID card",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "ideal_scan_passport_text": {
+      "page": "Tier Image Information",
+      "message": "An ideal scan/photo of a passport",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "unacceptable_examples_text": {
+      "page": "Tier Image Information",
+      "message": "Unacceptable examples",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "id_too_blurry_text": {
+      "page": "Tier Image Information",
+      "message": "ID is too blurry",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "id_edges_not_visible_text": {
+      "page": "Tier Image Information",
+      "message": "ID edges are not visible",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "little_bit_crop_text": {
+      "page": "Tier Image Information",
+      "message": "Even a little bit of crop is ",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "not_ok_text": {
+      "page": "Tier Image Information",
+      "message": "not OK...",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "id_not_in_color_text": {
+      "page": "Tier Image Information",
+      "message": "ID is not in color",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "background_not_contrasting_text": {
+      "page": "Tier Image Information",
+      "message": "Background is not contrasting",
+      "message_type": "Web content",
+      "context": "Static text"
+    }
   }
 }

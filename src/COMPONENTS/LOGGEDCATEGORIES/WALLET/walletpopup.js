@@ -1136,7 +1136,7 @@ class WalletPopup extends Component {
                             }
                             displayType={"text"}
                             thousandSeparator={true}
-                            suffix=" USD"
+                            prefix="$"
                           />
                         </span>
                       </TotPay>
@@ -1186,7 +1186,7 @@ class WalletPopup extends Component {
                               }
                               displayType={"text"}
                               thousandSeparator={true}
-                              suffix=" USD"
+                              prefix="$"
                             />
                           )}
                         </td>
@@ -1205,7 +1205,7 @@ class WalletPopup extends Component {
                               }
                               displayType={"text"}
                               thousandSeparator={true}
-                              suffix=" USD"
+                              prefix="$"
                             />
                           )}
                         </td>
@@ -1221,7 +1221,7 @@ class WalletPopup extends Component {
                               }
                               displayType={"text"}
                               thousandSeparator={true}
-                              suffix=" USD"
+                              prefix="$"
                             />
                           )}
                         </td>
@@ -1251,7 +1251,7 @@ class WalletPopup extends Component {
                               }
                               displayType={"text"}
                               thousandSeparator={true}
-                              suffix=" USD"
+                              prefix="$"
                             />
                           </td>
                           <td>
@@ -1263,7 +1263,7 @@ class WalletPopup extends Component {
                               }
                               displayType={"text"}
                               thousandSeparator={true}
-                              suffix=" USD"
+                              prefix="$"
                             />
                           </td>
                         </tr>
