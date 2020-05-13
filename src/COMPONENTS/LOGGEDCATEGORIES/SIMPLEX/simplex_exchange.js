@@ -717,7 +717,7 @@ class SimplexExchange extends React.Component {
                         )} ${this.state.minCurrency}`,
                         maxCurrencyValid: `${this.t(
                           "general_3:amount_lte_validation.message"
-                        )} ${this.state.minCurrency}`,
+                        )} ${this.state.maxCurrency}`,
                       }
                     )}
                   </Col>
