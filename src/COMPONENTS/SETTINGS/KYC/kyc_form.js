@@ -202,7 +202,7 @@ class KYCForm extends Component {
       firstname: {
         // name the rule
         message: this.t("sign_up:first_name_error.message"), // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
-        rule: function(val, options) {
+        rule: function (val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
           var re = /^[a-zA-Z0-9?']{2,5000}$/;
@@ -213,7 +213,7 @@ class KYCForm extends Component {
       lastname: {
         // name the rule
         message: this.t("sign_up:last_name_error.message"), // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
-        rule: function(val, options) {
+        rule: function (val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
           var re = /^[a-zA-Z0-9?']{2,5000}$/;
@@ -224,7 +224,7 @@ class KYCForm extends Component {
       oneapostrophe: {
         // name the rule
         message: this.t("validations:apostrophe_first_name.message"), // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
-        rule: function(val, options) {
+        rule: function (val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
           // var re = /^[a-zA-Z0-9?']{2,15}$/;
@@ -238,7 +238,7 @@ class KYCForm extends Component {
       streetaddress: {
         // name the rule
         message: this.t("validations:no_suffix_prefix_error.message"), // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
-        rule: function(val, options) {
+        rule: function (val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
           var re = val.trim(" ");
@@ -254,7 +254,7 @@ class KYCForm extends Component {
       onlyNumber: {
         // name the rule
         message: this.t("only_number_not_allowed.message"), // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
-        rule: function(val, options) {
+        rule: function (val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
           var re = /^[0-9]*$/;
@@ -265,7 +265,7 @@ class KYCForm extends Component {
       mobileVal: {
         // name the rule
         message: this.t("validations:mobile_no_error.message"), // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
-        rule: function(val, options) {
+        rule: function (val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
           var re = /^(\(?\+?[0-9]*\)?)?[0-9_\-\(\)]*$/;
@@ -275,7 +275,7 @@ class KYCForm extends Component {
       },
       zipValid: {
         message: this.t("validations:postal_code_letters_numbers.message"), // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
-        rule: function(val, options) {
+        rule: function (val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
           var re = /^(?=.*[0-9a-zA-Z])[-0-9a-zA-Z]+$/;
@@ -500,7 +500,7 @@ class KYCForm extends Component {
           //     loader: false,
           //   });
           // } else {
-          // console.log("kyc else^^^", this.props.profileDetails.country);
+          console.log("kyc else^^^", this.props.profileDetails);
           let profileData = this.props.profileDetails;
           fields["first_name"] =
             profileData.first_name !== null ? profileData.first_name : "";
@@ -1314,7 +1314,7 @@ class KYCForm extends Component {
                 type="primary"
                 onClick={this.onSubmit}
               >
-                Next
+                {t("identity_verification:subhead_btn_next.message")}
               </Savekyc>
             </Col>
           </FifthRowkyc>

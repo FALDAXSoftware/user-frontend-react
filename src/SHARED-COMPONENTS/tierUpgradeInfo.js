@@ -50,12 +50,12 @@ class TierUpgradeInfo extends Component {
       minimumWalletBalance: "",
       tierId: "",
     };
+    this.t = this.props.t;
     // this.callback = this.callback.bind(this);
     // this.logout = this.logout.bind(this);
   }
   componentWillReceiveProps(props) {
     if (props) {
-      console.log("test props^^", props.userUpgradeData);
       var requirement_1 = props.userUpgradeData.requirement_1;
       var requirement_2 = props.userUpgradeData.requirement_2;
       let temp1 = [];
@@ -85,13 +85,9 @@ class TierUpgradeInfo extends Component {
           : "0",
         tierId: props.current_tier_id,
       });
-      console.log("sdafsdf", props.current_tier_id);
     }
   }
   componentDidMount() {
-    console.log("test^^", this.props.userUpgradeData);
-    // var requirement_1 = this.props.userUpgradeData.requirement_1;
-    // var requirement_2 = this.props.userUpgradeData.requirement_2;
     var requirement_1 = {
       ageRemaining: 25,
       tradeCountRemaining: 150,
@@ -104,37 +100,29 @@ class TierUpgradeInfo extends Component {
     for (var key in requirement_1) {
       temp1[`${key}`] = requirement_1[key];
     }
-    this.setState({ response1: temp1 }, () => {
-      console.log("requireq1^^^", this.state.response1);
-    });
+    this.setState({ response1: temp1 });
     let temp2 = [];
     for (var key1 in requirement_2) {
       temp2[`${key1}`] = requirement_2[key1];
     }
-    this.setState(
-      {
-        response2: temp2,
-        ageCheck: this.props.userUpgradeData.req1_ageCheck,
-        tradeCountCheck: this.props.userUpgradeData.req1_tradeCountCheck,
-        tradeTotalFiatCheck: this.props.userUpgradeData
-          .req1_tradeTotalFiatCheck,
-        tradeWalletCheck: this.props.userUpgradeData.req2_tradeWalletCheck,
-        minimumAccountAge: this.props.minimumAccountAge,
-        minimumNumberOfTrades: this.props.minimumNumberOfTrades
-          ? this.props.minimumNumberOfTrades
-          : "0",
-        minimumTradeValue: this.props.minimumTradeValue
-          ? this.props.minimumTradeValue
-          : "0",
-        minimumWalletBalance: this.props.minimumWalletBalance
-          ? this.props.minimumWalletBalance
-          : "0",
-        tierId: this.props.current_tier_id,
-      },
-      () => {
-        console.log("requireq1^^^", this.props.current_tier_id);
-      }
-    );
+    this.setState({
+      response2: temp2,
+      ageCheck: this.props.userUpgradeData.req1_ageCheck,
+      tradeCountCheck: this.props.userUpgradeData.req1_tradeCountCheck,
+      tradeTotalFiatCheck: this.props.userUpgradeData.req1_tradeTotalFiatCheck,
+      tradeWalletCheck: this.props.userUpgradeData.req2_tradeWalletCheck,
+      minimumAccountAge: this.props.minimumAccountAge,
+      minimumNumberOfTrades: this.props.minimumNumberOfTrades
+        ? this.props.minimumNumberOfTrades
+        : "0",
+      minimumTradeValue: this.props.minimumTradeValue
+        ? this.props.minimumTradeValue
+        : "0",
+      minimumWalletBalance: this.props.minimumWalletBalance
+        ? this.props.minimumWalletBalance
+        : "0",
+      tierId: this.props.current_tier_id,
+    });
   }
   showCofirmModal = () => {
     this.setState({
@@ -168,8 +156,6 @@ class TierUpgradeInfo extends Component {
   };
 
   render() {
-    console.log("sfhdjkf", this.state.tierId);
-    let { t } = this.props;
     let {
       response1,
       response2,
@@ -185,56 +171,52 @@ class TierUpgradeInfo extends Component {
     } = this.state;
     return (
       <div>
-        {/* {this.props.visible && ( */}
         <Modal
-          title={
-            <div>
-              {/* <img alt="FALDAX" src={_COMINGIMG} />{" "}
-              <img className="faldax_logo" alt="FALDAX" src={_COMINGIMG2} /> */}
-              Tier Upgrade Info
-            </div>
-          }
+          title={<div>{this.t("tier_upgrade_info_text.message")}</div>}
           visible={this.props.visible}
           onOk={(e) => this.handleComing()}
           onCancel={(e) => this.comingCancel(e)}
-          //   closable={false}
-          //   maskClosable={false}
           footer={null}
           width="35%"
-          //   height="82%"
-          //   className="terms-outer-wrap"
         >
           <ModalAgreeWrap className="reject_reason_div">
             <p>
-              Before upgrading to Tier {tierId} account, Please fulfill any of
-              the below requirement set.
+              {this.t("tier_popup_subtext1_text.message")}
+              {tierId}
+              {this.t("tier_popup_subtext2_text.message")}
             </p>
             {/* <h5>Requirement set 1</h5> */}
             <UpgradeTable>
               <thead>
                 <tr>
-                  <th className="title">Title</th>
-                  <th>Requirement</th>
-                  <th>Your Data</th>
+                  <th className="title">{this.t("title_text.message")}</th>
+                  <th>{this.t("requirement_text.message")}</th>
+                  <th>{this.t("your_data_text.message")}</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td className="title">Minimum Account Age (Days)</td>
+                  <td className="title">
+                    {this.t("Minimum_account_age_text.message")}
+                  </td>
                   <td>{minimumAccountAge}</td>
                   <td className={ageCheck ? "green" : "red"}>
                     {response1.ageRemaining}
                   </td>
                 </tr>
                 <tr>
-                  <td className="title">Minimum Number of Trades</td>
+                  <td className="title">
+                    {this.t("Minimum_no_of_trades_text.message")}
+                  </td>
                   <td>{minimumNumberOfTrades}</td>
                   <td className={tradeCountCheck ? "green" : "red"}>
                     {response1.tradeCountRemaining}
                   </td>
                 </tr>
                 <tr>
-                  <td className="title">Minimum Total USD Value of Trades</td>
+                  <td className="title">
+                    {this.t("Minimum_total_value_of_trades_text.message")}
+                  </td>
                   <td>
                     <NumberFormat
                       value={`${parseFloat(minimumTradeValue).toFixed(2)}`}
@@ -262,21 +244,23 @@ class TierUpgradeInfo extends Component {
             </UpgradeTable>
             <BtnLink>
               <Link to="/trade">
-                <button>Trade Now</button>
+                <button>{this.t("trade_now_text.message")}</button>
               </Link>
             </BtnLink>
             <SpanOr>Or</SpanOr>
             <UpgradeTable>
               <thead>
                 <tr>
-                  <th className="title">Title</th>
-                  <th>Requirement</th>
-                  <th>Your Data</th>
+                  <th className="title">{this.t("title_text.message")}</th>
+                  <th>{this.t("requirement_text.message")}</th>
+                  <th>{this.t("your_data_text.message")}</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td className="title">Total Wallet USD value</td>
+                  <td className="title">
+                    {this.t("total_value_of_trades_text.message")}
+                  </td>
                   <td>
                     <NumberFormat
                       value={`${parseFloat(minimumWalletBalance).toFixed(2)}`}
@@ -304,7 +288,7 @@ class TierUpgradeInfo extends Component {
             </UpgradeTable>
             <BtnLink>
               <Link to="/wallet">
-                <button>Add Funds to Wallet</button>
+                <button>{this.t("add_funds_to_wallet_text.message")}</button>
               </Link>
             </BtnLink>
           </ModalAgreeWrap>
@@ -331,6 +315,6 @@ const mapDispatchToProps = (dispatch) => ({
 
 // export default withRouter(AgreeTerms);
 
-export default translate(["edit_profile_titles", "validations"])(
+export default translate(["tiers", "edit_profile_titles", "validations"])(
   connect(mapStateToProps, mapDispatchToProps)(withRouter(TierUpgradeInfo))
 );

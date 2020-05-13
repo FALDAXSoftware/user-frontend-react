@@ -1798,6 +1798,7 @@ class PersonalDetails extends Component {
         street1Icon: null,
         street2Icon: null,
         postalIcon: null,
+        dataDate:null,
         date_format: this.state.profileDetails.date_format,
         fiat: this.state.profileDetails.fiat,
         stateSelected: this.state.profileDetails.state,
