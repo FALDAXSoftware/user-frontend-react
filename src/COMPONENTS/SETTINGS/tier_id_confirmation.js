@@ -215,7 +215,7 @@ class TierIDConfirmation extends React.Component {
                     <p>
                       You can upload your IDCP in your FALDAX account on the{" "}
                       <b>
-                        <Link to="/tier3">Identity Verification > Tier 3.</Link>
+                        <Link to="/tier3">Identity Verification {'>'} Tier 3.</Link>
                       </b>{" "}
                     </p>
                     <p>
