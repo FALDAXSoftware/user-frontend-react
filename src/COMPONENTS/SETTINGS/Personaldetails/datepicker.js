@@ -108,6 +108,12 @@ export default class Datepicker extends Component {
           year: dob.getFullYear()
         });
       }
+    }else{
+      this.setState({
+        day: "",
+        month:"",
+        year: ""
+      });
     }
   };
   componentWillReceiveProps(newProps) {

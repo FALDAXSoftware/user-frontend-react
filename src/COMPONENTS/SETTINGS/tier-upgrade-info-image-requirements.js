@@ -11,7 +11,7 @@ import {
   TierAnswerTable,
   TierExamplesHead,
   TierExamplesSubHead,
-  TierImageWrap
+  TierImageWrap,
 } from "../../STYLED-COMPONENTS/TIER/tierStyle";
 import { Link } from "react-router-dom";
 

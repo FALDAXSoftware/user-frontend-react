@@ -25,6 +25,8 @@ import classNames from "classnames";
 import { withRouter, Redirect, Link } from "react-router-dom";
 import TierUpgradeInfo from "../../SHARED-COMPONENTS/tierUpgradeInfo";
 import NumberFormat from "react-number-format";
+import { translate } from "react-i18next";
+import { SecondLabel } from "../../STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle";
 
 let { API_URL } = globalVariables;
 let self;
@@ -43,6 +45,7 @@ class Tier extends Component {
       current_tier_id: "",
     };
     self = this;
+    self.t = self.props.t;
   }
 
   componentDidMount() {
@@ -61,11 +64,8 @@ class Tier extends Component {
           tierData: responseData.data,
           loader: false,
         });
-        // console.log("tierData", responseData.data);
       })
-      .catch((error) => {
-        // console.log(error);
-      });
+      .catch((error) => {});
   }
   comingCancel = (e) => {
     this.setState({
@@ -74,7 +74,6 @@ class Tier extends Component {
   };
   checkTierRequirements = (id) => {
     this.setState({ loader: true });
-    console.log("Tier check^^^", id);
     let values = {
       tier_requested: id,
     };
@@ -89,7 +88,6 @@ class Tier extends Component {
       .then((response) => response.json())
       .then((responseData) => {
         if (responseData.status === 200) {
-          // this.props.history.push(`tier${id}`);
           this.props.history.push({
             pathname: `tier${id}`,
             state: {
@@ -97,39 +95,31 @@ class Tier extends Component {
             },
           });
         } else if (responseData.status === 202) {
-          console.log(
-            "responseData^^^",
-            responseData,
-            this.state.tierData[id].minimum_activity_thresold.Account_Age
-          );
           let id_value = parseInt(id) - 1;
-          this.setState(
-            {
-              userUpgradeData: responseData.data,
-              tierUpgradePopup: true,
-              minimumAccountAge: this.state.tierData[id_value]
-                .minimum_activity_thresold.Account_Age,
-              minimumNumberOfTrades: this.state.tierData[id_value]
-                .minimum_activity_thresold.Minimum_Total_Transactions,
-              minimumTradeValue: this.state.tierData[id_value]
-                .minimum_activity_thresold
-                .Minimum_Total_Value_of_All_Transactions,
-              minimumWalletBalance: this.state.tierData[id_value]
-                .requirements_two.Total_Wallet_Balance,
-              current_tier_id: id,
-            },
-            () => {
-              console.log("minimumAccountAge", this.state.current_tier_id);
-            }
-          );
+          this.setState({
+            userUpgradeData: responseData.data,
+            tierUpgradePopup: true,
+            minimumAccountAge: this.state.tierData[id_value]
+              .minimum_activity_thresold.Account_Age,
+            minimumNumberOfTrades: this.state.tierData[id_value]
+              .minimum_activity_thresold.Minimum_Total_Transactions,
+            minimumTradeValue: this.state.tierData[id_value]
+              .minimum_activity_thresold
+              .Minimum_Total_Value_of_All_Transactions,
+            minimumWalletBalance: this.state.tierData[id_value].requirements_two
+              .Total_Wallet_Balance,
+            current_tier_id: id,
+          });
         } else {
-          this.openNotificationWithIcon("error", "Error", responseData.err);
+          this.openNotificationWithIcon(
+            "error",
+            this.t("validations:error_text.message"),
+            responseData.err
+          );
         }
         this.setState({ loader: false });
       })
-      .catch((error) => {
-        /* console.log(error) */
-      });
+      .catch((error) => {});
   };
   openNotificationWithIcon(type, head, desc) {
     notification[type]({
@@ -139,7 +129,6 @@ class Tier extends Component {
   }
   render() {
     let { tierData } = this.state;
-    // console.log("Tier:", this.props.history);
 
     return (
       <div>
@@ -147,8 +136,6 @@ class Tier extends Component {
           <TierMainInnerWrap>
             {tierData.length > 0
               ? tierData.map(function (tier, index) {
-                  // let path = `"/tier${tier.id}"`;
-                  // console.log(path);
                   var liClasses = classNames({
                     "tier-active": tier.is_verified === true,
                     "tier-enabled": tier.is_active === true,
@@ -157,24 +144,21 @@ class Tier extends Component {
                   return (
                     <TierSubMain key={tier.id} className={liClasses}>
                       <TierHead className="top-head">
-                        Tier {tier.tier_step}
+                        {self.t("tier_text.message")} {tier.tier_step}
                       </TierHead>
                       <TierSubMainInner>
                         <TierSubHead>
-                          Minimum Account Activity Thresholds
+                          {self.t(
+                            "Minimum_account_activity_thresholds_text.message"
+                          )}
                         </TierSubHead>
                         <TierUl>
                           <li>
-                            {/* <span className="icon-wrap">
-                              {tier.minimum_activity_thresold ? (
-                                <Icon type="check" />
-                              ) : (
-                                ""
-                              )}
-                            </span> */}
                             {tier.minimum_activity_thresold ? (
                               <span className="text-wrap">
-                                <span>Minimum Account Age (Days):</span>
+                                <span>
+                                  {self.t("Minimum_account_age_text.message")}:
+                                </span>
                                 <span>
                                   {tier.minimum_activity_thresold.Account_Age}
                                 </span>
@@ -184,16 +168,11 @@ class Tier extends Component {
                             )}
                           </li>
                           <li>
-                            {/* <span className="icon-wrap">
-                              {tier.minimum_activity_thresold ? (
-                                <Icon type="check" />
-                              ) : (
-                                ""
-                              )}
-                            </span> */}
                             {tier.minimum_activity_thresold ? (
                               <span className="text-wrap">
-                                <span>Minimum Number of Trades:</span>
+                                <span>
+                                  {self.t("Minimum_no_of_trades_text.message")}:
+                                </span>
                                 <span>
                                   {
                                     tier.minimum_activity_thresold
@@ -206,16 +185,14 @@ class Tier extends Component {
                             )}
                           </li>
                           <li>
-                            {/* <span className="icon-wrap">
-                              {tier.minimum_activity_thresold ? (
-                                <Icon type="check" />
-                              ) : (
-                                ""
-                              )}
-                            </span> */}
                             {tier.minimum_activity_thresold ? (
                               <span className="text-wrap">
-                                <span>Minimum Total USD Value of Trades: </span>
+                                <span>
+                                  {self.t(
+                                    "Minimum_total_value_of_trades_text.message"
+                                  )}
+                                  :
+                                </span>
                                 <NumberFormat
                                   value={`${parseFloat(
                                     tier.minimum_activity_thresold
@@ -230,20 +207,32 @@ class Tier extends Component {
                               ""
                             )}
                           </li>
+                          <li>
+                            <span class="text-wrap">
+                              <span>
+                                {self.t(
+                                  "deposit_cryptocurrencies_text.message"
+                                )}
+                                :
+                              </span>
+                              <span>{self.t("unlimited_text.message")}</span>
+                            </span>
+                          </li>
+                          <li>
+                            <span class="text-wrap">
+                              <span>{self.t("trade:trade_head.message")}:</span>
+                              <span>{self.t("unlimited_text.message")}</span>
+                            </span>
+                          </li>
                         </TierUl>
                         <OrSpan>OR</OrSpan>
                         <TierUl>
                           <li>
-                            {/* <span className="icon-wrap">
-                              {tier.requirements_two ? (
-                                <Icon type="check" />
-                              ) : (
-                                ""
-                              )}
-                            </span> */}
                             {tier.requirements_two ? (
                               <span className="text-wrap">
-                                <span>Total Wallet Balance: </span>
+                                <span>
+                                  {self.t("total_wallet_balance_text.message")}:{" "}
+                                </span>
                                 <NumberFormat
                                   value={`${parseFloat(
                                     tier.requirements_two.Total_Wallet_Balance
@@ -259,20 +248,20 @@ class Tier extends Component {
                           </li>
                         </TierUl>
                         <TierWithdrawalHead className="withdrawal">
-                          Withdrawl Limits Orders
+                          {self.t("withdrawal_limits_orders_text.message")}
                         </TierWithdrawalHead>
                         <TierTable>
                           <thead>
                             <tr>
-                              <th>Daily</th>
-                              <th>Monthly</th>
+                              <th>{self.t("daily_text.message")}</th>
+                              <th>{self.t("monthly_text.message")}</th>
                             </tr>
                           </thead>
                           <tbody>
                             <tr>
                               <td>
                                 {tier.daily_withdraw_limit == "Unlimited" ? (
-                                  tier.daily_withdraw_limit
+                                  self.t("unlimited_text.message")
                                 ) : (
                                   <NumberFormat
                                     value={`${parseFloat(
@@ -286,7 +275,7 @@ class Tier extends Component {
                               </td>
                               <td>
                                 {tier.monthly_withdraw_limit == "Unlimited" ? (
-                                  tier.monthly_withdraw_limit
+                                  self.t("unlimited_text.message")
                                 ) : (
                                   <NumberFormat
                                     value={`${parseFloat(
@@ -303,7 +292,9 @@ class Tier extends Component {
                         </TierTable>
                       </TierSubMainInner>
                       <TierRequirements>
-                        <TierSubHeadRequire>Requirements</TierSubHeadRequire>
+                        <TierSubHeadRequire>
+                          {self.t("requirements_text.message")}
+                        </TierSubHeadRequire>
                         <ul className="requirements">
                           {tier.requirements
                             ? Object.values(tier.requirements) &&
@@ -318,14 +309,6 @@ class Tier extends Component {
                             : ""}
                         </ul>
                       </TierRequirements>
-                      {/* {tier.is_verified && (
-                        <TierVerifiedWrap>
-                          <TierVerfied className="verified">
-                            <Icon type="check" />
-                            Verified
-                          </TierVerfied>
-                        </TierVerifiedWrap>
-                      )} */}
                       {tier.is_verified && (
                         <Link
                           to={{
@@ -336,7 +319,7 @@ class Tier extends Component {
                           }}
                         >
                           <TierUpdate className="upgrade-btn verified">
-                            Verified
+                            {self.t("login_page:verified_text.message")}
                           </TierUpdate>
                         </Link>
                       )}
@@ -352,15 +335,17 @@ class Tier extends Component {
                         >
                           {tier.account_details
                             ? tier.account_details.approved == null
-                              ? "Under Approval"
+                              ? self.t("history:under_approval_text.message")
                               : tier.account_details.approved == false
-                              ? "Rejected"
-                              : "Upgrade"
-                            : "Upgrade"}
+                              ? self.t("rejected_text.message")
+                              : self.t("upgrade_text.message")
+                            : self.t("upgrade_text.message")}
                         </TierUpdate>
                       )}
                       {!tier.is_active && !tier.is_verified && (
-                        <TierUpdate className="upgrade-btn">Upgrade</TierUpdate>
+                        <TierUpdate className="upgrade-btn">
+                          {self.t("upgrade_text.message")}
+                        </TierUpdate>
                       )}
                     </TierSubMain>
                   );
@@ -397,4 +382,10 @@ const mapStateToProps = (state) => {
         : "",
   };
 };
-export default connect(mapStateToProps)(withRouter(Tier));
+export default translate([
+  "tiers",
+  "validations",
+  "trade",
+  "history",
+  "login_page",
+])(connect(mapStateToProps)(withRouter(Tier)));

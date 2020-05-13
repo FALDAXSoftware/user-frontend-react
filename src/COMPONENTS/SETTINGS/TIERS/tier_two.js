@@ -20,7 +20,7 @@ import SimpleReactValidator from "simple-react-validator";
 import NumberFormat from "react-number-format";
 import { APIUtility } from "../../../httpHelper";
 import FaldaxLoader from "../../../SHARED-COMPONENTS/FaldaxLoader";
-
+import { translate } from "react-i18next";
 import {
   TwoFactorDiv,
   TierRow,
@@ -33,6 +33,7 @@ import {
 } from "../../../STYLED-COMPONENTS/TIER/tierStyle";
 import UploadCounter from "../../../SHARED-COMPONENTS/UploadCounter";
 import RejectReason from "../../../SHARED-COMPONENTS/RejectReason";
+import { faThList } from "@fortawesome/free-solid-svg-icons";
 let { API_URL } = globalVariables;
 /* Styled-Components */
 const KYCWrap = styled.div`
@@ -167,9 +168,10 @@ class TierTwo extends React.Component {
       forceAcceptedStatus: false,
       forceRejectNote: "",
     };
+    this.t = this.props.t;
     this.validator = new SimpleReactValidator({
       ssnValid: {
-        message: "Enter a valid SSN number.",
+        message: this.t("general_4:upload_ssn_invalid.message"),
         rule: function (val, options) {
           var re = /^\d{3}-\d{2}-\d{4}$/;
           var bool = re.test(String(val));
@@ -181,12 +183,6 @@ class TierTwo extends React.Component {
     this.populateData = this.populateData.bind(this);
   }
   componentWillMount() {
-    // if (
-    //   this.props.profileDetails.account_tier !== 1 &&
-    //   this.props.profileDetails.account_tier == 2
-    // ) {
-    //   this.props.history.push("/");
-    // }
     if (
       this.props.location.state === undefined ||
       this.props.location.state.flag === "" ||
@@ -194,14 +190,6 @@ class TierTwo extends React.Component {
     ) {
       this.props.history.push("/");
     }
-    // if (
-    //   this.props.profileDetails.account_tier == 0 ||
-    //   this.props.profileDetails.account_tier == 2 ||
-    //   this.props.profileDetails.account_tier == 3 ||
-    //   this.props.profileDetails.account_tier == 4
-    // ) {
-    //   this.props.history.push("/");
-    // }
   }
   async componentDidMount() {
     try {
@@ -255,7 +243,11 @@ class TierTwo extends React.Component {
           forceAcceptedStatus: true,
         });
       } else {
-        this.openNotificationWithIcon("error", "Error", result.message);
+        this.openNotificationWithIcon(
+          "error",
+          this.t("validations:error_text.message"),
+          result.message
+        );
       }
     } catch (error) {
       console.log(error);
@@ -264,9 +256,9 @@ class TierTwo extends React.Component {
     }
   }
   populateData() {
-    console.log("^^^tierdata", this.state.tierData, this.state.tierData.length);
+    // console.log("^^^tierdata", this.state.tierData, this.state.tierData.length);
     if (this.state.tierData.length < 4 && this.state.tierData.length > 0) {
-      console.log("Tier length^^^^", this.state.tierData.length);
+      // console.log("Tier length^^^^", this.state.tierData.length);
       this.setState({
         reUploadFlag: false,
         reUpload1: true,
@@ -300,7 +292,7 @@ class TierTwo extends React.Component {
               requestId: tierDoc.request_id,
             });
           }
-          console.log("jhfgsd^^^^", parseInt(tierDoc.type));
+          // console.log("jhfgsd^^^^", parseInt(tierDoc.type));
           switch (parseInt(tierDoc.type)) {
             case 1:
               let validid = tierDoc.is_approved;
@@ -317,7 +309,7 @@ class TierTwo extends React.Component {
                 validStatus: validid,
                 validNote: tierDoc.public_note,
               });
-              return console.log("TierDoc^^", tierDoc.type, index);
+              return;
             case 2:
               let residence = tierDoc.is_approved;
               let reupload2;
@@ -333,7 +325,7 @@ class TierTwo extends React.Component {
                 residenceStatus: residence,
                 residenceNote: tierDoc.public_note,
               });
-              return console.log("TierDoc^^", tierDoc.type, index);
+              return;
             case 3:
               let ssn = tierDoc.is_approved;
               let reupload3;
@@ -349,11 +341,11 @@ class TierTwo extends React.Component {
                 ssnStatus: ssn,
                 ssnNote: tierDoc.public_note,
               });
-              return console.log("TierDoc^^", tierDoc.type, index);
+              return;
             case 4:
-              return console.log("TierDoc^^", tierDoc.type, index);
+              return;
             default:
-              return console.log("No case");
+              return;
           }
         }
       });
@@ -372,7 +364,6 @@ class TierTwo extends React.Component {
     var e1 = e;
     let name = e1.target.name;
     let target = e1.target;
-    // console.log(e1.target);
     _self.setState(
       {
         targetName: name,
@@ -388,7 +379,6 @@ class TierTwo extends React.Component {
               ? file.type.substring(0, file.type.indexOf("/"))
               : "";
           const fileSize = file && file.size ? file.size : 0;
-          // console.log(file);
           if (fileType === "image") {
             if (fileType === "image" && fileSize < 4194304) {
               var fr = new FileReader();
@@ -456,8 +446,8 @@ class TierTwo extends React.Component {
                     }
                     _self.openNotificationWithIcon(
                       "error",
-                      "Error",
-                      "File needs to be greater than 450*600 in dimension"
+                      this.t("validations:error_text.message"),
+                      this.t("validations:image_upload_error.message")
                     );
                     document.getElementById("valid-id").value = "";
                     document.getElementById("residence-proof").value = "";
@@ -489,8 +479,8 @@ class TierTwo extends React.Component {
               }
               _self.openNotificationWithIcon(
                 "error",
-                "Error",
-                "Please select an image with a file size less than 4 mb"
+                this.t("validations:error_text.message"),
+                this.t("general_1:max_image_size_error.message")
               );
               document.getElementById("valid-id").value = "";
               document.getElementById("residence-proof").value = "";
@@ -498,8 +488,8 @@ class TierTwo extends React.Component {
           } else {
             _self.openNotificationWithIcon(
               "error",
-              "Error",
-              "File format is not supported. Please upload an image using a supported format."
+              this.t("validations:error_text.message"),
+              this.t("general_1:only_images_error.message")
             );
             document.getElementById("valid-id").value = "";
             document.getElementById("residence-proof").value = "";
@@ -618,14 +608,18 @@ class TierTwo extends React.Component {
               () => {
                 this.openNotificationWithIcon(
                   "success",
-                  "Success",
+                  this.t("validations:success_text.message"),
                   responseData.data
                 );
                 this.props.history.push("/editProfile");
               }
             );
           } else if (responseData.status == 500) {
-            this.openNotificationWithIcon("error", "Error", responseData.error);
+            this.openNotificationWithIcon(
+              "error",
+              this.t("validations:error_text.message"),
+              responseData.error
+            );
           }
           this.setState({ loader: false });
         })
@@ -666,12 +660,6 @@ class TierTwo extends React.Component {
     });
   };
   render() {
-    // console.log(
-    //   "data data data^^",
-    //   this.state.reUpload1,
-    //   this.state.reUpload2,
-    //   this.state.reUpload3
-    // );
     let {
       is_twofactor_enabled,
       forceRejectStatus,
@@ -683,8 +671,10 @@ class TierTwo extends React.Component {
         <Navigation />
         <TierWrapper>
           <KYCWrap>
-            <KYCHead>Tier 2 Upgrade</KYCHead>
-
+            <KYCHead>
+              {this.t("tiers:tier_text.message")} 2{" "}
+              {this.t("tiers:upgrade_text.message")}
+            </KYCHead>
             {forceRejectStatus ? (
               <TierWrap
                 style={{
@@ -693,13 +683,11 @@ class TierTwo extends React.Component {
                   fontSize: "18px",
                 }}
               >
-                <p>
-                  Your request for tier upgrade is rejected by admin due to
-                  below reason.
-                </p>
+                <p>{this.t("reject_reason_note.message")}</p>
                 <p>{forceRejectNote}</p>
                 <p>
-                  Feel free to contact us <Link to="/open-ticket">here</Link>
+                  {this.t("feel_free_note.message")}{" "}
+                  <Link to="/open-ticket">here</Link>
                 </p>
               </TierWrap>
             ) : (
@@ -720,10 +708,14 @@ class TierTwo extends React.Component {
                       />
                       <KycSucc>
                         <span>
-                          <b>Verification Completed.</b>
+                          <b>
+                            {this.t(
+                              "identity_verification:kyc_verified_text.message"
+                            )}
+                          </b>
                           <br />
                           <br />
-                          Your Account is Verified successfully to Tier 2.
+                          {this.t("verified_tier_note.message")} 2.
                         </span>
                       </KycSucc>
                     </DoneWrap>
@@ -732,27 +724,29 @@ class TierTwo extends React.Component {
                   <TierWrap>
                     {is_twofactor_enabled ? (
                       <TwoFactorDiv>
-                        <span>
-                          Two-factor Authentication(2FA) must be enabled to
-                          upgrade your account to tier 2.
-                        </span>
-                        <a>Enabled</a>
+                        <span>{this.t("2fa_note.message")}</span>
+                        <a>
+                          {this.t("security_tab:title_status_enabled.message")}
+                        </a>
                       </TwoFactorDiv>
                     ) : (
                       <TwoFactorDiv>
                         <span>
-                          Two-factor Authentication(2FA) must be enabled to
-                          upgrade your account to tier 2. Please click the link
-                          below to enable 2FA
+                          {this.t("2fa_note.message")}{" "}
+                          {this.t("2fa_note_2.message")}
                         </span>
-                        <a href="/editProfile">Click here</a>
+                        <a href="/editProfile">
+                          {this.t(
+                            "settings:deactivate_popup_click_here.message"
+                          )}
+                        </a>
                       </TwoFactorDiv>
                     )}
                     <TierRow>
                       <TierLabel>
-                        <label>Second Photo ID</label>
+                        <label>{this.t("second_photo_text.message")}</label>
                         <Link to="/tier-image-information" target="_blank">
-                          See Details
+                          {this.t("see_details_text.message")}
                         </Link>
                       </TierLabel>
                       <TierUpload>
@@ -776,7 +770,9 @@ class TierTwo extends React.Component {
                             }}
                           >
                             <Icon type="upload" />
-                            <span>Upload</span>
+                            <span>
+                              {this.t("general_4:upload_text.message")}
+                            </span>
                           </button>
                         )}
                         <TierInput
@@ -794,92 +790,35 @@ class TierTwo extends React.Component {
                               "required",
                               "tier-text-danger-validation",
                               {
-                                required: "This field is required.",
+                                required: this.t(
+                                  "general_1:this_field_required_error.message"
+                                ),
                               }
                             )
                           : delete this.validator.fields["valid-id"]}
-                        {/* <button
-                          onClick={() => {
-                            this.handleFileSelectClick("valid-id");
-                          }}
-                        >
-                          {this.state.validID.name ? (
-                            <div>
-                              <span>{this.state.validID.name}</span>
-                              <Icon
-                                onClick={() => {
-                                  this.removeFile("valid-id");
-                                }}
-                                type="close-circle"
-                              />
-                            </div>
-                          ) : (
-                            <div>
-                              <Icon type="upload" />
-                              <span>Upload</span>
-                            </div>
-                          )}
-                        </button> */}
                       </TierUpload>
-                      {/* <Fileselect1 className="file-select-col">
-                        <RemoveIcon1
-                          onClick={() => {
-                            this.removeFile("valid-id");
-                          }}
-                          style={{ display: `${this.state.displayFirst}` }}
-                          type={"close"}
-                          theme="outlined"
-                        />
-                        <ButtonUp
-                          style={{
-                            backgroundImage: `url('${this.state.profileImg}')`
-                          }}
-                          className="file-select-btn"
-                          onClick={() => {
-                            this.handleFileSelectClick("valid-id");
-                          }}
-                        >
-                          {/* <Plus className="plus">
-                            <Icon type={this.state.icon1} theme="outlined" />
-                          </Plus> */}
-                      {/* <Plustext className="text">Upload</Plustext>
-                        </ButtonUp>
-                        <Fileinput
-                          onChange={this.handleProfile}
-                          type="file"
-                          name="valid-id"
-                          id="valid-id"
-                          disabled={!this.state.reUpload1}
-                        />
-                        {this.state.reUpload1 &&
-                          this.validator.message(
-                            "valid-id",
-                            this.state.profileImg,
-                            "required",
-                            "tier-text-danger-validation",
-                            {
-                              required: "This field is required."
-                            }
-                          )}
-                      </Fileselect1> */}
                       {this.state.tierData.length > 0 ? (
                         <TierDocBox>
                           {this.state.validStatus === null && (
                             <TierDocStatus>
                               <Icon type="warning" />
-                              <span>Under Approval</span>
+                              <span>
+                                {this.t("history:under_approval_text.message")}
+                              </span>
                             </TierDocStatus>
                           )}
                           {this.state.validStatus === true && (
                             <TierDocStatus>
                               <Icon type="check" />
-                              <span>Verified</span>
+                              <span>
+                                {this.t("login_page:verified_text.message")}
+                              </span>
                             </TierDocStatus>
                           )}
                           {this.state.validStatus === false && (
                             <TierDocStatus>
                               <Icon type="close" />
-                              <span>Reupload it</span>
+                              <span>{this.t("reupload_it_text.message")}</span>
                             </TierDocStatus>
                           )}
                           {this.state.validNote && (
@@ -900,7 +839,9 @@ class TierTwo extends React.Component {
                     </TierRow>
                     <TierRow>
                       <TierLabel>
-                        <label>Proof of Residence</label>
+                        <label>
+                          {this.t("proof_of_residence_text.message")}
+                        </label>
                       </TierLabel>
                       <TierUpload>
                         {this.state.residenceProof.name ? (
@@ -923,7 +864,9 @@ class TierTwo extends React.Component {
                             }}
                           >
                             <Icon type="upload" />
-                            <span>Upload</span>
+                            <span>
+                              {this.t("general_4:upload_text.message")}
+                            </span>
                           </button>
                         )}
                         <TierInput
@@ -941,7 +884,9 @@ class TierTwo extends React.Component {
                               "required",
                               "tier-text-danger-validation",
                               {
-                                required: "This field is required.",
+                                required: this.t(
+                                  "general_1:this_field_required_error.message"
+                                ),
                               }
                             )
                           : delete this.validator.fields["residence-proof"]}
@@ -951,23 +896,26 @@ class TierTwo extends React.Component {
                           {this.state.residenceStatus === null && (
                             <TierDocStatus>
                               <Icon type="warning" />
-                              <span>Under Approval</span>
+                              <span>
+                                {this.t("history:under_approval_text.message")}
+                              </span>
                             </TierDocStatus>
                           )}
                           {this.state.residenceStatus === true && (
                             <TierDocStatus>
                               <Icon type="check" />
-                              <span>Verified</span>
+                              <span>
+                                {this.t("login_page:verified_text.message")}
+                              </span>
                             </TierDocStatus>
                           )}
                           {this.state.residenceStatus === false && (
                             <TierDocStatus>
                               <Icon type="close" />
-                              <span>Reupload it</span>
+                              <span>{this.t("reupload_it_text.message")}</span>
                             </TierDocStatus>
                           )}
                           {this.state.residenceNote && (
-                            // <RejectNote>{this.state.residenceNote}</RejectNote>
                             <Icon
                               type="message"
                               onClick={() => {
@@ -986,9 +934,10 @@ class TierTwo extends React.Component {
 
                     <TierRow className="no_border">
                       <TierLabel>
-                        <label>Govt. Issued ID Number</label>
+                        <label>
+                          {this.t("govt_issued_number_text.message")}
+                        </label>
                       </TierLabel>
-                      {/* <Input type="text" value={this.state.id_number} /> */}
                       <TierUpload
                         className={
                           this.state.reUpload3
@@ -1009,10 +958,21 @@ class TierTwo extends React.Component {
                               "required|alpha_num|min:4|max:20",
                               "tier-text-danger-validation",
                               {
-                                required: "This field is required.",
-                                // alphanum: "This field is required.",
-                                // min: "This field is required.",
-                                // max: "This field is required.",
+                                required: this.t(
+                                  "general_1:this_field_required_error.message"
+                                ),
+                                alpha_num:
+                                  this.t("govt_issued_number_text.message") +
+                                  " " +
+                                  this.t("general_3:validate_letter.message"),
+                                max:
+                                  this.t("govt_issued_number_text.message") +
+                                  " " +
+                                  this.t("validate_not_gt_20_ch.message"),
+                                min:
+                                  this.t("govt_issued_number_text.message") +
+                                  " " +
+                                  this.t("min_2_error.message"),
                               }
                             )
                           : delete this.validator.fields["id_number"]}
@@ -1022,19 +982,23 @@ class TierTwo extends React.Component {
                           {this.state.ssnStatus === null && (
                             <TierDocStatus>
                               <Icon type="warning" />
-                              <span>Under Approval</span>
+                              <span>
+                                {this.t("history:under_approval_text.message")}
+                              </span>
                             </TierDocStatus>
                           )}
                           {this.state.ssnStatus === true && (
                             <TierDocStatus>
                               <Icon type="check" />
-                              <span>Verified</span>
+                              <span>
+                                {this.t("login_page:verified_text.message")}
+                              </span>
                             </TierDocStatus>
                           )}
                           {this.state.ssnStatus === false && (
                             <TierDocStatus>
                               <Icon type="close" />
-                              <span>Reupload it</span>
+                              <span>{this.t("reupload_it_text.message")}</span>
                             </TierDocStatus>
                           )}
                           {this.state.ssnNote && (
@@ -1064,7 +1028,9 @@ class TierTwo extends React.Component {
                         }
                         disabled={!this.state.uploadBtnFlag}
                         onClick={this.handleCancel.bind(this)}
-                        value="Cancel"
+                        value={this.t(
+                          "edit_profile_titles:subhead_personal_form_cancel_btn.message"
+                        )}
                       />
                       <input
                         type="button"
@@ -1074,7 +1040,7 @@ class TierTwo extends React.Component {
                             : "upload_btn disabled"
                         }
                         onClick={this.handleSubmit.bind(this)}
-                        value="Upload"
+                        value={this.t("general_4:upload_text.message")}
                         disabled={!this.state.uploadBtnFlag}
                       />
                     </TierButtonRow>
@@ -1113,7 +1079,14 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(TierTwo));
+export default translate([
+  "tiers",
+  "general_4",
+  "general_1",
+  "validations",
+  "security_tab",
+  "settings",
+  "login_page",
+  "edit_profile_titles",
+  "general_3",
+])(connect(mapStateToProps, mapDispatchToProps)(withRouter(TierTwo)));

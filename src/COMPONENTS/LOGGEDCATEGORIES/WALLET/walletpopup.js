@@ -472,7 +472,11 @@ class WalletPopup extends Component {
               availableBalance: parseFloat(responseData.data).toFixed(8),
             });
           } else {
-            this.openNotificationWithIcon("error", "Error", responseData.error);
+            this.openNotificationWithIcon(
+              "error",
+              this.t("validations:error_text.message"),
+              responseData.error
+            );
           }
           this.setState({
             loader: false,
@@ -582,7 +586,7 @@ class WalletPopup extends Component {
           if (responseData.status === 200) {
             this.openNotificationWithIcon(
               "success",
-              "Successfully Sent",
+              this.t("validations:success_text.message"),
               responseData.message
             );
             this.props.walletDetailsApi();
@@ -599,13 +603,17 @@ class WalletPopup extends Component {
               showTFAModal: true,
             });
           } else if (responseData.status === 403) {
-            // this.openNotificationWithIcon("error", "Error", responseData.err);
+            // this.openNotificationWithIcon("error",  this.t("validations:error_text.message"), responseData.err);
             let formData = {
               user_id: this.props.profileDetails.id,
               jwt_token: this.props.isLoggedIn,
             };
             this.props.LogoutUser(this.props.isLoggedIn, formData);
-            this.openNotificationWithIcon("error", "Error", responseData.err);
+            this.openNotificationWithIcon(
+              "error",
+              this.t("validations:error_text.message"),
+              responseData.err
+            );
           } else {
             if (responseData.status !== 402)
               this.setState({
@@ -660,7 +668,7 @@ class WalletPopup extends Component {
       if (this.state.sendFields.amount && this.validator.allValid()) {
         this.timeout = setTimeout(async () => {
           // await this.getAvailableBalance();
-          await this.getTierLimits();
+          // await this.getTierLimits();
           await this.getFeeValues();
         }, 1500);
         // this.getAvailableBalance();
@@ -687,7 +695,8 @@ class WalletPopup extends Component {
       });
       var values = {
         coin: this.props.coin_code,
-        amount: this.state.sendFields.amount,
+        // amount: this.state.sendFields.amount,
+        amount: this.state.sendFields.subtotal,
       };
       fetch(`${API_URL}/users/check-transaction-limit`, {
         method: "post",
@@ -819,9 +828,11 @@ class WalletPopup extends Component {
               responseData.message
             );
           }
-          this.setState({
-            loader: false,
-          });
+          // code here for getting limits
+          this.getTierLimits();
+          // this.setState({
+          //   loader: false,
+          // });
           resolve();
         })
         .catch((error) => {});
@@ -884,7 +895,7 @@ class WalletPopup extends Component {
           ) {
             this.timeout = setTimeout(async () => {
               // await this.getAvailableBalance();
-              await this.getTierLimits();
+              // await this.getTierLimits();
               await this.getFeeValues();
             }, 1500);
             // this.getAvailableBalance();
@@ -977,7 +988,9 @@ class WalletPopup extends Component {
                           <RefInput
                             value={this.state.receive.receive_address}
                             className={this.state.receiveAdd}
-                            placeholder="Referral"
+                            placeholder={this.t(
+                              "edit_profile_titles:head_referral.message"
+                            )}
                             enterButton={this.t("referral:copy_btn.message")}
                             size="large"
                             onSearch={(e, value) => this.SearchText(e, value)}
@@ -1098,13 +1111,6 @@ class WalletPopup extends Component {
                           </span>
                         </span>
                         <span>
-                          {/* {this.props.fiatValue
-                          ? `${this.props.fiatValue.toFixed(2)} USD`
-                          : 0} */}
-                          {/* <span>
-                          <b>Fiat Value: </b>
-                          {this.state.fiatValue} USD
-                        </span> */}
                           <span>
                             <b>
                               {this.t("wallet_total_payout_text.message")}:{" "}
@@ -1144,16 +1150,16 @@ class WalletPopup extends Component {
                     <thead>
                       <tr>
                         <th></th>
-                        <th>Daily</th>
-                        <th>Monthly</th>
+                        <th>{this.t("tiers:daily_text.message")}</th>
+                        <th>{this.t("tiers:monthly_text.message")}</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <td>Tier Limit:</td>
+                        <td>{this.t("tiers:tier_limit_text.message")}:</td>
                         <td>
                           {this.state.limitUnlimited ? (
-                            dailyLimit
+                            this.t("tiers:unlimited_text.message")
                           ) : (
                             <NumberFormat
                               value={
@@ -1163,13 +1169,14 @@ class WalletPopup extends Component {
                               }
                               displayType={"text"}
                               thousandSeparator={true}
-                              prefix="$"
+                              // prefix="$"
+                              suffix=" USD"
                             />
                           )}
                         </td>
                         <td>
                           {this.state.limitUnlimited ? (
-                            monthlyLimit
+                            this.t("tiers:unlimited_text.message")
                           ) : (
                             <NumberFormat
                               value={
@@ -1185,10 +1192,10 @@ class WalletPopup extends Component {
                         </td>
                       </tr>
                       <tr>
-                        <td>Available Limit:</td>
+                        <td>{this.t("tiers:available_limit_text.message")}:</td>
                         <td>
                           {this.state.limitUnlimited ? (
-                            dailyLimitLeft
+                            this.t("tiers:unlimited_text.message")
                           ) : (
                             <NumberFormat
                               value={
@@ -1204,7 +1211,7 @@ class WalletPopup extends Component {
                         </td>
                         <td>
                           {this.state.limitUnlimited ? (
-                            monthlyLimitLeft
+                            this.t("tiers:unlimited_text.message")
                           ) : (
                             <NumberFormat
                               value={
@@ -1221,16 +1228,20 @@ class WalletPopup extends Component {
                       </tr>
                       {this.state.limitExceeded ? (
                         <tr className="limit_exceed">
-                          <td>Limit after transfer:</td>
+                          <td>
+                            {this.t("tiers:limit_after_transfer_text.message")}:
+                          </td>
                           <td className="center" colSpan="2">
-                            Limit Exceeded
+                            {this.t("tiers:limit_exceeded_text.message")}
                           </td>
                         </tr>
                       ) : this.state.limitUnlimited ? (
                         ""
                       ) : (
                         <tr>
-                          <td>Limit after transfer:</td>
+                          <td>
+                            {this.t("tiers:limit_after_transfer_text.message")}:
+                          </td>
                           <td>
                             <NumberFormat
                               value={
@@ -1326,4 +1337,5 @@ export default translate([
   "edit_profile_titles",
   "settings",
   "referral",
+  "tiers",
 ])(connect(mapStateToProps, mapDispatchToProps)(WalletPopup));
