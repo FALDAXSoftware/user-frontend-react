@@ -327,6 +327,9 @@ export const TierListingOutside = styled.ul`
   list-style-type: none;
   font-size: 14px;
   color: #000000;
+  & .link_initial {
+    text-transform: lowercase;
+  }
   > li {
     padding: 0 0 10px 0;
     > span {
