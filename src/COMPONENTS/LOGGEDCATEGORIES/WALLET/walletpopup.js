@@ -1111,13 +1111,6 @@ class WalletPopup extends Component {
                           </span>
                         </span>
                         <span>
-                          {/* {this.props.fiatValue
-                          ? `${this.props.fiatValue.toFixed(2)} USD`
-                          : 0} */}
-                          {/* <span>
-                          <b>Fiat Value: </b>
-                          {this.state.fiatValue} USD
-                        </span> */}
                           <span>
                             <b>
                               {this.t("wallet_total_payout_text.message")}:{" "}
@@ -1143,7 +1136,7 @@ class WalletPopup extends Component {
                             }
                             displayType={"text"}
                             thousandSeparator={true}
-                            prefix="$"
+                            suffix=" USD"
                           />
                         </span>
                       </TotPay>
@@ -1157,16 +1150,16 @@ class WalletPopup extends Component {
                     <thead>
                       <tr>
                         <th></th>
-                        <th>Daily</th>
-                        <th>Monthly</th>
+                        <th>{this.t("tiers:daily_text.message")}</th>
+                        <th>{this.t("tiers:monthly_text.message")}</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <td>Tier Limit:</td>
+                        <td>{this.t("tiers:tier_limit_text.message")}:</td>
                         <td>
                           {this.state.limitUnlimited ? (
-                            dailyLimit
+                            this.t("tiers:unlimited_text.message")
                           ) : (
                             <NumberFormat
                               value={
@@ -1183,7 +1176,7 @@ class WalletPopup extends Component {
                         </td>
                         <td>
                           {this.state.limitUnlimited ? (
-                            monthlyLimit
+                            this.t("tiers:unlimited_text.message")
                           ) : (
                             <NumberFormat
                               value={
@@ -1193,16 +1186,16 @@ class WalletPopup extends Component {
                               }
                               displayType={"text"}
                               thousandSeparator={true}
-                              prefix="$"
+                              suffix=" USD"
                             />
                           )}
                         </td>
                       </tr>
                       <tr>
-                        <td>Available Limit:</td>
+                        <td>{this.t("tiers:available_limit_text.message")}:</td>
                         <td>
                           {this.state.limitUnlimited ? (
-                            dailyLimitLeft
+                            this.t("tiers:unlimited_text.message")
                           ) : (
                             <NumberFormat
                               value={
@@ -1212,13 +1205,13 @@ class WalletPopup extends Component {
                               }
                               displayType={"text"}
                               thousandSeparator={true}
-                              prefix="$"
+                              suffix=" USD"
                             />
                           )}
                         </td>
                         <td>
                           {this.state.limitUnlimited ? (
-                            monthlyLimitLeft
+                            this.t("tiers:unlimited_text.message")
                           ) : (
                             <NumberFormat
                               value={
@@ -1228,23 +1221,27 @@ class WalletPopup extends Component {
                               }
                               displayType={"text"}
                               thousandSeparator={true}
-                              prefix="$"
+                              suffix=" USD"
                             />
                           )}
                         </td>
                       </tr>
                       {this.state.limitExceeded ? (
                         <tr className="limit_exceed">
-                          <td>Limit after transfer:</td>
+                          <td>
+                            {this.t("tiers:limit_after_transfer_text.message")}:
+                          </td>
                           <td className="center" colSpan="2">
-                            Limit Exceeded
+                            {this.t("tiers:limit_exceeded_text.message")}
                           </td>
                         </tr>
                       ) : this.state.limitUnlimited ? (
                         ""
                       ) : (
                         <tr>
-                          <td>Limit after transfer:</td>
+                          <td>
+                            {this.t("tiers:limit_after_transfer_text.message")}:
+                          </td>
                           <td>
                             <NumberFormat
                               value={
@@ -1254,7 +1251,7 @@ class WalletPopup extends Component {
                               }
                               displayType={"text"}
                               thousandSeparator={true}
-                              prefix="$"
+                              suffix=" USD"
                             />
                           </td>
                           <td>
@@ -1266,7 +1263,7 @@ class WalletPopup extends Component {
                               }
                               displayType={"text"}
                               thousandSeparator={true}
-                              prefix="$"
+                              suffix=" USD"
                             />
                           </td>
                         </tr>
@@ -1340,4 +1337,5 @@ export default translate([
   "edit_profile_titles",
   "settings",
   "referral",
+  "tiers",
 ])(connect(mapStateToProps, mapDispatchToProps)(WalletPopup));
