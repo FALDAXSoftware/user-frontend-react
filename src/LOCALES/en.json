@@ -4551,6 +4551,24 @@
       "message": "Your 2FA must be enabled to proceed further.",
       "message_type": "Web content",
       "context": "2fa validation text"
+    },
+    "activity_text": {
+      "page": "Tiers",
+      "message": "Activity",
+      "message_type": "Web content",
+      "context": "activity text"
+    },
+    "portfolio_text": {
+      "page": "Tiers",
+      "message": "Portfolio",
+      "message_type": "Web content",
+      "context": "Portfolio text"
+    },
+    "symbol_text": {
+      "page": "Tiers",
+      "message": "Symbol",
+      "message_type": "Web content",
+      "context": "Symbol text"
     }
   }
 }

@@ -1481,7 +1481,11 @@ class TierFour extends React.Component {
                     {/* 2 Months Bank Statements */}
                     <TierRow>
                       <TierLabel>
-                        <label>2 Months Bank Statements</label>
+                        <label>
+                          {this.t(
+                            "tiers:2_months_bank_statements_text.message"
+                          )}
+                        </label>
                       </TierLabel>
                       <TierUpload>
                         <TierDropWrap
@@ -2027,9 +2031,6 @@ class TierFour extends React.Component {
                     <TierRow>
                       <TierLabel>
                         <label>{this.t("bylaws_text.message")}</label>
-                        <a href={bylaws_form} target="_blank" download>
-                          {this.t("click_to_download_text.message")}
-                        </a>
                       </TierLabel>
                       <TierUpload>
                         <TierDropWrap
