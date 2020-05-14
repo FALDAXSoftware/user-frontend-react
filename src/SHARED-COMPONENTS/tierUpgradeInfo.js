@@ -177,7 +177,8 @@ class TierUpgradeInfo extends Component {
           onOk={(e) => this.handleComing()}
           onCancel={(e) => this.comingCancel(e)}
           footer={null}
-          width="35%"
+          // width="35%"
+          className="upgrade_popup"
         >
           <ModalAgreeWrap className="reject_reason_div">
             <p>
