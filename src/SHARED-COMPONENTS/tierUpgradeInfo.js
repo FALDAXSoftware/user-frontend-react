@@ -181,8 +181,7 @@ class TierUpgradeInfo extends Component {
         >
           <ModalAgreeWrap className="reject_reason_div">
             <p>
-              {this.t("tier_popup_subtext1_text.message")}
-              {tierId}
+              {this.t("tier_popup_subtext1_text.message")} {tierId}{" "}
               {this.t("tier_popup_subtext2_text.message")}
             </p>
             {/* <h5>Requirement set 1</h5> */}
@@ -247,7 +246,7 @@ class TierUpgradeInfo extends Component {
                 <button>{this.t("trade_now_text.message")}</button>
               </Link>
             </BtnLink>
-            <SpanOr>Or</SpanOr>
+            <SpanOr>{this.t("tier_changes:or_text.message")}</SpanOr>
             <UpgradeTable>
               <thead>
                 <tr>
@@ -259,7 +258,7 @@ class TierUpgradeInfo extends Component {
               <tbody>
                 <tr>
                   <td className="title">
-                    {this.t("total_value_of_trades_text.message")}
+                    {this.t("total_wallet_balance_text.message")}
                   </td>
                   <td>
                     <NumberFormat
@@ -315,6 +314,9 @@ const mapDispatchToProps = (dispatch) => ({
 
 // export default withRouter(AgreeTerms);
 
-export default translate(["tiers", "edit_profile_titles", "validations"])(
-  connect(mapStateToProps, mapDispatchToProps)(withRouter(TierUpgradeInfo))
-);
+export default translate([
+  "tiers",
+  "edit_profile_titles",
+  "validations",
+  "tier_changes",
+])(connect(mapStateToProps, mapDispatchToProps)(withRouter(TierUpgradeInfo)));
