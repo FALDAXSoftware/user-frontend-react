@@ -664,7 +664,9 @@ class TierThree extends React.Component {
                             <TierDocStatus>
                               <Icon type="warning" />
                               <span>
-                                {this.t("history:under_approval_text.message")}
+                                {this.t(
+                                  "tier_changes:under_review_text.message"
+                                )}
                               </span>
                             </TierDocStatus>
                           )}
@@ -793,7 +795,9 @@ class TierThree extends React.Component {
                             <TierDocStatus>
                               <Icon type="warning" />
                               <span>
-                                {this.t("history:under_approval_text.message")}
+                                {this.t(
+                                  "tier_changes:under_review_text.message"
+                                )}
                               </span>
                             </TierDocStatus>
                           )}
@@ -899,4 +903,5 @@ export default translate([
   "edit_profile_titles",
   "general_3",
   "apply_job",
+  "tier_changes",
 ])(connect(mapStateToProps, mapDispatchToProps)(withRouter(TierThree)));

@@ -335,7 +335,7 @@ class Tier extends Component {
                         >
                           {tier.account_details
                             ? tier.account_details.approved == null
-                              ? self.t("history:under_approval_text.message")
+                              ? self.t("tier_changes:under_review_text.message")
                               : tier.account_details.approved == false
                               ? self.t("rejected_text.message")
                               : self.t("upgrade_text.message")
@@ -388,4 +388,5 @@ export default translate([
   "trade",
   "history",
   "login_page",
+  "tier_changes",
 ])(connect(mapStateToProps)(withRouter(Tier)));

@@ -47,6 +47,7 @@ let {
   bylaws_form,
   ownership_and_control_structure,
   director_list_form,
+  proof_of_active_business,
 } = globalVariables;
 /* Styled-Components */
 const KYCWrap = styled.div`
@@ -1192,7 +1193,9 @@ class TierFour extends React.Component {
                             <TierDocStatus>
                               <Icon type="warning" />
                               <span>
-                                {this.t("history:under_approval_text.message")}
+                                {this.t(
+                                  "tier_changes:under_review_text.message"
+                                )}
                               </span>
                             </TierDocStatus>
                           )}
@@ -1231,7 +1234,9 @@ class TierFour extends React.Component {
                       <TierLabel>
                         <label>{this.t("comfort_letter_text.message")}</label>
                         <a href={comfort_letter} target="_blank" download>
-                          {this.t("click_to_download_text.message")}
+                          {this.t(
+                            "tier_changes:download_example_letter_text.message"
+                          )}
                         </a>
                       </TierLabel>
                       <TierUpload>
@@ -1325,7 +1330,9 @@ class TierFour extends React.Component {
                             <TierDocStatus>
                               <Icon type="warning" />
                               <span>
-                                {this.t("history:under_approval_text.message")}
+                                {this.t(
+                                  "tier_changes:under_review_text.message"
+                                )}
                               </span>
                             </TierDocStatus>
                           )}
@@ -1363,9 +1370,6 @@ class TierFour extends React.Component {
                     <TierRow>
                       <TierLabel>
                         <label>{this.t("board_resolution_text.message")}</label>
-                        <a href={board_resolution} target="_blank" download>
-                          {this.t("click_to_download_text.message")}
-                        </a>
                       </TierLabel>
                       <TierUpload>
                         <TierDropWrap
@@ -1456,7 +1460,9 @@ class TierFour extends React.Component {
                             <TierDocStatus>
                               <Icon type="warning" />
                               <span>
-                                {this.t("history:under_approval_text.message")}
+                                {this.t(
+                                  "tier_changes:under_review_text.message"
+                                )}
                               </span>
                             </TierDocStatus>
                           )}
@@ -1584,7 +1590,9 @@ class TierFour extends React.Component {
                             <TierDocStatus>
                               <Icon type="warning" />
                               <span>
-                                {this.t("history:under_approval_text.message")}
+                                {this.t(
+                                  "tier_changes:under_review_text.message"
+                                )}
                               </span>
                             </TierDocStatus>
                           )}
@@ -1624,13 +1632,6 @@ class TierFour extends React.Component {
                         <label>
                           {this.t("corporate_filing_information_text.message")}
                         </label>
-                        <a
-                          href={corporate_filing_info}
-                          target="_blank"
-                          download
-                        >
-                          {this.t("click_to_download_text.message")}
-                        </a>
                       </TierLabel>
                       <TierUpload>
                         <TierDropWrap
@@ -1721,7 +1722,9 @@ class TierFour extends React.Component {
                             <TierDocStatus>
                               <Icon type="warning" />
                               <span>
-                                {this.t("history:under_approval_text.message")}
+                                {this.t(
+                                  "tier_changes:under_review_text.message"
+                                )}
                               </span>
                             </TierDocStatus>
                           )}
@@ -1858,7 +1861,9 @@ class TierFour extends React.Component {
                             <TierDocStatus>
                               <Icon type="warning" />
                               <span>
-                                {this.t("history:under_approval_text.message")}
+                                {this.t(
+                                  "tier_changes:under_review_text.message"
+                                )}
                               </span>
                             </TierDocStatus>
                           )}
@@ -1898,13 +1903,6 @@ class TierFour extends React.Component {
                         <label>
                           {this.t("articles_of_incorporation_text.message")}
                         </label>
-                        <a
-                          href={articles_of_incorporation}
-                          target="_blank"
-                          download
-                        >
-                          {this.t("click_to_download_text.message")}
-                        </a>
                       </TierLabel>
                       <TierUpload>
                         <TierDropWrap
@@ -2003,7 +2001,9 @@ class TierFour extends React.Component {
                             <TierDocStatus>
                               <Icon type="warning" />
                               <span>
-                                {this.t("history:under_approval_text.message")}
+                                {this.t(
+                                  "tier_changes:under_review_text.message"
+                                )}
                               </span>
                             </TierDocStatus>
                           )}
@@ -2135,7 +2135,9 @@ class TierFour extends React.Component {
                             <TierDocStatus>
                               <Icon type="warning" />
                               <span>
-                                {this.t("history:under_approval_text.message")}
+                                {this.t(
+                                  "tier_changes:under_review_text.message"
+                                )}
                               </span>
                             </TierDocStatus>
                           )}
@@ -2177,13 +2179,6 @@ class TierFour extends React.Component {
                             "ownership_and_control_structure_text.message"
                           )}
                         </label>
-                        <a
-                          href={ownership_and_control_structure}
-                          target="_blank"
-                          download
-                        >
-                          {this.t("click_to_download_text.message")}
-                        </a>
                       </TierLabel>
                       <TierUpload>
                         <TierDropWrap
@@ -2283,7 +2278,9 @@ class TierFour extends React.Component {
                             <TierDocStatus>
                               <Icon type="warning" />
                               <span>
-                                {this.t("history:under_approval_text.message")}
+                                {this.t(
+                                  "tier_changes:under_review_text.message"
+                                )}
                               </span>
                             </TierDocStatus>
                           )}
@@ -2417,7 +2414,9 @@ class TierFour extends React.Component {
                             <TierDocStatus>
                               <Icon type="warning" />
                               <span>
-                                {this.t("history:under_approval_text.message")}
+                                {this.t(
+                                  "tier_changes:under_review_text.message"
+                                )}
                               </span>
                             </TierDocStatus>
                           )}
@@ -2457,6 +2456,13 @@ class TierFour extends React.Component {
                         <label>
                           {this.t("active_business_proof_text.message")}
                         </label>
+                        <a
+                          href={proof_of_active_business}
+                          target="_blank"
+                          download
+                        >
+                          {this.t("click_to_download_text.message")}
+                        </a>
                       </TierLabel>
                       <TierUpload>
                         <TierDropWrap
@@ -2552,7 +2558,9 @@ class TierFour extends React.Component {
                             <TierDocStatus>
                               <Icon type="warning" />
                               <span>
-                                {this.t("history:under_approval_text.message")}
+                                {this.t(
+                                  "tier_changes:under_review_text.message"
+                                )}
                               </span>
                             </TierDocStatus>
                           )}
@@ -2693,7 +2701,9 @@ class TierFour extends React.Component {
                             <TierDocStatus>
                               <Icon type="warning" />
                               <span>
-                                {this.t("history:under_approval_text.message")}
+                                {this.t(
+                                  "tier_changes:under_review_text.message"
+                                )}
                               </span>
                             </TierDocStatus>
                           )}
@@ -2824,7 +2834,9 @@ class TierFour extends React.Component {
                             <TierDocStatus>
                               <Icon type="warning" />
                               <span>
-                                {this.t("history:under_approval_text.message")}
+                                {this.t(
+                                  "tier_changes:under_review_text.message"
+                                )}
                               </span>
                             </TierDocStatus>
                           )}
@@ -2952,7 +2964,9 @@ class TierFour extends React.Component {
                             <TierDocStatus>
                               <Icon type="warning" />
                               <span>
-                                {this.t("history:under_approval_text.message")}
+                                {this.t(
+                                  "tier_changes:under_review_text.message"
+                                )}
                               </span>
                             </TierDocStatus>
                           )}
@@ -3080,7 +3094,9 @@ class TierFour extends React.Component {
                             <TierDocStatus>
                               <Icon type="warning" />
                               <span>
-                                {this.t("history:under_approval_text.message")}
+                                {this.t(
+                                  "tier_changes:under_review_text.message"
+                                )}
                               </span>
                             </TierDocStatus>
                           )}
@@ -3208,7 +3224,9 @@ class TierFour extends React.Component {
                             <TierDocStatus>
                               <Icon type="warning" />
                               <span>
-                                {this.t("history:under_approval_text.message")}
+                                {this.t(
+                                  "tier_changes:under_review_text.message"
+                                )}
                               </span>
                             </TierDocStatus>
                           )}
@@ -3321,4 +3339,5 @@ export default translate([
   "edit_profile_titles",
   "general_3",
   "apply_job",
+  "tier_changes",
 ])(connect(mapStateToProps, mapDispatchToProps)(withRouter(TierFour)));

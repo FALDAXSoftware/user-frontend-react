@@ -803,7 +803,9 @@ class TierTwo extends React.Component {
                             <TierDocStatus>
                               <Icon type="warning" />
                               <span>
-                                {this.t("history:under_approval_text.message")}
+                                {this.t(
+                                  "tier_changes:under_review_text.message"
+                                )}
                               </span>
                             </TierDocStatus>
                           )}
@@ -897,7 +899,9 @@ class TierTwo extends React.Component {
                             <TierDocStatus>
                               <Icon type="warning" />
                               <span>
-                                {this.t("history:under_approval_text.message")}
+                                {this.t(
+                                  "tier_changes:under_review_text.message"
+                                )}
                               </span>
                             </TierDocStatus>
                           )}
@@ -983,7 +987,9 @@ class TierTwo extends React.Component {
                             <TierDocStatus>
                               <Icon type="warning" />
                               <span>
-                                {this.t("history:under_approval_text.message")}
+                                {this.t(
+                                  "tier_changes:under_review_text.message"
+                                )}
                               </span>
                             </TierDocStatus>
                           )}
@@ -1089,4 +1095,5 @@ export default translate([
   "login_page",
   "edit_profile_titles",
   "general_3",
+  "tier_changes",
 ])(connect(mapStateToProps, mapDispatchToProps)(withRouter(TierTwo)));

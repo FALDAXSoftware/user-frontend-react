@@ -1054,7 +1054,7 @@
     },
     "id_type_driving_licence": {
       "page": "Edit Profile > Identity Verification > Step 2",
-      "message": "Driving license",
+      "message": "Driver's License",
       "message_type": "Web content",
       "context": "Driving licence text"
     },
@@ -1102,7 +1102,7 @@
     },
     "kyc_verified_text": {
       "page": "Edit Profile > Identity Verification",
-      "message": "Verification Completed.",
+      "message": "Verification Complete.",
       "message_type": "Web content",
       "context": "Identity verification kyc submit text"
     },
@@ -1498,7 +1498,7 @@
     },
     "under_approval_text": {
       "page": "History",
-      "message": "Under Approval",
+      "message": "Pending",
       "message_type": "Web content",
       "context": "Under Approval text for status"
     },
@@ -2042,7 +2042,7 @@
     },
     "two_factor_authentication_subhead": {
       "page": "Edit Profile > Security > Regenerate Backup code",
-      "message": "Please SAVE this backup code. It will be required to change your Two-Factor Authentication in the future if you no longer have the device you orginally associated with your 2FA.",
+      "message": "Please SAVE this backup code. It will be required to change your Two-Factor Authentication in the future if you no longer have the device you originally associated with your 2FA.",
       "message_type": "Web content",
       "context": "Two Factor Authentication sub text"
     },
@@ -2704,7 +2704,7 @@
     },
     "transition_error_please_try": {
       "page": "Simplex",
-      "message": "There is some error in the transaction. Please retry.",
+      "message": "There was an error with the transaction. Please try again.",
       "message_type": "Web content",
       "context": "Error"
     },
@@ -2770,7 +2770,7 @@
     },
     "cover_latter_text": {
       "page": "Jobs",
-      "message": "Cover Letter",
+      "message": "Cover Letter.",
       "message_type": "Web content",
       "context": "Text"
     },
@@ -2880,7 +2880,7 @@
     },
     "idcp_text_note_brief": {
       "page": "Profile Backup",
-      "message": "The handwritten note must say 'only for trading digital currency on www.faldax.com' and include: the current date your signature Pay close attention when writing the handwritten note! If even one word is different in the note, the IDCP may not be accepted.",
+      "message": "The handwritten note must say \"Only for trading digital currency on www.faldax.com\" and must include the current date with your signature. Pay close attention when writing the handwritten note! If even one word is different in the note, the IDCP may not be accepted.",
       "message_type": "Web content",
       "context": "profile backup clarity text"
     },
@@ -2922,7 +2922,7 @@
     },
     "lang_ja_text": {
       "page": "Header",
-      "message": "\u65e5\u672c\u8a9e",
+      "message": "Japanese",
       "message_type": "Web content",
       "context": "Japanese text"
     }
@@ -3168,7 +3168,7 @@
       "page": "Trade",
       "message": "Time",
       "message_type": "Web content",
-      "context": "Time Text of order history"
+      "context": "Time price Text of order history"
     },
     "type_text": {
       "page": "Trade",
@@ -3264,7 +3264,7 @@
     },
     "save_before_share_error": {
       "page": "Dashboard",
-      "message": "Save template before share",
+      "message": "You must save the dashboard template before you can share it.",
       "message_type": "Web content",
       "context": "validation message for Save template before share"
     },
@@ -3276,13 +3276,13 @@
     },
     "close_template_before_save": {
       "page": "Dashboard",
-      "message": "Do you want to close?",
+      "message": "Are you sure want to close before saving?",
       "message_type": "Web content",
       "context": "Do you want to close text on dashboard screen"
     },
     "unsave_data_popup_desc": {
       "page": "Dashboard",
-      "message": "This page may contains unsaved work. You will lost all unsaved data.",
+      "message": "This page may contain unsaved work. You will lose all unsaved data.",
       "message_type": "Web content",
       "context": "Unsaved data popup description on dashboard screen"
     },
@@ -3294,13 +3294,13 @@
     },
     "add_item_text": {
       "page": "Dashboard",
-      "message": "Add item",
+      "message": "Create custom template",
       "message_type": "Web content",
       "context": "Add item text on dashboard screen"
     },
     "note_template_text": {
       "page": "Dashboard",
-      "message": "If you want customized dashboard, create your own.",
+      "message": "If you want a customized dashboard, create a custom template.",
       "message_type": "Web content",
       "context": "Note for the templates that are not customizable(default templates)"
     },
@@ -3366,7 +3366,7 @@
     },
     "already_have_template_code_text": {
       "page": "Dashboard",
-      "message": "Already have template code? Enter here to Import.",
+      "message": "Already have a template code? Enter the code below to import a template.",
       "message_type": "Web content",
       "context": "Already have template code? Enter here to Import. text"
     },
@@ -3488,13 +3488,13 @@
     },
     "tier_popup_subtext1_text": {
       "page": "Tier upgrade info Popup",
-      "message": "Before upgrading to Tier ",
+      "message": "Before upgrading to Tier",
       "message_type": "Web content",
       "context": "Before upgrading to Tier text for subtext of popup"
     },
     "tier_popup_subtext2_text": {
       "page": "Tier upgrade info Popup",
-      "message": " account, Please fulfill any of the below requirement set.",
+      "message": "account, Please fulfill any of the below requirement set.",
       "message_type": "Web content",
       "context": "subtext of popup"
     },
@@ -3590,7 +3590,7 @@
     },
     "govt_issued_number_text": {
       "page": "Tiers",
-      "message": "Govt. Issued ID Number",
+      "message": "Government Issued ID Number",
       "message_type": "Web content",
       "context": "Govt. Issued ID Number label text"
     },
@@ -3630,12 +3630,6 @@
       "message_type": "Web content",
       "context": "Rejection Reason text"
     },
-    "rejection_reason_text": {
-      "page": "Tiers",
-      "message": "Rejection Reason",
-      "message_type": "Web content",
-      "context": "Rejection Reason text"
-    },
     "your_files_uploaded_text": {
       "page": "Tiers",
       "message": "Your files are being uploaded.",
@@ -3662,13 +3656,13 @@
     },
     "2_months_bank_statements_text": {
       "page": "Tier 4",
-      "message": "2 Months Bank Statements",
+      "message": "Bank Statement (2 Months)",
       "message_type": "Web content",
       "context": "2 Months Bank Statements label text"
     },
     "corporate_filing_information_text": {
       "page": "Tier 4",
-      "message": "Corporate Filing Information",
+      "message": "Corporate Filing Documents",
       "message_type": "Web content",
       "context": "Corporate Filing Information label text"
     },
@@ -3686,7 +3680,7 @@
     },
     "bylaws_text": {
       "page": "Tier 4",
-      "message": "Bylaws",
+      "message": "Company Bylaws",
       "message_type": "Web content",
       "context": "Bylaws label text"
     },
@@ -3698,7 +3692,7 @@
     },
     "director_list_text": {
       "page": "Tier 4",
-      "message": "Directors and Officers List & Personal Info Equivalent to Tier 3 Requirements",
+      "message": "ID Verification Documents of Directors and Officers with 10% Equity or Higher",
       "message_type": "Web content",
       "context": "Directors and Officers List & Personal Info Equivalent to Tier 3 Requirements"
     },
@@ -3772,7 +3766,7 @@
     },
     "for_id_documents_text": {
       "page": "Tier Image Information",
-      "message": " for ID documents",
+      "message": "for ID documents",
       "message_type": "Web content",
       "context": "Static text"
     },
@@ -3970,7 +3964,7 @@
     },
     "little_bit_crop_text": {
       "page": "Tier Image Information",
-      "message": "Even a little bit of crop is ",
+      "message": "Even a little bit of crop is",
       "message_type": "Web content",
       "context": "Static text"
     },
@@ -3994,7 +3988,7 @@
     },
     "for_verification_text": {
       "page": "Tier Image Information",
-      "message": " for verification",
+      "message": "for verification",
       "message_type": "Web content",
       "context": "Static text"
     },
@@ -4024,7 +4018,7 @@
     },
     "other_govt_issued_text": {
       "page": "Tier Image Information",
-      "message": "Other valid government-issued ID ",
+      "message": "Other valid government-issued ID",
       "message_type": "Web content",
       "context": "Static text"
     },
@@ -4036,13 +4030,13 @@
     },
     "govt_id_info_text": {
       "page": "Tier Image Information",
-      "message": " be accepted if it has your full legal name, photo, date of birth, and issue and expiry dates all on the front of your ID.",
+      "message": "be accepted if it has your full legal name, photo, date of birth, and issue and expiry dates all on the front of your ID.",
       "message_type": "Web content",
       "context": "Static text"
     },
     "firearm_licenses_text": {
       "page": "Tier Image Information",
-      "message": "Firearm licenses are ",
+      "message": "Firearm licenses are",
       "message_type": "Web content",
       "context": "Static text"
     },
@@ -4054,7 +4048,7 @@
     },
     "accepted_text": {
       "page": "Tier Image Information",
-      "message": " accepted.",
+      "message": "accepted.",
       "message_type": "Web content",
       "context": "Static text"
     },
@@ -4084,7 +4078,7 @@
     },
     "from_date_submission_text": {
       "page": "Tier Image Information",
-      "message": " from the date of submission.",
+      "message": "from the date of submission.",
       "message_type": "Web content",
       "context": "Static text"
     },
@@ -4138,7 +4132,7 @@
     },
     "we_text": {
       "page": "Tier Image Information",
-      "message": "We ",
+      "message": "We",
       "message_type": "Web content",
       "context": "Static text"
     },
@@ -4150,7 +4144,7 @@
     },
     "change_of_address_text": {
       "page": "Tier Image Information",
-      "message": " accept USPS change-of-address letters.",
+      "message": "accept USPS change-of-address letters.",
       "message_type": "Web content",
       "context": "Static text"
     },
@@ -4240,13 +4234,13 @@
     },
     "photo_instruction_text": {
       "page": "Tier Image Information",
-      "message": " photo (IDCP) instructions",
+      "message": "photo (IDCP) instructions",
       "message_type": "Web content",
       "context": "Static text"
     },
     "an_text": {
       "page": "Tier Image Information",
-      "message": "An ",
+      "message": "An",
       "message_type": "Web content",
       "context": "Static text"
     },
@@ -4294,7 +4288,7 @@
     },
     "the_details_on_id_text": {
       "page": "Tier Image Information",
-      "message": "The details on the ID in the photo must be ",
+      "message": "The details on the ID in the photo must be",
       "message_type": "Web content",
       "context": "Static text"
     },
@@ -4324,7 +4318,7 @@
     },
     "and_include_text": {
       "page": "Tier Image Information",
-      "message": " and include",
+      "message": "and include",
       "message_type": "Web content",
       "context": "Static text"
     },
@@ -4507,6 +4501,26 @@
       "message": "In addition to the points above, US clients' IDs must meet the following requirements",
       "message_type": "Web content",
       "context": "Static text"
+    }
+  },
+  "tier_changes": {
+    "under_review_text": {
+      "page": "Tier",
+      "message": "Under Review",
+      "message_type": "Web content",
+      "context": "Under Review text"
+    },
+    "or_text": {
+      "page": "Tier",
+      "message": "OR",
+      "message_type": "Web content",
+      "context": "Or text"
+    },
+    "download_example_letter_text": {
+      "page": "Tier",
+      "message": "Click Here to Download an Example Letter",
+      "message_type": "Web content",
+      "context": "Click Here to Download an Example Letter text"
     }
   }
 }
