@@ -560,7 +560,7 @@
     },
     "two_factor_text2": {
       "page": "Edit Profile > Securtiy > Two-Factor Authentication",
-      "message": "\u305d\u306e\u8abf\u5b50\u3067\u3059\uff012\u30d5\u30a1\u30af\u30bf\u30fc\u8a8d\u8a3c\u3092\u6709\u52b9\u306b\u3057\u3066\u3044\u305f\u3060\u304d\u3042\u308a\u304c\u3068\u3046\u3054\u3056\u3044\u307e\u3059\u3002\u5f53\u793e\u3067\u306f\u3001\u304a\u5ba2\u69d8\u306e\u5b89\u5168\u6027\u3092\u91cd\u8996\u3057\u307e\u3059\u3002",
+      "message": "\u305d\u306e\u8abf\u5b50\u3067\u3059\uff012\u30d5\u30a1\u30af\u30bf\u30fc\u8a8d\u8a3c\u3092\u6709\u52b9\u306b\u3057\u3066\u3044\u305f\u3060\u304d\u3042\u308a\u304c\u3068\u3046\u3054\u3056\u3044\u307e\u3059\u3002\u5f53\u793e\u3067\u306f\u3001\u304a\u5ba2\u69d8\u306e\u5b89\u5168\u6027\u3092\u91cd\u8996\u3057\u307e\u3059\u3002 ",
       "message_type": "Web content",
       "context": "text"
     },
@@ -1054,7 +1054,7 @@
     },
     "id_type_driving_licence": {
       "page": "Edit Profile > Identity Verification > Step 2",
-      "message": "\u904b\u8ee2\u514d\u8a31\u8a3c",
+      "message": "\r\n\u904b\u8ee2\u514d\u8a31\u8a3c",
       "message_type": "Web content",
       "context": "Driving licence text"
     },
@@ -1102,7 +1102,7 @@
     },
     "kyc_verified_text": {
       "page": "Edit Profile > Identity Verification",
-      "message": "\u8eab\u5143\u78ba\u8a8d\u304c\u5b8c\u4e86\u3057\u307e\u3057\u305f\u3002",
+      "message": "\u78ba\u8a8d\u304c\u5b8c\u4e86\u3057\u307e\u3057\u305f\u3002",
       "message_type": "Web content",
       "context": "Identity verification kyc submit text"
     },
@@ -1412,7 +1412,7 @@
     },
     "here_text": {
       "page": "Wallet Details",
-      "message": "\u3053\u3053\u306b",
+      "message": "\u8ca1\u5e03",
       "message_type": "Web content",
       "context": "text"
     },
@@ -1498,7 +1498,7 @@
     },
     "under_approval_text": {
       "page": "History",
-      "message": "\u627f\u8a8d\u4e2d\u3067\u3059",
+      "message": "\u4fdd\u7559\u4e2d",
       "message_type": "Web content",
       "context": "Under Approval text for status"
     },
@@ -1716,7 +1716,7 @@
     },
     "min_max_postal_code": {
       "page": "Personal Details",
-      "message": "\u90f5\u4fbf\u756a\u53f7\u306b\u306f\u3001\u6700\u5c0f3\u5b57\u304b\u3089\u6700\u592725\u5b57\u307e\u3067\u5165\u529b\u3067\u304d\u307e\u3059",
+      "message": "\n\u90f5\u4fbf\u756a\u53f7\u306b\u306f\u3001\u6700\u5c0f3\u5b57\u304b\u3089\u6700\u592725\u5b57\u307e\u3067\u5165\u529b\u3067\u304d\u307e\u3059",
       "message_type": "Web content",
       "context": "validation for postal code min max numbers"
     },
@@ -2042,7 +2042,7 @@
     },
     "two_factor_authentication_subhead": {
       "page": "Edit Profile > Security > Regenerate Backup code",
-      "message": "\u3053\u306e\u30d0\u30c3\u30af\u30a2\u30c3\u30d7\u30b3\u30fc\u30c9\u3092\u4fdd\u5b58\u3057\u3066\u304f\u3060\u3055\u3044\u3002\u3042\u306a\u305f\u306f\u3001\u3082\u306f\u3084\u3042\u306a\u305f\u304corginally\u3042\u306a\u305f\u306e2FA\u306b\u95a2\u9023\u4ed8\u3051\u3089\u308c\u3066\u3044\u308b\u30c7\u30d0\u30a4\u30b9\u3092\u6301\u3063\u3066\u3044\u306a\u3044\u5834\u5408\u306f\u3001\u5c06\u6765\u7684\u306b\u3042\u306a\u305f\u306eTwo-Factor\u8a8d\u8a3c\u3092\u5909\u66f4\u3059\u308b\u5fc5\u8981\u304c\u3042\u308a\u307e\u3059\u3002",
+      "message": "\u3053\u306e\u30d0\u30c3\u30af\u30a2\u30c3\u30d7\u30b3\u30fc\u30c9\u3092\u4fdd\u5b58\u3057\u3066\u304f\u3060\u3055\u3044\u3002\u3042\u306a\u305f\u304c\u3082\u306f\u3084\u3042\u306a\u305f\u306f\u3001\u3082\u3068\u3082\u3068\u81ea\u5206\u306e2FA\u306b\u95a2\u9023\u4ed8\u3051\u3089\u308c\u3066\u3044\u308b\u30c7\u30d0\u30a4\u30b9\u3092\u6301\u3063\u3066\u3044\u306a\u3044\u5834\u5408\u306f\u3001\u5c06\u6765\u7684\u306b\u3042\u306a\u305f\u306eTwo-Factor\u8a8d\u8a3c\u3092\u5909\u66f4\u3059\u308b\u5fc5\u8981\u304c\u3042\u308a\u307e\u3059\u3002",
       "message_type": "Web content",
       "context": "Two Factor Authentication sub text"
     },
@@ -2704,7 +2704,7 @@
     },
     "transition_error_please_try": {
       "page": "Simplex",
-      "message": "\u30c8\u30e9\u30f3\u30b6\u30af\u30b7\u30e7\u30f3\u5185\u306e\u3044\u304f\u3064\u304b\u306e\u30a8\u30e9\u30fc\u304c\u3042\u308a\u307e\u3059\u3002\u518d\u8a66\u884c\u3057\u3066\u304f\u3060\u3055\u3044\u3002",
+      "message": "\u53d6\u5f15\u306b\u30a8\u30e9\u30fc\u304c\u767a\u751f\u3057\u307e\u3057\u305f\u3002\u3082\u3046\u4e00\u5ea6\u3084\u308a\u76f4\u3057\u3066\u304f\u3060\u3055\u3044\u3002",
       "message_type": "Web content",
       "context": "Error"
     },
@@ -2880,7 +2880,7 @@
     },
     "idcp_text_note_brief": {
       "page": "Profile Backup",
-      "message": "\u624b\u66f8\u304d\u306e\u30ce\u30fc\u30c8\u306f\u300c\u306e\u307fwww.faldax.com\u306b\u30c7\u30b8\u30bf\u30eb\u901a\u8ca8\u3092\u53d6\u5f15\u3059\u308b\u305f\u3081\u306b\u300d\u3068\u8a00\u3046\u3068\u3001\u542b\u307e\u308c\u3066\u3044\u308b\u5fc5\u8981\u304c\u3042\u308a\u307e\u3059\uff1a\u73fe\u5728\u306e\u65e5\u4ed8\u3092\u3042\u306a\u305f\u306e\u7f72\u540d\u30da\u30a4\u7d30\u5fc3\u306e\u6ce8\u610f\u624b\u66f8\u304d\u306e\u30e1\u30e2\u3092\u66f8\u304f\u3068\u304d\u306b\uff01\u4e00\u3064\u3067\u3082\u5358\u8a9e\u304c\u30ce\u30fc\u30c8\u306e\u7570\u306a\u308b\u5834\u5408\u306f\u3001IDCP\u304c\u53d7\u3051\u4ed8\u3051\u3089\u308c\u306a\u3044\u5834\u5408\u304c\u3042\u308a\u307e\u3059\u3002",
+      "message": "\u624b\u66f8\u304d\u306e\u30ce\u30fc\u30c8\u306f\u300c\u306e\u307fwww.faldax.com\u306b\u30c7\u30b8\u30bf\u30eb\u901a\u8ca8\u3092\u53d6\u5f15\u3059\u308b\u305f\u3081\u306b\u300d\u3068\u8a00\u308f\u306a\u3051\u308c\u3070\u306a\u3089\u306a\u3044\u3068\u3042\u306a\u305f\u306e\u7f72\u540d\u3068\u73fe\u5728\u306e\u65e5\u4ed8\u3092\u542b\u3081\u308b\u5fc5\u8981\u304c\u3042\u308a\u307e\u3059\u3002\u624b\u66f8\u304d\u306e\u30e1\u30e2\u3092\u66f8\u304f\u3068\u304d\u306b\u7d30\u5fc3\u306e\u6ce8\u610f\u3092\u6255\u3063\u3066\u304f\u3060\u3055\u3044\uff01\u4e00\u3064\u3067\u3082\u5358\u8a9e\u304c\u30ce\u30fc\u30c8\u306e\u7570\u306a\u308b\u5834\u5408\u306f\u3001IDCP\u304c\u53d7\u3051\u4ed8\u3051\u3089\u308c\u306a\u3044\u5834\u5408\u304c\u3042\u308a\u307e\u3059\u3002",
       "message_type": "Web content",
       "context": "profile backup clarity text"
     },
@@ -2916,7 +2916,7 @@
     },
     "lang_eng_text": {
       "page": "Header",
-      "message": "English",
+      "message": "\u82f1\u8a9e",
       "message_type": "Web content",
       "context": "English text"
     },
@@ -3264,7 +3264,7 @@
     },
     "save_before_share_error": {
       "page": "Dashboard",
-      "message": "\u30b7\u30a7\u30a2\u3059\u308b\u524d\u306b\u30c6\u30f3\u30d7\u30ec\u30fc\u30c8\u3092\u4fdd\u5b58\u3057\u307e\u3059",
+      "message": "\u3042\u306a\u305f\u304c\u305d\u308c\u3092\u5171\u6709\u3059\u308b\u3053\u3068\u304c\u3067\u304d\u307e\u3059\u524d\u306b\u3001\u30c0\u30c3\u30b7\u30e5\u30dc\u30fc\u30c9\u30c6\u30f3\u30d7\u30ec\u30fc\u30c8\u3092\u4fdd\u5b58\u3059\u308b\u5fc5\u8981\u304c\u3042\u308a\u307e\u3059\u3002",
       "message_type": "Web content",
       "context": "validation message for Save template before share"
     },
@@ -3276,13 +3276,13 @@
     },
     "close_template_before_save": {
       "page": "Dashboard",
-      "message": "\u9589\u3058\u305f\u3044\u3067\u3059\u304b\uff1f",
+      "message": "\u3042\u306a\u305f\u306f\u78ba\u4fe1\u3057\u3066\u4fdd\u5b58\u3059\u308b\u524d\u306b\u30af\u30ed\u30fc\u30ba\u3057\u305f\u3044\u3067\u3059\u304b\uff1f",
       "message_type": "Web content",
       "context": "Do you want to close text on dashboard screen"
     },
     "unsave_data_popup_desc": {
       "page": "Dashboard",
-      "message": "\u3088\u3044\u3053\u306e\u30da\u30fc\u30b8\u306b\u306f\u3001\u672a\u4fdd\u5b58\u306e\u4f5c\u696d\u304c\u542b\u307e\u308c\u3066\u3044\u307e\u3059\u3002\u3042\u306a\u305f\u306f\u3059\u3079\u3066\u4fdd\u5b58\u3055\u308c\u3066\u3044\u306a\u3044\u30c7\u30fc\u30bf\u304c\u5931\u308f\u308c\u307e\u3059\u3002",
+      "message": "\u3053\u306e\u30da\u30fc\u30b8\u306b\u306f\u3001\u672a\u4fdd\u5b58\u306e\u4f5c\u696d\u304c\u542b\u307e\u308c\u3066\u3044\u3066\u3082\u3088\u3044\u3067\u3059\u3002\u3042\u306a\u305f\u306f\u3059\u3079\u3066\u4fdd\u5b58\u3055\u308c\u3066\u3044\u306a\u3044\u30c7\u30fc\u30bf\u304c\u5931\u308f\u308c\u307e\u3059\u3002",
       "message_type": "Web content",
       "context": "Unsaved data popup description on dashboard screen"
     },
@@ -3294,13 +3294,13 @@
     },
     "add_item_text": {
       "page": "Dashboard",
-      "message": "\u30a2\u30a4\u30c6\u30e0\u3092\u8ffd\u52a0\u3057\u307e\u3059\u3002",
+      "message": "\u30ab\u30b9\u30bf\u30e0\u30c6\u30f3\u30d7\u30ec\u30fc\u30c8\u3092\u4f5c\u6210\u3057\u307e\u3059\u3002",
       "message_type": "Web content",
       "context": "Add item text on dashboard screen"
     },
     "note_template_text": {
       "page": "Dashboard",
-      "message": "\u3042\u306a\u305f\u304c\u30ab\u30b9\u30bf\u30de\u30a4\u30ba\u3055\u308c\u305f\u30c0\u30c3\u30b7\u30e5\u30dc\u30fc\u30c9\u3092\u3057\u305f\u3044\u5834\u5408\u306f\u3001\u72ec\u81ea\u306b\u4f5c\u6210\u3057\u307e\u3059\u3002",
+      "message": "\u3042\u306a\u305f\u304c\u30ab\u30b9\u30bf\u30de\u30a4\u30ba\u3055\u308c\u305f\u30c0\u30c3\u30b7\u30e5\u30dc\u30fc\u30c9\u3092\u3057\u305f\u3044\u5834\u5408\u306f\u3001\u30ab\u30b9\u30bf\u30e0\u30c6\u30f3\u30d7\u30ec\u30fc\u30c8\u3092\u4f5c\u6210\u3057\u307e\u3059\u3002",
       "message_type": "Web content",
       "context": "Note for the templates that are not customizable(default templates)"
     },
@@ -3366,7 +3366,7 @@
     },
     "already_have_template_code_text": {
       "page": "Dashboard",
-      "message": "\u3059\u3067\u306b\u30c6\u30f3\u30d7\u30ec\u30fc\u30c8\u30b3\u30fc\u30c9\u3092\u6301\u3063\u3066\u3044\u307e\u3059\u304b\uff1f\u30a4\u30f3\u30dd\u30fc\u30c8\u306b\u3053\u3053\u306b\u5165\u529b\u3057\u307e\u3059\u3002",
+      "message": "\u3059\u3067\u306b\u30c6\u30f3\u30d7\u30ec\u30fc\u30c8\u30b3\u30fc\u30c9\u3092\u6301\u3063\u3066\u3044\u307e\u3059\u304b\uff1f\u30c6\u30f3\u30d7\u30ec\u30fc\u30c8\u3092\u30a4\u30f3\u30dd\u30fc\u30c8\u3059\u308b\u306b\u306f\u3001\u4ee5\u4e0b\u306e\u30b3\u30fc\u30c9\u3092\u5165\u529b\u3057\u307e\u3059\u3002",
       "message_type": "Web content",
       "context": "Already have template code? Enter here to Import. text"
     },
@@ -3393,6 +3393,1164 @@
       "message": "\u30ab\u30b9\u30bf\u30de\u30a4\u30ba\u30c0\u30c3\u30b7\u30e5\u30dc\u30fc\u30c9",
       "message_type": "Web content",
       "context": "Customize Dashboard text"
+    }
+  },
+  "tiers": {
+    "tier_text": {
+      "page": "Tiers",
+      "message": "\u30c6\u30a3\u30a2",
+      "message_type": "Web content",
+      "context": "Tier text for label"
+    },
+    "Minimum_account_activity_thresholds_text": {
+      "page": "Tiers",
+      "message": "\u6700\u5c0f\u30a2\u30ab\u30a6\u30f3\u30c8\u30a2\u30af\u30c6\u30a3\u30d3\u30c6\u30a3\u3057\u304d\u3044\u5024",
+      "message_type": "Web content",
+      "context": "Minimum Account Activity Thresholds text for label"
+    },
+    "Minimum_account_age_text": {
+      "page": "Tiers",
+      "message": "\u6700\u4f4e\u30a2\u30ab\u30a6\u30f3\u30c8\u5e74\u9f62\uff08\u65e5\uff09",
+      "message_type": "Web content",
+      "context": "Minimum Account Age (Days) text for label"
+    },
+    "Minimum_no_of_trades_text": {
+      "page": "Tiers",
+      "message": "\u53d6\u5f15\u306e\u6700\u5c0f\u6570",
+      "message_type": "Web content",
+      "context": "Minimum Number of Trades text for label"
+    },
+    "Minimum_total_value_of_trades_text": {
+      "page": "Tiers",
+      "message": "\u53d6\u5f15\u306e\u6700\u5c0f\u7dcfUSD\u5024",
+      "message_type": "Web content",
+      "context": "Minimum Total USD Value of Trades text for label"
+    },
+    "deposit_cryptocurrencies_text": {
+      "page": "Tiers",
+      "message": "\u9810\u91d1Cryptocurrencies",
+      "message_type": "Web content",
+      "context": "Deposit Cryptocurrencies text for label"
+    },
+    "unlimited_text": {
+      "page": "Tiers",
+      "message": "\u30a2\u30f3\u30ea\u30df\u30c6\u30c3\u30c9",
+      "message_type": "Web content",
+      "context": "Unlimited text for value"
+    },
+    "total_wallet_balance_text": {
+      "page": "Tiers",
+      "message": "\u5408\u8a08\u3001\u30a6\u30a9\u30ec\u30c3\u30c8\u306e\u6b8b\u9ad8",
+      "message_type": "Web content",
+      "context": "Total Wallet Balance text for label"
+    },
+    "withdrawal_limits_orders_text": {
+      "page": "Tiers",
+      "message": "\u64a4\u9000\u306e\u5236\u9650",
+      "message_type": "Web content",
+      "context": "Withdrawal Limits Orders text for label"
+    },
+    "daily_text": {
+      "page": "Tiers",
+      "message": "\u65e5\u3005",
+      "message_type": "Web content",
+      "context": "Daily text for label"
+    },
+    "monthly_text": {
+      "page": "Tiers",
+      "message": "\u6bce\u6708",
+      "message_type": "Web content",
+      "context": "Monthly text for label"
+    },
+    "requirements_text": {
+      "page": "Tiers",
+      "message": "\u5fc5\u8981\u6761\u4ef6",
+      "message_type": "Web content",
+      "context": "Requirements text for label"
+    },
+    "rejected_text": {
+      "page": "Tiers",
+      "message": "\u62d2\u5426\u3055\u308c\u307e\u3057\u305f",
+      "message_type": "Web content",
+      "context": "Rejected text for label"
+    },
+    "upgrade_text": {
+      "page": "Tiers",
+      "message": "\u30a2\u30c3\u30d7\u30b0\u30ec\u30fc\u30c9",
+      "message_type": "Web content",
+      "context": "Upgrade text for label"
+    },
+    "tier_upgrade_info_text": {
+      "page": "Tier upgrade info Popup",
+      "message": "\u30c6\u30a3\u30a2\u306f\u3001\u60c5\u5831\u3092\u30a2\u30c3\u30d7\u30b0\u30ec\u30fc\u30c9",
+      "message_type": "Web content",
+      "context": "Tier Upgrade Info text for label of popup"
+    },
+    "tier_popup_subtext1_text": {
+      "page": "Tier upgrade info Popup",
+      "message": "\u30c6\u30a3\u30a2\u306b\u30a2\u30c3\u30d7\u30b0\u30ec\u30fc\u30c9\u3059\u308b\u524d\u306b\u3001",
+      "message_type": "Web content",
+      "context": "Before upgrading to Tier text for subtext of popup"
+    },
+    "tier_popup_subtext2_text": {
+      "page": "Tier upgrade info Popup",
+      "message": "\u30a2\u30ab\u30a6\u30f3\u30c8\u306f\u3001\u4ee5\u4e0b\u306e\u8981\u4ef6\u306e\u30bb\u30c3\u30c8\u306e\u3044\u305a\u308c\u304b\u3092\u6e80\u305f\u3057\u3066\u304f\u3060\u3055\u3044\u3002",
+      "message_type": "Web content",
+      "context": "subtext of popup"
+    },
+    "title_text": {
+      "page": "Tier upgrade info Popup",
+      "message": "\u984c\u540d",
+      "message_type": "Web content",
+      "context": "Title text of popup table"
+    },
+    "requirement_text": {
+      "page": "Tier upgrade info Popup",
+      "message": "\u8981\u4ef6",
+      "message_type": "Web content",
+      "context": "Requirement text for label"
+    },
+    "your_data_text": {
+      "page": "Tier upgrade info Popup",
+      "message": "\u3042\u306a\u305f\u306e\u30c7\u30fc\u30bf",
+      "message_type": "Web content",
+      "context": "Your Data text for popup table"
+    },
+    "trade_now_text": {
+      "page": "Tier upgrade info Popup",
+      "message": "\u5c55\u89a7\u4eca",
+      "message_type": "Web content",
+      "context": "Trade Now btn text for popup table"
+    },
+    "total_value_of_trades_text": {
+      "page": "Tier upgrade info Popup",
+      "message": "\u53d6\u5f15\u306e\u5408\u8a08\u5024USD",
+      "message_type": "Web content",
+      "context": "Total USD Value of Trades text for label"
+    },
+    "add_funds_to_wallet_text": {
+      "page": "Tier upgrade info Popup",
+      "message": "\u8ca1\u5e03\u306b\u8cc7\u91d1\u3092\u8ffd\u52a0",
+      "message_type": "Web content",
+      "context": "Add Funds to Wallet btn text"
+    },
+    "reject_reason_note": {
+      "page": "Tiers",
+      "message": "\u5c64\u306e\u30a2\u30c3\u30d7\u30b0\u30ec\u30fc\u30c9\u306e\u305f\u3081\u306e\u3042\u306a\u305f\u306e\u8981\u6c42\u304c\u539f\u56e0\u4ee5\u4e0b\u306e\u7406\u7531\u306b\u7ba1\u7406\u8005\u306b\u3088\u3063\u3066\u62d2\u5426\u3055\u308c\u307e\u3059\u3002",
+      "message_type": "Web content",
+      "context": "reject reason text"
+    },
+    "feel_free_note": {
+      "page": "Tiers",
+      "message": "\u304a\u6c17\u8efd\u306b\u304a\u554f\u3044\u5408\u308f\u305b\u304f\u3060\u3055\u3044",
+      "message_type": "Web content",
+      "context": "reject reason subtext"
+    },
+    "verified_tier_note": {
+      "page": "Tiers",
+      "message": "\u30a2\u30ab\u30a6\u30f3\u30c8\u306f\u3001\u30c6\u30a3\u30a2\u306b\u6b63\u5e38\u306b\u691c\u8a3c\u3055\u308c\u307e\u3059",
+      "message_type": "Web content",
+      "context": "Your Account is Verified successfully to Tier text"
+    },
+    "2fa_note": {
+      "page": "Tiers",
+      "message": "\u4e8c\u8981\u7d20\u8a8d\u8a3c\uff082FA\uff09\u306f\u3001\u30c6\u30a3\u30a22\u306b\u30a2\u30ab\u30a6\u30f3\u30c8\u3092\u30a2\u30c3\u30d7\u30b0\u30ec\u30fc\u30c9\u3059\u308b\u305f\u3081\u306b\u6709\u52b9\u306b\u3059\u308b\u5fc5\u8981\u304c\u3042\u308a\u307e\u3059\u3002",
+      "message_type": "Web content",
+      "context": "2fa note as tier upgrade requirement"
+    },
+    "2fa_note_2": {
+      "page": "Tiers",
+      "message": "2FA\u3092\u6709\u52b9\u306b\u3059\u308b\u306b\u306f\u3001\u4ee5\u4e0b\u306e\u30ea\u30f3\u30af\u3092\u30af\u30ea\u30c3\u30af\u3057\u3066\u304f\u3060\u3055\u3044",
+      "message_type": "Web content",
+      "context": "2fa note as tier upgrade requirement"
+    },
+    "second_photo_text": {
+      "page": "Tiers",
+      "message": "2\u756a\u76ee\u306e\u5199\u771fID",
+      "message_type": "Web content",
+      "context": "Second Photo ID label text"
+    },
+    "see_details_text": {
+      "page": "Tiers",
+      "message": "\u8a73\u7d30\u3092\u898b\u308b",
+      "message_type": "Web content",
+      "context": "See details label text"
+    },
+    "reupload_it_text": {
+      "page": "Tiers",
+      "message": "\u305d\u308c\u3092\u518d\u5ea6\u30a2\u30c3\u30d7\u30ed\u30fc\u30c9\u3057\u307e\u3059",
+      "message_type": "Web content",
+      "context": "Reupload it status text"
+    },
+    "proof_of_residence_text": {
+      "page": "Tiers",
+      "message": "\u5c45\u4f4f\u5730\u306e\u8a3c\u660e",
+      "message_type": "Web content",
+      "context": "Proof of Residence label text"
+    },
+    "govt_issued_number_text": {
+      "page": "Tiers",
+      "message": "\u653f\u5e9c\u767a\u884cID\u6570",
+      "message_type": "Web content",
+      "context": "Govt. Issued ID Number label text"
+    },
+    "validate_not_gt_20_ch": {
+      "page": "Tiers",
+      "message": "20\u6587\u5b57\u3092\u8d85\u3048\u308b\u3053\u3068\u304c\u306a\u3044\u304b\u3082\u3057\u308c\u307e\u305b\u3093\u3002",
+      "message_type": "Web content",
+      "context": "Field Validation"
+    },
+    "min_2_error": {
+      "page": "Tiers",
+      "message": "\u5c11\u306a\u304f\u3068\u30826\u3064\u306e\u6587\u5b57\u3067\u306a\u3051\u308c\u3070\u306a\u308a\u307e\u305b\u3093\u3002",
+      "message_type": "Web content",
+      "context": "Minimum 2 error"
+    },
+    "idcp_label_text": {
+      "page": "Tiers",
+      "message": "ID\u78ba\u8a8d\u306e\u5199\u771f",
+      "message_type": "Web content",
+      "context": "ID Confirmation Photo label text"
+    },
+    "proof_of_assets_form_text": {
+      "page": "Tiers",
+      "message": "\u8cc7\u7523\u30d5\u30a9\u30fc\u30e0\u306e\u8a3c\u660e",
+      "message_type": "Web content",
+      "context": "Proof of Assets Form label text"
+    },
+    "click_to_download_text": {
+      "page": "Tiers",
+      "message": "\u30d5\u30a9\u30fc\u30e0\u3092\u30c0\u30a6\u30f3\u30ed\u30fc\u30c9\u3059\u308b\u306b\u306f\u3001\u3053\u3053\u3092\u30af\u30ea\u30c3\u30af",
+      "message_type": "Web content",
+      "context": "Click Here to Download the Form text"
+    },
+    "rejection_reason_text": {
+      "page": "Tiers",
+      "message": "\u62d2\u5426\u7406\u7531",
+      "message_type": "Web content",
+      "context": "Rejection Reason text"
+    },
+    "your_files_uploaded_text": {
+      "page": "Tiers",
+      "message": "\u3042\u306a\u305f\u306e\u30d5\u30a1\u30a4\u30eb\u304c\u30a2\u30c3\u30d7\u30ed\u30fc\u30c9\u3055\u308c\u3066\u3044\u307e\u3059\u3002",
+      "message_type": "Web content",
+      "context": "Your files are being uploaded. text"
+    },
+    "aml_questionnaire_text": {
+      "page": "Tier 4",
+      "message": "AML\u30a2\u30f3\u30b1\u30fc\u30c8",
+      "message_type": "Web content",
+      "context": "AML Questionnaire label text"
+    },
+    "comfort_letter_text": {
+      "page": "Tier 4",
+      "message": "\u30b3\u30f3\u30d5\u30a9\u30fc\u30c8\u30ec\u30bf\u30fc",
+      "message_type": "Web content",
+      "context": "Comfort Letter label text"
+    },
+    "board_resolution_text": {
+      "page": "Tier 4",
+      "message": "\u53d6\u7de0\u5f79\u4f1a\u6c7a\u8b70",
+      "message_type": "Web content",
+      "context": "Board Resolution label text"
+    },
+    "2_months_bank_statements_text": {
+      "page": "Tier 4",
+      "message": "\u9280\u884c\u5831\u544a\u66f8\uff082\u30f6\u6708\uff09",
+      "message_type": "Web content",
+      "context": "2 Months Bank Statements label text"
+    },
+    "corporate_filing_information_text": {
+      "page": "Tier 4",
+      "message": "\u30b3\u30fc\u30dd\u30ec\u30fc\u30c8\u30fb\u30d5\u30a1\u30a4\u30ea\u30f3\u30b0\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8",
+      "message_type": "Web content",
+      "context": "Corporate Filing Information label text"
+    },
+    "beneficial_ownership_form_text": {
+      "page": "Tier 4",
+      "message": "\u53d7\u76ca\u6240\u6709\u6a29\u30d5\u30a9\u30fc\u30e0",
+      "message_type": "Web content",
+      "context": "Beneficial Ownership Form label text"
+    },
+    "articles_of_incorporation_text": {
+      "page": "Tier 4",
+      "message": "\u5b9a\u6b3e",
+      "message_type": "Web content",
+      "context": "Articles of Incorporation label text"
+    },
+    "bylaws_text": {
+      "page": "Tier 4",
+      "message": "\u4f1a\u793e\u5b9a\u6b3e",
+      "message_type": "Web content",
+      "context": "Bylaws label text"
+    },
+    "ownership_and_control_structure_text": {
+      "page": "Tier 4",
+      "message": "\u6240\u6709\u3068\u652f\u914d\u69cb\u9020",
+      "message_type": "Web content",
+      "context": "Ownership and Control Structure label text"
+    },
+    "director_list_text": {
+      "page": "Tier 4",
+      "message": "10\uff05\u306e\u6301\u5206\u4ee5\u4e0a\u3068\u5f79\u54e1\u306eID\u691c\u8a3c\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8",
+      "message_type": "Web content",
+      "context": "Directors and Officers List & Personal Info Equivalent to Tier 3 Requirements"
+    },
+    "active_business_proof_text": {
+      "page": "Tier 4",
+      "message": "\u30a2\u30af\u30c6\u30a3\u30d6\u306a\u30d3\u30b8\u30cd\u30b9\u4f4f\u6240\u306e\u8a3c\u660e",
+      "message_type": "Web content",
+      "context": "Proof of Active Business Address label text"
+    },
+    "document_availability_policy_text": {
+      "page": "Tier 4",
+      "message": "\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\u306e\u53ef\u7528\u6027\u306e\u30dd\u30ea\u30b7\u30fc",
+      "message_type": "Web content",
+      "context": "Document Availability Policy label text"
+    },
+    "cookies_policy_text": {
+      "page": "Tier 4",
+      "message": "\u30af\u30c3\u30ad\u30fc\u30dd\u30ea\u30b7\u30fc",
+      "message_type": "Web content",
+      "context": "Cookies Policy label text"
+    },
+    "privacy_policy_text": {
+      "page": "Tier 4",
+      "message": "\u500b\u4eba\u60c5\u5831\u4fdd\u8b77\u65b9\u91dd",
+      "message_type": "Web content",
+      "context": "Privacy Policy label text"
+    },
+    "aml_policy_text": {
+      "page": "Tier 4",
+      "message": "AML\u30dd\u30ea\u30b7\u30fc",
+      "message_type": "Web content",
+      "context": "AML Policy label text"
+    },
+    "terms_of_service_text": {
+      "page": "Tier 4",
+      "message": "\u5229\u7528\u898f\u7d04",
+      "message_type": "Web content",
+      "context": "Terms of Service label text"
+    },
+    "tier_limit_text": {
+      "page": "Wallet Popup",
+      "message": "\u30c6\u30a3\u30a2\u5236\u9650",
+      "message_type": "Web content",
+      "context": "Tier Limit label text"
+    },
+    "available_limit_text": {
+      "page": "Wallet Popup",
+      "message": "\u5229\u7528\u53ef\u80fd\u306a\u5236\u9650",
+      "message_type": "Web content",
+      "context": "Available Limit label text"
+    },
+    "limit_after_transfer_text": {
+      "page": "Wallet Popup",
+      "message": "\u8ee2\u9001\u5f8c\u306e\u5236\u9650",
+      "message_type": "Web content",
+      "context": "Limit after transfer label text"
+    },
+    "limit_exceeded_text": {
+      "page": "Wallet Popup",
+      "message": "\u9650\u5ea6\u8d85\u904e",
+      "message_type": "Web content",
+      "context": "Limit Exceeded label text"
+    }
+  },
+  "static_info_pages": {
+    "image_requirements_text": {
+      "page": "Tier Image Information",
+      "message": "\u753b\u50cf\u306e\u8981\u4ef6",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "for_id_documents_text": {
+      "page": "Tier Image Information",
+      "message": "ID\u6587\u66f8\u7528",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "for_intermediate_text": {
+      "page": "Tier Image Information",
+      "message": "\u4e2d\u7d1a\u3001\u30d7\u30ed\u30ec\u30d9\u30eb\u306e\u691c\u8a3c\u306e\u305f\u3081\u306b\u3001\u6211\u3005\u306f\u552f\u4e00\u306e\u53d7\u3051\u5165\u308c",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "valid_id_documents_text": {
+      "page": "Tier Image Information",
+      "message": "\u6709\u52b9\u306a\u653f\u5e9c\u767a\u884c\u306eID\u6587\u66f8\u3002",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "acceptable_id_scan_text": {
+      "page": "Tier Image Information",
+      "message": "\u8a31\u5bb9\u53ef\u80fd\u306aID\u30b9\u30ad\u30e3\u30f3/\u5199\u771f\u3068\u306f\u4f55\u3067\u3059\u304b",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "reason_for_rejection_text": {
+      "page": "Tier Image Information",
+      "message": "\u62d2\u5426\u306e\u7406\u7531",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "full_color_image_text": {
+      "page": "Tier Image Information",
+      "message": "\u30d5\u30eb\u30ab\u30e9\u30fc\u753b\u50cf",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "image_black_and_white_text": {
+      "page": "Tier Image Information",
+      "message": "\u753b\u50cf\u306f\u767d\u9ed2\uff08\u30b0\u30ec\u30fc\u30b9\u30b1\u30fc\u30eb\uff09\u3067\u3042\u308a\u307e\u3059",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "all_details_on_id_text": {
+      "page": "Tier Image Information",
+      "message": "ID\u306e\u3059\u3079\u3066\u306e\u8a73\u7d30\u304c\u8aad\u3081\u307e\u3059",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "image_watermark_text": {
+      "page": "Tier Image Information",
+      "message": "\u753b\u50cf\u306b\u306f\u900f\u304b\u3057\u304c\u3042\u308a\u307e\u3059",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "image_blurred_text": {
+      "page": "Tier Image Information",
+      "message": "\u753b\u50cf\u304c\u307c\u3084\u3051\u3066\u3044\u307e\u3059",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "image_obfuscation_text": {
+      "page": "Tier Image Information",
+      "message": "\u753b\u50cf\u306f\u3001\u4ed6\u306e\u96e3\u8aad\u5316\u3092\u6301\u3063\u3066\u3044\u307e\u3059",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "id_is_well_lit_text": {
+      "page": "Tier Image Information",
+      "message": "ID\u306f\u3088\u304f\u70b9\u706f\u3057\u3066\u3044\u307e\u3059",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "id_glare_reflections_text": {
+      "page": "Tier Image Information",
+      "message": "ID\u306e\u8a73\u7d30\u306f\u5149\u30b0\u30ec\u30a2\u3084\u53cd\u5c04\u306b\u3088\u3063\u3066\u8986\u3044\u96a0\u3055\u308c\u3066\u3044\u308b\uff08\u30d5\u30e9\u30c3\u30b7\u30e5\u306b\u6ce8\u610f\u3057\u3066\u304f\u3060\u3055\u3044\uff01\uff09",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "id_in_good_shape_text": {
+      "page": "Tier Image Information",
+      "message": "ID\u306f\u3001\u826f\u3044\u5f62\u3067\u3042\u308a\u307e\u3059",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "id_torn_holes_text": {
+      "page": "Tier Image Information",
+      "message": "ID\u306f\u3072\u3069\u304f\u640d\u50b7\u3001\u7834\u308c\u3001\u307e\u305f\u306f\u7a74\u3092\u6709\u3057\u3066\u3044\u307e\u3059",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "id_upright_text": {
+      "page": "Tier Image Information",
+      "message": "ID\u306f\u76f4\u7acb\u4f4d\u7f6e\u306b\u3042\u308a\u307e\u3059",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "id_rotated_text": {
+      "page": "Tier Image Information",
+      "message": "ID\u306f\u3001\u56de\u8ee2\u6a2a\u5411\u304d\u307e\u305f\u306f\u9006\u3055\u307e\u3067\u3059",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "id_occupies_most_image_text": {
+      "page": "Tier Image Information",
+      "message": "ID\u306f\u3001\u753b\u50cf\u306e\u5927\u90e8\u5206\u3092\u5360\u3081\u307e\u3059",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "too_much_space_text": {
+      "page": "Tier Image Information",
+      "message": "ID\u306e\u5468\u308a\u3042\u307e\u308a\u306b\u3082\u591a\u304f\u306e\u30b9\u30da\u30fc\u30b9",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "background_visible_text": {
+      "page": "Tier Image Information",
+      "message": "\u80cc\u666f1-2\u30bb\u30f3\u30c1\uff081 / 2'-1' \uff09\u3067ID\u306e\u5468\u308a\u306b\u76ee\u306b\u898b\u3048\u308b\u3059\u3079\u3066\u3067\u3042\u308a\u307e\u3059",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "id_edge_cropped_text": {
+      "page": "Tier Image Information",
+      "message": "ID\u30a8\u30c3\u30b8\u306f\uff08\u3055\u3048\u300c\u5c11\u3057\u300d\u306e\u5834\u5408\uff09\u30c8\u30ea\u30df\u30f3\u30b0\u3055\u308c",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "us_image_requirement_text": {
+      "page": "Tier Image Information",
+      "message": "\u7c73\u56fd\u306e\u30a4\u30e1\u30fc\u30b8\u8981\u4ef6",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "background_color_text": {
+      "page": "Tier Image Information",
+      "message": "\u80cc\u666f\u306f\u3001\u5bfe\u7167\u7684\u306a\u8272\u3067\u3042\u308b\uff08\u4f8b\u3048\u3070\u3001\u6de1\u8272ID\u7528\u6697\uff09",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "similar_color_id_text": {
+      "page": "Tier Image Information",
+      "message": "\u80cc\u666f\u306f\u3001ID\u3068\u540c\u4e00\u307e\u305f\u306f\u985e\u4f3c\u306e\u8272\u3067\u3042\u308a\u307e\u3059",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "good_scan_photo_text": {
+      "page": "Tier Image Information",
+      "message": "\u3069\u3046\u3059\u308c\u3070\u826f\u3044\u306e\u30b9\u30ad\u30e3\u30f3/\u5199\u771f\u3092\u64ae\u308b\u3053\u3068\u304c\u3067\u304d\u307e\u3059",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "click_here_for_tips_text": {
+      "page": "Tier Image Information",
+      "message": "\u3061\u3087\u3046\u3069\u53f3\u306e\u30b9\u30ad\u30e3\u30f3/\u5199\u771f\u3092\u5165\u624b\u3059\u308b\u65b9\u6cd5\u306e\u30d2\u30f3\u30c8\u306b\u3064\u3044\u3066\u306f\u3001\u3053\u3053\u3092\u30af\u30ea\u30c3\u30af\u3057\u3066\u304f\u3060\u3055\u3044\u3002",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "technical_parameters_text": {
+      "page": "Tier Image Information",
+      "message": "\u307e\u305f\u3001\u5fc5\u305a\u3042\u306a\u305f\u306e\u5199\u771f/\u30b9\u30ad\u30e3\u30f3\u306f\u3001\u5f53\u793e\u306e\u6280\u8853\u30d1\u30e9\u30e1\u30fc\u30bf\u3092\u6e80\u305f\u3057\u3066\u3044\u308b\u3053\u3068\u3092\u78ba\u8a8d\u3059\u308b\u5fc5\u8981\u304c\u3042\u308a\u307e\u3059\u3002",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "good_examples_text": {
+      "page": "Tier Image Information",
+      "message": "\u826f\u3044\u4f8b",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "ideal_photo_scan_text": {
+      "page": "Tier Image Information",
+      "message": "ID\u30ab\u30fc\u30c9\u306e\u7406\u60f3\u7684\u306a\u30b9\u30ad\u30e3\u30f3/\u5199\u771f",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "ideal_scan_passport_text": {
+      "page": "Tier Image Information",
+      "message": "\u30d1\u30b9\u30dd\u30fc\u30c8\u306e\u7406\u60f3\u7684\u306a\u30b9\u30ad\u30e3\u30f3/\u5199\u771f",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "unacceptable_examples_text": {
+      "page": "Tier Image Information",
+      "message": "\u5bb9\u8a8d\u3067\u304d\u306a\u3044\u4f8b",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "id_too_blurry_text": {
+      "page": "Tier Image Information",
+      "message": "ID\u306f\u3042\u307e\u308a\u306b\u3082\u307c\u3084\u3051\u3066\u3044\u307e\u3059",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "id_edges_not_visible_text": {
+      "page": "Tier Image Information",
+      "message": "ID\u306e\u30a8\u30c3\u30b8\u304c\u8868\u793a\u3055\u308c\u307e\u305b\u3093",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "little_bit_crop_text": {
+      "page": "Tier Image Information",
+      "message": "\u3067\u3082\u4f5c\u7269\u306e\u5c11\u3057\u306f\u3042\u308a\u307e\u3059",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "not_ok_text": {
+      "page": "Tier Image Information",
+      "message": "\u826f\u304f\u306a\u3044\u3067\u3059\u3088...",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "id_not_in_color_text": {
+      "page": "Tier Image Information",
+      "message": "ID\u306f\u30ab\u30e9\u30fc\u3067\u306f\u3042\u308a\u307e\u305b\u3093",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "document_requirements_text": {
+      "page": "Tier Image Information",
+      "message": "\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\u306e\u8981\u4ef6",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "for_verification_text": {
+      "page": "Tier Image Information",
+      "message": "\u691c\u8a3c\u306e\u305f\u3081\u306e",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "valid_govt_doc_text": {
+      "page": "Tier Image Information",
+      "message": "\u6709\u52b9\u306a\u653f\u5e9c\u306f\u3001ID\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\u3092\u767a\u884c\u3057\u307e\u3059",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "valid_documents_include_text": {
+      "page": "Tier Image Information",
+      "message": "\u6709\u52b9\u306a\u6587\u66f8\u304c\u542b\u307e",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "drivers_license_text": {
+      "page": "Tier Image Information",
+      "message": "\u904b\u8ee2\u514d\u8a31\u8a3c",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "national_identity_text": {
+      "page": "Tier Image Information",
+      "message": "\u56fd\u6c11ID\u30ab\u30fc\u30c9\uff08\u30d5\u30ed\u30f3\u30c8+\u30d0\u30c3\u30af\uff09",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "other_govt_issued_text": {
+      "page": "Tier Image Information",
+      "message": "\u4ed6\u306e\u6709\u52b9\u306a\u653f\u5e9c\u767a\u884c\u306eID",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "may_text": {
+      "page": "Tier Image Information",
+      "message": "\u4e94\u6708",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "govt_id_info_text": {
+      "page": "Tier Image Information",
+      "message": "\u305d\u308c\u306f\u3059\u3079\u3066\u3042\u306a\u305f\u306eID\u306e\u524d\u306b\u3042\u306a\u305f\u306e\u5b8c\u5168\u306a\u6cd5\u7684\u540d\u524d\u3001\u5199\u771f\u3001\u751f\u5e74\u6708\u65e5\u3001\u554f\u984c\u3068\u6709\u52b9\u671f\u9650\u3092\u6301\u3063\u3066\u3044\u308b\u5834\u5408\u306f\u53d7\u3051\u5165\u308c\u3089\u308c\u307e\u3059\u3002",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "firearm_licenses_text": {
+      "page": "Tier Image Information",
+      "message": "\u9283\u5668\u30e9\u30a4\u30bb\u30f3\u30b9\u304c\u3042\u308a\u307e\u3059",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "not_text": {
+      "page": "Tier Image Information",
+      "message": "\u3067\u306f\u3042\u308a\u307e\u305b\u3093",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "accepted_text": {
+      "page": "Tier Image Information",
+      "message": "\u53d7\u3051\u5165\u308c\u307e\u3057\u305f\u3002",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "scan_meet_require_text": {
+      "page": "Tier Image Information",
+      "message": "\u5fc5\u305a\u3042\u306a\u305f\u306eID\u306e\u5199\u771f/\u30b9\u30ad\u30e3\u30f3\u6e80\u305f\u3057\u3066\u3044\u308b\u3053\u3068\u3092\u3053\u308c\u3089\u304f\u3060\u3055\u3044",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "proof_document_text": {
+      "page": "Tier Image Information",
+      "message": "\u30ec\u30b8\u30c7\u30f3\u30b9\u6587\u66f8\u306e\u8a3c\u660e",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "proof_document_require_text": {
+      "page": "Tier Image Information",
+      "message": "\u6ede\u7559\u6587\u66f8\u306e\u8a3c\u660e\u3042\u306a\u305f\u306e\u540d\u524d\u3001\u4f4f\u6240\u3092\u542b\u307f\u3001\u304b\u3064\u306a\u3051\u308c\u3070\u306a\u308a\u307e\u305b\u3093",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "dated_months_ago_text": {
+      "page": "Tier Image Information",
+      "message": "\u65e5\u4ed8\u672a\u6e803\u30f6\u6708\u524d",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "from_date_submission_text": {
+      "page": "Tier Image Information",
+      "message": "\u63d0\u51fa\u306e\u65e5\u304b\u3089\u3002",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "valid_doc_include_text": {
+      "page": "Tier Image Information",
+      "message": "\u6709\u52b9\u306a\u6587\u66f8\u304c\u542b\u307e\u308c\u3001\u3053\u308c\u3089\u306b\u9650\u5b9a\u3055\u308c\u306a\u3044\u304c\u3001",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "bank_statement_text": {
+      "page": "Tier Image Information",
+      "message": "\u9280\u884c\u53d6\u5f15\u660e\u7d30\u66f8",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "credit_card_statement_text": {
+      "page": "Tier Image Information",
+      "message": "\u30af\u30ec\u30b8\u30c3\u30c8\u30ab\u30fc\u30c9\u660e\u7d30\u66f8",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "utility_bill_text": {
+      "page": "Tier Image Information",
+      "message": "\u30e6\u30fc\u30c6\u30a3\u30ea\u30c6\u30a3\u6cd5\u6848\uff08\u6c34\u3001\u96fb\u6c17\u3001\u30ac\u30b9\u3001\u30a4\u30f3\u30bf\u30fc\u30cd\u30c3\u30c8\u3001\u643a\u5e2f\u96fb\u8a71\uff09",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "payroll_statement_text": {
+      "page": "Tier Image Information",
+      "message": "\u96c7\u7528\u4e3b\u304b\u3089\u7d66\u4e0e\u8a08\u7b97\u66f8 - \u307e\u305f\u306f - \u516c\u5f0f\u7d66\u4e0e\u6587\u66f8",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "insurance_statement_text": {
+      "page": "Tier Image Information",
+      "message": "\u4fdd\u967a\u58f0\u660e",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "tax_document_text": {
+      "page": "Tier Image Information",
+      "message": "\u7a0e\u52d9\u66f8\u985e",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "residence_certificate_text": {
+      "page": "Tier Image Information",
+      "message": "\u30ec\u30b8\u30c7\u30f3\u30b9\u8a3c\u660e\u66f8",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "we_text": {
+      "page": "Tier Image Information",
+      "message": "\u6211\u3005",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "do_not_text": {
+      "page": "Tier Image Information",
+      "message": "\u3057\u306a\u3044",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "change_of_address_text": {
+      "page": "Tier Image Information",
+      "message": "USPS\u30c1\u30a7\u30f3\u30b8\u30fb\u30aa\u30d6\u30fb\u30a2\u30c9\u30ec\u30b9\u306e\u6587\u5b57\u3092\u53d7\u3051\u5165\u308c\u307e\u3059\u3002",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "non_latin_characters_text": {
+      "page": "Tier Image Information",
+      "message": "\uff08\u306a\u3069\u30ed\u30b7\u30a2\u8a9e\u3001\u4e2d\u56fd\u8a9e\u3001\u30bf\u30a4\u8a9e\u3001\u30d8\u30d6\u30e9\u30a4\u8a9e\u3001\u306a\u3069\uff09\u975e\u30e9\u30c6\u30f3\u6587\u5b57\u3092\u4f7f\u7528\u3059\u308b\u8a00\u8a9e\u306e\u6587\u66f8\u3001\u5927\u5e45\u306b\u51e6\u7406\u6642\u9593\u3092\u30b9\u30d4\u30fc\u30c9\u30a2\u30c3\u30d7\u3057\u307e\u3059\u6ede\u7559\u6587\u66f8\u306e\u3042\u306a\u305f\u306e\u8a3c\u660e\u306e\u516c\u8a3c\u7ffb\u8a33\u306e\u305f\u3081\u3002",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "or_text": {
+      "page": "Tier Image Information",
+      "message": "\u82e5\u3057\u304f\u306f",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "valid_text": {
+      "page": "Tier Image Information",
+      "message": "\u59a5\u5f53",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "ssn_text": {
+      "page": "Tier Image Information",
+      "message": "SSN",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "itin_text": {
+      "page": "Tier Image Information",
+      "message": "ITIN\uff08\u500b\u4eba\u7d0d\u7a0e\u8005\u756a\u53f7\uff09",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "us_clients_only_text": {
+      "page": "Tier Image Information",
+      "message": "\uff08\u7c73\u56fd\u306e\u30af\u30e9\u30a4\u30a2\u30f3\u30c8\u306e\u307f\uff09",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "certian_countries_only_text": {
+      "page": "Tier Image Information",
+      "message": "\uff08\u7279\u5b9a\u306e\u56fd\u306e\u307f\uff09",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "required_to_provide_text": {
+      "page": "Tier Image Information",
+      "message": "\u3042\u306a\u305f\u306f\u63d0\u4f9b\u3059\u308b\u5fc5\u8981\u304c\u3042\u308a\u307e\u3059",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "for_the_intermediate_verification_text": {
+      "page": "Tier Image Information",
+      "message": "\u4e2d\u9593\u691c\u8a3c\u30ec\u30d9\u30eb\u306e\u305f\u3081\u306b\u3042\u306a\u305f\u304c\u3057\u3066\u3044\u308b\u5834\u5408",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "resident_in_usa_text": {
+      "page": "Tier Image Information",
+      "message": "\u7c73\u56fd\u3084\u30c9\u30a4\u30c4\u306e\u5e38\u99d0",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "german_bank_account_text": {
+      "page": "Tier Image Information",
+      "message": "\u30c9\u30a4\u30c4\u306e\u9280\u884c\u53e3\u5ea7\u3067\u8cc7\u91d1\u8abf\u9054",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "domestic_funding_text": {
+      "page": "Tier Image Information",
+      "message": "\u56fd\u5185USD\u306e\u8cc7\u91d1\u3092\u4f7f\u7528\u3057\u307e\u3059",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "may_be_other_situations_text": {
+      "page": "Tier Image Information",
+      "message": "\u3057\u304b\u3057\u3001\u307e\u305f\u3001\u6211\u3005\u306fID\u78ba\u8a8d\u306e\u5199\u771f\u3092\u30a2\u30c3\u30d7\u30ed\u30fc\u30c9\u3059\u308b\u3042\u306a\u305f\u3092\u5fc5\u8981\u3068\u3059\u308b\u4ed6\u306e\u72b6\u6cc1\u304c\u3042\u308b\u304b\u3082\u3057\u308c\u307e\u305b\u3093\u3002",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "id_confirmation_text": {
+      "page": "Tier Image Information",
+      "message": "ID\u78ba\u8a8d",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "photo_instruction_text": {
+      "page": "Tier Image Information",
+      "message": "\u5199\u771f\uff08IDCP\uff09\u547d\u4ee4",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "an_text": {
+      "page": "Tier Image Information",
+      "message": "\u30a2\u30f3",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "photo_of_you_text": {
+      "page": "Tier Image Information",
+      "message": "\uff08IDCP\uff09\u3042\u306a\u305f\u3092\u4fdd\u6301\u3057\u3001\u3042\u306a\u305f\u306e\u5199\u771f\u3001\u53e3\u5ea7\u540d\u7fa9\u4eba\u3067\u3042\u308a\u307e\u3059",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "id_document_text": {
+      "page": "Tier Image Information",
+      "message": "ID\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "and_handwritten_text": {
+      "page": "Tier Image Information",
+      "message": "\u624b\u66f8\u304d",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "note_text": {
+      "page": "Tier Image Information",
+      "message": "\u6ce8\u610f",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "next_to_your_face_text": {
+      "page": "Tier Image Information",
+      "message": "\u3042\u306a\u305f\u306e\u9854\u306e\u6a2a",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "checklist_for_idcp_text": {
+      "page": "Tier Image Information",
+      "message": "\u4ee5\u4e0b\u306f\u3001\u5f53\u793e\u306e\u691c\u8a3c\u30c1\u30fc\u30e0\u304c\u53d7\u3051\u5165\u308c\u53ef\u80fd\u306a\u9069\u5207\u306aIDCP\u3092\u88fd\u9020\u3059\u308b\u305f\u3081\u306e\u30c1\u30a7\u30c3\u30af\u30ea\u30b9\u30c8\u3067\u3059",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "id_holding_text": {
+      "page": "Tier Image Information",
+      "message": "\u3042\u306a\u305f\u304c\u4fdd\u6301\u3057\u3066\u3044\u308bID\u306fKYC\u306e\u691c\u8a3c\u306b\u4f7f\u7528\u3057\u305f\u306e\u3068\u540c\u3058ID\u3067\u306a\u3051\u308c\u3070\u306a\u308a\u307e\u305b\u3093\u3002",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "the_details_on_id_text": {
+      "page": "Tier Image Information",
+      "message": "\u5199\u771f\u306eID\u306b\u3064\u3044\u3066\u306e\u8a73\u7d30\u306f\u3001\u3067\u3042\u308b\u5fc5\u8981\u304c\u3042\u308a\u307e\u3059",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "readable_text": {
+      "page": "Tier Image Information",
+      "message": "\u53ef\u8aad",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "cannot_be_blurry_text": {
+      "page": "Tier Image Information",
+      "message": "\u5f7c\u3089\u306f\u307c\u3084\u3051\u305f\u308a\u3001\u7126\u70b9\u306e\u5916\u306b\u3059\u308b\u3053\u3068\u306f\u3067\u304d\u307e\u305b\u3093\u3002",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "handwritten_note_must_say_text": {
+      "page": "Tier Image Information",
+      "message": "\u624b\u66f8\u304d\u306e\u30ce\u30fc\u30c8\u306f\u8a00\u308f\u306a\u3051\u308c\u3070\u306a\u308a\u307e\u305b\u3093",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "only_for_faldax_text": {
+      "page": "Tier Image Information",
+      "message": "www.faldax.com\u306b\u30c7\u30b8\u30bf\u30eb\u901a\u8ca8\u3092\u53d6\u5f15\u3059\u308b\u305f\u3081\u306e\u552f\u4e00\u306e",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "and_include_text": {
+      "page": "Tier Image Information",
+      "message": "\u3068\u304c\u542b\u307e",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "the_text": {
+      "page": "Tier Image Information",
+      "message": "\u30a4\u30f3\u30af\u30eb\u30fc\u30c9",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "your_text": {
+      "page": "Tier Image Information",
+      "message": "\u541b\u306e",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "current_date_text": {
+      "page": "Tier Image Information",
+      "message": "\u73fe\u5728\u306e\u65e5\u4ed8",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "signature_text": {
+      "page": "Tier Image Information",
+      "message": "\u7f72\u540d",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "pay_close_attention_text": {
+      "page": "Tier Image Information",
+      "message": "\u624b\u66f8\u304d\u306e\u30e1\u30e2\u3092\u66f8\u304f\u3068\u304d\u306b\u7d30\u5fc3\u306e\u6ce8\u610f\u3092\u6255\u3063\u3066\u304f\u3060\u3055\u3044\uff01\u4e00\u3064\u3067\u3082\u5358\u8a9e\u304c\u30ce\u30fc\u30c8\u306e\u7570\u306a\u308b\u5834\u5408\u306f\u3001IDCP\u304c\u53d7\u3051\u4ed8\u3051\u3089\u308c\u306a\u3044\u5834\u5408\u304c\u3042\u308a\u307e\u3059\u3002",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "be_aware_text": {
+      "page": "Tier Image Information",
+      "message": "\u7279\u5b9a\u306e\u72b6\u6cc1\u3067\u3001\u6211\u3005\u306f\u3042\u306a\u305f\u304c\u624b\u66f8\u304d\u306e\u30ce\u30fc\u30c8\u306b\u4f55\u304b\u3092\u66f8\u304f\u3053\u3068\u3092\u8981\u6c42\u3059\u308b\u3053\u3068\u304c\u3067\u304d\u308b\u3053\u3068\u306b\u6ce8\u610f\u3057\u3066\u304f\u3060\u3055\u3044\u3002\u5bc6\u63a5\u306b\u3042\u306a\u305f\u306e\u30c1\u30b1\u30c3\u30c8\u306b\u3042\u306a\u305f\u306b\u63d0\u4f9b\u3055\u308c\u308b\u6307\u793a\u306b\u5f93\u3063\u3066\u304f\u3060\u3055\u3044\u3002",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "dos_text": {
+      "page": "Tier Image Information",
+      "message": "\u30c9\u30b9",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "donts_text": {
+      "page": "Tier Image Information",
+      "message": "\u7981\u6b62\u4e8b\u9805",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "write_note_text": {
+      "page": "Tier Image Information",
+      "message": "\u3042\u306a\u305f\u306e\u624b\u3067\u30ce\u30fc\u30c8\u3092\u66f8\u304d\u307e\u3059\u3002",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "dont_type_text": {
+      "page": "Tier Image Information",
+      "message": "\u30e1\u30e2\u3092\u5165\u529b\u3057\u306a\u3044\u3067\u304f\u3060\u3055\u3044\u3002",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "write_note_exactly_text": {
+      "page": "Tier Image Information",
+      "message": "\u6307\u793a\u901a\u308a\u6b63\u78ba\u306b\u30ce\u30fc\u30c8\u3092\u66f8\u304d\u307e\u3059",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "change_wording_text": {
+      "page": "Tier Image Information",
+      "message": "\u30ce\u30fc\u30c8\u306e\u6587\u8a00\u3084\u610f\u5473\u3092\u5909\u66f4\u3057\u306a\u3044\u3067\u304f\u3060\u3055\u3044\u3002",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "we_accept_note_text": {
+      "page": "Tier Image Information",
+      "message": "\u79c1\u305f\u3061\u306f\u3001\u9650\u308a\u3001\u305d\u308c\u306f\u540c\u3058\u610f\u5473\u3092\u4fdd\u3064\u3088\u3046\u306b\u3001\u4ed6\u306e\u8a00\u8a9e\u3067\u306e\u30ce\u30fc\u30c8\u306e\u7ffb\u8a33\u3092\u53d7\u3051\u5165\u308c\u307e\u3059\u3002",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "photo_requirements_text": {
+      "page": "Tier Image Information",
+      "message": "\u5199\u771f\u306e\u8981\u4ef6",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "how_to_put_together_text": {
+      "page": "Tier Image Information",
+      "message": "\u3069\u306e\u3088\u3046\u306b\u4e00\u7dd2\u306bID\u3084\u30ce\u30fc\u30c8\u3092\u5165\u308c\u3066",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "high_quality_photo_text": {
+      "page": "Tier Image Information",
+      "message": "\u9ad8\u54c1\u8cea\u306e\u5199\u771f\u3092\u4f7f\u7528\u3057\u3001\u5fc5\u305aID\u306e\u30c6\u30ad\u30b9\u30c8\u3068\u6570\u5b57\u304c\u8aad\u3081\u308b\u3057\u307e\u3059\u3002\u3042\u306a\u305f\u306e\u9854\u5168\u4f53\u3084\u8155\u306b\u3082\u8868\u793a\u3055\u308c\u308b\u306f\u305a\u3067\u3059\u3002",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "not_cover_parts_text": {
+      "page": "Tier Image Information",
+      "message": "ID\u3001\u30e1\u30c3\u30bb\u30fc\u30b8\u3001\u307e\u305f\u306f\u3042\u306a\u305f\u306e\u9854\u306e\u90e8\u5206\u3092\u30ab\u30d0\u30fc\u3057\u306a\u3044\u3067\u304f\u3060\u3055\u3044\u3002",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "id_in_your_hands_text": {
+      "page": "Tier Image Information",
+      "message": "\u3042\u306a\u305f\u306f\u3042\u306a\u305f\u306e\u624b\u306e\u4e2d\u306bID\u3092\u4fdd\u6301\u3059\u308b\u5fc5\u8981\u304c\u3042\u308a\u307e\u3059\u3002\u3042\u306a\u305f\u306e\u624b\u3068\u8155\u306f\u753b\u50cf\u3067\u8868\u793a\u3055\u308c\u308b\u306f\u305a\u3067\u3059\u3002\u30b5\u30f3\u30b0\u30e9\u30b9\u3001\u5e3d\u5b50\u3001\u307e\u305f\u306f\u3042\u306a\u305f\u306e\u9854\u306e\u7279\u5fb4\u3092\u30ab\u30d0\u30fc\u3057\u3066\u4f55\u304b\u3092\u7740\u7528\u3057\u306a\u3044\u3067\u304f\u3060\u3055\u3044\u3002",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "do_not_cover_text": {
+      "page": "Tier Image Information",
+      "message": "ID\u3001\u30e1\u30c3\u30bb\u30fc\u30b8\u3001\u307e\u305f\u306f\u3042\u306a\u305f\u306e\u9854\u306e\u90e8\u5206\u3092\u30ab\u30d0\u30fc\u3057\u306a\u3044\u3067\u304f\u3060\u3055\u3044\u3002",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "hold_the_id_text": {
+      "page": "Tier Image Information",
+      "message": "\u3042\u306a\u305f\u306e\u624b\u3067ID\u3068\u30ce\u30fc\u30c8\u3092\u30db\u30fc\u30eb\u30c9\uff08S\uff09",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "someone_else_hold_text": {
+      "page": "Tier Image Information",
+      "message": "\u8ab0\u304b\u3092\u6301\u3063\u3066\u3044\u306a\u3044\u4ed6\u306e\u30ce\u30fc\u30c8\u3092\u4fdd\u6301\u3057\u307e\u3059\u3002",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "tap_id_text": {
+      "page": "Tier Image Information",
+      "message": "\u30ce\u30fc\u30c8\u306bID\u3092\u30c6\u30fc\u30d7\u3057\u306a\u3044\u3067\u304f\u3060\u3055\u3044\u3002",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "clearly_visible_text": {
+      "page": "Tier Image Information",
+      "message": "ID\u304a\u3088\u3073\u30ce\u30fc\u200b\u200b\u30c8\u3059\u3079\u3066\u304c\u306f\u3063\u304d\u308a\u3068\u898b\u3048\u308b\u3088\u3046\u306b\u3059\u308b\u5fc5\u8981\u304c\u3042\u308a\u307e\u3059\u3002",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "details_on_id_text": {
+      "page": "Tier Image Information",
+      "message": "\u6307\u3067ID\u3084\u30ce\u30fc\u30c8\u4e0a\u306e\u4efb\u610f\u306e\u8a73\u7d30\u3092\u3075\u3055\u304c\u306a\u3044\u3067\u304f\u3060\u3055\u3044\u3002",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "upload_instructions_text": {
+      "page": "Tier Image Information",
+      "message": "\u30a2\u30c3\u30d7\u30ed\u30fc\u30c9\u306e\u624b\u9806",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "upload_instruct_text": {
+      "page": "Tier Image Information",
+      "message": "\u3042\u306a\u305f\u306f\u4e0a\u306eFALDAX\u306e\u30a2\u30ab\u30a6\u30f3\u30c8\u3067IDCP\u3092\u30a2\u30c3\u30d7\u30ed\u30fc\u30c9\u3059\u308b\u3053\u3068\u304c\u3067\u304d\u307e\u3059",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "idcp_on_that_page_text": {
+      "page": "Tier Image Information",
+      "message": "\u3042\u306a\u305f\u306f\u305d\u306e\u30da\u30fc\u30b8\u306bIDCP\u3092\u30a2\u30c3\u30d7\u30ed\u30fc\u30c9\u3059\u308b\u30bb\u30af\u30b7\u30e7\u30f3\u304c\u8868\u793a\u3055\u308c\u306a\u3044\u5834\u5408",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "contact_support_text": {
+      "page": "Tier Image Information",
+      "message": "\u30b5\u30dd\u30fc\u30c8\u554f\u3044\u5408\u308f\u305b\u5148",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "backgrount_not_contrast_text": {
+      "page": "Tier Image Information",
+      "message": "\u80cc\u666f\u306f\u5bfe\u7167\u7684\u306a\u3055\u308c\u3066\u3044\u307e\u305b\u3093",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "id_must_meet_requirement_text": {
+      "page": "Tier Image Information",
+      "message": "\u4e0a\u8a18\u306e\u70b9\u306b\u52a0\u3048\u3066\u3001\u7c73\u56fd\u306e\u30af\u30e9\u30a4\u30a2\u30f3\u30c8\u306eID\u306f\u3001\u6b21\u306e\u8981\u4ef6\u3092\u6e80\u305f\u3059\u5fc5\u8981\u304c\u3042\u308a\u307e\u3059\u3002",
+      "message_type": "Web content",
+      "context": "Static text"
+    }
+  },
+  "tier_changes": {
+    "under_review_text": {
+      "page": "Tier",
+      "message": "\u30ec\u30d3\u30e5\u30fc\u306e\u4e0b\u3067",
+      "message_type": "Web content",
+      "context": "Under Review text"
+    },
+    "or_text": {
+      "page": "Tier",
+      "message": "OR",
+      "message_type": "Web content",
+      "context": "Or text"
+    },
+    "download_example_letter_text": {
+      "page": "Tier",
+      "message": "\u4f8b\u306e\u624b\u7d19\u3092\u30c0\u30a6\u30f3\u30ed\u30fc\u30c9\u3059\u308b\u306b\u306f\u3001\u3053\u3053\u3092\u30af\u30ea\u30c3\u30af",
+      "message_type": "Web content",
+      "context": "Click Here to Download an Example Letter text"
+    },
+    "institutional_account_text": {
+      "page": "Tier",
+      "message": "\u30a4\u30f3\u30b9\u30c6\u30a3\u30c6\u30e5\u30fc\u30b7\u30e7\u30ca\u30eb\u53e3\u5ea7",
+      "message_type": "Web content",
+      "context": "Click Here to Download an Example Letter text"
+    },
+    "unsupported_file_format_text": {
+      "page": "Tier",
+      "message": "\u30b5\u30dd\u30fc\u30c8\u3055\u308c\u3066\u3044\u306a\u3044\u30d5\u30a1\u30a4\u30eb\u5f62\u5f0f",
+      "message_type": "Web content",
+      "context": "Unsupported file format validation on wrong file selection"
+    },
+    "reject_reason_note_instituitional": {
+      "page": "Tier 4",
+      "message": "\u6a5f\u95a2\u306e\u30a2\u30ab\u30a6\u30f3\u30c8\u306e\u30a2\u30c3\u30d7\u30b0\u30ec\u30fc\u30c9\u306e\u305f\u3081\u306e\u3042\u306a\u305f\u306e\u8981\u6c42\u304c\u539f\u56e0\u4ee5\u4e0b\u306e\u7406\u7531\u306b\u7ba1\u7406\u8005\u306b\u3088\u3063\u3066\u62d2\u5426\u3055\u308c\u307e\u3059\u3002",
+      "message_type": "Web content",
+      "context": "Your request for Institutional Account upgrade is rejected by admin due to below reason."
+    },
+    "verified_institutional_note": {
+      "page": "Tiers",
+      "message": "\u30a2\u30ab\u30a6\u30f3\u30c8\u306f\u3001\u30a4\u30f3\u30b9\u30c6\u30a3\u30c6\u30e5\u30fc\u30b7\u30e7\u30ca\u30eb\u53e3\u5ea7\u306b\u6b63\u5e38\u306b\u691c\u8a3c\u3055\u308c\u307e\u3059",
+      "message_type": "Web content",
+      "context": "Your Account is Verified successfully to Tier text"
+    },
+    "2fa_note_validation": {
+      "page": "Tiers",
+      "message": "\u3042\u306a\u305f\u306e2FA\u306f\u3055\u3089\u306b\u9032\u884c\u3059\u308b\u305f\u3081\u306b\u6709\u52b9\u306b\u3059\u308b\u5fc5\u8981\u304c\u3042\u308a\u307e\u3059\u3002",
+      "message_type": "Web content",
+      "context": "2fa validation text"
     }
   }
 }

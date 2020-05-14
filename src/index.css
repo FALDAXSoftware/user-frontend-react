@@ -1094,6 +1094,9 @@ td.column-Email {
   width: 100%;
   justify-content: center;
 }
+.tier-text-danger-validation.red {
+  margin: 0 0 20px 0;
+}
 .validation-message {
   color: red;
 }
@@ -1426,10 +1429,10 @@ div.scrollbar>div:nth-child(3)>div{
 .lang-menu .ant-dropdown-menu-item .lang-menu-item img {
   margin: 0 5px 0 0;
 }
-.selectedIns{
+.selectedIns {
   background-color: #1890ff21;
 }
-#depthChartContainer{
+#depthChartContainer {
   width: 95%;
   height: 100%;
 }
