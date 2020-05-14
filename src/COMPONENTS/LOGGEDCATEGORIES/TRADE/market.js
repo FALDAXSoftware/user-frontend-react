@@ -409,6 +409,13 @@ class Market extends Component {
       amount,
     } = this.state;
     const RadioGroup = Radio.Group;
+    if (this.props.userBal.currency) {
+      console.log(
+        "$#^^^sdfkjghsd",
+        this.props.userBal.currency.balance,
+        this.props.userBal.currency.placed_balance
+      );
+    }
 
     return (
       <MarketWrap>
@@ -463,10 +470,12 @@ class Market extends Component {
                     </Col>
                     <Col span={24}>
                       <Balance>
-                        {this.props.userBal.currency
-                          ? `${this.props.userBal.currency.balance.toFixed(
-                              8
-                            )}${" "}`
+                        {this.props.userBal
+                          ? this.props.userBal.currency.length > 0
+                            ? `${this.props.userBal.currency.balance.toFixed(
+                                8
+                              )}${" "}`
+                            : `00${" "}`
                           : `00${" "}`}
                         {this.state.currency}
                       </Balance>
@@ -483,10 +492,12 @@ class Market extends Component {
                     <Col span={24}>
                       <Balance>
                         {this.props.userBal.currency
-                          ? `${Math.abs(
-                              this.props.userBal.currency.balance -
-                                this.props.userBal.currency.placed_balance
-                            ).toFixed(8)}${" "}`
+                          ? this.props.userBal.currency.balance
+                            ? `${Math.abs(
+                                this.props.userBal.currency.balance -
+                                  this.props.userBal.currency.placed_balance
+                              ).toFixed(8)}${" "}`
+                            : `00${" "}`
                           : `00${" "}`}
                         {this.state.currency}
                       </Balance>
@@ -542,10 +553,12 @@ class Market extends Component {
                     </Col>
                     <Col span={24}>
                       <Balance>
-                        {this.props.userBal.crypto
-                          ? `${this.props.userBal.crypto.balance.toFixed(
-                              8
-                            )}${" "}`
+                        {this.props.userBal
+                          ? this.props.userBal.crypto.length > 0
+                            ? `${this.props.userBal.crypto.balance.toFixed(
+                                8
+                              )}${" "}`
+                            : `00${" "}`
                           : `00${" "}`}
                         {this.state.crypto}
                       </Balance>
@@ -562,10 +575,12 @@ class Market extends Component {
                     <Col span={24}>
                       <Balance>
                         {this.props.userBal.crypto
-                          ? `${Math.abs(
-                              this.props.userBal.crypto.balance -
-                                this.props.userBal.crypto.placed_balance
-                            ).toFixed(8)}${" "}`
+                          ? this.props.userBal.crypto.balance
+                            ? `${Math.abs(
+                                this.props.userBal.crypto.balance -
+                                  this.props.userBal.crypto.placed_balance
+                              ).toFixed(8)}${" "}`
+                            : `00${" "}`
                           : `00${" "}`}
                         {this.state.crypto}
                       </Balance>
