@@ -3602,7 +3602,7 @@
     },
     "min_2_error": {
       "page": "Tiers",
-      "message": "\r\n2\u6587\u5b57\u4ee5\u4e0a\u3067\u3042\u308b\u5fc5\u8981\u304c\u3042\u308a\u307e\u3059",
+      "message": "\r\n4\u6587\u5b57\u4ee5\u4e0a\u3067\u3042\u308b\u5fc5\u8981\u304c\u3042\u308a\u307e\u3059\u3002",
       "message_type": "Web content",
       "context": "Minimum 2 error"
     },
