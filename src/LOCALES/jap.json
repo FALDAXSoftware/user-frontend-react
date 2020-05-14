@@ -2916,7 +2916,7 @@
     },
     "lang_eng_text": {
       "page": "Header",
-      "message": "\u82f1\u8a9e",
+      "message": "English",
       "message_type": "Web content",
       "context": "English text"
     },
@@ -2930,7 +2930,7 @@
   "market": {
     "crypto_screener": {
       "page": "Market",
-      "message": "CRYPTO\u30af\u30ea\u30fc\u30ca\u30fc",
+      "message": "\u6697\u53f7\u30b9\u30af\u30ea\u30fc\u30f3\u30ca\u30fc",
       "message_type": "Web content",
       "context": "CRYPTO SCREENER Widget header"
     },
@@ -2966,7 +2966,7 @@
     },
     "cryptocurrency_market_text": {
       "page": "Market",
-      "message": "Cryptocurrency\u5e02\u5834",
+      "message": "\u6697\u53f7\u901a\u8ca8\u5e02\u5834",
       "message_type": "Web content",
       "context": "copyright text at bottom"
     },
@@ -3046,7 +3046,7 @@
     },
     "instruments_text": {
       "page": "Trade",
-      "message": "INSTRUMENTS",
+      "message": "\u697d\u5668",
       "message_type": "Web content",
       "context": "text of trade screen"
     },
@@ -3064,7 +3064,7 @@
     },
     "my_order_and_trade_head": {
       "page": "Trade",
-      "message": "MY\u6ce8\u6587\u3068TRADES",
+      "message": "\u79c1\u306e\u6ce8\u6587\u3068\u53d6\u5f15",
       "message_type": "Web content",
       "context": "Text of MY ORDERS AND TRADES"
     },
@@ -3112,7 +3112,7 @@
     },
     "market_depth_text": {
       "page": "Trade",
-      "message": "\u5e02\u5834DEPTH",
+      "message": "\u5e02\u5834\u306e\u6df1\u3055",
       "message_type": "Web content",
       "context": "MARKET DEPTH Text of depth chart"
     },
@@ -3130,19 +3130,19 @@
     },
     "order_book_text": {
       "page": "Trade",
-      "message": "ORDER BOOK",
+      "message": "\u6ce8\u6587\u66f8",
       "message_type": "Web content",
       "context": "ORDER BOOK Text of Buy/Sell book"
     },
     "buying_text": {
       "page": "Trade",
-      "message": "BUYING",
+      "message": "\u8cb7\u3046",
       "message_type": "Web content",
       "context": "BUYING Text of Buy/Sell book"
     },
     "my_size_text": {
       "page": "Trade",
-      "message": "MY SIZE",
+      "message": "\u79c1\u306e\u30b5\u30a4\u30ba",
       "message_type": "Web content",
       "context": "my size Text of Buy/Sell book"
     },
@@ -3428,7 +3428,7 @@
     },
     "deposit_cryptocurrencies_text": {
       "page": "Tiers",
-      "message": "\u9810\u91d1Cryptocurrencies",
+      "message": "\u6697\u53f7\u901a\u8ca8\u3092\u5165\u91d1\u3059\u308b",
       "message_type": "Web content",
       "context": "Deposit Cryptocurrencies text for label"
     },
@@ -4551,6 +4551,24 @@
       "message": "\u3042\u306a\u305f\u306e2FA\u306f\u3055\u3089\u306b\u9032\u884c\u3059\u308b\u305f\u3081\u306b\u6709\u52b9\u306b\u3059\u308b\u5fc5\u8981\u304c\u3042\u308a\u307e\u3059\u3002",
       "message_type": "Web content",
       "context": "2fa validation text"
+    },
+    "activity_text": {
+      "page": "Tiers",
+      "message": "\u30a2\u30af\u30c6\u30a3\u30d3\u30c6\u30a3",
+      "message_type": "Web content",
+      "context": "activity text"
+    },
+    "portfolio_text": {
+      "page": "Tiers",
+      "message": "\u30dd\u30fc\u30c8\u30d5\u30a9\u30ea\u30aa",
+      "message_type": "Web content",
+      "context": "Portfolio text"
+    },
+    "symbol_text": {
+      "page": "Tiers",
+      "message": "\u30b7\u30f3\u30dc\u30eb",
+      "message_type": "Web content",
+      "context": "Symbol text"
     }
   }
 }
