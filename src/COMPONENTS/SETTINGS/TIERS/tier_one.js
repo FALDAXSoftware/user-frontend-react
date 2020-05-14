@@ -49,7 +49,7 @@ export const KYCHead = styled.div`
 const KYCProgress = styled.div`
   width: 26%;
   text-align: left;
-  margin-top: 50px;
+  margin-top: 0;
   margin-left: auto;
   margin-right: auto;
   & .ant-steps-item-icon {

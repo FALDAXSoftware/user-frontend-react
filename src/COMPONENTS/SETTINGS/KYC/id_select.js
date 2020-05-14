@@ -23,7 +23,7 @@ const KYCTypeSelectRow = styled.div`
   margin 55px auto;
 `;
 const SelectTitle = styled(Col)`
-  margin-top: 20px;
+  margin-top: 0;
   margin-bottom: 30px;
   text-align: center;
   color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
@@ -49,7 +49,7 @@ const SSNCol = styled(Col)`
   }
 `;
 export const ButtonWrap = styled.div`
-  margin-top: 230px;
+  margin-top: 0;
   text-align: center;
 `;
 export const SubWrap = styled.div``;
@@ -166,7 +166,6 @@ class IDselect extends Component {
     return (
       <div>
         <KYCTypeSelectRow>
-          {/* {console.log("KYC CHECK", this.props.countryFlag)} */}
           {this.props.countryFlag === true ? (
             <Row>
               <SelectTitle md={{ span: 24 }}>

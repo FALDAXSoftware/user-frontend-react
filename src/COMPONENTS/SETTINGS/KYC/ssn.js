@@ -17,7 +17,8 @@ const SSNWrap = styled.div`
   margin-left: auto;
   margin-right: auto;
   border: 1px solid #e8ebee;
-  margin-top: 88px;
+  margin-top: 50px;
+  margin-bottom: 50px;
   text-align: left;
   @media (max-width: 1024px) {
     width: 70%;
