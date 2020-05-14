@@ -561,15 +561,16 @@ class KYCForm extends Component {
                 phoneCountry: arr,
                 displayCountry: true,
                 fields,
+                showSSN: true,
               },
               () => {
-                if (
-                  profileData.country_code == "US" ||
-                  profileData.country_code == "CA"
-                )
-                  self.setState({
-                    showSSN: true,
-                  });
+                // if (
+                //   profileData.country_code == "US" ||
+                //   profileData.country_code == "CA"
+                // )
+                //   self.setState({
+                //     showSSN: true,
+                //   });
               }
             );
           } else if (profileData.country) {
@@ -587,13 +588,14 @@ class KYCForm extends Component {
                 phoneCountry: arr,
                 displayCountry: true,
                 fields,
+                showSSN: true,
               },
               () => {
-                if (country_code == "US" || country_code == "CA") {
-                  self.setState({
-                    showSSN: true,
-                  });
-                }
+                // if (country_code == "US" || country_code == "CA") {
+                //   self.setState({
+                //     showSSN: true,
+                //   });
+                // }
               }
             );
           }

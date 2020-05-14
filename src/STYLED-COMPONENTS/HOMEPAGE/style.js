@@ -106,8 +106,9 @@ export const NoteSpan = styled.span`
   font-size: 12px;
   font-style: italic;
   padding: 20px 0 0;
-  color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "#000")};
+  color: ${(props) => (props.theme.mode === "dark" ? "#ffffff" : "#000")};
   &.upload_note {
     padding: 5px 0;
+    margin: 0 0 45px 0;
   }
 `;
