@@ -4,6 +4,7 @@ import { Progress, Spin } from "antd";
 import moment from "moment";
 import { connect } from "react-redux";
 import { globalVariables } from "Globals.js";
+import { translate } from "react-i18next";
 
 import {
   Topic,
@@ -15,39 +16,7 @@ const SideType = styled.td`
   color: ${(props) => (props.type === "Sell" ? "#f13239" : "#4fb153")};
   font-weight: 600;
 `;
-const activityColumns = [
-  {
-    title: "Date",
-    dataIndex: "date",
-    key: "date",
-    className: "dash-date",
-  },
-  {
-    title: "Action",
-    dataIndex: "action",
-    key: "action",
-    render: (text) => <SideType type={text}>{text}</SideType>,
-  },
-  {
-    title: "Amount",
-    dataIndex: "amount",
-    key: "amount",
-    className: "amount",
-  },
-  {
-    title: "Symbol",
-    dataIndex: "symbol",
-    key: "symbol",
-    className: "amount",
-  },
-  {
-    title: "Completed",
-    key: "completed",
-    dataIndex: "completed",
-    className: "progress-bar-container",
-    render: (completed) => <Progress percent={completed} />,
-  },
-];
+
 class Activity extends Component {
   constructor(props) {
     super(props);
@@ -55,6 +24,7 @@ class Activity extends Component {
       activityData: [],
       activityLoader: false,
     };
+    this.t = this.props.t;
   }
   componentDidMount() {
     this.loadActivity();
@@ -116,10 +86,43 @@ class Activity extends Component {
       });
   }
   render() {
+    const activityColumns = [
+      {
+        title: this.t("wallet:date_text.message"),
+        dataIndex: "date",
+        key: "date",
+        className: "dash-date",
+      },
+      {
+        title: this.t("settings:table_head_action.message"),
+        dataIndex: "action",
+        key: "action",
+        render: (text) => <SideType type={text}>{text}</SideType>,
+      },
+      {
+        title: this.t("wallet:amount_text.message"),
+        dataIndex: "amount",
+        key: "amount",
+        className: "amount",
+      },
+      {
+        title: this.t("symbol_text.message"),
+        dataIndex: "symbol",
+        key: "symbol",
+        className: "amount",
+      },
+      {
+        title: this.t("trade:completed_text.message"),
+        key: "completed",
+        dataIndex: "completed",
+        className: "progress-bar-container",
+        render: (completed) => <Progress percent={completed} />,
+      },
+    ];
     return (
       <>
         <Topic>
-          <span>ACTIVITY</span>
+          <span>{this.t("activity_text.message")}</span>
         </Topic>
         <ActDiv>
           <ActTable
@@ -156,4 +159,6 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(Activity);
+export default translate(["tier_changes", "wallet", "settings", "trade"])(
+  connect(mapStateToProps)(Activity)
+);
