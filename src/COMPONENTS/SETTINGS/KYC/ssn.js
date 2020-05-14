@@ -34,7 +34,7 @@ const SSNsub = styled.div`
 const SSNLabel = styled.label`
   display: block;
   margin-bottom: 10px;
-  color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
 `;
 const SSNInput = styled.input`
   display: block;
@@ -43,12 +43,12 @@ const SSNInput = styled.input`
   padding: 5px;
   background-color: #f8f8f8;
   border: none;
-  color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   border-style: solid;
   border-width: 1px;
   border-color: rgb(212, 218, 223);
   border-radius: 5px;
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#020f18" : "rgb( 248, 248, 248 )"};
 `;
 
@@ -56,20 +56,20 @@ class SSN extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value_input: ""
+      value_input: "",
     };
     this.t = this.props.t;
     this.validator = new SimpleReactValidator({
       ssnValid: {
         message: this.t("general_4:upload_ssn_invalid.message"), // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
-        rule: function(val, options) {
+        rule: function (val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
           var re = /^\d{3}-\d{2}-\d{4}$/;
           var bool = re.test(String(val));
           return bool;
-        }
-      }
+        },
+      },
     });
   }
 
@@ -120,15 +120,29 @@ class SSN extends Component {
       <div>
         <SSNWrap>
           <SSNsub>
-            <SSNLabel>{this.t("id_type_ssn.message")}</SSNLabel>
+            <SSNLabel>
+              {this.t("tiers:govt_issued_number_text.message")}
+            </SSNLabel>
             <SSNInput onChange={this.input_change.bind(this)} />
             {this.validator.message(
               "postal_code",
               this.state.value_input,
-              "required|ssnValid",
+              "required|alpha_num|min:4|max:20",
               "text-danger-validation",
               {
-                required: this.t("general_4:upload_ssn_require.message")
+                required: this.t("general_1:this_field_required_error.message"),
+                alpha_num:
+                  this.t("tiers:govt_issued_number_text.message") +
+                  " " +
+                  this.t("general_3:validate_letter.message"),
+                max:
+                  this.t("tiers:govt_issued_number_text.message") +
+                  " " +
+                  this.t("tiers:validate_not_gt_20_ch.message"),
+                min:
+                  this.t("tiers:govt_issued_number_text.message") +
+                  " " +
+                  this.t("tiers:min_2_error.message"),
               }
             )}
           </SSNsub>
@@ -148,20 +162,23 @@ class SSN extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   /* console.log("personalDetails",state) */
   return {
     ...state,
     isLoggedIn:
       state.simpleReducer.isLoggedIn !== undefined
         ? state.simpleReducer.isLoggedIn
-        : ""
+        : "",
   };
 };
-const mapDispatchToProps = dispatch => ({
-  kycFormAction: (is, data) => dispatch(kycFormAction(is, data))
+const mapDispatchToProps = (dispatch) => ({
+  kycFormAction: (is, data) => dispatch(kycFormAction(is, data)),
 });
 
-export default translate(["identity_verification", "general_4"])(
-  connect(mapStateToProps, mapDispatchToProps)(SSN)
-);
+export default translate([
+  "identity_verification",
+  "general_4",
+  "general_1",
+  "tiers",
+])(connect(mapStateToProps, mapDispatchToProps)(SSN));

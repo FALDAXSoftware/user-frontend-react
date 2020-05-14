@@ -15,7 +15,7 @@ import {
   _ACTIVESSN,
   _SSN,
   _LICENSELOGO,
-  _PASSPORTLOGO
+  _PASSPORTLOGO,
 } from "CONSTANTS/images";
 
 const KYCTypeSelectRow = styled.div`
@@ -26,7 +26,7 @@ const SelectTitle = styled(Col)`
   margin-top: 20px;
   margin-bottom: 30px;
   text-align: center;
-  color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
 `;
 const PassportCol = styled(Col)`
   @media (max-width: 575px) {
@@ -86,7 +86,7 @@ class IDselect extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      background: ""
+      background: "",
     };
   }
 
@@ -105,7 +105,7 @@ class IDselect extends Component {
     */
 
   next_step() {
-    let {t}=this.props;
+    let { t } = this.props;
     var kycSteps = {};
     if (document.getElementById("passport").checked) {
       kycSteps["id_type"] = 1;
@@ -134,8 +134,8 @@ class IDselect extends Component {
     } else {
       this.openNotificationWithIcon(
         "error",
-        t('validations:error_text.message'),
-        t('general_3:select_any_option.message')
+        t("validations:error_text.message"),
+        t("general_3:select_any_option.message")
       );
     }
   }
@@ -157,7 +157,7 @@ class IDselect extends Component {
   openNotificationWithIcon(type, head, desc) {
     notification[type]({
       message: head,
-      description: desc
+      description: desc,
     });
   }
 
@@ -262,7 +262,9 @@ class IDselect extends Component {
                       className="active"
                     />
                     <img alt="ID SELECTION" src={_SSN} className="normal" />
-                    <span className="text">{t("id_type_ssn.message")}</span>
+                    <span className="text">
+                      {t("tiers:govt_issued_number_text.message")}
+                    </span>
                   </span>
                 </label>
               </SSNCol>
@@ -365,20 +367,23 @@ class IDselect extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     ...state,
     isLoggedIn:
       state.simpleReducer.isLoggedIn !== undefined
         ? state.simpleReducer.isLoggedIn
-        : ""
+        : "",
   };
 };
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   kycFormAction: (is, data) => dispatch(kycFormAction(is, data)),
-  kycformData: data => dispatch(kycformData(data))
+  kycformData: (data) => dispatch(kycformData(data)),
 });
 
-export default translate(["identity_verification","general_3","validations"])(
-  connect(mapStateToProps, mapDispatchToProps)(IDselect)
-);
+export default translate([
+  "identity_verification",
+  "general_3",
+  "validations",
+  "tiers",
+])(connect(mapStateToProps, mapDispatchToProps)(IDselect));
