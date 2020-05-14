@@ -3554,7 +3554,7 @@
     },
     "2fa_note": {
       "page": "Tiers",
-      "message": "Two-factor Authentication(2FA) must be enabled to upgrade your account to tier 2.",
+      "message": "Two-Factor Authentication(2FA) must be enabled to upgrade your account to Tier 2.",
       "message_type": "Web content",
       "context": "2fa note as tier upgrade requirement"
     },
