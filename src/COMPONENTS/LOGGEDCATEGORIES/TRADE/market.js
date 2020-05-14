@@ -409,14 +409,6 @@ class Market extends Component {
       amount,
     } = this.state;
     const RadioGroup = Radio.Group;
-    if (this.props.userBal.currency) {
-      console.log(
-        "$#^^^sdfkjghsd",
-        this.props.userBal.currency.balance,
-        this.props.userBal.currency.placed_balance
-      );
-    }
-
     return (
       <MarketWrap>
         <BuyWrap>
