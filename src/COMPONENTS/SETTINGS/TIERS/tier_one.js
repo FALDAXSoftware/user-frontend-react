@@ -28,6 +28,8 @@ export const TierWrapper = styled.div`
   min-height: calc(100vh - 380px);
   background-color: ${(props) =>
     props.theme.mode === "dark" ? "#01090f" : "#f5f6fa"};
+  color: ${(props) =>
+    props.theme.mode === "dark" ? "white" : "rgb( 80, 80, 80 )"};
 `;
 const KYCWrap = styled.div`
   background-color: ${(props) =>
@@ -36,6 +38,8 @@ const KYCWrap = styled.div`
   width: 95%;
   border-radius: 7px;
   padding: 50px 0;
+  color: ${(props) =>
+    props.theme.mode === "dark" ? "white" : "rgb( 80, 80, 80 )"};
 `;
 export const KYCHead = styled.div`
   font-size: 26px;

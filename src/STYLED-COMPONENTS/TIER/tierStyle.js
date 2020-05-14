@@ -583,7 +583,8 @@ export const TierWrap = styled.div`
 export const TwoFactorDiv = styled.div`
   width: 85%;
   padding: 25px;
-  background: #fcfcfc;
+  background: ${(props) =>
+    props.theme.mode === "dark" ? "#01090f" : "#fcfcfc"};
   border: 1px solid #f3f3f3;
   border-radius: 4px;
   text-align: center;
@@ -670,12 +671,13 @@ export const TierDocStatus = styled.div`
   align-items: center;
   justify-content: space-evenly;
   padding: 10px 15px
-  background: #fefefe;
+  background: ${(props) =>
+    props.theme.mode === "dark" ? "#01090f" : "#fefefe"};
   border: 1px solid #d4dadf;
   border-radius: 4px;
   font-size: 16px;
   font-weight: 600;
-  color: #5a5a5a;
+  color: ${(props) => (props.theme.mode === "dark" ? "#fff" : "#5a5a5a")};
   > .anticon  {
     margin: 0 10px 0 0;
   }
@@ -717,8 +719,11 @@ export const TierUpload = styled.div`
     cursor: default;
   }
   > button {
-    background: #f8f8f8;
+    background: ${(props) =>
+      props.theme.mode === "dark" ? "#01090f" : "#f8f8f8"};
     border: 1px solid #d4dadf;
+    border-color: ${(props) =>
+      props.theme.mode === "dark" ? "#fff" : "#d4dadf"};
     padding: 10px 15px;
     border-radius: 4px;
     display: flex;
@@ -727,7 +732,7 @@ export const TierUpload = styled.div`
     min-width: 120px;
     font-size: 16px;
     font-weight: 600;
-    color: #505050;
+    color: ${(props) => (props.theme.mode === "dark" ? "#fff" : "#505050")};
     opacity: 80%;
     > .anticon-close {
       margin: 0 0 0 10px;
@@ -806,10 +811,13 @@ export const TierDropzoneStyle = styled(Dropzone)`
   align-items: center;
   font-size: 16px;
   font-weight: 600;
-  color: #505050;
-  opacity: 80%;
+  color: ${(props) => (props.theme.mode === "dark" ? "#fff" : "#505050")};
+  opacity: ${(props) => (props.theme.mode === "dark" ? "1" : "80%")};
   padding: 10px 15px;
   width: 100%;
+  background: ${(props) =>
+    props.theme.mode === "dark" ? "#01090f" : "#f5f6fa"};
+  border-radius: 4px;
   &.has_file {
     padding-right: 0;
     width: calc(100% - 43px);
@@ -826,7 +834,8 @@ export const TierDropzoneStyle = styled(Dropzone)`
   }
 `;
 export const TierDropWrap = styled.div`
-  background: #f8f8f8;
+  background: ${(props) =>
+    props.theme.mode === "dark" ? "#01090f" : "#f8f8f8"};
   border: 1px solid #d4dadf;
   border-radius: 4px;
   display: flex;
