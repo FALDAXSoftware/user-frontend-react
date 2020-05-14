@@ -973,7 +973,7 @@ class TierTwo extends React.Component {
                           ? this.validator.message(
                               "id_number",
                               this.state.id_number,
-                              "required|alpha_num|min:2|max:20",
+                              "required|alpha_num|min:4|max:20",
                               "tier-text-danger-validation",
                               {
                                 required: this.t(

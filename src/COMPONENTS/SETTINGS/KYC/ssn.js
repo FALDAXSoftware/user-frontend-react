@@ -128,7 +128,7 @@ class SSN extends Component {
             {this.validator.message(
               "postal_code",
               this.state.value_input,
-              "required|alpha_num|min:2|max:20",
+              "required|alpha_num|min:4|max:20",
               "text-danger-validation",
               {
                 required: this.t("general_1:this_field_required_error.message"),
