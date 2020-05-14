@@ -717,18 +717,22 @@ class TierThree extends React.Component {
                       <TierUpload>
                         <TierDropWrap
                           className={
-                            this.state.asset_proof.name
-                              ? "has_file"
-                              : !this.state.reUpload2
-                              ? "disabled_btn"
+                            this.state.asset_proof
+                              ? this.state.asset_proof.name
+                                ? "has_file"
+                                : !this.state.reUpload2
+                                ? "disabled_btn"
+                                : ""
                               : ""
                           }
                         >
                           <TierDropzoneStyle
                             accept=".pdf,.doc,.docx"
                             className={
-                              this.state.asset_proof.name
-                                ? "tier_dropzone has_file"
+                              this.state.asset_proof
+                                ? this.state.asset_proof.name
+                                  ? "tier_dropzone has_file"
+                                  : "tier_dropzone"
                                 : "tier_dropzone"
                             }
                             multiple={false}
@@ -736,7 +740,7 @@ class TierThree extends React.Component {
                             onFileDialogCancel={this.onCancel.bind(this)}
                             disabled={!this.state.reUpload2}
                           >
-                            {cover_flag === null && (
+                            {(cover_flag === null || cover_flag === false) && (
                               <div>
                                 <IconS type="upload" />
                                 <FileSelectText>
@@ -744,33 +748,30 @@ class TierThree extends React.Component {
                                 </FileSelectText>
                               </div>
                             )}
-                            {cover_flag === false && (
-                              <div>
-                                <FileSelectText>
-                                  {this.t("apply_job:wrong_file_text.message")}
-                                </FileSelectText>
-                              </div>
-                            )}
                             {cover_flag === true && (
                               <div>
                                 <FileSelectText>
-                                  {this.state.asset_proof.name}
+                                  {this.state.asset_proof
+                                    ? this.state.asset_proof.name
+                                    : ""}
                                 </FileSelectText>
                               </div>
                             )}
                           </TierDropzoneStyle>
-                          {this.state.asset_proof.name && (
-                            <Icon
-                              className="drop_zone_icon"
-                              onClick={() => {
-                                this.setState({
-                                  asset_proof: [],
-                                  cover_flag: null,
-                                });
-                              }}
-                              type="close"
-                            />
-                          )}
+                          {this.state.asset_proof
+                            ? this.state.asset_proof.name && (
+                                <Icon
+                                  className="drop_zone_icon"
+                                  onClick={() => {
+                                    this.setState({
+                                      asset_proof: [],
+                                      cover_flag: null,
+                                    });
+                                  }}
+                                  type="close"
+                                />
+                              )
+                            : ""}
                         </TierDropWrap>
                         <SupportText className="tier_support_text">
                           {this.t("apply_job:supported_formats_text.message")}
@@ -788,6 +789,13 @@ class TierThree extends React.Component {
                               }
                             )
                           : delete this.validator.fields["asset_proof"]}
+                        {cover_flag === false && (
+                          <div class="tier-text-danger-validation">
+                            {this.t(
+                              "tier_changes:unsupported_file_format_text.message"
+                            )}
+                          </div>
+                        )}
                       </TierUpload>
                       {this.state.tierData.length > 0 ? (
                         <TierDocBox>

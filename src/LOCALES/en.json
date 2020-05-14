@@ -3446,9 +3446,9 @@
     },
     "withdrawal_limits_orders_text": {
       "page": "Tiers",
-      "message": "Withdrawal Limits Orders",
+      "message": "Withdrawal Limits",
       "message_type": "Web content",
-      "context": "Withdrawal Limits Orders text for label"
+      "context": "Withdrawal Limits text for label"
     },
     "daily_text": {
       "page": "Tiers",
@@ -4521,6 +4521,36 @@
       "message": "Click Here to Download an Example Letter",
       "message_type": "Web content",
       "context": "Click Here to Download an Example Letter text"
+    },
+    "institutional_account_text": {
+      "page": "Tier",
+      "message": "Institutional Account",
+      "message_type": "Web content",
+      "context": "Click Here to Download an Example Letter text"
+    },
+    "unsupported_file_format_text": {
+      "page": "Tier",
+      "message": "Unsupported file format",
+      "message_type": "Web content",
+      "context": "Unsupported file format validation on wrong file selection"
+    },
+    "reject_reason_note_instituitional": {
+      "page": "Tier 4",
+      "message": "Your request for institutional account upgrade is rejected by admin due to below reason.",
+      "message_type": "Web content",
+      "context": "Your request for Institutional Account upgrade is rejected by admin due to below reason."
+    },
+    "verified_institutional_note": {
+      "page": "Tiers",
+      "message": "Your Account is Verified successfully to Institutional Account",
+      "message_type": "Web content",
+      "context": "Your Account is Verified successfully to Tier text"
+    },
+    "2fa_note_validation": {
+      "page": "Tiers",
+      "message": "Your 2FA must be enabled to proceed further.",
+      "message_type": "Web content",
+      "context": "2fa validation text"
     }
   }
 }

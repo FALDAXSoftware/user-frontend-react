@@ -1019,7 +1019,7 @@ class TierFour extends React.Component {
         <TierWrapper>
           <KYCWrap>
             <KYCHead>
-              {this.t("tiers:tier_text.message")} 4{" "}
+              {this.t("tier_changes:institutional_account_text.message")}{" "}
               {this.t("tiers:upgrade_text.message")}
             </KYCHead>
             {forceRejectStatus ? (
@@ -1030,7 +1030,11 @@ class TierFour extends React.Component {
                   fontSize: "18px",
                 }}
               >
-                <p>{this.t("reject_reason_note.message")}</p>
+                <p>
+                  {this.t(
+                    "tier_changes:reject_reason_note_instituitional.message"
+                  )}
+                </p>
                 <p>{forceRejectNote}</p>
                 <p>
                   {this.t("feel_free_note.message")}{" "}
@@ -1062,7 +1066,9 @@ class TierFour extends React.Component {
                           </b>
                           <br />
                           <br />
-                          {this.t("verified_tier_note.message")} 4.
+                          {this.t(
+                            "tier_changes:verified_institutional_note.message"
+                          )}
                         </span>
                       </KycSucc>
                     </DoneWrap>
@@ -1156,7 +1162,9 @@ class TierFour extends React.Component {
                           : delete this.validator1.fields["aml_questionnaire"]}
                         {aml_flag === false && (
                           <div class="tier-text-danger-validation">
-                            Invalid file format
+                            {this.t(
+                              "tier_changes:unsupported_file_format_text.message"
+                            )}
                           </div>
                         )}
                       </TierUpload>
@@ -1292,7 +1300,9 @@ class TierFour extends React.Component {
                           : delete this.validator1.fields["comfort_letter"]}
                         {comfort_flag === false && (
                           <div class="tier-text-danger-validation">
-                            Invalid file format
+                            {this.t(
+                              "tier_changes:unsupported_file_format_text.message"
+                            )}
                           </div>
                         )}
                       </TierUpload>
@@ -1420,7 +1430,9 @@ class TierFour extends React.Component {
                           : delete this.validator1.fields["board_resolution"]}
                         {board_flag === false && (
                           <div class="tier-text-danger-validation">
-                            Invalid file format
+                            {this.t(
+                              "tier_changes:unsupported_file_format_text.message"
+                            )}
                           </div>
                         )}
                       </TierUpload>
@@ -1548,7 +1560,9 @@ class TierFour extends React.Component {
                           : delete this.validator1.fields["bank_statements"]}
                         {bank_flag === false && (
                           <div class="tier-text-danger-validation">
-                            Invalid file format
+                            {this.t(
+                              "tier_changes:unsupported_file_format_text.message"
+                            )}
                           </div>
                         )}
                       </TierUpload>
@@ -1679,7 +1693,9 @@ class TierFour extends React.Component {
                           : delete this.validator1.fields["corporate_info"]}
                         {corporate_flag === false && (
                           <div class="tier-text-danger-validation">
-                            Invalid file format
+                            {this.t(
+                              "tier_changes:unsupported_file_format_text.message"
+                            )}
                           </div>
                         )}
                       </TierUpload>
@@ -1817,7 +1833,9 @@ class TierFour extends React.Component {
                           : delete this.validator1.fields["ownership_form"]}
                         {ownership_flag === false && (
                           <div class="tier-text-danger-validation">
-                            Invalid file format
+                            {this.t(
+                              "tier_changes:unsupported_file_format_text.message"
+                            )}
                           </div>
                         )}
                       </TierUpload>
@@ -1956,7 +1974,9 @@ class TierFour extends React.Component {
                             ]}
                         {articles_flag === false && (
                           <div class="tier-text-danger-validation">
-                            Invalid file format
+                            {this.t(
+                              "tier_changes:unsupported_file_format_text.message"
+                            )}
                           </div>
                         )}
                       </TierUpload>
@@ -2089,7 +2109,9 @@ class TierFour extends React.Component {
                           : delete this.validator1.fields["bylaws"]}
                         {bylaws_flag === false && (
                           <div class="tier-text-danger-validation">
-                            Invalid file format
+                            {this.t(
+                              "tier_changes:unsupported_file_format_text.message"
+                            )}
                           </div>
                         )}
                       </TierUpload>
@@ -2230,7 +2252,9 @@ class TierFour extends React.Component {
                             ]}
                         {ownership_control_structure_flag === false && (
                           <div class="tier-text-danger-validation">
-                            Invalid file format
+                            {this.t(
+                              "tier_changes:unsupported_file_format_text.message"
+                            )}
                           </div>
                         )}
                       </TierUpload>
@@ -2366,7 +2390,9 @@ class TierFour extends React.Component {
                           : delete this.validator1.fields["director_list"]}
                         {director_list_flag === false && (
                           <div class="tier-text-danger-validation">
-                            Invalid file format
+                            {this.t(
+                              "tier_changes:unsupported_file_format_text.message"
+                            )}
                           </div>
                         )}
                       </TierUpload>
@@ -2509,7 +2535,9 @@ class TierFour extends React.Component {
                             ]}
                         {active_business_proof_flag === false && (
                           <div class="tier-text-danger-validation">
-                            Invalid file format
+                            {this.t(
+                              "tier_changes:unsupported_file_format_text.message"
+                            )}
                           </div>
                         )}
                       </TierUpload>
@@ -2650,7 +2678,9 @@ class TierFour extends React.Component {
                             ]}
                         {document_availability_policy_flag === false && (
                           <div class="tier-text-danger-validation">
-                            Invalid file format
+                            {this.t(
+                              "tier_changes:unsupported_file_format_text.message"
+                            )}
                           </div>
                         )}
                       </TierUpload>
@@ -2783,7 +2813,9 @@ class TierFour extends React.Component {
                           : delete this.validator1.fields["cookies_policy"]}
                         {cookies_policy_flag === false && (
                           <div class="tier-text-danger-validation">
-                            Invalid file format
+                            {this.t(
+                              "tier_changes:unsupported_file_format_text.message"
+                            )}
                           </div>
                         )}
                       </TierUpload>
@@ -2912,7 +2944,9 @@ class TierFour extends React.Component {
                           : delete this.validator1.fields["privacy_policy"]}
                         {privacy_policy_flag === false && (
                           <div class="tier-text-danger-validation">
-                            Invalid file format
+                            {this.t(
+                              "tier_changes:unsupported_file_format_text.message"
+                            )}
                           </div>
                         )}
                       </TierUpload>
@@ -3041,7 +3075,9 @@ class TierFour extends React.Component {
                           : delete this.validator1.fields["aml_policy"]}
                         {aml_policy_flag === false && (
                           <div class="tier-text-danger-validation">
-                            Invalid file format
+                            {this.t(
+                              "tier_changes:unsupported_file_format_text.message"
+                            )}
                           </div>
                         )}
                       </TierUpload>
@@ -3170,7 +3206,9 @@ class TierFour extends React.Component {
                           : delete this.validator1.fields["terms_of_service"]}
                         {terms_of_service_flag === false && (
                           <div class="tier-text-danger-validation">
-                            Invalid file format
+                            {this.t(
+                              "tier_changes:unsupported_file_format_text.message"
+                            )}
                           </div>
                         )}
                       </TierUpload>

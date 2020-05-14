@@ -16,6 +16,7 @@ import {
   TierUpdate,
   TierVerfied,
   TierVerifiedWrap,
+  ButtonWrapDiv,
   OrSpan,
 } from "../../STYLED-COMPONENTS/TIER/tierStyle";
 import { Icon, notification } from "antd";
@@ -108,7 +109,10 @@ class Tier extends Component {
               .Minimum_Total_Value_of_All_Transactions,
             minimumWalletBalance: this.state.tierData[id_value].requirements_two
               .Total_Wallet_Balance,
-            current_tier_id: id,
+            current_tier_id:
+              id == 4
+                ? `${this.t("tier_changes:institutional_account_text.message")}`
+                : id,
           });
         } else {
           this.openNotificationWithIcon(
@@ -144,109 +148,130 @@ class Tier extends Component {
                   return (
                     <TierSubMain key={tier.id} className={liClasses}>
                       <TierHead className="top-head">
-                        {self.t("tier_text.message")} {tier.tier_step}
+                        {tier.tier_step == 4
+                          ? `${self.t(
+                              "tier_changes:institutional_account_text.message"
+                            )}`
+                          : `${self.t("tier_text.message")}${" "}${
+                              tier.tier_step
+                            }`}
                       </TierHead>
                       <TierSubMainInner>
-                        <TierSubHead>
-                          {self.t(
-                            "Minimum_account_activity_thresholds_text.message"
-                          )}
-                        </TierSubHead>
-                        <TierUl>
-                          <li>
-                            {tier.minimum_activity_thresold ? (
-                              <span className="text-wrap">
-                                <span>
-                                  {self.t("Minimum_account_age_text.message")}:
-                                </span>
-                                <span>
-                                  {tier.minimum_activity_thresold.Account_Age}
-                                </span>
-                              </span>
-                            ) : (
-                              ""
+                        {tier.tier_step != 4 && (
+                          <TierSubHead>
+                            {self.t(
+                              "Minimum_account_activity_thresholds_text.message"
                             )}
-                          </li>
-                          <li>
-                            {tier.minimum_activity_thresold ? (
-                              <span className="text-wrap">
-                                <span>
-                                  {self.t("Minimum_no_of_trades_text.message")}:
+                          </TierSubHead>
+                        )}
+                        {tier.tier_step != 4 && (
+                          <TierUl>
+                            <li>
+                              {tier.minimum_activity_thresold ? (
+                                <span className="text-wrap">
+                                  <span>
+                                    {self.t("Minimum_account_age_text.message")}
+                                    :
+                                  </span>
+                                  <span>
+                                    {tier.minimum_activity_thresold.Account_Age}
+                                  </span>
                                 </span>
-                                <span>
-                                  {
-                                    tier.minimum_activity_thresold
-                                      .Minimum_Total_Transactions
-                                  }
+                              ) : (
+                                ""
+                              )}
+                            </li>
+                            <li>
+                              {tier.minimum_activity_thresold ? (
+                                <span className="text-wrap">
+                                  <span>
+                                    {self.t(
+                                      "Minimum_no_of_trades_text.message"
+                                    )}
+                                    :
+                                  </span>
+                                  <span>
+                                    {
+                                      tier.minimum_activity_thresold
+                                        .Minimum_Total_Transactions
+                                    }
+                                  </span>
                                 </span>
-                              </span>
-                            ) : (
-                              ""
-                            )}
-                          </li>
-                          <li>
-                            {tier.minimum_activity_thresold ? (
-                              <span className="text-wrap">
+                              ) : (
+                                ""
+                              )}
+                            </li>
+                            <li>
+                              {tier.minimum_activity_thresold ? (
+                                <span className="text-wrap">
+                                  <span>
+                                    {self.t(
+                                      "Minimum_total_value_of_trades_text.message"
+                                    )}
+                                    :
+                                  </span>
+                                  <NumberFormat
+                                    value={`${parseFloat(
+                                      tier.minimum_activity_thresold
+                                        .Minimum_Total_Value_of_All_Transactions
+                                    ).toFixed(2)}`}
+                                    displayType={"text"}
+                                    thousandSeparator={true}
+                                    prefix="$"
+                                  />
+                                </span>
+                              ) : (
+                                ""
+                              )}
+                            </li>
+                            <li>
+                              <span class="text-wrap">
                                 <span>
                                   {self.t(
-                                    "Minimum_total_value_of_trades_text.message"
+                                    "deposit_cryptocurrencies_text.message"
                                   )}
                                   :
                                 </span>
-                                <NumberFormat
-                                  value={`${parseFloat(
-                                    tier.minimum_activity_thresold
-                                      .Minimum_Total_Value_of_All_Transactions
-                                  ).toFixed(2)}`}
-                                  displayType={"text"}
-                                  thousandSeparator={true}
-                                  prefix="$"
-                                />
+                                <span>{self.t("unlimited_text.message")}</span>
                               </span>
-                            ) : (
-                              ""
-                            )}
-                          </li>
-                          <li>
-                            <span class="text-wrap">
-                              <span>
-                                {self.t(
-                                  "deposit_cryptocurrencies_text.message"
-                                )}
-                                :
-                              </span>
-                              <span>{self.t("unlimited_text.message")}</span>
-                            </span>
-                          </li>
-                          <li>
-                            <span class="text-wrap">
-                              <span>{self.t("trade:trade_head.message")}:</span>
-                              <span>{self.t("unlimited_text.message")}</span>
-                            </span>
-                          </li>
-                        </TierUl>
-                        <OrSpan>OR</OrSpan>
-                        <TierUl>
-                          <li>
-                            {tier.requirements_two ? (
-                              <span className="text-wrap">
+                            </li>
+                            <li>
+                              <span class="text-wrap">
                                 <span>
-                                  {self.t("total_wallet_balance_text.message")}:{" "}
+                                  {self.t("trade:trade_head.message")}:
                                 </span>
-                                <NumberFormat
-                                  value={`${parseFloat(
-                                    tier.requirements_two.Total_Wallet_Balance
-                                  ).toFixed(2)}`}
-                                  displayType={"text"}
-                                  thousandSeparator={true}
-                                  prefix="$"
-                                />
+                                <span>{self.t("unlimited_text.message")}</span>
                               </span>
-                            ) : (
-                              ""
-                            )}
-                          </li>
-                        </TierUl>
+                            </li>
+                          </TierUl>
+                        )}
+                        {tier.tier_step != 4 && <OrSpan>OR</OrSpan>}
+                        {tier.tier_step != 4 && (
+                          <TierUl>
+                            <li>
+                              {tier.requirements_two ? (
+                                <span className="text-wrap">
+                                  <span>
+                                    {self.t(
+                                      "total_wallet_balance_text.message"
+                                    )}
+                                    :{" "}
+                                  </span>
+                                  <NumberFormat
+                                    value={`${parseFloat(
+                                      tier.requirements_two.Total_Wallet_Balance
+                                    ).toFixed(2)}`}
+                                    displayType={"text"}
+                                    thousandSeparator={true}
+                                    prefix="$"
+                                  />
+                                </span>
+                              ) : (
+                                ""
+                              )}
+                            </li>
+                          </TierUl>
+                        )}
                         <TierWithdrawalHead className="withdrawal">
                           {self.t("withdrawal_limits_orders_text.message")}
                         </TierWithdrawalHead>
@@ -309,44 +334,48 @@ class Tier extends Component {
                             : ""}
                         </ul>
                       </TierRequirements>
-                      {tier.is_verified && (
-                        <Link
-                          to={{
-                            pathname: `/tier${tier.id}`,
-                            state: {
-                              flag: true,
-                            },
-                          }}
-                        >
-                          <TierUpdate className="upgrade-btn verified">
-                            {self.t("login_page:verified_text.message")}
+                      <ButtonWrapDiv>
+                        {tier.is_verified && (
+                          <Link
+                            to={{
+                              pathname: `/tier${tier.id}`,
+                              state: {
+                                flag: true,
+                              },
+                            }}
+                          >
+                            <TierUpdate className="upgrade-btn verified">
+                              {self.t("login_page:verified_text.message")}
+                            </TierUpdate>
+                          </Link>
+                        )}
+                        {tier.is_active && (
+                          <TierUpdate
+                            onClick={() => {
+                              self.checkTierRequirements(tier.id);
+                            }}
+                            key={tier.id}
+                            id={tier.id}
+                            data-id={tier.id}
+                            className="upgrade-btn"
+                          >
+                            {tier.account_details
+                              ? tier.account_details.approved == null
+                                ? self.t(
+                                    "tier_changes:under_review_text.message"
+                                  )
+                                : tier.account_details.approved == false
+                                ? self.t("rejected_text.message")
+                                : self.t("upgrade_text.message")
+                              : self.t("upgrade_text.message")}
                           </TierUpdate>
-                        </Link>
-                      )}
-                      {tier.is_active && (
-                        <TierUpdate
-                          onClick={() => {
-                            self.checkTierRequirements(tier.id);
-                          }}
-                          key={tier.id}
-                          id={tier.id}
-                          data-id={tier.id}
-                          className="upgrade-btn"
-                        >
-                          {tier.account_details
-                            ? tier.account_details.approved == null
-                              ? self.t("tier_changes:under_review_text.message")
-                              : tier.account_details.approved == false
-                              ? self.t("rejected_text.message")
-                              : self.t("upgrade_text.message")
-                            : self.t("upgrade_text.message")}
-                        </TierUpdate>
-                      )}
-                      {!tier.is_active && !tier.is_verified && (
-                        <TierUpdate className="upgrade-btn">
-                          {self.t("upgrade_text.message")}
-                        </TierUpdate>
-                      )}
+                        )}
+                        {!tier.is_active && !tier.is_verified && (
+                          <TierUpdate className="upgrade-btn">
+                            {self.t("upgrade_text.message")}
+                          </TierUpdate>
+                        )}
+                      </ButtonWrapDiv>
                     </TierSubMain>
                   );
                 })

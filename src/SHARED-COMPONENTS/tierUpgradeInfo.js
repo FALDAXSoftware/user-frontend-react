@@ -181,8 +181,7 @@ class TierUpgradeInfo extends Component {
         >
           <ModalAgreeWrap className="reject_reason_div">
             <p>
-              {this.t("tier_popup_subtext1_text.message")}
-              {tierId}
+              {this.t("tier_popup_subtext1_text.message")} {tierId}{" "}
               {this.t("tier_popup_subtext2_text.message")}
             </p>
             {/* <h5>Requirement set 1</h5> */}

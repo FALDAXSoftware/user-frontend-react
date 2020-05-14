@@ -1058,7 +1058,7 @@ class WalletPopup extends Component {
                   {this.validator.message(
                     "amount",
                     this.state.sendFields.amount,
-                    "amountRequired|numeric|gtzero|decimalrestrict|minLimitCheck|maxLimitCheck",
+                    "amountRequired|numeric|gtzero|decimalrestrict|minLimitCheck",
                     "text-danger-validation",
                     {
                       numeric: this.t("validation_amount_numeric.message"),

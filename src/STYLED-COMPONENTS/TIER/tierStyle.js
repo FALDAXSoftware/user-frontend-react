@@ -155,12 +155,12 @@ export const TierTable = styled.table`
   }
 `;
 export const TierRequirements = styled.div`
-  padding: 0 15px;
+  padding: 0 15px 68px;
   border-top: 1px solid #f5f5f5;
   width: 100%;
   min-height: 269px;
-  height: 250px;
-  overflow: auto;
+  // height: 250px;
+  // overflow: auto;
   @media (max-width: 1500px) {
     min-height: 320px;
     height: 300px;
@@ -217,6 +217,13 @@ export const TierRequirements = styled.div`
 export const TierSubHeadRequire = styled(TierSubHead)`
   padding: 20px 0;
 `;
+export const ButtonWrapDiv = styled.div`
+  width: 100%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 20px;
+`;
 export const TierUpdate = styled.button`
   background: ${(props) =>
     props.theme.mode === "dark" ? "#818d95" : "transparent"};
@@ -230,7 +237,6 @@ export const TierUpdate = styled.button`
   border-color: ${(props) =>
     props.theme.mode === "dark" ? "#818d95" : "#333333"};
   border-radius: 30px;
-  margin: 0 0 20px;
   &:focus {
     outline: none;
   }
@@ -568,6 +574,9 @@ export const TwoFactorDiv = styled.div`
   border-radius: 4px;
   text-align: center;
   margin: 0 auto 20px;
+  &.red {
+    margin: 0 auto 0;
+  }
   > span {
     font-weight: 700;
     font-size: 16px;

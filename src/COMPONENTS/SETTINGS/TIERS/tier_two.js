@@ -167,6 +167,7 @@ class TierTwo extends React.Component {
       forceRejectStatus: false,
       forceAcceptedStatus: false,
       forceRejectNote: "",
+      TwoFactorMessage: false,
     };
     this.t = this.props.t;
     this.validator = new SimpleReactValidator({
@@ -627,6 +628,9 @@ class TierTwo extends React.Component {
           this.setState({ loader: false });
         });
     } else {
+      this.setState({
+        TwoFactorMessage: true,
+      });
       this.validator.showMessages();
       this.forceUpdate();
     }
@@ -650,6 +654,7 @@ class TierTwo extends React.Component {
       displaySecond: "none",
       residenceProof: "",
       id_number: "",
+      TwoFactorMessage: false,
     });
     this.validator.hideMessages();
     this.forceUpdate();
@@ -730,17 +735,26 @@ class TierTwo extends React.Component {
                         </a>
                       </TwoFactorDiv>
                     ) : (
-                      <TwoFactorDiv>
-                        <span>
-                          {this.t("2fa_note.message")}{" "}
-                          {this.t("2fa_note_2.message")}
-                        </span>
-                        <a href="/editProfile">
-                          {this.t(
-                            "settings:deactivate_popup_click_here.message"
-                          )}
-                        </a>
-                      </TwoFactorDiv>
+                      <div>
+                        <TwoFactorDiv
+                          className={this.state.TwoFactorMessage ? "red" : ""}
+                        >
+                          <span>
+                            {this.t("2fa_note.message")}{" "}
+                            {this.t("2fa_note_2.message")}
+                          </span>
+                          <a href="/editProfile">
+                            {this.t(
+                              "settings:deactivate_popup_click_here.message"
+                            )}
+                          </a>
+                        </TwoFactorDiv>
+                        {this.state.TwoFactorMessage && (
+                          <div class="tier-text-danger-validation red">
+                            {this.t("tier_changes:2fa_note_validation.message")}
+                          </div>
+                        )}
+                      </div>
                     )}
                     <TierRow>
                       <TierLabel>
