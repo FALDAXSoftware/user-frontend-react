@@ -345,7 +345,7 @@ class StopLimit extends Component {
       this.setState({ loader: true });
       fetch(
         SOCKET_HOST +
-        `/api/v1/tradding/orders/pending-${self.state.side.toLowerCase()}-order-create`,
+          `/api/v1/tradding/orders/pending-${self.state.side.toLowerCase()}-order-create`,
         {
           method: "post",
           headers: {
@@ -451,7 +451,7 @@ class StopLimit extends Component {
     }
   }
 
-  onChangeCheck(e) { }
+  onChangeCheck(e) {}
 
   render() {
     const {
@@ -497,8 +497,8 @@ class StopLimit extends Component {
                         {this.props.userBal.currency
                           ? this.props.userBal.currency.placed_balance
                             ? `${this.props.userBal.currency.placed_balance.toFixed(
-                              8
-                            )}${" "}`
+                                8
+                              )}${" "}`
                             : `00${" "}`
                           : `00${" "}`}
                         {this.state.currency}
@@ -515,10 +515,12 @@ class StopLimit extends Component {
                     </Col>
                     <Col span={24}>
                       <Balance>
-                        {this.props.userBal.currency
-                          ? `${this.props.userBal.currency.balance.toFixed(
-                            8
-                          )}${" "}`
+                        {this.props.userBal
+                          ? this.props.userBal.currency.length > 0
+                            ? `${this.props.userBal.currency.balance.toFixed(
+                                8
+                              )}${" "}`
+                            : `00${" "}`
                           : `00${" "}`}
                         {this.state.currency}
                       </Balance>
@@ -535,10 +537,12 @@ class StopLimit extends Component {
                     <Col span={24}>
                       <Balance>
                         {this.props.userBal.currency
-                          ? `${Math.abs(
-                            this.props.userBal.currency.balance -
-                            this.props.userBal.currency.placed_balance
-                          ).toFixed(8)}${" "}`
+                          ? this.props.userBal.currency.balance
+                            ? `${Math.abs(
+                                this.props.userBal.currency.balance -
+                                  this.props.userBal.currency.placed_balance
+                              ).toFixed(8)}${" "}`
+                            : `00${" "}`
                           : `00${" "}`}
 
                         {this.state.currency}
@@ -565,88 +569,92 @@ class StopLimit extends Component {
               </Row>
             </BalanceWrap>
           ) : (
-              <BalanceWrap>
-                <Row>
-                  <Col xs={24} sm={12}>
-                    <Row>
-                      <Col span={24}>
-                        <Balance1>{this.t("balance_text.message")}</Balance1>
-                      </Col>
-                      <Col span={24}>
-                        <Balance>
-                          {this.props.userBal.crypto
-                            ? this.props.userBal.crypto.placed_balance
-                              ? `${this.props.userBal.crypto.placed_balance.toFixed(
+            <BalanceWrap>
+              <Row>
+                <Col xs={24} sm={12}>
+                  <Row>
+                    <Col span={24}>
+                      <Balance1>{this.t("balance_text.message")}</Balance1>
+                    </Col>
+                    <Col span={24}>
+                      <Balance>
+                        {this.props.userBal.crypto
+                          ? this.props.userBal.crypto.placed_balance
+                            ? `${this.props.userBal.crypto.placed_balance.toFixed(
                                 8
                               )}${" "}`
-                              : `00${" "}`
-                            : `00${" "}`}
-                          {this.state.crypto}
-                        </Balance>
-                      </Col>
-                    </Row>
-                  </Col>
-                  <Col xs={24} sm={12}>
-                    <Row>
-                      <Col span={24}>
-                        <Balance1>
-                          {this.t("conversion:total_text.message")}
-                        </Balance1>
-                      </Col>
-                      <Col span={24}>
-                        <Balance>
-                          {this.props.userBal.crypto
+                            : `00${" "}`
+                          : `00${" "}`}
+                        {this.state.crypto}
+                      </Balance>
+                    </Col>
+                  </Row>
+                </Col>
+                <Col xs={24} sm={12}>
+                  <Row>
+                    <Col span={24}>
+                      <Balance1>
+                        {this.t("conversion:total_text.message")}
+                      </Balance1>
+                    </Col>
+                    <Col span={24}>
+                      <Balance>
+                        {this.props.userBal
+                          ? this.props.userBal.crypto.length > 0
                             ? `${this.props.userBal.crypto.balance.toFixed(
-                              8
-                            )}${" "}`
-                            : `00${" "}`}
-                          {this.state.crypto}
-                        </Balance>
-                      </Col>
-                    </Row>
-                  </Col>
-                  <Col xs={24} sm={12}>
-                    <Row>
-                      <Col span={24}>
-                        <Balance1>
-                          {this.t("wallet:in_order_text.message")}
-                        </Balance1>
-                      </Col>
-                      <Col span={24}>
-                        <Balance>
-                          {this.props.userBal.crypto
+                                8
+                              )}${" "}`
+                            : `00${" "}`
+                          : `00${" "}`}
+                        {this.state.crypto}
+                      </Balance>
+                    </Col>
+                  </Row>
+                </Col>
+                <Col xs={24} sm={12}>
+                  <Row>
+                    <Col span={24}>
+                      <Balance1>
+                        {this.t("wallet:in_order_text.message")}
+                      </Balance1>
+                    </Col>
+                    <Col span={24}>
+                      <Balance>
+                        {this.props.userBal.crypto
+                          ? this.props.userBal.crypto.balance
                             ? `${Math.abs(
-                              this.props.userBal.crypto.balance -
-                              this.props.userBal.crypto.placed_balance
-                            ).toFixed(8)}${" "}`
-                            : `00${" "}`}
-                          {this.state.crypto}
-                        </Balance>
-                      </Col>
-                    </Row>
-                  </Col>
-                  <Col xs={24} sm={12}>
-                    <Row>
-                      <Col span={24}>
-                        <Balance1>
-                          {this.t("best_text.message")}{" "}
-                          {this.t("bid_text.message")}
-                        </Balance1>
-                      </Col>
-                      <Col span={24}>
-                        <Balance>
-                          {this.props.userBal.sellPay.toFixed(5)}{" "}
-                          {this.state.currency}
-                        </Balance>
-                      </Col>
-                    </Row>
-                  </Col>
-                </Row>
-              </BalanceWrap>
-            )
+                                this.props.userBal.crypto.balance -
+                                  this.props.userBal.crypto.placed_balance
+                              ).toFixed(8)}${" "}`
+                            : `00${" "}`
+                          : `00${" "}`}
+                        {this.state.crypto}
+                      </Balance>
+                    </Col>
+                  </Row>
+                </Col>
+                <Col xs={24} sm={12}>
+                  <Row>
+                    <Col span={24}>
+                      <Balance1>
+                        {this.t("best_text.message")}{" "}
+                        {this.t("bid_text.message")}
+                      </Balance1>
+                    </Col>
+                    <Col span={24}>
+                      <Balance>
+                        {this.props.userBal.sellPay.toFixed(5)}{" "}
+                        {this.state.currency}
+                      </Balance>
+                    </Col>
+                  </Row>
+                </Col>
+              </Row>
+            </BalanceWrap>
+          )
         ) : (
-            ""
-          )}
+          ""
+        )}
         <ETHWrap>
           <Label>{this.t("wallet:amount_text.message")}</Label>
           <TotalWrap>
@@ -800,7 +808,8 @@ class StopLimit extends Component {
                     )}
                   </WillpayBelow>
                   <WillpayBelow2>
-                    {parseFloat(this.state.fiatCurrencyValue).toFixed(8)} {" "} {this.state.fiatCurrency}
+                    {parseFloat(this.state.fiatCurrencyValue).toFixed(8)}{" "}
+                    {this.state.fiatCurrency}
                   </WillpayBelow2>
                 </ApproxBelow>
                 <ApproxBelow>
@@ -822,50 +831,51 @@ class StopLimit extends Component {
               </Esti>
             </Pay>
           ) : (
-              <Pay>
-                <Approx>
-                  <Willpay>
-                    {this.t("you_approximate_text.message")}{" "}
-                    {this.t("receive_text.message")}
-                  </Willpay>
-                  <Willpay2>
-                    {sellEstPrice.toFixed(8)} {this.state.currency}
-                  </Willpay2>
-                </Approx>
-                <Esti>
-                  <ApproxBelow>
-                    <WillpayBelow>
-                      {this.t(
-                        "settings:deactivate_popup_table_head_fiat_value.message"
-                      )}
-                    </WillpayBelow>
-                    <WillpayBelow2>
-                      {parseFloat(this.state.fiatCurrencyValue).toFixed(8)} {" "} {this.state.fiatCurrency}
-                    </WillpayBelow2>
-                  </ApproxBelow>
-                  <ApproxBelow>
-                    <WillpayBelow>
-                      {this.t("estimated_best_price_text.message")}
-                    </WillpayBelow>
-                    <WillpayBelow2>
-                      {sellPayAmt.toFixed(8)} {this.state.currency}
-                    </WillpayBelow2>
-                  </ApproxBelow>
-                  <ApproxBelow>
-                    <WillpayBelow>
-                      {this.t("conversion:fee_text.message")} {userBalFees} %
+            <Pay>
+              <Approx>
+                <Willpay>
+                  {this.t("you_approximate_text.message")}{" "}
+                  {this.t("receive_text.message")}
+                </Willpay>
+                <Willpay2>
+                  {sellEstPrice.toFixed(8)} {this.state.currency}
+                </Willpay2>
+              </Approx>
+              <Esti>
+                <ApproxBelow>
+                  <WillpayBelow>
+                    {this.t(
+                      "settings:deactivate_popup_table_head_fiat_value.message"
+                    )}
                   </WillpayBelow>
-                    <WillpayBelow2>
-                      {(sellPayAmt - sellEstPrice).toFixed(8)}{" "}
-                      {this.state.currency}
-                    </WillpayBelow2>
-                  </ApproxBelow>
-                </Esti>
-              </Pay>
-            )
+                  <WillpayBelow2>
+                    {parseFloat(this.state.fiatCurrencyValue).toFixed(8)}{" "}
+                    {this.state.fiatCurrency}
+                  </WillpayBelow2>
+                </ApproxBelow>
+                <ApproxBelow>
+                  <WillpayBelow>
+                    {this.t("estimated_best_price_text.message")}
+                  </WillpayBelow>
+                  <WillpayBelow2>
+                    {sellPayAmt.toFixed(8)} {this.state.currency}
+                  </WillpayBelow2>
+                </ApproxBelow>
+                <ApproxBelow>
+                  <WillpayBelow>
+                    {this.t("conversion:fee_text.message")} {userBalFees} %
+                  </WillpayBelow>
+                  <WillpayBelow2>
+                    {(sellPayAmt - sellEstPrice).toFixed(8)}{" "}
+                    {this.state.currency}
+                  </WillpayBelow2>
+                </ApproxBelow>
+              </Esti>
+            </Pay>
+          )
         ) : (
-            ""
-          )}
+          ""
+        )}
         <ButtonWrap>
           <ButtonETH side={this.state.side} onClick={this.onSubmit}>
             {`${this.state.side.toUpperCase()} ${" "} ${this.state.crypto}`}
@@ -876,8 +886,8 @@ class StopLimit extends Component {
             <Spin size="small" />
           </SpinSingle>
         ) : (
-            ""
-          )}
+          ""
+        )}
       </MarketWrap>
     );
   }

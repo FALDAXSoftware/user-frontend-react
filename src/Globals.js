@@ -93,4 +93,7 @@ export const globalVariables = {
 
   director_list_form:
     "https://production-static-asset.s3.us-east-2.amazonaws.com/assets/pdf/FALDAX Directors and Officers List & Personal Info Equivalent to Tier 3 Requirements.pdf",
+
+  proof_of_active_business:
+    "https://production-static-asset.s3.us-east-2.amazonaws.com/assets/pdf/FALDAX Proof of Active Business Address.pdf",
 };

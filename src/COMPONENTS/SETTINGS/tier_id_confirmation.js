@@ -17,8 +17,14 @@ import {
 } from "../../STYLED-COMPONENTS/TIER/tierStyle";
 import { Link } from "react-router-dom";
 import { Icon } from "antd";
+import { translate } from "react-i18next";
 
 class TierIDConfirmation extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+    this.t = this.props.t;
+  }
   render() {
     return (
       <div>
@@ -27,113 +33,97 @@ class TierIDConfirmation extends React.Component {
           <TierInfoInnerWrap>
             <TierInfoContent>
               <TierInfoHead>
-                <b>ID confirmation</b> photo (IDCP) instructions
+                <b>{this.t("id_confirmation_text.message")}</b>
+                {this.t("photo_instruction_text.message")}
               </TierInfoHead>
               <p>
-                An <b>ID confirmation photo</b> (IDCP) is a photo of you, the
-                account holder, holding your <b>ID document</b> and a
-                handwritten <b>note</b> next to your face.
+                {this.t("an_text.message")}
+                <b>{this.t("tiers:idcp_label_text.message")}</b>
+                {this.t("photo_of_you_text.message")}{" "}
+                <b>{this.t("id_document_text.message")}</b>{" "}
+                {this.t("and_handwritten_text.message")}{" "}
+                <b>{this.t("note_text.message")}</b>{" "}
+                {this.t("next_to_your_face_text.message")}.
               </p>
-              <p>
-                Below is a checklist for producing a proper IDCP that can be
-                accepted by our verification team:
-              </p>
+              <p>{this.t("checklist_for_idcp_text.message")}:</p>
               <TierListingOutside>
                 <li>
                   <TierListingInfoHead>
-                    1. <b>ID requirements</b>
+                    1. <b>{this.t("general_4:idcp_text_id_require.message")}</b>
                   </TierListingInfoHead>
                   <div className="content">
+                    <p>{this.t("id_holding_text.message")}</p>
                     <p>
-                      The ID you're holding must be the same ID used for KYC
-                      verification.
-                    </p>
-                    <p>
-                      The details on the ID in the photo must be{" "}
-                      <b>readable.</b> They cannot be blurry or out of focus.
+                      {this.t("the_details_on_id_text.message")}
+                      <b>{this.t("readable_text.message")}.</b>{" "}
+                      {this.t("cannot_be_blurry_text.message")}
                     </p>
                   </div>
                 </li>
                 <li>
                   <TierListingInfoHead>
-                    2. <b>Note requirements</b>
+                    2.{" "}
+                    <b>{this.t("general_4:idcp_text_note_require.message")}</b>
                   </TierListingInfoHead>
                   <div className="content">
                     <p>
-                      The handwritten note must say{" "}
-                      <b>
-                        "only for trading digital currency on www.faldax.com"
-                      </b>{" "}
-                      and include:
+                      {this.t("handwritten_note_must_say_text.message")}{" "}
+                      <b>"{this.t("only_for_faldax_text.message")}"</b>
+                      {this.t("and_include_text.message")}:
                     </p>
                     <TierListingInside>
                       <li>
-                        the <b>current date</b>
+                        {this.t("the_text.message")}{" "}
+                        <b>{this.t("current_date_text.message")}</b>
                       </li>
                       <li>
-                        your <b>signature</b>
+                        {this.t("your_text.message")}{" "}
+                        <b>{this.t("signature_text.message")}</b>
                       </li>
                     </TierListingInside>
-                    <p>
-                      Pay close attention when writing the handwritten note! If
-                      even one word is different in the note, the IDCP may not
-                      be accepted.
-                    </p>
-                    <p>
-                      Be aware that in certain situations we may request that
-                      you write something else on the handwritten note. Follow
-                      the instructions provided to you in your ticket closely.
-                    </p>
+                    <p>{this.t("pay_close_attention_text.message")}</p>
+                    <p>{this.t("be_aware_text.message")}</p>
                     <TierAnswerTable>
                       <thead>
                         <tr>
-                          <th>Dos</th>
-                          <th>Don'ts</th>
+                          <th>{this.t("dos_text.message")}</th>
+                          <th>{this.t("donts_text.message")}</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
-                          <td>✓ Write the note with your hand.</td>
-                          <td>✘ Don't type the note.</td>
+                          <td>✓ {this.t("write_note_text.message")}</td>
+                          <td>✘ {this.t("dont_type_text.message")}</td>
                         </tr>
                         <tr>
-                          <td>✓ Write the note exactly as instructed.*</td>
                           <td>
-                            ✘ Don't change the wording or meaning of the note.
+                            ✓ {this.t("write_note_exactly_text.message")}.*
                           </td>
+                          <td>✘ {this.t("change_wording_text.message")}</td>
                         </tr>
                       </tbody>
                     </TierAnswerTable>
-                    <p>
-                      *We accept translations of the note in other languages as
-                      long as it keeps the same meaning.
-                    </p>
+                    <p>*{this.t("we_accept_note_text.message")}</p>
                   </div>
                 </li>
                 <li>
                   <TierListingInfoHead>
-                    3. <b>Photo requirements</b>
+                    3. <b>{this.t("photo_requirements_text.message")}</b>
                   </TierListingInfoHead>
                   <div className="content">
-                    <p>How to put the ID and note together:</p>
+                    <p>{this.t("how_to_put_together_text.message")}:</p>
                     <TierPhotoBlock>
                       <TierPhotoBlockCol className="left-col">
                         <TierImageWrap className="photo-block">
                           <img src="/images/01-DO.png" />
                         </TierImageWrap>
-                        <p>
-                          Use a high-quality photo and make sure the text and
-                          numbers on the ID are readable. Your whole face and
-                          arms should also be visible.
-                        </p>
+                        <p>{this.t("high_quality_photo_text.message")}</p>
                       </TierPhotoBlockCol>
                       <TierPhotoBlockCol className="right-col">
                         <TierImageWrap className="photo-block">
                           <img src="/images/02-DO.png" />
                         </TierImageWrap>
-                        <p>
-                          Do not cover parts of the ID, message, or your face.
-                        </p>
+                        <p>{this.t("not_cover_parts_text.message")}</p>
                       </TierPhotoBlockCol>
                     </TierPhotoBlock>
                     <TierPhotoBlock>
@@ -141,68 +131,43 @@ class TierIDConfirmation extends React.Component {
                         <TierImageWrap className="photo-block">
                           <img src="/images/03-DON'T.png" />
                         </TierImageWrap>
-                        <p>
-                          You must be holding the ID in your hands; your hands
-                          and arms should be visible in the image. Do not wear
-                          sunglasses, hats, or anything that covers your facial
-                          features.
-                        </p>
+                        <p>{this.t("id_in_your_hands_text.message")}</p>
                       </TierPhotoBlockCol>
                       <TierPhotoBlockCol className="right-col">
                         <TierImageWrap className="photo-block">
                           <img src="/images/05-DON'T.png" />
                         </TierImageWrap>
-                        <p>
-                          Do not cover parts of the ID, message, or your face.
-                        </p>
+                        <p>{this.t("do_not_cover_text.message")}</p>
                       </TierPhotoBlockCol>
                     </TierPhotoBlock>
                     <TierAnswerTable>
                       <thead>
                         <tr>
-                          <th>Dos</th>
-                          <th>Don'ts</th>
+                          <th>{this.t("dos_text.message")}</th>
+                          <th>{this.t("donts_text.message")}</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
-                          <td>✓ Hold the ID and note in your hand(s).</td>
+                          <td>✓ {this.t("hold_the_id_text.message")}.</td>
                           <td>
                             <span>
-                              ✘ Don't have someone else hold the note.
+                              ✘ {this.t("someone_else_hold_text.message")}.
                             </span>
-                            <span>✘ Don't tape ID to the note.</span>
+                            <span>✘ {this.t("tap_id_text.message")}</span>
                           </td>
                         </tr>
                         <tr>
-                          <td>
-                            ✓ The ID and the note all have to be clearly
-                            visible.
-                          </td>
-                          <td>
-                            ✘ Don't cover any details on the ID or note with
-                            your fingers.
-                          </td>
+                          <td>✓ {this.t("clearly_visible_text.message")}</td>
+                          <td>✘ {this.t("details_on_id_text.message")}</td>
                         </tr>
                         <tr>
-                          <td>
-                            ✓ The ID and the note all have to be clearly
-                            visible.
-                          </td>
-                          <td>
-                            ✘ Don't cover any details on the ID or note with
-                            your fingers.
-                          </td>
+                          <td>✓ {this.t("clearly_visible_text.message")}</td>
+                          <td>✘ {this.t("details_on_id_text.message")}</td>
                         </tr>
                         <tr>
-                          <td>
-                            ✓ The ID and the note all have to be clearly
-                            visible.
-                          </td>
-                          <td>
-                            ✘ Don't cover any details on the ID or note with
-                            your fingers.
-                          </td>
+                          <td>✓ {this.t("clearly_visible_text.message")}</td>
+                          <td>✘ {this.t("details_on_id_text.message")}</td>
                         </tr>
                       </tbody>
                     </TierAnswerTable>
@@ -210,20 +175,26 @@ class TierIDConfirmation extends React.Component {
                 </li>
                 <li>
                   <TierListingInfoHead className="instructions">
-                    <b>Upload instructions</b>
+                    <b>{this.t("upload_instructions_text.message")}</b>
                   </TierListingInfoHead>
                   <div className="content">
                     <p>
-                      You can upload your IDCP in your FALDAX account on the{" "}
+                      {this.t("upload_instruct_text.message")}{" "}
                       <b>
                         <Link to="/tier3">
-                          Identity Verification <Icon type="right" /> Tier 3.
+                          {this.t(
+                            "edit_profile_titles:head_identity_verification.message"
+                          )}{" "}
+                          <Icon type="right" />{" "}
+                          {this.t("tiers:tier_text.message")} 3.
                         </Link>
                       </b>{" "}
                     </p>
                     <p>
-                      If you do not see the section to upload the IDCP on that
-                      page, <Link to="/open-ticket">contact support.</Link>
+                      {this.t("idcp_on_that_page_text.message")},{" "}
+                      <Link to="/open-ticket">
+                        {this.t("contact_support_text.message")}.
+                      </Link>
                     </p>
                   </div>
                 </li>
@@ -237,4 +208,10 @@ class TierIDConfirmation extends React.Component {
   }
 }
 
-export default TierIDConfirmation;
+export default translate([
+  "static_info_pages",
+  "identity_verification",
+  "tiers",
+  "general_4",
+  "edit_profile_titles",
+])(TierIDConfirmation);
