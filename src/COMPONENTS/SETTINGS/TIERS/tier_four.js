@@ -161,7 +161,6 @@ class TierFour extends React.Component {
     try {
       await this.getTierDetails();
     } catch (error) {
-      console.log(error);
     } finally {
     }
     this.populateData();
@@ -199,7 +198,6 @@ class TierFour extends React.Component {
         );
       }
     } catch (error) {
-      console.log(error);
     } finally {
       this.setState({ loader: false });
     }
@@ -228,12 +226,6 @@ class TierFour extends React.Component {
       });
       let tierData = this.state.tierData;
       tierData.map((tierDoc, index) => {
-        // console.log("tierdoc^^^", tierDoc.type);
-        // let object = {};
-        // object[`reUpload${tierDoc.type}`] = false;
-        // this.setState({
-        //   ...object,
-        // });
         if (tierDoc.request_id) {
           this.setState({
             requestId: tierDoc.request_id,
@@ -516,7 +508,7 @@ class TierFour extends React.Component {
               });
               return;
             default:
-              return console.log("No case");
+              return;
           }
         }
       });
@@ -556,20 +548,11 @@ class TierFour extends React.Component {
           }
         }
         temp["aml_questionnaire"] = { type: 1, file: files[0] };
-        this.setState(
-          {
-            aml_flag: flag,
-            resumeLimit: flagLimit,
-            documents: temp,
-          },
-          () => {
-            console.log(
-              "document",
-              this.state.documents.aml_questionnaire.file.name,
-              this.state.documents.aml_questionnaire.type
-            );
-          }
-        );
+        this.setState({
+          aml_flag: flag,
+          resumeLimit: flagLimit,
+          documents: temp,
+        });
         break;
       case "comfort_letter":
         if (files.length > 0) {
@@ -818,7 +801,6 @@ class TierFour extends React.Component {
           return size;
         };
         var size = Object.size(count);
-        console.log("^^^size", size);
         this.setState({
           total_file_size: size,
         });
@@ -836,7 +818,6 @@ class TierFour extends React.Component {
               upload_flag: upload_flag1,
             });
             if (result) {
-              console.log("Result^^^^^^", result, size, index);
               if (index == size + 1) {
                 if (result.status == 200) {
                   this.openNotificationWithIcon(
@@ -900,14 +881,11 @@ class TierFour extends React.Component {
           return size;
         };
         var size = Object.size(count);
-        console.log("^^^size", size);
         this.setState({
           total_file_size: size,
         });
         try {
           for (const property in count) {
-            console.log(`${property}: ${count[property].file}`);
-            console.log(`${property}: ${count[property].type}`);
             let result = await (
               await this.uploadDocument(index, count[property].file)
             ).json();
@@ -1013,7 +991,6 @@ class TierFour extends React.Component {
     });
   };
   render() {
-    // console.log("render^^^", this.state.reUpload1);
     let {
       aml_flag,
       comfort_flag,
@@ -1128,7 +1105,7 @@ class TierFour extends React.Component {
                             onFileDialogCancel={this.onCancel.bind(this)}
                             disabled={!this.state.reUpload1}
                           >
-                            {aml_flag === null && (
+                            {(aml_flag === null || aml_flag === false) && (
                               <div>
                                 <IconS type="upload" />
                                 <FileSelectText>
@@ -1136,17 +1113,8 @@ class TierFour extends React.Component {
                                 </FileSelectText>
                               </div>
                             )}
-                            {aml_flag === false && (
-                              <div>
-                                {/* <IconS type="close-square" /> */}
-                                <FileSelectText>
-                                  {this.t("apply_job:wrong_file_text.message")}
-                                </FileSelectText>
-                              </div>
-                            )}
                             {aml_flag === true && (
                               <div>
-                                {/* <IconS type="check-square" /> */}
                                 <FileSelectText>
                                   {documents.aml_questionnaire.file.name}
                                 </FileSelectText>
@@ -1186,6 +1154,11 @@ class TierFour extends React.Component {
                               }
                             )
                           : delete this.validator1.fields["aml_questionnaire"]}
+                        {aml_flag === false && (
+                          <div class="tier-text-danger-validation">
+                            Invalid file format
+                          </div>
+                        )}
                       </TierUpload>
                       {this.state.tierData.length > 0 ? (
                         <TierDocBox>
@@ -1265,7 +1238,8 @@ class TierFour extends React.Component {
                             onFileDialogCancel={this.onCancel.bind(this)}
                             disabled={!this.state.reUpload2}
                           >
-                            {comfort_flag === null && (
+                            {(comfort_flag === null ||
+                              comfort_flag === false) && (
                               <div>
                                 <IconS type="upload" />
                                 <FileSelectText>
@@ -1273,14 +1247,7 @@ class TierFour extends React.Component {
                                 </FileSelectText>
                               </div>
                             )}
-                            {comfort_flag === false && (
-                              <div>
-                                {/* <IconS type="close-square" /> */}
-                                <FileSelectText>
-                                  {this.t("apply_job:wrong_file_text.message")}
-                                </FileSelectText>
-                              </div>
-                            )}
+
                             {comfort_flag === true && (
                               <div>
                                 {/* <IconS type="check-square" /> */}
@@ -1323,6 +1290,11 @@ class TierFour extends React.Component {
                               }
                             )
                           : delete this.validator1.fields["comfort_letter"]}
+                        {comfort_flag === false && (
+                          <div class="tier-text-danger-validation">
+                            Invalid file format
+                          </div>
+                        )}
                       </TierUpload>
                       {this.state.tierData.length > 0 ? (
                         <TierDocBox>
@@ -1397,18 +1369,11 @@ class TierFour extends React.Component {
                             onFileDialogCancel={this.onCancel.bind(this)}
                             disabled={!this.state.reUpload3}
                           >
-                            {board_flag === null && (
+                            {(board_flag === null || board_flag === false) && (
                               <div>
                                 <IconS type="upload" />
                                 <FileSelectText>
                                   {this.t("general_4:upload_text.message")}
-                                </FileSelectText>
-                              </div>
-                            )}
-                            {board_flag === false && (
-                              <div>
-                                <FileSelectText>
-                                  {this.t("apply_job:wrong_file_text.message")}
                                 </FileSelectText>
                               </div>
                             )}
@@ -1453,6 +1418,11 @@ class TierFour extends React.Component {
                               }
                             )
                           : delete this.validator1.fields["board_resolution"]}
+                        {board_flag === false && (
+                          <div class="tier-text-danger-validation">
+                            Invalid file format
+                          </div>
+                        )}
                       </TierUpload>
                       {this.state.tierData.length > 0 ? (
                         <TierDocBox>
@@ -1527,18 +1497,11 @@ class TierFour extends React.Component {
                             onFileDialogCancel={this.onCancel.bind(this)}
                             disabled={!this.state.reUpload4}
                           >
-                            {bank_flag === null && (
+                            {(bank_flag === null || bank_flag === false) && (
                               <div>
                                 <IconS type="upload" />
                                 <FileSelectText>
                                   {this.t("general_4:upload_text.message")}
-                                </FileSelectText>
-                              </div>
-                            )}
-                            {bank_flag === false && (
-                              <div>
-                                <FileSelectText>
-                                  {this.t("apply_job:wrong_file_text.message")}
                                 </FileSelectText>
                               </div>
                             )}
@@ -1583,6 +1546,11 @@ class TierFour extends React.Component {
                               }
                             )
                           : delete this.validator1.fields["bank_statements"]}
+                        {bank_flag === false && (
+                          <div class="tier-text-danger-validation">
+                            Invalid file format
+                          </div>
+                        )}
                       </TierUpload>
                       {this.state.tierData.length > 0 ? (
                         <TierDocBox>
@@ -1659,18 +1627,12 @@ class TierFour extends React.Component {
                             onFileDialogCancel={this.onCancel.bind(this)}
                             disabled={!this.state.reUpload5}
                           >
-                            {corporate_flag === null && (
+                            {(corporate_flag === null ||
+                              corporate_flag === false) && (
                               <div>
                                 <IconS type="upload" />
                                 <FileSelectText>
                                   {this.t("general_4:upload_text.message")}
-                                </FileSelectText>
-                              </div>
-                            )}
-                            {corporate_flag === false && (
-                              <div>
-                                <FileSelectText>
-                                  {this.t("apply_job:wrong_file_text.message")}
                                 </FileSelectText>
                               </div>
                             )}
@@ -1715,6 +1677,11 @@ class TierFour extends React.Component {
                               }
                             )
                           : delete this.validator1.fields["corporate_info"]}
+                        {corporate_flag === false && (
+                          <div class="tier-text-danger-validation">
+                            Invalid file format
+                          </div>
+                        )}
                       </TierUpload>
                       {this.state.tierData.length > 0 ? (
                         <TierDocBox>
@@ -1798,18 +1765,12 @@ class TierFour extends React.Component {
                             onFileDialogCancel={this.onCancel.bind(this)}
                             disabled={!this.state.reUpload6}
                           >
-                            {ownership_flag === null && (
+                            {(ownership_flag === null ||
+                              ownership_flag === false) && (
                               <div>
                                 <IconS type="upload" />
                                 <FileSelectText>
                                   {this.t("general_4:upload_text.message")}
-                                </FileSelectText>
-                              </div>
-                            )}
-                            {ownership_flag === false && (
-                              <div>
-                                <FileSelectText>
-                                  {this.t("apply_job:wrong_file_text.message")}
                                 </FileSelectText>
                               </div>
                             )}
@@ -1854,6 +1815,11 @@ class TierFour extends React.Component {
                               }
                             )
                           : delete this.validator1.fields["ownership_form"]}
+                        {ownership_flag === false && (
+                          <div class="tier-text-danger-validation">
+                            Invalid file format
+                          </div>
+                        )}
                       </TierUpload>
                       {this.state.tierData.length > 0 ? (
                         <TierDocBox>
@@ -1933,18 +1899,12 @@ class TierFour extends React.Component {
                             onFileDialogCancel={this.onCancel.bind(this)}
                             disabled={!this.state.reUpload7}
                           >
-                            {articles_flag === null && (
+                            {(articles_flag === null ||
+                              articles_flag === false) && (
                               <div>
                                 <IconS type="upload" />
                                 <FileSelectText>
                                   {this.t("general_4:upload_text.message")}
-                                </FileSelectText>
-                              </div>
-                            )}
-                            {articles_flag === false && (
-                              <div>
-                                <FileSelectText>
-                                  {this.t("apply_job:wrong_file_text.message")}
                                 </FileSelectText>
                               </div>
                             )}
@@ -1994,6 +1954,11 @@ class TierFour extends React.Component {
                           : delete this.validator1.fields[
                               "articles_of_incorporation"
                             ]}
+                        {articles_flag === false && (
+                          <div class="tier-text-danger-validation">
+                            Invalid file format
+                          </div>
+                        )}
                       </TierUpload>
                       {this.state.tierData.length > 0 ? (
                         <TierDocBox>
@@ -2072,18 +2037,12 @@ class TierFour extends React.Component {
                             onFileDialogCancel={this.onCancel.bind(this)}
                             disabled={!this.state.reUpload8}
                           >
-                            {bylaws_flag === null && (
+                            {(bylaws_flag === null ||
+                              bylaws_flag === false) && (
                               <div>
                                 <IconS type="upload" />
                                 <FileSelectText>
                                   {this.t("general_4:upload_text.message")}
-                                </FileSelectText>
-                              </div>
-                            )}
-                            {bylaws_flag === false && (
-                              <div>
-                                <FileSelectText>
-                                  {this.t("apply_job:wrong_file_text.message")}
                                 </FileSelectText>
                               </div>
                             )}
@@ -2128,6 +2087,11 @@ class TierFour extends React.Component {
                               }
                             )
                           : delete this.validator1.fields["bylaws"]}
+                        {bylaws_flag === false && (
+                          <div class="tier-text-danger-validation">
+                            Invalid file format
+                          </div>
+                        )}
                       </TierUpload>
                       {this.state.tierData.length > 0 ? (
                         <TierDocBox>
@@ -2209,18 +2173,12 @@ class TierFour extends React.Component {
                             onFileDialogCancel={this.onCancel.bind(this)}
                             disabled={!this.state.reUpload9}
                           >
-                            {ownership_control_structure_flag === null && (
+                            {(ownership_control_structure_flag === null ||
+                              ownership_control_structure_flag === false) && (
                               <div>
                                 <IconS type="upload" />
                                 <FileSelectText>
                                   {this.t("general_4:upload_text.message")}
-                                </FileSelectText>
-                              </div>
-                            )}
-                            {ownership_control_structure_flag === false && (
-                              <div>
-                                <FileSelectText>
-                                  {this.t("apply_job:wrong_file_text.message")}
                                 </FileSelectText>
                               </div>
                             )}
@@ -2270,6 +2228,11 @@ class TierFour extends React.Component {
                           : delete this.validator1.fields[
                               "ownership_control_structure"
                             ]}
+                        {ownership_control_structure_flag === false && (
+                          <div class="tier-text-danger-validation">
+                            Invalid file format
+                          </div>
+                        )}
                       </TierUpload>
                       {this.state.tierData.length > 0 ? (
                         <TierDocBox>
@@ -2351,18 +2314,12 @@ class TierFour extends React.Component {
                             onFileDialogCancel={this.onCancel.bind(this)}
                             disabled={!this.state.reUpload10}
                           >
-                            {director_list_flag === null && (
+                            {(director_list_flag === null ||
+                              director_list_flag === false) && (
                               <div>
                                 <IconS type="upload" />
                                 <FileSelectText>
                                   {this.t("general_4:upload_text.message")}
-                                </FileSelectText>
-                              </div>
-                            )}
-                            {director_list_flag === false && (
-                              <div>
-                                <FileSelectText>
-                                  {this.t("apply_job:wrong_file_text.message")}
                                 </FileSelectText>
                               </div>
                             )}
@@ -2407,6 +2364,11 @@ class TierFour extends React.Component {
                               }
                             )
                           : delete this.validator1.fields["director_list"]}
+                        {director_list_flag === false && (
+                          <div class="tier-text-danger-validation">
+                            Invalid file format
+                          </div>
+                        )}
                       </TierUpload>
                       {this.state.tierData.length > 0 ? (
                         <TierDocBox>
@@ -2493,18 +2455,12 @@ class TierFour extends React.Component {
                             onFileDialogCancel={this.onCancel.bind(this)}
                             disabled={!this.state.reUpload11}
                           >
-                            {active_business_proof_flag === null && (
+                            {(active_business_proof_flag === null ||
+                              active_business_proof_flag === false) && (
                               <div>
                                 <IconS type="upload" />
                                 <FileSelectText>
                                   {this.t("general_4:upload_text.message")}
-                                </FileSelectText>
-                              </div>
-                            )}
-                            {active_business_proof_flag === false && (
-                              <div>
-                                <FileSelectText>
-                                  {this.t("apply_job:wrong_file_text.message")}
                                 </FileSelectText>
                               </div>
                             )}
@@ -2551,6 +2507,11 @@ class TierFour extends React.Component {
                           : delete this.validator1.fields[
                               "active_business_proof"
                             ]}
+                        {active_business_proof_flag === false && (
+                          <div class="tier-text-danger-validation">
+                            Invalid file format
+                          </div>
+                        )}
                       </TierUpload>
                       {this.state.tierData.length > 0 ? (
                         <TierDocBox>
@@ -2631,18 +2592,12 @@ class TierFour extends React.Component {
                             onFileDialogCancel={this.onCancel.bind(this)}
                             disabled={!this.state.reUpload12}
                           >
-                            {document_availability_policy_flag === null && (
+                            {(document_availability_policy_flag === null ||
+                              document_availability_policy_flag === false) && (
                               <div>
                                 <IconS type="upload" />
                                 <FileSelectText>
                                   {this.t("general_4:upload_text.message")}
-                                </FileSelectText>
-                              </div>
-                            )}
-                            {document_availability_policy_flag === false && (
-                              <div>
-                                <FileSelectText>
-                                  {this.t("apply_job:wrong_file_text.message")}
                                 </FileSelectText>
                               </div>
                             )}
@@ -2693,6 +2648,11 @@ class TierFour extends React.Component {
                           : delete this.validator1.fields[
                               "document_availability_policy"
                             ]}
+                        {document_availability_policy_flag === false && (
+                          <div class="tier-text-danger-validation">
+                            Invalid file format
+                          </div>
+                        )}
                       </TierUpload>
                       {this.state.tierData.length > 0 ? (
                         <TierDocBox>
@@ -2771,18 +2731,12 @@ class TierFour extends React.Component {
                             onFileDialogCancel={this.onCancel.bind(this)}
                             disabled={!this.state.reUpload13}
                           >
-                            {cookies_policy_flag === null && (
+                            {(cookies_policy_flag === null ||
+                              cookies_policy_flag === false) && (
                               <div>
                                 <IconS type="upload" />
                                 <FileSelectText>
                                   {this.t("general_4:upload_text.message")}
-                                </FileSelectText>
-                              </div>
-                            )}
-                            {cookies_policy_flag === false && (
-                              <div>
-                                <FileSelectText>
-                                  {this.t("apply_job:wrong_file_text.message")}
                                 </FileSelectText>
                               </div>
                             )}
@@ -2827,6 +2781,11 @@ class TierFour extends React.Component {
                               }
                             )
                           : delete this.validator1.fields["cookies_policy"]}
+                        {cookies_policy_flag === false && (
+                          <div class="tier-text-danger-validation">
+                            Invalid file format
+                          </div>
+                        )}
                       </TierUpload>
                       {this.state.tierData.length > 0 ? (
                         <TierDocBox>
@@ -2901,18 +2860,12 @@ class TierFour extends React.Component {
                             onFileDialogCancel={this.onCancel.bind(this)}
                             disabled={!this.state.reUpload14}
                           >
-                            {privacy_policy_flag === null && (
+                            {(privacy_policy_flag === null ||
+                              privacy_policy_flag === false) && (
                               <div>
                                 <IconS type="upload" />
                                 <FileSelectText>
                                   {this.t("general_4:upload_text.message")}
-                                </FileSelectText>
-                              </div>
-                            )}
-                            {privacy_policy_flag === false && (
-                              <div>
-                                <FileSelectText>
-                                  {this.t("apply_job:wrong_file_text.message")}
                                 </FileSelectText>
                               </div>
                             )}
@@ -2957,6 +2910,11 @@ class TierFour extends React.Component {
                               }
                             )
                           : delete this.validator1.fields["privacy_policy"]}
+                        {privacy_policy_flag === false && (
+                          <div class="tier-text-danger-validation">
+                            Invalid file format
+                          </div>
+                        )}
                       </TierUpload>
                       {this.state.tierData.length > 0 ? (
                         <TierDocBox>
@@ -3031,18 +2989,12 @@ class TierFour extends React.Component {
                             onFileDialogCancel={this.onCancel.bind(this)}
                             disabled={!this.state.reUpload15}
                           >
-                            {aml_policy_flag === null && (
+                            {(aml_policy_flag === null ||
+                              aml_policy_flag === false) && (
                               <div>
                                 <IconS type="upload" />
                                 <FileSelectText>
                                   {this.t("general_4:upload_text.message")}
-                                </FileSelectText>
-                              </div>
-                            )}
-                            {aml_policy_flag === false && (
-                              <div>
-                                <FileSelectText>
-                                  {this.t("apply_job:wrong_file_text.message")}
                                 </FileSelectText>
                               </div>
                             )}
@@ -3087,6 +3039,11 @@ class TierFour extends React.Component {
                               }
                             )
                           : delete this.validator1.fields["aml_policy"]}
+                        {aml_policy_flag === false && (
+                          <div class="tier-text-danger-validation">
+                            Invalid file format
+                          </div>
+                        )}
                       </TierUpload>
                       {this.state.tierData.length > 0 ? (
                         <TierDocBox>
@@ -3161,18 +3118,12 @@ class TierFour extends React.Component {
                             onFileDialogCancel={this.onCancel.bind(this)}
                             disabled={!this.state.reUpload16}
                           >
-                            {terms_of_service_flag === null && (
+                            {(terms_of_service_flag === null ||
+                              terms_of_service_flag === false) && (
                               <div>
                                 <IconS type="upload" />
                                 <FileSelectText>
                                   {this.t("general_4:upload_text.message")}
-                                </FileSelectText>
-                              </div>
-                            )}
-                            {terms_of_service_flag === false && (
-                              <div>
-                                <FileSelectText>
-                                  {this.t("apply_job:wrong_file_text.message")}
                                 </FileSelectText>
                               </div>
                             )}
@@ -3217,6 +3168,11 @@ class TierFour extends React.Component {
                               }
                             )
                           : delete this.validator1.fields["terms_of_service"]}
+                        {terms_of_service_flag === false && (
+                          <div class="tier-text-danger-validation">
+                            Invalid file format
+                          </div>
+                        )}
                       </TierUpload>
                       {this.state.tierData.length > 0 ? (
                         <TierDocBox>
