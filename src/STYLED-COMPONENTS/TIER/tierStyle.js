@@ -6,6 +6,9 @@ export const TierMainWrap = styled.div`
   padding: 30px 0 50px;
   width: 80%;
   margin: 0 auto;
+  @media (min-width: 1200px) and (max-width: 1500px) {
+    width: 95%;
+  }
   @media (max-width: 650px) {
     width: 70%;
   }
@@ -16,6 +19,7 @@ export const TierMainWrap = styled.div`
 export const TierMainInnerWrap = styled.div`
   display: flex;
   width: 100%;
+
   @media (max-width: 1200px) {
     flex-wrap: wrap;
   }
@@ -52,7 +56,7 @@ export const TierSubMainInner = styled.div`
   align-items: flex-start;
 `;
 export const TierHead = styled.span`
-  font-size: 25px;
+  font-size: 22px;
   font-weight: bold;
   width: 100%;
   background: ${(props) =>
@@ -63,6 +67,15 @@ export const TierHead = styled.span`
   line-height: 32px;
   height: 55px;
   align-items: center;
+  @media (min-width: 1500px) and (max-width: 1920px) {
+    font-size: 16px;
+  }
+  @media (min-width: 1200px) and (max-width: 1500px) {
+    font-size: 16px;
+  }
+  @media (max-width: 1200px) {
+    font-size: 16px;
+  }
 `;
 export const TierSubHead = styled.span`
   display: block;
@@ -162,24 +175,25 @@ export const TierRequirements = styled.div`
   // height: 250px;
   // overflow: auto;
   @media (max-width: 1500px) {
-    min-height: 320px;
-    height: 300px;
+    // min-height: 320px;
+    // height: 300px;
+    padding: 0 15px 88px;
   }
   @media (max-width: 1200px) {
-    min-height: 286px;
-    height: 240px;
+    // min-height: 286px;
+    // height: 240px;
   }
   @media (max-width: 750px) {
-    min-height: 320px;
-    height: 300px;
+    // min-height: 320px;
+    // height: 300px;
   }
   @media (max-width: 650px) {
-    min-height: 260px;
-    height: 240px;
+    // min-height: 260px;
+    // height: 240px;
   }
   @media (max-width: 450px) {
-    min-height: 310px;
-    height: 290px;
+    // min-height: 310px;
+    // height: 290px;
   }
   > ul.requirements {
     list-style: none;
