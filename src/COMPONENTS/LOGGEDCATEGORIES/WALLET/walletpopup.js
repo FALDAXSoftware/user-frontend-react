@@ -801,10 +801,13 @@ class WalletPopup extends Component {
                 parseFloat(responseData.data)
             ).toFixed(8);
             fields["subtotal"] = subtotal;
+            let fiatValueamount =
+              parseFloat(subtotal) * parseFloat(this.state.singlefiatValue);
             this.setState({
               networkFee: responseData.data,
               // disabled: false,
               sendFields: fields,
+              fiatValue: fiatValueamount,
             });
             if (this.state.limitExceeded) {
               this.setState({
@@ -869,6 +872,7 @@ class WalletPopup extends Component {
         parseFloat(fields[name]) +
           parseFloat(fields[name]) * (this.props.coinFee / 100)
       ).toFixed(8);
+
       let fiatValueamount;
       if (this.state.singlefiatValue !== 0) {
         fiatValueamount = parseFloat(
@@ -1136,7 +1140,7 @@ class WalletPopup extends Component {
                             }
                             displayType={"text"}
                             thousandSeparator={true}
-                            prefix="$"
+                            prefix={this.state.fiatCurrency}
                           />
                         </span>
                       </TotPay>
