@@ -4569,6 +4569,12 @@
       "message": "Symbol",
       "message_type": "Web content",
       "context": "Symbol text"
+    },
+    "reupload_doc_text": {
+      "page": "Tiers",
+      "message": "Please re-upload your documents.",
+      "message_type": "Web content",
+      "context": "Please re-upload your documents text"
     }
   }
 }
