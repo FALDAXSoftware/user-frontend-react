@@ -335,8 +335,8 @@ class TierThree extends React.Component {
                     }
                     _self.openNotificationWithIcon(
                       "error",
-                      this.t("validations:error_text.message"),
-                      this.t("validations:image_upload_error.message")
+                      _self.t("validations:error_text.message"),
+                      _self.t("validations:image_upload_error.message")
                     );
                     document.getElementById("idcp-photo").value = "";
                     // document.getElementById("residence-proof").value = "";
@@ -368,7 +368,7 @@ class TierThree extends React.Component {
               }
               _self.openNotificationWithIcon(
                 "error",
-                this.t("validations:error_text.message"),
+                _self.t("validations:error_text.message"),
                 _self.t("general_1:max_image_size_error.message")
               );
               document.getElementById("idcp-photo").value = "";
@@ -377,8 +377,8 @@ class TierThree extends React.Component {
           } else {
             _self.openNotificationWithIcon(
               "error",
-              this.t("validations:error_text.message"),
-              this.t("general_1:only_images_error.message")
+              _self.t("validations:error_text.message"),
+              _self.t("general_1:only_images_error.message")
             );
             document.getElementById("idcp-photo").value = "";
             // document.getElementById("residence-proof").value = "";
@@ -499,6 +499,8 @@ class TierThree extends React.Component {
     }
   }
   handleCancel() {
+    var DataForm = new FormData();
+    DataForm.append("image", "");
     this.setState({
       profileImg: "",
       imageName: "",
@@ -511,6 +513,7 @@ class TierThree extends React.Component {
       asset_proof: [],
       cover_flag: null,
     });
+    document.getElementById("idcp-photo").value = "";
     this.validator.hideMessages();
     this.forceUpdate();
   }
