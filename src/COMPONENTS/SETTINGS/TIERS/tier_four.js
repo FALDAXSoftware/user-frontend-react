@@ -932,7 +932,7 @@ class TierFour extends React.Component {
           this.openNotificationWithIcon(
             "error",
             this.t("validations:error_text.message"),
-            "Please reupload your documents."
+            this.t("tier_changes:reupload_doc_text.message")
           );
           this.setState(
             {

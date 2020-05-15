@@ -18,6 +18,7 @@ import { translate } from "react-i18next";
 import { withRouter } from "react-router-dom";
 // import CountryAccess from "../../../SHARED-COMPONENTS/CountryAccess";
 import CompleteProfile from "../../../SHARED-COMPONENTS/completeProfile";
+import { getProfileDataAction } from "../../../ACTIONS/SETTINGS/settingActions";
 
 const Step = Steps.Step;
 
@@ -132,6 +133,8 @@ class TierOne extends React.Component {
     }
   }
   componentDidMount() {
+    this.props.getProfileDataAction(this.props.isLoggedIn);
+    console.log("askdj^^^^", this.props.is_kyc_done);
     // console.log(
     //   "^^tier^",
     //   this.props.profileDetails.is_user_updated,
@@ -303,7 +306,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => ({});
+const mapDispatchToProps = (dispatch) => ({
+  getProfileDataAction: (isLoggedIn) =>
+    dispatch(getProfileDataAction(isLoggedIn)),
+});
 
 export default translate(
   "identity_verification",
