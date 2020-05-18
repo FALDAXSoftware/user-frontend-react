@@ -109,7 +109,7 @@ class DepthChartAm extends Component {
             return res;
         });
         // Set up precision for numbers
-        chart.numberFormatter.numberFormat = "#,###.####";
+        chart.numberFormatter.numberFormat = "#,###.########";
 
         // Create axes
         let xAxis = chart.xAxes.push(new am4charts.CategoryAxis());
