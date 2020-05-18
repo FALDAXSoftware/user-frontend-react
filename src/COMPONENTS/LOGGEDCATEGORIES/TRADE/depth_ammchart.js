@@ -43,8 +43,6 @@ class DepthChartAm extends Component {
         chart.dataSource.url = `${SOCKET_HOST}/api/v1/tradding/depth-chart-details?symbol=${this.props.crypto}-${this.props.currency}`;
         chart.dataSource.reloadFrequency = 10000;
         chart.dataSource.adapter.add("parsedData", function (data) {
-            console.log();
-
             // Function to process (sort and calculate cummulative volume)
             function processData(list, type, desc) {
 
