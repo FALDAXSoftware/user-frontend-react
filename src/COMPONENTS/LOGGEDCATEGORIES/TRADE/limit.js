@@ -42,6 +42,51 @@ import {
 
 let { SOCKET_HOST } = globalVariables;
 
+function precision(x) {
+  if (Math.abs(x) < 1.0) {
+    var e = parseInt(x.toString().split("e-")[1]);
+    if (e) {
+      x *= Math.pow(10, e - 1);
+      x = "0." + new Array(e).join("0") + x.toString().substring(2);
+    }
+  } else {
+    var e = parseInt(x.toString().split("+")[1]);
+    if (e > 20) {
+      e -= 20;
+      x /= Math.pow(10, e);
+      x += new Array(e + 1).join("0");
+    }
+  }
+  if (x.toString().split(".")[1] && x.toString().split(".")[1].length > 8) {
+    {
+      x = parseFloat(x).toFixed(8);
+      if (
+        x.toString()[x.toString().length - 1] == "0" &&
+        (x.toString().split(".")[1][0] != "0" ||
+          x.toString().split(".")[1][5] != "0")
+      ) {
+        return parseFloat(x);
+      } else if (x.toString().split(".")[1][7] == "0") {
+        if (x.toString().split(".")[1][6] == "0") {
+          if (x.toString().split(".")[1][5] == "0") {
+            if (x.toString().split(".")[1][4] == "0") {
+              if (x.toString().split(".")[1][3] == "0") {
+                if (x.toString().split(".")[1][2] == "0") {
+                  if (x.toString().split(".")[1][1] == "0") {
+                    if (x.toString().split(".")[1][0] == "0") {
+                      return parseFloat(x).toFixed(0);
+                    } else return parseFloat(x).toFixed(1);
+                  } else return parseFloat(x).toFixed(2);
+                } else return parseFloat(x).toFixed(3);
+              } else return parseFloat(x).toFixed(4);
+            } else return parseFloat(x).toFixed(5);
+          } else return parseFloat(x).toFixed(6);
+        } else return parseFloat(x).toFixed(7);
+      } else return parseFloat(x).toFixed(8);
+    }
+  }
+  return x;
+}
 class Limit extends Component {
   constructor(props) {
     super(props);
@@ -98,6 +143,17 @@ class Limit extends Component {
         message: this.t("5_decimal_error.message"),
         rule: (val) => {
           var RE = /^\d*\.?\d{0,5}$/;
+          if (RE.test(val)) {
+            return true;
+          } else {
+            return false;
+          }
+        },
+      },
+      decimalrestrict8: {
+        message: this.t("validations:8_decimal_error.message"),
+        rule: (val) => {
+          var RE = /^\d*\.?\d{0,8}$/;
           if (RE.test(val)) {
             return true;
           } else {
@@ -490,11 +546,11 @@ class Limit extends Component {
                       <Balance>
                         {this.props.userBal.currency
                           ? this.props.userBal.currency.placed_balance
-                            ? `${this.props.userBal.currency.placed_balance.toFixed(
-                                8
+                            ? `${precision(
+                                this.props.userBal.currency.placed_balance
                               )}${" "}`
-                            : `00${" "}`
-                          : `00${" "}`}
+                            : `0${" "}`
+                          : `0${" "}`}
                         {this.state.currency}
                       </Balance>
                     </Col>
@@ -511,11 +567,11 @@ class Limit extends Component {
                       <Balance>
                         {this.props.userBal
                           ? this.props.userBal.currency.length > 0
-                            ? `${this.props.userBal.currency.balance.toFixed(
-                                8
+                            ? `${precision(
+                                this.props.userBal.currency.balance
                               )}${" "}`
-                            : `00${" "}`
-                          : `00${" "}`}
+                            : `0${" "}`
+                          : `0${" "}`}
                         {this.state.currency}
                       </Balance>
                     </Col>
@@ -532,12 +588,14 @@ class Limit extends Component {
                       <Balance>
                         {this.props.userBal.currency
                           ? this.props.userBal.currency.balance
-                            ? `${Math.abs(
-                                this.props.userBal.currency.balance -
-                                  this.props.userBal.currency.placed_balance
-                              ).toFixed(8)}${" "}`
-                            : `00${" "}`
-                          : `00${" "}`}
+                            ? `${precision(
+                                Math.abs(
+                                  this.props.userBal.currency.balance -
+                                    this.props.userBal.currency.placed_balance
+                                )
+                              )}${" "}`
+                            : `0${" "}`
+                          : `0${" "}`}
                         {this.state.currency}
                       </Balance>
                     </Col>
@@ -553,7 +611,7 @@ class Limit extends Component {
                     </Col>
                     <Col span={24}>
                       <Balance>
-                        {this.props.userBal.buyPay.toFixed(5)}{" "}
+                        {precision(this.props.userBal.buyPay)}{" "}
                         {this.state.currency}
                       </Balance>
                     </Col>
@@ -574,12 +632,12 @@ class Limit extends Component {
                         {this.props.userBal
                           ? this.props.userBal.crypto.length > 0
                             ? this.props.userBal.crypto.placed_balance
-                              ? `${this.props.userBal.crypto.placed_balance.toFixed(
-                                  8
+                              ? `${precision(
+                                  this.props.userBal.crypto.placed_balance
                                 )}${" "}`
-                              : `00${" "}`
-                            : `00${" "}`
-                          : `00${" "}`}
+                              : `0${" "}`
+                            : `0${" "}`
+                          : `0${" "}`}
                         {this.state.crypto}
                       </Balance>
                     </Col>
@@ -596,11 +654,11 @@ class Limit extends Component {
                       <Balance>
                         {this.props.userBal
                           ? this.props.userBal.crypto.length > 0
-                            ? `${this.props.userBal.crypto.balance.toFixed(
-                                8
+                            ? `${precision(
+                                this.props.userBal.crypto.balance
                               )}${" "}`
-                            : `00${" "}`
-                          : `00${" "}`}
+                            : `0${" "}`
+                          : `0${" "}`}
                         {this.state.crypto}
                       </Balance>
                     </Col>
@@ -617,12 +675,14 @@ class Limit extends Component {
                       <Balance>
                         {this.props.userBal.crypto
                           ? this.props.userBal.crypto.balance
-                            ? `${Math.abs(
-                                this.props.userBal.crypto.balance -
-                                  this.props.userBal.crypto.placed_balance
-                              ).toFixed(8)}${" "}`
-                            : `00${" "}`
-                          : `00${" "}`}
+                            ? `${precision(
+                                Math.abs(
+                                  this.props.userBal.crypto.balance -
+                                    this.props.userBal.crypto.placed_balance
+                                )
+                              )}${" "}`
+                            : `0${" "}`
+                          : `0${" "}`}
                         {this.state.crypto}
                       </Balance>
                     </Col>
@@ -638,7 +698,7 @@ class Limit extends Component {
                     </Col>
                     <Col span={24}>
                       <Balance>
-                        {this.props.userBal.sellPay.toFixed(5)}{" "}
+                        {precision(this.props.userBal.sellPay)}{" "}
                         {this.state.currency}
                       </Balance>
                     </Col>
@@ -682,18 +742,18 @@ class Limit extends Component {
           <TotalWrap>
             <TotInput
               min="0"
-              step="0.00001"
+              step="0.00000001"
               type="number"
               placeholder="0"
               addonAfter={this.state.currency}
-              value={this.state.limit_price}
+              value={precision(this.state.limit_price)}
               name="limit_price"
               onChange={this.onChange}
             />
             {this.validator.message(
               "Limit_price",
               this.state.limit_price,
-              "required|gtzero|numeric|decimalrestrict5",
+              "required|gtzero|decimalrestrict8",
               "trade-action-validation",
               {
                 required: `${this.t("limit_price_text.message")}${" "}${this.t(
@@ -705,9 +765,9 @@ class Limit extends Component {
                 gtzero: `${this.t("limit_price_text.message")}${" "}${this.t(
                   "should_be_greater_than_0.message"
                 )}`,
-                decimalrestrict5: `${this.t(
+                decimalrestrict8: `${this.t(
                   "limit_price_text.message"
-                )}${" "}${this.t("5_decimal_error.message")}`,
+                )}${" "}${this.t("validations:8_decimal_error.message")}`,
               }
             )}
           </TotalWrap>
@@ -719,7 +779,7 @@ class Limit extends Component {
               min="0"
               type="number"
               addonAfter={this.state.currency}
-              value={this.state.total.toFixed(8)}
+              value={precision(this.state.total)}
               name="total"
               readOnly="true"
             />
@@ -734,7 +794,7 @@ class Limit extends Component {
                   {this.t("pay_text.message")}
                 </Willpay>
                 <Willpay2>
-                  {buyPayAmt.toFixed(8)} {this.state.currency}
+                  {precision(buyPayAmt)} {this.state.currency}
                 </Willpay2>
               </Approx>
               <Esti>
@@ -745,7 +805,7 @@ class Limit extends Component {
                     )}
                   </WillpayBelow>
                   <WillpayBelow2>
-                    {parseFloat(this.state.fiatCurrencyValue).toFixed(8)}{" "}
+                    {precision(this.state.fiatCurrencyValue)}{" "}
                     {this.state.fiatCurrency}
                   </WillpayBelow2>
                 </ApproxBelow>
@@ -754,7 +814,7 @@ class Limit extends Component {
                     {this.t("estimated_best_price_text.message")}
                   </WillpayBelow>
                   <WillpayBelow2>
-                    {buyPayAmt.toFixed(8)} {this.state.currency}
+                    {precision(buyPayAmt)} {this.state.currency}
                   </WillpayBelow2>
                 </ApproxBelow>
                 <ApproxBelow>
@@ -762,7 +822,7 @@ class Limit extends Component {
                     {this.t("conversion:fee_text.message")} {userBalFees} %
                   </WillpayBelow>
                   <WillpayBelow2>
-                    {(buyPayAmt - buyEstPrice).toFixed(8)} {this.state.crypto}
+                    {precision(buyPayAmt - buyEstPrice)} {this.state.crypto}
                   </WillpayBelow2>
                 </ApproxBelow>
               </Esti>
@@ -775,7 +835,7 @@ class Limit extends Component {
                   {this.t("receive_text.message")}
                 </Willpay>
                 <Willpay2>
-                  {sellEstPrice.toFixed(8)} {this.state.currency}
+                  {precision(sellEstPrice)} {this.state.currency}
                 </Willpay2>
               </Approx>
               <Esti>
@@ -786,7 +846,7 @@ class Limit extends Component {
                     )}
                   </WillpayBelow>
                   <WillpayBelow2>
-                    {parseFloat(this.state.fiatCurrencyValue).toFixed(8)}{" "}
+                    {precision(this.state.fiatCurrencyValue)}{" "}
                     {this.state.fiatCurrency}
                   </WillpayBelow2>
                 </ApproxBelow>
@@ -795,7 +855,7 @@ class Limit extends Component {
                     {this.t("estimated_best_price_text.message")}
                   </WillpayBelow>
                   <WillpayBelow2>
-                    {sellPayAmt.toFixed(8)} {this.state.currency}
+                    {precision(sellPayAmt)} {this.state.currency}
                   </WillpayBelow2>
                 </ApproxBelow>
                 <ApproxBelow>
@@ -803,8 +863,7 @@ class Limit extends Component {
                     {this.t("conversion:fee_text.message")} {userBalFees} %
                   </WillpayBelow>
                   <WillpayBelow2>
-                    {(sellPayAmt - sellEstPrice).toFixed(8)}{" "}
-                    {this.state.currency}
+                    {precision(sellPayAmt - sellEstPrice)} {this.state.currency}
                   </WillpayBelow2>
                 </ApproxBelow>
               </Esti>

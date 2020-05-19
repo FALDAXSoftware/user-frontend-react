@@ -24,7 +24,51 @@ import { SpinSingle } from "STYLED-COMPONENTS/LOGGED_STYLE/dashStyle";
 import { OTwrap } from "./ordertrade";
 
 const APP_URL = globalVariables.API_URL;
-
+function precision(x) {
+  if (Math.abs(x) < 1.0) {
+    var e = parseInt(x.toString().split("e-")[1]);
+    if (e) {
+      x *= Math.pow(10, e - 1);
+      x = "0." + new Array(e).join("0") + x.toString().substring(2);
+    }
+  } else {
+    var e = parseInt(x.toString().split("+")[1]);
+    if (e > 20) {
+      e -= 20;
+      x /= Math.pow(10, e);
+      x += new Array(e + 1).join("0");
+    }
+  }
+  if (x.toString().split(".")[1] && x.toString().split(".")[1].length > 8) {
+    {
+      x = parseFloat(x).toFixed(8);
+      if (
+        x.toString()[x.toString().length - 1] == "0" &&
+        (x.toString().split(".")[1][0] != "0" ||
+          x.toString().split(".")[1][5] != "0")
+      ) {
+        return parseFloat(x);
+      } else if (x.toString().split(".")[1][7] == "0") {
+        if (x.toString().split(".")[1][6] == "0") {
+          if (x.toString().split(".")[1][5] == "0") {
+            if (x.toString().split(".")[1][4] == "0") {
+              if (x.toString().split(".")[1][3] == "0") {
+                if (x.toString().split(".")[1][2] == "0") {
+                  if (x.toString().split(".")[1][1] == "0") {
+                    if (x.toString().split(".")[1][0] == "0") {
+                      return parseFloat(x).toFixed(0);
+                    } else return parseFloat(x).toFixed(1);
+                  } else return parseFloat(x).toFixed(2);
+                } else return parseFloat(x).toFixed(3);
+              } else return parseFloat(x).toFixed(4);
+            } else return parseFloat(x).toFixed(5);
+          } else return parseFloat(x).toFixed(6);
+        } else return parseFloat(x).toFixed(7);
+      } else return parseFloat(x).toFixed(8);
+    }
+  }
+  return x;
+}
 const OTwrap2 = styled(OTwrap)`
   min-width: auto;
   @media (max-width: 991px) {
@@ -281,7 +325,7 @@ class BuyTABLE extends Component {
         </BBC>
         <TotalBTC>
           {this.t("conversion:total_text.message")}:{" "}
-          {this.state.lastsum && parseFloat(this.state.lastsum).toFixed(8)}{" "}
+          {this.state.lastsum && precision(this.state.lastsum)}{" "}
           {this.props.currency}
         </TotalBTC>
         <BuyTable>
@@ -292,9 +336,17 @@ class BuyTABLE extends Component {
                   <thead>
                     <tr>
                       {/* <th>{this.t("my_size_text.message")}</th> */}
-                      <th>{this.t("wallet:amount_text.message")} ({this.props.crypto})</th>
-                      <th>{this.t("bid_text.message")} ({this.props.currency})</th>
-                      <th>{this.t("conversion:total_text.message")} ({this.props.currency})</th>
+                      <th>
+                        {this.t("wallet:amount_text.message")} (
+                        {this.props.crypto})
+                      </th>
+                      <th>
+                        {this.t("bid_text.message")} ({this.props.currency})
+                      </th>
+                      <th>
+                        {this.t("conversion:total_text.message")} (
+                        {this.props.currency})
+                      </th>
                     </tr>
                   </thead>
                 </TableHeader>
@@ -318,31 +370,29 @@ class BuyTABLE extends Component {
                         {this.state.result.map((element) => (
                           <tr>
                             {/* <td>{element.my_size.toFixed(8)}</td> */}
-                            <td>{element.amount?.toFixed(8)}</td>
-                            <td>{element.bid?.toFixed(8)}</td>
-                            <td>{element.total?.toFixed(8)}</td>
+                            <td>{precision(element.amount)}</td>
+                            <td>{precision(element.bid)}</td>
+                            <td>{precision(element.total)}</td>
                           </tr>
                         ))}
                       </tbody>
                     ) : (
-                        <NDF>{this.t("wallet:no_data_found_text.message")}</NDF>
-                      )}
+                      <NDF>{this.t("wallet:no_data_found_text.message")}</NDF>
+                    )}
                   </TableContent>
                 </Scrollbars>
               </ScrollTableContent>
             </OTwrap2>
           </HistoryWrap1>
-        </BuyTable >
-        {
-          this.state.Loader === true ? (
-            <SpinSingle className="Single_spin">
-              <Spin size="small" />
-            </SpinSingle>
-          ) : (
-              ""
-            )
-        }
-      </div >
+        </BuyTable>
+        {this.state.Loader === true ? (
+          <SpinSingle className="Single_spin">
+            <Spin size="small" />
+          </SpinSingle>
+        ) : (
+          ""
+        )}
+      </div>
     );
   }
 }

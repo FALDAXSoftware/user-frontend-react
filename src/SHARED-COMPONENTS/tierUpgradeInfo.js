@@ -219,7 +219,7 @@ class TierUpgradeInfo extends Component {
                   </td>
                   <td>
                     <NumberFormat
-                      value={`${parseFloat(minimumTradeValue).toFixed(2)}`}
+                      value={`${precisionTwo(minimumTradeValue)}`}
                       displayType={"text"}
                       thousandSeparator={true}
                       prefix="$"
@@ -229,9 +229,7 @@ class TierUpgradeInfo extends Component {
                     <NumberFormat
                       value={
                         response1.tradeTotalFiatRemaining
-                          ? `${parseFloat(
-                              response1.tradeTotalFiatRemaining
-                            ).toFixed(2)}`
+                          ? `${precisionTwo(response1.tradeTotalFiatRemaining)}`
                           : "0"
                       }
                       displayType={"text"}
@@ -263,7 +261,7 @@ class TierUpgradeInfo extends Component {
                   </td>
                   <td>
                     <NumberFormat
-                      value={`${parseFloat(minimumWalletBalance).toFixed(2)}`}
+                      value={`${precisionTwo(minimumWalletBalance)}`}
                       displayType={"text"}
                       thousandSeparator={true}
                       prefix="$"
@@ -273,9 +271,7 @@ class TierUpgradeInfo extends Component {
                     <NumberFormat
                       value={
                         response2.userWalletFiatRemaining
-                          ? `${parseFloat(
-                              response2.userWalletFiatRemaining
-                            ).toFixed(2)}`
+                          ? `${precisionTwo(response2.userWalletFiatRemaining)}`
                           : "0"
                       }
                       displayType={"text"}
@@ -321,3 +317,36 @@ export default translate([
   "validations",
   "tier_changes",
 ])(connect(mapStateToProps, mapDispatchToProps)(withRouter(TierUpgradeInfo)));
+function precisionTwo(x) {
+  if (Math.abs(x) < 1.0) {
+    var e = parseInt(x.toString().split("e-")[1]);
+    if (e) {
+      x *= Math.pow(10, e - 1);
+      x = "0." + new Array(e).join("0") + x.toString().substring(2);
+    }
+  } else {
+    var e = parseInt(x.toString().split("+")[1]);
+    if (e > 20) {
+      e -= 20;
+      x /= Math.pow(10, e);
+      x += new Array(e + 1).join("0");
+    }
+  }
+  if (x.toString().split(".")[1] && x.toString().split(".")[1].length > 2) {
+    {
+      x = parseFloat(x).toFixed(2);
+      if (
+        x.toString()[x.toString().length - 1] == "0" &&
+        (x.toString().split(".")[1][0] != "0" ||
+          x.toString().split(".")[1][5] != "0")
+      ) {
+        return parseFloat(x);
+      } else if (x.toString().split(".")[1][1] == "0") {
+        if (x.toString().split(".")[1][0] == "0") {
+          return parseFloat(x).toFixed(0);
+        } else return parseFloat(x).toFixed(1);
+      }
+    }
+  }
+  return x;
+}

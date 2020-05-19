@@ -139,6 +139,9 @@ export const SubHead = styled.th`
   > a.ant-dropdown-link {
     vertical-align: middle;
   }
+  &.alignCenter {
+    text-align: center !important;
+  }
 `;
 export const Col1 = styled.tr`
   height: ${(props) => (props.wallet ? "70px" : "90px")};

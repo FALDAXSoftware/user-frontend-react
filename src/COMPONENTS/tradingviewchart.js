@@ -3,9 +3,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { widget } from "CHARTING_LIB/charting_library.min";
 import { globalVariables } from "Globals.js";
-import {
-  withRouter
-} from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 const API_URL = globalVariables.API_URL;
 
@@ -23,13 +21,13 @@ class TradingViewChart extends React.Component {
     super(props);
     this.state = {
       crypto: "XRP",
-      currency: "BTC"
+      currency: "BTC",
     };
   }
   static defaultProps = {
     symbol: `XRP-BTC`,
     // symbol: 'AAPL',
-    interval: "1",
+    interval: "D",
     containerId: "tv_chart_container",
     // datafeedUrl: 'https://demo_feed.tradingview.com',
     datafeedUrl: `${API_URL}/tradingview`,
@@ -40,7 +38,7 @@ class TradingViewChart extends React.Component {
     userId: "public_user_id",
     fullscreen: false,
     autosize: true,
-    studiesOverrides: {}
+    studiesOverrides: {},
   };
   tvWidget = null;
   componentWillReceiveProps(props, newProps) {
@@ -82,7 +80,7 @@ class TradingViewChart extends React.Component {
           "header_undo_redo",
           "study_dialog_search_control",
           "go_to_date",
-          "timeframes_toolbar"
+          "timeframes_toolbar",
         ],
         enabled_features: [],
         charts_storage_url: props.chartsStorageUrl,
@@ -92,7 +90,7 @@ class TradingViewChart extends React.Component {
         fullscreen: props.fullscreen,
         autosize: props.autosize,
         studies_overrides: props.studiesOverrides,
-        theme: props.theme === true ? "Dark" : "Light"
+        theme: props.theme === true ? "Dark" : "Light",
       };
 
       const tvWidget = new widget(widgetOptions);
@@ -115,14 +113,18 @@ class TradingViewChart extends React.Component {
   }
 
   componentDidMount() {
-    console.log("^^^prods", window.location.href, this.props, this.props.match.params.pair);
+    console.log(
+      "^^^prods",
+      window.location.href,
+      this.props,
+      this.props.match.params.pair
+    );
     let currency, crypto;
 
     if (this.props.match.params.pair) {
       currency = this.props.match.params.pair.split("-")[1];
       crypto = this.props.match.params.pair.split("-")[0];
-    }
-    else if (this.props.cryptoPair.crypto === undefined) {
+    } else if (this.props.cryptoPair.crypto === undefined) {
       currency = this.state.currency;
       crypto = this.state.crypto;
     } else {
@@ -151,7 +153,7 @@ class TradingViewChart extends React.Component {
         "header_undo_redo",
         "study_dialog_search_control",
         "go_to_date",
-        "timeframes_toolbar"
+        "timeframes_toolbar",
       ],
       enabled_features: [],
       charts_storage_url: this.props.chartsStorageUrl,
@@ -161,7 +163,7 @@ class TradingViewChart extends React.Component {
       fullscreen: this.props.fullscreen,
       autosize: this.props.autosize,
       studies_overrides: this.props.studiesOverrides,
-      theme: this.props.theme === true ? "Dark" : "Light"
+      theme: this.props.theme === true ? "Dark" : "Light",
     };
 
     const tvWidget = new widget(widgetOptions);
@@ -201,7 +203,7 @@ function mapStateToProps(state) {
     cryptoPair:
       state.walletReducer.cryptoPair !== undefined
         ? state.walletReducer.cryptoPair
-        : ""
+        : "",
     /*  profileDetails: state.simpleReducer.profileDetails !== undefined ? state.simpleReducer.profileDetails.data[0] : "", */
     /* loader:state.simpleReducer.loader?state.simpleReducer.loader:false */
   };
