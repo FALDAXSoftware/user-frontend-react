@@ -742,18 +742,18 @@ class Limit extends Component {
           <TotalWrap>
             <TotInput
               min="0"
-              step="0.00000001"
+              step="0.00001"
               type="number"
               placeholder="0"
               addonAfter={this.state.currency}
-              value={precision(this.state.limit_price)}
+              value={this.state.limit_price}
               name="limit_price"
               onChange={this.onChange}
             />
             {this.validator.message(
               "Limit_price",
               this.state.limit_price,
-              "required|gtzero|decimalrestrict8",
+              "required|gtzero|numeric|decimalrestrict8",
               "trade-action-validation",
               {
                 required: `${this.t("limit_price_text.message")}${" "}${this.t(
