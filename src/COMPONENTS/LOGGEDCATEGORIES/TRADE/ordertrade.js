@@ -29,7 +29,7 @@ export const OrderWrap = styled.div`
 
   &::-webkit-scrollbar-thumb {
     background-color: ${(props) =>
-    props.theme.mode === "dark" ? "#041624" : ""};
+      props.theme.mode === "dark" ? "#041624" : ""};
     border-radius: 3px;
   }
   &::-webkit-scrollbar-track {
@@ -39,7 +39,7 @@ export const OrderWrap = styled.div`
 export const HTable = styled(Table)`
   > thead {
     background-color: ${(props) =>
-    props.theme.mode === "dark" ? "#041422" : "#f5f6fa"};
+      props.theme.mode === "dark" ? "#041422" : "#f5f6fa"};
     color: #174c7e;
     border: none;
   }
@@ -54,7 +54,7 @@ export const HTable = styled(Table)`
   }
   > tbody > tr:nth-of-type(odd) {
     background-color: ${(props) =>
-    props.theme.mode === "dark" ? "#041422" : "#f9f9f9"};
+      props.theme.mode === "dark" ? "#041422" : "#f9f9f9"};
   }
 `;
 const SideType = styled.td`
@@ -106,13 +106,13 @@ class OrderTrade extends Component {
                   {self.props.pending !== 2 ? (
                     <th>{this.t("history:price_text.message")}</th>
                   ) : (
-                      <th>{this.t("limit_price_text.message")}</th>
-                    )}
+                    <th>{this.t("limit_price_text.message")}</th>
+                  )}
                   {self.props.pending !== 2 ? (
                     <th>{this.t("unfilled_text.message")}</th>
                   ) : (
-                      <th>{this.t("stop_price_text.message")}</th>
-                    )}
+                    <th>{this.t("stop_price_text.message")}</th>
+                  )}
                   <th>{this.t("fill_price_text.message")}</th>
                   <th>{this.t("type_text.message")}</th>
                   <th>{this.t("time_text.message")}</th>
@@ -120,8 +120,8 @@ class OrderTrade extends Component {
                   {self.props.pending === 2 ? (
                     <th>{this.t("actions_text.message")}</th>
                   ) : (
-                      ""
-                    )}
+                    ""
+                  )}
                 </tr>
               </thead>
             </TableHeader>
@@ -159,45 +159,55 @@ class OrderTrade extends Component {
                           .format("MMM D, YYYY, H:m:s");
                       var Filled = data.fix_quantity - data.quantity;
                       // console.log("self.props.profileDetails", self.props.profileDetails)
-                      var typeValue = ""
-                      var currencyValue = ""
-                      var sideValue
+                      var typeValue = "";
+                      var currencyValue = "";
+                      var sideValue;
                       if (self.props.pending == 1) {
                         if (data.user_id == self.props.profileDetails.id) {
-                          sideValue = data.side
-                        } else if (data.requested_user_id == self.props.profileDetails.id) {
-                          sideValue = (data.side == 'Buy') ? "Sell" : "Buy"
+                          sideValue = data.side;
+                        } else if (
+                          data.requested_user_id == self.props.profileDetails.id
+                        ) {
+                          sideValue = data.side == "Buy" ? "Sell" : "Buy";
                         }
                         if (data.side == "Buy") {
                           if (data.user_id == self.props.profileDetails.id) {
-                            currencyValue = data.settle_currency
-                          } else if (data.requested_user_id == self.props.profileDetails.id) {
-                            currencyValue = data.currency
+                            currencyValue = data.settle_currency;
+                          } else if (
+                            data.requested_user_id ==
+                            self.props.profileDetails.id
+                          ) {
+                            currencyValue = data.currency;
                           }
                         } else if (data.side == "Sell") {
                           if (data.user_id == self.props.profileDetails.id) {
-                            currencyValue = data.settle_currency
-                          } else if (data.requested_user_id == self.props.profileDetails.id) {
-                            currencyValue = data.currency
+                            currencyValue = data.settle_currency;
+                          } else if (
+                            data.requested_user_id ==
+                            self.props.profileDetails.id
+                          ) {
+                            currencyValue = data.currency;
                           }
                         }
-                        console.log("currencyValue", currencyValue)
-                        console.log("data", data)
+                        console.log("currencyValue", currencyValue);
+                        console.log("data", data);
                         if (data.user_id == self.props.profileDetails.id) {
-                          typeValue = data.order_type
-                        } else if (data.requested_user_id == self.props.profileDetails.id) {
-                          typeValue = "Limit"
+                          typeValue = data.order_type;
+                        } else if (
+                          data.requested_user_id == self.props.profileDetails.id
+                        ) {
+                          typeValue = "Limit";
                         }
                       } else {
                         typeValue = data.order_type;
                         currencyValue = data.settle_currency;
-                        sideValue = data.side
+                        sideValue = data.side;
                       }
                       return (
                         <tr>
                           <SideType type={sideValue}>{sideValue}</SideType>
                           <td>
-                            {data.quantity.toFixed(8)} {currencyValue}
+                            {precision(data.quantity)} {currencyValue}
                           </td>
                           {/* <td>
                             {self.props.pending !== 2
@@ -209,24 +219,24 @@ class OrderTrade extends Component {
                           <td>
                             {self.props.pending != 2
                               ? "-"
-                              : data.limit_price.toFixed(8)}
+                              : precision(data.limit_price)}
                           </td>
                           <SideType type={data.side}>
                             {self.props.pending !== 2
-                              ? Filled.toFixed(8)
+                              ? precision(Filled)
                               : data.stop_price !== undefined
-                                ? data.stop_price.toFixed(8)
-                                : 0}
+                              ? precision(data.stop_price)
+                              : 0}
                           </SideType>
                           <td>
-                            {data.fill_price.toFixed(8)} {data.currency}
+                            {precision(data.fill_price)} {data.currency}
                           </td>
                           <td>{typeValue}</td>
                           <td>{date}</td>
                           <td>
                             {self.props.pending === 2
-                              ? (data.quantity * data.limit_price).toFixed(8)
-                              : (data.quantity * data.fill_price).toFixed(8)}
+                              ? precision(data.quantity * data.limit_price)
+                              : precision(data.quantity * data.fill_price)}
                           </td>
                           {self.props.pending === 2 ? (
                             <th>
@@ -246,14 +256,14 @@ class OrderTrade extends Component {
                               </span>
                             </th>
                           ) : (
-                              ""
-                            )}
+                            ""
+                          )}
                         </tr>
                       );
                     })
                   ) : (
-                      <NDF>{this.t("support:no_data_found.message")}</NDF>
-                    )}
+                    <NDF>{this.t("support:no_data_found.message")}</NDF>
+                  )}
                 </tbody>
               </TableContent>
             </Scrollbars>
@@ -267,3 +277,48 @@ class OrderTrade extends Component {
 export default translate(["trade", "conversion", "wallet", "support"])(
   OrderTrade
 );
+function precision(x) {
+  if (Math.abs(x) < 1.0) {
+    var e = parseInt(x.toString().split("e-")[1]);
+    if (e) {
+      x *= Math.pow(10, e - 1);
+      x = "0." + new Array(e).join("0") + x.toString().substring(2);
+    }
+  } else {
+    var e = parseInt(x.toString().split("+")[1]);
+    if (e > 20) {
+      e -= 20;
+      x /= Math.pow(10, e);
+      x += new Array(e + 1).join("0");
+    }
+  }
+  if (x.toString().split(".")[1] && x.toString().split(".")[1].length > 8) {
+    {
+      x = parseFloat(x).toFixed(8);
+      if (
+        x.toString()[x.toString().length - 1] == "0" &&
+        (x.toString().split(".")[1][0] != "0" ||
+          x.toString().split(".")[1][5] != "0")
+      ) {
+        return parseFloat(x);
+      } else if (x.toString().split(".")[1][7] == "0") {
+        if (x.toString().split(".")[1][6] == "0") {
+          if (x.toString().split(".")[1][5] == "0") {
+            if (x.toString().split(".")[1][4] == "0") {
+              if (x.toString().split(".")[1][3] == "0") {
+                if (x.toString().split(".")[1][2] == "0") {
+                  if (x.toString().split(".")[1][1] == "0") {
+                    if (x.toString().split(".")[1][0] == "0") {
+                      return parseFloat(x).toFixed(0);
+                    } else return parseFloat(x).toFixed(1);
+                  } else return parseFloat(x).toFixed(2);
+                } else return parseFloat(x).toFixed(3);
+              } else return parseFloat(x).toFixed(4);
+            } else return parseFloat(x).toFixed(5);
+          } else return parseFloat(x).toFixed(6);
+        } else return parseFloat(x).toFixed(7);
+      } else return parseFloat(x).toFixed(8);
+    }
+  }
+  return x;
+}

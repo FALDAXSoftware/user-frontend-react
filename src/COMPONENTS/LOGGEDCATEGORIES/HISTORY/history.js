@@ -355,21 +355,17 @@ class History extends Component {
                   .local()
                   .format(`${this.props.profileData.date_format} HH:mm:ss`);
                 if (temp.side === "Sell") {
-                  var fill_price = parseFloat(temp.buy_currency_amount).toFixed(
-                    8
-                  );
+                  var fill_price = precision(temp.buy_currency_amount);
                 } else {
-                  var fill_price = parseFloat(
-                    temp.sell_currency_amount
-                  ).toFixed(8);
+                  var fill_price = precision(temp.sell_currency_amount);
                 }
-                var fees_total = parseFloat(
+                var fees_total = precision(
                   parseFloat(temp.faldax_fees) + parseFloat(temp.network_fees)
-                ).toFixed(8);
-                var amount = parseFloat(
+                );
+                var amount = precision(
                   parseFloat(temp.execution_report.CumQty) -
                     parseFloat(fees_total)
-                ).toFixed(8);
+                );
                 var status = temp.order_status.toUpperCase();
                 var order_id = temp.order_id;
                 obj["symbol"] = symbol;
@@ -410,8 +406,8 @@ class History extends Component {
                   .local()
                   .format(`${this.props.profileData.date_format} HH:mm:ss`);
                 var side = temp.side;
-                var fill_price = parseFloat(temp.fill_price).toFixed(8);
-                var quantity = parseFloat(temp.quantity).toFixed(8);
+                var fill_price = precision(temp.fill_price);
+                var quantity = precision(temp.quantity);
                 var payment_id = temp.payment_id;
                 var quote_id = temp.quote_id;
                 var address = temp.address;
@@ -1004,10 +1000,10 @@ class History extends Component {
                                   .format(
                                     `${self.props.profileData.date_format} HH:mm:ss`
                                   );
-                                var fees_total = (
+                                var fees_total = precision(
                                   parseFloat(temps.faldax_fees) +
                                   parseFloat(temps.network_fees)
-                                ).toFixed(8);
+                                );
                                 var coin =
                                   temps.side == "Buy"
                                     ? temps.currency
@@ -1021,17 +1017,15 @@ class History extends Component {
                                 //   8
                                 // );
                                 if (temps.side === "Sell") {
-                                  var fill_price = parseFloat(
+                                  var fill_price = precision(
                                     temps.buy_currency_amount
-                                  ).toFixed(8);
+                                  );
                                 } else {
-                                  var fill_price = parseFloat(
+                                  var fill_price = precision(
                                     temps.sell_currency_amount
-                                  ).toFixed(8);
+                                  );
                                 }
-                                var amount = parseFloat(temps.quantity).toFixed(
-                                  8
-                                );
+                                var amount = precision(temps.quantity);
                                 var str = temps.order_status;
                                 var status =
                                   str.charAt(0).toUpperCase() + str.slice(1);
@@ -1113,7 +1107,7 @@ class History extends Component {
                         {this.state.historySimplexData !== undefined ? (
                           this.state.historySimplexData.length > 0 ? (
                             <tbody>
-                              {this.state.historySimplexData.map(function(
+                              {this.state.historySimplexData.map(function (
                                 temps
                               ) {
                                 var date = moment
@@ -1211,7 +1205,9 @@ class History extends Component {
                         {this.state.historyTradeData !== undefined ? (
                           this.state.historyTradeData.length > 0 ? (
                             <tbody>
-                              {this.state.historyTradeData.map(function(temps) {
+                              {this.state.historyTradeData.map(function (
+                                temps
+                              ) {
                                 var date = moment
                                   .utc(temps.created_at)
                                   .local()
@@ -1302,3 +1298,48 @@ export default translate([
   "support",
   "trade",
 ])(connect(mapStateToProps, mapDispatchToProps)(History));
+function precision(x) {
+  if (Math.abs(x) < 1.0) {
+    var e = parseInt(x.toString().split("e-")[1]);
+    if (e) {
+      x *= Math.pow(10, e - 1);
+      x = "0." + new Array(e).join("0") + x.toString().substring(2);
+    }
+  } else {
+    var e = parseInt(x.toString().split("+")[1]);
+    if (e > 20) {
+      e -= 20;
+      x /= Math.pow(10, e);
+      x += new Array(e + 1).join("0");
+    }
+  }
+  if (x.toString().split(".")[1] && x.toString().split(".")[1].length > 8) {
+    {
+      x = parseFloat(x).toFixed(8);
+      if (
+        x.toString()[x.toString().length - 1] == "0" &&
+        (x.toString().split(".")[1][0] != "0" ||
+          x.toString().split(".")[1][5] != "0")
+      ) {
+        return parseFloat(x);
+      } else if (x.toString().split(".")[1][7] == "0") {
+        if (x.toString().split(".")[1][6] == "0") {
+          if (x.toString().split(".")[1][5] == "0") {
+            if (x.toString().split(".")[1][4] == "0") {
+              if (x.toString().split(".")[1][3] == "0") {
+                if (x.toString().split(".")[1][2] == "0") {
+                  if (x.toString().split(".")[1][1] == "0") {
+                    if (x.toString().split(".")[1][0] == "0") {
+                      return parseFloat(x).toFixed(0);
+                    } else return parseFloat(x).toFixed(1);
+                  } else return parseFloat(x).toFixed(2);
+                } else return parseFloat(x).toFixed(3);
+              } else return parseFloat(x).toFixed(4);
+            } else return parseFloat(x).toFixed(5);
+          } else return parseFloat(x).toFixed(6);
+        } else return parseFloat(x).toFixed(7);
+      } else return parseFloat(x).toFixed(8);
+    }
+  }
+  return x;
+}

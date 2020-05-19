@@ -682,15 +682,10 @@ class TierThree extends React.Component {
                             </TierDocStatus>
                           )}
                           {this.state.idcpStatus === false && (
-                            <div>
-                              <TierDocStatus>
-                                <Icon type="close" />
-                                <span>
-                                  {this.t("reupload_it_text.message")}
-                                </span>
-                              </TierDocStatus>
-                              <span>{this.state.assetFormNote}</span>
-                            </div>
+                            <TierDocStatus>
+                              <Icon type="close" />
+                              <span>{this.t("reupload_it_text.message")}</span>
+                            </TierDocStatus>
                           )}
                           {this.state.idcpNote && (
                             <Icon

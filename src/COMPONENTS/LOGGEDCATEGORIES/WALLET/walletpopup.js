@@ -284,7 +284,7 @@ class WalletPopup extends Component {
         },
       },
       decimalrestrict: {
-        message: this.t("validation_amount_numeric.message"),
+        message: this.t("validations:8_decimal_error.message"),
         rule: (val) => {
           var RE = /^\d*\.?\d{0,8}$/;
           if (RE.test(val)) {
@@ -437,7 +437,7 @@ class WalletPopup extends Component {
       this.setState({
         fiatValue: 0,
         fiatCurrency: this.props.fiatCurrency,
-        singlefiatValue: this.props.fiatValue.toFixed(8),
+        singlefiatValue: precision(this.props.fiatValue),
       });
     } else {
       this.setState({
@@ -469,7 +469,7 @@ class WalletPopup extends Component {
           if (responseData.status === 200) {
             // console.log("^^^", responseData);
             this.setState({
-              availableBalance: parseFloat(responseData.data).toFixed(8),
+              availableBalance: precision(parseFloat(responseData.data)),
             });
           } else {
             this.openNotificationWithIcon(
@@ -725,11 +725,6 @@ class WalletPopup extends Component {
               showDeatils: true,
             });
           } else if (responseData.status === 201) {
-            // this.openNotificationWithIcon(
-            //   "warning",
-            //   "Warning",
-            //   responseData.message
-            // );
             this.setState({
               dailyLimit: responseData.data.daily_limit_actual,
               monthlyLimit: responseData.data.monthly_limit_actual,
@@ -739,6 +734,16 @@ class WalletPopup extends Component {
               showDeatils: true,
             });
           } else if (responseData.status === 202) {
+            this.setState({
+              showDeatils: false,
+              limitExceeded: false,
+            });
+            this.openNotificationWithIcon(
+              "error",
+              this.t("validations:error_text.message"),
+              responseData.message
+            );
+          } else if (responseData.status === 203) {
             this.setState({
               dailyLimit: responseData.data.daily_limit_actual,
               monthlyLimit: responseData.data.monthly_limit_actual,
@@ -796,15 +801,18 @@ class WalletPopup extends Component {
         .then((responseData) => {
           if (responseData.status === 200) {
             // console.log(responseData);
-            let subtotal = parseFloat(
+            let subtotal = precision(
               parseFloat(this.state.sendFields.subtotal) +
                 parseFloat(responseData.data)
-            ).toFixed(8);
+            );
             fields["subtotal"] = subtotal;
+            let fiatValueamount =
+              parseFloat(subtotal) * parseFloat(this.state.singlefiatValue);
             this.setState({
               networkFee: responseData.data,
               // disabled: false,
               sendFields: fields,
+              fiatValue: fiatValueamount,
             });
             if (this.state.limitExceeded) {
               this.setState({
@@ -847,13 +855,13 @@ class WalletPopup extends Component {
     var name = e.target.name;
     fields[name] = e.target.value;
     if (e.target.value === "" || e.target.value === null) {
-      let subtotal = parseFloat(
+      let subtotal = precision(
         parseFloat(fields[name]) +
           parseFloat(fields[name]) * (this.props.coinFee / 100)
-      ).toFixed(8);
-      let fiatValueamount = parseFloat(
+      );
+      let fiatValueamount = precisionTwo(
         parseFloat(this.state.singlefiatValue) * parseFloat(subtotal)
-      ).toFixed(2);
+      );
       fields["subtotal"] = 0;
       this.setState({
         sendFields: fields,
@@ -865,21 +873,20 @@ class WalletPopup extends Component {
         showDeatils: false,
       });
     } else {
-      let subtotal = parseFloat(
+      let subtotal = precision(
         parseFloat(fields[name]) +
           parseFloat(fields[name]) * (this.props.coinFee / 100)
-      ).toFixed(8);
+      );
+
       let fiatValueamount;
       if (this.state.singlefiatValue !== 0) {
-        fiatValueamount = parseFloat(
+        fiatValueamount = precisionTwo(
           parseFloat(this.state.singlefiatValue) * parseFloat(subtotal)
-        ).toFixed(2);
+        );
       } else {
         fiatValueamount = 0;
       }
-      let faldaxFee = parseFloat(
-        e.target.value * (this.props.coinFee / 100)
-      ).toFixed(8);
+      let faldaxFee = precision(e.target.value * (this.props.coinFee / 100));
       fields["subtotal"] = subtotal;
       this.setState(
         {
@@ -1131,12 +1138,12 @@ class WalletPopup extends Component {
                           <NumberFormat
                             value={
                               this.state.fiatValue
-                                ? parseFloat(this.state.fiatValue).toFixed(2)
+                                ? precisionTwo(this.state.fiatValue)
                                 : "0"
                             }
                             displayType={"text"}
                             thousandSeparator={true}
-                            prefix="$"
+                            prefix={this.state.fiatCurrency}
                           />
                         </span>
                       </TotPay>
@@ -1163,14 +1170,12 @@ class WalletPopup extends Component {
                           ) : (
                             <NumberFormat
                               value={
-                                dailyLimit
-                                  ? parseFloat(dailyLimit).toFixed(2)
-                                  : "0"
+                                dailyLimit ? precisionTwo(dailyLimit) : "0"
                               }
                               displayType={"text"}
                               thousandSeparator={true}
-                              // prefix="$"
-                              suffix=" USD"
+                              prefix="$"
+                              // suffix=" USD"
                             />
                           )}
                         </td>
@@ -1180,9 +1185,7 @@ class WalletPopup extends Component {
                           ) : (
                             <NumberFormat
                               value={
-                                monthlyLimit
-                                  ? parseFloat(monthlyLimit).toFixed(2)
-                                  : "0"
+                                monthlyLimit ? precisionTwo(monthlyLimit) : "0"
                               }
                               displayType={"text"}
                               thousandSeparator={true}
@@ -1200,7 +1203,7 @@ class WalletPopup extends Component {
                             <NumberFormat
                               value={
                                 dailyLimitLeft
-                                  ? parseFloat(dailyLimitLeft).toFixed(2)
+                                  ? precisionTwo(dailyLimitLeft)
                                   : "0"
                               }
                               displayType={"text"}
@@ -1216,7 +1219,7 @@ class WalletPopup extends Component {
                             <NumberFormat
                               value={
                                 monthlyLimitLeft
-                                  ? parseFloat(monthlyLimitLeft).toFixed(2)
+                                  ? precisionTwo(monthlyLimitLeft)
                                   : "0"
                               }
                               displayType={"text"}
@@ -1246,7 +1249,7 @@ class WalletPopup extends Component {
                             <NumberFormat
                               value={
                                 dailyLimitAfter
-                                  ? parseFloat(dailyLimitAfter).toFixed(2)
+                                  ? precisionTwo(dailyLimitAfter)
                                   : "0"
                               }
                               displayType={"text"}
@@ -1258,7 +1261,7 @@ class WalletPopup extends Component {
                             <NumberFormat
                               value={
                                 monthlyLimitAfter
-                                  ? parseFloat(monthlyLimitAfter).toFixed(2)
+                                  ? precisionTwo(monthlyLimitAfter)
                                   : "0"
                               }
                               displayType={"text"}
@@ -1339,3 +1342,81 @@ export default translate([
   "referral",
   "tiers",
 ])(connect(mapStateToProps, mapDispatchToProps)(WalletPopup));
+function precision(x) {
+  if (Math.abs(x) < 1.0) {
+    var e = parseInt(x.toString().split("e-")[1]);
+    if (e) {
+      x *= Math.pow(10, e - 1);
+      x = "0." + new Array(e).join("0") + x.toString().substring(2);
+    }
+  } else {
+    var e = parseInt(x.toString().split("+")[1]);
+    if (e > 20) {
+      e -= 20;
+      x /= Math.pow(10, e);
+      x += new Array(e + 1).join("0");
+    }
+  }
+  if (x.toString().split(".")[1] && x.toString().split(".")[1].length > 8) {
+    {
+      x = parseFloat(x).toFixed(8);
+      if (
+        x.toString()[x.toString().length - 1] == "0" &&
+        (x.toString().split(".")[1][0] != "0" ||
+          x.toString().split(".")[1][5] != "0")
+      ) {
+        return parseFloat(x);
+      } else if (x.toString().split(".")[1][7] == "0") {
+        if (x.toString().split(".")[1][6] == "0") {
+          if (x.toString().split(".")[1][5] == "0") {
+            if (x.toString().split(".")[1][4] == "0") {
+              if (x.toString().split(".")[1][3] == "0") {
+                if (x.toString().split(".")[1][2] == "0") {
+                  if (x.toString().split(".")[1][1] == "0") {
+                    if (x.toString().split(".")[1][0] == "0") {
+                      return parseFloat(x).toFixed(0);
+                    } else return parseFloat(x).toFixed(1);
+                  } else return parseFloat(x).toFixed(2);
+                } else return parseFloat(x).toFixed(3);
+              } else return parseFloat(x).toFixed(4);
+            } else return parseFloat(x).toFixed(5);
+          } else return parseFloat(x).toFixed(6);
+        } else return parseFloat(x).toFixed(7);
+      } else return parseFloat(x).toFixed(8);
+    }
+  }
+  return x;
+}
+function precisionTwo(x) {
+  if (Math.abs(x) < 1.0) {
+    var e = parseInt(x.toString().split("e-")[1]);
+    if (e) {
+      x *= Math.pow(10, e - 1);
+      x = "0." + new Array(e).join("0") + x.toString().substring(2);
+    }
+  } else {
+    var e = parseInt(x.toString().split("+")[1]);
+    if (e > 20) {
+      e -= 20;
+      x /= Math.pow(10, e);
+      x += new Array(e + 1).join("0");
+    }
+  }
+  if (x.toString().split(".")[1] && x.toString().split(".")[1].length > 2) {
+    {
+      x = parseFloat(x).toFixed(2);
+      if (
+        x.toString()[x.toString().length - 1] == "0" &&
+        (x.toString().split(".")[1][0] != "0" ||
+          x.toString().split(".")[1][5] != "0")
+      ) {
+        return parseFloat(x);
+      } else if (x.toString().split(".")[1][1] == "0") {
+        if (x.toString().split(".")[1][0] == "0") {
+          return parseFloat(x).toFixed(0);
+        } else return parseFloat(x).toFixed(1);
+      }
+    }
+  }
+  return x;
+}
