@@ -16,7 +16,7 @@ import {
   HistoryWrap,
   TableHeader,
   TableContent,
-  ScrollTableContent
+  ScrollTableContent,
 } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
 import { OTwrap } from "./ordertrade";
 
@@ -32,16 +32,16 @@ const BorderedHistoryWrap = styled(HistoryWrap)`
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: ${props =>
-    props.theme.mode === "dark" ? "#041624" : ""};
+    background-color: ${(props) =>
+      props.theme.mode === "dark" ? "#041624" : ""};
     border-radius: 3px;
   }
   &::-webkit-scrollbar-track {
-    background: ${props => (props.theme.mode === "dark" ? "#072135" : "")};
+    background: ${(props) => (props.theme.mode === "dark" ? "#072135" : "")};
   }
 `;
 const SideType = styled.td`
-  color: ${props => (props.type === "Sell" ? "#f13239" : "#4fb153")};
+  color: ${(props) => (props.type === "Sell" ? "#f13239" : "#4fb153")};
   > &.img-display {
     margin-bottom: 3px;
   }
@@ -51,7 +51,7 @@ const NDF = styled.p`
     text-align: center; 
     font-weight: 600; 
     font-size: 17px;
-    color: ${props => (props.theme.mode === "dark" ? "white" : "black")}; 
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "black")}; 
     margin-top: 30px; 
     font-family: "Open Sans";
 }}
@@ -64,7 +64,7 @@ class HistoryTable extends Component {
       data: [],
       crypto: this.props.cryptoPair ? this.props.cryptoPair.crypto : "XRP",
       currency: this.props.cryptoPair ? this.props.cryptoPair.currency : "BTC",
-      loader: false
+      loader: false,
     };
     this.t = this.props.t;
     this.historyFunc = this.historyFunc.bind(this);
@@ -78,7 +78,7 @@ class HistoryTable extends Component {
     if (this.props.io) {
       this.props.hisFunc(true);
       this.setState({ loader: true });
-      this.props.io.on("trade-history-data", data => {
+      this.props.io.on("trade-history-data", (data) => {
         // console.log("^^^^data", data);
         this.updateData(data);
       });
@@ -176,14 +176,14 @@ class HistoryTable extends Component {
         amount: element.quantity,
         fill_price: element.fill_price,
         time: date,
-        total: element.quantity * element.fill_price
+        total: element.quantity * element.fill_price,
       });
     }
 
     this.setState(
       {
         data: rows,
-        loader: false
+        loader: false,
       },
       () => {
         this.props.hisFunc(false);
@@ -204,12 +204,12 @@ class HistoryTable extends Component {
           {element.side}
         </SideType>
         <td width="20%">
-          {element.amount !== undefined ? element.amount.toFixed(8) : ""}
+          {element.amount !== undefined ? precision(element.amount) : ""}
         </td>
         {index + 1 < me.state.data.length ? (
           element.fill_price >= me.state.data[index + 1].fill_price ? (
             <td width="20%">
-              {element.fill_price.toFixed(8)}{" "}
+              {precision(element.fill_price)}{" "}
               {this.props.theme !== true ? (
                 <img
                   alt="UP-Right"
@@ -217,36 +217,36 @@ class HistoryTable extends Component {
                   src="/images/up-right.png"
                 />
               ) : (
-                  <img
-                    alt="UP-Right"
-                    className="img-display"
-                    src="/images/up_white.png"
-                  />
-                )}
+                <img
+                  alt="UP-Right"
+                  className="img-display"
+                  src="/images/up_white.png"
+                />
+              )}
             </td>
           ) : (
-              <td width="20%">
-                {element.fill_price.toFixed(8)}{" "}
-                {this.props.theme !== true ? (
-                  <img
-                    alt="UP-Right"
-                    className="img-display"
-                    src="/images/down-right.png"
-                  />
-                ) : (
-                    <img
-                      alt="UP-Right"
-                      className="img-display"
-                      src="/images/down_white.png"
-                    />
-                  )}
-              </td>
-            )
+            <td width="20%">
+              {precision(element.fill_price)}{" "}
+              {this.props.theme !== true ? (
+                <img
+                  alt="UP-Right"
+                  className="img-display"
+                  src="/images/down-right.png"
+                />
+              ) : (
+                <img
+                  alt="UP-Right"
+                  className="img-display"
+                  src="/images/down_white.png"
+                />
+              )}
+            </td>
+          )
         ) : (
-            <td>{element.fill_price} </td>
-          )}
+          <td>{element.fill_price} </td>
+        )}
         <td width="25%">{element.time}</td>
-        <td width="25%">{element.total.toFixed(8)}</td>
+        <td width="25%">{precision(element.total)}</td>
       </tr>
     ));
   }
@@ -293,8 +293,8 @@ class HistoryTable extends Component {
                   {this.state.data.length > 0 ? (
                     this.historyFunc()
                   ) : (
-                      <NDF>{this.t("wallet:no_data_found_text.message")}</NDF>
-                    )}
+                    <NDF>{this.t("wallet:no_data_found_text.message")}</NDF>
+                  )}
                 </tbody>
               </TableContent>
             </Scrollbars>
@@ -317,7 +317,7 @@ function mapStateToProps(state) {
     profileDetails:
       state.simpleReducer.profileDetails !== undefined
         ? state.simpleReducer.profileDetails.data[0]
-        : ""
+        : "",
     /* loader:state.simpleReducer.loader?state.simpleReducer.loader:false */
   };
 }
@@ -325,3 +325,48 @@ function mapStateToProps(state) {
 export default translate(["trade", "wallet", "conversion", "history"])(
   connect(mapStateToProps)(HistoryTable)
 );
+function precision(x) {
+  if (Math.abs(x) < 1.0) {
+    var e = parseInt(x.toString().split("e-")[1]);
+    if (e) {
+      x *= Math.pow(10, e - 1);
+      x = "0." + new Array(e).join("0") + x.toString().substring(2);
+    }
+  } else {
+    var e = parseInt(x.toString().split("+")[1]);
+    if (e > 20) {
+      e -= 20;
+      x /= Math.pow(10, e);
+      x += new Array(e + 1).join("0");
+    }
+  }
+  if (x.toString().split(".")[1] && x.toString().split(".")[1].length > 8) {
+    {
+      x = parseFloat(x).toFixed(8);
+      if (
+        x.toString()[x.toString().length - 1] == "0" &&
+        (x.toString().split(".")[1][0] != "0" ||
+          x.toString().split(".")[1][5] != "0")
+      ) {
+        return parseFloat(x);
+      } else if (x.toString().split(".")[1][7] == "0") {
+        if (x.toString().split(".")[1][6] == "0") {
+          if (x.toString().split(".")[1][5] == "0") {
+            if (x.toString().split(".")[1][4] == "0") {
+              if (x.toString().split(".")[1][3] == "0") {
+                if (x.toString().split(".")[1][2] == "0") {
+                  if (x.toString().split(".")[1][1] == "0") {
+                    if (x.toString().split(".")[1][0] == "0") {
+                      return parseFloat(x).toFixed(0);
+                    } else return parseFloat(x).toFixed(1);
+                  } else return parseFloat(x).toFixed(2);
+                } else return parseFloat(x).toFixed(3);
+              } else return parseFloat(x).toFixed(4);
+            } else return parseFloat(x).toFixed(5);
+          } else return parseFloat(x).toFixed(6);
+        } else return parseFloat(x).toFixed(7);
+      } else return parseFloat(x).toFixed(8);
+    }
+  }
+  return x;
+}

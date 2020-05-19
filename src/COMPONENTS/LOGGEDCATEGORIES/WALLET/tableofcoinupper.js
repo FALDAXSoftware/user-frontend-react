@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { Menu, Dropdown, Icon } from "antd";
 import NumberFormat from "react-number-format";
-import {translate} from "react-i18next"
+import { translate } from "react-i18next";
 
 /* Styled Components */
 import { HistoryWrap } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
@@ -20,7 +20,7 @@ import {
   Bit,
   BitPrice,
   Price,
-  IconWrap
+  IconWrap,
 } from "STYLED-COMPONENTS/LOGGED_STYLE/walletStyle";
 
 /* Components */
@@ -36,12 +36,12 @@ const BorderedHistoryWrap = styled(HistoryWrap)`
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: ${props =>
+    background-color: ${(props) =>
       props.theme.mode === "dark" ? "#041624" : ""};
     border-radius: 3px;
   }
   &::-webkit-scrollbar-track {
-    background: ${props => (props.theme.mode === "dark" ? "#072135" : "")};
+    background: ${(props) => (props.theme.mode === "dark" ? "#072135" : "")};
   }
 `;
 
@@ -73,7 +73,7 @@ export const NDF = styled.td`
   text-align: center;
   font-weight: 600;
   font-size: 17px;
-  color: ${props => (props.theme.mode === "dark" ? "white" : "black")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "black")};
   padding-top: 30px;
   font-family: "Open Sans";
   padding-bottom: 30px;
@@ -90,9 +90,9 @@ class TableofCoin extends React.Component {
       drop3: "INR",
       curr1: "$",
       curr2: "\u20AC",
-      curr3: "\u20B9"
+      curr3: "\u20B9",
     };
-    this.t=this.props.t;
+    this.t = this.props.t;
   }
 
   /* Life Cycle Methods */
@@ -125,7 +125,7 @@ class TableofCoin extends React.Component {
       drop3: this.props.currencySeq[2],
       curr1: sign1,
       curr2: sign2,
-      curr3: sign3
+      curr3: sign3,
     });
   }
 
@@ -138,16 +138,16 @@ class TableofCoin extends React.Component {
     this.props.totalUSD(total);
   }
 
-  translateCurrency(currency){
-    switch(currency){
+  translateCurrency(currency) {
+    switch (currency) {
       case "INR":
-          return this.t("edit_profile_titles:currency_inr.message");
+        return this.t("edit_profile_titles:currency_inr.message");
       case "EUR":
-          return this.t("edit_profile_titles:currency_eur.message");
-        case "USD":
-          return this.t("settings:currency_usd.message");
+        return this.t("edit_profile_titles:currency_eur.message");
+      case "USD":
+        return this.t("settings:currency_usd.message");
       default:
-          return this.t("settings:currency_usd.message");
+        return this.t("settings:currency_usd.message");
     }
   }
   render() {
@@ -210,23 +210,35 @@ class TableofCoin extends React.Component {
     };
     const menu1 = (
       <Menu onClick={onClick1}>
-        <Menu.Item key="1">{this.t("edit_profile_titles:currency_inr.message")}</Menu.Item>
+        <Menu.Item key="1">
+          {this.t("edit_profile_titles:currency_inr.message")}
+        </Menu.Item>
         <Menu.Item key="2">{this.t("settings:currency_usd.message")}</Menu.Item>
-        <Menu.Item key="3">{this.t("edit_profile_titles:currency_eur.message")}</Menu.Item>
+        <Menu.Item key="3">
+          {this.t("edit_profile_titles:currency_eur.message")}
+        </Menu.Item>
       </Menu>
     );
     const menu2 = (
       <Menu onClick={onClick2}>
-        <Menu.Item key="1">{this.t("edit_profile_titles:currency_inr.message")}</Menu.Item>
+        <Menu.Item key="1">
+          {this.t("edit_profile_titles:currency_inr.message")}
+        </Menu.Item>
         <Menu.Item key="2">{this.t("settings:currency_usd.message")}</Menu.Item>
-        <Menu.Item key="3">{this.t("edit_profile_titles:currency_eur.message")}</Menu.Item>
+        <Menu.Item key="3">
+          {this.t("edit_profile_titles:currency_eur.message")}
+        </Menu.Item>
       </Menu>
     );
     const menu3 = (
       <Menu onClick={onClick3}>
-        <Menu.Item key="1">{this.t("edit_profile_titles:currency_inr.message")}</Menu.Item>
+        <Menu.Item key="1">
+          {this.t("edit_profile_titles:currency_inr.message")}
+        </Menu.Item>
         <Menu.Item key="2">{this.t("settings:currency_usd.message")}</Menu.Item>
-        <Menu.Item key="3">{this.t("edit_profile_titles:currency_eur.message")}</Menu.Item>
+        <Menu.Item key="3">
+          {this.t("edit_profile_titles:currency_eur.message")}
+        </Menu.Item>
       </Menu>
     );
     return (
@@ -249,7 +261,7 @@ class TableofCoin extends React.Component {
                   </Dropdown>
                 </SubHead>
                 <SubHead>
-                {this.translateCurrency(this.state.drop2)}
+                  {this.translateCurrency(this.state.drop2)}
                   <Dropdown overlay={menu2} trigger={["click"]}>
                     <a
                       className="ant-dropdown-link"
@@ -261,7 +273,7 @@ class TableofCoin extends React.Component {
                   </Dropdown>
                 </SubHead>
                 <SubHead>
-                {this.translateCurrency(this.state.drop3)}
+                  {this.translateCurrency(this.state.drop3)}
                   <Dropdown overlay={menu3} trigger={["click"]}>
                     <a
                       className="ant-dropdown-link"
@@ -278,7 +290,7 @@ class TableofCoin extends React.Component {
             <tbody>
               {tableData !== undefined && tableData !== null ? (
                 tableData.length > 0 ? (
-                  Object.keys(tableData).map(function(index, key) {
+                  Object.keys(tableData).map(function (index, key) {
                     var img;
                     if (
                       tableData[index].coin_icon != undefined ||
@@ -299,17 +311,21 @@ class TableofCoin extends React.Component {
                             <BitImg src={img} />
                             <BitText>
                               <Bit>{tableIndex.coin_name}</Bit>
-                              <BitPrice>
+                              <BitPrice className="ajfdhksjdfh">
                                 {
                                   <NumberFormat
-                                    value={parseFloat(
+                                    value={
                                       tableIndex.balance
-                                    ).toFixed(8)}
+                                        ? precision(
+                                            parseFloat(tableIndex.balance)
+                                          )
+                                        : "0"
+                                    }
                                     displayType={"text"}
                                     thousandSeparator={true}
+                                    suffix={`${" "}${tableIndex.coin_code}`}
                                   />
-                                }{" "}
-                                {tableIndex.coin_code}
+                                }
                               </BitPrice>
                             </BitText>
                           </Link>
@@ -327,12 +343,12 @@ class TableofCoin extends React.Component {
                                   {/* {console.log("HBDE", tableIndex.quote[`${me.state.drop1}`].price)} */}
                                   {
                                     <NumberFormat
-                                      value={parseFloat(
+                                      value={precisionTwo(
                                         parseFloat(
                                           tableIndex.quote[`${me.state.drop1}`]
                                             .price
                                         ) * parseFloat(tableIndex.balance)
-                                      ).toFixed(2)}
+                                      )}
                                       displayType={"text"}
                                       thousandSeparator={true}
                                     />
@@ -359,12 +375,12 @@ class TableofCoin extends React.Component {
                                   {/* {console.log("HBDE", tableIndex.quote[`${me.state.drop2}`].price)} */}
                                   {
                                     <NumberFormat
-                                      value={parseFloat(
+                                      value={precisionTwo(
                                         parseFloat(
                                           tableIndex.quote[`${me.state.drop2}`]
                                             .price
                                         ) * parseFloat(tableIndex.balance)
-                                      ).toFixed(2)}
+                                      )}
                                       displayType={"text"}
                                       thousandSeparator={true}
                                     />
@@ -391,12 +407,12 @@ class TableofCoin extends React.Component {
                                   <span>{me.state.curr3}</span>
                                   {
                                     <NumberFormat
-                                      value={parseFloat(
+                                      value={precisionTwo(
                                         parseFloat(
                                           tableIndex.quote[`${me.state.drop3}`]
                                             .price
                                         ) * parseFloat(tableIndex.balance)
-                                      ).toFixed(2)}
+                                      )}
                                       displayType={"text"}
                                       thousandSeparator={true}
                                     />
@@ -440,4 +456,84 @@ function mapStateToProps(state) {
   return {};
 }
 
-export default translate(['wallet','settings','edit_profile_titles'])(connect(mapStateToProps)(TableofCoin));
+export default translate(["wallet", "settings", "edit_profile_titles"])(
+  connect(mapStateToProps)(TableofCoin)
+);
+function precision(x) {
+  if (Math.abs(x) < 1.0) {
+    var e = parseInt(x.toString().split("e-")[1]);
+    if (e) {
+      x *= Math.pow(10, e - 1);
+      x = "0." + new Array(e).join("0") + x.toString().substring(2);
+    }
+  } else {
+    var e = parseInt(x.toString().split("+")[1]);
+    if (e > 20) {
+      e -= 20;
+      x /= Math.pow(10, e);
+      x += new Array(e + 1).join("0");
+    }
+  }
+  if (x.toString().split(".")[1] && x.toString().split(".")[1].length > 8) {
+    {
+      x = parseFloat(x).toFixed(8);
+      if (
+        x.toString()[x.toString().length - 1] == "0" &&
+        (x.toString().split(".")[1][0] != "0" ||
+          x.toString().split(".")[1][5] != "0")
+      ) {
+        return parseFloat(x);
+      } else if (x.toString().split(".")[1][7] == "0") {
+        if (x.toString().split(".")[1][6] == "0") {
+          if (x.toString().split(".")[1][5] == "0") {
+            if (x.toString().split(".")[1][4] == "0") {
+              if (x.toString().split(".")[1][3] == "0") {
+                if (x.toString().split(".")[1][2] == "0") {
+                  if (x.toString().split(".")[1][1] == "0") {
+                    if (x.toString().split(".")[1][0] == "0") {
+                      return parseFloat(x).toFixed(0);
+                    } else return parseFloat(x).toFixed(1);
+                  } else return parseFloat(x).toFixed(2);
+                } else return parseFloat(x).toFixed(3);
+              } else return parseFloat(x).toFixed(4);
+            } else return parseFloat(x).toFixed(5);
+          } else return parseFloat(x).toFixed(6);
+        } else return parseFloat(x).toFixed(7);
+      } else return parseFloat(x).toFixed(8);
+    }
+  }
+  return x;
+}
+function precisionTwo(x) {
+  if (Math.abs(x) < 1.0) {
+    var e = parseInt(x.toString().split("e-")[1]);
+    if (e) {
+      x *= Math.pow(10, e - 1);
+      x = "0." + new Array(e).join("0") + x.toString().substring(2);
+    }
+  } else {
+    var e = parseInt(x.toString().split("+")[1]);
+    if (e > 20) {
+      e -= 20;
+      x /= Math.pow(10, e);
+      x += new Array(e + 1).join("0");
+    }
+  }
+  if (x.toString().split(".")[1] && x.toString().split(".")[1].length > 2) {
+    {
+      x = parseFloat(x).toFixed(2);
+      if (
+        x.toString()[x.toString().length - 1] == "0" &&
+        (x.toString().split(".")[1][0] != "0" ||
+          x.toString().split(".")[1][5] != "0")
+      ) {
+        return parseFloat(x);
+      } else if (x.toString().split(".")[1][1] == "0") {
+        if (x.toString().split(".")[1][0] == "0") {
+          return parseFloat(x).toFixed(0);
+        } else return parseFloat(x).toFixed(1);
+      }
+    }
+  }
+  return x;
+}

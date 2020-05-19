@@ -17,7 +17,7 @@ export const globalVariables = {
 
   // API_URL: "http://e8789287.ngrok.io",
 
-  // API_URL: "http://7b2d9029.ngrok.io",
+  // API_URL: "http://00c912ac.ngrok.io",
 
   // API_URL: "http://192.168.1.96:1337", //Jagdish's URL
 

@@ -304,7 +304,7 @@ class Referral extends Component {
             let fiatAmt =
               parseFloat(temp.amount) * parseFloat(temp.quote[`${fiat}`].price);
             //Sum of all fiatAmt.
-            sum = sum + parseFloat(fiatAmt.toFixed(4));
+            sum = sum + precision(fiatAmt);
             //Object Taken for fields for dropdown
             let obj = {
               coin_name: temp.coin_name,
@@ -333,15 +333,15 @@ class Referral extends Component {
           responseData.leftReferredData.map(function (temp) {
             let fiatAmt =
               parseFloat(temp.amount) * parseFloat(temp.quote[`${fiat}`].price);
-            fiatAmt = parseFloat(fiatAmt).toFixed(8);
+            fiatAmt = precision(fiatAmt);
             sum2 = parseFloat(sum2) + parseFloat(fiatAmt);
-            sum2 = parseFloat(sum2.toFixed(8));
+            sum2 = precision(sum2);
           });
           this.setState({
             referredData: responseData.data,
             referredCoin: fields,
-            totalEarned: sum.toFixed(8),
-            leftOutRef: sum2.toFixed(8),
+            totalEarned: precision(sum),
+            leftOutRef: precision(sum2),
             loader: false,
           });
         } else if (responseData.status == 403) {
@@ -554,7 +554,7 @@ class Referral extends Component {
                     {this.state.perCoinEarned !== "" ? (
                       <span className="amtSpan">
                         {" "}
-                        {this.state.perCoinEarned.toFixed(8)}{" "}
+                        {precision(this.state.perCoinEarned)}{" "}
                         {this.state.coinSelected}
                       </span>
                     ) : (
@@ -622,3 +622,48 @@ export default translate([
   "settings",
   "general_1",
 ])(connect(mapStateToProps, mapDispatchToProps)(Referral));
+function precision(x) {
+  if (Math.abs(x) < 1.0) {
+    var e = parseInt(x.toString().split("e-")[1]);
+    if (e) {
+      x *= Math.pow(10, e - 1);
+      x = "0." + new Array(e).join("0") + x.toString().substring(2);
+    }
+  } else {
+    var e = parseInt(x.toString().split("+")[1]);
+    if (e > 20) {
+      e -= 20;
+      x /= Math.pow(10, e);
+      x += new Array(e + 1).join("0");
+    }
+  }
+  if (x.toString().split(".")[1] && x.toString().split(".")[1].length > 8) {
+    {
+      x = parseFloat(x).toFixed(8);
+      if (
+        x.toString()[x.toString().length - 1] == "0" &&
+        (x.toString().split(".")[1][0] != "0" ||
+          x.toString().split(".")[1][5] != "0")
+      ) {
+        return parseFloat(x);
+      } else if (x.toString().split(".")[1][7] == "0") {
+        if (x.toString().split(".")[1][6] == "0") {
+          if (x.toString().split(".")[1][5] == "0") {
+            if (x.toString().split(".")[1][4] == "0") {
+              if (x.toString().split(".")[1][3] == "0") {
+                if (x.toString().split(".")[1][2] == "0") {
+                  if (x.toString().split(".")[1][1] == "0") {
+                    if (x.toString().split(".")[1][0] == "0") {
+                      return parseFloat(x).toFixed(0);
+                    } else return parseFloat(x).toFixed(1);
+                  } else return parseFloat(x).toFixed(2);
+                } else return parseFloat(x).toFixed(3);
+              } else return parseFloat(x).toFixed(4);
+            } else return parseFloat(x).toFixed(5);
+          } else return parseFloat(x).toFixed(6);
+        } else return parseFloat(x).toFixed(7);
+      } else return parseFloat(x).toFixed(8);
+    }
+  }
+  return x;
+}

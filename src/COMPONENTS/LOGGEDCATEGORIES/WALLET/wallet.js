@@ -13,7 +13,7 @@ import CommonFooter from "COMPONENTS/LANDING/FOOTERS/footer_home";
 import { Container } from "STYLED-COMPONENTS/HOMEPAGE/style";
 import {
   ContactWrap,
-  GreyWrap
+  GreyWrap,
 } from "STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle";
 import {
   HeaderWrap,
@@ -25,7 +25,7 @@ import {
   Currency,
   CoinTable,
   SearchCoin2,
-  HeaderWrap2
+  HeaderWrap2,
 } from "STYLED-COMPONENTS/LOGGED_STYLE/walletStyle";
 /* import { globalVariables } from 'Globals.js'; */
 
@@ -38,7 +38,7 @@ import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
 const Search = Input.Search;
 
 const ContainerContact = styled(Container)`
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#041422" : "white"};
   border-radius: 5px;
   padding-right: 30px;
@@ -73,7 +73,7 @@ const ContainerContact = styled(Container)`
   }
 `;
 const ContainerContact2 = styled(ContainerContact)`
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#041422" : "white"};
   border-radius: 5px;
   padding-right: 30px;
@@ -90,14 +90,14 @@ const Inputsearch = styled(Search)`
     height: 40px;
     >input
     {
-        background-color:${props =>
+        background-color:${(props) =>
           props.theme.mode === "dark" ? "#020e18" : ""};
-        color:${props => (props.theme.mode === "dark" ? "white" : "")}
-        caret-color:${props => (props.theme.mode === "dark" ? "white" : "")}
+        color:${(props) => (props.theme.mode === "dark" ? "white" : "")}
+        caret-color:${(props) => (props.theme.mode === "dark" ? "white" : "")}
     }
     >span>i
     {
-        color:${props => (props.theme.mode === "dark" ? "white" : "")};
+        color:${(props) => (props.theme.mode === "dark" ? "white" : "")};
     }
 `;
 const TableWrap = styled.div`
@@ -120,7 +120,7 @@ class Wallet extends Component {
       searchedERCTokens: null,
       searchedDeactivatedWallet: null,
       searchedWallet: null,
-      currencySeq: ["USD", "EUR", "INR"]
+      currencySeq: ["USD", "EUR", "INR"],
     };
     this.t = this.props.t;
     this.searchChangeCoins = this.searchChangeCoins.bind(this);
@@ -156,7 +156,7 @@ class Wallet extends Component {
     var coll = document.getElementsByClassName("collapsible");
     var i;
     for (i = 0; i < coll.length; i++) {
-      coll[i].addEventListener("click", function() {
+      coll[i].addEventListener("click", function () {
         this.classList.toggle("active");
         var content = this.nextElementSibling;
         if (content.style.display === "block") {
@@ -222,7 +222,7 @@ class Wallet extends Component {
         var tableData = newProps.walletDetails.activated_asset_lists;
         var FIAT = newProps.profileDetails.fiat;
         if (tableData !== undefined) {
-          tableData.map(function(index, key) {
+          tableData.map(function (index, key) {
             // console.log(index.quote);
             if (index.quote !== null)
               if (
@@ -251,7 +251,7 @@ class Wallet extends Component {
     if (search !== "") {
       if (search.trim() !== "" && field == "active_wallet") {
         var searchedWallet = this.props.walletDetails.activated_asset_lists.filter(
-          function(temp) {
+          function (temp) {
             if (
               temp.coin.toLowerCase().includes(search.toLowerCase()) ||
               temp.coin_name.toLowerCase().includes(search.toLowerCase()) ||
@@ -266,7 +266,7 @@ class Wallet extends Component {
         this.setState({ searchedWallet });
       } else if (search.trim() !== "" && field == "deactive_wallet") {
         var searchedDeactivatedWallet = this.props.walletDetails.deactivated_asset_lists.filter(
-          function(temp) {
+          function (temp) {
             if (
               temp.coin.toLowerCase().includes(search.toLowerCase()) ||
               temp.coin_name.toLowerCase().includes(search.toLowerCase()) ||
@@ -297,7 +297,7 @@ class Wallet extends Component {
     if (search !== "") {
       if (search.trim() !== "" && field == "all_assets") {
         var searchedCoins = this.props.nowalletBalance.all_assets_lists.filter(
-          function(temp) {
+          function (temp) {
             if (
               temp.coin.toLowerCase().includes(search.toLowerCase()) ||
               temp.coin_name.toLowerCase().includes(search.toLowerCase()) ||
@@ -312,7 +312,7 @@ class Wallet extends Component {
         this.setState({ searchedCoins });
       } else if (search.trim() !== "" && field == "all_erc_tokens") {
         var searchedERCTokens = this.props.nowalletBalance.all_erctoken_lists.filter(
-          function(temp) {
+          function (temp) {
             if (
               temp.coin.toLowerCase().includes(search.toLowerCase()) ||
               temp.coin_name.toLowerCase().includes(search.toLowerCase()) ||
@@ -372,7 +372,7 @@ class Wallet extends Component {
                         " " +
                         this.t("coins_text_subhead.message")
                       }
-                      onChange={value =>
+                      onChange={(value) =>
                         this.searchChangeWallet(value, "active_wallet")
                       }
                       className=""
@@ -391,7 +391,7 @@ class Wallet extends Component {
                         : "$"}
                       {this.state.total !== null ? (
                         <NumberFormat
-                          value={parseFloat(this.state.total).toFixed(2)}
+                          value={precisionTwo(this.state.total)}
                           displayType={"text"}
                           thousandSeparator={true}
                         />
@@ -447,7 +447,7 @@ class Wallet extends Component {
                       placeholder={this.t(
                         "general_2:wallet_search_tokens.message"
                       )}
-                      onChange={value =>
+                      onChange={(value) =>
                         this.searchChangeCoins(value, "all_assets")
                       }
                       className=""
@@ -499,7 +499,7 @@ class Wallet extends Component {
                       placeholder={this.t(
                         "general_2:wallet_search_tokens.message"
                       )}
-                      onChange={value =>
+                      onChange={(value) =>
                         this.searchChangeCoins(value, "all_erc_tokens")
                       }
                       className=""
@@ -548,7 +548,7 @@ class Wallet extends Component {
                       placeholder={this.t(
                         "general_2:wallet_search_coin.message"
                       )}
-                      onChange={value =>
+                      onChange={(value) =>
                         this.searchChangeWallet(value, "deactive_wallet")
                       }
                       className=""
@@ -610,14 +610,14 @@ function mapStateToProps(state) {
     profileDetails:
       state.simpleReducer.profileDetails !== undefined
         ? state.simpleReducer.profileDetails.data[0]
-        : ""
+        : "",
   };
 }
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   walletBal: (isLoggedIn, currency) =>
     dispatch(walletBal(isLoggedIn, currency)),
   getAllCoins: (isLoggedIn, currency) =>
-    dispatch(getAllCoins(isLoggedIn, currency))
+    dispatch(getAllCoins(isLoggedIn, currency)),
 });
 export default translate([
   "wallet",
@@ -625,5 +625,38 @@ export default translate([
   "conversion",
   "general_2",
   "setting",
-  "edit_profile_titles"
+  "edit_profile_titles",
 ])(connect(mapStateToProps, mapDispatchToProps)(Wallet));
+function precisionTwo(x) {
+  if (Math.abs(x) < 1.0) {
+    var e = parseInt(x.toString().split("e-")[1]);
+    if (e) {
+      x *= Math.pow(10, e - 1);
+      x = "0." + new Array(e).join("0") + x.toString().substring(2);
+    }
+  } else {
+    var e = parseInt(x.toString().split("+")[1]);
+    if (e > 20) {
+      e -= 20;
+      x /= Math.pow(10, e);
+      x += new Array(e + 1).join("0");
+    }
+  }
+  if (x.toString().split(".")[1] && x.toString().split(".")[1].length > 2) {
+    {
+      x = parseFloat(x).toFixed(2);
+      if (
+        x.toString()[x.toString().length - 1] == "0" &&
+        (x.toString().split(".")[1][0] != "0" ||
+          x.toString().split(".")[1][5] != "0")
+      ) {
+        return parseFloat(x);
+      } else if (x.toString().split(".")[1][1] == "0") {
+        if (x.toString().split(".")[1][0] == "0") {
+          return parseFloat(x).toFixed(0);
+        } else return parseFloat(x).toFixed(1);
+      }
+    }
+  }
+  return x;
+}
