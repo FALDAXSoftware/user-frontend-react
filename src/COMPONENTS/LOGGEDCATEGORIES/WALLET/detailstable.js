@@ -10,17 +10,18 @@ import { Scrollbars } from "react-custom-scrollbars";
 import {
   TableHeader,
   TableContent,
-  ScrollTableContent
+  ScrollTableContent,
 } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
 import {
   Head,
   SubHead,
-  Col1
+  Col1,
 } from "STYLED-COMPONENTS/LOGGED_STYLE/walletStyle";
 
 const TableContentRide = styled(TableContent)`
   > tbody > tr:nth-of-type(even) {
-    background-color: ${props => (props.theme.mode === "dark" ? "" : "white")};
+    background-color: ${(props) =>
+      props.theme.mode === "dark" ? "" : "white"};
   }
   > tbody > tr > td {
     border-top: 1px solid #ddd;
@@ -51,12 +52,12 @@ export const OrderWrap = styled.div`
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: ${props =>
+    background-color: ${(props) =>
       props.theme.mode === "dark" ? "#041624" : ""};
     border-radius: 3px;
   }
   &::-webkit-scrollbar-track {
-    background: ${props => (props.theme.mode === "dark" ? "#072135" : "")};
+    background: ${(props) => (props.theme.mode === "dark" ? "#072135" : "")};
   }
 `;
 const OrderWrapRide = styled(OrderWrap)`
@@ -71,7 +72,7 @@ const NDF = styled.td`
   text-align: center;
   font-weight: 600;
   font-size: 17px;
-  color: ${props => (props.theme.mode === "dark" ? "white" : "black")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "black")};
 
   font-family: Open Sans;
 `;
@@ -87,7 +88,7 @@ class DetailsTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      walletDetails: []
+      walletDetails: [],
     };
     this.t = this.props.t;
   }
@@ -97,7 +98,7 @@ class DetailsTable extends React.Component {
     if (props.wallet !== undefined && props.wallet !== null) {
       if (props.wallet.length > 0)
         this.setState({
-          walletDetails: props.wallet
+          walletDetails: props.wallet,
         });
     }
   }
@@ -105,7 +106,7 @@ class DetailsTable extends React.Component {
     if (this.props.wallet !== null)
       if (this.props.wallet.length > 0)
         this.setState({
-          walletDetails: this.props.wallet
+          walletDetails: this.props.wallet,
         });
   }
 
@@ -173,7 +174,7 @@ class DetailsTable extends React.Component {
                 <tbody>
                   {this.state.walletDetails !== null ? (
                     Object.keys(this.state.walletDetails).length > 0 ? (
-                      Object.keys(this.state.walletDetails).map(function(
+                      Object.keys(this.state.walletDetails).map(function (
                         index,
                         key
                       ) {
@@ -253,30 +254,22 @@ class DetailsTable extends React.Component {
                             </td>
                             <td>{details[index].source_address}</td>
                             <td>{details[index].destination_address}</td>
-                            <td>
-                              {parseFloat(details[index].amount).toFixed(8)}
-                            </td>
+                            <td>{precision(details[index].amount)}</td>
                             <td>
                               {details[index].faldax_fee === "-"
                                 ? details[index].faldax_fee
-                                : parseFloat(details[index].faldax_fee).toFixed(
-                                    8
-                                  )}
+                                : precision(details[index].faldax_fee)}
                               {/* {parseFloat(details[index].faldax_fee).toFixed(8)} */}
                             </td>
                             <td>
                               {details[index].network_fees === "-"
                                 ? details[index].network_fees
-                                : parseFloat(
-                                    details[index].network_fees
-                                  ).toFixed(8)}
+                                : precision(details[index].network_fees)}
                               {/* {parseFloat(details[index].network_fees).toFixed(
                                 8
                               )} */}
                             </td>
-                            <td>
-                              {parseFloat(details[index].total).toFixed(8)}
-                            </td>
+                            <td>{precision(details[index].total)}</td>
                             <td>
                               {me.props.coin_code === "xrp" ? (
                                 details[index].transaction_id ? (
@@ -321,13 +314,13 @@ class DetailsTable extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     ...state,
     profileDetails:
       state.simpleReducer.profileDetails !== undefined
         ? state.simpleReducer.profileDetails.data[0]
-        : ""
+        : "",
   };
 };
 
@@ -336,5 +329,50 @@ export default translate([
   "settings",
   "wallet",
   "conversion",
-  "footer"
+  "footer",
 ])(connect(mapStateToProps)(DetailsTable));
+function precision(x) {
+  if (Math.abs(x) < 1.0) {
+    var e = parseInt(x.toString().split("e-")[1]);
+    if (e) {
+      x *= Math.pow(10, e - 1);
+      x = "0." + new Array(e).join("0") + x.toString().substring(2);
+    }
+  } else {
+    var e = parseInt(x.toString().split("+")[1]);
+    if (e > 20) {
+      e -= 20;
+      x /= Math.pow(10, e);
+      x += new Array(e + 1).join("0");
+    }
+  }
+  if (x.toString().split(".")[1] && x.toString().split(".")[1].length > 8) {
+    {
+      x = parseFloat(x).toFixed(8);
+      if (
+        x.toString()[x.toString().length - 1] == "0" &&
+        (x.toString().split(".")[1][0] != "0" ||
+          x.toString().split(".")[1][5] != "0")
+      ) {
+        return parseFloat(x);
+      } else if (x.toString().split(".")[1][7] == "0") {
+        if (x.toString().split(".")[1][6] == "0") {
+          if (x.toString().split(".")[1][5] == "0") {
+            if (x.toString().split(".")[1][4] == "0") {
+              if (x.toString().split(".")[1][3] == "0") {
+                if (x.toString().split(".")[1][2] == "0") {
+                  if (x.toString().split(".")[1][1] == "0") {
+                    if (x.toString().split(".")[1][0] == "0") {
+                      return parseFloat(x).toFixed(0);
+                    } else return parseFloat(x).toFixed(1);
+                  } else return parseFloat(x).toFixed(2);
+                } else return parseFloat(x).toFixed(3);
+              } else return parseFloat(x).toFixed(4);
+            } else return parseFloat(x).toFixed(5);
+          } else return parseFloat(x).toFixed(6);
+        } else return parseFloat(x).toFixed(7);
+      } else return parseFloat(x).toFixed(8);
+    }
+  }
+  return x;
+}

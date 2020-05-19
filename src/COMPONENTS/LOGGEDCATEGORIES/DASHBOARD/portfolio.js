@@ -49,9 +49,9 @@ class Portfolio extends Component {
           responseData.data.portfolioData.map((element) => {
             portfolioData.push({
               coin: element.name,
-              amount: element.Amount.toFixed(3) + " " + element.symbol,
-              value: element.average_price.toFixed(5) + " " + userFiat,
-              change: element.percentchange.toFixed(5) + "%",
+              amount: precision(element.Amount) + " " + element.symbol,
+              value: precision(element.average_price) + " " + userFiat,
+              change: precisionTwo(element.percentchange) + "%",
             });
           });
           self.setState({
@@ -102,7 +102,7 @@ class Portfolio extends Component {
         </Topic>
         <HighLow>
           <LeftHl>
-            {this.state.total.toFixed(8)} {userFiat}
+            {precision(this.state.total)} {userFiat}
           </LeftHl>
           <RightHl
             className={
@@ -114,7 +114,7 @@ class Portfolio extends Component {
             ) : (
               <Icon type="arrow-up" />
             )}
-            {this.state.diffrence.toFixed(8)} {userFiat}
+            {precision(this.state.diffrence)} {userFiat}
           </RightHl>
         </HighLow>
         <ActDiv>
@@ -155,3 +155,81 @@ function mapStateToProps(state) {
 export default translate(["tier_changes", "wallet", "trade", "settings"])(
   connect(mapStateToProps)(Portfolio)
 );
+function precision(x) {
+  if (Math.abs(x) < 1.0) {
+    var e = parseInt(x.toString().split("e-")[1]);
+    if (e) {
+      x *= Math.pow(10, e - 1);
+      x = "0." + new Array(e).join("0") + x.toString().substring(2);
+    }
+  } else {
+    var e = parseInt(x.toString().split("+")[1]);
+    if (e > 20) {
+      e -= 20;
+      x /= Math.pow(10, e);
+      x += new Array(e + 1).join("0");
+    }
+  }
+  if (x.toString().split(".")[1] && x.toString().split(".")[1].length > 8) {
+    {
+      x = parseFloat(x).toFixed(8);
+      if (
+        x.toString()[x.toString().length - 1] == "0" &&
+        (x.toString().split(".")[1][0] != "0" ||
+          x.toString().split(".")[1][5] != "0")
+      ) {
+        return parseFloat(x);
+      } else if (x.toString().split(".")[1][7] == "0") {
+        if (x.toString().split(".")[1][6] == "0") {
+          if (x.toString().split(".")[1][5] == "0") {
+            if (x.toString().split(".")[1][4] == "0") {
+              if (x.toString().split(".")[1][3] == "0") {
+                if (x.toString().split(".")[1][2] == "0") {
+                  if (x.toString().split(".")[1][1] == "0") {
+                    if (x.toString().split(".")[1][0] == "0") {
+                      return parseFloat(x).toFixed(0);
+                    } else return parseFloat(x).toFixed(1);
+                  } else return parseFloat(x).toFixed(2);
+                } else return parseFloat(x).toFixed(3);
+              } else return parseFloat(x).toFixed(4);
+            } else return parseFloat(x).toFixed(5);
+          } else return parseFloat(x).toFixed(6);
+        } else return parseFloat(x).toFixed(7);
+      } else return parseFloat(x).toFixed(8);
+    }
+  }
+  return x;
+}
+function precisionTwo(x) {
+  if (Math.abs(x) < 1.0) {
+    var e = parseInt(x.toString().split("e-")[1]);
+    if (e) {
+      x *= Math.pow(10, e - 1);
+      x = "0." + new Array(e).join("0") + x.toString().substring(2);
+    }
+  } else {
+    var e = parseInt(x.toString().split("+")[1]);
+    if (e > 20) {
+      e -= 20;
+      x /= Math.pow(10, e);
+      x += new Array(e + 1).join("0");
+    }
+  }
+  if (x.toString().split(".")[1] && x.toString().split(".")[1].length > 2) {
+    {
+      x = parseFloat(x).toFixed(2);
+      if (
+        x.toString()[x.toString().length - 1] == "0" &&
+        (x.toString().split(".")[1][0] != "0" ||
+          x.toString().split(".")[1][5] != "0")
+      ) {
+        return parseFloat(x);
+      } else if (x.toString().split(".")[1][1] == "0") {
+        if (x.toString().split(".")[1][0] == "0") {
+          return parseFloat(x).toFixed(0);
+        } else return parseFloat(x).toFixed(1);
+      }
+    }
+  }
+  return x;
+}
