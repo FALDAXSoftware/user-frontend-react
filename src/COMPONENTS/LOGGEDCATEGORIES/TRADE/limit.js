@@ -151,7 +151,7 @@ class Limit extends Component {
         },
       },
       decimalrestrict8: {
-        message: this.t("8_decimal_error.message"),
+        message: this.t("validations:8_decimal_error.message"),
         rule: (val) => {
           var RE = /^\d*\.?\d{0,8}$/;
           if (RE.test(val)) {
@@ -753,7 +753,7 @@ class Limit extends Component {
             {this.validator.message(
               "Limit_price",
               this.state.limit_price,
-              "required|gtzero|numeric|decimalrestrict8",
+              "required|gtzero|decimalrestrict8",
               "trade-action-validation",
               {
                 required: `${this.t("limit_price_text.message")}${" "}${this.t(
@@ -767,7 +767,7 @@ class Limit extends Component {
                 )}`,
                 decimalrestrict8: `${this.t(
                   "limit_price_text.message"
-                )}${" "}${this.t("8_decimal_error.message")}`,
+                )}${" "}${this.t("validations:8_decimal_error.message")}`,
               }
             )}
           </TotalWrap>

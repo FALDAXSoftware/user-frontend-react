@@ -154,7 +154,7 @@ class StopLimit extends Component {
         },
       },
       decimalrestrict8: {
-        message: this.t("8_decimal_error.message"),
+        message: this.t("validations:8_decimal_error.message"),
         rule: (val) => {
           var RE = /^\d*\.?\d{0,8}$/;
           if (RE.test(val)) {
@@ -732,7 +732,7 @@ class StopLimit extends Component {
               step="0.001"
               addonAfter={this.state.crypto}
               placeholder="0"
-              value={precision(this.state.amount)}
+              value={this.state.amount}
               name="amount"
               onChange={this.onChange}
             />
@@ -778,7 +778,7 @@ class StopLimit extends Component {
               {this.validator.message(
                 "stop_price",
                 this.state.stop_price,
-                "required|gtzero|numeric|decimalrestrict8",
+                "required|gtzero|decimalrestrict8",
                 "trade-action-validation",
                 {
                   required: `${this.t("stop_price_text.message")}${" "}${this.t(
@@ -792,7 +792,7 @@ class StopLimit extends Component {
                   )}`,
                   decimalrestrict8: `${this.t(
                     "stop_price_text.message"
-                  )}${" "}${this.t("8_decimal_error.message")}`,
+                  )}${" "}${this.t("validations:8_decimal_error.message")}`,
                 }
               )}
             </TotalWrap>
@@ -813,7 +813,7 @@ class StopLimit extends Component {
               {this.validator.message(
                 "Limit_Price",
                 this.state.limit_price,
-                "required|gtzero|numeric|decimalrestrict8",
+                "required|gtzero|decimalrestrict8",
                 "trade-action-validation",
                 {
                   required: `${this.t(
@@ -827,7 +827,7 @@ class StopLimit extends Component {
                   )}`,
                   decimalrestrict8: `${this.t(
                     "limit_price_text.message"
-                  )}${" "}${this.t("8_decimal_error.message")}`,
+                  )}${" "}${this.t("validations:8_decimal_error.message")}`,
                 }
               )}
             </TotalWrap>
