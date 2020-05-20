@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import SimpleReactValidator from "simple-react-validator";
 import "antd/dist/antd.css";
-import { Row, Col, Radio, notification, Spin } from "antd";
+import { Row, Col, Radio, notification, Spin, Icon } from "antd";
 import { translate } from "react-i18next";
 
 /* Components */
@@ -33,6 +33,7 @@ import {
   ButtonWrap,
   ButtonETH,
   FlexWrapDiv,
+  TriggerDiv,
 } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
 import {
   Approx,
@@ -113,6 +114,8 @@ class StopLimit extends Component {
       fiatCryptoValue: "",
       fiatCurrencyValue: 0,
       fiatCurrency: "",
+      latestFillPrice: "",
+      disabledBtn: false,
     };
     this.t = this.props.t;
     this.onChange = this.onChange.bind(this);
@@ -171,6 +174,52 @@ class StopLimit extends Component {
 
   componentDidMount() {
     let fiat, currency;
+    if (this.props.io) {
+      this.props.io.on("trade-history-data", (data) => {
+        console.log("trade-history-data^^^^data", data[0].fill_price);
+        this.setState(
+          {
+            disabledBtn: false,
+            latestFillPrice: data[0].fill_price,
+          },
+          () => {
+            if (this.state.stop_price > 0) {
+              if (this.state.side === "Buy") {
+                if (
+                  parseFloat(this.state.stop_price) >
+                  parseFloat(this.state.latestFillPrice)
+                ) {
+                  this.setState({
+                    disabledBtn: false,
+                  });
+                } else {
+                  this.setState({
+                    disabledBtn: true,
+                  });
+                }
+              } else {
+                if (
+                  parseFloat(this.state.stop_price) <
+                  parseFloat(this.state.latestFillPrice)
+                ) {
+                  this.setState({
+                    disabledBtn: false,
+                  });
+                } else {
+                  this.setState({
+                    disabledBtn: true,
+                  });
+                }
+              }
+            } else {
+              this.setState({
+                disabledBtn: false,
+              });
+            }
+          }
+        );
+      });
+    }
     if (this.props.profileDetails) {
       switch (this.props.profileDetails.fiat) {
         case "USD":
@@ -277,6 +326,35 @@ class StopLimit extends Component {
       },
       () => {
         obj = {};
+        if (this.state.stop_price > 0) {
+          if (this.state.side === "Buy") {
+            if (
+              parseFloat(this.state.stop_price) >
+              parseFloat(this.state.latestFillPrice)
+            ) {
+              this.setState({
+                disabledBtn: false,
+              });
+            } else {
+              this.setState({
+                disabledBtn: true,
+              });
+            }
+          } else {
+            if (
+              parseFloat(this.state.stop_price) <
+              parseFloat(this.state.latestFillPrice)
+            ) {
+              this.setState({
+                disabledBtn: false,
+              });
+            } else {
+              this.setState({
+                disabledBtn: true,
+              });
+            }
+          }
+        }
         if (this.state.amount >= 0 && this.state.stop_price > 0) {
           if (this.state.side === "Buy") {
             if (this.validator.allValid()) {
@@ -728,17 +806,6 @@ class StopLimit extends Component {
               name="amount"
               onChange={this.onChange}
             />
-            {/* {this.validator.message(
-              "amount",
-              this.state.amount,
-              "required|gtzero|numeric|decimalrestrict3",
-              "trade-action-validation",
-              {
-                gtzero: "Amount should be greater than zero.",
-                decimalrestrict3:
-                  "Amount must be less than or equal to 5 digits after decimal point."
-              }
-            )} */}
             {this.validator.message(
               "amount",
               this.state.amount,
@@ -788,6 +855,21 @@ class StopLimit extends Component {
                 }
               )}
             </TotalWrap>
+            {this.state.side === "Buy" && this.state.latestFillPrice ? (
+              <TriggerDiv>
+                <span>
+                  Trigger <Icon type="right" />{" "}
+                </span>
+                <span>{precision(this.state.latestFillPrice)}</span>
+              </TriggerDiv>
+            ) : (
+              <TriggerDiv>
+                <span>
+                  Trigger <Icon type="left" />{" "}
+                </span>
+                <span>{precision(this.state.latestFillPrice)}</span>
+              </TriggerDiv>
+            )}
           </BTCWrap>
           <BTCWrap className="width_class">
             <Label>{this.t("limit_price_text.message")}</Label>
@@ -936,7 +1018,25 @@ class StopLimit extends Component {
           ""
         )}
         <ButtonWrap>
-          <ButtonETH side={this.state.side} onClick={this.onSubmit}>
+          {/* <div>Last order Fill price: {this.state.latestFillPrice}</div>
+          <div>Stop price: {this.state.stop_price}</div> */}
+          <ButtonETH
+            // disabled={
+            //   parseFloat(this.state.stop_price) ===
+            //   parseFloat(this.state.latestFillPrice)
+            //     ? true
+            //     : false
+            // }
+            // disabled={
+            //   parseFloat(this.state.stop_price) >
+            //   parseFloat(this.state.latestFillPrice)
+            //     ? false
+            //     : true
+            // }
+            disabled={this.state.disabledBtn}
+            side={this.state.side}
+            onClick={this.onSubmit}
+          >
             {`${this.state.side.toUpperCase()} ${" "} ${this.state.crypto}`}
           </ButtonETH>
         </ButtonWrap>
