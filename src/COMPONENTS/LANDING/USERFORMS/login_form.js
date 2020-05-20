@@ -658,19 +658,20 @@ class Login_Form extends Component {
     if (props.errorStatus) {
       if (props.errorStatus.status == 200) {
         this.props.i18n.changeLanguage(props.errorStatus.user.default_language);
-        this.openNotificationWithIcon(
-          "success",
-          this.t("validations:success_text.message"),
-          props.errorStatus.message
-        );
         // console.log("thisd^^^", props.errorStatus.user.is_kyc_done);
         if (this.state.verify == true) {
+          // this.openNotificationWithIcon(
+          //   "success",
+          //   this.t("validations:success_text.message"),
+          //   props.errorStatus.message
+          // );
+          this.setState({ loader: false, verify: true });
+        } else {
           this.openNotificationWithIcon(
             "success",
-            this.t("login_page:login_successful_text.message"),
+            this.t("validations:success_text.message"),
             props.errorStatus.message
           );
-          this.setState({ loader: false, verify: true });
         }
       } else if (props.errorStatus.status == 201) {
         this.setState(
@@ -721,9 +722,10 @@ class Login_Form extends Component {
       .then((responseData) => {
         this.setState({ loader: false });
         if (responseData.status === 200) {
-          responseData.message = "";
-          this.props.loginAction(responseData);
-          this.setState({ verify: true });
+          // responseData.message = "";
+          this.setState({ verify: true }, () => {
+            this.props.loginAction(responseData);
+          });
           this.openNotificationWithIcon(
             "success",
             this.t("login_page:verified_text.message"),

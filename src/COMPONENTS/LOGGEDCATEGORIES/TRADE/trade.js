@@ -305,6 +305,7 @@ class Trade extends Component {
       layouts: JSON.parse(JSON.stringify(originalLayouts)),
       MLS: "",
       loader: false,
+      butonEnable: false,
     };
     io = this.props.io;
     this.t = this.props.t;
@@ -659,6 +660,9 @@ class Trade extends Component {
   //
 
   cancelOrder(id, side, type) {
+    this.setState({
+      orderTradeLoader: true,
+    });
     console.log(id, side, type);
     fetch(SOCKET_HOST + `/api/v1/tradding/cancel-pending-order`, {
       method: "post",
@@ -688,6 +692,10 @@ class Trade extends Component {
             this.t("validations:error_text.message"),
             responseData.err
           );
+        this.setState({
+          butonEnable: true,
+          orderTradeLoader: false,
+        });
       })
       .catch((error) => {});
   }
@@ -1730,6 +1738,7 @@ class Trade extends Component {
                         }}
                         orderTradeData={this.state.orderTradeData}
                         height={self.state.myOrderTableHeight}
+                        butonEnable={this.state.butonEnable}
                       />
                     </LeftDiv2>
                   </div>
