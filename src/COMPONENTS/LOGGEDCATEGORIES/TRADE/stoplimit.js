@@ -552,11 +552,9 @@ class StopLimit extends Component {
                       <Balance>
                         {this.props.userBal.currency
                           ? this.props.userBal.currency.placed_balance
-                            ? `${parseFloat(
-                                this.props.userBal.currency.placed_balance.toFixed(
-                                  8
-                                )
-                              ).toString()}${" "}`
+                            ? `${precision(
+                                this.props.userBal.currency.placed_balance
+                              )}${" "}`
                             : `0${" "}`
                           : `0${" "}`}
                         {this.state.currency}
@@ -575,9 +573,9 @@ class StopLimit extends Component {
                       <Balance>
                         {this.props.userBal
                           ? this.props.userBal.currency.length > 0
-                            ? `${parseFloat(
-                                this.props.userBal.currency.balance.toFixed(8)
-                              ).toString()}${" "}`
+                            ? `${precision(
+                                this.props.userBal.currency.balance
+                              )}${" "}`
                             : `0${" "}`
                           : `0${" "}`}
                         {this.state.currency}
@@ -596,12 +594,12 @@ class StopLimit extends Component {
                       <Balance>
                         {this.props.userBal.currency
                           ? this.props.userBal.currency.balance
-                            ? `${parseFloat(
+                            ? `${precision(
                                 Math.abs(
                                   this.props.userBal.currency.balance -
                                     this.props.userBal.currency.placed_balance
-                                ).toFixed(8)
-                              ).toString()}${" "}`
+                                )
+                              )}${" "}`
                             : `0${" "}`
                           : `0${" "}`}
 
@@ -620,9 +618,7 @@ class StopLimit extends Component {
                     </Col>
                     <Col span={24}>
                       <Balance>
-                        {parseFloat(
-                          this.props.userBal.buyPay.toFixed(8)
-                        ).toString()}{" "}
+                        {precision(this.props.userBal.buyPay)}{" "}
                         {this.state.currency}
                       </Balance>
                     </Col>
@@ -642,11 +638,9 @@ class StopLimit extends Component {
                       <Balance>
                         {this.props.userBal.crypto
                           ? this.props.userBal.crypto.placed_balance
-                            ? `${parseFloat(
-                                this.props.userBal.crypto.placed_balance.toFixed(
-                                  8
-                                )
-                              ).toString()}${" "}`
+                            ? `${precision(
+                                this.props.userBal.crypto.placed_balance
+                              )}${" "}`
                             : `0${" "}`
                           : `0${" "}`}
                         {this.state.crypto}
@@ -665,9 +659,9 @@ class StopLimit extends Component {
                       <Balance>
                         {this.props.userBal
                           ? this.props.userBal.crypto.length > 0
-                            ? `${parseFloat(
-                                this.props.userBal.crypto.balance.toFixed(8)
-                              ).toString()}${" "}`
+                            ? `${precision(
+                                this.props.userBal.crypto.balance
+                              )}${" "}`
                             : `0${" "}`
                           : `0${" "}`}
                         {this.state.crypto}
@@ -686,12 +680,12 @@ class StopLimit extends Component {
                       <Balance>
                         {this.props.userBal.crypto
                           ? this.props.userBal.crypto.balance
-                            ? `${parseFloat(
+                            ? `${precision(
                                 Math.abs(
                                   this.props.userBal.crypto.balance -
                                     this.props.userBal.crypto.placed_balance
-                                ).toFixed(8)
-                              ).toString()}${" "}`
+                                )
+                              )}${" "}`
                             : `0${" "}`
                           : `0${" "}`}
                         {this.state.crypto}
@@ -709,9 +703,7 @@ class StopLimit extends Component {
                     </Col>
                     <Col span={24}>
                       <Balance>
-                        {parseFloat(
-                          this.props.userBal.sellPay.toFixed(8)
-                        ).toString()}{" "}
+                        {precision(this.props.userBal.sellPay)}{" "}
                         {this.state.currency}
                       </Balance>
                     </Col>
