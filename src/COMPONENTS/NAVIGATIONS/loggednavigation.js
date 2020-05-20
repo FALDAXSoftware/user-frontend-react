@@ -28,6 +28,7 @@ import {
   _FALDAX,
   _WALLPAPER,
 } from "CONSTANTS/images";
+import FaldaxLoader from "../../SHARED-COMPONENTS/FaldaxLoader";
 const { Header } = Layout;
 const API_URL = globalVariables.API_URL;
 const SubMenu = Menu.SubMenu;
@@ -374,6 +375,7 @@ class LoggedNavigation extends Component {
       completeProfile: false,
       panicEnabled: false,
       panic_status: false,
+      loader: false,
       // langValue: this.props.language
     };
     // this.tradeAccess = this.tradeAccess.bind(this);
@@ -471,6 +473,7 @@ class LoggedNavigation extends Component {
     */
 
   logout() {
+    this.setState({ loader: true });
     let formData = {
       user_id: this.props.profileDetails.id,
       jwt_token: this.props.isLoggedIn,
@@ -1300,6 +1303,7 @@ class LoggedNavigation extends Component {
             </LogoutStyle>
           </SideNav>
         </ReactSwipeEvents>
+        {this.state.loader == true ? <FaldaxLoader /> : ""}
         <ComingSoon
           comingCancel={(e) => this.comingCancel(e)}
           visible={this.state.comingSoon}
