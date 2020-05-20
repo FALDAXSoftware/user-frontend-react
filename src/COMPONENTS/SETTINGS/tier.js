@@ -245,7 +245,11 @@ class Tier extends Component {
                             </li>
                           </TierUl>
                         )}
-                        {tier.tier_step != 4 && <OrSpan>OR</OrSpan>}
+                        {tier.tier_step != 4 && (
+                          <OrSpan>
+                            {self.t("static_info_pages:or_text.message")}
+                          </OrSpan>
+                        )}
                         {tier.tier_step != 4 && (
                           <TierUl>
                             <li>
@@ -418,6 +422,7 @@ export default translate([
   "history",
   "login_page",
   "tier_changes",
+  "static_info_pages",
 ])(connect(mapStateToProps)(withRouter(Tier)));
 function precisionTwo(x) {
   if (Math.abs(x) < 1.0) {

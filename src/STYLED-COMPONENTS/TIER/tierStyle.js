@@ -92,7 +92,8 @@ export const OrSpan = styled.span`
   width: 100%;
   font-weight: bold;
   padding: 10px 0;
-  color: #000;
+  text-transform: uppercase;
+  color: ${(props) => (props.theme.mode === "dark" ? "#ffffff" : "#000")};
 `;
 export const TierUl = styled.ul`
   padding: 0;

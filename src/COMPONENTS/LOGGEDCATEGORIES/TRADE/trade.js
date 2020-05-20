@@ -1599,6 +1599,7 @@ class Trade extends Component {
                             userBal={this.state.userBal}
                             crypto={this.state.crypto}
                             currency={this.state.currency}
+                            io={this.props.io}
                           />
                         </TabPane>
                       </TabsRight>
