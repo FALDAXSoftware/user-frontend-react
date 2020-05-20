@@ -629,13 +629,11 @@ class Limit extends Component {
                     </Col>
                     <Col span={24}>
                       <Balance>
-                        {this.props.userBal
-                          ? this.props.userBal.crypto.length > 0
-                            ? this.props.userBal.crypto.placed_balance
-                              ? `${precision(
-                                  this.props.userBal.crypto.placed_balance
-                                )}${" "}`
-                              : `0${" "}`
+                        {this.props.userBal.crypto
+                          ? this.props.userBal.crypto.placed_balance
+                            ? `${precision(
+                                this.props.userBal.crypto.placed_balance
+                              )}${" "}`
                             : `0${" "}`
                           : `0${" "}`}
                         {this.state.crypto}
