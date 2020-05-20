@@ -4,7 +4,7 @@ import "antd/dist/antd.css";
 import moment from "moment";
 import styled from "styled-components";
 import { Table } from "react-bootstrap";
-import { Icon } from "antd";
+import { Icon, Button } from "antd";
 import { Scrollbars } from "react-custom-scrollbars";
 import { translate } from "react-i18next";
 
@@ -35,6 +35,12 @@ export const OrderWrap = styled.div`
   &::-webkit-scrollbar-track {
     background: ${(props) => (props.theme.mode === "dark" ? "#072135" : "")};
   }
+`;
+const CancelBTN = styled(Button)`
+  border: 0;
+  padding: 0;
+  background: transparent;
+  height: auto;
 `;
 export const HTable = styled(Table)`
   > thead {
@@ -77,6 +83,9 @@ export const OTwrap = styled.div`
 class OrderTrade extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      disabled: false,
+    };
     this.t = this.props.t;
     this.cancelOrder = this.cancelOrder.bind(this);
   }
@@ -85,9 +94,18 @@ class OrderTrade extends Component {
         Page: /trade --> Orders and Trades
         This method is called when u cancel an order and parent callback method is called.
     */
-
+  componentWillReceiveProps(props) {
+    if (props.butonEnable) {
+      this.setState({
+        disabled: false,
+      });
+    }
+  }
   cancelOrder(id, side, type) {
-    console.log(id, side, type);
+    console.log("cancel orde^^^^^", id, side, type);
+    this.setState({
+      disabled: true,
+    });
     this.props.cancelOrder(id, side, type);
   }
 
@@ -189,8 +207,6 @@ class OrderTrade extends Component {
                             currencyValue = data.currency;
                           }
                         }
-                        console.log("currencyValue", currencyValue);
-                        console.log("data", data);
                         if (data.user_id == self.props.profileDetails.id) {
                           typeValue = data.order_type;
                         } else if (
@@ -209,18 +225,18 @@ class OrderTrade extends Component {
                           <td>
                             {precision(data.quantity)} {currencyValue}
                           </td>
-                          {/* <td>
+                          <td>
                             {self.props.pending !== 2
                               ? data.order_type === "Market"
                                 ? data.order_type
-                                : data.limit_price.toFixed(8)
-                              : data.limit_price.toFixed(8)}
-                          </td> */}
-                          <td>
+                                : precision(data.limit_price)
+                              : precision(data.limit_price)}
+                          </td>
+                          {/* <td>
                             {self.props.pending != 2
                               ? "-"
                               : precision(data.limit_price)}
-                          </td>
+                          </td> */}
                           <SideType type={data.side}>
                             {self.props.pending !== 2
                               ? precision(Filled)
@@ -240,7 +256,9 @@ class OrderTrade extends Component {
                           </td>
                           {self.props.pending === 2 ? (
                             <th>
-                              <span
+                              <CancelBTN
+                                disabled={self.state.disabled}
+                                // disabled={true}
                                 onClick={() =>
                                   self.cancelOrder(
                                     data.id,
@@ -253,7 +271,7 @@ class OrderTrade extends Component {
                                   style={{ color: "#279CED", fontSize: "18px" }}
                                   type="close-circle"
                                 />
-                              </span>
+                              </CancelBTN>
                             </th>
                           ) : (
                             ""
