@@ -52,7 +52,7 @@ export const TVBar = styled.div`
     font-weight: "normal";
     font-size: "17px";
     color: ${(props) =>
-    props.theme.mode === "dark" ? "rgb(217, 217, 217)" : "rgb(85, 85, 85)"};
+      props.theme.mode === "dark" ? "rgb(217, 217, 217)" : "rgb(85, 85, 85)"};
   }
   > div > i {
     cursor: pointer;
@@ -147,7 +147,7 @@ export const SearchInput = styled(Search)`
         border-right:0px;
         border-radius:0px;
         background-color:${(props) =>
-    props.theme.mode === "dark" ? "#041b2c" : ""}
+          props.theme.mode === "dark" ? "#041b2c" : ""}
         caret-color:${(props) => (props.theme.mode === "dark" ? "white" : "")}
         color:${(props) => (props.theme.mode === "dark" ? "white" : "")}
     }
@@ -173,7 +173,7 @@ export const FIATWrap2 = styled.div`
   float: right;
   & .ant-radio-button-wrapper {
     background-color: ${(props) =>
-    props.theme.mode === "dark" ? "#041422" : ""};
+      props.theme.mode === "dark" ? "#041422" : ""};
     color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   }
   @media (max-width: 535px) {
@@ -190,7 +190,7 @@ export const RadioSelect = styled(RadioGroup)`
   & .ant-radio-button-wrapper {
     font-weight: 600 !important;
     background-color: ${(props) =>
-    props.theme.mode === "dark" ? "" : "#f5f6fa"};
+      props.theme.mode === "dark" ? "" : "#f5f6fa"};
     font-size: 13px;
     text-transform: uppercase;
   }
@@ -275,7 +275,7 @@ export const TableIns = styled(Table)`
     > th {
     color: #174c7e;
     background-color: ${(props) =>
-    props.theme.mode === "dark" ? "#041422" : ""};
+      props.theme.mode === "dark" ? "#041422" : ""};
     font-weight: bold;
     border-bottom: 0px;
   }
@@ -349,7 +349,7 @@ export const TableIns = styled(Table)`
   }
   & .ant-table-tbody > tr:hover > td {
     background-color: ${(props) =>
-    props.theme.mode === "dark" ? "#041b2c" : ""};
+      props.theme.mode === "dark" ? "#041b2c" : ""};
   }
   & .ant-table-placeholder {
     position: relative;
@@ -445,9 +445,9 @@ export const BuySell = styled.div`
   text-align: center;
   & .ant-radio-button-wrapper {
     background: ${(props) =>
-    props.theme.mode === "dark" ? "#041422" : "#f5f6fa"};
+      props.theme.mode === "dark" ? "#041422" : "#f5f6fa"};
     border: ${(props) =>
-    props.theme.mode === "dark" ? "1px solid #2c3f51" : "1px solid #cad0e6"};
+      props.theme.mode === "dark" ? "1px solid #2c3f51" : "1px solid #cad0e6"};
     color: ${(props) => (props.theme.mode === "dark" ? "#617090" : "#9e9ea1")};
   }
 `;
@@ -540,7 +540,7 @@ export const AMTInput = styled(Input)`
     caret-color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
     color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
     background-color: ${(props) =>
-    props.theme.mode === "dark" ? "#041b2c" : ""};
+      props.theme.mode === "dark" ? "#041b2c" : ""};
   }
 `;
 
@@ -576,7 +576,7 @@ export const TotalWrap = styled.div`
   }
   > .ant-input-group-wrapper > .ant-input-group > .ant-input-group-addon {
     background-color: ${(props) =>
-    props.theme.mode === "dark" ? "#041b2c" : "white"};
+      props.theme.mode === "dark" ? "#041b2c" : "white"};
     border-left: 0px;
     color: #c5c5c5;
     letter-spacing: 1px;
@@ -595,7 +595,7 @@ export const TotInput = styled(Input)`
     caret-color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
     color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
     background-color: ${(props) =>
-    props.theme.mode === "dark" ? "#041b2c" : ""} !important;
+      props.theme.mode === "dark" ? "#041b2c" : ""} !important;
   }
 `;
 export const Pay = styled.div`
@@ -653,7 +653,7 @@ export const ButtonETH = styled(Button)`
   &:hover,
   &:focus {
     background-color: ${(props) =>
-    props.side === "Buy" ? "#64ba71" : "#ba6471"};
+      props.side === "Buy" ? "#64ba71" : "#ba6471"};
     color: rgb(255, 255, 255);
     border-color: ${(props) => (props.side === "Buy" ? "#64ba71" : "#ba6471")};
   }
@@ -724,10 +724,9 @@ export const BBC2 = styled(BBC)`
 export const Instru2 = styled(Instru)`
   margin-top: 25px;
   margin-left: 10px;
-  & .controlls{
-    float:right
-    button{
-      margin:0 5px;
+  & .controlls {
+    float:right button {
+      margin: 0 5px;
     }
   }
 `;
@@ -744,7 +743,7 @@ export const HistoryWrap1 = styled.div`
 
   &::-webkit-scrollbar-thumb {
     background-color: ${(props) =>
-    props.theme.mode === "dark" ? "#041624" : ""};
+      props.theme.mode === "dark" ? "#041624" : ""};
     border-radius: 3px;
   }
   &::-webkit-scrollbar-track {
@@ -789,7 +788,7 @@ export const TableContent = styled(CustomTable)`
   }
   > tbody > tr:nth-of-type(even) {
     background-color: ${(props) =>
-    props.theme.mode === "dark" ? "#041422" : "#f5f6fa"};
+      props.theme.mode === "dark" ? "#041422" : "#f5f6fa"};
   }
   &.buy_sell_table {
     > tbody {
@@ -816,9 +815,9 @@ export const SelectMonth = styled(Select)`
   }
   & .ant-select-selection {
     background-color: ${(props) =>
-    props.theme.mode === "dark" ? "#041422" : ""};
+      props.theme.mode === "dark" ? "#041422" : ""};
     color: ${(props) =>
-    props.theme.mode === "dark" ? "white" : "rgba(0, 0, 0, 0.65)"};
+      props.theme.mode === "dark" ? "white" : "rgba(0, 0, 0, 0.65)"};
     > .ant-select-selection__rendered {
       line-height: 38px;
     }
@@ -929,4 +928,19 @@ export const SettingButton = styled(Button)`
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+`;
+export const TriggerDiv = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 5px 0 0 0;
+  font-size: 12px;
+  > span {
+    display: inherit;
+    align-items: center;
+    > i {
+      font-size: 10px;
+      display: inherit;
+      padding: 0 5px;
+    }
+  }
 `;

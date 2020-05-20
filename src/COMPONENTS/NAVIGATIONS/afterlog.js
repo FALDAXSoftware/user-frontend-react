@@ -20,6 +20,7 @@ import * as allCoinsData from "ACTIONS/LOGGEDCAT/walletActions";
 
 /* CONSTANTS */
 import { globalVariables } from "Globals.js";
+import FaldaxLoader from "../../SHARED-COMPONENTS/FaldaxLoader";
 
 /* Styled-Components */
 const LoginButton = styled(Button)`
@@ -150,6 +151,7 @@ class Afterlog extends Component {
       comingSoon: false,
       selected: false,
       fontColor: "",
+      loader: false,
     };
     this.t = this.props.t;
   }
@@ -228,6 +230,7 @@ class Afterlog extends Component {
     */
 
   logout() {
+    this.setState({ loader: true });
     let formData = {
       user_id: this.props.profileDetails.id,
       jwt_token: this.props.isLoggedIn,
@@ -462,6 +465,7 @@ class Afterlog extends Component {
             </div>
           </Modal>
         </div>
+        {this.state.loader == true ? <FaldaxLoader /> : ""}
       </RightDiv>
     );
   }
