@@ -820,7 +820,11 @@ class Limit extends Component {
                     {this.t("conversion:fee_text.message")} {userBalFees} %
                   </WillpayBelow>
                   <WillpayBelow2>
-                    {precision(buyPayAmt - buyEstPrice)} {this.state.crypto}
+                    {/* {precision(buyPayAmt - buyEstPrice)} {this.state.crypto} */}
+                    {precision(
+                      (this.state.amount * this.state.userBalFees) / 100
+                    )}{" "}
+                    {this.state.crypto}
                   </WillpayBelow2>
                 </ApproxBelow>
               </Esti>
@@ -861,7 +865,11 @@ class Limit extends Component {
                     {this.t("conversion:fee_text.message")} {userBalFees} %
                   </WillpayBelow>
                   <WillpayBelow2>
-                    {precision(sellPayAmt - sellEstPrice)} {this.state.currency}
+                    {/* {precision(sellPayAmt - sellEstPrice)} {this.state.currency} */}
+                    {precision(
+                      (this.state.total * this.state.userBalFees) / 100
+                    )}{" "}
+                    {this.state.currency}
                   </WillpayBelow2>
                 </ApproxBelow>
               </Esti>

@@ -175,6 +175,7 @@ class StopLimit extends Component {
   componentDidMount() {
     let fiat, currency;
     if (this.props.io) {
+      console.log("trade-history-data^^^^data", this.props.io);
       this.props.io.on("trade-history-data", (data) => {
         console.log("trade-history-data^^^^data", data[0].fill_price);
         this.setState(
@@ -183,6 +184,10 @@ class StopLimit extends Component {
             latestFillPrice: data[0].fill_price,
           },
           () => {
+            console.log(
+              "trade-history-data^^^^data",
+              this.state.latestFillPrice
+            );
             if (this.state.stop_price > 0) {
               if (this.state.side === "Buy") {
                 if (
@@ -863,12 +868,14 @@ class StopLimit extends Component {
                 <span>{precision(this.state.latestFillPrice)}</span>
               </TriggerDiv>
             ) : (
-              <TriggerDiv>
-                <span>
-                  Trigger <Icon type="left" />{" "}
-                </span>
-                <span>{precision(this.state.latestFillPrice)}</span>
-              </TriggerDiv>
+              this.state.latestFillPrice && (
+                <TriggerDiv>
+                  <span>
+                    Trigger <Icon type="left" />{" "}
+                  </span>
+                  <span>{precision(this.state.latestFillPrice)}</span>
+                </TriggerDiv>
+              )
             )}
           </BTCWrap>
           <BTCWrap className="width_class">
@@ -967,7 +974,11 @@ class StopLimit extends Component {
                     {this.t("conversion:fee_text.message")} {userBalFees} %
                   </WillpayBelow>
                   <WillpayBelow2>
-                    {precision(buyPayAmt - buyEstPrice)} {this.state.crypto}
+                    {/* {precision(buyPayAmt - buyEstPrice)} {this.state.crypto} */}
+                    {precision(
+                      (this.state.amount * this.state.userBalFees) / 100
+                    )}{" "}
+                    {this.state.crypto}
                   </WillpayBelow2>
                 </ApproxBelow>
               </Esti>
@@ -1008,7 +1019,11 @@ class StopLimit extends Component {
                     {this.t("conversion:fee_text.message")} {userBalFees} %
                   </WillpayBelow>
                   <WillpayBelow2>
-                    {precision(sellPayAmt - sellEstPrice)} {this.state.currency}
+                    {/* {precision(sellPayAmt - sellEstPrice)} {this.state.currency} */}
+                    {precision(
+                      (this.state.total * this.state.userBalFees) / 100
+                    )}{" "}
+                    {this.state.currency}
                   </WillpayBelow2>
                 </ApproxBelow>
               </Esti>

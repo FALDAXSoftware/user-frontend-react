@@ -746,8 +746,15 @@ class Market extends Component {
                     {this.state.userBalFees} %
                   </WillpayBelow>
                   <WillpayBelow2>
+                    {/* {console.log(
+                      "buyPayAmt - buyEstPrice %%%",
+                      amount,
+                      (amount * this.state.userBalFees) / 100
+                    )} */}
                     {/* {(buyPayAmt - buyEstPrice).toFixed(8)} {this.state.crypto} */}
-                    {precision(buyPayAmt - buyEstPrice)} {this.state.crypto}
+                    {/* {precision(buyPayAmt - buyEstPrice)} {this.state.crypto} */}
+                    {precision((amount * this.state.userBalFees) / 100)}{" "}
+                    {this.state.crypto}
                   </WillpayBelow2>
                 </ApproxBelow>
               </Esti>
@@ -792,8 +799,17 @@ class Market extends Component {
                     {this.state.userBalFees} %
                   </WillpayBelow>
                   <WillpayBelow2>
+                    {/* {console.log(
+                      "sellPayAmt - sellEstPrice %%%",
+                      sellPayAmt,
+                      sellEstPrice
+                    )} */}
                     {/* {(sellPayAmt - sellEstPrice).toFixed(8)}{" "} */}
-                    {precision(sellPayAmt - sellEstPrice)} {this.state.currency}
+                    {/* {precision(sellPayAmt - sellEstPrice)} {this.state.currency} */}
+                    {precision(
+                      (this.state.total * this.state.userBalFees) / 100
+                    )}{" "}
+                    {this.state.currency}
                   </WillpayBelow2>
                 </ApproxBelow>
               </Esti>
