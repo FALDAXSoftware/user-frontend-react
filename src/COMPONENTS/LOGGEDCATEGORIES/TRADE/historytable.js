@@ -204,12 +204,14 @@ class HistoryTable extends Component {
           {element.side}
         </SideType>
         <td width="20%">
-          {element.amount !== undefined ? precision(element.amount) : ""}
+          {element.amount !== undefined
+            ? `${precision(element.amount)}${" "}${this.props.crypto}`
+            : ""}
         </td>
         {index + 1 < me.state.data.length ? (
           element.fill_price >= me.state.data[index + 1].fill_price ? (
             <td width="20%">
-              {precision(element.fill_price)}{" "}
+              {precision(element.fill_price)} {this.props.currency}{" "}
               {this.props.theme !== true ? (
                 <img
                   alt="UP-Right"
@@ -226,7 +228,7 @@ class HistoryTable extends Component {
             </td>
           ) : (
             <td width="20%">
-              {precision(element.fill_price)}{" "}
+              {precision(element.fill_price)} {this.props.currency}{" "}
               {this.props.theme !== true ? (
                 <img
                   alt="UP-Right"
@@ -243,10 +245,15 @@ class HistoryTable extends Component {
             </td>
           )
         ) : (
-          <td>{element.fill_price} </td>
+          <td>
+            {element.fill_price}
+            {this.props.currency}
+          </td>
         )}
         <td width="25%">{element.time}</td>
-        <td width="25%">{precision(element.total)}</td>
+        <td width="25%">
+          {precision(element.total)} {this.props.currency}
+        </td>
       </tr>
     ));
   }
