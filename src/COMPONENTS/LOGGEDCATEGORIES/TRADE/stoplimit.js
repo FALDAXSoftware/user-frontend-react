@@ -177,7 +177,7 @@ class StopLimit extends Component {
     if (this.props.io) {
       console.log("trade-history-data^^^^data", this.props.io);
       this.props.io.on("trade-history-data", (data) => {
-        console.log("trade-history-data^^^^data", data[0].fill_price);
+        console.log("trade-history-data^^^^data", data[0]);
         this.setState(
           {
             disabledBtn: false,

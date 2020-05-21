@@ -29,6 +29,8 @@ class BuySell extends React.Component {
           }}
           io={this.props.io}
           height={this.props.height}
+          currency={this.props.currency}
+          crypto={this.props.crypto}
         />
       </LeftDiv2>
     );
