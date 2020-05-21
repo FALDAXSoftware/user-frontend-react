@@ -242,7 +242,7 @@ class OrderTrade extends Component {
                               ? "-"
                               : precision(data.limit_price)}
                           </td> */}
-                          <SideType type={data.side}>
+                          <SideType type={sideValue}>
                             {self.props.pending !== 2
                               ? `${precision(Filled)}${" "}${self.props.crypto}`
                               : data.stop_price !== undefined
