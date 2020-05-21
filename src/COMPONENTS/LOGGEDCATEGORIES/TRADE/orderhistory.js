@@ -24,11 +24,13 @@ class BuySell extends React.Component {
       <LeftDiv2>
         <Instru>{this.t("order_history_text.message")}</Instru>
         <HistoryTable
-          hisFunc={loader => {
+          hisFunc={(loader) => {
             this.hisFunc(loader);
           }}
           io={this.props.io}
           height={this.props.height}
+          currency={this.props.currency}
+          crypto={this.props.crypto}
         />
       </LeftDiv2>
     );

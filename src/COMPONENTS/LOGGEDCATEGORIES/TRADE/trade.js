@@ -70,7 +70,84 @@ import {
   SettingDropdown,
 } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
 import DepthChartAm from "./depth_ammchart";
-
+function precision(x) {
+  if (Math.abs(x) < 1.0) {
+    var e = parseInt(x.toString().split("e-")[1]);
+    if (e) {
+      x *= Math.pow(10, e - 1);
+      x = "0." + new Array(e).join("0") + x.toString().substring(2);
+    }
+  } else {
+    var e = parseInt(x.toString().split("+")[1]);
+    if (e > 20) {
+      e -= 20;
+      x /= Math.pow(10, e);
+      x += new Array(e + 1).join("0");
+    }
+  }
+  if (x.toString().split(".")[1] && x.toString().split(".")[1].length > 8) {
+    {
+      x = parseFloat(x).toFixed(8);
+      if (
+        x.toString()[x.toString().length - 1] == "0" &&
+        (x.toString().split(".")[1][0] != "0" ||
+          x.toString().split(".")[1][5] != "0")
+      ) {
+        return parseFloat(x);
+      } else if (x.toString().split(".")[1][7] == "0") {
+        if (x.toString().split(".")[1][6] == "0") {
+          if (x.toString().split(".")[1][5] == "0") {
+            if (x.toString().split(".")[1][4] == "0") {
+              if (x.toString().split(".")[1][3] == "0") {
+                if (x.toString().split(".")[1][2] == "0") {
+                  if (x.toString().split(".")[1][1] == "0") {
+                    if (x.toString().split(".")[1][0] == "0") {
+                      return parseFloat(x).toFixed(0);
+                    } else return parseFloat(x).toFixed(1);
+                  } else return parseFloat(x).toFixed(2);
+                } else return parseFloat(x).toFixed(3);
+              } else return parseFloat(x).toFixed(4);
+            } else return parseFloat(x).toFixed(5);
+          } else return parseFloat(x).toFixed(6);
+        } else return parseFloat(x).toFixed(7);
+      } else return parseFloat(x).toFixed(8);
+    }
+  }
+  return x;
+}
+function precisionTwo(x) {
+  if (Math.abs(x) < 1.0) {
+    var e = parseInt(x.toString().split("e-")[1]);
+    if (e) {
+      x *= Math.pow(10, e - 1);
+      x = "0." + new Array(e).join("0") + x.toString().substring(2);
+    }
+  } else {
+    var e = parseInt(x.toString().split("+")[1]);
+    if (e > 20) {
+      e -= 20;
+      x /= Math.pow(10, e);
+      x += new Array(e + 1).join("0");
+    }
+  }
+  if (x.toString().split(".")[1] && x.toString().split(".")[1].length > 2) {
+    {
+      x = parseFloat(x).toFixed(2);
+      if (
+        x.toString()[x.toString().length - 1] == "0" &&
+        (x.toString().split(".")[1][0] != "0" ||
+          x.toString().split(".")[1][5] != "0")
+      ) {
+        return parseFloat(x);
+      } else if (x.toString().split(".")[1][1] == "0") {
+        if (x.toString().split(".")[1][0] == "0") {
+          return parseFloat(x).toFixed(0);
+        } else return parseFloat(x).toFixed(1);
+      }
+    }
+  }
+  return x;
+}
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 const originalLayouts = getFromLS("layouts") || {};
 
@@ -102,7 +179,7 @@ const GreyWrapTrade = styled(GreyWrap)`
     margin: 10px;
     overflow: hidden;
     background-color: ${(props) =>
-    props.theme.mode === "dark" ? "#041b2c" : "white"};
+      props.theme.mode === "dark" ? "#041b2c" : "white"};
     border-radius: 5px;
     -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -114,7 +191,7 @@ const GreyWrapTrade = styled(GreyWrap)`
     margin: 10px;
     overflow: auto;
     background-color: ${(props) =>
-    props.theme.mode === "dark" ? "#041b2c" : "white"};
+      props.theme.mode === "dark" ? "#041b2c" : "white"};
     border-radius: 5px;
     -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -126,7 +203,7 @@ const GreyWrapTrade = styled(GreyWrap)`
     margin: 10px;
     overflow: auto;
     background-color: ${(props) =>
-    props.theme.mode === "dark" ? "#041b2c" : "white"};
+      props.theme.mode === "dark" ? "#041b2c" : "white"};
     border-radius: 5px;
     -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -138,7 +215,7 @@ const GreyWrapTrade = styled(GreyWrap)`
     margin: 10px;
     overflow: auto;
     background-color: ${(props) =>
-    props.theme.mode === "dark" ? "#041b2c" : "white"};
+      props.theme.mode === "dark" ? "#041b2c" : "white"};
     border-radius: 5px;
     -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -150,7 +227,7 @@ const GreyWrapTrade = styled(GreyWrap)`
     margin: 10px;
     overflow: auto;
     background-color: ${(props) =>
-    props.theme.mode === "dark" ? "#041b2c" : "white"};
+      props.theme.mode === "dark" ? "#041b2c" : "white"};
     border-radius: 5px;
     -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -162,7 +239,7 @@ const GreyWrapTrade = styled(GreyWrap)`
     margin: 10px;
     overflow: auto;
     background-color: ${(props) =>
-    props.theme.mode === "dark" ? "#041b2c" : "white"};
+      props.theme.mode === "dark" ? "#041b2c" : "white"};
     border-radius: 5px;
     -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -174,7 +251,7 @@ const GreyWrapTrade = styled(GreyWrap)`
     margin: 10px;
     overflow: auto;
     background-color: ${(props) =>
-    props.theme.mode === "dark" ? "#041b2c" : "white"};
+      props.theme.mode === "dark" ? "#041b2c" : "white"};
     border-radius: 5px;
     -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -185,13 +262,13 @@ const GreyWrapTrade = styled(GreyWrap)`
 const RGL = styled(ResponsiveReactGridLayout)`
   & .react-resizable-handle::after {
     border-right: ${(props) =>
-    props.theme.mode === "dark"
-      ? "2px solid rgb(255, 255, 255) !important"
-      : ""};
+      props.theme.mode === "dark"
+        ? "2px solid rgb(255, 255, 255) !important"
+        : ""};
     border-bottom: ${(props) =>
-    props.theme.mode === "dark"
-      ? "2px solid rgb(255, 255, 255) !important"
-      : ""};
+      props.theme.mode === "dark"
+        ? "2px solid rgb(255, 255, 255) !important"
+        : ""};
   }
 `;
 
@@ -228,6 +305,7 @@ class Trade extends Component {
       layouts: JSON.parse(JSON.stringify(originalLayouts)),
       MLS: "",
       loader: false,
+      butonEnable: false,
     };
     io = this.props.io;
     this.t = this.props.t;
@@ -338,16 +416,16 @@ class Trade extends Component {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        "Accept-Language": localStorage["i18nextLng"]
-      }
+        "Accept-Language": localStorage["i18nextLng"],
+      },
     })
-      .then(response => response.json())
-      .then(responseData => {
+      .then((response) => response.json())
+      .then((responseData) => {
         if (responseData.status == 200) {
           this.updateInstrumentsData(responseData.data);
         }
       })
-      .catch(error => { });
+      .catch((error) => {});
   };
   joinRoom = (prevRoom = null) => {
     console.log("joinRoom^^", this.state, prevRoom);
@@ -452,10 +530,10 @@ class Trade extends Component {
       res[currency].push({
         name: element.name.split("-")[0],
         currency,
-        price: parseFloat(element.last_price).toFixed(5),
-        volume: parseFloat(element.volume).toFixed(3),
-        change: parseFloat(element.percentChange).toFixed(5),
-        pairName: element.name
+        price: precision(element.last_price),
+        volume: precisionTwo(element.volume),
+        change: precisionTwo(element.percentChange),
+        pairName: element.name,
       });
     }
     console.log("instruments -----", res);
@@ -582,6 +660,9 @@ class Trade extends Component {
   //
 
   cancelOrder(id, side, type) {
+    this.setState({
+      orderTradeLoader: true,
+    });
     console.log(id, side, type);
     fetch(SOCKET_HOST + `/api/v1/tradding/cancel-pending-order`, {
       method: "post",
@@ -611,8 +692,12 @@ class Trade extends Component {
             this.t("validations:error_text.message"),
             responseData.err
           );
+        this.setState({
+          butonEnable: true,
+          orderTradeLoader: false,
+        });
       })
-      .catch((error) => { });
+      .catch((error) => {});
   }
 
   // created by Meghal Patel at 2019-04-27 15:24.
@@ -1270,7 +1355,7 @@ class Trade extends Component {
             return 1;
           }
         },
-        render: (text) => (text.replace("-", "/"))
+        render: (text) => text.replace("-", "/"),
       },
       {
         title: `${this.t("history:price_text.message")}`,
@@ -1371,7 +1456,7 @@ class Trade extends Component {
                 <div key="tradeView">
                   <div
                     className="tradeView"
-                  // style={{ height: "100%", width: "100%" }}
+                    // style={{ height: "100%", width: "100%" }}
                   >
                     <MainTV>
                       <TVBar>
@@ -1383,7 +1468,8 @@ class Trade extends Component {
                         <div
                           onClick={() => {
                             window.open(
-                              tvChartURL + `/${this.state.crypto}-${this.state.currency}`,
+                              tvChartURL +
+                                `/${this.state.crypto}-${this.state.currency}`,
                               "_blank",
                               "location=yes,height=800,width=1000,scrollbars=yes,status=yes"
                             );
@@ -1409,13 +1495,13 @@ class Trade extends Component {
                 <div key="instruments">
                   <div
                     className="instruments"
-                  // style={{ height: "100%", width: "100%", overflow: "auto" }}
+                    // style={{ height: "100%", width: "100%", overflow: "auto" }}
                   >
                     {this.state.insLoader === true ? (
                       <Loader color="#1990ff" width="50" height="50" />
                     ) : (
-                        ""
-                      )}
+                      ""
+                    )}
                     <LeftDiv1>
                       <Instru>{this.t("instruments_text.message")}</Instru>
                       {/* {this.state.InsData ? (
@@ -1475,13 +1561,13 @@ class Trade extends Component {
                 <div key="tradeAction">
                   <div
                     className="tradeAction"
-                  // style={{ height: "100%", width: "100%", overflow: "auto" }}
+                    // style={{ height: "100%", width: "100%", overflow: "auto" }}
                   >
                     {this.state.userBalLoader === true ? (
                       <Loader color="#1990ff" width="50" height="50" />
                     ) : (
-                        ""
-                      )}
+                      ""
+                    )}
                     <RightDiv1>
                       <TabsRight
                         defaultActiveKey="1"
@@ -1513,6 +1599,7 @@ class Trade extends Component {
                             userBal={this.state.userBal}
                             crypto={this.state.crypto}
                             currency={this.state.currency}
+                            io={this.props.io}
                           />
                         </TabPane>
                       </TabsRight>
@@ -1522,7 +1609,7 @@ class Trade extends Component {
                 <div key="buysellBook">
                   <div
                     className="buysellBook"
-                  // style={{ height: "100%", width: "100%", overflow: "auto" }}
+                    // style={{ height: "100%", width: "100%", overflow: "auto" }}
                   >
                     {/* {this.state.buySellLoader === true ? (
                       <Loader color="#1990ff" width="50" height="50" />
@@ -1543,13 +1630,13 @@ class Trade extends Component {
                 <div key="depthChart">
                   <div
                     className="depthChart"
-                  // style={{ height: "100%", width: "100%", overflow: "auto" }}
+                    // style={{ height: "100%", width: "100%", overflow: "auto" }}
                   >
                     {this.state.depthLoader === true ? (
                       <Loader color="#1990ff" width="50" height="50" />
                     ) : (
-                        ""
-                      )}
+                      ""
+                    )}
                     <RightDiv>
                       {/* <DepthChart
                         crypto={this.state.crypto}
@@ -1572,30 +1659,32 @@ class Trade extends Component {
                 <div key="orderHistory">
                   <div
                     className="orderHistory"
-                  // style={{ height: "100%", width: "100%", overflow: "auto" }}
+                    // style={{ height: "100%", width: "100%", overflow: "auto" }}
                   >
                     {this.state.hisLoader === true ? (
                       <Loader color="#1990ff" width="50" height="50" />
                     ) : (
-                        ""
-                      )}
+                      ""
+                    )}
                     <OrderHIstory
                       io={io}
                       hisFunc={(loader) => this.hisFunc(loader)}
                       height={self.state.orderHistoryTableHeight}
+                      currency={this.state.currency}
+                      crypto={this.state.crypto}
                     />
                   </div>
                 </div>
                 <div key="myorder">
                   <div
                     className="myorder"
-                  // style={{ height: "100%", width: "100%", overflow: "auto" }}
+                    // style={{ height: "100%", width: "100%", overflow: "auto" }}
                   >
                     {this.state.orderTradeLoader === true ? (
                       <Loader color="#1990ff" width="50" height="50" />
                     ) : (
-                        ""
-                      )}
+                      ""
+                    )}
                     <LeftDiv2>
                       <OrderWrap>
                         <InstruOrder>
@@ -1652,6 +1741,9 @@ class Trade extends Component {
                         }}
                         orderTradeData={this.state.orderTradeData}
                         height={self.state.myOrderTableHeight}
+                        butonEnable={this.state.butonEnable}
+                        currency={this.state.currency}
+                        crypto={this.state.crypto}
                       />
                     </LeftDiv2>
                   </div>

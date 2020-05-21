@@ -40,6 +40,52 @@ import { globalVariables } from "Globals.js";
 
 let { SOCKET_HOST } = globalVariables;
 
+function precision(x) {
+  if (Math.abs(x) < 1.0) {
+    var e = parseInt(x.toString().split("e-")[1]);
+    if (e) {
+      x *= Math.pow(10, e - 1);
+      x = "0." + new Array(e).join("0") + x.toString().substring(2);
+    }
+  } else {
+    var e = parseInt(x.toString().split("+")[1]);
+    if (e > 20) {
+      e -= 20;
+      x /= Math.pow(10, e);
+      x += new Array(e + 1).join("0");
+    }
+  }
+  if (x.toString().split(".")[1] && x.toString().split(".")[1].length > 8) {
+    {
+      x = parseFloat(x).toFixed(8);
+      if (
+        x.toString()[x.toString().length - 1] == "0" &&
+        (x.toString().split(".")[1][0] != "0" ||
+          x.toString().split(".")[1][5] != "0")
+      ) {
+        return parseFloat(x);
+      } else if (x.toString().split(".")[1][7] == "0") {
+        if (x.toString().split(".")[1][6] == "0") {
+          if (x.toString().split(".")[1][5] == "0") {
+            if (x.toString().split(".")[1][4] == "0") {
+              if (x.toString().split(".")[1][3] == "0") {
+                if (x.toString().split(".")[1][2] == "0") {
+                  if (x.toString().split(".")[1][1] == "0") {
+                    if (x.toString().split(".")[1][0] == "0") {
+                      return parseFloat(x).toFixed(0);
+                    } else return parseFloat(x).toFixed(1);
+                  } else return parseFloat(x).toFixed(2);
+                } else return parseFloat(x).toFixed(3);
+              } else return parseFloat(x).toFixed(4);
+            } else return parseFloat(x).toFixed(5);
+          } else return parseFloat(x).toFixed(6);
+        } else return parseFloat(x).toFixed(7);
+      } else return parseFloat(x).toFixed(8);
+    }
+  }
+  return x;
+}
+
 class Market extends Component {
   constructor(props) {
     super(props);
@@ -205,7 +251,6 @@ class Market extends Component {
     this.setState({
       fiatCurrencyValue: 0,
     });
-    console.log("^^^asd,mkasd", e.target.value);
     this.clearValidation();
     obj[name] = value;
     if (name === "side") {
@@ -272,6 +317,19 @@ class Market extends Component {
               Number(this.state.amount) * this.props.userBal.sellPay;
             // obj["amount"] = Number(this.state.amount).toFixed(3);
             if (value > 0 && name === "amount") {
+              // console.log(
+              //   "^^^user",
+              //   parseFloat(
+              //     parseFloat(this.state.amount) *
+              //       parseFloat(this.props.userBal.sellPay)
+              //   ).toFixed(8)
+              // );
+              // obj["total"] = parseFloat(
+              //   parseFloat(
+              //     parseFloat(this.state.amount) *
+              //       parseFloat(this.props.userBal.sellPay)
+              //   ).toFixed(8)
+              // ).toString();
               let fiatValue =
                 parseFloat(this.state.singlefiatCurrencyValue) *
                 parseFloat(obj["total"]).toFixed(8);
@@ -443,11 +501,11 @@ class Market extends Component {
                       <Balance>
                         {this.props.userBal.currency
                           ? this.props.userBal.currency.placed_balance
-                            ? `${this.props.userBal.currency.placed_balance.toFixed(
-                                8
+                            ? `${precision(
+                                this.props.userBal.currency.placed_balance
                               )}${" "}`
-                            : `00${" "}`
-                          : `00${" "}`}
+                            : `0${" "}`
+                          : `0${" "}`}
                         {this.state.currency}
                       </Balance>
                     </Col>
@@ -464,11 +522,11 @@ class Market extends Component {
                       <Balance>
                         {this.props.userBal
                           ? this.props.userBal.currency.length > 0
-                            ? `${this.props.userBal.currency.balance.toFixed(
-                                8
+                            ? `${precision(
+                                this.props.userBal.currency.balance
                               )}${" "}`
-                            : `00${" "}`
-                          : `00${" "}`}
+                            : `0${" "}`
+                          : `0${" "}`}
                         {this.state.currency}
                       </Balance>
                     </Col>
@@ -485,12 +543,14 @@ class Market extends Component {
                       <Balance>
                         {this.props.userBal.currency
                           ? this.props.userBal.currency.balance
-                            ? `${Math.abs(
-                                this.props.userBal.currency.balance -
-                                  this.props.userBal.currency.placed_balance
-                              ).toFixed(8)}${" "}`
-                            : `00${" "}`
-                          : `00${" "}`}
+                            ? `${precision(
+                                Math.abs(
+                                  this.props.userBal.currency.balance -
+                                    this.props.userBal.currency.placed_balance
+                                )
+                              )}${" "}`
+                            : `0${" "}`
+                          : `0${" "}`}
                         {this.state.currency}
                       </Balance>
                     </Col>
@@ -506,7 +566,7 @@ class Market extends Component {
                     </Col>
                     <Col span={24}>
                       <Balance>
-                        {this.props.userBal.buyPay.toFixed(5)}{" "}
+                        {precision(this.props.userBal.buyPay)}{" "}
                         {this.state.currency}
                       </Balance>
                     </Col>
@@ -526,11 +586,11 @@ class Market extends Component {
                       <Balance>
                         {this.props.userBal.crypto
                           ? this.props.userBal.crypto.placed_balance
-                            ? `${this.props.userBal.crypto.placed_balance.toFixed(
-                                8
+                            ? `${precision(
+                                this.props.userBal.crypto.placed_balance
                               )}${" "}`
-                            : `00${" "}`
-                          : `00${" "}`}
+                            : `0${" "}`
+                          : `0${" "}`}
                         {this.state.crypto}
                       </Balance>
                     </Col>
@@ -547,11 +607,11 @@ class Market extends Component {
                       <Balance>
                         {this.props.userBal
                           ? this.props.userBal.crypto.length > 0
-                            ? `${this.props.userBal.crypto.balance.toFixed(
-                                8
+                            ? `${precision(
+                                this.props.userBal.crypto.balance
                               )}${" "}`
-                            : `00${" "}`
-                          : `00${" "}`}
+                            : `0${" "}`
+                          : `0${" "}`}
                         {this.state.crypto}
                       </Balance>
                     </Col>
@@ -568,12 +628,14 @@ class Market extends Component {
                       <Balance>
                         {this.props.userBal.crypto
                           ? this.props.userBal.crypto.balance
-                            ? `${Math.abs(
-                                this.props.userBal.crypto.balance -
-                                  this.props.userBal.crypto.placed_balance
-                              ).toFixed(8)}${" "}`
-                            : `00${" "}`
-                          : `00${" "}`}
+                            ? `${precision(
+                                Math.abs(
+                                  this.props.userBal.crypto.balance -
+                                    this.props.userBal.crypto.placed_balance
+                                )
+                              )}${" "}`
+                            : `0${" "}`
+                          : `0${" "}`}
                         {this.state.crypto}
                       </Balance>
                     </Col>
@@ -589,7 +651,7 @@ class Market extends Component {
                     </Col>
                     <Col span={24}>
                       <Balance>
-                        {this.props.userBal.sellPay.toFixed(5)}{" "}
+                        {precision(this.props.userBal.sellPay)}{" "}
                         {this.state.currency}
                       </Balance>
                     </Col>
@@ -609,7 +671,7 @@ class Market extends Component {
               type="number"
               step="0.001"
               addonAfter={this.state.crypto}
-              value={this.state.amount}
+              value={precision(this.state.amount)}
               placeholder="0"
               name="amount"
               onChange={this.onChange}
@@ -636,7 +698,9 @@ class Market extends Component {
               readOnly="true"
               type="number"
               addonAfter={this.state.currency}
-              value={this.state.total.toFixed(8)}
+              // value={this.state.total.toFixed(8)}
+              value={precision(this.state.total)}
+              // value={this.state.total.toPrecise(8)}
               name="total"
             />
           </TotalWrap>
@@ -650,7 +714,8 @@ class Market extends Component {
                   {this.t("pay_text.message")}
                 </Willpay>
                 <Willpay2>
-                  {buyPayAmt.toFixed(8)} {this.state.currency}
+                  {/* {buyPayAmt.toFixed(8)} {this.state.currency} */}
+                  {precision(buyPayAmt)} {this.state.currency}
                 </Willpay2>
               </Approx>
               <Esti>
@@ -661,7 +726,8 @@ class Market extends Component {
                     )}
                   </WillpayBelow>
                   <WillpayBelow2>
-                    {parseFloat(this.state.fiatCurrencyValue).toFixed(8)}{" "}
+                    {/* {parseFloat(this.state.fiatCurrencyValue).toFixed(8)}{" "} */}
+                    {precision(this.state.fiatCurrencyValue)}{" "}
                     {this.state.fiatCurrency}
                   </WillpayBelow2>
                 </ApproxBelow>
@@ -670,7 +736,8 @@ class Market extends Component {
                     {this.t("estimated_best_price_text.message")}
                   </WillpayBelow>
                   <WillpayBelow2>
-                    {buyPayAmt.toFixed(8)} {this.state.currency}
+                    {/* {buyPayAmt.toFixed(8)} {this.state.currency} */}
+                    {precision(buyPayAmt)} {this.state.currency}
                   </WillpayBelow2>
                 </ApproxBelow>
                 <ApproxBelow>
@@ -679,7 +746,15 @@ class Market extends Component {
                     {this.state.userBalFees} %
                   </WillpayBelow>
                   <WillpayBelow2>
-                    {(buyPayAmt - buyEstPrice).toFixed(8)} {this.state.crypto}
+                    {/* {console.log(
+                      "buyPayAmt - buyEstPrice %%%",
+                      amount,
+                      (amount * this.state.userBalFees) / 100
+                    )} */}
+                    {/* {(buyPayAmt - buyEstPrice).toFixed(8)} {this.state.crypto} */}
+                    {/* {precision(buyPayAmt - buyEstPrice)} {this.state.crypto} */}
+                    {precision((amount * this.state.userBalFees) / 100)}{" "}
+                    {this.state.crypto}
                   </WillpayBelow2>
                 </ApproxBelow>
               </Esti>
@@ -692,7 +767,8 @@ class Market extends Component {
                   {this.t("receive_text.message")}
                 </Willpay>
                 <Willpay2>
-                  {sellEstPrice.toFixed(8)} {this.state.currency}
+                  {/* {sellEstPrice.toFixed(8)} {this.state.currency} */}
+                  {precision(sellEstPrice)} {this.state.currency}
                 </Willpay2>
               </Approx>
               <Esti>
@@ -703,7 +779,8 @@ class Market extends Component {
                     )}
                   </WillpayBelow>
                   <WillpayBelow2>
-                    {parseFloat(this.state.fiatCurrencyValue).toFixed(8)}{" "}
+                    {/* {parseFloat(this.state.fiatCurrencyValue).toFixed(8)}{" "} */}
+                    {precision(this.state.fiatCurrencyValue)}{" "}
                     {this.state.fiatCurrency}
                   </WillpayBelow2>
                 </ApproxBelow>
@@ -712,7 +789,8 @@ class Market extends Component {
                     {this.t("estimated_best_price_text.message")}
                   </WillpayBelow>
                   <WillpayBelow2>
-                    {sellPayAmt.toFixed(8)} {this.state.currency}
+                    {/* {sellPayAmt.toFixed(8)} {this.state.currency} */}
+                    {precision(sellPayAmt)} {this.state.currency}
                   </WillpayBelow2>
                 </ApproxBelow>
                 <ApproxBelow>
@@ -721,7 +799,16 @@ class Market extends Component {
                     {this.state.userBalFees} %
                   </WillpayBelow>
                   <WillpayBelow2>
-                    {(sellPayAmt - sellEstPrice).toFixed(8)}{" "}
+                    {/* {console.log(
+                      "sellPayAmt - sellEstPrice %%%",
+                      sellPayAmt,
+                      sellEstPrice
+                    )} */}
+                    {/* {(sellPayAmt - sellEstPrice).toFixed(8)}{" "} */}
+                    {/* {precision(sellPayAmt - sellEstPrice)} {this.state.currency} */}
+                    {precision(
+                      (this.state.total * this.state.userBalFees) / 100
+                    )}{" "}
                     {this.state.currency}
                   </WillpayBelow2>
                 </ApproxBelow>

@@ -527,7 +527,7 @@ class KYCForm extends Component {
               : moment(profileData.dob, "DD-MM-YYYY").format("YYYY-MM-DD");
           fields["country_code"] =
             profileData.country_code !== null ? profileData.country_code : "";
-          let country_code = "";
+          let country_code = profileData.country_code;
           console.log("^^^profileData.country_code ", profileData.country_code);
           // if (
           //   profileData.country_code == "US" ||
@@ -537,68 +537,58 @@ class KYCForm extends Component {
           //     showSSN: true
           //   });
           // }
-          if (profileData.country) {
-            // console.log("kyc dob ^^^^", profileData.countryJsonId);
-            var countrySelected = CountryData.getCountryById(
-              profileData.countryJsonId - 1
-            );
+          // if (profileData.country) {
+          //   // console.log("kyc dob ^^^^", profileData.countryJsonId);
+          //   var countrySelected = CountryData.getCountryById(
+          //     profileData.countryJsonId - 1
+          //   );
 
-            if (countrySelected) {
-              country_code = countrySelected.sortname;
-            }
-            fields["country_code"] = country_code;
-            // console.log("kyc dob else ^^^^^", country_code);
-          }
+          //   if (countrySelected) {
+          //     country_code = countrySelected.sortname;
+          //   }
+          //   fields["country_code"] = country_code;
+          //   // console.log("kyc dob else ^^^^^", country_code);
+          // }
           if (profileData.phone_number) {
             fields["phone_number"] = profileData.phone_number.replace(/ /g, "");
-            fields["country_code"] = country_code;
+            // fields["country_code"] = country_code;
             let arr = [];
             arr.push(country_code);
-            this.setState(
-              {
-                countrychange: true,
-                mobile: profileData.phone_number.replace(/ /g, ""),
-                phoneCountry: arr,
-                displayCountry: true,
-                fields,
-                showSSN: true,
-              },
-              () => {
-                // if (
-                //   profileData.country_code == "US" ||
-                //   profileData.country_code == "CA"
-                // )
-                //   self.setState({
-                //     showSSN: true,
-                //   });
-              }
-            );
-          } else if (profileData.country) {
-            fields["phone_number"] =
-              typeof profileData.phone_number == "string"
-                ? profileData.phone_number.replace(/ /g, "")
-                : profileData.phone_number;
-            let phone = profileData.phone_number;
-            let arr = [];
-            arr.push(country_code);
-            this.setState(
-              {
-                countrychange: true,
-                // mobile: profileData.phone_number,
-                phoneCountry: arr,
-                displayCountry: true,
-                fields,
-                showSSN: true,
-              },
-              () => {
-                // if (country_code == "US" || country_code == "CA") {
-                //   self.setState({
-                //     showSSN: true,
-                //   });
-                // }
-              }
-            );
+            this.setState({
+              countrychange: true,
+              mobile: profileData.phone_number.replace(/ /g, ""),
+              phoneCountry: arr,
+              displayCountry: true,
+              fields,
+              showSSN: true,
+            });
           }
+          // else if (profileData.country) {
+          //   fields["phone_number"] =
+          //     typeof profileData.phone_number == "string"
+          //       ? profileData.phone_number.replace(/ /g, "")
+          //       : profileData.phone_number;
+          //   let phone = profileData.phone_number;
+          //   let arr = [];
+          //   arr.push(country_code);
+          //   this.setState(
+          //     {
+          //       countrychange: true,
+          //       // mobile: profileData.phone_number,
+          //       phoneCountry: arr,
+          //       displayCountry: true,
+          //       fields,
+          //       showSSN: true,
+          //     },
+          //     () => {
+          //       // if (country_code == "US" || country_code == "CA") {
+          //       //   self.setState({
+          //       //     showSSN: true,
+          //       //   });
+          //       // }
+          //     }
+          //   );
+          // }
           let temp = profileData;
           temp["dob"] = moment(profileData.dob, "DD-MM-YYYY").format(
             "YYYY-MM-DD"
