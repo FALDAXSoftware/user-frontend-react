@@ -254,7 +254,11 @@ class DetailsTable extends React.Component {
                             </td>
                             <td>{details[index].source_address}</td>
                             <td>{details[index].destination_address}</td>
-                            <td>{precision(details[index].amount)}</td>
+                            <td>
+                              {details[index].amount
+                                ? precision(details[index].amount)
+                                : "0"}
+                            </td>
                             <td>
                               {details[index].faldax_fee === "-"
                                 ? details[index].faldax_fee
@@ -269,7 +273,11 @@ class DetailsTable extends React.Component {
                                 8
                               )} */}
                             </td>
-                            <td>{precision(details[index].total)}</td>
+                            <td>
+                              {details[index].total
+                                ? precision(details[index].total)
+                                : "0"}
+                            </td>
                             <td>
                               {me.props.coin_code === "xrp" ? (
                                 details[index].transaction_id ? (
