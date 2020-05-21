@@ -531,7 +531,7 @@ class Trade extends Component {
         name: element.name.split("-")[0],
         currency,
         price: precision(element.last_price),
-        volume: precision(element.volume),
+        volume: precisionTwo(element.volume),
         change: precisionTwo(element.percentChange),
         pairName: element.name,
       });
@@ -1740,6 +1740,7 @@ class Trade extends Component {
                         orderTradeData={this.state.orderTradeData}
                         height={self.state.myOrderTableHeight}
                         butonEnable={this.state.butonEnable}
+                        currency={this.state.currency}
                       />
                     </LeftDiv2>
                   </div>

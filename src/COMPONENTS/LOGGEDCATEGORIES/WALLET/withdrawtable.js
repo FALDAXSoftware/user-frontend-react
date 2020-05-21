@@ -187,7 +187,11 @@ class WithdrawTable extends React.Component {
                             </td>
                             <td>{details[index].source_address}</td>
                             <td>{details[index].destination_address}</td>
-                            <td>{precision(details[index].amount)}</td>
+                            <td>
+                              {details[index].amount
+                                ? precision(details[index].amount)
+                                : "0"}
+                            </td>
                             <td>{status}</td>
                             <td>
                               {details[index].reason === ""
