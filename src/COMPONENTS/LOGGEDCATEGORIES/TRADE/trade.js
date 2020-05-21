@@ -1670,6 +1670,8 @@ class Trade extends Component {
                       io={io}
                       hisFunc={(loader) => this.hisFunc(loader)}
                       height={self.state.orderHistoryTableHeight}
+                      currency={this.state.currency}
+                      crypto={this.state.crypto}
                     />
                   </div>
                 </div>
@@ -1741,6 +1743,7 @@ class Trade extends Component {
                         height={self.state.myOrderTableHeight}
                         butonEnable={this.state.butonEnable}
                         currency={this.state.currency}
+                        crypto={this.state.crypto}
                       />
                     </LeftDiv2>
                   </div>
