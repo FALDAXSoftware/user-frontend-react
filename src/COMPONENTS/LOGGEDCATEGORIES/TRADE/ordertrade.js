@@ -223,14 +223,19 @@ class OrderTrade extends Component {
                         <tr>
                           <SideType type={sideValue}>{sideValue}</SideType>
                           <td>
-                            {precision(data.quantity)} {currencyValue}
+                            {/* {precision(data.quantity)} {currencyValue} */}
+                            {precision(data.quantity)} {self.props.crypto}
                           </td>
                           <td>
                             {self.props.pending !== 2
                               ? data.order_type === "Market"
                                 ? data.order_type
-                                : precision(data.limit_price)
-                              : precision(data.limit_price)}
+                                : `${precision(data.limit_price)}${" "}${
+                                    self.props.currency
+                                  }`
+                              : `${precision(data.limit_price)}${" "}${
+                                  self.props.currency
+                                }`}
                           </td>
                           {/* <td>
                             {self.props.pending != 2
@@ -239,13 +244,15 @@ class OrderTrade extends Component {
                           </td> */}
                           <SideType type={data.side}>
                             {self.props.pending !== 2
-                              ? precision(Filled)
+                              ? `${precision(Filled)}${" "}${self.props.crypto}`
                               : data.stop_price !== undefined
-                              ? precision(data.stop_price)
+                              ? `${precision(data.stop_price)}${" "}${
+                                  self.props.currency
+                                }`
                               : 0}
                           </SideType>
                           <td>
-                            {precision(data.fill_price)} {data.currency}
+                            {precision(data.fill_price)} {self.props.currency}
                           </td>
                           <td>{typeValue}</td>
                           <td>{date}</td>
