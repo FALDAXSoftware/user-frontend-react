@@ -362,7 +362,7 @@ export const inbuiltTemplates = [
         name: "Mini graph",
         checked: true,
         multiple: true,
-        data: ["XRP-BTC", "XRP-ETH", "XRP-LTC"],
+        data: ["XRP-BTC", "XRP-ETH", "LTC-BTC"],
       },
 
       {
