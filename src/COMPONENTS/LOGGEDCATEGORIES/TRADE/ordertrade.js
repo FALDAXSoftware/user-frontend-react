@@ -251,8 +251,12 @@ class OrderTrade extends Component {
                           <td>{date}</td>
                           <td>
                             {self.props.pending === 2
-                              ? precision(data.quantity * data.limit_price)
-                              : precision(data.quantity * data.fill_price)}
+                              ? `${precision(
+                                  data.quantity * data.limit_price
+                                )}${" "}${self.props.currency}`
+                              : `${precision(
+                                  data.quantity * data.fill_price
+                                )}${" "}${self.props.currency}`}
                           </td>
                           {self.props.pending === 2 ? (
                             <th>
