@@ -102,7 +102,7 @@ class Portfolio extends Component {
         </Topic>
         <HighLow>
           <LeftHl>
-            {precision(this.state.total)} {userFiat}
+            {precision(parseFloat(this.state.total))} {userFiat}
           </LeftHl>
           <RightHl
             className={
@@ -114,7 +114,7 @@ class Portfolio extends Component {
             ) : (
               <Icon type="arrow-up" />
             )}
-            {precision(this.state.diffrence)} {userFiat}
+            {precision(parseFloat(this.state.diffrence))} {userFiat}
           </RightHl>
         </HighLow>
         <ActDiv>
