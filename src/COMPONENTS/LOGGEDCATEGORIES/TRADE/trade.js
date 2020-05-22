@@ -1650,7 +1650,7 @@ class Trade extends Component {
                       }
                       displayType={"text"}
                       thousandSeparator={true}
-                      suffix="USD"
+                      suffix={this.state.currency}
                     />
                   </span>
                 </span>
