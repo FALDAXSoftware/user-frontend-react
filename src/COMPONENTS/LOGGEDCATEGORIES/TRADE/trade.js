@@ -40,6 +40,7 @@ import OrderTrade from "./ordertrade";
 import { globalVariables } from "Globals.js";
 import TradingViewChart from "COMPONENTS/tradingviewchart";
 import { translate } from "react-i18next";
+import NumberFormat from "react-number-format";
 /* import FaldaxLoader from 'SHARED-COMPONENTS/FaldaxLoader'; */
 
 /* Styled-Components */
@@ -150,7 +151,7 @@ function precisionTwo(x) {
 }
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 const originalLayouts = getFromLS("layouts") || {};
-
+const _AMAZONBUCKET = globalVariables._AMAZONBUCKET;
 let { API_URL, tvChartURL, SOCKET_HOST } = globalVariables;
 /* var socketIOClient = require('socket.io-client');
 io.sails.url = API_URL;
@@ -271,6 +272,110 @@ const RGL = styled(ResponsiveReactGridLayout)`
         : ""};
   }
 `;
+const PairMainDiv = styled(Col)`
+  background-color: ${(props) =>
+    props.theme.mode === "dark" ? "#041b2c" : "white"};
+  border-radius: 5px;
+  -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
+  -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
+  box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
+  margin: 10px 10px 20px;
+  padding: 25px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  @media (max-width: 990px) {
+    flex-wrap: wrap;
+  }
+`;
+const TopDiv = styled.div`
+  display: flex;
+  width: 16.66%;
+  justify-content: center;
+  position: relative;
+  flex-wrap: wrap;
+  &:after {
+    content: "";
+    display: inherit;
+    background: #e8e8e8;
+    height: 20px;
+    width: 1px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+  }
+  &.last_child:after {
+    display: none;
+  }
+  & .top_head {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    font-size: 15px;
+    margin: 0 0 10px 0;
+    line-height: 1;
+    align-items: flex-end;
+    > .highlighted {
+      line-height: 1;
+      font-size: 24px;
+      font-weight: 600;
+      margin: 0 4px 0 0;
+    }
+  }
+  & .bottom_name {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    font-size: 14px;
+    line-height: 1;
+    font-weight: bold;
+    align-items: center;
+    > img {
+      height: 20px;
+      margin: 0 10px 0 0;
+    }
+  }
+  & .bottom_name.top {
+    margin: 0 0 10px 0;
+  }
+  & .values_data {
+    font-weight: bold;
+    font-size: 16px;
+    > .change {
+      padding: 0 15px 0 0;
+    }
+    > .red {
+      color: red;
+    }
+    > .green {
+      color: green;
+    }
+  }
+  @media (max-width: 1024px) {
+    & .top_head {
+      font-size: 13px;
+      > .highlighted {
+        font-size: 20px;
+      }
+    }
+    & .bottom_name {
+      font-size: 13px;
+    }
+    & .values_data {
+      font-size: 14px;
+    }
+  }
+  @media (max-width: 990px) {
+    flex-wrap: wrap;
+    width: 33.33%;
+    margin: 0 0 20px 0;
+  }
+  @media (max-width: 600px) {
+    width: 50%;
+  }
+`;
 
 const TabPane = Tabs.TabPane;
 let io = null;
@@ -306,6 +411,7 @@ class Trade extends Component {
       MLS: "",
       loader: false,
       butonEnable: false,
+      symbolHighLevelInfo: "",
     };
     io = this.props.io;
     this.t = this.props.t;
@@ -339,7 +445,9 @@ class Trade extends Component {
             // self.orderSocket(self.state.timePeriod, self.state.status);
             // self.getUserBal();
             this.joinRoom(
-              props.cryptoPair.prevRoom.crypto + "-" + props.cryptoPair.currency
+              props.cryptoPair.prevRoom.crypto +
+                "-" +
+                props.cryptoPair.prevRoom.currency
             );
           }
         );
@@ -354,7 +462,9 @@ class Trade extends Component {
             // self.orderSocket(self.state.timePeriod, self.state.status);
             // self.getUserBal();
             this.joinRoom(
-              props.cryptoPair.prevRoom.crypto + "-" + props.cryptoPair.currency
+              props.cryptoPair.prevRoom.crypto +
+                "-" +
+                props.cryptoPair.prevRoom.currency
             );
           }
         );
@@ -387,6 +497,17 @@ class Trade extends Component {
         orderTradeLoader: true,
       });
       // this.setState({ userBalLoader: true });
+      this.props.io.on("symbol-high-level-info", (data) => {
+        console.log(
+          "symbol-high-level-info^^^^data",
+          this.state.crypto,
+          this.state.currency
+        );
+        console.log("symbol-high-level-info^^^^data", data);
+        this.setState({
+          symbolHighLevelInfo: data,
+        });
+      });
       this.props.io.on("users-all-trade-data", (data) => {
         console.log("^^^^data", data);
         this.updateMyOrder(data);
@@ -1441,6 +1562,100 @@ class Trade extends Component {
         <Navigation />
         <GreyWrapTrade>
           <Row>
+            <PairMainDiv>
+              <TopDiv className="pair_name">
+                <span className="top_head">
+                  <span className="highlighted">{this.state.crypto}</span>/{" "}
+                  {this.state.currency}
+                </span>
+                <span className="bottom_name">
+                  <img
+                    src={`${_AMAZONBUCKET}${this.state.symbolHighLevelInfo.icon}`}
+                  />
+                  <span>{this.state.symbolHighLevelInfo.coin_name}</span>
+                </span>
+              </TopDiv>
+              <TopDiv className="pair_name">
+                <span className="bottom_name top">
+                  <span>Last Price</span>
+                </span>
+                <span className="values_data">
+                  <span>
+                    {this.state.symbolHighLevelInfo.last_price
+                      ? precision(this.state.symbolHighLevelInfo.last_price)
+                      : "0"}
+                  </span>
+                </span>
+              </TopDiv>
+              <TopDiv className="pair_name">
+                <span className="bottom_name top">
+                  <span>24h Change</span>
+                </span>
+                <span className="values_data">
+                  <span
+                  // className={
+                  //   parseFloat(this.state.symbolHighLevelInfo.change) < 0
+                  //     ? "red"
+                  //     : "green"
+                  // }
+                  >
+                    <NumberFormat
+                      value={
+                        this.state.symbolHighLevelInfo.change
+                          ? precisionTwo(this.state.symbolHighLevelInfo.change)
+                          : "0"
+                      }
+                      displayType={"text"}
+                      thousandSeparator={true}
+                      suffix="%"
+                    />
+                  </span>
+                </span>
+              </TopDiv>
+              <TopDiv className="pair_name">
+                <span className="bottom_name top">
+                  <span>24h High</span>
+                </span>
+                <span className="values_data">
+                  <span>
+                    {this.state.symbolHighLevelInfo.high
+                      ? precision(this.state.symbolHighLevelInfo.high)
+                      : "0"}
+                  </span>
+                </span>
+              </TopDiv>
+              <TopDiv className="pair_name">
+                <span className="bottom_name top">
+                  <span>24h Low</span>
+                </span>
+                <span className="values_data">
+                  <span>
+                    {this.state.symbolHighLevelInfo.low
+                      ? precision(this.state.symbolHighLevelInfo.low)
+                      : "0"}
+                  </span>
+                </span>
+              </TopDiv>
+              <TopDiv className="last_child">
+                <span className="bottom_name top">
+                  <span>24h Volume</span>
+                </span>
+                <span className="values_data">
+                  <span>
+                    <NumberFormat
+                      value={
+                        this.state.symbolHighLevelInfo.volume
+                          ? precision(this.state.symbolHighLevelInfo.volume)
+                          : "0"
+                      }
+                      displayType={"text"}
+                      thousandSeparator={true}
+                      suffix="USD"
+                    />
+                  </span>
+                </span>
+              </TopDiv>
+            </PairMainDiv>
             <Col>
               <RGL
                 className="layout"
