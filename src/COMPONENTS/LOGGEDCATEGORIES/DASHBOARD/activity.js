@@ -67,7 +67,7 @@ class Activity extends Component {
             activityData.push({
               date: date,
               action: element.side,
-              amount: precision(element.price),
+              amount: precision(element.quantity),
               symbol: element.symbol,
               completed: parseInt(
                 (parseFloat(element.quantity) * 100) /
