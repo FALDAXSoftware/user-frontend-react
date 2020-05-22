@@ -365,7 +365,8 @@ class StopLimit extends Component {
             if (this.validator.allValid()) {
               this.validator.hideMessages();
             }
-            obj["total"] = this.state.amount * this.props.userBal.buyPay;
+            // obj["total"] = this.state.amount * this.props.userBal.buyPay;
+            obj["total"] = this.state.amount * this.state.limit_price;
             self.setState({
               buyPayAmt: this.state.amount * this.props.userBal.buyPay,
               buyEstPrice:
@@ -375,7 +376,8 @@ class StopLimit extends Component {
             if (this.validator.allValid()) {
               this.validator.hideMessages();
             }
-            obj["total"] = this.state.amount * this.props.userBal.sellPay;
+            // obj["total"] = this.state.amount * this.props.userBal.sellPay;
+            obj["total"] = this.state.amount * this.state.limit_price;
             self.setState({
               sellPayAmt: this.state.amount * this.props.userBal.sellPay,
               sellEstPrice:

@@ -153,7 +153,7 @@ class History extends Component {
       loader: false,
       csvFields: [],
       checkedGroupValue: ["SEND", "RECEIVE", "SELL", "BUY"],
-      activeKey: "2",
+      activeKey: "1",
       // csvHeadersTrade: [
       //   { label: "Date", key: "date" },
       //   { label: "Side", key: "side" },
@@ -235,7 +235,8 @@ class History extends Component {
 
   loadCoinList() {
     var self = this;
-    if (this.state.activeKey === "1" || this.state.activeKey === "3") {
+    if (this.state.activeKey === "1") {
+      // if (this.state.activeKey === "1" || this.state.activeKey === "3") {
       fetch(API_URL + "/conversion/get-jst-pair", {
         method: "get",
         headers: {
@@ -301,9 +302,19 @@ class History extends Component {
 
   historyResult() {
     let { drop1Value, drop2Value, toDate, fromDate, activeKey } = this.state;
+    let key;
+    if (activeKey === "1") {
+      key = "3";
+    }
+    if (activeKey === "3") {
+      key = "1";
+    }
+    if (activeKey === "2") {
+      key = "2";
+    }
     let url =
       API_URL +
-      `/get-user-history?send=${this.state.send}&receive=${this.state.receive}&buy=${this.state.buy}&sell=${this.state.sell}&toDate=${this.state.toDate}&fromDate=${this.state.fromDate}&trade_type=${this.state.activeKey}`;
+      `/get-user-history?send=${this.state.send}&receive=${this.state.receive}&buy=${this.state.buy}&sell=${this.state.sell}&toDate=${this.state.toDate}&fromDate=${this.state.fromDate}&trade_type=${key}`;
     if (toDate && fromDate) {
       let url =
         API_URL +
@@ -313,19 +324,19 @@ class History extends Component {
           this.state.sell
         }&toDate=${this.state.toDate.format(
           "YYYY-MM-DD"
-        )}&fromDate=${this.state.fromDate.format("YYYY-MM-DD")}&trade_type=${
-          this.state.activeKey
-        }`;
+        )}&fromDate=${this.state.fromDate.format(
+          "YYYY-MM-DD"
+        )}&trade_type=${key}`;
     }
-    if (drop1Value && drop2Value && activeKey === "1") {
+    if (drop1Value && drop2Value && key === "1") {
       url =
         url + "&symbol=" + this.state.drop1Value + "/" + this.state.drop2Value;
     }
-    if (drop1Value && drop2Value && activeKey === "2") {
+    if (drop1Value && drop2Value && key === "2") {
       url =
         url + "&symbol=" + this.state.drop1Value + "-" + this.state.drop2Value;
     }
-    if (drop1Value && drop2Value && activeKey === "3") {
+    if (drop1Value && drop2Value && key === "3") {
       url =
         url + "&symbol=" + this.state.drop1Value + "-" + this.state.drop2Value;
     }
@@ -342,8 +353,7 @@ class History extends Component {
       .then((responseData) => {
         this.setState({ loader: false });
         if (responseData.status === 200) {
-          // console.log("this.state.activeKey", this.state.activeKey)
-          if (this.state.activeKey === "1") {
+          if (key === "1") {
             let csvJSTFields = [];
             if (responseData.data && responseData.data.length > 0) {
               for (var i = 0; i < responseData.data.length; i++) {
@@ -394,7 +404,7 @@ class History extends Component {
                 responseData.err
               );
             }
-          } else if (this.state.activeKey === "2") {
+          } else if (key === "2") {
             let csvSimplexFields = [];
             if (responseData.data && responseData.data.length > 0) {
               for (var i = 0; i < responseData.data.length; i++) {
@@ -447,7 +457,7 @@ class History extends Component {
                 responseData.err
               );
             }
-          } else if (this.state.activeKey === "3") {
+          } else if (key === "3") {
             let csvTradeFields = [];
             if (responseData.data && responseData.data.length > 0) {
               for (var i = 0; i < responseData.data.length; i++) {
@@ -705,11 +715,12 @@ class History extends Component {
                       {this.state.drop1List &&
                         this.state.drop1List.map((element) => {
                           if (this.state.activeKey === "1") {
-                            if (this.state.drop2Value === "XRP") {
+                            if (this.state.drop2Value === "ETH") {
                               if (
                                 element.coin != this.state.drop2Value &&
-                                element.coin != "LTC" &&
-                                element.coin != "ETH"
+                                element.coin != "BTC" &&
+                                element.coin != "SUSU" &&
+                                element.coin != "ERC20"
                               ) {
                                 return (
                                   <Option value={element.coin}>
@@ -717,23 +728,10 @@ class History extends Component {
                                   </Option>
                                 );
                               }
-                            } else if (this.state.drop2Value === "LTC") {
+                            } else if (this.state.drop2Value === "BTC") {
                               if (
                                 element.coin != this.state.drop2Value &&
-                                element.coin != "XRP" &&
-                                element.coin != "ETH"
-                              ) {
-                                return (
-                                  <Option value={element.coin}>
-                                    {element.coin}
-                                  </Option>
-                                );
-                              }
-                            } else if (this.state.drop2Value === "ETH") {
-                              if (
-                                element.coin != this.state.drop2Value &&
-                                element.coin != "XRP" &&
-                                element.coin != "LTC"
+                                element.coin != "ERC20"
                               ) {
                                 return (
                                   <Option value={element.coin}>
@@ -750,6 +748,51 @@ class History extends Component {
                                 );
                               }
                             }
+                            // if (this.state.drop2Value === "XRP") {
+                            //   if (
+                            //     element.coin != this.state.drop2Value &&
+                            //     element.coin != "LTC" &&
+                            //     element.coin != "ETH"
+                            //   ) {
+                            //     return (
+                            //       <Option value={element.coin}>
+                            //         {element.coin}
+                            //       </Option>
+                            //     );
+                            //   }
+                            // } else if (this.state.drop2Value === "LTC") {
+                            //   if (
+                            //     element.coin != this.state.drop2Value &&
+                            //     element.coin != "XRP" &&
+                            //     element.coin != "ETH"
+                            //   ) {
+                            //     return (
+                            //       <Option value={element.coin}>
+                            //         {element.coin}
+                            //       </Option>
+                            //     );
+                            //   }
+                            // } else if (this.state.drop2Value === "ETH") {
+                            //   if (
+                            //     element.coin != this.state.drop2Value &&
+                            //     element.coin != "XRP" &&
+                            //     element.coin != "LTC"
+                            //   ) {
+                            //     return (
+                            //       <Option value={element.coin}>
+                            //         {element.coin}
+                            //       </Option>
+                            //     );
+                            //   }
+                            // } else {
+                            //   if (element.coin != this.state.drop2Value) {
+                            //     return (
+                            //       <Option value={element.coin}>
+                            //         {element.coin}
+                            //       </Option>
+                            //     );
+                            //   }
+                            // }
                           } else {
                             if (element.coin != this.state.drop2Value) {
                               return (
@@ -761,8 +804,7 @@ class History extends Component {
                           }
                         })}
                     </Select1>
-                    {this.state.activeKey === "1" ||
-                    this.state.activeKey === "3" ? (
+                    {this.state.activeKey === "3" ? (
                       <FontAwesomeIconS
                         className="click_change"
                         onClick={() => {
@@ -796,43 +838,13 @@ class History extends Component {
                       {this.state.drop2List &&
                         this.state.drop2List.map((element) => {
                           if (this.state.activeKey === "1") {
-                            if (this.state.drop1Value === "XRP") {
-                              if (
-                                element.coin != this.state.drop1Value &&
-                                element.coin != "LTC" &&
-                                element.coin != "ETH"
-                              ) {
-                                return (
-                                  <Option value={element.coin}>
-                                    {element.coin}
-                                  </Option>
-                                );
-                              }
-                            } else if (this.state.drop1Value === "LTC") {
-                              if (
-                                element.coin != this.state.drop1Value &&
-                                element.coin != "XRP" &&
-                                element.coin != "ETH"
-                              ) {
-                                return (
-                                  <Option value={element.coin}>
-                                    {element.coin}
-                                  </Option>
-                                );
-                              }
-                            } else if (this.state.drop1Value === "ETH") {
-                              if (
-                                element.coin != this.state.drop1Value &&
-                                element.coin != "XRP" &&
-                                element.coin != "LTC"
-                              ) {
-                                return (
-                                  <Option value={element.coin}>
-                                    {element.coin}
-                                  </Option>
-                                );
-                              }
-                            } else {
+                            if (
+                              element.coin != "BCH" &&
+                              element.coin != "LTC" &&
+                              element.coin != "SUSU" &&
+                              element.coin != "ERC20" &&
+                              element.coin != "XRP"
+                            ) {
                               if (element.coin != this.state.drop1Value) {
                                 return (
                                   <Option value={element.coin}>
@@ -1069,6 +1081,86 @@ class History extends Component {
                       </HisTable>
                     </Tablediv>
                   </TabPane> */}
+                  <TabPane tab={this.t("trade:trade_head.message")} key="1">
+                    <Tablediv>
+                      <HisTable responsive striped condensed>
+                        <thead>
+                          <tr>
+                            <th>
+                              {this.t("settings:table_head_coin.message")}
+                            </th>
+                            <th>{this.t("wallet:date_text.message")}</th>
+                            <th>
+                              {this.t("history:filled_text.message")}{" "}
+                              {this.t("history:price_text.message")}
+                            </th>
+                            <th>{this.t("wallet:amount_text.message")}</th>
+                            <th>{this.t("history:side_text.message")}</th>
+                            <th>{this.t("trade:order_type_text.message")}</th>
+                            <th>{this.t("trade:limit_price_text.message")}</th>
+                            <th>{this.t("trade:stop_price_text.message")}</th>
+                          </tr>
+                        </thead>
+                        {/* {console.log(this.state.historyTradeData)} */}
+                        {this.state.historyTradeData !== undefined ? (
+                          this.state.historyTradeData.length > 0 ? (
+                            <tbody>
+                              {this.state.historyTradeData.map(function (
+                                temps
+                              ) {
+                                var date = moment
+                                  .utc(temps.created_at)
+                                  .local()
+                                  .format(
+                                    `${self.props.profileData.date_format} HH:mm:ss`
+                                  );
+                                var side =
+                                  Number(temps.user_id) ===
+                                  self.props.profileData.id
+                                    ? temps.side
+                                    : temps.side === "Buy"
+                                    ? "Sell"
+                                    : "Buy";
+
+                                var limit_price =
+                                  temps.order_type != "Market"
+                                    ? temps.limit_price
+                                    : 0.0;
+                                var stop_price =
+                                  temps.order_type == "StopLimit"
+                                    ? temps.stop_price
+                                    : 0.0;
+
+                                console.log(self.props.profileData.id);
+                                return (
+                                  <tr>
+                                    <td>{temps.symbol}</td>
+                                    <td>{date}</td>
+                                    <td>{temps.fill_price}</td>
+                                    <td>{temps.quantity}</td>
+                                    <td>{side}</td>
+                                    <td>{temps.order_type}</td>
+                                    <td>{limit_price}</td>
+                                    <td>{stop_price}</td>
+                                  </tr>
+                                );
+                              })}
+                            </tbody>
+                          ) : (
+                            <NDF>
+                              <tr>
+                                <td colSpan="8">
+                                  {t("support:no_data_found.message")}
+                                </td>
+                              </tr>
+                            </NDF>
+                          )
+                        ) : (
+                          ""
+                        )}
+                      </HisTable>
+                    </Tablediv>
+                  </TabPane>
                   <TabPane
                     tab={this.t(
                       "header:navbar_sub_menu_conversation_credit_card.message"
@@ -1162,86 +1254,6 @@ class History extends Component {
                                         </span>
                                       )}
                                     </td>
-                                  </tr>
-                                );
-                              })}
-                            </tbody>
-                          ) : (
-                            <NDF>
-                              <tr>
-                                <td colSpan="8">
-                                  {t("support:no_data_found.message")}
-                                </td>
-                              </tr>
-                            </NDF>
-                          )
-                        ) : (
-                          ""
-                        )}
-                      </HisTable>
-                    </Tablediv>
-                  </TabPane>
-                  <TabPane tab={this.t("trade:trade_head.message")} key="3">
-                    <Tablediv>
-                      <HisTable responsive striped condensed>
-                        <thead>
-                          <tr>
-                            <th>
-                              {this.t("settings:table_head_coin.message")}
-                            </th>
-                            <th>{this.t("wallet:date_text.message")}</th>
-                            <th>
-                              {this.t("history:filled_text.message")}{" "}
-                              {this.t("history:price_text.message")}
-                            </th>
-                            <th>{this.t("wallet:amount_text.message")}</th>
-                            <th>{this.t("history:side_text.message")}</th>
-                            <th>{this.t("trade:order_type_text.message")}</th>
-                            <th>{this.t("trade:limit_price_text.message")}</th>
-                            <th>{this.t("trade:stop_price_text.message")}</th>
-                          </tr>
-                        </thead>
-                        {/* {console.log(this.state.historyTradeData)} */}
-                        {this.state.historyTradeData !== undefined ? (
-                          this.state.historyTradeData.length > 0 ? (
-                            <tbody>
-                              {this.state.historyTradeData.map(function (
-                                temps
-                              ) {
-                                var date = moment
-                                  .utc(temps.created_at)
-                                  .local()
-                                  .format(
-                                    `${self.props.profileData.date_format} HH:mm:ss`
-                                  );
-                                var side =
-                                  Number(temps.user_id) ===
-                                  self.props.profileData.id
-                                    ? temps.side
-                                    : temps.side === "Buy"
-                                    ? "Sell"
-                                    : "Buy";
-
-                                var limit_price =
-                                  temps.order_type != "Market"
-                                    ? temps.limit_price
-                                    : 0.0;
-                                var stop_price =
-                                  temps.order_type == "StopLimit"
-                                    ? temps.stop_price
-                                    : 0.0;
-
-                                console.log(self.props.profileData.id);
-                                return (
-                                  <tr>
-                                    <td>{temps.symbol}</td>
-                                    <td>{date}</td>
-                                    <td>{temps.fill_price}</td>
-                                    <td>{temps.quantity}</td>
-                                    <td>{side}</td>
-                                    <td>{temps.order_type}</td>
-                                    <td>{limit_price}</td>
-                                    <td>{stop_price}</td>
                                   </tr>
                                 );
                               })}
