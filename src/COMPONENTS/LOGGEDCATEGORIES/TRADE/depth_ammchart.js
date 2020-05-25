@@ -125,7 +125,7 @@ class DepthChartAm extends Component {
     series.fontSize = "5px";
     series.fillOpacity = 0.1;
     series.tooltipText =
-      "Ask: [bold]{categoryX}[/]\nTotal volume: [bold]{valueY}[/]\nVolume: [bold]{bidsvolume}[/]";
+      "Bid: [bold]{categoryX}[/]\nTotal volume: [bold]{valueY}[/]\nVolume: [bold]{bidsvolume}[/]";
 
     let series2 = chart.series.push(new am4charts.StepLineSeries());
     series2.dataFields.categoryX = "value";
@@ -136,7 +136,7 @@ class DepthChartAm extends Component {
     series.fontSize = "5px";
     series2.fillOpacity = 0.1;
     series2.tooltipText =
-      "Bid: [bold]{categoryX}[/]\nTotal volume: [bold]{valueY}[/]\nVolume: [bold]{asksvolume}[/]";
+      "Ask: [bold]{categoryX}[/]\nTotal volume: [bold]{valueY}[/]\nVolume: [bold]{asksvolume}[/]";
 
     let series3 = chart.series.push(new am4charts.ColumnSeries());
     series3.dataFields.categoryX = "value";

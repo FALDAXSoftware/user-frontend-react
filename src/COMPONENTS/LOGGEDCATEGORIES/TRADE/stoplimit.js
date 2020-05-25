@@ -178,51 +178,58 @@ class StopLimit extends Component {
       console.log("trade-history-data^^^^data", this.props.io);
       this.props.io.on("trade-history-data", (data) => {
         console.log("trade-history-data^^^^data", data[0]);
-        this.setState(
-          {
-            disabledBtn: false,
-            latestFillPrice: data[0].fill_price,
-          },
-          () => {
-            console.log(
-              "trade-history-data^^^^data",
-              this.state.latestFillPrice
-            );
-            if (this.state.stop_price > 0) {
-              if (this.state.side === "Buy") {
-                if (
-                  parseFloat(this.state.stop_price) >
-                  parseFloat(this.state.latestFillPrice)
-                ) {
-                  this.setState({
-                    disabledBtn: false,
-                  });
+        if (data[0]) {
+          this.setState(
+            {
+              disabledBtn: false,
+              latestFillPrice: data[0].fill_price,
+            },
+            () => {
+              console.log(
+                "trade-history-data^^^^data",
+                this.state.latestFillPrice
+              );
+              if (this.state.stop_price > 0) {
+                if (this.state.side === "Buy") {
+                  if (
+                    parseFloat(this.state.stop_price) >
+                    parseFloat(this.state.latestFillPrice)
+                  ) {
+                    this.setState({
+                      disabledBtn: false,
+                    });
+                  } else {
+                    this.setState({
+                      disabledBtn: true,
+                    });
+                  }
                 } else {
-                  this.setState({
-                    disabledBtn: true,
-                  });
+                  if (
+                    parseFloat(this.state.stop_price) <
+                    parseFloat(this.state.latestFillPrice)
+                  ) {
+                    this.setState({
+                      disabledBtn: false,
+                    });
+                  } else {
+                    this.setState({
+                      disabledBtn: true,
+                    });
+                  }
                 }
               } else {
-                if (
-                  parseFloat(this.state.stop_price) <
-                  parseFloat(this.state.latestFillPrice)
-                ) {
-                  this.setState({
-                    disabledBtn: false,
-                  });
-                } else {
-                  this.setState({
-                    disabledBtn: true,
-                  });
-                }
+                this.setState({
+                  disabledBtn: false,
+                });
               }
-            } else {
-              this.setState({
-                disabledBtn: false,
-              });
             }
-          }
-        );
+          );
+        } else {
+          this.setState({
+            latestFillPrice: "",
+            disabledBtn: false,
+          });
+        }
       });
     }
     if (this.props.profileDetails) {
@@ -365,8 +372,8 @@ class StopLimit extends Component {
             if (this.validator.allValid()) {
               this.validator.hideMessages();
             }
-            // obj["total"] = this.state.amount * this.props.userBal.buyPay;
-            obj["total"] = this.state.amount * this.state.limit_price;
+            obj["total"] = this.state.amount * this.props.userBal.buyPay;
+            // obj["total"] = this.state.amount * this.state.limit_price;
             self.setState({
               buyPayAmt: this.state.amount * this.props.userBal.buyPay,
               buyEstPrice:
@@ -376,8 +383,8 @@ class StopLimit extends Component {
             if (this.validator.allValid()) {
               this.validator.hideMessages();
             }
-            // obj["total"] = this.state.amount * this.props.userBal.sellPay;
-            obj["total"] = this.state.amount * this.state.limit_price;
+            obj["total"] = this.state.amount * this.props.userBal.sellPay;
+            // obj["total"] = this.state.amount * this.state.limit_price;
             self.setState({
               sellPayAmt: this.state.amount * this.props.userBal.sellPay,
               sellEstPrice:
@@ -816,7 +823,7 @@ class StopLimit extends Component {
             {this.validator.message(
               "amount",
               this.state.amount,
-              "required|gtzero|numeric|decimalrestrict3",
+              "required|gtzero|numeric|decimalrestrict8",
               "trade-action-validation",
               {
                 required: this.t(
@@ -863,7 +870,7 @@ class StopLimit extends Component {
               )}
             </TotalWrap>
             {this.state.side === "Buy" && this.state.latestFillPrice ? (
-              <TriggerDiv>
+              <TriggerDiv className={this.state.disabledBtn ? "red" : ""}>
                 <span>
                   Trigger <Icon type="right" />{" "}
                 </span>
@@ -871,7 +878,7 @@ class StopLimit extends Component {
               </TriggerDiv>
             ) : (
               this.state.latestFillPrice && (
-                <TriggerDiv>
+                <TriggerDiv className={this.state.disabledBtn ? "red" : ""}>
                   <span>
                     Trigger <Icon type="left" />{" "}
                   </span>
