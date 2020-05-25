@@ -126,7 +126,7 @@ export const ActTable = styled(Table)`
         }
      
         &:hover {
-         background: #072135;
+        //  background: #072135;
         }
        }
     }
@@ -142,7 +142,7 @@ export const ActTable = styled(Table)`
         border-radius: 3px;
      
         :hover {
-         background: #072135;
+        //  background: #072135;
         }
        }
     }  */
@@ -226,7 +226,7 @@ export const PortTable = styled(Table)`
         }
      
         &:hover {
-         background: #072135;
+        //  background: #072135;
         }
        }
     }
@@ -243,7 +243,7 @@ export const PortTable = styled(Table)`
         border-radius: 3px;
      
         :hover {
-         background: #072135;
+        //  background: #072135;
         }
        }
     } */
