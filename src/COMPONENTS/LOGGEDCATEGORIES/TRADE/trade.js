@@ -18,6 +18,7 @@ import {
   Icon,
   Menu,
   Tooltip,
+  Spin,
 } from "antd";
 import styled from "styled-components";
 import { Responsive, WidthProvider } from "react-grid-layout";
@@ -71,6 +72,7 @@ import {
   SettingDropdown,
 } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
 import DepthChartAm from "./depth_ammchart";
+import { getProfileDataAction } from "../../../ACTIONS/SETTINGS/settingActions";
 function precision(x) {
   if (Math.abs(x) < 1.0) {
     var e = parseInt(x.toString().split("e-")[1]);
@@ -284,6 +286,9 @@ const PairMainDiv = styled(Col)`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  &.spin_load {
+    justify-content: center;
+  }
   @media (max-width: 990px) {
     flex-wrap: wrap;
   }
@@ -474,6 +479,9 @@ class Trade extends Component {
 
   componentDidMount() {
     console.log("^^^^", this.state.crypto, this.state.currency);
+    if (!this.props.profileDetails) {
+      this.props.getProfileDataAction(this.props.isLoggedIn);
+    }
     var self = this;
     // io.sails.headers = {
     //   Accept: "application/json",
@@ -1562,100 +1570,129 @@ class Trade extends Component {
         <Navigation />
         <GreyWrapTrade>
           <Row>
-            <PairMainDiv>
-              <TopDiv className="pair_name">
-                <span className="top_head">
-                  <span className="highlighted">{this.state.crypto}</span>/{" "}
-                  {this.state.currency}
-                </span>
-                <span className="bottom_name">
-                  <img
-                    src={`${_AMAZONBUCKET}${this.state.symbolHighLevelInfo.icon}`}
-                  />
-                  <span>{this.state.symbolHighLevelInfo.coin_name}</span>
-                </span>
-              </TopDiv>
-              <TopDiv className="pair_name">
-                <span className="bottom_name top">
-                  <span>Last Price</span>
-                </span>
-                <span className="values_data">
-                  <span>
-                    {this.state.symbolHighLevelInfo.last_price
-                      ? precision(this.state.symbolHighLevelInfo.last_price)
-                      : "0"}
+            {this.state.symbolHighLevelInfo ? (
+              <PairMainDiv>
+                <TopDiv className="pair_name">
+                  <span className="top_head">
+                    <span className="highlighted">{this.state.crypto}</span>/{" "}
+                    {this.state.currency}
                   </span>
-                </span>
-              </TopDiv>
-              <TopDiv className="pair_name">
-                <span className="bottom_name top">
-                  <span>24h Change</span>
-                </span>
-                <span className="values_data">
-                  <span
-                  // className={
-                  //   parseFloat(this.state.symbolHighLevelInfo.change) < 0
-                  //     ? "red"
-                  //     : "green"
-                  // }
-                  >
+
+                  <span className="bottom_name">
+                    <img
+                      src={`${_AMAZONBUCKET}${this.state.symbolHighLevelInfo.icon}`}
+                    />
+                    <span>{this.state.symbolHighLevelInfo.coin_name}</span>
+                  </span>
+                </TopDiv>
+                <TopDiv className="pair_name">
+                  <span className="bottom_name top">
+                    <span>
+                      {this.t("tier_changes:last_price_text.message")}
+                    </span>
+                  </span>
+                  <span className="values_data">
+                    <span
+                      className={
+                        this.state.symbolHighLevelInfo.side === "Sell"
+                          ? "red change"
+                          : "green change"
+                      }
+                    >
+                      {this.state.symbolHighLevelInfo.last_price
+                        ? precision(this.state.symbolHighLevelInfo.last_price)
+                        : "0"}
+                    </span>
+                  </span>
+                  <span className="values_data">
                     <NumberFormat
                       value={
-                        this.state.symbolHighLevelInfo.change
-                          ? precisionTwo(this.state.symbolHighLevelInfo.change)
+                        this.state.symbolHighLevelInfo.fiatValue
+                          ? precisionTwo(
+                              this.state.symbolHighLevelInfo.fiatValue
+                            )
                           : "0"
                       }
                       displayType={"text"}
                       thousandSeparator={true}
-                      suffix="%"
+                      prefix="$"
                     />
                   </span>
-                </span>
-              </TopDiv>
-              <TopDiv className="pair_name">
-                <span className="bottom_name top">
-                  <span>24h High</span>
-                </span>
-                <span className="values_data">
-                  <span>
-                    {this.state.symbolHighLevelInfo.high
-                      ? precision(this.state.symbolHighLevelInfo.high)
-                      : "0"}
+                </TopDiv>
+                <TopDiv className="pair_name">
+                  <span className="bottom_name top">
+                    <span>
+                      {this.t("tier_changes:24h_change_text.message")}
+                    </span>
                   </span>
-                </span>
-              </TopDiv>
-              <TopDiv className="pair_name">
-                <span className="bottom_name top">
-                  <span>24h Low</span>
-                </span>
-                <span className="values_data">
-                  <span>
-                    {this.state.symbolHighLevelInfo.low
-                      ? precision(this.state.symbolHighLevelInfo.low)
-                      : "0"}
+                  <span className="values_data">
+                    <span>
+                      <NumberFormat
+                        value={
+                          this.state.symbolHighLevelInfo.change
+                            ? precisionTwo(
+                                this.state.symbolHighLevelInfo.change
+                              )
+                            : "0"
+                        }
+                        displayType={"text"}
+                        thousandSeparator={true}
+                        suffix="%"
+                      />
+                    </span>
                   </span>
-                </span>
-              </TopDiv>
-              <TopDiv className="last_child">
-                <span className="bottom_name top">
-                  <span>24h Volume</span>
-                </span>
-                <span className="values_data">
-                  <span>
-                    <NumberFormat
-                      value={
-                        this.state.symbolHighLevelInfo.volume
-                          ? precision(this.state.symbolHighLevelInfo.volume)
-                          : "0"
-                      }
-                      displayType={"text"}
-                      thousandSeparator={true}
-                      suffix={this.state.currency}
-                    />
+                </TopDiv>
+                <TopDiv className="pair_name">
+                  <span className="bottom_name top">
+                    <span>{this.t("tier_changes:24h_high_text.message")}</span>
                   </span>
-                </span>
-              </TopDiv>
-            </PairMainDiv>
+                  <span className="values_data">
+                    <span>
+                      {this.state.symbolHighLevelInfo.high
+                        ? precision(this.state.symbolHighLevelInfo.high)
+                        : "0"}
+                    </span>
+                  </span>
+                </TopDiv>
+                <TopDiv className="pair_name">
+                  <span className="bottom_name top">
+                    <span>{this.t("tier_changes:24h_low_text.message")}</span>
+                  </span>
+                  <span className="values_data">
+                    <span>
+                      {this.state.symbolHighLevelInfo.low
+                        ? precision(this.state.symbolHighLevelInfo.low)
+                        : "0"}
+                    </span>
+                  </span>
+                </TopDiv>
+                <TopDiv className="last_child">
+                  <span className="bottom_name top">
+                    <span>
+                      {this.t("tier_changes:24h_volume_text.message")}
+                    </span>
+                  </span>
+                  <span className="values_data">
+                    <span>
+                      <NumberFormat
+                        value={
+                          this.state.symbolHighLevelInfo.volume
+                            ? precision(this.state.symbolHighLevelInfo.volume)
+                            : "0"
+                        }
+                        displayType={"text"}
+                        thousandSeparator={true}
+                        suffix={this.state.currency}
+                      />
+                    </span>
+                  </span>
+                </TopDiv>
+              </PairMainDiv>
+            ) : (
+              <PairMainDiv className="spin_load">
+                <Spin />
+              </PairMainDiv>
+            )}
             <Col>
               <RGL
                 className="layout"
@@ -1991,6 +2028,8 @@ function mapStateToProps(state) {
 }
 const mapDispatchToProps = (dispatch) => ({
   cryptoCurrency: (Pair) => dispatch(cryptoCurrency(Pair)),
+  getProfileDataAction: (isLoggedIn) =>
+    dispatch(getProfileDataAction(isLoggedIn)),
 });
 
 export default translate([

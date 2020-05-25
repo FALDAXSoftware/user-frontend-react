@@ -904,6 +904,12 @@ class Login_Form extends Component {
         this.props.location.state.from.pathname == "/crypto-conversion"
       ) {
         this.props.history.push(this.props.location.state.from.pathname);
+      } else if (
+        this.props.location.state &&
+        this.props.location.state.from &&
+        this.props.location.state.from.pathname == "/trade"
+      ) {
+        this.props.history.push(this.props.location.state.from.pathname);
       } else {
         if (this.props.isKYCDone == 2) {
           this.props.history.push("/conversion");
