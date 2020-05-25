@@ -814,21 +814,22 @@ class LoggedNavigation extends Component {
         <Menu.Item key="1">
           <a
             onClick={() =>
+              this.props.history.push({ pathname: "/history", tradeType: "1" })
+            }
+          >
+            {this.t("trade:trade_head.message")}
+          </a>
+        </Menu.Item>
+        <Menu.Item key="2">
+          <a
+            onClick={() =>
               this.props.history.push({ pathname: "/history", tradeType: "2" })
             }
           >
             {t("navbar_sub_menu_conversation_credit_card.message")}
           </a>
         </Menu.Item>
-        <Menu.Item key="2">
-          <a
-            onClick={() =>
-              this.props.history.push({ pathname: "/history", tradeType: "3" })
-            }
-          >
-            {this.t("trade:trade_head.message")}
-          </a>
-        </Menu.Item>
+
         {/* <Menu.Item key="2">
           <a
             onClick={() =>
@@ -943,7 +944,7 @@ class LoggedNavigation extends Component {
                 to={{
                   pathname: "/history",
                   state: {
-                    tradeType: "2",
+                    tradeType: "1",
                   },
                 }}
               >
@@ -1117,11 +1118,11 @@ class LoggedNavigation extends Component {
                       onClick={() =>
                         this.props.history.push({
                           pathname: "/history",
-                          tradeType: "2",
+                          tradeType: "1",
                         })
                       }
                     >
-                      {t("navbar_sub_menu_conversation_credit_card.message")}
+                      {this.t("trade:trade_head.message")}
                     </a>
                   </Menu.Item>
                   <Menu.Item key="2">
@@ -1129,11 +1130,11 @@ class LoggedNavigation extends Component {
                       onClick={() =>
                         this.props.history.push({
                           pathname: "/history",
-                          tradeType: "3",
+                          tradeType: "2",
                         })
                       }
                     >
-                      {this.t("trade:trade_head.message")}
+                      {t("navbar_sub_menu_conversation_credit_card.message")}
                     </a>
                   </Menu.Item>
                   {/* <Menu.Item key="2">
