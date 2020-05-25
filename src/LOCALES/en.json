@@ -4575,6 +4575,36 @@
       "message": "Please re-upload your documents.",
       "message_type": "Web content",
       "context": "Please re-upload your documents text"
+    },
+    "last_price_text": {
+      "page": "Trade",
+      "message": "Last Price",
+      "message_type": "Web content",
+      "context": "Last Price text"
+    },
+    "24h_change_text": {
+      "page": "Trade",
+      "message": "24h Change",
+      "message_type": "Web content",
+      "context": "24h Change text"
+    },
+    "24h_high_text": {
+      "page": "Trade",
+      "message": "24h High",
+      "message_type": "Web content",
+      "context": "24h High text"
+    },
+    "24h_low_text": {
+      "page": "Trade",
+      "message": "24h Low",
+      "message_type": "Web content",
+      "context": "24h Low text"
+    },
+    "24h_volume_text": {
+      "page": "Trade",
+      "message": "24h Volume",
+      "message_type": "Web content",
+      "context": "24h Volume text"
     }
   }
 }
