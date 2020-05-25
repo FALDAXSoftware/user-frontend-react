@@ -138,6 +138,17 @@ class Market extends Component {
           }
         },
       },
+      decimalrestrict8: {
+        message: this.t("validations:8_decimal_error.message"),
+        rule: (val) => {
+          var RE = /^\d*\.?\d{0,8}$/;
+          if (RE.test(val)) {
+            return true;
+          } else {
+            return false;
+          }
+        },
+      },
     });
   }
   /* Life-Cycle Methods */
@@ -679,7 +690,7 @@ class Market extends Component {
             {this.validator.message(
               "Amount",
               this.state.amount,
-              "required|gtzero|numeric|decimalrestrict3",
+              "required|gtzero|numeric|decimalrestrict8",
               "trade-action-validation",
               {
                 required: this.t(
