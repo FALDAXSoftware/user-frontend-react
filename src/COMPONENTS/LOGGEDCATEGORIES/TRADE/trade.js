@@ -337,6 +337,7 @@ const TopDiv = styled.div`
     line-height: 1;
     font-weight: bold;
     align-items: center;
+    color: ${(props) => (props.theme.mode === "dark" ? "#1890ff" : "#174c7e")};
     > img {
       height: 20px;
       margin: 0 10px 0 0;
@@ -348,6 +349,8 @@ const TopDiv = styled.div`
   & .values_data {
     font-weight: bold;
     font-size: 16px;
+    color: ${(props) =>
+      props.theme.mode === "dark" ? "#fff" : "rgba(0, 0, 0, 0.65)"};
     > .change {
       padding: 0 15px 0 0;
     }
@@ -370,6 +373,16 @@ const TopDiv = styled.div`
     }
     & .values_data {
       font-size: 14px;
+    }
+  }
+  &.pair_name {
+    & .top_head {
+      color: ${(props) =>
+        props.theme.mode === "dark" ? "#1890ff" : "#174c7e"};
+    }
+    & .bottom_name {
+      color: ${(props) =>
+        props.theme.mode === "dark" ? "#fff" : "rgba(0, 0, 0, 0.65)"};
     }
   }
   @media (max-width: 990px) {
@@ -1585,7 +1598,7 @@ class Trade extends Component {
                     <span>{this.state.symbolHighLevelInfo.coin_name}</span>
                   </span>
                 </TopDiv>
-                <TopDiv className="pair_name">
+                <TopDiv>
                   <span className="bottom_name top">
                     <span>
                       {this.t("tier_changes:last_price_text.message")}
@@ -1619,19 +1632,25 @@ class Trade extends Component {
                     />
                   </span>
                 </TopDiv>
-                <TopDiv className="pair_name">
+                <TopDiv>
                   <span className="bottom_name top">
                     <span>
                       {this.t("tier_changes:24h_change_text.message")}
                     </span>
                   </span>
                   <span className="values_data">
-                    <span>
+                    <span
+                      className={
+                        parseFloat(this.state.symbolHighLevelInfo.change) >= 0
+                          ? "green"
+                          : "red"
+                      }
+                    >
                       <NumberFormat
                         value={
                           this.state.symbolHighLevelInfo.change
                             ? precisionTwo(
-                                this.state.symbolHighLevelInfo.change
+                                Math.abs(this.state.symbolHighLevelInfo.change)
                               )
                             : "0"
                         }
@@ -1642,7 +1661,7 @@ class Trade extends Component {
                     </span>
                   </span>
                 </TopDiv>
-                <TopDiv className="pair_name">
+                <TopDiv>
                   <span className="bottom_name top">
                     <span>{this.t("tier_changes:24h_high_text.message")}</span>
                   </span>
@@ -1654,7 +1673,7 @@ class Trade extends Component {
                     </span>
                   </span>
                 </TopDiv>
-                <TopDiv className="pair_name">
+                <TopDiv>
                   <span className="bottom_name top">
                     <span>{this.t("tier_changes:24h_low_text.message")}</span>
                   </span>
@@ -1677,12 +1696,14 @@ class Trade extends Component {
                       <NumberFormat
                         value={
                           this.state.symbolHighLevelInfo.volume
-                            ? precision(this.state.symbolHighLevelInfo.volume)
+                            ? precisionTwo(
+                                this.state.symbolHighLevelInfo.volume
+                              )
                             : "0"
                         }
                         displayType={"text"}
                         thousandSeparator={true}
-                        suffix={this.state.currency}
+                        suffix={`${" "}${this.state.currency}`}
                       />
                     </span>
                   </span>
@@ -1832,6 +1853,7 @@ class Trade extends Component {
                             userBal={this.state.userBal}
                             crypto={this.state.crypto}
                             currency={this.state.currency}
+                            io={this.props.io}
                           />
                         </TabPane>
                         <TabPane tab={this.t("limit_head.message")} key="2">
@@ -1840,6 +1862,7 @@ class Trade extends Component {
                             userBal={this.state.userBal}
                             crypto={this.state.crypto}
                             currency={this.state.currency}
+                            io={this.props.io}
                           />
                         </TabPane>
                         <TabPane
