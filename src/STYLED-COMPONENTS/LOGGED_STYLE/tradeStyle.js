@@ -943,4 +943,7 @@ export const TriggerDiv = styled.div`
       padding: 0 5px;
     }
   }
+  &.red {
+    color: red;
+  }
 `;
