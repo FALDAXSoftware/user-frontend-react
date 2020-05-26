@@ -109,6 +109,8 @@ class Market extends Component {
       fiatCryptoValue: "",
       fiatCurrencyValue: 0,
       fiatCurrency: "",
+      sellTotal: 0,
+      buyTotal: 0,
     };
     this.t = this.props.t;
     this.onChange = this.onChange.bind(this);
@@ -149,6 +151,24 @@ class Market extends Component {
           }
         },
       },
+      // maxLimitBuy: {
+      //   message: "Invalid order quantity",
+      //   rule: (val, params, validator) => {
+      //     if (this.state.side === "Buy") {
+      //       if (parseFloat(val) > parseFloat(this.state.sellTotal)) {
+      //         return false;
+      //       } else {
+      //         return true;
+      //       }
+      //     } else {
+      //       if (parseFloat(val) > parseFloat(this.state.buyTotal)) {
+      //         return false;
+      //       } else {
+      //         return true;
+      //       }
+      //     }
+      //   },
+      // },
     });
   }
   /* Life-Cycle Methods */
@@ -168,6 +188,7 @@ class Market extends Component {
       sellPayAmt: 0,
       buyEstPrice: 0,
       sellEstPrice: 0,
+      disabledBtn: false,
       // fiatCryptoValue: props.userBal.cryptoFiat,
       // fiatCurrencyValue: props.userBal.currencyFiat,
       singlefiatCryptoValue: props.userBal.cryptoFiat,
@@ -183,6 +204,52 @@ class Market extends Component {
     }
   }
   componentDidMount() {
+    if (this.props.io) {
+      this.props.io.on("sell-book-data", (data) => {
+        console.log("sell^^^^sell-data Sell Book", data);
+        this.setState(
+          {
+            sellTotal: data.total,
+          },
+          () => {
+            if (
+              this.state.side === "Buy" &&
+              parseFloat(this.state.amount) > parseFloat(this.state.sellTotal)
+            ) {
+              this.setState({
+                disabledMode: true,
+              });
+            } else {
+              this.setState({
+                disabledMode: false,
+              });
+            }
+          }
+        );
+      });
+      this.props.io.on("buy-book-data", (data) => {
+        console.log("sell^^^^sell data Buy Book", data);
+        this.setState(
+          {
+            buyTotal: data.total_quantity,
+          },
+          () => {
+            if (
+              this.state.side === "Sell" &&
+              parseFloat(this.state.amount) > parseFloat(this.state.buyTotal)
+            ) {
+              this.setState({
+                disabledMode: true,
+              });
+            } else {
+              this.setState({
+                disabledMode: false,
+              });
+            }
+          }
+        );
+      });
+    }
     console.log("^^^^userdata", this.props.userBal);
     let fiat, currency;
     if (this.props.profileDetails) {
@@ -296,7 +363,6 @@ class Market extends Component {
       },
       () => {
         obj = {};
-
         if (this.state.amount >= 0) {
           if (this.state.side === "Buy") {
             self.setState({
@@ -314,6 +380,17 @@ class Market extends Component {
               this.setState({
                 // fiatCryptoValue: fiatValue
                 fiatCurrencyValue: fiatValue,
+              });
+            }
+            if (
+              parseFloat(this.state.amount) > parseFloat(this.state.sellTotal)
+            ) {
+              self.setState({
+                disabledMode: true,
+              });
+            } else {
+              self.setState({
+                disabledMode: false,
               });
             }
           } else if (this.state.side === "Sell") {
@@ -348,11 +425,20 @@ class Market extends Component {
                 fiatCurrencyValue: fiatValue,
               });
             }
+            if (
+              parseFloat(this.state.amount) > parseFloat(this.state.buyTotal)
+            ) {
+              self.setState({
+                disabledMode: true,
+              });
+            } else {
+              self.setState({
+                disabledMode: false,
+              });
+            }
           }
         } else {
           obj["total"] = 0;
-
-          // obj["amount"] = Number(this.state.amount).toFixed(3);
         }
         self.setState({ ...obj });
       }
@@ -698,6 +784,13 @@ class Market extends Component {
                 ),
                 numeric: this.t("general_3:validation_amount_numeric.message"),
               }
+            )}
+            {this.state.disabledMode ? (
+              <div className="trade-action-validation">
+                Invalid order quantity
+              </div>
+            ) : (
+              ""
             )}
           </TotalWrap>
         </ETHWrap>
