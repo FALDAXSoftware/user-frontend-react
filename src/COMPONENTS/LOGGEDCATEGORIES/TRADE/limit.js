@@ -110,6 +110,9 @@ class Limit extends Component {
       fiatCryptoValue: "",
       fiatCurrencyValue: 0,
       fiatCurrency: "",
+      sellTotal: 0,
+      buyTotal: 0,
+      disabledMode: false,
     };
     this.t = this.props.t;
     this.onChange = this.onChange.bind(this);
@@ -167,6 +170,53 @@ class Limit extends Component {
   /* Life-Cycle Methods */
 
   componentDidMount() {
+    if (this.props.io) {
+      console.log("limitsell^^^^sell-data Sell Book trigger");
+      this.props.io.on("sell-book-data", (data) => {
+        this.setState(
+          {
+            sellTotal: data.total,
+          },
+          () => {
+            console.log("limitsell^^^^sell-data Sell Book", data.total);
+            if (
+              this.state.side === "Buy" &&
+              parseFloat(this.state.amount) > parseFloat(this.state.sellTotal)
+            ) {
+              this.setState({
+                disabledMode: true,
+              });
+            } else {
+              this.setState({
+                disabledMode: false,
+              });
+            }
+          }
+        );
+      });
+      this.props.io.on("buy-book-data", (data) => {
+        console.log("limitsell^^^^sell-data Buy Book", data.total_quantity);
+        this.setState(
+          {
+            buyTotal: data.total_quantity,
+          },
+          () => {
+            if (
+              this.state.side === "Sell" &&
+              parseFloat(this.state.amount) > parseFloat(this.state.buyTotal)
+            ) {
+              this.setState({
+                disabledMode: true,
+              });
+            } else {
+              this.setState({
+                disabledMode: false,
+              });
+            }
+          }
+        );
+      });
+    }
     let fiat, currency;
     if (this.props.profileDetails) {
       switch (this.props.profileDetails.fiat) {
@@ -327,6 +377,22 @@ class Limit extends Component {
               this.setState({
                 fiatCurrencyValue: fiatValue,
               });
+              console.log(
+                "limitsell^^^^sellTest data Buy Book",
+                parseFloat(this.state.amount),
+                parseFloat(this.state.sellTotal)
+              );
+              if (
+                parseFloat(this.state.amount) > parseFloat(this.state.sellTotal)
+              ) {
+                self.setState({
+                  disabledMode: true,
+                });
+              } else {
+                self.setState({
+                  disabledMode: false,
+                });
+              }
             }
           } else if (this.state.side === "Sell") {
             if (value > 0 && name === "amount") {
@@ -336,6 +402,17 @@ class Limit extends Component {
               this.setState({
                 fiatCurrencyValue: fiatValue,
               });
+              if (
+                parseFloat(this.state.amount) > parseFloat(this.state.buyTotal)
+              ) {
+                self.setState({
+                  disabledMode: true,
+                });
+              } else {
+                self.setState({
+                  disabledMode: false,
+                });
+              }
             }
           }
         } else {
@@ -345,12 +422,14 @@ class Limit extends Component {
               fiatCurrencyValue: 0,
               buyPayAmt: 0,
               buyEstPrice: 0,
+              disabledMode: false,
             });
           } else if (this.state.side === "Sell") {
             this.setState({
               fiatCurrencyValue: 0,
               sellPayAmt: 0,
               sellEstPrice: 0,
+              disabledMode: false,
             });
           }
           // obj["amount"] = Number(this.state.amount).toFixed(3);
@@ -733,6 +812,13 @@ class Limit extends Component {
                 numeric: this.t("general_3:validation_amount_numeric.message"),
               }
             )}
+            {this.state.disabledMode ? (
+              <div className="trade-action-validation">
+                Invalid order quantity
+              </div>
+            ) : (
+              ""
+            )}
           </TotalWrap>
         </ETHWrap>
         <BTCWrap>
@@ -879,7 +965,11 @@ class Limit extends Component {
           ""
         )}
         <ButtonWrap>
-          <ButtonETH side={this.state.side} onClick={this.onSubmit}>
+          <ButtonETH
+            disabled={this.state.disabledMode}
+            side={this.state.side}
+            onClick={this.onSubmit}
+          >
             {`${this.state.side.toUpperCase()} ${" "} ${this.state.crypto}`}
           </ButtonETH>
         </ButtonWrap>
