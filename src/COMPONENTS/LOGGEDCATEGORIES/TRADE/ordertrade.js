@@ -29,7 +29,7 @@ export const OrderWrap = styled.div`
 
   &::-webkit-scrollbar-thumb {
     background-color: ${(props) =>
-    props.theme.mode === "dark" ? "#041624" : ""};
+      props.theme.mode === "dark" ? "#041624" : ""};
     border-radius: 3px;
   }
   &::-webkit-scrollbar-track {
@@ -45,7 +45,7 @@ const CancelBTN = styled(Button)`
 export const HTable = styled(Table)`
   > thead {
     background-color: ${(props) =>
-    props.theme.mode === "dark" ? "#041422" : "#f5f6fa"};
+      props.theme.mode === "dark" ? "#041422" : "#f5f6fa"};
     color: #174c7e;
     border: none;
   }
@@ -60,7 +60,7 @@ export const HTable = styled(Table)`
   }
   > tbody > tr:nth-of-type(odd) {
     background-color: ${(props) =>
-    props.theme.mode === "dark" ? "#041422" : "#f9f9f9"};
+      props.theme.mode === "dark" ? "#041422" : "#f9f9f9"};
   }
 `;
 const SideType = styled.td`
@@ -120,26 +120,45 @@ class OrderTrade extends Component {
               <thead>
                 <tr>
                   {/* <th>{this.t("history:side_text.message")}</th> */}
-                  <th>{this.t("wallet:amount_text.message")}</th>
+                  <th>
+                    {this.t("wallet:amount_text.message")} ({self.props.crypto})
+                  </th>
+
                   {self.props.pending !== 2 ? (
-                    <th>{this.t("history:price_text.message")}</th>
+                    <th>
+                      {this.t("history:price_text.message")} (
+                      {self.props.currency})
+                    </th>
                   ) : (
-                      <th>{this.t("limit_price_text.message")}</th>
-                    )}
+                    <th>
+                      {this.t("limit_price_text.message")} (
+                      {self.props.currency})
+                    </th>
+                  )}
                   {self.props.pending !== 2 ? (
-                    <th>{this.t("unfilled_text.message")}</th>
+                    <th>
+                      {this.t("unfilled_text.message")} ({self.props.crypto})
+                    </th>
                   ) : (
-                      <th>{this.t("stop_price_text.message")}</th>
-                    )}
-                  <th>{this.t("fill_price_text.message")}</th>
+                    <th>
+                      {this.t("stop_price_text.message")} ({self.props.currency}
+                      )
+                    </th>
+                  )}
+                  <th>
+                    {this.t("fill_price_text.message")} ({self.props.currency})
+                  </th>
                   <th>{this.t("type_text.message")}</th>
                   <th>{this.t("time_text.message")}</th>
-                  <th>{this.t("conversion:total_text.message")}</th>
+                  <th>
+                    {this.t("conversion:total_text.message")} (
+                    {self.props.currency})
+                  </th>
                   {self.props.pending === 2 ? (
                     <th>{this.t("actions_text.message")}</th>
                   ) : (
-                      ""
-                    )}
+                    ""
+                  )}
                 </tr>
               </thead>
             </TableHeader>
@@ -221,14 +240,14 @@ class OrderTrade extends Component {
                           data.requested_user_id == self.props.profileDetails.id
                         ) {
                           if (data.is_stop_limit == true) {
-                            typeValue = "StopLimit"
+                            typeValue = "StopLimit";
                           } else {
                             typeValue = "Limit";
                           }
                         }
                       } else {
                         if (data.is_stop_limit == true) {
-                          typeValue = "StopLimit"
+                          typeValue = "StopLimit";
                         } else {
                           typeValue = data.order_type;
                         }
@@ -240,18 +259,15 @@ class OrderTrade extends Component {
                           {/* <SideType type={sideValue}>{sideValue}</SideType> */}
                           <SideType type={sideValue}>
                             {/* {precision(data.quantity)} {currencyValue} */}
-                            {precision(data.quantity)} {self.props.crypto}
+                            {precision(data.quantity)}
+                            {/* {self.props.crypto} */}
                           </SideType>
                           <td>
                             {self.props.pending !== 2
                               ? data.order_type === "Market"
                                 ? data.order_type
-                                : `${precision(data.limit_price)}${" "}${
-                                self.props.currency
-                                }`
-                              : `${precision(data.limit_price)}${" "}${
-                              self.props.currency
-                              }`}
+                                : `${precision(data.limit_price)}`
+                              : `${precision(data.limit_price)}`}
                           </td>
                           {/* <td>
                             {self.props.pending != 2
@@ -260,26 +276,21 @@ class OrderTrade extends Component {
                           </td> */}
                           <SideType type={sideValue}>
                             {self.props.pending !== 2
-                              ? `${precision(Filled)}${" "}${self.props.crypto}`
+                              ? `${precision(Filled)}`
                               : data.stop_price !== undefined
-                                ? `${precision(data.stop_price)}${" "}${
-                                self.props.currency
-                                }`
-                                : 0}
+                              ? `${precision(data.stop_price)}`
+                              : 0}
                           </SideType>
                           <td>
-                            {precision(data.fill_price)} {self.props.currency}
+                            {precision(data.fill_price)}
+                            {/* {self.props.currency} */}
                           </td>
                           <td>{typeValue}</td>
                           <td>{date}</td>
                           <td>
                             {self.props.pending === 2
-                              ? `${precision(
-                                data.quantity * data.limit_price
-                              )}${" "}${self.props.currency}`
-                              : `${precision(
-                                data.quantity * data.fill_price
-                              )}${" "}${self.props.currency}`}
+                              ? `${precision(data.quantity * data.limit_price)}`
+                              : `${precision(data.quantity * data.fill_price)}`}
                           </td>
                           {self.props.pending === 2 ? (
                             <th>
@@ -301,14 +312,14 @@ class OrderTrade extends Component {
                               </CancelBTN>
                             </th>
                           ) : (
-                              ""
-                            )}
+                            ""
+                          )}
                         </tr>
                       );
                     })
                   ) : (
-                      <NDF>{this.t("support:no_data_found.message")}</NDF>
-                    )}
+                    <NDF>{this.t("support:no_data_found.message")}</NDF>
+                  )}
                 </tbody>
               </TableContent>
             </Scrollbars>
