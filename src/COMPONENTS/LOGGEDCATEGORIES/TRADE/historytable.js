@@ -203,12 +203,12 @@ class HistoryTable extends Component {
         {/* <SideType type={element.side} width="10%">
           {element.side}
         </SideType> */}
-        <SideType type={element.side} width="25%">
+        <SideType type={element.side} width="33.33%">
           {element.amount !== undefined ? `${precision(element.amount)}` : ""}
         </SideType>
         {index + 1 < me.state.data.length ? (
           element.fill_price >= me.state.data[index + 1].fill_price ? (
-            <td width="25%">
+            <td width="33.33%">
               {precision(element.fill_price)}
               {/* {this.props.currency}{" "} */}{" "}
               {this.props.theme !== true ? (
@@ -226,7 +226,7 @@ class HistoryTable extends Component {
               )}
             </td>
           ) : (
-            <td width="25%">
+            <td width="33.33%">
               {precision(element.fill_price)}
               {/* {this.props.currency}{" "} */}{" "}
               {this.props.theme !== true ? (
@@ -250,11 +250,11 @@ class HistoryTable extends Component {
             {/* {this.props.currency} */}
           </td>
         )}
-        <td width="25%">{element.time}</td>
-        <td width="25%">
-          {precision(element.total)}
-          {/* {this.props.currency} */}
-        </td>
+        <td width="33.33%">{element.time}</td>
+        {/* <td width="25%">
+          {precision(element.total)} */}
+        {/* {this.props.currency} */}
+        {/* </td> */}
       </tr>
     ));
   }
@@ -275,17 +275,17 @@ class HistoryTable extends Component {
               <thead>
                 <tr>
                   {/* <th width="10%">{this.t("history:side_text.message")}</th> */}
-                  <th width="25%">
+                  <th width="33.33%">
                     {this.t("wallet:amount_text.message")} ({this.props.crypto})
                   </th>
-                  <th width="25%">
+                  <th width="33.33%">
                     {this.t("fill_price_text.message")} ({this.props.currency})
                   </th>
-                  <th width="25%">{this.t("time_text.message")}</th>
-                  <th width="25%">
+                  <th width="33.33%">{this.t("time_text.message")}</th>
+                  {/* <th width="25%">
                     {this.t("conversion:total_text.message")} (
                     {this.props.currency})
-                  </th>
+                  </th> */}
                 </tr>
               </thead>
             </TableHeader>
