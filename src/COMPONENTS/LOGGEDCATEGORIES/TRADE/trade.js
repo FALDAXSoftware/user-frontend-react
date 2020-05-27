@@ -431,6 +431,7 @@ class Trade extends Component {
       loader: false,
       butonEnable: false,
       symbolHighLevelInfo: "",
+      latestFillPrice: "",
     };
     io = this.props.io;
     this.t = this.props.t;
@@ -543,13 +544,17 @@ class Trade extends Component {
       setInterval(() => {
         this.getInstrumentData();
       }, 10000);
-      // this.props.io.on("instrument-data", (data) => {
-      //   console.log("instrument-data^^^", data);
-      //   this.updateInstrumentsData(data);
-      // });
       this.props.io.on("user-wallet-balance", (data) => {
         console.log("^^^^userdata", data);
         this.setState({ userBal: data, userBalLoader: false });
+      });
+      this.props.io.on("trade-history-data", (data) => {
+        console.log("trade-history-data^^^^data", data[0]);
+        if (data[0].fill_price) {
+          this.setState({
+            latestFillPrice: data[0].fill_price,
+          });
+        }
       });
     }
   }
@@ -1996,6 +2001,7 @@ class Trade extends Component {
                             crypto={this.state.crypto}
                             currency={this.state.currency}
                             io={this.props.io}
+                            latestFillPrice={this.state.latestFillPrice}
                           />
                         </TabPane>
                       </TabsRight>
