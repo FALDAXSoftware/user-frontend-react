@@ -810,8 +810,8 @@ class StopLimit extends Component {
                     </Col>
                     <Col span={24}>
                       <Balance>
-                        {this.props.userBal
-                          ? this.props.userBal.currency.length > 0
+                        {this.props.userBal.currency
+                          ? this.props.userBal.currency.balance
                             ? `${precision(
                                 this.props.userBal.currency.balance
                               )}${" "}`
@@ -896,8 +896,8 @@ class StopLimit extends Component {
                     </Col>
                     <Col span={24}>
                       <Balance>
-                        {this.props.userBal
-                          ? this.props.userBal.crypto.length > 0
+                        {this.props.userBal.crypto
+                          ? this.props.userBal.crypto.balance
                             ? `${precision(
                                 this.props.userBal.crypto.balance
                               )}${" "}`
