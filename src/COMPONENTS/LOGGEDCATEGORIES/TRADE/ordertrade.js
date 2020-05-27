@@ -29,7 +29,7 @@ export const OrderWrap = styled.div`
 
   &::-webkit-scrollbar-thumb {
     background-color: ${(props) =>
-      props.theme.mode === "dark" ? "#041624" : ""};
+    props.theme.mode === "dark" ? "#041624" : ""};
     border-radius: 3px;
   }
   &::-webkit-scrollbar-track {
@@ -45,7 +45,7 @@ const CancelBTN = styled(Button)`
 export const HTable = styled(Table)`
   > thead {
     background-color: ${(props) =>
-      props.theme.mode === "dark" ? "#041422" : "#f5f6fa"};
+    props.theme.mode === "dark" ? "#041422" : "#f5f6fa"};
     color: #174c7e;
     border: none;
   }
@@ -60,7 +60,7 @@ export const HTable = styled(Table)`
   }
   > tbody > tr:nth-of-type(odd) {
     background-color: ${(props) =>
-      props.theme.mode === "dark" ? "#041422" : "#f9f9f9"};
+    props.theme.mode === "dark" ? "#041422" : "#f9f9f9"};
   }
 `;
 const SideType = styled.td`
@@ -124,13 +124,13 @@ class OrderTrade extends Component {
                   {self.props.pending !== 2 ? (
                     <th>{this.t("history:price_text.message")}</th>
                   ) : (
-                    <th>{this.t("limit_price_text.message")}</th>
-                  )}
+                      <th>{this.t("limit_price_text.message")}</th>
+                    )}
                   {self.props.pending !== 2 ? (
                     <th>{this.t("unfilled_text.message")}</th>
                   ) : (
-                    <th>{this.t("stop_price_text.message")}</th>
-                  )}
+                      <th>{this.t("stop_price_text.message")}</th>
+                    )}
                   <th>{this.t("fill_price_text.message")}</th>
                   <th>{this.t("type_text.message")}</th>
                   <th>{this.t("time_text.message")}</th>
@@ -138,8 +138,8 @@ class OrderTrade extends Component {
                   {self.props.pending === 2 ? (
                     <th>{this.t("actions_text.message")}</th>
                   ) : (
-                    ""
-                  )}
+                      ""
+                    )}
                 </tr>
               </thead>
             </TableHeader>
@@ -220,10 +220,18 @@ class OrderTrade extends Component {
                         } else if (
                           data.requested_user_id == self.props.profileDetails.id
                         ) {
-                          typeValue = "Limit";
+                          if (data.is_stop_limit == true) {
+                            typeValue = "StopLimit"
+                          } else {
+                            typeValue = "Limit";
+                          }
                         }
                       } else {
-                        typeValue = data.order_type;
+                        if (data.is_stop_limit == true) {
+                          typeValue = "StopLimit"
+                        } else {
+                          typeValue = data.order_type;
+                        }
                         currencyValue = data.settle_currency;
                         sideValue = data.side;
                       }
@@ -239,11 +247,11 @@ class OrderTrade extends Component {
                               ? data.order_type === "Market"
                                 ? data.order_type
                                 : `${precision(data.limit_price)}${" "}${
-                                    self.props.currency
-                                  }`
+                                self.props.currency
+                                }`
                               : `${precision(data.limit_price)}${" "}${
-                                  self.props.currency
-                                }`}
+                              self.props.currency
+                              }`}
                           </td>
                           {/* <td>
                             {self.props.pending != 2
@@ -254,10 +262,10 @@ class OrderTrade extends Component {
                             {self.props.pending !== 2
                               ? `${precision(Filled)}${" "}${self.props.crypto}`
                               : data.stop_price !== undefined
-                              ? `${precision(data.stop_price)}${" "}${
-                                  self.props.currency
+                                ? `${precision(data.stop_price)}${" "}${
+                                self.props.currency
                                 }`
-                              : 0}
+                                : 0}
                           </SideType>
                           <td>
                             {precision(data.fill_price)} {self.props.currency}
@@ -267,11 +275,11 @@ class OrderTrade extends Component {
                           <td>
                             {self.props.pending === 2
                               ? `${precision(
-                                  data.quantity * data.limit_price
-                                )}${" "}${self.props.currency}`
+                                data.quantity * data.limit_price
+                              )}${" "}${self.props.currency}`
                               : `${precision(
-                                  data.quantity * data.fill_price
-                                )}${" "}${self.props.currency}`}
+                                data.quantity * data.fill_price
+                              )}${" "}${self.props.currency}`}
                           </td>
                           {self.props.pending === 2 ? (
                             <th>
@@ -293,14 +301,14 @@ class OrderTrade extends Component {
                               </CancelBTN>
                             </th>
                           ) : (
-                            ""
-                          )}
+                              ""
+                            )}
                         </tr>
                       );
                     })
                   ) : (
-                    <NDF>{this.t("support:no_data_found.message")}</NDF>
-                  )}
+                      <NDF>{this.t("support:no_data_found.message")}</NDF>
+                    )}
                 </tbody>
               </TableContent>
             </Scrollbars>
