@@ -113,13 +113,13 @@ class OrderTrade extends Component {
     var self = this;
     return (
       <OrderWrap>
-        <OTwrap className="jsdghfjks">
+        <OTwrap>
           <div className="tbl-header">
             <TableHeader cellpadding="10px" cellspacing="0" border="0">
               {/* <HTable striped responsive> */}
               <thead>
                 <tr>
-                  <th>{this.t("history:side_text.message")}</th>
+                  {/* <th>{this.t("history:side_text.message")}</th> */}
                   <th>{this.t("wallet:amount_text.message")}</th>
                   {self.props.pending !== 2 ? (
                     <th>{this.t("history:price_text.message")}</th>
@@ -237,11 +237,11 @@ class OrderTrade extends Component {
                       }
                       return (
                         <tr>
-                          <SideType type={sideValue}>{sideValue}</SideType>
-                          <td>
+                          {/* <SideType type={sideValue}>{sideValue}</SideType> */}
+                          <SideType type={sideValue}>
                             {/* {precision(data.quantity)} {currencyValue} */}
                             {precision(data.quantity)} {self.props.crypto}
-                          </td>
+                          </SideType>
                           <td>
                             {self.props.pending !== 2
                               ? data.order_type === "Market"

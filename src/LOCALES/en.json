@@ -4617,6 +4617,12 @@
       "message": "Invalid order quantity",
       "message_type": "Web content",
       "context": "invalid order quantity validation if the order amount exceeds buy book or sell book total value"
+    },
+    "trade_history_text": {
+      "page": "Trade",
+      "message": "TRADE HISTORY",
+      "message_type": "Web content",
+      "context": "TRADE HISTORY Text"
     }
   }
 }
