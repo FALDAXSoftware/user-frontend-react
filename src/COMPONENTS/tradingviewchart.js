@@ -20,14 +20,14 @@ class TradingViewChart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      crypto: "XRP",
+      crypto: "ETH",
       currency: "BTC",
     };
   }
   static defaultProps = {
-    symbol: `XRP-BTC`,
+    symbol: `ETH-BTC`,
     // symbol: 'AAPL',
-    interval: "1",
+    interval: "15",
     containerId: "tv_chart_container",
     // datafeedUrl: 'https://demo_feed.tradingview.com',
     datafeedUrl: `${API_URL}/tradingview`,
