@@ -4605,6 +4605,18 @@
       "message": "24h Volume",
       "message_type": "Web content",
       "context": "24h Volume text"
+    },
+    "something_went_wrong_text": {
+      "page": "Trade",
+      "message": "Something went wrong!",
+      "message_type": "Web content",
+      "context": "Something went wrong text when api timeout"
+    },
+    "invalid_order_quantity_text": {
+      "page": "Trade",
+      "message": "Invalid order quantity",
+      "message_type": "Web content",
+      "context": "invalid order quantity validation if the order amount exceeds buy book or sell book total value"
     }
   }
 }

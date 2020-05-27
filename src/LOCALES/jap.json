@@ -4605,6 +4605,12 @@
       "message": "24\u6642\u9593\u306e\u30dc\u30ea\u30e5\u30fc\u30e0",
       "message_type": "Web content",
       "context": "24h Volume text"
+    },
+    "something_went_wrong_text": {
+      "page": "Trade",
+      "message": "\u4f55\u304b\u304c\u9593\u9055\u3063\u3066\u3044\u307e\u3057\u305f\uff01",
+      "message_type": "Web content",
+      "context": "Something went wrong text when api timeout"
     }
   }
 }

@@ -160,17 +160,17 @@ class HistoryTable extends Component {
         date = moment
           .utc(element.created_at)
           .local()
-          .format("MM/DD/YYYY, H:m:s");
+          .format("MM/DD/YYYY, HH:mm:ss");
       else if (this.props.profileDetails.date_format === "DD/MM/YYYY")
         date = moment
           .utc(element.created_at)
           .local()
-          .format("DD/MM/YYYY, H:m:s");
+          .format("DD/MM/YYYY, HH:mm:ss");
       else
         date = moment
           .utc(element.created_at)
           .local()
-          .format("MMM D, YYYY, H:m:s");
+          .format("MMM D, YYYY, HH:mm:ss");
       rows.push({
         side: element.side,
         amount: element.quantity,

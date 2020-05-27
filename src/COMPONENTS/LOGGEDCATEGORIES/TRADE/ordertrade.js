@@ -162,20 +162,28 @@ class OrderTrade extends Component {
                         date = moment
                           .utc(data.created_at)
                           .local()
-                          .format("MM/DD/YYYY, H:m:s");
+                          .format("MM/DD/YYYY, HH:mm:ss");
                       else if (
                         self.props.profileDetails.date_format === "DD/MM/YYYY"
                       )
                         date = moment
                           .utc(data.created_at)
                           .local()
-                          .format("DD/MM/YYYY, H:m:s");
+                          .format("DD/MM/YYYY, HH:mm:ss");
                       else
                         date = moment
                           .utc(data.created_at)
                           .local()
-                          .format("MMM D, YYYY, H:m:s");
-                      var Filled = data.fix_quantity - data.quantity;
+                          .format("MMM D, YYYY, HH:mm:ss");
+
+                      if (
+                        data.requested_user_id == self.props.profileDetails.id
+                      ) {
+                        var Filled = 0;
+                      } else {
+                        var Filled = data.fix_quantity - data.quantity;
+                      }
+
                       // console.log("self.props.profileDetails", self.props.profileDetails)
                       var typeValue = "";
                       var currencyValue = "";
