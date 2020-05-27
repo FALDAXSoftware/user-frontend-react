@@ -160,17 +160,17 @@ class HistoryTable extends Component {
         date = moment
           .utc(element.created_at)
           .local()
-          .format("MM/DD/YYYY, H:m:s");
+          .format("MM/DD/YYYY, HH:mm:ss");
       else if (this.props.profileDetails.date_format === "DD/MM/YYYY")
         date = moment
           .utc(element.created_at)
           .local()
-          .format("DD/MM/YYYY, H:m:s");
+          .format("DD/MM/YYYY, HH:mm:ss");
       else
         date = moment
           .utc(element.created_at)
           .local()
-          .format("MMM D, YYYY, H:m:s");
+          .format("MMM D, YYYY, HH:mm:ss");
       rows.push({
         side: element.side,
         amount: element.quantity,
@@ -200,14 +200,14 @@ class HistoryTable extends Component {
     var me = this;
     return this.state.data.map((element, index) => (
       <tr>
-        <SideType type={element.side} width="10%">
+        {/* <SideType type={element.side} width="10%">
           {element.side}
-        </SideType>
-        <td width="20%">
+        </SideType> */}
+        <SideType type={element.side} width="20%">
           {element.amount !== undefined
             ? `${precision(element.amount)}${" "}${this.props.crypto}`
             : ""}
-        </td>
+        </SideType>
         {index + 1 < me.state.data.length ? (
           element.fill_price >= me.state.data[index + 1].fill_price ? (
             <td width="20%">
@@ -273,7 +273,7 @@ class HistoryTable extends Component {
             >
               <thead>
                 <tr>
-                  <th width="10%">{this.t("history:side_text.message")}</th>
+                  {/* <th width="10%">{this.t("history:side_text.message")}</th> */}
                   <th width="20%">{this.t("wallet:amount_text.message")}</th>
                   <th width="20%">{this.t("fill_price_text.message")}</th>
                   <th width="25%">{this.t("time_text.message")}</th>
