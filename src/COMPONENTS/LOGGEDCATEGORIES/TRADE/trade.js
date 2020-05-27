@@ -175,7 +175,7 @@ const OrderTradeWrap = styled.div`
 `;
 const GreyWrapTrade = styled(GreyWrap)`
   font-family: "Open sans";
-  padding-top: 120px;
+  padding-top: 110px;
   & .tradeView {
     height: calc(100% - 20px);
     width: calc(100% - 20px);
@@ -281,13 +281,14 @@ const PairMainDiv = styled(Col)`
   -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
   -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
   box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
-  margin: 10px 10px 20px;
+  margin: 0 10px 20px;
   padding: 25px 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
   &.spin_load {
     justify-content: center;
+    height: 100px;
   }
   @media (max-width: 990px) {
     flex-wrap: wrap;
@@ -403,7 +404,7 @@ class Trade extends Component {
     this.state = {
       timePeriod: "1",
       status: "1",
-      crypto: "XRP",
+      crypto: "ETH",
       currency: "BTC",
       prevRoom: {},
       orderTradeData: {},
@@ -1114,6 +1115,125 @@ class Trade extends Component {
     this.setState(
       {
         saveState: false,
+        // layouts: {
+        //   lg: [
+        //     {
+        //       w: 8,
+        //       h: 4,
+        //       x: 0,
+        //       y: 0,
+        //       i: "tradeView",
+        //       minW: 6,
+        //       minH: 3,
+        //       moved: false,
+        //       static: false,
+        //     },
+        //     {
+        //       w: 4,
+        //       h: 4,
+        //       x: 8,
+        //       y: 0,
+        //       i: "instruments",
+        //       minW: 4,
+        //       minH: 2,
+        //       moved: false,
+        //       static: false,
+        //     },
+        //     {
+        //       w: 4,
+        //       h: 5,
+        //       x: 4,
+        //       y: 4,
+        //       i: "tradeAction",
+        //       minW: 3,
+        //       minH: 2,
+        //       maxH: 5,
+        //       moved: false,
+        //       static: false,
+        //     },
+        //     {
+        //       w: 4,
+        //       h: 5,
+        //       x: 8,
+        //       y: 4,
+        //       i: "buysellBook",
+        //       minW: 4,
+        //       minH: 3,
+        //       moved: false,
+        //       static: false,
+        //     },
+        //     {
+        //       w: 4,
+        //       h: 5,
+        //       x: 0,
+        //       y: 9,
+        //       i: "depthChart",
+        //       minW: 4,
+        //       minH: 4,
+        //       maxH: 5,
+        //       moved: false,
+        //       static: false,
+        //     },
+        //     {
+        //       w: 4,
+        //       h: 5,
+        //       x: 0,
+        //       y: 4,
+        //       i: "orderHistory",
+        //       minW: 4,
+        //       minH: 2,
+        //       moved: false,
+        //       static: false,
+        //     },
+        //     {
+        //       w: 8,
+        //       h: 5,
+        //       x: 4,
+        //       y: 9,
+        //       i: "myorder",
+        //       minW: 6,
+        //       minH: 2,
+        //       moved: false,
+        //       static: false,
+        //     },
+        //   ],
+        //   md: [
+        //     { i: "tradeView", x: 0, y: 0, w: 10, h: 3, minH: 3 },
+        //     { i: "instruments", x: 0, y: 1, w: 5, h: 2, minW: 5 },
+        //     { i: "tradeAction", x: 5, y: 1, w: 5, h: 2, minW: 3 },
+        //     { i: "buysellBook", x: 0, y: 2, w: 5, h: 3, minH: 3, minW: 5 },
+        //     { i: "depthChart", x: 5, y: 2, w: 5, h: 2, minW: 5 },
+        //     { i: "orderHistory", x: 0, y: 3, w: 12, h: 2, minH: 2, minW: 5 },
+        //     { i: "myorder", x: 0, y: 4, w: 10, h: 4, minW: 5, minH: 4 },
+        //   ],
+        //   sm: [
+        //     { i: "tradeView", x: 0, y: 0, w: 6, h: 3, minH: 3 },
+        //     { i: "instruments", x: 0, y: 1, w: 6, h: 2, minW: 6 },
+        //     { i: "tradeAction", x: 0, y: 2, w: 6, h: 2, minW: 6 },
+        //     { i: "buysellBook", x: 0, y: 3, w: 6, h: 3, minH: 3, minW: 6 },
+        //     { i: "depthChart", x: 0, y: 4, w: 6, h: 2, minW: 6 },
+        //     { i: "orderHistory", x: 0, y: 5, w: 6, h: 2, minH: 2, minW: 6 },
+        //     { i: "myorder", x: 0, y: 6, w: 6, h: 2, minW: 6 },
+        //   ],
+        //   xs: [
+        //     { i: "tradeView", x: 0, y: 0, w: 4, h: 3, minH: 3 },
+        //     { i: "instruments", x: 0, y: 1, w: 4, h: 2, minW: 4 },
+        //     { i: "tradeAction", x: 0, y: 2, w: 4, h: 2, minW: 4 },
+        //     { i: "buysellBook", x: 0, y: 3, w: 4, h: 3, minH: 3, minW: 4 },
+        //     { i: "depthChart", x: 0, y: 4, w: 4, h: 2, minW: 4 },
+        //     { i: "orderHistory", x: 0, y: 5, w: 4, h: 2, minH: 2, minW: 4 },
+        //     { i: "myorder", x: 0, y: 5, w: 5, h: 2, minW: 4 },
+        //   ],
+        //   xxs: [
+        //     { i: "tradeView", x: 0, y: 0, w: 2, h: 3, minH: 3 },
+        //     { i: "instruments", x: 0, y: 1, w: 2, h: 2, minW: 2 },
+        //     { i: "tradeAction", x: 0, y: 2, w: 2, h: 2, minW: 2 },
+        //     { i: "buysellBook", x: 0, y: 3, w: 2, h: 3, minH: 3, minW: 2 },
+        //     { i: "depthChart", x: 0, y: 4, w: 2, h: 2, minW: 2 },
+        //     { i: "orderHistory", x: 0, y: 5, w: 2, h: 2, minH: 2, minW: 2 },
+        //     { i: "myorder", x: 0, y: 6, w: 2, h: 2, minW: 2 },
+        //   ],
+        // },
         layouts: {
           lg: [
             {
@@ -1711,7 +1831,8 @@ class Trade extends Component {
               </PairMainDiv>
             ) : (
               <PairMainDiv className="spin_load">
-                <Spin />
+                {/* <Spin size="small" /> */}
+                <Loader color="#1990ff" width="50" height="50" />
               </PairMainDiv>
             )}
             <Col>
@@ -2068,6 +2189,125 @@ function getFromLS(key) {
   if (global.localStorage) {
     try {
       ls = JSON.parse(global.localStorage.getItem("rgl-8")) || {
+        // layouts: {
+        //   lg: [
+        //     {
+        //       w: 8,
+        //       h: 4,
+        //       x: 0,
+        //       y: 0,
+        //       i: "tradeView",
+        //       minW: 6,
+        //       minH: 3,
+        //       moved: false,
+        //       static: false,
+        //     },
+        //     {
+        //       w: 4,
+        //       h: 4,
+        //       x: 8,
+        //       y: 0,
+        //       i: "instruments",
+        //       minW: 4,
+        //       minH: 2,
+        //       moved: false,
+        //       static: false,
+        //     },
+        //     {
+        //       w: 4,
+        //       h: 5,
+        //       x: 4,
+        //       y: 4,
+        //       i: "tradeAction",
+        //       minW: 3,
+        //       minH: 2,
+        //       maxH: 5,
+        //       moved: false,
+        //       static: false,
+        //     },
+        //     {
+        //       w: 4,
+        //       h: 5,
+        //       x: 8,
+        //       y: 4,
+        //       i: "buysellBook",
+        //       minW: 4,
+        //       minH: 3,
+        //       moved: false,
+        //       static: false,
+        //     },
+        //     {
+        //       w: 4,
+        //       h: 5,
+        //       x: 0,
+        //       y: 9,
+        //       i: "depthChart",
+        //       minW: 4,
+        //       minH: 4,
+        //       maxH: 5,
+        //       moved: false,
+        //       static: false,
+        //     },
+        //     {
+        //       w: 4,
+        //       h: 5,
+        //       x: 0,
+        //       y: 4,
+        //       i: "orderHistory",
+        //       minW: 4,
+        //       minH: 2,
+        //       moved: false,
+        //       static: false,
+        //     },
+        //     {
+        //       w: 8,
+        //       h: 5,
+        //       x: 4,
+        //       y: 9,
+        //       i: "myorder",
+        //       minW: 6,
+        //       minH: 2,
+        //       moved: false,
+        //       static: false,
+        //     },
+        //   ],
+        //   md: [
+        //     { i: "tradeView", x: 0, y: 0, w: 10, h: 3, minH: 3 },
+        //     { i: "instruments", x: 0, y: 1, w: 5, h: 2, minW: 5 },
+        //     { i: "tradeAction", x: 5, y: 1, w: 5, h: 2, minW: 3 },
+        //     { i: "buysellBook", x: 0, y: 2, w: 5, h: 3, minH: 3, minW: 5 },
+        //     { i: "depthChart", x: 5, y: 2, w: 5, h: 2, minW: 5 },
+        //     { i: "orderHistory", x: 0, y: 3, w: 12, h: 2, minH: 2, minW: 5 },
+        //     { i: "myorder", x: 0, y: 4, w: 10, h: 4, minW: 5, minH: 4 },
+        //   ],
+        //   sm: [
+        //     { i: "tradeView", x: 0, y: 0, w: 6, h: 3, minH: 3 },
+        //     { i: "instruments", x: 0, y: 1, w: 6, h: 2, minW: 6 },
+        //     { i: "tradeAction", x: 0, y: 2, w: 6, h: 2, minW: 6 },
+        //     { i: "buysellBook", x: 0, y: 3, w: 6, h: 3, minH: 3, minW: 6 },
+        //     { i: "depthChart", x: 0, y: 4, w: 6, h: 2, minW: 6 },
+        //     { i: "orderHistory", x: 0, y: 5, w: 6, h: 2, minH: 2, minW: 6 },
+        //     { i: "myorder", x: 0, y: 6, w: 6, h: 2, minW: 6 },
+        //   ],
+        //   xs: [
+        //     { i: "tradeView", x: 0, y: 0, w: 4, h: 3, minH: 3 },
+        //     { i: "instruments", x: 0, y: 1, w: 4, h: 2, minW: 4 },
+        //     { i: "tradeAction", x: 0, y: 2, w: 4, h: 2, minW: 4 },
+        //     { i: "buysellBook", x: 0, y: 3, w: 4, h: 3, minH: 3, minW: 4 },
+        //     { i: "depthChart", x: 0, y: 4, w: 4, h: 2, minW: 4 },
+        //     { i: "orderHistory", x: 0, y: 5, w: 4, h: 2, minH: 2, minW: 4 },
+        //     { i: "myorder", x: 0, y: 5, w: 5, h: 2, minW: 4 },
+        //   ],
+        //   xxs: [
+        //     { i: "tradeView", x: 0, y: 0, w: 2, h: 3, minH: 3 },
+        //     { i: "instruments", x: 0, y: 1, w: 2, h: 2, minW: 2 },
+        //     { i: "tradeAction", x: 0, y: 2, w: 2, h: 2, minW: 2 },
+        //     { i: "buysellBook", x: 0, y: 3, w: 2, h: 3, minH: 3, minW: 2 },
+        //     { i: "depthChart", x: 0, y: 4, w: 2, h: 2, minW: 2 },
+        //     { i: "orderHistory", x: 0, y: 5, w: 2, h: 2, minH: 2, minW: 2 },
+        //     { i: "myorder", x: 0, y: 6, w: 2, h: 2, minW: 2 },
+        //   ],
+        // },
         layouts: {
           lg: [
             {

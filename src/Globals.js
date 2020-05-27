@@ -50,7 +50,7 @@ export const globalVariables = {
     */
   // API_URL: 'http://13.58.130.154:8989' //Client Live URL,
   SOCKET_HOST: "https://preprod-trading.faldax.com",
-  // SOCKET_HOST: "http://localhost:3011/",
+  // SOCKET_HOST: "http://124863c5.ngrok.io/",
 
   Terms_and_services:
     "https://s3.us-east-2.amazonaws.com/production-static-asset/assets/pdf/FALDAX+Terms+of+Service.pdf",
