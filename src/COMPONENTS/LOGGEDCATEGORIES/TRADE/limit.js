@@ -170,55 +170,50 @@ class Limit extends Component {
   /* Life-Cycle Methods */
 
   componentDidMount() {
-    // if (this.props.io) {
-    //   console.log("limitsell^^^^sell-data Sell Book trigger");
-    //   this.props.io.on("sell-book-data", (data) => {
-    //     this.setState(
-    //       {
-    //         sellTotal: data.total,
-    //       },
-    //       () => {
-    //         console.log("limitsell^^^^sell-data Sell Book", data.total);
-    //         if (
-    //           this.state.side === "Buy" &&
-    //           !this.state.loader &&
-    //           parseFloat(this.state.amount) > parseFloat(this.state.sellTotal)
-    //         ) {
-    //           this.setState({
-    //             disabledMode: true,
-    //           });
-    //         } else {
-    //           this.setState({
-    //             disabledMode: false,
-    //           });
-    //         }
-    //       }
-    //     );
-    //   });
-    //   this.props.io.on("buy-book-data", (data) => {
-    //     console.log("limitsell^^^^sell-data Buy Book", data.total_quantity);
-    //     this.setState(
-    //       {
-    //         buyTotal: data.total_quantity,
-    //       },
-    //       () => {
-    //         if (
-    //           this.state.side === "Sell" &&
-    //           !this.state.loader &&
-    //           parseFloat(this.state.amount) > parseFloat(this.state.buyTotal)
-    //         ) {
-    //           this.setState({
-    //             disabledMode: true,
-    //           });
-    //         } else {
-    //           this.setState({
-    //             disabledMode: false,
-    //           });
-    //         }
-    //       }
-    //     );
-    //   });
-    // }
+    if (this.props.sellTotal) {
+      this.setState(
+        {
+          sellTotal: this.props.sellTotal,
+        },
+        () => {
+          if (
+            this.state.side === "Buy" &&
+            !this.state.loader &&
+            parseFloat(this.state.amount) > parseFloat(this.state.sellTotal)
+          ) {
+            this.setState({
+              disabledMode: true,
+            });
+          } else {
+            this.setState({
+              disabledMode: false,
+            });
+          }
+        }
+      );
+    }
+    if (this.props.buyTotal) {
+      this.setState(
+        {
+          buyTotal: this.props.buyTotal,
+        },
+        () => {
+          if (
+            this.state.side === "Sell" &&
+            !this.state.loader &&
+            parseFloat(this.state.amount) > parseFloat(this.state.buyTotal)
+          ) {
+            this.setState({
+              disabledMode: true,
+            });
+          } else {
+            this.setState({
+              disabledMode: false,
+            });
+          }
+        }
+      );
+    }
     let fiat, currency;
     if (this.props.profileDetails) {
       switch (this.props.profileDetails.fiat) {
@@ -275,6 +270,50 @@ class Limit extends Component {
       if (props.cryptoPair.currency !== this.state.currency) {
         this.setState({ currency: props.cryptoPair.currency });
       }
+    }
+    if (props.sellTotal && props.sellTotal != this.props.sellTotal) {
+      this.setState(
+        {
+          sellTotal: props.sellTotal,
+        },
+        () => {
+          if (
+            this.state.side === "Buy" &&
+            !this.state.loader &&
+            parseFloat(this.state.amount) > parseFloat(this.state.sellTotal)
+          ) {
+            this.setState({
+              disabledMode: true,
+            });
+          } else {
+            this.setState({
+              disabledMode: false,
+            });
+          }
+        }
+      );
+    }
+    if (props.buyTotal && props.buyTotal != this.props.buyTotal) {
+      this.setState(
+        {
+          buyTotal: props.buyTotal,
+        },
+        () => {
+          if (
+            this.state.side === "Sell" &&
+            !this.state.loader &&
+            parseFloat(this.state.amount) > parseFloat(this.state.buyTotal)
+          ) {
+            this.setState({
+              disabledMode: true,
+            });
+          } else {
+            this.setState({
+              disabledMode: false,
+            });
+          }
+        }
+      );
     }
   }
 
@@ -401,17 +440,17 @@ class Limit extends Component {
               // this.setState({
               //   fiatCurrencyValue: fiatValue,
               // });
-              // if (
-              //   parseFloat(this.state.amount) > parseFloat(this.state.sellTotal)
-              // ) {
-              //   self.setState({
-              //     disabledMode: true,
-              //   });
-              // } else {
-              //   self.setState({
-              //     disabledMode: false,
-              //   });
-              // }
+              if (
+                parseFloat(this.state.amount) > parseFloat(this.state.sellTotal)
+              ) {
+                self.setState({
+                  disabledMode: true,
+                });
+              } else {
+                self.setState({
+                  disabledMode: false,
+                });
+              }
             }
           } else if (this.state.side === "Sell") {
             if (value > 0 && name === "amount") {
@@ -421,17 +460,17 @@ class Limit extends Component {
               // this.setState({
               //   fiatCurrencyValue: fiatValue,
               // });
-              // if (
-              //   parseFloat(this.state.amount) > parseFloat(this.state.buyTotal)
-              // ) {
-              //   self.setState({
-              //     disabledMode: true,
-              //   });
-              // } else {
-              //   self.setState({
-              //     disabledMode: false,
-              //   });
-              // }
+              if (
+                parseFloat(this.state.amount) > parseFloat(this.state.buyTotal)
+              ) {
+                self.setState({
+                  disabledMode: true,
+                });
+              } else {
+                self.setState({
+                  disabledMode: false,
+                });
+              }
             }
           }
         } else {

@@ -432,6 +432,8 @@ class Trade extends Component {
       butonEnable: false,
       symbolHighLevelInfo: "",
       latestFillPrice: "",
+      sellTotal: "",
+      buyTotal: "",
     };
     io = this.props.io;
     this.t = this.props.t;
@@ -550,9 +552,37 @@ class Trade extends Component {
       });
       this.props.io.on("trade-history-data", (data) => {
         console.log("trade-history-data^^^^data", data[0]);
-        if (data[0].fill_price) {
+        if (data[0] && data[0].fill_price) {
           this.setState({
             latestFillPrice: data[0].fill_price,
+          });
+        } else {
+          this.setState({
+            latestFillPrice: 0,
+          });
+        }
+      });
+      this.props.io.on("sell-book-data", (data) => {
+        console.log("sell^^^^sell-data Sell Book", data);
+        if (data && data.total) {
+          this.setState({
+            sellTotal: data.total,
+          });
+        } else {
+          this.setState({
+            sellTotal: 0,
+          });
+        }
+      });
+      this.props.io.on("buy-book-data", (data) => {
+        console.log("sell^^^^sell data Buy Book", data);
+        if (data && data.total_quantity) {
+          this.setState({
+            buyTotal: data.total_quantity,
+          });
+        } else {
+          this.setState({
+            buyTotal: 0,
           });
         }
       });
@@ -1980,6 +2010,8 @@ class Trade extends Component {
                             crypto={this.state.crypto}
                             currency={this.state.currency}
                             io={this.props.io}
+                            sellTotal={this.state.sellTotal}
+                            buyTotal={this.state.buyTotal}
                           />
                         </TabPane>
                         <TabPane tab={this.t("limit_head.message")} key="2">
@@ -1989,6 +2021,8 @@ class Trade extends Component {
                             crypto={this.state.crypto}
                             currency={this.state.currency}
                             io={this.props.io}
+                            sellTotal={this.state.sellTotal}
+                            buyTotal={this.state.buyTotal}
                           />
                         </TabPane>
                         <TabPane
@@ -2002,6 +2036,8 @@ class Trade extends Component {
                             currency={this.state.currency}
                             io={this.props.io}
                             latestFillPrice={this.state.latestFillPrice}
+                            sellTotal={this.state.sellTotal}
+                            buyTotal={this.state.buyTotal}
                           />
                         </TabPane>
                       </TabsRight>
