@@ -240,6 +240,13 @@ export const RightDiv1 = styled(RightDiv)`
 `;
 export const InstruTable = styled.div`
   margin-top: 25px;
+  & .ant-table-tbody {
+    > tr {
+      > td {
+        padding: 10px 16px;
+      }
+    }
+  }
 `;
 export const TableIns = styled(Table)`
   & .ant-table-column-sorter {
@@ -378,6 +385,9 @@ export const TabsRight = styled(Tabs)`
     margin: 0 20px !important;
   }
   &.tardeActionCard {
+    & .ant-tabs-bar {
+      margin: 0 0 10px 0;
+    }
     .ant-tabs-nav-container {
       > .ant-tabs-nav-wrap {
         > .ant-tabs-nav-scroll {
@@ -428,6 +438,7 @@ export const TabsRight = styled(Tabs)`
 
 export const Label = styled.label`
   color: ${(props) => (props.theme.mode === "dark" ? "white" : "#333")};
+  margin-bottom: 0px;
 `;
 export const MarketWrap = styled.div`
   padding-left: 30px;
@@ -487,7 +498,7 @@ export const Sell = styled(Button)`
   height: 40px;
 `;
 export const BalanceWrap = styled.div`
-  margin-top: 15px;
+  margin-top: 10px;
   > .ant-row {
     > .ant-col {
       padding: 0 10px;
@@ -506,7 +517,7 @@ export const Balance = styled.p`
   font-size: 14px;
   letter-spacing: 1px;
   line-height: 1;
-  margin: 0 0 20px 0;
+  margin: 0 0 10px 0;
 `;
 export const Balance1 = styled.p`
   color: ${(props) => (props.theme.mode === "dark" ? "#617090" : "#7f7f7f")};
@@ -545,7 +556,7 @@ export const AMTInput = styled(Input)`
 `;
 
 export const BTCWrap = styled.div`
-  margin-top: 15px;
+  margin-top: 10px;
   padding: 0 10px;
   &.width_class {
     width: 50%;
@@ -599,7 +610,7 @@ export const TotInput = styled(Input)`
   }
 `;
 export const Pay = styled.div`
-  margin-top: 20px;
+  margin-top: 10px;
   padding: 0 10px;
   color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
 `;
@@ -609,7 +620,7 @@ export const Approx = styled.div`
   justify-content: space-between;
 `;
 export const Esti = styled.div`
-  margin-top: 20px;
+  margin-top: 5px;
   > .ant-row {
     font-size: 13px;
   }
@@ -754,7 +765,7 @@ export const CustomTable = styled.table`
   width: 100%;
   table-layout: fixed;
   & td {
-    padding: 8px;
+    padding: 5px;
     text-align: center;
   }
   & th {
@@ -795,6 +806,7 @@ export const TableContent = styled(CustomTable)`
       > tr {
         > td {
           word-break: break-all;
+          padding: 5px;
         }
       }
     }
