@@ -22,7 +22,7 @@ class BuySell extends React.Component {
   render() {
     return (
       <LeftDiv2>
-        <Instru>{this.t("order_history_text.message")}</Instru>
+        <Instru>{this.t("trade_history_text.message")}</Instru>
         <HistoryTable
           hisFunc={(loader) => {
             this.hisFunc(loader);
@@ -37,4 +37,4 @@ class BuySell extends React.Component {
   }
 }
 
-export default translate(["trade"])(BuySell);
+export default translate(["tier_changes"])(BuySell);
