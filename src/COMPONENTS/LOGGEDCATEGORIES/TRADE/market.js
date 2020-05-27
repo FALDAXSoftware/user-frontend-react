@@ -174,6 +174,50 @@ class Market extends Component {
   /* Life-Cycle Methods */
 
   componentWillReceiveProps(props, newProps) {
+    if (props.sellTotal && this.props.sellTotal != props.sellTotal) {
+      this.setState(
+        {
+          sellTotal: props.sellTotal,
+        },
+        () => {
+          if (
+            this.state.side === "Buy" &&
+            !this.state.Loader &&
+            parseFloat(this.state.amount) > parseFloat(this.state.sellTotal)
+          ) {
+            this.setState({
+              disabledMode: true,
+            });
+          } else {
+            this.setState({
+              disabledMode: false,
+            });
+          }
+        }
+      );
+    }
+    if (props.buyTotal && props.buyTotal != this.props.buyTotal) {
+      this.setState(
+        {
+          buyTotal: props.buyTotal,
+        },
+        () => {
+          if (
+            this.state.side === "Sell" &&
+            !this.state.Loader &&
+            parseFloat(this.state.amount) > parseFloat(this.state.buyTotal)
+          ) {
+            this.setState({
+              disabledMode: true,
+            });
+          } else {
+            this.setState({
+              disabledMode: false,
+            });
+          }
+        }
+      );
+    }
     console.log(
       "^^^^userdata  pro",
       props.userBal,
@@ -204,53 +248,49 @@ class Market extends Component {
     }
   }
   componentDidMount() {
-    if (this.props.io) {
-      // this.props.io.on("sell-book-data", (data) => {
-      //   console.log("sell^^^^sell-data Sell Book", data);
-      //   this.setState(
-      //     {
-      //       sellTotal: data.total,
-      //     },
-      //     () => {
-      //       if (
-      //         this.state.side === "Buy" &&
-      //         !this.state.Loader &&
-      //         parseFloat(this.state.amount) > parseFloat(this.state.sellTotal)
-      //       ) {
-      //         this.setState({
-      //           disabledMode: true,
-      //         });
-      //       } else {
-      //         this.setState({
-      //           disabledMode: false,
-      //         });
-      //       }
-      //     }
-      //   );
-      // });
-      // this.props.io.on("buy-book-data", (data) => {
-      //   console.log("sell^^^^sell data Buy Book", data);
-      //   this.setState(
-      //     {
-      //       buyTotal: data.total_quantity,
-      //     },
-      //     () => {
-      //       if (
-      //         this.state.side === "Sell" &&
-      //         !this.state.Loader &&
-      //         parseFloat(this.state.amount) > parseFloat(this.state.buyTotal)
-      //       ) {
-      //         this.setState({
-      //           disabledMode: true,
-      //         });
-      //       } else {
-      //         this.setState({
-      //           disabledMode: false,
-      //         });
-      //       }
-      //     }
-      //   );
-      // });
+    if (this.props.sellTotal) {
+      this.setState(
+        {
+          sellTotal: this.props.sellTotal,
+        },
+        () => {
+          if (
+            this.state.side === "Buy" &&
+            !this.state.Loader &&
+            parseFloat(this.state.amount) > parseFloat(this.state.sellTotal)
+          ) {
+            this.setState({
+              disabledMode: true,
+            });
+          } else {
+            this.setState({
+              disabledMode: false,
+            });
+          }
+        }
+      );
+    }
+    if (this.props.buyTotal) {
+      this.setState(
+        {
+          buyTotal: this.props.buyTotal,
+        },
+        () => {
+          if (
+            this.state.side === "Sell" &&
+            !this.state.Loader &&
+            parseFloat(this.state.amount) > parseFloat(this.state.buyTotal)
+          ) {
+            this.setState({
+              disabledMode: true,
+            });
+          } else {
+            this.setState({
+              disabledMode: false,
+            });
+          }
+        }
+      );
     }
     console.log("^^^^userdata", this.props.userBal);
     let fiat, currency;
@@ -393,17 +433,17 @@ class Market extends Component {
                 fiatCurrencyValue: fiatValue,
               });
             }
-            // if (
-            //   parseFloat(this.state.amount) > parseFloat(this.state.sellTotal)
-            // ) {
-            //   self.setState({
-            //     disabledMode: true,
-            //   });
-            // } else {
-            //   self.setState({
-            //     disabledMode: false,
-            //   });
-            // }
+            if (
+              parseFloat(this.state.amount) > parseFloat(this.state.sellTotal)
+            ) {
+              self.setState({
+                disabledMode: true,
+              });
+            } else {
+              self.setState({
+                disabledMode: false,
+              });
+            }
           } else if (this.state.side === "Sell") {
             self.setState({
               sellPayAmt:
@@ -439,17 +479,17 @@ class Market extends Component {
                 fiatCurrencyValue: fiatValue,
               });
             }
-            // if (
-            //   parseFloat(this.state.amount) > parseFloat(this.state.buyTotal)
-            // ) {
-            //   self.setState({
-            //     disabledMode: true,
-            //   });
-            // } else {
-            //   self.setState({
-            //     disabledMode: false,
-            //   });
-            // }
+            if (
+              parseFloat(this.state.amount) > parseFloat(this.state.buyTotal)
+            ) {
+              self.setState({
+                disabledMode: true,
+              });
+            } else {
+              self.setState({
+                disabledMode: false,
+              });
+            }
           }
         } else {
           obj["total"] = 0;
