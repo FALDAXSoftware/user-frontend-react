@@ -657,6 +657,7 @@ class Trade extends Component {
     //   }
     // );
     this.setState({
+      // userBalLoader: true,
       InsCurrency: e.target.value,
     });
   }
@@ -898,9 +899,9 @@ class Trade extends Component {
   //
 
   currencyPair(crypto) {
-    // this.setState({
-    //   insLoader: true,
-    // });
+    this.setState({
+      userBalLoader: true,
+    });
     let cryptoPair = {
       crypto: crypto,
       currency: this.state.InsCurrency,
@@ -2012,6 +2013,29 @@ class Trade extends Component {
                             io={this.props.io}
                             sellTotal={this.state.sellTotal}
                             buyTotal={this.state.buyTotal}
+                            cryptoCode={
+                              this.state.symbolHighLevelInfo.crypto_coin_code
+                                ? this.state.symbolHighLevelInfo
+                                    .crypto_coin_code
+                                : "teth"
+                            }
+                            cryptoName={
+                              this.state.symbolHighLevelInfo.coin_name
+                                ? this.state.symbolHighLevelInfo.coin_name
+                                : "Ethereum"
+                            }
+                            currencyName={
+                              this.state.symbolHighLevelInfo.currency_coin_name
+                                ? this.state.symbolHighLevelInfo
+                                    .currency_coin_name
+                                : "Bitcoin"
+                            }
+                            currencyCode={
+                              this.state.symbolHighLevelInfo.currency_coin_code
+                                ? this.state.symbolHighLevelInfo
+                                    .currency_coin_code
+                                : "tbtc"
+                            }
                           />
                         </TabPane>
                         <TabPane tab={this.t("limit_head.message")} key="2">
@@ -2023,6 +2047,29 @@ class Trade extends Component {
                             io={this.props.io}
                             sellTotal={this.state.sellTotal}
                             buyTotal={this.state.buyTotal}
+                            cryptoCode={
+                              this.state.symbolHighLevelInfo.crypto_coin_code
+                                ? this.state.symbolHighLevelInfo
+                                    .crypto_coin_code
+                                : "teth"
+                            }
+                            cryptoName={
+                              this.state.symbolHighLevelInfo.coin_name
+                                ? this.state.symbolHighLevelInfo.coin_name
+                                : "Ethereum"
+                            }
+                            currencyName={
+                              this.state.symbolHighLevelInfo.currency_coin_name
+                                ? this.state.symbolHighLevelInfo
+                                    .currency_coin_name
+                                : "Bitcoin"
+                            }
+                            currencyCode={
+                              this.state.symbolHighLevelInfo.currency_coin_code
+                                ? this.state.symbolHighLevelInfo
+                                    .currency_coin_code
+                                : "tbtc"
+                            }
                           />
                         </TabPane>
                         <TabPane
@@ -2038,6 +2085,29 @@ class Trade extends Component {
                             latestFillPrice={this.state.latestFillPrice}
                             sellTotal={this.state.sellTotal}
                             buyTotal={this.state.buyTotal}
+                            cryptoCode={
+                              this.state.symbolHighLevelInfo.crypto_coin_code
+                                ? this.state.symbolHighLevelInfo
+                                    .crypto_coin_code
+                                : "teth"
+                            }
+                            cryptoName={
+                              this.state.symbolHighLevelInfo.coin_name
+                                ? this.state.symbolHighLevelInfo.coin_name
+                                : "Ethereum"
+                            }
+                            currencyName={
+                              this.state.symbolHighLevelInfo.currency_coin_name
+                                ? this.state.symbolHighLevelInfo
+                                    .currency_coin_name
+                                : "Bitcoin"
+                            }
+                            currencyCode={
+                              this.state.symbolHighLevelInfo.currency_coin_code
+                                ? this.state.symbolHighLevelInfo
+                                    .currency_coin_code
+                                : "tbtc"
+                            }
                           />
                         </TabPane>
                       </TabsRight>
