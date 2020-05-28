@@ -907,7 +907,7 @@ class Limit extends Component {
                     {this.t("header:navbar_menu_wallet.message")}?
                   </span>
                   <a href={`/walletDetails?coinID0=${this.props.currencyCode}`}>
-                    {this.t("generate_wallet_text.message")}
+                    {this.t("general_3:generate_wallet_text.message")}
                   </a>
                 </BTCWrap>
               ) : (
