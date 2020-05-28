@@ -1028,9 +1028,13 @@ class StopLimit extends Component {
             <div>
               {!Object.keys(this.props.userBal.crypto).length > 0 ? (
                 <BTCWrap className="no_wallet">
-                  <span>Don't have {this.props.cryptoName} Wallet?</span>
+                  <span>
+                    {this.t("general_3:dont_have_text.message")}{" "}
+                    {this.props.cryptoName}{" "}
+                    {this.t("header:navbar_menu_wallet.message")}?
+                  </span>
                   <a href={`/walletDetails?coinID0=${this.props.cryptoCode}`}>
-                    Generate wallet
+                    {this.t("general_3:generate_wallet_text.message")}
                   </a>
                 </BTCWrap>
               ) : (
@@ -1038,9 +1042,13 @@ class StopLimit extends Component {
               )}
               {!Object.keys(this.props.userBal.currency).length > 0 ? (
                 <BTCWrap className="no_wallet">
-                  <span>Don't have {this.props.currencyName} Wallet?</span>
+                  <span>
+                    {this.t("general_3:dont_have_text.message")}{" "}
+                    {this.props.currencyName}{" "}
+                    {this.t("header:navbar_menu_wallet.message")}?
+                  </span>
                   <a href={`/walletDetails?coinID0=${this.props.currencyCode}`}>
-                    Generate wallet
+                    {this.t("generate_wallet_text.message")}
                   </a>
                 </BTCWrap>
               ) : (
@@ -1123,7 +1131,8 @@ class StopLimit extends Component {
             {this.state.side === "Buy" && this.state.latestFillPrice ? (
               <TriggerDiv className={this.state.disabledBtn ? "red" : ""}>
                 <span>
-                  Trigger <Icon type="right" />{" "}
+                  {this.t("tier_changes:trigger_text.message")}{" "}
+                  <Icon type="right" />{" "}
                 </span>
                 <span>{precision(this.state.latestFillPrice)}</span>
               </TriggerDiv>
@@ -1131,7 +1140,8 @@ class StopLimit extends Component {
               this.state.latestFillPrice && (
                 <TriggerDiv className={this.state.disabledBtn ? "red" : ""}>
                   <span>
-                    Trigger <Icon type="left" />{" "}
+                    {this.t("tier_changes:trigger_text.message")}{" "}
+                    <Icon type="left" />{" "}
                   </span>
                   <span>{precision(this.state.latestFillPrice)}</span>
                 </TriggerDiv>
@@ -1356,4 +1366,5 @@ export default translate([
   "history",
   "general_3",
   "tier_changes",
+  "header",
 ])(connect(mapStateToProps)(StopLimit));

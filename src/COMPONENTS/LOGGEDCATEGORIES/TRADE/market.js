@@ -874,9 +874,13 @@ class Market extends Component {
             <div>
               {!Object.keys(this.props.userBal.crypto).length > 0 ? (
                 <BTCWrap className="no_wallet">
-                  <span>Don't have {this.props.cryptoName} Wallet?</span>
+                  <span>
+                    {this.t("general_3:dont_have_text.message")}{" "}
+                    {this.props.cryptoName}{" "}
+                    {this.t("header:navbar_menu_wallet.message")}?
+                  </span>
                   <a href={`/walletDetails?coinID0=${this.props.cryptoCode}`}>
-                    Generate wallet
+                    {this.t("general_3:generate_wallet_text.message")}
                   </a>
                 </BTCWrap>
               ) : (
@@ -884,9 +888,13 @@ class Market extends Component {
               )}
               {!Object.keys(this.props.userBal.currency).length > 0 ? (
                 <BTCWrap className="no_wallet">
-                  <span>Don't have {this.props.currencyName} Wallet?</span>
+                  <span>
+                    {this.t("general_3:dont_have_text.message")}{" "}
+                    {this.props.currencyName}{" "}
+                    {this.t("header:navbar_menu_wallet.message")}?
+                  </span>
                   <a href={`/walletDetails?coinID0=${this.props.currencyCode}`}>
-                    Generate wallet
+                    {this.t("generate_wallet_text.message")}
                   </a>
                 </BTCWrap>
               ) : (
@@ -1105,4 +1113,5 @@ export default translate([
   "history",
   "general_3",
   "tier_changes",
+  "header",
 ])(connect(mapStateToProps)(Market));
