@@ -561,6 +561,19 @@ export const BTCWrap = styled.div`
   &.width_class {
     width: 50%;
   }
+  &.no_wallet {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 10px;
+    > a {
+      padding: 5px 10px;
+      border: 1px solid;
+      border-radius: 4px;
+      color: #4c84ff;
+    }
+  }
 `;
 export const Willpay = styled.span`
   font-size: 12px;

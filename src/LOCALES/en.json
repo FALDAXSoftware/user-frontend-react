@@ -4623,6 +4623,12 @@
       "message": "TRADE HISTORY",
       "message_type": "Web content",
       "context": "TRADE HISTORY Text"
+    },
+    "trigger_text": {
+      "page": "Stop limit",
+      "message": "Trigger",
+      "message_type": "Web content",
+      "context": "Trigger Text"
     }
   }
 }
