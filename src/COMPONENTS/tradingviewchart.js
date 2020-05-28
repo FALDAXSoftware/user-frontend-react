@@ -95,6 +95,10 @@ class TradingViewChart extends React.Component {
         overrides: {
           "mainSeriesProperties.candleStyle.wickUpColor": "#008000",
           "mainSeriesProperties.candleStyle.wickDownColor": "#ff0000",
+          "mainSeriesProperties.candleStyle.upColor": "#008000",
+          "mainSeriesProperties.candleStyle.downColor": "#ff0000",
+          "mainSeriesProperties.candleStyle.borderUpColor": "#008000",
+          "mainSeriesProperties.candleStyle.borderDownColor": "#ff0000",
         },
       };
 
@@ -173,6 +177,10 @@ class TradingViewChart extends React.Component {
       overrides: {
         "mainSeriesProperties.candleStyle.wickUpColor": "#008000",
         "mainSeriesProperties.candleStyle.wickDownColor": "#ff0000",
+        "mainSeriesProperties.candleStyle.upColor": "#008000",
+        "mainSeriesProperties.candleStyle.downColor": "#ff0000",
+        "mainSeriesProperties.candleStyle.borderUpColor": "#008000",
+        "mainSeriesProperties.candleStyle.borderDownColor": "#ff0000",
       },
     };
 
