@@ -568,10 +568,6 @@ class Trade extends Component {
           this.setState({
             sellTotal: data.total,
           });
-        } else {
-          this.setState({
-            sellTotal: 0,
-          });
         }
       });
       this.props.io.on("buy-book-data", (data) => {
@@ -2011,8 +2007,8 @@ class Trade extends Component {
                             crypto={this.state.crypto}
                             currency={this.state.currency}
                             io={this.props.io}
-                            sellTotal={this.state.sellTotal}
-                            buyTotal={this.state.buyTotal}
+                            // sellTotal={this.state.sellTotal}
+                            // buyTotal={this.state.buyTotal}
                             cryptoCode={
                               this.state.symbolHighLevelInfo.crypto_coin_code
                                 ? this.state.symbolHighLevelInfo
@@ -2045,8 +2041,8 @@ class Trade extends Component {
                             crypto={this.state.crypto}
                             currency={this.state.currency}
                             io={this.props.io}
-                            sellTotal={this.state.sellTotal}
-                            buyTotal={this.state.buyTotal}
+                            // sellTotal={this.state.sellTotal}
+                            // buyTotal={this.state.buyTotal}
                             cryptoCode={
                               this.state.symbolHighLevelInfo.crypto_coin_code
                                 ? this.state.symbolHighLevelInfo
@@ -2083,8 +2079,8 @@ class Trade extends Component {
                             currency={this.state.currency}
                             io={this.props.io}
                             latestFillPrice={this.state.latestFillPrice}
-                            sellTotal={this.state.sellTotal}
-                            buyTotal={this.state.buyTotal}
+                            // sellTotal={this.state.sellTotal}
+                            // buyTotal={this.state.buyTotal}
                             cryptoCode={
                               this.state.symbolHighLevelInfo.crypto_coin_code
                                 ? this.state.symbolHighLevelInfo
