@@ -240,50 +240,50 @@ class StopLimit extends Component {
         disabledBtn: false,
       });
     }
-    if (this.props.sellTotal) {
-      this.setState(
-        {
-          sellTotal: this.props.sellTotal,
-        },
-        () => {
-          if (
-            this.state.side === "Buy" &&
-            !this.state.loader &&
-            parseFloat(this.state.amount) > parseFloat(this.state.sellTotal)
-          ) {
-            this.setState({
-              disabledMode: true,
-            });
-          } else {
-            this.setState({
-              disabledMode: false,
-            });
-          }
-        }
-      );
-    }
-    if (this.props.buyTotal) {
-      this.setState(
-        {
-          buyTotal: this.props.buyTotal,
-        },
-        () => {
-          if (
-            this.state.side === "Sell" &&
-            !this.state.loader &&
-            parseFloat(this.state.amount) > parseFloat(this.state.buyTotal)
-          ) {
-            this.setState({
-              disabledMode: true,
-            });
-          } else {
-            this.setState({
-              disabledMode: false,
-            });
-          }
-        }
-      );
-    }
+    // if (this.props.sellTotal) {
+    //   this.setState(
+    //     {
+    //       sellTotal: this.props.sellTotal,
+    //     },
+    //     () => {
+    //       if (
+    //         this.state.side === "Buy" &&
+    //         !this.state.loader &&
+    //         parseFloat(this.state.amount) > parseFloat(this.state.sellTotal)
+    //       ) {
+    //         this.setState({
+    //           disabledMode: true,
+    //         });
+    //       } else {
+    //         this.setState({
+    //           disabledMode: false,
+    //         });
+    //       }
+    //     }
+    //   );
+    // }
+    // if (this.props.buyTotal) {
+    //   this.setState(
+    //     {
+    //       buyTotal: this.props.buyTotal,
+    //     },
+    //     () => {
+    //       if (
+    //         this.state.side === "Sell" &&
+    //         !this.state.loader &&
+    //         parseFloat(this.state.amount) > parseFloat(this.state.buyTotal)
+    //       ) {
+    //         this.setState({
+    //           disabledMode: true,
+    //         });
+    //       } else {
+    //         this.setState({
+    //           disabledMode: false,
+    //         });
+    //       }
+    //     }
+    //   );
+    // }
     if (this.props.profileDetails) {
       switch (this.props.profileDetails.fiat) {
         case "USD":
@@ -412,50 +412,50 @@ class StopLimit extends Component {
         disabledBtn: false,
       });
     }
-    if (props.sellTotal && props.sellTotal != this.props.sellTotal) {
-      this.setState(
-        {
-          sellTotal: props.sellTotal,
-        },
-        () => {
-          if (
-            this.state.side === "Buy" &&
-            !this.state.loader &&
-            parseFloat(this.state.amount) > parseFloat(this.state.sellTotal)
-          ) {
-            this.setState({
-              disabledMode: true,
-            });
-          } else {
-            this.setState({
-              disabledMode: false,
-            });
-          }
-        }
-      );
-    }
-    if (props.buyTotal && props.buyTotal != this.props.buyTotal) {
-      this.setState(
-        {
-          buyTotal: props.buyTotal,
-        },
-        () => {
-          if (
-            this.state.side === "Sell" &&
-            !this.state.loader &&
-            parseFloat(this.state.amount) > parseFloat(this.state.buyTotal)
-          ) {
-            this.setState({
-              disabledMode: true,
-            });
-          } else {
-            this.setState({
-              disabledMode: false,
-            });
-          }
-        }
-      );
-    }
+    // if (props.sellTotal && props.sellTotal != this.props.sellTotal) {
+    //   this.setState(
+    //     {
+    //       sellTotal: props.sellTotal,
+    //     },
+    //     () => {
+    //       if (
+    //         this.state.side === "Buy" &&
+    //         !this.state.loader &&
+    //         parseFloat(this.state.amount) > parseFloat(this.state.sellTotal)
+    //       ) {
+    //         this.setState({
+    //           disabledMode: true,
+    //         });
+    //       } else {
+    //         this.setState({
+    //           disabledMode: false,
+    //         });
+    //       }
+    //     }
+    //   );
+    // }
+    // if (props.buyTotal && props.buyTotal != this.props.buyTotal) {
+    //   this.setState(
+    //     {
+    //       buyTotal: props.buyTotal,
+    //     },
+    //     () => {
+    //       if (
+    //         this.state.side === "Sell" &&
+    //         !this.state.loader &&
+    //         parseFloat(this.state.amount) > parseFloat(this.state.buyTotal)
+    //       ) {
+    //         this.setState({
+    //           disabledMode: true,
+    //         });
+    //       } else {
+    //         this.setState({
+    //           disabledMode: false,
+    //         });
+    //       }
+    //     }
+    //   );
+    // }
   }
 
   /* 
@@ -609,17 +609,17 @@ class StopLimit extends Component {
               // this.setState({
               //   fiatCurrencyValue: fiatValue,
               // });
-              if (
-                parseFloat(this.state.amount) > parseFloat(this.state.sellTotal)
-              ) {
-                self.setState({
-                  disabledMode: true,
-                });
-              } else {
-                self.setState({
-                  disabledMode: false,
-                });
-              }
+              // if (
+              //   parseFloat(this.state.amount) > parseFloat(this.state.sellTotal)
+              // ) {
+              //   self.setState({
+              //     disabledMode: true,
+              //   });
+              // } else {
+              //   self.setState({
+              //     disabledMode: false,
+              //   });
+              // }
             }
           } else if (this.state.side === "Sell") {
             if (value > 0 && name === "amount") {
@@ -629,17 +629,17 @@ class StopLimit extends Component {
               // this.setState({
               //   fiatCurrencyValue: fiatValue,
               // });
-              if (
-                parseFloat(this.state.amount) > parseFloat(this.state.buyTotal)
-              ) {
-                self.setState({
-                  disabledMode: true,
-                });
-              } else {
-                self.setState({
-                  disabledMode: false,
-                });
-              }
+              // if (
+              //   parseFloat(this.state.amount) > parseFloat(this.state.buyTotal)
+              // ) {
+              //   self.setState({
+              //     disabledMode: true,
+              //   });
+              // } else {
+              //   self.setState({
+              //     disabledMode: false,
+              //   });
+              // }
             }
           }
         } else {
