@@ -25,7 +25,7 @@ class DepthChart extends Component {
       loader: false,
       askData: [],
       bidData: [],
-      zoom: 1
+      zoom: 1,
     };
     this.t = this.props.t;
     this.updateGraph = this.updateGraph.bind(this);
@@ -36,7 +36,7 @@ class DepthChart extends Component {
 
   componentDidMount() {
     if (this.props.io) {
-      this.props.io.on("depth-chart-data", data => {
+      this.props.io.on("depth-chart-data", (data) => {
         console.log("^^^^data", data);
         this.updateGraph(data);
       });
@@ -54,7 +54,7 @@ class DepthChart extends Component {
         this.setState(
           {
             crypto: props.crypto,
-            currency: props.currency
+            currency: props.currency,
           },
           () => {
             // self.depthFunc();
@@ -103,14 +103,14 @@ class DepthChart extends Component {
       let element = data.buyDetails[index];
       bidData.push({
         x: element.price,
-        y: element.quantity
+        y: element.quantity,
       });
     }
     for (let sellIndex = 0; sellIndex < data.sellDetails.length; sellIndex++) {
       let element = data.sellDetails[sellIndex];
       askData.push({
         x: element.price,
-        y: element.quantity
+        y: element.quantity,
       });
     }
     let askDepthTotal = 0;
@@ -121,7 +121,7 @@ class DepthChart extends Component {
       askDepthTotal += askData[i]["y"];
       askDataArray.push({
         x: askData[i]["x"],
-        y: askDepthTotal
+        y: askDepthTotal,
       });
     }
 
@@ -129,14 +129,14 @@ class DepthChart extends Component {
       bidDepthTotal += bidData[j]["y"];
       bidDataArray.push({
         x: bidData[j]["x"],
-        y: bidDepthTotal
+        y: bidDepthTotal,
       });
     }
 
     self.setState(
       {
         bidData: bidDataArray,
-        askData: askDataArray
+        askData: askDataArray,
       },
       () => {
         self.forceUpdate();
@@ -147,35 +147,35 @@ class DepthChart extends Component {
     this.props.depthLoaderFunc(false);
   }
   zoomIn = () => {
-    let zoom = this.state.zoom
+    let zoom = this.state.zoom;
     if (zoom <= 4) {
       this.setState({
-        zoom: zoom + 1
-      })
+        zoom: zoom + 1,
+      });
     }
-  }
+  };
   zoomOut = () => {
-    let zoom = this.state.zoom
+    let zoom = this.state.zoom;
     if (zoom > 1) {
       this.setState({
-        zoom: zoom - 1
-      })
+        zoom: zoom - 1,
+      });
     }
-  }
+  };
   render() {
     var self = this;
-    let bidData = [...self.state.bidData]
-    let askData = [...self.state.askData]
+    let bidData = [...self.state.bidData];
+    let askData = [...self.state.askData];
     console.log(bidData, askData, self.state.zoom);
-    let ask_lenght = Math.ceil(askData.length / self.state.zoom)
-    let bid_length = Math.ceil(bidData.length / self.state.zoom)
+    let ask_lenght = Math.ceil(askData.length / self.state.zoom);
+    let bid_length = Math.ceil(bidData.length / self.state.zoom);
     if (self.state.zoom > 1) {
-      let min_length = Math.min(ask_lenght, bid_length)
-      ask_lenght = min_length
-      bid_length = min_length
+      let min_length = Math.min(ask_lenght, bid_length);
+      ask_lenght = min_length;
+      bid_length = min_length;
     }
-    bidData = bidData.slice(0, bid_length)
-    askData = askData.slice(0, ask_lenght)
+    bidData = bidData.slice(0, bid_length);
+    askData = askData.slice(0, ask_lenght);
     console.log(bidData, askData);
 
     let graphData = {
@@ -192,7 +192,7 @@ class DepthChart extends Component {
           pointHitRadius: 2,
           steppedLine: true,
           pointRadius: 0.2,
-          data: [...bidData]
+          data: [...bidData],
         },
         {
           label: `${this.t("ask_text.message")}`,
@@ -205,9 +205,9 @@ class DepthChart extends Component {
           pointHitRadius: 2,
           pointRadius: 0.2,
           steppedLine: true,
-          data: [...askData]
-        }
-      ]
+          data: [...askData],
+        },
+      ],
     };
 
     return (
@@ -215,7 +215,14 @@ class DepthChart extends Component {
         <Instru2 style={{ width: "calc(100% - 20px)" }}>
           {this.t("market_depth_text.message")} {this.props.crypto}/
           {this.props.currency}
-          <div className="controlls"><Button size="small" type="primary" onClick={this.zoomIn}><Icon type="plus" /></Button><Button size="small" type="primary" onClick={this.zoomOut}><Icon type="minus" /></Button></div>
+          <div className="controlls">
+            <Button size="small" type="primary" onClick={this.zoomIn}>
+              <Icon type="plus" />
+            </Button>
+            <Button size="small" type="primary" onClick={this.zoomOut}>
+              <Icon type="minus" />
+            </Button>
+          </div>
         </Instru2>
         <Row>
           <Col xl={24}>
@@ -228,7 +235,7 @@ class DepthChart extends Component {
                   responsive: true,
                   maintainAspectRatio: false,
                   legend: {
-                    display: false
+                    display: false,
                   },
                   scales: {
                     xAxes: [
@@ -238,11 +245,11 @@ class DepthChart extends Component {
                         position: "bottom",
                         gridLines: {
                           display: false,
-                          color: "#FFFFFF"
-                        }
-                      }
-                    ]
-                  }
+                          color: "#FFFFFF",
+                        },
+                      },
+                    ],
+                  },
                 }}
                 ref="chart"
               />
@@ -256,7 +263,7 @@ class DepthChart extends Component {
 
 function mapStateToProps(state) {
   return {
-    isLoggedIn: state.simpleReducer.isLoggedIn
+    isLoggedIn: state.simpleReducer.isLoggedIn,
   };
 }
 
