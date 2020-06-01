@@ -3,19 +3,19 @@ import { globalVariables } from "./Globals";
 const { API_URL } = globalVariables;
 // Add a response interceptor
 axios.interceptors.response.use(
-  function(response) {
+  function (response) {
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
     return response.data;
   },
-  function(error) {
+  function (error) {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
     return Promise.reject(error);
   }
 );
 const APIUtility = {
-  getThresholdData: function(token) {
+  getThresholdData: function (token) {
     return axios({
       method: "get",
       url: API_URL + "/users/get-user-thresholds",
@@ -24,7 +24,7 @@ const APIUtility = {
       },
     });
   },
-  setThresholdData: function(token, data) {
+  setThresholdData: function (token, data) {
     return axios({
       method: "post",
       url: API_URL + "/users/add-thresholds-limits",
@@ -34,7 +34,7 @@ const APIUtility = {
       data: data,
     });
   },
-  getPanicStatus: function(token) {
+  getPanicStatus: function (token) {
     return axios({
       method: "get",
       url: API_URL + "/check-panic-status",
@@ -43,7 +43,7 @@ const APIUtility = {
       },
     });
   },
-  getUserTradeStatus: function(token) {
+  getUserTradeStatus: function (token) {
     return axios({
       method: "get",
       url: API_URL + "/users/get-user-trade-status",
@@ -52,7 +52,7 @@ const APIUtility = {
       },
     });
   },
-  getCrypto: function(token) {
+  getCrypto: function (token) {
     return axios({
       method: "get",
       url: API_URL + "/get-simplex-coin-list",
@@ -61,7 +61,7 @@ const APIUtility = {
       },
     });
   },
-  getTierDetails: function(token, data) {
+  getTierDetails: function (token, data) {
     return axios({
       method: "post",
       url: API_URL + "/users/get-user-tier-details",
@@ -71,7 +71,7 @@ const APIUtility = {
       data: data,
     });
   },
-  calculateDigitalCurrency: function(token, data) {
+  calculateDigitalCurrency: function (token, data) {
     return axios({
       method: "post",
       url: API_URL + "/get-qoute-details",
@@ -83,4 +83,5 @@ const APIUtility = {
     });
   },
 };
+
 export { APIUtility };

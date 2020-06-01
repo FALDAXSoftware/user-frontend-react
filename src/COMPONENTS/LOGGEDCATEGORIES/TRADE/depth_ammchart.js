@@ -103,7 +103,38 @@ class DepthChartAm extends Component {
       return res;
     });
     // Set up precision for numbers
-    chart.numberFormatter.numberFormat = "#,###.######";
+    let stepValue;
+    switch (this.props.pricePrecision.toString()) {
+      case "0":
+        stepValue = "#,###";
+        break;
+      case "1":
+        stepValue = "#,###.#";
+        break;
+      case "2":
+        stepValue = "#,###.##";
+        break;
+      case "3":
+        stepValue = "#,###.###";
+        break;
+      case "4":
+        stepValue = "#,###.####";
+        break;
+      case "5":
+        stepValue = "#,###.#####";
+        break;
+      case "6":
+        stepValue = "#,###.######";
+        break;
+      case "7":
+        stepValue = "#,###.#######";
+      case "8":
+        stepValue = "#,###.########";
+        break;
+      default:
+        break;
+    }
+    chart.numberFormatter.numberFormat = stepValue;
 
     // Create axes
     let xAxis = chart.xAxes.push(new am4charts.CategoryAxis());
@@ -169,6 +200,38 @@ class DepthChartAm extends Component {
           },
           () => {
             chart.dataSource.url = `${SOCKET_HOST}/api/v1/tradding/depth-chart-details?symbol=${this.props.crypto}-${this.props.currency}`;
+            let stepValue;
+            switch (props.pricePrecision.toString()) {
+              case "0":
+                stepValue = "#,###";
+                break;
+              case "1":
+                stepValue = "#,###.#";
+                break;
+              case "2":
+                stepValue = "#,###.##";
+                break;
+              case "3":
+                stepValue = "#,###.###";
+                break;
+              case "4":
+                stepValue = "#,###.####";
+                break;
+              case "5":
+                stepValue = "#,###.#####";
+                break;
+              case "6":
+                stepValue = "#,###.######";
+                break;
+              case "7":
+                stepValue = "#,###.#######";
+              case "8":
+                stepValue = "#,###.########";
+                break;
+              default:
+                break;
+            }
+            chart.numberFormatter.numberFormat = stepValue;
             chart.dataSource.load();
           }
         );
@@ -178,7 +241,7 @@ class DepthChartAm extends Component {
   /* Life-Cycle Methods */
   render() {
     return (
-      <WrapDepth style={{ fontSize: "10px" }}>
+      <WrapDepth style={{ fontSize: "8px" }}>
         <Instru2 style={{ width: "calc(100% - 20px)" }}>
           {this.t("market_depth_text.message")} {this.props.crypto}/
           {this.props.currency}

@@ -73,51 +73,8 @@ import {
 } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
 import DepthChartAm from "./depth_ammchart";
 import { getProfileDataAction } from "../../../ACTIONS/SETTINGS/settingActions";
-function precision(x) {
-  if (Math.abs(x) < 1.0) {
-    var e = parseInt(x.toString().split("e-")[1]);
-    if (e) {
-      x *= Math.pow(10, e - 1);
-      x = "0." + new Array(e).join("0") + x.toString().substring(2);
-    }
-  } else {
-    var e = parseInt(x.toString().split("+")[1]);
-    if (e > 20) {
-      e -= 20;
-      x /= Math.pow(10, e);
-      x += new Array(e + 1).join("0");
-    }
-  }
-  if (x.toString().split(".")[1] && x.toString().split(".")[1].length > 8) {
-    {
-      x = parseFloat(x).toFixed(8);
-      if (
-        x.toString()[x.toString().length - 1] == "0" &&
-        (x.toString().split(".")[1][0] != "0" ||
-          x.toString().split(".")[1][5] != "0")
-      ) {
-        return parseFloat(x);
-      } else if (x.toString().split(".")[1][7] == "0") {
-        if (x.toString().split(".")[1][6] == "0") {
-          if (x.toString().split(".")[1][5] == "0") {
-            if (x.toString().split(".")[1][4] == "0") {
-              if (x.toString().split(".")[1][3] == "0") {
-                if (x.toString().split(".")[1][2] == "0") {
-                  if (x.toString().split(".")[1][1] == "0") {
-                    if (x.toString().split(".")[1][0] == "0") {
-                      return parseFloat(x).toFixed(0);
-                    } else return parseFloat(x).toFixed(1);
-                  } else return parseFloat(x).toFixed(2);
-                } else return parseFloat(x).toFixed(3);
-              } else return parseFloat(x).toFixed(4);
-            } else return parseFloat(x).toFixed(5);
-          } else return parseFloat(x).toFixed(6);
-        } else return parseFloat(x).toFixed(7);
-      } else return parseFloat(x).toFixed(8);
-    }
-  }
-  return x;
-}
+import { precise } from "../../../precision";
+function precision(x) {}
 function precisionTwo(x) {
   if (Math.abs(x) < 1.0) {
     var e = parseInt(x.toString().split("e-")[1]);
@@ -151,6 +108,7 @@ function precisionTwo(x) {
   }
   return x;
 }
+
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 const originalLayouts = getFromLS("layouts") || {};
 const _AMAZONBUCKET = globalVariables._AMAZONBUCKET;
@@ -434,6 +392,8 @@ class Trade extends Component {
       latestFillPrice: "",
       sellTotal: "",
       buyTotal: "",
+      pricePrecision: "0",
+      quantityPrecision: "0",
     };
     io = this.props.io;
     this.t = this.props.t;
@@ -596,6 +556,17 @@ class Trade extends Component {
       .then((response) => response.json())
       .then((responseData) => {
         if (responseData.status == 200) {
+          for (let index = 0; index < responseData.data.length; index++) {
+            const element = responseData.data[index];
+            if (element.name == `${this.state.crypto}-${this.state.currency}`) {
+              let pricePrecision = element.price_precision;
+              let qtyPrecision = element.quantity_precision;
+              this.setState({
+                pricePrecision: pricePrecision,
+                quantityPrecision: qtyPrecision,
+              });
+            }
+          }
           this.updateInstrumentsData(responseData.data);
         }
       })
@@ -702,16 +673,19 @@ class Trade extends Component {
       if (!res[currency]) {
         res[currency] = [];
       }
+
       res[currency].push({
         name: element.name.split("-")[0],
         currency,
-        price: precision(element.last_price),
-        volume: precisionTwo(element.volume),
-        change: precisionTwo(element.percentChange),
+        price: precise(element.last_price, this.state.pricePrecision),
+        volume: precise(element.volume, "2"),
+        change: precise(element.percentChange, "2"),
+        pricePrecision: element.price_precision,
+        quantityPrecision: element.quantity_precision,
         pairName: element.name,
       });
     }
-    console.log("instruments -----", res);
+    console.log("instruments -----", res, data);
 
     this.setState({
       InsData: res,
@@ -1765,7 +1739,10 @@ class Trade extends Component {
                       }
                     >
                       {this.state.symbolHighLevelInfo.last_price
-                        ? precision(this.state.symbolHighLevelInfo.last_price)
+                        ? precise(
+                            this.state.symbolHighLevelInfo.last_price,
+                            this.state.pricePrecision
+                          )
                         : "0"}
                     </span>
                   </span>
@@ -1773,8 +1750,9 @@ class Trade extends Component {
                     <NumberFormat
                       value={
                         this.state.symbolHighLevelInfo.fiatValue
-                          ? precisionTwo(
-                              this.state.symbolHighLevelInfo.fiatValue
+                          ? precise(
+                              this.state.symbolHighLevelInfo.fiatValue,
+                              "2"
                             )
                           : "0"
                       }
@@ -1801,8 +1779,9 @@ class Trade extends Component {
                       <NumberFormat
                         value={
                           this.state.symbolHighLevelInfo.change
-                            ? precisionTwo(
-                                Math.abs(this.state.symbolHighLevelInfo.change)
+                            ? precise(
+                                Math.abs(this.state.symbolHighLevelInfo.change),
+                                "2"
                               )
                             : "0"
                         }
@@ -1820,7 +1799,10 @@ class Trade extends Component {
                   <span className="values_data">
                     <span>
                       {this.state.symbolHighLevelInfo.high
-                        ? precision(this.state.symbolHighLevelInfo.high)
+                        ? precise(
+                            this.state.symbolHighLevelInfo.high,
+                            this.state.pricePrecision
+                          )
                         : "0"}
                     </span>
                   </span>
@@ -1832,7 +1814,10 @@ class Trade extends Component {
                   <span className="values_data">
                     <span>
                       {this.state.symbolHighLevelInfo.low
-                        ? precision(this.state.symbolHighLevelInfo.low)
+                        ? precise(
+                            this.state.symbolHighLevelInfo.low,
+                            this.state.pricePrecision
+                          )
                         : "0"}
                     </span>
                   </span>
@@ -1848,8 +1833,9 @@ class Trade extends Component {
                       <NumberFormat
                         value={
                           this.state.symbolHighLevelInfo.volume
-                            ? precisionTwo(
-                                this.state.symbolHighLevelInfo.volume
+                            ? precise(
+                                this.state.symbolHighLevelInfo.volume,
+                                "2"
                               )
                             : "0"
                         }
@@ -1959,12 +1945,21 @@ class Trade extends Component {
                             return {
                               onClick: (event) => {
                                 self.currencyPair(record.name);
+                                console.log("instruments", record);
+                                self.setState({
+                                  pricePrecision: record.pricePrecision
+                                    ? record.pricePrecision
+                                    : "0",
+                                  quantityPrecision: record.quantityPrecision
+                                    ? record.quantityPrecision
+                                    : "0",
+                                });
                               }, // click row
                             };
                           }}
                           pagination={false}
                           columns={columns}
-                          rowClassName={(record, index) => {
+                          rowClassName={(record) => {
                             if (
                               record.name == this.state.crypto &&
                               record.currency == this.state.currency
@@ -2032,6 +2027,8 @@ class Trade extends Component {
                                     .currency_coin_code
                                 : "tbtc"
                             }
+                            pricePrecision={this.state.pricePrecision}
+                            qtyPrecision={this.state.quantityPrecision}
                           />
                         </TabPane>
                         <TabPane tab={this.t("limit_head.message")} key="2">
@@ -2066,6 +2063,8 @@ class Trade extends Component {
                                     .currency_coin_code
                                 : "tbtc"
                             }
+                            pricePrecision={this.state.pricePrecision}
+                            qtyPrecision={this.state.quantityPrecision}
                           />
                         </TabPane>
                         <TabPane
@@ -2104,6 +2103,8 @@ class Trade extends Component {
                                     .currency_coin_code
                                 : "tbtc"
                             }
+                            pricePrecision={this.state.pricePrecision}
+                            qtyPrecision={this.state.quantityPrecision}
                           />
                         </TabPane>
                       </TabsRight>
@@ -2128,6 +2129,8 @@ class Trade extends Component {
                       }}
                       io={io}
                       height={this.state.buySellOrderHeight}
+                      pricePrecision={this.state.pricePrecision}
+                      qtyPrecision={this.state.quantityPrecision}
                     />
                   </div>
                 </div>
@@ -2156,6 +2159,7 @@ class Trade extends Component {
                         currency={this.state.currency}
                         io={this.props.io}
                         height={this.state.depthChartHeight}
+                        pricePrecision={this.state.pricePrecision}
                       />
                     </RightDiv>
                   </div>
@@ -2176,6 +2180,8 @@ class Trade extends Component {
                       height={self.state.orderHistoryTableHeight}
                       currency={this.state.currency}
                       crypto={this.state.crypto}
+                      pricePrecision={this.state.pricePrecision}
+                      qtyPrecision={this.state.quantityPrecision}
                     />
                   </div>
                 </div>
@@ -2248,6 +2254,8 @@ class Trade extends Component {
                         butonEnable={this.state.butonEnable}
                         currency={this.state.currency}
                         crypto={this.state.crypto}
+                        pricePrecision={this.state.pricePrecision}
+                        qtyPrecision={this.state.quantityPrecision}
                       />
                     </LeftDiv2>
                   </div>

@@ -19,6 +19,7 @@ import {
   ScrollTableContent,
 } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
 import { OTwrap } from "./ordertrade";
+import { precise } from "../../../precision";
 
 const APP_URL = globalVariables.API_URL;
 const BorderedHistoryWrap = styled(HistoryWrap)`
@@ -204,12 +205,14 @@ class HistoryTable extends Component {
           {element.side}
         </SideType> */}
         <SideType type={element.side} width="33.33%">
-          {element.amount !== undefined ? `${precision(element.amount)}` : ""}
+          {element.amount !== undefined
+            ? `${precise(element.amount, this.props.qtyPrecision)}`
+            : ""}
         </SideType>
         {index + 1 < me.state.data.length ? (
           element.fill_price >= me.state.data[index + 1].fill_price ? (
             <td width="33.33%">
-              {precision(element.fill_price)}
+              {precise(element.fill_price, this.props.pricePrecision)}
               {/* {this.props.currency}{" "} */}{" "}
               {this.props.theme !== true ? (
                 <img
@@ -227,7 +230,7 @@ class HistoryTable extends Component {
             </td>
           ) : (
             <td width="33.33%">
-              {precision(element.fill_price)}
+              {precise(element.fill_price, this.props.pricePrecision)}
               {/* {this.props.currency}{" "} */}{" "}
               {this.props.theme !== true ? (
                 <img
@@ -340,48 +343,3 @@ function mapStateToProps(state) {
 export default translate(["trade", "wallet", "conversion", "history"])(
   connect(mapStateToProps)(HistoryTable)
 );
-function precision(x) {
-  if (Math.abs(x) < 1.0) {
-    var e = parseInt(x.toString().split("e-")[1]);
-    if (e) {
-      x *= Math.pow(10, e - 1);
-      x = "0." + new Array(e).join("0") + x.toString().substring(2);
-    }
-  } else {
-    var e = parseInt(x.toString().split("+")[1]);
-    if (e > 20) {
-      e -= 20;
-      x /= Math.pow(10, e);
-      x += new Array(e + 1).join("0");
-    }
-  }
-  if (x.toString().split(".")[1] && x.toString().split(".")[1].length > 8) {
-    {
-      x = parseFloat(x).toFixed(8);
-      if (
-        x.toString()[x.toString().length - 1] == "0" &&
-        (x.toString().split(".")[1][0] != "0" ||
-          x.toString().split(".")[1][5] != "0")
-      ) {
-        return parseFloat(x);
-      } else if (x.toString().split(".")[1][7] == "0") {
-        if (x.toString().split(".")[1][6] == "0") {
-          if (x.toString().split(".")[1][5] == "0") {
-            if (x.toString().split(".")[1][4] == "0") {
-              if (x.toString().split(".")[1][3] == "0") {
-                if (x.toString().split(".")[1][2] == "0") {
-                  if (x.toString().split(".")[1][1] == "0") {
-                    if (x.toString().split(".")[1][0] == "0") {
-                      return parseFloat(x).toFixed(0);
-                    } else return parseFloat(x).toFixed(1);
-                  } else return parseFloat(x).toFixed(2);
-                } else return parseFloat(x).toFixed(3);
-              } else return parseFloat(x).toFixed(4);
-            } else return parseFloat(x).toFixed(5);
-          } else return parseFloat(x).toFixed(6);
-        } else return parseFloat(x).toFixed(7);
-      } else return parseFloat(x).toFixed(8);
-    }
-  }
-  return x;
-}
