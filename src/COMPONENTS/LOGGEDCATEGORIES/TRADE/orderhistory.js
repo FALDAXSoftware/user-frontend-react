@@ -31,6 +31,8 @@ class BuySell extends React.Component {
           height={this.props.height}
           currency={this.props.currency}
           crypto={this.props.crypto}
+          pricePrecision={this.props.pricePrecision}
+          qtyPrecision={this.props.qtyPrecision}
         />
       </LeftDiv2>
     );

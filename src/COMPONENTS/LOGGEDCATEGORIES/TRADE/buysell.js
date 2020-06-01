@@ -11,7 +11,7 @@ import {
   LeftDiv,
   Instru,
   BBCWrap,
-  BBCWrap2
+  BBCWrap2,
 } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
 
 class BuySell extends React.Component {
@@ -41,11 +41,13 @@ class BuySell extends React.Component {
           <BuyTable
             currency={this.props.currency}
             crypto={this.props.crypto}
-            loaderfunc={loader => {
+            loaderfunc={(loader) => {
               this.loaderfunc(loader);
             }}
             io={this.props.io}
             elementHeight={this.props.height}
+            pricePrecision={this.props.pricePrecision}
+            qtyPrecision={this.props.qtyPrecision}
           />
         </BBCWrap>
 
@@ -55,6 +57,8 @@ class BuySell extends React.Component {
             crypto={this.props.crypto}
             currency={this.props.currency}
             height={this.props.height}
+            pricePrecision={this.props.pricePrecision}
+            qtyPrecision={this.props.qtyPrecision}
           />
         </BBCWrap2>
       </LeftDiv>

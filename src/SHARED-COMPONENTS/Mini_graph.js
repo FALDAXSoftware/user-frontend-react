@@ -23,7 +23,9 @@ const ImageWrapper = styled.img`
   background-color: ${(props) =>
     props.theme.mode === "dark" ? "#041b2c" : ""};
 `;
-
+const GraphMain = styled(Col)`
+  padding: 0 20px;
+`;
 const SpanCoinName = styled.span`
   font-size: 16px;
   font-family: "Open sans";
@@ -285,7 +287,7 @@ class Mini_graph extends React.Component {
         <Row
         // style={{ paddingTop: "10px" }}
         >
-          <Col span={24}>
+          <GraphMain span={24}>
             <Line
               data={graphData}
               options={{
@@ -318,7 +320,7 @@ class Mini_graph extends React.Component {
               redraw={true}
               ref="chart"
             />
-          </Col>
+          </GraphMain>
         </Row>
       </GraphWrapper>
     );
