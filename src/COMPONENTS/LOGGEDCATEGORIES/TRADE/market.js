@@ -37,54 +37,9 @@ import {
 /* Components */
 import { SpinSingle } from "STYLED-COMPONENTS/LOGGED_STYLE/dashStyle";
 import { globalVariables } from "Globals.js";
+import { precise } from "../../../precision";
 
 let { SOCKET_HOST } = globalVariables;
-
-function precision(x) {
-  if (Math.abs(x) < 1.0) {
-    var e = parseInt(x.toString().split("e-")[1]);
-    if (e) {
-      x *= Math.pow(10, e - 1);
-      x = "0." + new Array(e).join("0") + x.toString().substring(2);
-    }
-  } else {
-    var e = parseInt(x.toString().split("+")[1]);
-    if (e > 20) {
-      e -= 20;
-      x /= Math.pow(10, e);
-      x += new Array(e + 1).join("0");
-    }
-  }
-  if (x.toString().split(".")[1] && x.toString().split(".")[1].length > 8) {
-    {
-      x = parseFloat(x).toFixed(8);
-      if (
-        x.toString()[x.toString().length - 1] == "0" &&
-        (x.toString().split(".")[1][0] != "0" ||
-          x.toString().split(".")[1][5] != "0")
-      ) {
-        return parseFloat(x);
-      } else if (x.toString().split(".")[1][7] == "0") {
-        if (x.toString().split(".")[1][6] == "0") {
-          if (x.toString().split(".")[1][5] == "0") {
-            if (x.toString().split(".")[1][4] == "0") {
-              if (x.toString().split(".")[1][3] == "0") {
-                if (x.toString().split(".")[1][2] == "0") {
-                  if (x.toString().split(".")[1][1] == "0") {
-                    if (x.toString().split(".")[1][0] == "0") {
-                      return parseFloat(x).toFixed(0);
-                    } else return parseFloat(x).toFixed(1);
-                  } else return parseFloat(x).toFixed(2);
-                } else return parseFloat(x).toFixed(3);
-              } else return parseFloat(x).toFixed(4);
-            } else return parseFloat(x).toFixed(5);
-          } else return parseFloat(x).toFixed(6);
-        } else return parseFloat(x).toFixed(7);
-      } else return parseFloat(x).toFixed(8);
-    }
-  }
-  return x;
-}
 
 class Market extends Component {
   constructor(props) {
@@ -716,6 +671,41 @@ class Market extends Component {
       amount,
     } = this.state;
     const RadioGroup = Radio.Group;
+    console.log(
+      "%%%%this.props.qtyPrecision",
+      this.props.qtyPrecision.toString()
+    );
+    let stepValue;
+    switch (this.props.qtyPrecision.toString()) {
+      case "0":
+        stepValue = "1";
+        break;
+      case "1":
+        stepValue = "0.1";
+        break;
+      case "2":
+        stepValue = "0.01";
+        break;
+      case "3":
+        stepValue = "0.001";
+        break;
+      case "4":
+        stepValue = "0.0001";
+        break;
+      case "5":
+        stepValue = "0.00001";
+        break;
+      case "6":
+        stepValue = "0.000001";
+        break;
+      case "7":
+        stepValue = "0.0000001";
+      case "8":
+        stepValue = "0.00000001";
+        break;
+      default:
+        break;
+    }
     return (
       <MarketWrap>
         <BuyWrap>
@@ -752,8 +742,9 @@ class Market extends Component {
                         <Balance>
                           {this.props.userBal.currency
                             ? this.props.userBal.currency.placed_balance
-                              ? `${precision(
-                                  this.props.userBal.currency.placed_balance
+                              ? `${precise(
+                                  this.props.userBal.currency.placed_balance,
+                                  this.props.pricePrecision
                                 )}${" "}`
                               : `0${" "}`
                             : `0${" "}`}
@@ -773,8 +764,9 @@ class Market extends Component {
                         <Balance>
                           {this.props.userBal.currency
                             ? this.props.userBal.currency.balance
-                              ? `${precision(
-                                  this.props.userBal.currency.balance
+                              ? `${precise(
+                                  this.props.userBal.currency.balance,
+                                  this.props.pricePrecision
                                 )}${" "}`
                               : `0${" "}`
                             : `0${" "}`}
@@ -794,11 +786,12 @@ class Market extends Component {
                         <Balance>
                           {this.props.userBal.currency
                             ? this.props.userBal.currency.balance
-                              ? `${precision(
+                              ? `${precise(
                                   Math.abs(
                                     this.props.userBal.currency.balance -
                                       this.props.userBal.currency.placed_balance
-                                  )
+                                  ),
+                                  this.props.pricePrecision
                                 )}${" "}`
                               : `0${" "}`
                             : `0${" "}`}
@@ -817,7 +810,10 @@ class Market extends Component {
                       </Col>
                       <Col span={24}>
                         <Balance>
-                          {precision(this.props.userBal.buyPay)}{" "}
+                          {precise(
+                            this.props.userBal.buyPay,
+                            this.props.pricePrecision
+                          )}{" "}
                           {this.state.currency}
                         </Balance>
                       </Col>
@@ -837,8 +833,9 @@ class Market extends Component {
                         <Balance>
                           {this.props.userBal.crypto
                             ? this.props.userBal.crypto.placed_balance
-                              ? `${precision(
-                                  this.props.userBal.crypto.placed_balance
+                              ? `${precise(
+                                  this.props.userBal.crypto.placed_balance,
+                                  this.props.pricePrecision
                                 )}${" "}`
                               : `0${" "}`
                             : `0${" "}`}
@@ -858,8 +855,9 @@ class Market extends Component {
                         <Balance>
                           {this.props.userBal.crypto
                             ? this.props.userBal.crypto.balance
-                              ? `${precision(
-                                  this.props.userBal.crypto.balance
+                              ? `${precise(
+                                  this.props.userBal.crypto.balance,
+                                  this.props.pricePrecision
                                 )}${" "}`
                               : `0${" "}`
                             : `0${" "}`}
@@ -879,11 +877,12 @@ class Market extends Component {
                         <Balance>
                           {this.props.userBal.crypto
                             ? this.props.userBal.crypto.balance
-                              ? `${precision(
+                              ? `${precise(
                                   Math.abs(
                                     this.props.userBal.crypto.balance -
                                       this.props.userBal.crypto.placed_balance
-                                  )
+                                  ),
+                                  this.props.pricePrecision
                                 )}${" "}`
                               : `0${" "}`
                             : `0${" "}`}
@@ -902,7 +901,10 @@ class Market extends Component {
                       </Col>
                       <Col span={24}>
                         <Balance>
-                          {precision(this.props.userBal.sellPay)}{" "}
+                          {precise(
+                            this.props.userBal.sellPay,
+                            this.props.pricePrecision
+                          )}{" "}
                           {this.state.currency}
                         </Balance>
                       </Col>
@@ -952,9 +954,9 @@ class Market extends Component {
             <AMTInput
               min="0"
               type="number"
-              step="0.001"
+              step={stepValue}
               addonAfter={this.state.crypto}
-              value={this.state.amount}
+              value={precise(this.state.amount, this.props.qtyPrecision)}
               placeholder="0"
               name="amount"
               onChange={this.onChange}
@@ -989,7 +991,7 @@ class Market extends Component {
               type="number"
               addonAfter={this.state.currency}
               // value={this.state.total.toFixed(8)}
-              value={precision(this.state.total)}
+              value={precise(this.state.total, this.props.pricePrecision)}
               // value={this.state.total.toPrecise(8)}
               name="total"
             />
@@ -1005,7 +1007,8 @@ class Market extends Component {
                 </Willpay>
                 <Willpay2>
                   {/* {buyPayAmt.toFixed(8)} {this.state.currency} */}
-                  {precision(buyPayAmt)} {this.state.currency}
+                  {precise(buyPayAmt, this.props.pricePrecision)}{" "}
+                  {this.state.currency}
                 </Willpay2>
               </Approx>
               <Esti>
@@ -1017,7 +1020,7 @@ class Market extends Component {
                   </WillpayBelow>
                   <WillpayBelow2>
                     {/* {parseFloat(this.state.fiatCurrencyValue).toFixed(8)}{" "} */}
-                    {precision(this.state.fiatCurrencyValue)}{" "}
+                    {precise(this.state.fiatCurrencyValue, "2")}{" "}
                     {this.state.fiatCurrency}
                   </WillpayBelow2>
                 </ApproxBelow>
@@ -1027,7 +1030,8 @@ class Market extends Component {
                   </WillpayBelow>
                   <WillpayBelow2>
                     {/* {buyPayAmt.toFixed(8)} {this.state.currency} */}
-                    {precision(buyPayAmt)} {this.state.currency}
+                    {precise(buyPayAmt, this.props.pricePrecision)}{" "}
+                    {this.state.currency}
                   </WillpayBelow2>
                 </ApproxBelow>
                 <ApproxBelow>
@@ -1043,7 +1047,10 @@ class Market extends Component {
                     )} */}
                     {/* {(buyPayAmt - buyEstPrice).toFixed(8)} {this.state.crypto} */}
                     {/* {precision(buyPayAmt - buyEstPrice)} {this.state.crypto} */}
-                    {precision((amount * this.state.userBalFees) / 100)}{" "}
+                    {precise(
+                      (amount * this.state.userBalFees) / 100,
+                      this.props.pricePrecision
+                    )}{" "}
                     {this.state.crypto}
                   </WillpayBelow2>
                 </ApproxBelow>
@@ -1058,7 +1065,8 @@ class Market extends Component {
                 </Willpay>
                 <Willpay2>
                   {/* {sellEstPrice.toFixed(8)} {this.state.currency} */}
-                  {precision(sellEstPrice)} {this.state.currency}
+                  {precise(sellEstPrice, this.props.pricePrecision)}{" "}
+                  {this.state.currency}
                 </Willpay2>
               </Approx>
               <Esti>
@@ -1070,7 +1078,7 @@ class Market extends Component {
                   </WillpayBelow>
                   <WillpayBelow2>
                     {/* {parseFloat(this.state.fiatCurrencyValue).toFixed(8)}{" "} */}
-                    {precision(this.state.fiatCurrencyValue)}{" "}
+                    {precise(this.state.fiatCurrencyValue, "2")}{" "}
                     {this.state.fiatCurrency}
                   </WillpayBelow2>
                 </ApproxBelow>
@@ -1080,7 +1088,8 @@ class Market extends Component {
                   </WillpayBelow>
                   <WillpayBelow2>
                     {/* {sellPayAmt.toFixed(8)} {this.state.currency} */}
-                    {precision(sellPayAmt)} {this.state.currency}
+                    {precise(sellPayAmt, this.props.pricePrecision)}{" "}
+                    {this.state.currency}
                   </WillpayBelow2>
                 </ApproxBelow>
                 <ApproxBelow>
@@ -1096,8 +1105,9 @@ class Market extends Component {
                     )} */}
                     {/* {(sellPayAmt - sellEstPrice).toFixed(8)}{" "} */}
                     {/* {precision(sellPayAmt - sellEstPrice)} {this.state.currency} */}
-                    {precision(
-                      (this.state.total * this.state.userBalFees) / 100
+                    {precise(
+                      (this.state.total * this.state.userBalFees) / 100,
+                      this.props.pricePrecision
                     )}{" "}
                     {this.state.currency}
                   </WillpayBelow2>

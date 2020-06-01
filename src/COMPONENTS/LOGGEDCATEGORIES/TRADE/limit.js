@@ -39,54 +39,10 @@ import {
   WillpayBelow2,
   WillpayBelow,
 } from "../../../STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
+import { precise } from "../../../precision";
 
 let { SOCKET_HOST } = globalVariables;
 
-function precision(x) {
-  if (Math.abs(x) < 1.0) {
-    var e = parseInt(x.toString().split("e-")[1]);
-    if (e) {
-      x *= Math.pow(10, e - 1);
-      x = "0." + new Array(e).join("0") + x.toString().substring(2);
-    }
-  } else {
-    var e = parseInt(x.toString().split("+")[1]);
-    if (e > 20) {
-      e -= 20;
-      x /= Math.pow(10, e);
-      x += new Array(e + 1).join("0");
-    }
-  }
-  if (x.toString().split(".")[1] && x.toString().split(".")[1].length > 8) {
-    {
-      x = parseFloat(x).toFixed(8);
-      if (
-        x.toString()[x.toString().length - 1] == "0" &&
-        (x.toString().split(".")[1][0] != "0" ||
-          x.toString().split(".")[1][5] != "0")
-      ) {
-        return parseFloat(x);
-      } else if (x.toString().split(".")[1][7] == "0") {
-        if (x.toString().split(".")[1][6] == "0") {
-          if (x.toString().split(".")[1][5] == "0") {
-            if (x.toString().split(".")[1][4] == "0") {
-              if (x.toString().split(".")[1][3] == "0") {
-                if (x.toString().split(".")[1][2] == "0") {
-                  if (x.toString().split(".")[1][1] == "0") {
-                    if (x.toString().split(".")[1][0] == "0") {
-                      return parseFloat(x).toFixed(0);
-                    } else return parseFloat(x).toFixed(1);
-                  } else return parseFloat(x).toFixed(2);
-                } else return parseFloat(x).toFixed(3);
-              } else return parseFloat(x).toFixed(4);
-            } else return parseFloat(x).toFixed(5);
-          } else return parseFloat(x).toFixed(6);
-        } else return parseFloat(x).toFixed(7);
-      } else return parseFloat(x).toFixed(8);
-    }
-  }
-  return x;
-}
 class Limit extends Component {
   constructor(props) {
     super(props);
@@ -687,7 +643,67 @@ class Limit extends Component {
       sellPayAmt,
     } = this.state;
     const RadioGroup = Radio.Group;
-
+    let stepValue, limitPrecision;
+    switch (this.props.qtyPrecision.toString()) {
+      case "0":
+        stepValue = "1";
+        break;
+      case "1":
+        stepValue = "0.1";
+        break;
+      case "2":
+        stepValue = "0.01";
+        break;
+      case "3":
+        stepValue = "0.001";
+        break;
+      case "4":
+        stepValue = "0.0001";
+        break;
+      case "5":
+        stepValue = "0.00001";
+        break;
+      case "6":
+        stepValue = "0.000001";
+        break;
+      case "7":
+        stepValue = "0.0000001";
+      case "8":
+        stepValue = "0.00000001";
+        break;
+      default:
+        break;
+    }
+    switch (this.props.pricePrecision.toString()) {
+      case "0":
+        limitPrecision = "1";
+        break;
+      case "1":
+        limitPrecision = "0.1";
+        break;
+      case "2":
+        limitPrecision = "0.01";
+        break;
+      case "3":
+        limitPrecision = "0.001";
+        break;
+      case "4":
+        limitPrecision = "0.0001";
+        break;
+      case "5":
+        limitPrecision = "0.00001";
+        break;
+      case "6":
+        limitPrecision = "0.000001";
+        break;
+      case "7":
+        limitPrecision = "0.0000001";
+      case "8":
+        limitPrecision = "0.00000001";
+        break;
+      default:
+        break;
+    }
     return (
       <MarketWrap>
         <BuyWrap>
@@ -724,8 +740,9 @@ class Limit extends Component {
                         <Balance>
                           {this.props.userBal.currency
                             ? this.props.userBal.currency.placed_balance
-                              ? `${precision(
-                                  this.props.userBal.currency.placed_balance
+                              ? `${precise(
+                                  this.props.userBal.currency.placed_balance,
+                                  this.props.pricePrecision
                                 )}${" "}`
                               : `0${" "}`
                             : `0${" "}`}
@@ -745,8 +762,9 @@ class Limit extends Component {
                         <Balance>
                           {this.props.userBal.currency
                             ? this.props.userBal.currency.balance
-                              ? `${precision(
-                                  this.props.userBal.currency.balance
+                              ? `${precise(
+                                  this.props.userBal.currency.balance,
+                                  this.props.pricePrecision
                                 )}${" "}`
                               : `0${" "}`
                             : `0${" "}`}
@@ -766,11 +784,12 @@ class Limit extends Component {
                         <Balance>
                           {this.props.userBal.currency
                             ? this.props.userBal.currency.balance
-                              ? `${precision(
+                              ? `${precise(
                                   Math.abs(
                                     this.props.userBal.currency.balance -
                                       this.props.userBal.currency.placed_balance
-                                  )
+                                  ),
+                                  this.props.pricePrecision
                                 )}${" "}`
                               : `0${" "}`
                             : `0${" "}`}
@@ -789,7 +808,10 @@ class Limit extends Component {
                       </Col>
                       <Col span={24}>
                         <Balance>
-                          {precision(this.props.userBal.buyPay)}{" "}
+                          {precise(
+                            this.props.userBal.buyPay,
+                            this.props.pricePrecision
+                          )}{" "}
                           {this.state.currency}
                         </Balance>
                       </Col>
@@ -809,8 +831,9 @@ class Limit extends Component {
                         <Balance>
                           {this.props.userBal.crypto
                             ? this.props.userBal.crypto.placed_balance
-                              ? `${precision(
-                                  this.props.userBal.crypto.placed_balance
+                              ? `${precise(
+                                  this.props.userBal.crypto.placed_balance,
+                                  this.props.pricePrecision
                                 )}${" "}`
                               : `0${" "}`
                             : `0${" "}`}
@@ -830,8 +853,9 @@ class Limit extends Component {
                         <Balance>
                           {this.props.userBal.crypto
                             ? this.props.userBal.crypto.balance
-                              ? `${precision(
-                                  this.props.userBal.crypto.balance
+                              ? `${precise(
+                                  this.props.userBal.crypto.balance,
+                                  this.props.pricePrecision
                                 )}${" "}`
                               : `0${" "}`
                             : `0${" "}`}
@@ -851,11 +875,12 @@ class Limit extends Component {
                         <Balance>
                           {this.props.userBal.crypto
                             ? this.props.userBal.crypto.balance
-                              ? `${precision(
+                              ? `${precise(
                                   Math.abs(
                                     this.props.userBal.crypto.balance -
                                       this.props.userBal.crypto.placed_balance
-                                  )
+                                  ),
+                                  this.props.pricePrecision
                                 )}${" "}`
                               : `0${" "}`
                             : `0${" "}`}
@@ -874,7 +899,10 @@ class Limit extends Component {
                       </Col>
                       <Col span={24}>
                         <Balance>
-                          {precision(this.props.userBal.sellPay)}{" "}
+                          {precise(
+                            this.props.userBal.sellPay,
+                            this.props.pricePrecision
+                          )}{" "}
                           {this.state.currency}
                         </Balance>
                       </Col>
@@ -924,9 +952,9 @@ class Limit extends Component {
             <AMTInput
               min="0"
               type="number"
-              step="0.001"
+              step={stepValue}
               addonAfter={this.state.crypto}
-              value={this.state.amount}
+              value={precise(this.state.amount, this.props.qtyPrecision)}
               name="amount"
               placeholder="0"
               onChange={this.onChange}
@@ -957,11 +985,11 @@ class Limit extends Component {
           <TotalWrap>
             <TotInput
               min="0"
-              step="0.00001"
+              step={limitPrecision}
               type="number"
               placeholder="0"
               addonAfter={this.state.currency}
-              value={this.state.limit_price}
+              value={precise(this.state.limit_price, this.props.pricePrecision)}
               name="limit_price"
               onChange={this.onChange}
             />
@@ -994,7 +1022,7 @@ class Limit extends Component {
               min="0"
               type="number"
               addonAfter={this.state.currency}
-              value={precision(this.state.total)}
+              value={precise(this.state.total, this.props.pricePrecision)}
               name="total"
               readOnly="true"
             />
@@ -1009,7 +1037,8 @@ class Limit extends Component {
                   {this.t("pay_text.message")}
                 </Willpay>
                 <Willpay2>
-                  {precision(buyPayAmt)} {this.state.currency}
+                  {precise(buyPayAmt, this.props.pricePrecision)}{" "}
+                  {this.state.currency}
                 </Willpay2>
               </Approx>
               <Esti>
@@ -1020,7 +1049,7 @@ class Limit extends Component {
                     )}
                   </WillpayBelow>
                   <WillpayBelow2>
-                    {precision(this.state.fiatCurrencyValue)}{" "}
+                    {precise(this.state.fiatCurrencyValue, "2")}{" "}
                     {this.state.fiatCurrency}
                   </WillpayBelow2>
                 </ApproxBelow>
@@ -1029,7 +1058,8 @@ class Limit extends Component {
                     {this.t("estimated_best_price_text.message")}
                   </WillpayBelow>
                   <WillpayBelow2>
-                    {precision(buyPayAmt)} {this.state.currency}
+                    {precise(buyPayAmt, this.props.pricePrecision)}{" "}
+                    {this.state.currency}
                   </WillpayBelow2>
                 </ApproxBelow>
                 <ApproxBelow>
@@ -1038,8 +1068,9 @@ class Limit extends Component {
                   </WillpayBelow>
                   <WillpayBelow2>
                     {/* {precision(buyPayAmt - buyEstPrice)} {this.state.crypto} */}
-                    {precision(
-                      (this.state.amount * this.state.userBalFees) / 100
+                    {precise(
+                      (this.state.amount * this.state.userBalFees) / 100,
+                      this.props.pricePrecision
                     )}{" "}
                     {this.state.crypto}
                   </WillpayBelow2>
@@ -1054,7 +1085,8 @@ class Limit extends Component {
                   {this.t("receive_text.message")}
                 </Willpay>
                 <Willpay2>
-                  {precision(sellEstPrice)} {this.state.currency}
+                  {precise(sellEstPrice, this.props.pricePrecision)}{" "}
+                  {this.state.currency}
                 </Willpay2>
               </Approx>
               <Esti>
@@ -1065,7 +1097,7 @@ class Limit extends Component {
                     )}
                   </WillpayBelow>
                   <WillpayBelow2>
-                    {precision(this.state.fiatCurrencyValue)}{" "}
+                    {precise(this.state.fiatCurrencyValue, "2")}{" "}
                     {this.state.fiatCurrency}
                   </WillpayBelow2>
                 </ApproxBelow>
@@ -1074,7 +1106,8 @@ class Limit extends Component {
                     {this.t("estimated_best_price_text.message")}
                   </WillpayBelow>
                   <WillpayBelow2>
-                    {precision(sellPayAmt)} {this.state.currency}
+                    {precise(sellPayAmt, this.props.pricePrecision)}{" "}
+                    {this.state.currency}
                   </WillpayBelow2>
                 </ApproxBelow>
                 <ApproxBelow>
@@ -1083,8 +1116,9 @@ class Limit extends Component {
                   </WillpayBelow>
                   <WillpayBelow2>
                     {/* {precision(sellPayAmt - sellEstPrice)} {this.state.currency} */}
-                    {precision(
-                      (this.state.total * this.state.userBalFees) / 100
+                    {precise(
+                      (this.state.total * this.state.userBalFees) / 100,
+                      this.props.pricePrecision
                     )}{" "}
                     {this.state.currency}
                   </WillpayBelow2>
