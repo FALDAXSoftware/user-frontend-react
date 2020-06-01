@@ -14,6 +14,7 @@ import {
   TableContent,
   ScrollTableContent,
 } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
+import { precise } from "../../../precision";
 
 export const OrderWrap = styled.div`
   margin-left: 30px;
@@ -259,15 +260,21 @@ class OrderTrade extends Component {
                           {/* <SideType type={sideValue}>{sideValue}</SideType> */}
                           <SideType type={sideValue}>
                             {/* {precision(data.quantity)} {currencyValue} */}
-                            {precision(data.quantity)}
+                            {precise(data.quantity, self.props.qtyPrecision)}
                             {/* {self.props.crypto} */}
                           </SideType>
                           <td>
                             {self.props.pending !== 2
                               ? data.order_type === "Market"
                                 ? data.order_type
-                                : `${precision(data.limit_price)}`
-                              : `${precision(data.limit_price)}`}
+                                : `${precise(
+                                    data.limit_price,
+                                    self.props.pricePrecision
+                                  )}`
+                              : `${precise(
+                                  data.limit_price,
+                                  self.props.pricePrecision
+                                )}`}
                           </td>
                           {/* <td>
                             {self.props.pending != 2
@@ -276,21 +283,33 @@ class OrderTrade extends Component {
                           </td> */}
                           <SideType type={sideValue}>
                             {self.props.pending !== 2
-                              ? `${precision(Filled)}`
+                              ? `${precise(Filled, self.props.pricePrecision)}`
                               : data.stop_price !== undefined
-                              ? `${precision(data.stop_price)}`
+                              ? `${precise(
+                                  data.stop_price,
+                                  self.props.pricePrecision
+                                )}`
                               : 0}
                           </SideType>
                           <td>
-                            {precision(data.fill_price)}
+                            {precise(
+                              data.fill_price,
+                              self.props.pricePrecision
+                            )}
                             {/* {self.props.currency} */}
                           </td>
                           <td>{typeValue}</td>
                           <td>{date}</td>
                           <td>
                             {self.props.pending === 2
-                              ? `${precision(data.quantity * data.limit_price)}`
-                              : `${precision(data.quantity * data.fill_price)}`}
+                              ? `${precise(
+                                  data.quantity * data.limit_price,
+                                  self.props.pricePrecision
+                                )}`
+                              : `${precise(
+                                  data.quantity * data.fill_price,
+                                  self.props.pricePrecision
+                                )}`}
                           </td>
                           {self.props.pending === 2 ? (
                             <th>
@@ -333,48 +352,3 @@ class OrderTrade extends Component {
 export default translate(["trade", "conversion", "wallet", "support"])(
   OrderTrade
 );
-function precision(x) {
-  if (Math.abs(x) < 1.0) {
-    var e = parseInt(x.toString().split("e-")[1]);
-    if (e) {
-      x *= Math.pow(10, e - 1);
-      x = "0." + new Array(e).join("0") + x.toString().substring(2);
-    }
-  } else {
-    var e = parseInt(x.toString().split("+")[1]);
-    if (e > 20) {
-      e -= 20;
-      x /= Math.pow(10, e);
-      x += new Array(e + 1).join("0");
-    }
-  }
-  if (x.toString().split(".")[1] && x.toString().split(".")[1].length > 8) {
-    {
-      x = parseFloat(x).toFixed(8);
-      if (
-        x.toString()[x.toString().length - 1] == "0" &&
-        (x.toString().split(".")[1][0] != "0" ||
-          x.toString().split(".")[1][5] != "0")
-      ) {
-        return parseFloat(x);
-      } else if (x.toString().split(".")[1][7] == "0") {
-        if (x.toString().split(".")[1][6] == "0") {
-          if (x.toString().split(".")[1][5] == "0") {
-            if (x.toString().split(".")[1][4] == "0") {
-              if (x.toString().split(".")[1][3] == "0") {
-                if (x.toString().split(".")[1][2] == "0") {
-                  if (x.toString().split(".")[1][1] == "0") {
-                    if (x.toString().split(".")[1][0] == "0") {
-                      return parseFloat(x).toFixed(0);
-                    } else return parseFloat(x).toFixed(1);
-                  } else return parseFloat(x).toFixed(2);
-                } else return parseFloat(x).toFixed(3);
-              } else return parseFloat(x).toFixed(4);
-            } else return parseFloat(x).toFixed(5);
-          } else return parseFloat(x).toFixed(6);
-        } else return parseFloat(x).toFixed(7);
-      } else return parseFloat(x).toFixed(8);
-    }
-  }
-  return x;
-}
