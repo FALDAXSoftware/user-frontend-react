@@ -959,6 +959,7 @@ export const TriggerDiv = styled.div`
   align-items: center;
   padding: 5px 0 0 0;
   font-size: 12px;
+  color: ${(props) => (props.theme.mode == "dark" ? "#fff" : "#000")};
   > span {
     display: inherit;
     align-items: center;
