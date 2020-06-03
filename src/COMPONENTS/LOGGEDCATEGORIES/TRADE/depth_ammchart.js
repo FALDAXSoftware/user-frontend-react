@@ -245,7 +245,7 @@ class DepthChartAm extends Component {
   /* Life-Cycle Methods */
   render() {
     return (
-      <WrapDepth style={{ fontSize: "8px" }}>
+      <WrapDepth style={{ fontSize: "8px", fontWeight: "300" }}>
         <Instru2 style={{ width: "calc(100% - 20px)" }}>
           {this.t("market_depth_text.message")} {this.props.crypto}/
           {this.props.currency}
