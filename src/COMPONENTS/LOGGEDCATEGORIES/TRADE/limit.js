@@ -238,16 +238,23 @@ class Limit extends Component {
         });
       }
     }
-    this.setState({
-      amount: "",
-      total: 0,
-      limit_price: "",
-      userBalFees: props.userBal.fees,
-      // fiatCryptoValue: props.userBal.cryptoFiat,
-      // fiatCurrencyValue: props.userBal.currencyFiat,
-      singlefiatCryptoValue: props.userBal.cryptoFiat,
-      singlefiatCurrencyValue: props.userBal.currencyFiat,
-    });
+    if (props.userBal && props.userBal != this.props.userBal) {
+      this.setState({
+        amount: "",
+        total: 0,
+        limit_price: "",
+        userBalFees: props.userBal.fees,
+        singlefiatCryptoValue: props.userBal.cryptoFiat,
+        singlefiatCurrencyValue: props.userBal.currencyFiat,
+      });
+    } else {
+      this.setState({
+        userBalFees: props.userBal.fees,
+        singlefiatCryptoValue: props.userBal.cryptoFiat,
+        singlefiatCurrencyValue: props.userBal.currencyFiat,
+      });
+    }
+
     if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
       if (props.cryptoPair.crypto !== this.state.crypto) {
         this.setState({ crypto: props.cryptoPair.crypto });
