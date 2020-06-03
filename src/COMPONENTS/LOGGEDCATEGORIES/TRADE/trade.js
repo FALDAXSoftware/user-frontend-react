@@ -415,6 +415,12 @@ class Trade extends Component {
   /* Life-Cycle Methods */
 
   componentWillReceiveProps(props, newProps) {
+    document.onkeydown = function (evt) {
+      evt = evt || window.event;
+      if (evt.keyCode == 27) {
+        alert("Esc key pressed.");
+      }
+    };
     var self = this;
     if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
       if (props.cryptoPair.crypto !== this.state.crypto) {
@@ -1564,6 +1570,8 @@ class Trade extends Component {
   //
 
   goFullScreen() {
+    alert("go to full screen");
+    console.log("^^^^^^Fullscreen");
     let body = document.getElementsByTagName("body");
     let element = body[0];
     if (element.requestFullscreen) {
@@ -1590,6 +1598,8 @@ class Trade extends Component {
   //
 
   exitFullScreen() {
+    alert("here");
+    console.log("^^^^here exit fullscreen");
     if (document.exitFullscreen) document.exitFullscreen();
     else if (document.mozCancelFullScreen) document.mozCancelFullScreen();
     else if (document.webkitExitFullscreen) document.webkitExitFullscreen();

@@ -367,11 +367,9 @@ class Wallet extends Component {
                   </MYWallet>
                   <SearchCoin>
                     <Inputsearch
-                      placeholder={
-                        this.t("search_text.message") +
-                        " " +
-                        this.t("coins_text_subhead.message")
-                      }
+                      placeholder={this.t(
+                        "general_2:wallet_search_coin.message"
+                      )}
                       onChange={(value) =>
                         this.searchChangeWallet(value, "active_wallet")
                       }
@@ -444,9 +442,11 @@ class Wallet extends Component {
                   </MYWallet>
                   <SearchCoin2>
                     <Inputsearch
-                      placeholder={this.t(
-                        "general_2:wallet_search_tokens.message"
-                      )}
+                      placeholder={
+                        this.t("search_text.message") +
+                        " " +
+                        this.t("coins_text_subhead.message")
+                      }
                       onChange={(value) =>
                         this.searchChangeCoins(value, "all_assets")
                       }
@@ -491,7 +491,6 @@ class Wallet extends Component {
                   <MYWallet>
                     <span>
                       {this.t("general_2:wallet_available_erc20_token.message")}
-                      )
                     </span>
                   </MYWallet>
                   <SearchCoin2>

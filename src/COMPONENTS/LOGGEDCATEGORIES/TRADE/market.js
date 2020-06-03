@@ -1047,11 +1047,11 @@ class Market extends Component {
                     )} */}
                     {/* {(buyPayAmt - buyEstPrice).toFixed(8)} {this.state.crypto} */}
                     {/* {precision(buyPayAmt - buyEstPrice)} {this.state.crypto} */}
-                    {precise(
+                    {/* {precise(
                       (amount * this.state.userBalFees) / 100,
                       this.props.pricePrecision
                     )}{" "}
-                    {this.state.crypto}
+                    {this.state.crypto} */}
                   </WillpayBelow2>
                 </ApproxBelow>
               </Esti>
@@ -1105,11 +1105,11 @@ class Market extends Component {
                     )} */}
                     {/* {(sellPayAmt - sellEstPrice).toFixed(8)}{" "} */}
                     {/* {precision(sellPayAmt - sellEstPrice)} {this.state.currency} */}
-                    {precise(
+                    {/* {precise(
                       (this.state.total * this.state.userBalFees) / 100,
                       this.props.pricePrecision
                     )}{" "}
-                    {this.state.currency}
+                    {this.state.currency} */}
                   </WillpayBelow2>
                 </ApproxBelow>
               </Esti>

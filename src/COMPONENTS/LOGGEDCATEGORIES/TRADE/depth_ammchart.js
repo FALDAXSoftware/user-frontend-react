@@ -142,9 +142,13 @@ class DepthChartAm extends Component {
     //xAxis.renderer.grid.template.location = 0;
     xAxis.renderer.minGridDistance = 50;
     xAxis.title.text = "Price";
+    xAxis.strokeWidth = 1;
+    xAxis.stroke = am4core.color(this.props.theme ? "#FFFFFF" : "#333333");
 
     let yAxis = chart.yAxes.push(new am4charts.ValueAxis());
     yAxis.title.text = "Volume";
+    yAxis.strokeWidth = 1;
+    yAxis.stroke = am4core.color(this.props.theme ? "#FFFFFF" : "#333333");
 
     // Create series
     let series = chart.series.push(new am4charts.StepLineSeries());
@@ -259,6 +263,8 @@ class DepthChartAm extends Component {
 function mapStateToProps(state) {
   return {
     isLoggedIn: state.simpleReducer.isLoggedIn,
+    theme:
+      state.themeReducer.theme !== undefined ? state.themeReducer.theme : "",
   };
 }
 
