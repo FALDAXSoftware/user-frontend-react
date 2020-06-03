@@ -1290,11 +1290,11 @@ class StopLimit extends Component {
                   </WillpayBelow>
                   <WillpayBelow2>
                     {/* {precision(buyPayAmt - buyEstPrice)} {this.state.crypto} */}
-                    {precise(
+                    {/* {precise(
                       (this.state.amount * this.state.userBalFees) / 100,
                       this.props.pricePrecision
                     )}{" "}
-                    {this.state.crypto}
+                    {this.state.crypto} */}
                   </WillpayBelow2>
                 </ApproxBelow>
               </Esti>
@@ -1338,11 +1338,11 @@ class StopLimit extends Component {
                   </WillpayBelow>
                   <WillpayBelow2>
                     {/* {precision(sellPayAmt - sellEstPrice)} {this.state.currency} */}
-                    {precise(
+                    {/* {precise(
                       (this.state.total * this.state.userBalFees) / 100,
                       this.props.pricePrecision
                     )}{" "}
-                    {this.state.currency}
+                    {this.state.currency} */}
                   </WillpayBelow2>
                 </ApproxBelow>
               </Esti>

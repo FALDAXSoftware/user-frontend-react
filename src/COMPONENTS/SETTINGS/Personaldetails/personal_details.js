@@ -470,7 +470,7 @@ class PersonalDetails extends Component {
       mobileVal: {
         // name the rule
         message: this.t("validations:mobile_no_error.message"), // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
-        rule: function(val, options) {
+        rule: function (val, options) {
           // return true if it is succeeds and false it if fails validation. the _testRegex method is available to give back a true/false for the regex and given value
           // check that it is a valid IP address and is not blacklisted
           var re = /^(\(?\+?[0-9]*\)?)?[0-9_\-\(\)]*$/;
@@ -1798,7 +1798,7 @@ class PersonalDetails extends Component {
         street1Icon: null,
         street2Icon: null,
         postalIcon: null,
-        dataDate:null,
+        dataDate: null,
         date_format: this.state.profileDetails.date_format,
         fiat: this.state.profileDetails.fiat,
         stateSelected: this.state.profileDetails.state,
@@ -1813,6 +1813,7 @@ class PersonalDetails extends Component {
             : false,
         profileImage: undefined,
         editMode: false,
+        displayCountry: false,
       },
       () => {
         this.datePickerChild.current.resetDatePicker();

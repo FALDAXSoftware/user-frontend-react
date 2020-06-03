@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const { RangePicker } = DatePicker;
 
 export const ContainerContact = styled(Container)`
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#041422" : "white"};
   border-radius: 5px;
   max-width: 1170px;
@@ -24,7 +24,7 @@ export const ContainerContact = styled(Container)`
 export const HisTitle = styled.span`
   font-size: 20px;
   font-family: "Open Sans";
-  color: ${props =>
+  color: ${(props) =>
     props.theme.mode === "dark" ? "white" : "rgb( 51, 51, 51 )"};
   font-weight: bold;
   text-transform: uppercase;
@@ -59,7 +59,8 @@ export const HisWrap = styled.div`
       font-weight: 600;
       -webkit-text-decoration: none;
       text-decoration: none;
-      color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "#333333")};
+      color: ${(props) =>
+        props.theme.mode === "dark" ? "#ffffff" : "#333333"};
     }
   }
 `;
@@ -77,7 +78,7 @@ export const Tablediv = styled.div`
     display: -ms-flexbox;
     display: flex;
     position: absolute;
-    background: ${props =>
+    background: ${(props) =>
       props.theme.mode === "dark" ? "#4d5861" : "#ffffff"};
     top: 0;
     right: 0;
@@ -90,7 +91,7 @@ export const HisTable = styled(Table)`
   margin-bottom: 0px;
   width: 100%;
   > thead {
-    background-color: ${props =>
+    background-color: ${(props) =>
       props.theme.mode === "dark" ? "#01090f" : "#f5f6fa"};
     color: #174c7e;
     border: none;
@@ -105,13 +106,19 @@ export const HisTable = styled(Table)`
     text-align: center;
   }
   > tbody {
-    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
     display: block;
     max-height: 1000px;
     overflow-y: scroll;
     > tr {
       display: table;
       width: 100%;
+      > td.red {
+        color: red;
+      }
+      > td.green {
+        color: green;
+      }
     }
   }
   > tbody > tr > td {
@@ -124,7 +131,7 @@ export const HisTable = styled(Table)`
     font-size: 14px;
     font-weight: 600;
     font-family: "Open Sans";
-    color: ${props =>
+    color: ${(props) =>
       props.theme.mode === "dark" ? "white" : "rgb( 33, 33, 33 )"};
     text-transform: uppercase;
   }
@@ -135,7 +142,7 @@ export const HisTable = styled(Table)`
     border-top: 1px solid #ddd;
   }
   > tbody > tr:nth-of-type(odd) {
-    background-color: ${props =>
+    background-color: ${(props) =>
       props.theme.mode === "dark" ? "#041422" : "#f9f9f9"};
   }
   @media (max-width: 991px) {
@@ -186,8 +193,9 @@ export const ButtonToolbarOne = styled(ButtonToolbar)`
 `;
 
 export const DropdownButtonOne = styled(DropdownButton)`
-  background-color: ${props => (props.theme.mode === "dark" ? "#01090f" : "")};
-  color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+  background-color: ${(props) =>
+    props.theme.mode === "dark" ? "#01090f" : ""};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   width: 100%;
   text-align: left;
   > .caret {
@@ -215,17 +223,17 @@ export const Datediv = styled.div`
 `;
 export const RangePickerS = styled(RangePicker)`
   > .ant-calendar-picker-input {
-    background-color: ${props =>
+    background-color: ${(props) =>
       props.theme.mode === "dark" ? "#01090f" : ""};
   }
   > .ant-calendar-picker-input > .ant-calendar-range-picker-input {
-    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   }
   > .ant-calendar-picker-input > .ant-calendar-range-picker-separator {
-    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   }
   > .ant-calendar-picker-input > .ant-calendar-picker-icon {
-    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   }
 `;
 export const FontAwesomeIconS = styled(FontAwesomeIcon)`
