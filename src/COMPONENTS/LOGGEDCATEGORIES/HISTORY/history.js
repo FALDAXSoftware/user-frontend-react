@@ -887,13 +887,14 @@ class History extends Component {
                       >
                         {t("reset_btn.message")}
                       </EXPButton>
-                      {this.state.csvJSTFields !== undefined ? (
-                        this.state.csvJSTFields.length > 0 ? (
+                      {this.state.csvTradeFields !== undefined ? (
+                        this.state.csvTradeFields.length > 0 &&
+                        this.state.csvTradeFields !== null ? (
                           <EXPButton>
                             <CSVLink
-                              filename="jstreportfile.csv"
-                              data={this.state.csvJSTFields}
-                              headers={this.state.csvHeadersJST}
+                              filename="tradereportfile.csv"
+                              data={this.state.csvTradeFields}
+                              headers={this.state.csvHeadersTrade}
                             >
                               {t("export_btn.message")}
                             </CSVLink>
@@ -942,13 +943,13 @@ class History extends Component {
                       >
                         {t("reset_btn.message")}
                       </EXPButton>
-                      {this.state.csvTradeFields !== undefined ? (
-                        this.state.csvTradeFields.length > 0 ? (
+                      {this.state.csvJSTFields !== undefined ? (
+                        this.state.csvJSTFields.length > 0 ? (
                           <EXPButton>
                             <CSVLink
-                              filename="tradereportfile.csv"
-                              data={this.state.csvTradeFields}
-                              headers={this.state.csvHeadersTrade}
+                              filename="jstreportfile.csv"
+                              data={this.state.csvJSTFields}
+                              headers={this.state.csvHeadersJST}
                             >
                               {t("export_btn.message")}
                             </CSVLink>
