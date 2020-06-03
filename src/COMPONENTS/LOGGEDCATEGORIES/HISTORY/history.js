@@ -1138,7 +1138,13 @@ class History extends Component {
                                     <td>{date}</td>
                                     <td>{temps.fill_price}</td>
                                     <td>{temps.quantity}</td>
-                                    <td>{side}</td>
+                                    <td
+                                      className={
+                                        side == "Buy" ? "green" : "red"
+                                      }
+                                    >
+                                      {side}
+                                    </td>
                                     <td>{temps.order_type}</td>
                                     <td>{limit_price}</td>
                                     <td>{stop_price}</td>
