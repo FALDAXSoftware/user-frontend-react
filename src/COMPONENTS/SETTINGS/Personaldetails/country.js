@@ -17,7 +17,7 @@ const Option = Select.Option;
 const Country = styled.span`
   font-size: 14.007px;
   font-family: "Open Sans";
-  color: ${props =>
+  color: ${(props) =>
     props.theme.mode === "dark"
       ? "rgba( 152, 171, 215, 0.502 )"
       : "rgba( 80, 80, 80, 0.502 )"};
@@ -97,7 +97,7 @@ class CountryPick extends Component {
       theme: "",
       states: [],
       cities: [],
-      phone_number: ""
+      phone_number: "",
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeState = this.handleChangeState.bind(this);
@@ -108,6 +108,7 @@ class CountryPick extends Component {
 
   /* Life-Cycle Methods */
   componentDidMount() {
+    console.log("country mount%%%", CountryData.getAllCountries());
     var countrySelected = CountryData.getCountryById(this.props.country_id - 1);
     let country_code = "";
     let phoneCode = "";
@@ -123,13 +124,13 @@ class CountryPick extends Component {
       country_json_id: this.props.country_id,
       country_code,
       phoneCode,
-      phone_number: this.props.phone_number
+      phone_number: this.props.phone_number,
     });
   }
   componentWillReceiveProps(newprops) {
     if (this.props.country_id != newprops.country_id && newprops.country_id) {
       this.setState({
-        country_json_id: newprops.country_id
+        country_json_id: newprops.country_id,
       });
     }
     if (this.props != newprops) {
@@ -147,7 +148,7 @@ class CountryPick extends Component {
         state_selected: newprops.state,
         city_selected: newprops.city,
         country_code,
-        phoneCode
+        phoneCode,
       });
     }
   }
@@ -178,7 +179,7 @@ class CountryPick extends Component {
         country_code,
         phoneCode,
         country_json_id,
-        phone_number: ""
+        phone_number: "",
         // stateID: null,
         // countryID: newPosition,
         // states
@@ -212,7 +213,7 @@ class CountryPick extends Component {
         state_selected: value,
         city_selected: "",
         country_code,
-        phoneCode
+        phoneCode,
 
         // country_selected: country,
         // stateID: newPosition,
@@ -315,8 +316,8 @@ class CountryPick extends Component {
           allCities = [
             {
               id: selectedState,
-              name: this.state.state_selected
-            }
+              name: this.state.state_selected,
+            },
           ];
         }
         selectedCity = this.state.city_selected;
