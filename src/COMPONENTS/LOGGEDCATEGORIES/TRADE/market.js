@@ -240,20 +240,30 @@ class Market extends Component {
       props.crypto,
       props.currency
     );
-    this.setState({
-      userBalFees: props.userBal.fees,
-      amount: "",
-      total: 0,
-      buyPayAmt: 0,
-      sellPayAmt: 0,
-      buyEstPrice: 0,
-      sellEstPrice: 0,
-      disabledBtn: false,
-      // fiatCryptoValue: props.userBal.cryptoFiat,
-      // fiatCurrencyValue: props.userBal.currencyFiat,
-      singlefiatCryptoValue: props.userBal.cryptoFiat,
-      singlefiatCurrencyValue: props.userBal.currencyFiat,
-    });
+    if (props.userBal && props.userBal != this.props.userBal) {
+      this.setState({
+        userBalFees: props.userBal.fees,
+        amount: "",
+        total: 0,
+        buyPayAmt: 0,
+        sellPayAmt: 0,
+        buyEstPrice: 0,
+        sellEstPrice: 0,
+        disabledBtn: false,
+        disabledMode: false,
+        // fiatCryptoValue: props.userBal.cryptoFiat,
+        // fiatCurrencyValue: props.userBal.currencyFiat,
+        singlefiatCryptoValue: props.userBal.cryptoFiat,
+        singlefiatCurrencyValue: props.userBal.currencyFiat,
+      });
+    } else {
+      this.setState({
+        userBalFees: props.userBal.fees,
+        disabledBtn: false,
+        singlefiatCryptoValue: props.userBal.cryptoFiat,
+        singlefiatCurrencyValue: props.userBal.currencyFiat,
+      });
+    }
     if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
       if (props.cryptoPair.crypto !== this.state.crypto) {
         this.setState({ crypto: props.cryptoPair.crypto });
