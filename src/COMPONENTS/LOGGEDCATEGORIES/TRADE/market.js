@@ -38,6 +38,7 @@ import {
 import { SpinSingle } from "STYLED-COMPONENTS/LOGGED_STYLE/dashStyle";
 import { globalVariables } from "Globals.js";
 import { precise } from "../../../precision";
+import { parse } from "@fortawesome/fontawesome-svg-core";
 
 let { SOCKET_HOST } = globalVariables;
 
@@ -67,6 +68,9 @@ class Market extends Component {
       sellTotal: this.props.sellTotal,
       buyTotal: this.props.buyTotal,
       disabledbtn: false,
+      bestAsk: 0,
+      bestBid: 0,
+      maxValue: 0,
     };
     this.t = this.props.t;
     this.onChange = this.onChange.bind(this);
@@ -279,6 +283,81 @@ class Market extends Component {
         });
       }
     }
+    if (this.props.io) {
+      this.props.io.on("get-latest-price", (data) => {
+        console.log("^^^^^Test Data%%%%", data);
+        if (data) {
+          this.setState(
+            {
+              bestAsk: data.askPrice,
+              bestBid: data.bidPrice,
+              maxValue: data.maximumValue,
+            },
+            () => {
+              if (this.state.amount > 0) {
+                if (this.state.side === "Buy") {
+                  if (
+                    parseFloat(this.state.amount) >
+                    parseFloat(this.state.maxValue)
+                  ) {
+                    this.setState({
+                      disabledMode: true,
+                    });
+                  } else {
+                    this.setState({
+                      disabledMode: false,
+                    });
+                  }
+                  this.setState({
+                    buyPayAmt:
+                      parseFloat(this.state.amount) *
+                      parseFloat(this.state.bestAsk),
+                    total:
+                      parseFloat(this.state.amount) *
+                      parseFloat(this.state.bestAsk),
+                    fiatCurrencyValue:
+                      parseFloat(this.state.singlefiatCurrencyValue) *
+                      parseFloat(
+                        Number(this.state.amount) *
+                          parseFloat(this.state.bestAsk)
+                      ).toFixed(8),
+                  });
+                } else {
+                  this.setState({
+                    sellPayAmt:
+                      Number(this.state.amount) *
+                      parseFloat(this.state.bestBid),
+                    total:
+                      parseFloat(this.state.amount) *
+                      parseFloat(this.state.bestBid),
+                    fiatCurrencyValue:
+                      parseFloat(this.state.singlefiatCurrencyValue) *
+                      parseFloat(
+                        Number(this.state.amount) *
+                          parseFloat(this.state.bestBid)
+                      ).toFixed(8),
+                  });
+                }
+              } else {
+                if (this.state.side === "Buy") {
+                  this.setState({
+                    buyPayAmt: 0,
+                    total: 0,
+                    fiatCurrencyValue: 0,
+                  });
+                } else {
+                  this.setState({
+                    sellPayAmt: 0,
+                    total: 0,
+                    fiatCurrencyValue: 0,
+                  });
+                }
+              }
+            }
+          );
+        }
+      });
+    }
     // if (this.props.sellTotal) {
     //   this.setState(
     //     {
@@ -396,9 +475,6 @@ class Market extends Component {
     let obj = {};
     let name = e.target.name;
     let value = e.target.value;
-    // this.setState({
-    //   amount: e.target.value.toFixed(3)
-    // });
     this.setState({
       fiatCurrencyValue: 0,
     });
@@ -407,26 +483,17 @@ class Market extends Component {
     if (name === "side") {
       obj["amount"] = "";
       obj["total"] = 0;
-
       if (e.target.value === "Buy") {
-        console.log(
-          "here^^^^",
-          e.target.value,
-          this.state.singlefiatCryptoValue
-        );
         this.setState({
-          // fiatCryptoValue: this.state.singlefiatCryptoValue
           fiatCurrencyValue: 0,
+          buyPayAmt: 0,
+          total: 0,
         });
       } else if (e.target.value === "Sell") {
-        console.log(
-          "here^^^^",
-          e.target.value,
-          this.state.singlefiatCurrencyValue
-        );
         this.setState({
-          // fiatCurrencyValue: this.state.singlefiatCurrencyValue
           fiatCurrencyValue: 0,
+          sellPayAmt: 0,
+          total: 0,
         });
       }
     }
@@ -436,16 +503,18 @@ class Market extends Component {
       },
       () => {
         obj = {};
-        if (this.state.amount >= 0) {
+        if (this.state.amount > 0) {
           if (this.state.side === "Buy") {
             self.setState({
-              buyPayAmt: Number(this.state.amount) * this.props.userBal.buyPay,
+              // buyPayAmt: Number(this.state.amount) * this.props.userBal.buyPay,
+              buyPayAmt:
+                parseFloat(this.state.amount) * parseFloat(this.state.bestAsk),
               buyEstPrice:
                 Number(this.state.amount) *
                 this.props.userBal.buyEstimatedPrice,
             });
             obj["total"] =
-              Number(this.state.amount) * this.props.userBal.buyPay;
+              parseFloat(this.state.amount) * parseFloat(this.state.bestAsk);
             if (value > 0 && name === "amount") {
               // console.log(
               //   "^^^^this.state.singlefiatCurrencyValue",
@@ -457,34 +526,37 @@ class Market extends Component {
               let fiatValue =
                 parseFloat(this.state.singlefiatCurrencyValue) *
                 parseFloat(
-                  Number(this.state.amount) * this.props.userBal.buyPay
+                  Number(this.state.amount) * parseFloat(this.state.bestAsk)
                 ).toFixed(8);
               this.setState({
                 // fiatCryptoValue: fiatValue
                 fiatCurrencyValue: fiatValue,
               });
             }
-            // if (
-            //   parseFloat(this.state.amount) > parseFloat(this.state.sellTotal)
-            // ) {
-            //   self.setState({
-            //     disabledMode: true,
-            //   });
-            // } else {
-            //   self.setState({
-            //     disabledMode: false,
-            //   });
-            // }
+            if (
+              parseFloat(this.state.amount) > parseFloat(this.state.maxValue) ||
+              parseFloat(
+                parseFloat(this.state.amount) * parseFloat(this.state.bestAsk)
+              ) > parseFloat(this.props.userBal.currency.placed_balance)
+            ) {
+              self.setState({
+                disabledMode: true,
+              });
+            } else {
+              self.setState({
+                disabledMode: false,
+              });
+            }
           } else if (this.state.side === "Sell") {
             self.setState({
               sellPayAmt:
-                Number(this.state.amount) * this.props.userBal.sellPay,
+                Number(this.state.amount) * parseFloat(this.state.bestBid),
               sellEstPrice:
                 Number(this.state.amount) *
                 this.props.userBal.sellEstimatedPrice,
             });
             obj["total"] =
-              Number(this.state.amount) * this.props.userBal.sellPay;
+              Number(this.state.amount) * parseFloat(this.state.bestBid);
             // obj["amount"] = Number(this.state.amount).toFixed(3);
             if (value > 0 && name === "amount") {
               // console.log(
@@ -510,20 +582,37 @@ class Market extends Component {
                 fiatCurrencyValue: fiatValue,
               });
             }
-            // if (
-            //   parseFloat(this.state.amount) > parseFloat(this.state.buyTotal)
-            // ) {
-            //   self.setState({
-            //     disabledMode: true,
-            //   });
-            // } else {
-            //   self.setState({
-            //     disabledMode: false,
-            //   });
-            // }
+            if (
+              parseFloat(this.state.amount) > parseFloat(this.state.maxValue) ||
+              parseFloat(this.state.amount) >
+                parseFloat(this.props.userBal.crypto.placed_balance)
+            ) {
+              self.setState({
+                disabledMode: true,
+              });
+            } else {
+              self.setState({
+                disabledMode: false,
+              });
+            }
           }
         } else {
           obj["total"] = 0;
+          if (this.state.side === "Buy") {
+            this.setState({
+              buyPayAmt: 0,
+              total: 0,
+              fiatCurrencyValue: 0,
+              disabledMode: false,
+            });
+          } else {
+            this.setState({
+              sellPayAmt: 0,
+              total: 0,
+              fiatCurrencyValue: 0,
+              disabledMode: false,
+            });
+          }
         }
         self.setState({ ...obj });
       }
@@ -811,7 +900,7 @@ class Market extends Component {
                       <Col span={24}>
                         <Balance>
                           {precise(
-                            this.props.userBal.buyPay,
+                            this.state.bestAsk,
                             this.props.pricePrecision
                           )}{" "}
                           {this.state.currency}
@@ -902,7 +991,7 @@ class Market extends Component {
                       <Col span={24}>
                         <Balance>
                           {precise(
-                            this.props.userBal.sellPay,
+                            this.state.bestBid,
                             this.props.pricePrecision
                           )}{" "}
                           {this.state.currency}
@@ -1065,7 +1154,7 @@ class Market extends Component {
                 </Willpay>
                 <Willpay2>
                   {/* {sellEstPrice.toFixed(8)} {this.state.currency} */}
-                  {precise(sellEstPrice, this.props.pricePrecision)}{" "}
+                  {precise(sellPayAmt, this.props.pricePrecision)}{" "}
                   {this.state.currency}
                 </Willpay2>
               </Approx>
