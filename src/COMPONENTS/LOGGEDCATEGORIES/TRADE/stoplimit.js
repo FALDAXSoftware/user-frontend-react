@@ -251,9 +251,6 @@ class StopLimit extends Component {
                         Number(this.state.amount) *
                           parseFloat(this.state.bestBid)
                       ).toFixed(8),
-                    sellEstPrice:
-                      Number(this.state.amount) *
-                      parseFloat(this.state.bestBid),
                   });
                 }
               } else {
@@ -533,7 +530,6 @@ class StopLimit extends Component {
               this.validator.hideMessages();
             }
             obj["total"] = this.state.amount * parseFloat(this.state.bestAsk);
-            // obj["total"] = this.state.amount * this.state.limit_price;
             self.setState({
               buyPayAmt: this.state.amount * parseFloat(this.state.bestAsk),
               buyEstPrice:
@@ -552,10 +548,11 @@ class StopLimit extends Component {
               this.validator.hideMessages();
             }
             obj["total"] = this.state.amount * parseFloat(this.state.bestBid);
-            // obj["total"] = this.state.amount * this.state.limit_price;
             self.setState({
               sellPayAmt: this.state.amount * parseFloat(this.state.bestBid),
-              sellEstPrice: this.state.amount * parseFloat(this.state.bestBid),
+              sellEstPrice:
+                this.state.amount *
+                parseFloat(this.props.userBal.sellEstimatedPrice),
             });
             let fiatValue =
               parseFloat(this.state.singlefiatCurrencyValue) *
@@ -601,12 +598,6 @@ class StopLimit extends Component {
           console.log("^^^^Testda", this.state.amount);
           if (this.state.side === "Buy") {
             if (value > 0 && name === "amount") {
-              // let fiatValue =
-              //   parseFloat(this.state.singlefiatCurrencyValue) *
-              //   parseFloat(value).toFixed(8);
-              // this.setState({
-              //   fiatCurrencyValue: fiatValue,
-              // });
               if (
                 parseFloat(this.state.amount) >
                   parseFloat(this.state.maxValue) ||
@@ -625,12 +616,6 @@ class StopLimit extends Component {
             }
           } else if (this.state.side === "Sell") {
             if (value > 0 && name === "amount") {
-              // let fiatValue =
-              //   parseFloat(this.state.singlefiatCurrencyValue) *
-              //   parseFloat(value).toFixed(8);
-              // this.setState({
-              //   fiatCurrencyValue: fiatValue,
-              // });
               if (
                 parseFloat(this.state.amount) >
                   parseFloat(this.state.maxValue) ||
@@ -1357,7 +1342,7 @@ class StopLimit extends Component {
                   {this.t("receive_text.message")}
                 </Willpay>
                 <Willpay2>
-                  {precise(sellEstPrice, this.props.pricePrecision)}{" "}
+                  {precise(sellPayAmt, this.props.pricePrecision)}{" "}
                   {this.state.currency}
                 </Willpay2>
               </Approx>
@@ -1378,7 +1363,7 @@ class StopLimit extends Component {
                     {this.t("estimated_best_price_text.message")}
                   </WillpayBelow>
                   <WillpayBelow2>
-                    {precise(sellPayAmt, this.props.pricePrecision)}{" "}
+                    {precise(sellEstPrice, this.props.pricePrecision)}{" "}
                     {this.state.currency}
                   </WillpayBelow2>
                 </ApproxBelow>

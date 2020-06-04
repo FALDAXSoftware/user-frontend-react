@@ -1036,7 +1036,7 @@ class Market extends Component {
                   </WillpayBelow>
                   <WillpayBelow2>
                     {/* {sellPayAmt.toFixed(8)} {this.state.currency} */}
-                    {precise(sellPayAmt, this.props.pricePrecision)}{" "}
+                    {precise(sellEstPrice, this.props.pricePrecision)}{" "}
                     {this.state.currency}
                   </WillpayBelow2>
                 </ApproxBelow>
