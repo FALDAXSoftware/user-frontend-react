@@ -150,55 +150,58 @@ class StopLimit extends Component {
       }
     }
     let fiat, currency;
-    if (this.props.latestFillPrice) {
-      this.setState(
-        {
-          disabledBtn: false,
-          latestFillPrice: this.props.latestFillPrice,
-        },
-        () => {
-          if (this.state.stop_price > 0) {
-            if (this.state.side === "Buy") {
-              if (
-                parseFloat(this.state.stop_price) >
-                parseFloat(this.state.latestFillPrice)
-              ) {
-                this.setState({
-                  disabledBtn: false,
-                });
-              } else {
-                this.setState({
-                  disabledBtn: true,
-                });
-              }
-            } else {
-              if (
-                parseFloat(this.state.stop_price) <
-                parseFloat(this.state.latestFillPrice)
-              ) {
-                this.setState({
-                  disabledBtn: false,
-                });
-              } else {
-                this.setState({
-                  disabledBtn: true,
-                });
-              }
-            }
-          } else {
-            this.setState({
-              disabledBtn: false,
-            });
-          }
-        }
-      );
-    } else {
-      this.setState({
-        latestFillPrice: "",
-        disabledBtn: false,
-      });
-    }
+    // if (this.props.latestFillPrice) {
+    //   this.setState(
+    //     {
+    //       disabledBtn: false,
+    //       latestFillPrice: this.props.latestFillPrice,
+    //     },
+    //     () => {
+    //       if (this.state.stop_price > 0) {
+    //         if (this.state.side === "Buy") {
+    //           if (
+    //             parseFloat(this.state.stop_price) >
+    //             parseFloat(this.state.latestFillPrice)
+    //           ) {
+    //             this.setState({
+    //               disabledBtn: false,
+    //             });
+    //           } else {
+    //             this.setState({
+    //               disabledBtn: true,
+    //             });
+    //           }
+    //         } else {
+    //           if (
+    //             parseFloat(this.state.stop_price) <
+    //             parseFloat(this.state.latestFillPrice)
+    //           ) {
+    //             this.setState({
+    //               disabledBtn: false,
+    //             });
+    //           } else {
+    //             this.setState({
+    //               disabledBtn: true,
+    //             });
+    //           }
+    //         }
+    //       } else {
+    //         this.setState({
+    //           disabledBtn: false,
+    //         });
+    //       }
+    //     }
+    //   );
+    // } else {
+    //   this.setState({
+    //     latestFillPrice: "",
+    //     disabledBtn: false,
+    //   });
+    // }
     if (this.props.io) {
+      this.props.io.emit("get-limit-stop-latest", {
+        symbol: `${this.state.crypto}-${this.state.currency}`,
+      });
       this.props.io.on("get-latest-price", (data) => {
         console.log("^^^^^Test Data%%%%", data);
         if (data) {
@@ -207,6 +210,7 @@ class StopLimit extends Component {
               bestAsk: data.askPrice,
               bestBid: data.bidPrice,
               maxValue: data.maximumValue,
+              latestFillPrice: data.lastPrice,
             },
             () => {
               if (this.state.amount > 0) {
@@ -269,8 +273,46 @@ class StopLimit extends Component {
                   });
                 }
               }
+              if (this.state.stop_price > 0) {
+                if (this.state.side === "Buy") {
+                  if (
+                    parseFloat(this.state.stop_price) >
+                    parseFloat(this.state.latestFillPrice)
+                  ) {
+                    this.setState({
+                      disabledBtn: false,
+                    });
+                  } else {
+                    this.setState({
+                      disabledBtn: true,
+                    });
+                  }
+                } else {
+                  if (
+                    parseFloat(this.state.stop_price) <
+                    parseFloat(this.state.latestFillPrice)
+                  ) {
+                    this.setState({
+                      disabledBtn: false,
+                    });
+                  } else {
+                    this.setState({
+                      disabledBtn: true,
+                    });
+                  }
+                }
+              } else {
+                this.setState({
+                  disabledBtn: false,
+                });
+              }
             }
           );
+        } else {
+          this.setState({
+            latestFillPrice: "",
+            disabledBtn: false,
+          });
         }
       });
     }
