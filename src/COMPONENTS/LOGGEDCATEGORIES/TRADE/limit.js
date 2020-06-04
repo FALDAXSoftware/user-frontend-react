@@ -48,7 +48,7 @@ class Limit extends Component {
     super(props);
     this.state = {
       side: "Buy",
-      crypto: this.props.crypto ? this.props.crypto : "XRP",
+      crypto: this.props.crypto ? this.props.crypto : "ETH",
       currency: this.props.currency ? this.props.currency : "BTC",
       sellprice: 0.001,
       buyPrice: 0.002,
@@ -130,6 +130,7 @@ class Limit extends Component {
   /* Life-Cycle Methods */
 
   componentDidMount() {
+    console.log("^^^Test Did mount limit");
     if (Object.keys(this.props.userBal).length > 0) {
       if (
         Object.keys(this.props.userBal.crypto).length > 0 &&
@@ -145,6 +146,10 @@ class Limit extends Component {
       }
     }
     if (this.props.io) {
+      console.log("^^^Test Did mount limit props");
+      this.props.io.emit("get-limit-stop-latest", {
+        symbol: `${this.state.crypto}-${this.state.currency}`,
+      });
       this.props.io.on("get-latest-price", (data) => {
         console.log("^^^^^Test Data%%%%", data);
         if (data) {
@@ -270,6 +275,7 @@ class Limit extends Component {
         });
       }
     }
+
     if (props.userBal && props.userBal != this.props.userBal) {
       this.setState({
         amount: "",
@@ -455,7 +461,7 @@ class Limit extends Component {
             }
           }
         } else if (this.state.amount > 0) {
-          console.log("^^^^", this.state.amount);
+          console.log("^^^^Testdatalimit", this.state.amount);
           if (this.state.side === "Buy") {
             if (value > 0 && name === "amount") {
               if (
