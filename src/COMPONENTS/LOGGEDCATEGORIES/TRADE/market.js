@@ -111,24 +111,6 @@ class Market extends Component {
           }
         },
       },
-      // maxLimitBuy: {
-      //   message: "Invalid order quantity",
-      //   rule: (val, params, validator) => {
-      //     if (this.state.side === "Buy") {
-      //       if (parseFloat(val) > parseFloat(this.state.sellTotal)) {
-      //         return false;
-      //       } else {
-      //         return true;
-      //       }
-      //     } else {
-      //       if (parseFloat(val) > parseFloat(this.state.buyTotal)) {
-      //         return false;
-      //       } else {
-      //         return true;
-      //       }
-      //     }
-      //   },
-      // },
     });
   }
   /* Life-Cycle Methods */
@@ -148,92 +130,6 @@ class Market extends Component {
         });
       }
     }
-    // if (props.sellTotal && this.props.sellTotal != props.sellTotal) {
-    //   this.setState(
-    //     {
-    //       sellTotal: props.sellTotal,
-    //     },
-    //     () => {
-    //       if (
-    //         this.state.side === "Buy" &&
-    //         !this.state.Loader &&
-    //         parseFloat(this.state.amount) > parseFloat(this.state.sellTotal)
-    //       ) {
-    //         this.setState({
-    //           disabledMode: true,
-    //         });
-    //       } else {
-    //         this.setState({
-    //           disabledMode: false,
-    //         });
-    //       }
-    //     }
-    //   );
-    // } else {
-    //   this.setState(
-    //     {
-    //       sellTotal: this.props.sellTotal,
-    //     },
-    //     () => {
-    //       if (
-    //         this.state.side === "Buy" &&
-    //         !this.state.Loader &&
-    //         parseFloat(this.state.amount) > parseFloat(this.state.sellTotal)
-    //       ) {
-    //         this.setState({
-    //           disabledMode: true,
-    //         });
-    //       } else {
-    //         this.setState({
-    //           disabledMode: false,
-    //         });
-    //       }
-    //     }
-    //   );
-    // }
-    // if (props.buyTotal && props.buyTotal != this.props.buyTotal) {
-    //   this.setState(
-    //     {
-    //       buyTotal: props.buyTotal,
-    //     },
-    //     () => {
-    //       if (
-    //         this.state.side === "Sell" &&
-    //         !this.state.Loader &&
-    //         parseFloat(this.state.amount) > parseFloat(this.state.buyTotal)
-    //       ) {
-    //         this.setState({
-    //           disabledMode: true,
-    //         });
-    //       } else {
-    //         this.setState({
-    //           disabledMode: false,
-    //         });
-    //       }
-    //     }
-    //   );
-    // } else {
-    //   this.setState(
-    //     {
-    //       buyTotal: this.props.buyTotal,
-    //     },
-    //     () => {
-    //       if (
-    //         this.state.side === "Sell" &&
-    //         !this.state.Loader &&
-    //         parseFloat(this.state.amount) > parseFloat(this.state.buyTotal)
-    //       ) {
-    //         this.setState({
-    //           disabledMode: true,
-    //         });
-    //       } else {
-    //         this.setState({
-    //           disabledMode: false,
-    //         });
-    //       }
-    //     }
-    //   );
-    // }
     console.log(
       "^^^^userdata  pro",
       props.userBal,
@@ -251,8 +147,6 @@ class Market extends Component {
         sellEstPrice: 0,
         disabledBtn: false,
         disabledMode: false,
-        // fiatCryptoValue: props.userBal.cryptoFiat,
-        // fiatCurrencyValue: props.userBal.currencyFiat,
         singlefiatCryptoValue: props.userBal.cryptoFiat,
         singlefiatCurrencyValue: props.userBal.currencyFiat,
       });
@@ -279,21 +173,34 @@ class Market extends Component {
         Object.keys(this.props.userBal.crypto).length > 0 &&
         Object.keys(this.props.userBal.currency).length > 0
       ) {
-        console.log(
-          "this.props.userBal.currency",
-          this.props.userBal.currency,
-          this.props.userBal.crypto
-        );
         this.setState({
           disabledbtn: false,
+          userBalFees: this.props.userBal.fees,
+          amount: "",
+          total: 0,
+          buyPayAmt: 0,
+          sellPayAmt: 0,
+          buyEstPrice: 0,
+          sellEstPrice: 0,
+          disabledBtn: false,
+          disabledMode: false,
+          singlefiatCryptoValue: this.props.userBal.cryptoFiat,
+          singlefiatCurrencyValue: this.props.userBal.currencyFiat,
         });
       } else {
         this.setState({
           disabledbtn: true,
+          userBalFees: this.props.userBal.fees,
+          disabledBtn: false,
+          singlefiatCryptoValue: this.props.userBal.cryptoFiat,
+          singlefiatCurrencyValue: this.props.userBal.currencyFiat,
         });
       }
     }
     if (this.props.io) {
+      this.props.io.emit("get-limit-stop-latest", {
+        symbol: `${this.state.crypto}-${this.state.currency}`,
+      });
       this.props.io.on("get-latest-price", (data) => {
         console.log("^^^^^Test Data%%%%", data);
         if (data) {
@@ -368,51 +275,6 @@ class Market extends Component {
         }
       });
     }
-    // if (this.props.sellTotal) {
-    //   this.setState(
-    //     {
-    //       sellTotal: this.props.sellTotal,
-    //     },
-    //     () => {
-    //       if (
-    //         this.state.side === "Buy" &&
-    //         !this.state.Loader &&
-    //         parseFloat(this.state.amount) > parseFloat(this.state.sellTotal)
-    //       ) {
-    //         this.setState({
-    //           disabledMode: true,
-    //         });
-    //       } else {
-    //         this.setState({
-    //           disabledMode: false,
-    //         });
-    //       }
-    //     }
-    //   );
-    // }
-    // if (this.props.buyTotal) {
-    //   this.setState(
-    //     {
-    //       buyTotal: this.props.buyTotal,
-    //     },
-    //     () => {
-    //       if (
-    //         this.state.side === "Sell" &&
-    //         !this.state.Loader &&
-    //         parseFloat(this.state.amount) > parseFloat(this.state.buyTotal)
-    //       ) {
-    //         this.setState({
-    //           disabledMode: true,
-    //         });
-    //       } else {
-    //         this.setState({
-    //           disabledMode: false,
-    //         });
-    //       }
-    //     }
-    //   );
-    // }
-    console.log("^^^^userdata", this.props.userBal);
     let fiat, currency;
     if (this.props.profileDetails) {
       switch (this.props.profileDetails.fiat) {
@@ -1187,7 +1049,7 @@ class Market extends Component {
                   </WillpayBelow>
                   <WillpayBelow2>
                     {/* {sellPayAmt.toFixed(8)} {this.state.currency} */}
-                    {precise(sellPayAmt, this.props.pricePrecision)}{" "}
+                    {precise(sellEstPrice, this.props.pricePrecision)}{" "}
                     {this.state.currency}
                   </WillpayBelow2>
                 </ApproxBelow>
