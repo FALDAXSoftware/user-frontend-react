@@ -331,7 +331,7 @@ class OrderTrade extends Component {
                               </CancelBTN>
                             </th>
                           ) : (
-                            "-"
+                            ""
                           )}
                         </tr>
                       );
