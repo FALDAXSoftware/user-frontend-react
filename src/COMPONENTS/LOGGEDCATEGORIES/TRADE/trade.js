@@ -2001,7 +2001,7 @@ class Trade extends Component {
                     )}
                     <RightDiv1>
                       <TabsRight
-                        defaultActiveKey="1"
+                        defaultActiveKey="2"
                         onChange={this.callback}
                         className="tardeActionCard"
                       >
