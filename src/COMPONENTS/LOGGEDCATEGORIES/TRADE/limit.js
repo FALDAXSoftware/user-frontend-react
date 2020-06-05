@@ -396,8 +396,20 @@ class Limit extends Component {
             }
             obj["total"] =
               Number(this.state.amount) * parseFloat(this.state.bestAsk);
-            // obj["amount"] = Number(this.state.amount).toFixed(3);
-            // obj["limit_price"] = Number(this.state.limit_price).toFixed(5);
+            if (
+              parseFloat(this.state.amount) > parseFloat(this.state.maxValue) ||
+              parseFloat(
+                parseFloat(this.state.amount) * parseFloat(this.state.bestAsk)
+              ) > parseFloat(this.props.userBal.currency.placed_balance)
+            ) {
+              self.setState({
+                disabledMode: true,
+              });
+            } else {
+              self.setState({
+                disabledMode: false,
+              });
+            }
             self.setState({
               buyPayAmt:
                 Number(this.state.amount) * parseFloat(this.state.bestAsk),
@@ -416,6 +428,22 @@ class Limit extends Component {
           } else if (this.state.side === "Sell") {
             if (this.validator.allValid()) {
               this.validator.hideMessages();
+            }
+            if (value > 0 && name === "amount") {
+              if (
+                parseFloat(this.state.amount) >
+                  parseFloat(this.state.maxValue) ||
+                parseFloat(this.state.amount) >
+                  parseFloat(this.props.userBal.crypto.placed_balance)
+              ) {
+                self.setState({
+                  disabledMode: true,
+                });
+              } else {
+                self.setState({
+                  disabledMode: false,
+                });
+              }
             }
             self.setState({
               sellPayAmt:
