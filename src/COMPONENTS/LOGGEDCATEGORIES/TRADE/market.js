@@ -188,6 +188,9 @@ class Market extends Component {
       }
     }
     if (this.props.io) {
+      this.props.io.emit("get-limit-stop-latest", {
+        symbol: `${this.state.crypto}-${this.state.currency}`,
+      });
       this.props.io.on("get-latest-price", (data) => {
         console.log("^^^^^Test Data%%%%", data);
         if (data) {
