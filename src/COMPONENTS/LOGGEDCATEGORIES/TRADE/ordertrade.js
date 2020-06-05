@@ -124,7 +124,6 @@ class OrderTrade extends Component {
                   <th>
                     {this.t("wallet:amount_text.message")} ({self.props.crypto})
                   </th>
-
                   {self.props.pending !== 2 ? (
                     <th>
                       {this.t("history:price_text.message")} (
@@ -257,11 +256,8 @@ class OrderTrade extends Component {
                       }
                       return (
                         <tr>
-                          {/* <SideType type={sideValue}>{sideValue}</SideType> */}
                           <SideType type={sideValue}>
-                            {/* {precision(data.quantity)} {currencyValue} */}
                             {precise(data.quantity, self.props.qtyPrecision)}
-                            {/* {self.props.crypto} */}
                           </SideType>
                           <td>
                             {self.props.pending !== 2
@@ -292,10 +288,13 @@ class OrderTrade extends Component {
                               : 0}
                           </SideType>
                           <td>
-                            {precise(
-                              data.fill_price,
-                              self.props.pricePrecision
-                            )}
+                            {data.order_type === "Market"
+                              ? "Market"
+                              : precise(
+                                  data.fill_price,
+                                  self.props.pricePrecision
+                                )}
+
                             {/* {self.props.currency} */}
                           </td>
                           <td>{typeValue}</td>
@@ -311,7 +310,8 @@ class OrderTrade extends Component {
                                   self.props.pricePrecision
                                 )}`}
                           </td>
-                          {self.props.pending === 2 ? (
+                          {self.props.pending === 2 &&
+                          data.order_type !== "Market" ? (
                             <th>
                               <CancelBTN
                                 disabled={self.state.disabled}
@@ -331,7 +331,7 @@ class OrderTrade extends Component {
                               </CancelBTN>
                             </th>
                           ) : (
-                            ""
+                            "-"
                           )}
                         </tr>
                       );
