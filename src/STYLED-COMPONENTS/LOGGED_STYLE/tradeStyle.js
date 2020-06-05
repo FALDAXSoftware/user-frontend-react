@@ -649,6 +649,7 @@ export const WillpayBelow = styled.div`
   font-weight: 600;
   font-size: 12px;
   color: ${(props) => (props.theme.mode === "dark" ? "white" : "#333")};
+  min-width: 50%;
 `;
 export const WillpayBelow2 = styled.div`
   line-height: 1;
@@ -656,6 +657,7 @@ export const WillpayBelow2 = styled.div`
   font-size: 14px;
   color: ${(props) => (props.theme.mode === "dark" ? "white" : "#333")};
   letter-spacing: 1px;
+  word-break: break-all;
 `;
 export const Best = styled.span`
   font-size: 12px;
