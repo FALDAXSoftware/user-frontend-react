@@ -173,17 +173,27 @@ class Market extends Component {
         Object.keys(this.props.userBal.crypto).length > 0 &&
         Object.keys(this.props.userBal.currency).length > 0
       ) {
-        console.log(
-          "this.props.userBal.currency",
-          this.props.userBal.currency,
-          this.props.userBal.crypto
-        );
         this.setState({
           disabledbtn: false,
+          userBalFees: this.props.userBal.fees,
+          amount: "",
+          total: 0,
+          buyPayAmt: 0,
+          sellPayAmt: 0,
+          buyEstPrice: 0,
+          sellEstPrice: 0,
+          disabledBtn: false,
+          disabledMode: false,
+          singlefiatCryptoValue: this.props.userBal.cryptoFiat,
+          singlefiatCurrencyValue: this.props.userBal.currencyFiat,
         });
       } else {
         this.setState({
           disabledbtn: true,
+          userBalFees: this.props.userBal.fees,
+          disabledBtn: false,
+          singlefiatCryptoValue: this.props.userBal.cryptoFiat,
+          singlefiatCurrencyValue: this.props.userBal.currencyFiat,
         });
       }
     }
