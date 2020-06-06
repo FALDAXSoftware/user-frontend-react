@@ -298,7 +298,8 @@ class OrderTrade extends Component {
                                 : 0}
                           </SideType>
                           <td>
-                            {data.order_type === "Market"
+                            {self.props.pending === 2 &&
+                              data.order_type === "Market"
                               ? "Market"
                               : precise(
                                 data.fill_price,
