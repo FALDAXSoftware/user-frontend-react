@@ -102,12 +102,12 @@ class OrderTrade extends Component {
       });
     }
   }
-  cancelOrder(id, side, type) {
-    console.log("cancel orde^^^^^", id, side, type);
+  cancelOrder(id, side, type, flagValue) {
+    console.log("cancel orde^^^^^", id, side, type, flagValue);
     this.setState({
       disabled: true,
     });
-    this.props.cancelOrder(id, side, type);
+    this.props.cancelOrder(id, side, type, flagValue);
   }
 
   render() {
@@ -124,7 +124,6 @@ class OrderTrade extends Component {
                   <th>
                     {this.t("wallet:amount_text.message")} ({self.props.crypto})
                   </th>
-
                   {self.props.pending !== 2 ? (
                     <th>
                       {this.t("history:price_text.message")} (
@@ -175,7 +174,17 @@ class OrderTrade extends Component {
                 <tbody>
                   {this.props.orderTradeData.length > 0 ? (
                     this.props.orderTradeData.map(function (data) {
+                      console.log("data", data);
                       var date;
+                      console.log("data.flag", data.flag);
+                      var flagValue = false;
+                      if (data.flag == true) {
+                        data.fill_price = 0.0;
+                      }
+                      if (data.flag == true) {
+                        flagValue = true;
+                      }
+                      console.log("flagValue", flagValue);
                       if (
                         self.props.profileDetails.date_format === "MM/DD/YYYY"
                       )
@@ -257,11 +266,8 @@ class OrderTrade extends Component {
                       }
                       return (
                         <tr>
-                          {/* <SideType type={sideValue}>{sideValue}</SideType> */}
                           <SideType type={sideValue}>
-                            {/* {precision(data.quantity)} {currencyValue} */}
                             {precise(data.quantity, self.props.qtyPrecision)}
-                            {/* {self.props.crypto} */}
                           </SideType>
                           <td>
                             {self.props.pending !== 2
@@ -292,10 +298,14 @@ class OrderTrade extends Component {
                               : 0}
                           </SideType>
                           <td>
-                            {precise(
-                              data.fill_price,
-                              self.props.pricePrecision
-                            )}
+                            {self.props.pending === 2 &&
+                            data.order_type === "Market"
+                              ? "Market"
+                              : precise(
+                                  data.fill_price,
+                                  self.props.pricePrecision
+                                )}
+
                             {/* {self.props.currency} */}
                           </td>
                           <td>{typeValue}</td>
@@ -311,7 +321,8 @@ class OrderTrade extends Component {
                                   self.props.pricePrecision
                                 )}`}
                           </td>
-                          {self.props.pending === 2 ? (
+                          {self.props.pending === 2 &&
+                          data.order_type !== "Market" ? (
                             <th>
                               <CancelBTN
                                 disabled={self.state.disabled}
@@ -320,7 +331,8 @@ class OrderTrade extends Component {
                                   self.cancelOrder(
                                     data.id,
                                     data.side,
-                                    data.order_type
+                                    data.order_type,
+                                    flagValue
                                   )
                                 }
                               >
@@ -331,7 +343,7 @@ class OrderTrade extends Component {
                               </CancelBTN>
                             </th>
                           ) : (
-                            ""
+                            <td>-</td>
                           )}
                         </tr>
                       );

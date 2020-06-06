@@ -212,6 +212,13 @@ class History extends Component {
     ) {
       this.props.history.push("/editProfile");
     }
+    if (
+      this.props.location.state === undefined ||
+      this.props.location.state.flag === "" ||
+      this.props.location.state.flag === null
+    ) {
+      this.props.history.push("/");
+    }
     if (this.props.location.tradeType === "1") {
       this.setState({ activeKey: "1" }, () => {
         this.historyResult();
