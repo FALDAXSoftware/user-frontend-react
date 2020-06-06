@@ -30,7 +30,7 @@ export const OrderWrap = styled.div`
 
   &::-webkit-scrollbar-thumb {
     background-color: ${(props) =>
-      props.theme.mode === "dark" ? "#041624" : ""};
+    props.theme.mode === "dark" ? "#041624" : ""};
     border-radius: 3px;
   }
   &::-webkit-scrollbar-track {
@@ -46,7 +46,7 @@ const CancelBTN = styled(Button)`
 export const HTable = styled(Table)`
   > thead {
     background-color: ${(props) =>
-      props.theme.mode === "dark" ? "#041422" : "#f5f6fa"};
+    props.theme.mode === "dark" ? "#041422" : "#f5f6fa"};
     color: #174c7e;
     border: none;
   }
@@ -61,7 +61,7 @@ export const HTable = styled(Table)`
   }
   > tbody > tr:nth-of-type(odd) {
     background-color: ${(props) =>
-      props.theme.mode === "dark" ? "#041422" : "#f9f9f9"};
+    props.theme.mode === "dark" ? "#041422" : "#f9f9f9"};
   }
 `;
 const SideType = styled.td`
@@ -102,12 +102,12 @@ class OrderTrade extends Component {
       });
     }
   }
-  cancelOrder(id, side, type) {
-    console.log("cancel orde^^^^^", id, side, type);
+  cancelOrder(id, side, type, flagValue) {
+    console.log("cancel orde^^^^^", id, side, type, flagValue);
     this.setState({
       disabled: true,
     });
-    this.props.cancelOrder(id, side, type);
+    this.props.cancelOrder(id, side, type, flagValue);
   }
 
   render() {
@@ -130,21 +130,21 @@ class OrderTrade extends Component {
                       {self.props.currency})
                     </th>
                   ) : (
-                    <th>
-                      {this.t("limit_price_text.message")} (
+                      <th>
+                        {this.t("limit_price_text.message")} (
                       {self.props.currency})
                     </th>
-                  )}
+                    )}
                   {self.props.pending !== 2 ? (
                     <th>
                       {this.t("unfilled_text.message")} ({self.props.crypto})
                     </th>
                   ) : (
-                    <th>
-                      {this.t("stop_price_text.message")} ({self.props.currency}
-                      )
+                      <th>
+                        {this.t("stop_price_text.message")} ({self.props.currency}
+                        )
                     </th>
-                  )}
+                    )}
                   <th>
                     {this.t("fill_price_text.message")} ({self.props.currency})
                   </th>
@@ -157,8 +157,8 @@ class OrderTrade extends Component {
                   {self.props.pending === 2 ? (
                     <th>{this.t("actions_text.message")}</th>
                   ) : (
-                    ""
-                  )}
+                      ""
+                    )}
                 </tr>
               </thead>
             </TableHeader>
@@ -174,7 +174,17 @@ class OrderTrade extends Component {
                 <tbody>
                   {this.props.orderTradeData.length > 0 ? (
                     this.props.orderTradeData.map(function (data) {
+                      console.log("data", data)
                       var date;
+                      console.log("data.flag", data.flag)
+                      var flagValue = false;
+                      if (data.flag == true) {
+                        data.fill_price = 0.0
+                      }
+                      if (data.flag == true) {
+                        flagValue = true;
+                      }
+                      console.log("flagValue", flagValue)
                       if (
                         self.props.profileDetails.date_format === "MM/DD/YYYY"
                       )
@@ -264,13 +274,13 @@ class OrderTrade extends Component {
                               ? data.order_type === "Market"
                                 ? data.order_type
                                 : `${precise(
-                                    data.limit_price,
-                                    self.props.pricePrecision
-                                  )}`
-                              : `${precise(
                                   data.limit_price,
                                   self.props.pricePrecision
-                                )}`}
+                                )}`
+                              : `${precise(
+                                data.limit_price,
+                                self.props.pricePrecision
+                              )}`}
                           </td>
                           {/* <td>
                             {self.props.pending != 2
@@ -281,19 +291,19 @@ class OrderTrade extends Component {
                             {self.props.pending !== 2
                               ? `${precise(Filled, self.props.pricePrecision)}`
                               : data.stop_price !== undefined
-                              ? `${precise(
+                                ? `${precise(
                                   data.stop_price,
                                   self.props.pricePrecision
                                 )}`
-                              : 0}
+                                : 0}
                           </SideType>
                           <td>
                             {data.order_type === "Market"
                               ? "Market"
                               : precise(
-                                  data.fill_price,
-                                  self.props.pricePrecision
-                                )}
+                                data.fill_price,
+                                self.props.pricePrecision
+                              )}
 
                             {/* {self.props.currency} */}
                           </td>
@@ -302,43 +312,44 @@ class OrderTrade extends Component {
                           <td>
                             {self.props.pending === 2
                               ? `${precise(
-                                  data.quantity * data.limit_price,
-                                  self.props.pricePrecision
-                                )}`
+                                data.quantity * data.limit_price,
+                                self.props.pricePrecision
+                              )}`
                               : `${precise(
-                                  data.quantity * data.fill_price,
-                                  self.props.pricePrecision
-                                )}`}
+                                data.quantity * data.fill_price,
+                                self.props.pricePrecision
+                              )}`}
                           </td>
                           {self.props.pending === 2 &&
-                          data.order_type !== "Market" ? (
-                            <th>
-                              <CancelBTN
-                                disabled={self.state.disabled}
-                                // disabled={true}
-                                onClick={() =>
-                                  self.cancelOrder(
-                                    data.id,
-                                    data.side,
-                                    data.order_type
-                                  )
-                                }
-                              >
-                                <Icon
-                                  style={{ color: "#279CED", fontSize: "18px" }}
-                                  type="close-circle"
-                                />
-                              </CancelBTN>
-                            </th>
-                          ) : (
-                            "-"
-                          )}
+                            data.order_type !== "Market" ? (
+                              <th>
+                                <CancelBTN
+                                  disabled={self.state.disabled}
+                                  // disabled={true}
+                                  onClick={() =>
+                                    self.cancelOrder(
+                                      data.id,
+                                      data.side,
+                                      data.order_type,
+                                      flagValue
+                                    )
+                                  }
+                                >
+                                  <Icon
+                                    style={{ color: "#279CED", fontSize: "18px" }}
+                                    type="close-circle"
+                                  />
+                                </CancelBTN>
+                              </th>
+                            ) : (
+                              ""
+                            )}
                         </tr>
                       );
                     })
                   ) : (
-                    <NDF>{this.t("support:no_data_found.message")}</NDF>
-                  )}
+                      <NDF>{this.t("support:no_data_found.message")}</NDF>
+                    )}
                 </tbody>
               </TableContent>
             </Scrollbars>
