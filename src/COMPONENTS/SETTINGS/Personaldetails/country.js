@@ -10,7 +10,7 @@ import { translate } from "react-i18next";
 /* components */
 import { globalVariables } from "Globals.js";
 
-/* let { API_URL } = globalVariables; */
+let { API_URL } = globalVariables;
 const Option = Select.Option;
 /* var Countries = []; */
 
@@ -98,7 +98,9 @@ class CountryPick extends Component {
       states: [],
       cities: [],
       phone_number: "",
+      countryList: "",
     };
+    this.getallCountriesData = this.getallCountriesData.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeState = this.handleChangeState.bind(this);
     this.handleChangeCity = this.handleChangeCity.bind(this);
@@ -108,7 +110,8 @@ class CountryPick extends Component {
 
   /* Life-Cycle Methods */
   componentDidMount() {
-    console.log("country mount%%%", CountryData.getAllCountries());
+    this.getallCountriesData();
+    console.log("country mount%%%", this.state.countryList);
     var countrySelected = CountryData.getCountryById(this.props.country_id - 1);
     let country_code = "";
     let phoneCode = "";
@@ -161,7 +164,6 @@ class CountryPick extends Component {
     var newPosition = Number(position.key) - 1;
     var countrySelected = CountryData.getCountryById(newPosition);
     // console.log(countrySelected);
-
     let country_code = "";
     let phoneCode = "";
     let country_json_id = "";
@@ -243,7 +245,7 @@ class CountryPick extends Component {
     // this.props.onCountryChange(country, state, value);
   }
   getCountryId(countryName) {
-    let allCountries = CountryData.getAllCountries();
+    let allCountries = this.state.countryList;
     for (let index = 0; index < allCountries.length; index++) {
       const element = allCountries[index];
       if (countryName === element.name) {
@@ -280,6 +282,25 @@ class CountryPick extends Component {
       this.state.phone_number
     );
   };
+  getallCountriesData() {
+    fetch(API_URL + "/get-countries", {
+      method: "get",
+      headers: {
+        Accept: "application/json",
+        "Accept-Language": localStorage["i18nextLng"],
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + this.props.isLoggedIn,
+      },
+    })
+      .then((response) => response.json())
+      .then((responseData) => {
+        console.log("countrieslist%%%%", responseData.data);
+        this.setState({
+          countryList: responseData.data,
+        });
+      })
+      .catch((error) => {});
+  }
   render() {
     let country, state, city;
     const { t } = this.props;
@@ -299,7 +320,8 @@ class CountryPick extends Component {
       }
 
     // ----------
-    let allCountries = CountryData.getAllCountries();
+    // let allCountries = CountryData.getAllCountries();
+    let allCountries = this.state.countryList;
 
     let countryId = this.getCountryId(this.state.country_selected);
     let allStates = [];
@@ -351,11 +373,12 @@ class CountryPick extends Component {
                   .indexOf(input.toLowerCase()) >= 0
               }
             >
-              {allCountries.map((country, index) => (
-                <Option key={country.id} value={country.name}>
-                  {country.name}
-                </Option>
-              ))}
+              {allCountries &&
+                allCountries.map((country, index) => (
+                  <Option key={country.id} value={country.name}>
+                    {country.name}
+                  </Option>
+                ))}
             </SelectS>
           </Col>
           <Col sm={24} md={8} xl={8} xxl={8}>
