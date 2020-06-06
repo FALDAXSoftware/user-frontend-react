@@ -70,7 +70,8 @@ class Market extends Component {
       disabledbtn: false,
       bestAsk: 0,
       bestBid: 0,
-      maxValue: 0,
+      buyMaxValue: 0,
+      sellMaxValue: 0,
     };
     this.t = this.props.t;
     this.onChange = this.onChange.bind(this);
@@ -208,14 +209,19 @@ class Market extends Component {
             {
               bestAsk: data.askPrice,
               bestBid: data.bidPrice,
-              maxValue: data.maximumValue,
+              buyMaxValue: data.buyMaximumValue,
+              sellMaxValue: data.sellMaximumValue,
             },
             () => {
               if (this.state.amount > 0) {
                 if (this.state.side === "Buy") {
                   if (
                     parseFloat(this.state.amount) >
-                    parseFloat(this.state.maxValue)
+                      parseFloat(this.state.buyMaxValue) ||
+                    parseFloat(
+                      parseFloat(this.state.amount) *
+                        parseFloat(this.state.bestAsk)
+                    ) > parseFloat(this.props.userBal.currency.placed_balance)
                   ) {
                     this.setState({
                       disabledMode: true,
@@ -240,6 +246,20 @@ class Market extends Component {
                       ).toFixed(8),
                   });
                 } else {
+                  if (
+                    parseFloat(this.state.amount) >
+                      parseFloat(this.state.sellMaxValue) ||
+                    parseFloat(this.state.amount) >
+                      parseFloat(this.props.userBal.crypto.placed_balance)
+                  ) {
+                    this.setState({
+                      disabledMode: true,
+                    });
+                  } else {
+                    this.setState({
+                      disabledMode: false,
+                    });
+                  }
                   this.setState({
                     sellPayAmt:
                       Number(this.state.amount) *
@@ -388,13 +408,6 @@ class Market extends Component {
             obj["total"] =
               parseFloat(this.state.amount) * parseFloat(this.state.bestAsk);
             if (value > 0 && name === "amount") {
-              // console.log(
-              //   "^^^^this.state.singlefiatCurrencyValue",
-              //   this.state.singlefiatCurrencyValue,
-              //   parseFloat(
-              //     Number(this.state.amount) * this.props.userBal.buyPay
-              //   )
-              // );
               let fiatValue =
                 parseFloat(this.state.singlefiatCurrencyValue) *
                 parseFloat(
@@ -406,7 +419,8 @@ class Market extends Component {
               });
             }
             if (
-              parseFloat(this.state.amount) > parseFloat(this.state.maxValue) ||
+              parseFloat(this.state.amount) >
+                parseFloat(this.state.buyMaxValue) ||
               parseFloat(
                 parseFloat(this.state.amount) * parseFloat(this.state.bestAsk)
               ) > parseFloat(this.props.userBal.currency.placed_balance)
@@ -455,7 +469,8 @@ class Market extends Component {
               });
             }
             if (
-              parseFloat(this.state.amount) > parseFloat(this.state.maxValue) ||
+              parseFloat(this.state.amount) >
+                parseFloat(this.state.sellMaxValue) ||
               parseFloat(this.state.amount) >
                 parseFloat(this.props.userBal.crypto.placed_balance)
             ) {

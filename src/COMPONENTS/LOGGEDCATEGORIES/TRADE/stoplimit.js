@@ -209,24 +209,24 @@ class StopLimit extends Component {
             {
               bestAsk: data.askPrice,
               bestBid: data.bidPrice,
-              maxValue: data.maximumValue,
+              // maxValue: data.maximumValue,
               latestFillPrice: data.lastPrice,
             },
             () => {
               if (this.state.amount > 0) {
                 if (this.state.side === "Buy") {
-                  if (
-                    parseFloat(this.state.amount) >
-                    parseFloat(this.state.maxValue)
-                  ) {
-                    this.setState({
-                      disabledMode: true,
-                    });
-                  } else {
-                    this.setState({
-                      disabledMode: false,
-                    });
-                  }
+                  // if (
+                  //   parseFloat(this.state.amount) >
+                  //   parseFloat(this.state.maxValue)
+                  // ) {
+                  //   this.setState({
+                  //     disabledMode: true,
+                  //   });
+                  // } else {
+                  //   this.setState({
+                  //     disabledMode: false,
+                  //   });
+                  // }
                   this.setState({
                     buyPayAmt:
                       parseFloat(this.state.amount) *
@@ -525,7 +525,7 @@ class StopLimit extends Component {
               this.validator.hideMessages();
             }
             if (
-              parseFloat(this.state.amount) > parseFloat(this.state.maxValue) ||
+              // parseFloat(this.state.amount) > parseFloat(this.state.maxValue) ||
               parseFloat(
                 parseFloat(this.state.amount) * parseFloat(this.state.bestAsk)
               ) > parseFloat(this.props.userBal.currency.placed_balance)
@@ -557,9 +557,9 @@ class StopLimit extends Component {
               this.validator.hideMessages();
             }
             if (
-              parseFloat(this.state.amount) > parseFloat(this.state.maxValue) ||
+              // parseFloat(this.state.amount) > parseFloat(this.state.maxValue) ||
               parseFloat(this.state.amount) >
-                parseFloat(this.props.userBal.crypto.placed_balance)
+              parseFloat(this.props.userBal.crypto.placed_balance)
             ) {
               self.setState({
                 disabledMode: true,
@@ -621,8 +621,8 @@ class StopLimit extends Component {
           if (this.state.side === "Buy") {
             if (value > 0 && name === "amount") {
               if (
-                parseFloat(this.state.amount) >
-                  parseFloat(this.state.maxValue) ||
+                // parseFloat(this.state.amount) >
+                //   parseFloat(this.state.maxValue) ||
                 parseFloat(
                   parseFloat(this.state.amount) * parseFloat(this.state.bestAsk)
                 ) > parseFloat(this.props.userBal.currency.placed_balance)
@@ -639,10 +639,10 @@ class StopLimit extends Component {
           } else if (this.state.side === "Sell") {
             if (value > 0 && name === "amount") {
               if (
+                // parseFloat(this.state.amount) >
+                //   parseFloat(this.state.maxValue) ||
                 parseFloat(this.state.amount) >
-                  parseFloat(this.state.maxValue) ||
-                parseFloat(this.state.amount) >
-                  parseFloat(this.props.userBal.crypto.placed_balance)
+                parseFloat(this.props.userBal.crypto.placed_balance)
               ) {
                 self.setState({
                   disabledMode: true,
