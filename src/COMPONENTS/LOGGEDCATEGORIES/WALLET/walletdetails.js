@@ -136,7 +136,10 @@ class WalletDetails extends Component {
 
   /* Life Cycle Methods */
   componentWillMount() {
-    if (!this.props.profileDetails.is_user_updated) {
+    if (
+      !this.props.profileDetails.is_user_updated &&
+      !this.props.profileDetails.is_allowed
+    ) {
       this.props.history.push("/");
     }
   }

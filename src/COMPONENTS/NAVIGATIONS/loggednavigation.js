@@ -29,6 +29,7 @@ import {
   _WALLPAPER,
 } from "CONSTANTS/images";
 import FaldaxLoader from "../../SHARED-COMPONENTS/FaldaxLoader";
+import { APIUtility } from "../../httpHelper";
 const { Header } = Layout;
 const API_URL = globalVariables.API_URL;
 const SubMenu = Menu.SubMenu;
@@ -334,6 +335,10 @@ const DropDownDiv = styled(Dropdown)`
       font-size: 20px;
     }
   }
+  &.Drop-main {
+    > a {
+    }
+  }
   @media (max-width: 480px) {
     margin-top: 10px;
   }
@@ -376,6 +381,7 @@ class LoggedNavigation extends Component {
       panicEnabled: false,
       panic_status: false,
       loader: false,
+      walletIsAllowed: "",
       // langValue: this.props.language
     };
     // this.tradeAccess = this.tradeAccess.bind(this);
@@ -384,6 +390,7 @@ class LoggedNavigation extends Component {
     this.simplexAccess = this.simplexAccess.bind(this);
     this.walletAccess = this.walletAccess.bind(this);
     this.tokenAccess = this.tokenAccess.bind(this);
+    this.historyAccess = this.historyAccess.bind(this);
     this.panicStatus = this.panicStatus.bind(this);
   }
 
@@ -397,7 +404,7 @@ class LoggedNavigation extends Component {
       }
     }
   }
-  componentDidMount() {
+  async componentDidMount() {
     if (this.props.location) {
       if (this.props.location.pathname.includes("market")) {
         this.setState({ selected: "1" });
@@ -432,6 +439,14 @@ class LoggedNavigation extends Component {
     //   this.tradeAccess();
     // }
     this.panicStatus();
+    let result = await APIUtility.getUserTradeStatusWallet(
+      this.props.isLoggedIn
+    );
+    if (result) {
+      this.setState({
+        walletIsAllowed: result.data.is_allowed,
+      });
+    }
   }
 
   /* 
@@ -620,8 +635,46 @@ class LoggedNavigation extends Component {
   walletAccess() {
     if (this.props.isLoggedIn) {
       if (this.props.profileDetails.is_user_updated) {
-        if (this.props.location.pathname !== "/wallet")
-          this.props.history.push("/wallet");
+        if (this.state.panic_status === true) {
+          this.setState({ panicEnabled: true });
+        } else {
+          if (this.state.walletIsAllowed === true) {
+            if (this.props.location.pathname !== "/wallet")
+              this.props.history.push({
+                pathname: "/wallet",
+                state: {
+                  flag: true,
+                },
+              });
+          } else {
+            this.setState({ countryAccess: true });
+          }
+        }
+      } else {
+        this.setState({ completeProfile: true });
+      }
+    } else {
+      this.props.history.push("/login");
+    }
+  }
+  historyAccess() {
+    if (this.props.isLoggedIn) {
+      if (this.props.profileDetails.is_user_updated) {
+        if (this.state.panic_status === true) {
+          this.setState({ panicEnabled: true });
+        } else {
+          if (this.state.walletIsAllowed === true) {
+            if (this.props.location.pathname !== "/history")
+              this.props.history.push({
+                pathname: "/history",
+                state: {
+                  flag: true,
+                },
+              });
+          } else {
+            this.setState({ countryAccess: true });
+          }
+        }
       } else {
         this.setState({ completeProfile: true });
       }
@@ -630,22 +683,13 @@ class LoggedNavigation extends Component {
     }
   }
   simplexAccess() {
-    // console.log(
-    //   "^^^^",
-    //   this.props.profileDetails.is_allowed,
-    //   this.props.profileDetails.is_kyc_done
-    // );
     if (this.state.panic_status === true) {
-      // alert("Idf");
       this.setState({ panicEnabled: true });
     } else {
       if (
         this.props.profileDetails.is_allowed === true &&
         this.props.profileDetails.is_kyc_done === 2
       ) {
-        // alert("IF");
-        // console.log("I am here", this.props.location.pathname);
-        // this.props.history.push('/trade');
         if (this.props.location.pathname !== "/simplex")
           this.props.history.push({
             pathname: "/simplex",
@@ -658,7 +702,6 @@ class LoggedNavigation extends Component {
           this.props.profileDetails.is_allowed === false &&
           this.props.profileDetails.is_kyc_done !== 2
         ) {
-          // alert("ELSE IF");
           this.setState({ completeKYC: true });
         } else if (
           this.props.profileDetails.is_allowed === true &&
@@ -666,7 +709,6 @@ class LoggedNavigation extends Component {
         ) {
           this.setState({ completeKYC: true });
         } else {
-          // alert("ELSE ELSE");
           this.setState({ countryAccess: true });
         }
       }
@@ -813,18 +855,34 @@ class LoggedNavigation extends Component {
         </Menu.Item> */}
         <Menu.Item key="1">
           <a
-            onClick={() =>
-              this.props.history.push({ pathname: "/history", tradeType: "1" })
-            }
+            onClick={() => {
+              if (this.state.walletIsAllowed) {
+                this.props.history.push({
+                  pathname: "/history",
+                  tradeType: "1",
+                  flag: true,
+                });
+              } else {
+                this.setState({ countryAccess: true });
+              }
+            }}
           >
             {this.t("trade:trade_head.message")}
           </a>
         </Menu.Item>
         <Menu.Item key="2">
           <a
-            onClick={() =>
-              this.props.history.push({ pathname: "/history", tradeType: "2" })
-            }
+            onClick={() => {
+              if (this.state.walletIsAllowed) {
+                this.props.history.push({
+                  pathname: "/history",
+                  tradeType: "2",
+                  flag: true,
+                });
+              } else {
+                this.setState({ countryAccess: true });
+              }
+            }}
           >
             {t("navbar_sub_menu_conversation_credit_card.message")}
           </a>
@@ -939,17 +997,28 @@ class LoggedNavigation extends Component {
               overlay={DropdownHistoryItems}
               overlayClassName="custom_dropdown_menu"
             >
-              <NavLink
-                className="ant-dropdown-link "
-                to={{
-                  pathname: "/history",
-                  state: {
-                    tradeType: "1",
-                  },
+              <a
+                className="ant-dropdown-link color_important"
+                // to={{
+                //   pathname: "/history",
+                //   state: {
+                //     tradeType: "1",
+                //   },
+                // }}
+                onclick={() => {
+                  if (this.state.walletIsAllowed) {
+                    this.props.history.push({
+                      pathname: "/history",
+                      tradeType: "1",
+                      flag: true,
+                    });
+                  } else {
+                    this.setState({ countryAccess: true });
+                  }
                 }}
               >
                 {t("navbar_menu_history.message")}
-              </NavLink>
+              </a>
             </DropDownDiv>
           </Menuitem>
           {/* <Menuitem key="7">
@@ -1115,24 +1184,34 @@ class LoggedNavigation extends Component {
                   </Menu.Item> */}
                   <Menu.Item key="1">
                     <a
-                      onClick={() =>
-                        this.props.history.push({
-                          pathname: "/history",
-                          tradeType: "1",
-                        })
-                      }
+                      onClick={() => {
+                        if (this.state.walletIsAllowed) {
+                          this.props.history.push({
+                            pathname: "/history",
+                            tradeType: "1",
+                            flag: true,
+                          });
+                        } else {
+                          this.setState({ countryAccess: true });
+                        }
+                      }}
                     >
                       {this.t("trade:trade_head.message")}
                     </a>
                   </Menu.Item>
                   <Menu.Item key="2">
                     <a
-                      onClick={() =>
-                        this.props.history.push({
-                          pathname: "/history",
-                          tradeType: "2",
-                        })
-                      }
+                      onClick={() => {
+                        if (this.state.walletIsAllowed) {
+                          this.props.history.push({
+                            pathname: "/history",
+                            tradeType: "1",
+                            flag: true,
+                          });
+                        } else {
+                          this.setState({ countryAccess: true });
+                        }
+                      }}
                     >
                       {t("navbar_sub_menu_conversation_credit_card.message")}
                     </a>

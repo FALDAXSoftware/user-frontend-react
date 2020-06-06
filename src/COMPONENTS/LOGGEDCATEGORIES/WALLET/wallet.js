@@ -134,6 +134,13 @@ class Wallet extends Component {
     }
   }
   componentDidMount() {
+    if (
+      this.props.location.state === undefined ||
+      this.props.location.state.flag === "" ||
+      this.props.location.state.flag === null
+    ) {
+      this.props.history.push("/");
+    }
     // var total = 0;
     // var tableData = this.props.walletDetails.activated_asset_lists;
     // var FIAT = this.props.profileDetails.fiat;
