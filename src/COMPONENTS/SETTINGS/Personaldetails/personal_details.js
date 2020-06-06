@@ -38,6 +38,7 @@ import { Link } from "react-router-dom";
 import { langAction } from "../../../ACTIONS/authActions";
 import { IntlTelInputS } from "../../../STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle";
 
+let { API_URL } = globalVariables;
 /* const Option = Select.Option; */
 const RadioGroup = Radio.Group;
 const { Option } = Select;
@@ -459,8 +460,10 @@ class PersonalDetails extends Component {
       },
       countryJsonId: "",
       profileDetails: [],
+      countryList: "",
     };
     this.datePickerChild = React.createRef();
+    this.getallCountriesData = this.getallCountriesData.bind(this);
     this.handleProfile = this.handleProfile.bind(this);
     this.handleLangChange = this.handleLangChange.bind(this);
     this.t = this.props.t;
@@ -487,6 +490,7 @@ class PersonalDetails extends Component {
   /* Life-Cycle Methods */
 
   componentDidMount() {
+    this.getallCountriesData();
     this.props.getProfileDataAction(this.props.isLoggedIn);
     if (this.props.profileDetails.default_language) {
       this.setState({
@@ -546,7 +550,24 @@ class PersonalDetails extends Component {
       });
     }
   }
-
+  getallCountriesData() {
+    fetch(API_URL + "/get-countries", {
+      method: "get",
+      headers: {
+        Accept: "application/json",
+        "Accept-Language": localStorage["i18nextLng"],
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + this.props.isLoggedIn,
+      },
+    })
+      .then((response) => response.json())
+      .then((responseData) => {
+        this.setState({
+          countryList: responseData.data,
+        });
+      })
+      .catch((error) => {});
+  }
   componentWillReceiveProps(props) {
     if (
       props.profileDetails.countryJsonId &&
@@ -783,7 +804,6 @@ class PersonalDetails extends Component {
   //   this.onChangeField(loc, "country");
   // }
   onCountryChange(country, state, city, country_code, phoneCode, phone_number) {
-    // console.log("^^^Before", this.state.countrySelected);
     // console.log("^^^kyc", country, state, city, country_code);
     let fields = this.state.fields;
     if (this.state.countrySelected === country) {
@@ -1607,7 +1627,6 @@ class PersonalDetails extends Component {
           this.state.profileImage !== undefined &&
           !this.state.profileImg.includes("def_profile.jpg")
         ) {
-          console.log("Prkjhf^^", this.state.profileImage);
           profileData.append("profile_pic", this.state.profileImage);
         }
         profileData.append("default_language", this.state.language);
@@ -1755,7 +1774,7 @@ class PersonalDetails extends Component {
     });
   }
   changeNumber(a, mob, code) {
-    // console.log("^^^code", code, mob);
+    console.log("^^^code", code, mob);
     if (mob.trim !== "") {
       var temp = `+${code.dialCode}`;
       var mobile = mob.includes(`+${code.dialCode}`) ? mob : temp.concat(mob);
@@ -1787,6 +1806,36 @@ class PersonalDetails extends Component {
     // rerender to hide messages for the first time
   }
   onKycCancel = () => {
+    let allCountries = this.state.countryList;
+    let phonecode, country_code, country_id;
+    let arr = [];
+    allCountries.map((country, index) => {
+      if (country.name == this.props.profileDetails.country) {
+        phonecode = country.phonecode;
+        country_code = country.sortname;
+        country_id = country.id;
+      }
+    });
+    if (this.state.profileDetails.phone_number) {
+      arr.push(country_code);
+      let temp = this.props.profileDetails.phone_number;
+      var mob = temp.split(`+${phonecode}`);
+      let phone = this.props.profileDetails.phone_number;
+      this.setState({
+        mobile: mob[1],
+        displayCountry: true,
+        fields: {
+          phone_number: phone,
+        },
+        phoneCountry: arr,
+        phoneCode: phonecode,
+        countryJsonId: country_id,
+      });
+    } else {
+      this.setState({
+        displayCountry: false,
+      });
+    }
     this.setState(
       {
         fiatIcon: null,
@@ -1813,7 +1862,7 @@ class PersonalDetails extends Component {
             : false,
         profileImage: undefined,
         editMode: false,
-        displayCountry: false,
+        // displayCountry: false,
       },
       () => {
         this.datePickerChild.current.resetDatePicker();
