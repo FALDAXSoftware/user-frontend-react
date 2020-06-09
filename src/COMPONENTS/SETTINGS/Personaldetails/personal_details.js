@@ -37,6 +37,7 @@ import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
 import { Link } from "react-router-dom";
 import { langAction } from "../../../ACTIONS/authActions";
 import { IntlTelInputS } from "../../../STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle";
+import { APIUtility } from "../../../httpHelper";
 
 let { API_URL } = globalVariables;
 /* const Option = Select.Option; */
@@ -443,7 +444,7 @@ class PersonalDetails extends Component {
       dateFIcon: null,
       remove_pic: false,
       fiat: "",
-      date_format: "",
+      date_format: "MM/DD/YYYY",
       showFileInput: true,
       agreeCheck: false,
       agreeTermsShow: false,

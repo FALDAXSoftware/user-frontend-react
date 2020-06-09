@@ -461,7 +461,6 @@ class TierThree extends React.Component {
         .then((response) => response.json())
         .then((responseData) => {
           if (responseData.status == 200) {
-            console.log("^^^^response", responseData);
             this.setState(
               {
                 loader: false,
