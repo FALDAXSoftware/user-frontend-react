@@ -390,17 +390,27 @@ class LoggedNavigation extends Component {
     this.simplexAccess = this.simplexAccess.bind(this);
     this.walletAccess = this.walletAccess.bind(this);
     this.tokenAccess = this.tokenAccess.bind(this);
-    this.historyAccess = this.historyAccess.bind(this);
+
     this.panicStatus = this.panicStatus.bind(this);
   }
 
   /* Life-Cycle Methods */
-  componentWillReceiveProps(props, newProps) {
+  async componentWillReceiveProps(props, newProps) {
     if (props.theme !== undefined) {
       if (props.theme !== this.state.theme) {
         if (props.theme === false)
           this.setState({ faldaxLogo: _FALDAXLOGO, faldax: _FALDAX });
         else this.setState({ faldax: _FALDAXWHITE, faldaxLogo: _WHITELOGO });
+      }
+    }
+    if (props.profileDetails) {
+      let result = await APIUtility.getUserTradeStatusWallet(
+        this.props.isLoggedIn
+      );
+      if (result) {
+        this.setState({
+          walletIsAllowed: result.data.is_allowed,
+        });
       }
     }
   }
@@ -633,6 +643,11 @@ class LoggedNavigation extends Component {
     }
   }
   walletAccess() {
+    // console.log(
+    //   "^^^^walletaccess",
+    //   this.state.walletIsAllowed,
+    //   this.props.profileDetails.is_allowed
+    // );
     if (this.props.isLoggedIn) {
       if (this.props.profileDetails.is_user_updated) {
         if (this.state.panic_status === true) {
@@ -657,31 +672,7 @@ class LoggedNavigation extends Component {
       this.props.history.push("/login");
     }
   }
-  historyAccess() {
-    if (this.props.isLoggedIn) {
-      if (this.props.profileDetails.is_user_updated) {
-        if (this.state.panic_status === true) {
-          this.setState({ panicEnabled: true });
-        } else {
-          if (this.state.walletIsAllowed === true) {
-            if (this.props.location.pathname !== "/history")
-              this.props.history.push({
-                pathname: "/history",
-                state: {
-                  flag: true,
-                },
-              });
-          } else {
-            this.setState({ countryAccess: true });
-          }
-        }
-      } else {
-        this.setState({ completeProfile: true });
-      }
-    } else {
-      this.props.history.push("/login");
-    }
-  }
+
   simplexAccess() {
     if (this.state.panic_status === true) {
       this.setState({ panicEnabled: true });

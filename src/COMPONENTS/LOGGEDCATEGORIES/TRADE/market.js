@@ -143,12 +143,7 @@ class Market extends Component {
         });
       }
     }
-    console.log(
-      "^^^^userdata  pro",
-      props.userBal,
-      props.crypto,
-      props.currency
-    );
+
     if (props.userBal && props.userBal != this.props.userBal) {
       this.setState({
         userBalFees: props.userBal.fees,
@@ -181,7 +176,6 @@ class Market extends Component {
     }
   }
   componentDidMount() {
-    console.log("^^^^^^^wallet", this.props.walletIsAllowed);
     if (!this.props.walletIsAllowed) {
       this.setState({
         illegalbtn: true,
@@ -225,7 +219,6 @@ class Market extends Component {
         symbol: `${this.state.crypto}-${this.state.currency}`,
       });
       this.props.io.on("get-latest-price", (data) => {
-        console.log("^^^^^Test Data%%%%", data);
         if (data) {
           this.setState(
             {

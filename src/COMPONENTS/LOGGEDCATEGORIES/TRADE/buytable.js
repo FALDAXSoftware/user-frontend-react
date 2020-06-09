@@ -76,12 +76,10 @@ class BuyTABLE extends Component {
   }
   componentDidMount() {
     // self.buyTableData();
-    console.log("^^^^ Here", this.props.pricePrecision);
     if (this.props.io) {
       this.props.loaderfunc(true);
       this.setState({ loader: true });
       this.props.io.on("buy-book-data", (data) => {
-        console.log("^^^^buy data", data);
         this.updateData(data);
       });
     }
@@ -195,8 +193,6 @@ class BuyTABLE extends Component {
   updateData(res) {
     let self = this;
     let data = res.data;
-
-    console.log("buyrow------------", data);
     const row = [];
     var value = [];
     let sum = 0;

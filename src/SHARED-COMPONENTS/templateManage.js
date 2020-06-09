@@ -10,7 +10,7 @@ import {
   Switch,
   Alert,
   Row,
-  Col
+  Col,
 } from "antd";
 import { withRouter } from "react-router-dom";
 import { globalVariables } from "../Globals.js";
@@ -20,12 +20,12 @@ import {
   TemplateTabPane,
   TemplatePairSelect,
   SaveBtn,
-  TempName
+  TempName,
 } from "STYLED-COMPONENTS/SHARED-STYLES/sharedStyle";
 import {
   TemplateTab,
   WidgetName,
-  TempRow
+  TempRow,
 } from "../STYLED-COMPONENTS/SHARED-STYLES/sharedStyle";
 import NumberFormat from "react-number-format";
 import { inbuiltTemplates } from "../COMPONENTS/LOGGEDCATEGORIES/DASHBOARD/inbuiltTemplate.js";
@@ -45,8 +45,8 @@ class TemplateManage extends React.Component {
         title: "Tab 3",
         content: "Content of Tab 3",
         key: "3",
-        closable: false
-      }
+        closable: false,
+      },
     ];
     this.state = {
       templates: [],
@@ -61,7 +61,7 @@ class TemplateManage extends React.Component {
           name: "Technical analysis",
           checked: true,
           multiple: true,
-          data: ["XRP-BTC"]
+          data: ["XRP-BTC"],
         },
         {
           id: "2",
@@ -69,7 +69,7 @@ class TemplateManage extends React.Component {
           name: "Mini graph",
           checked: false,
           multiple: true,
-          data: ["XRP-BTC"]
+          data: ["XRP-BTC"],
         },
         {
           id: "3",
@@ -77,21 +77,21 @@ class TemplateManage extends React.Component {
           name: "Candle Stick",
           checked: false,
           multiple: true,
-          data: ["XRP-BTC"]
+          data: ["XRP-BTC"],
         },
         {
           id: "4",
           key: "crypto_screener",
           name: "Crypto screener",
           checked: false,
-          multiple: false
+          multiple: false,
         },
         {
           id: "5",
           key: "rising_falling",
           name: "Rising / Falling",
           checked: false,
-          multiple: false
+          multiple: false,
         },
 
         {
@@ -99,25 +99,25 @@ class TemplateManage extends React.Component {
           key: "activity",
           name: "Activity",
           checked: true,
-          multiple: false
+          multiple: false,
         },
         {
           id: "7",
           key: "portfolio",
           name: "Portfolio",
           checked: true,
-          multiple: false
+          multiple: false,
         },
         {
           id: "8",
           key: "news",
           name: "News",
           checked: false,
-          multiple: false
-        }
+          multiple: false,
+        },
       ],
       templateName: "New Template",
-      errMsg: ""
+      errMsg: "",
     };
     // this.t = this.props.t;
     this.newTabIndex = 0;
@@ -129,23 +129,23 @@ class TemplateManage extends React.Component {
     if (this.state.templateName) {
       this.props.onSave(this.state.templates);
       this.setState({
-        errMsg: ""
+        errMsg: "",
       });
     } else {
       this.setState({
-        errMsg: "Please enter template name"
+        errMsg: "Please enter template name",
       });
     }
   };
   componentDidMount() {
     this.setState({ templates: [...this.props.templates] });
   }
-  onCancle = e => {
+  onCancle = (e) => {
     this.setState({ comingSoon: false });
     this.props.onCancle(e);
   };
 
-  onChange = activeKey => {
+  onChange = (activeKey) => {
     console.log("aksfjh^", activeKey);
     this.setState({ activeKey });
   };
@@ -156,21 +156,20 @@ class TemplateManage extends React.Component {
   };
 
   add = () => {
-    console.log("^^^^^", this.state.templates);
     let temp = this.state.templates;
     const activeKey = temp.length + 1;
     temp.push({
       ...JSON.parse(JSON.stringify(inbuiltTemplates[0])),
       title: "New Template",
-      inbuilt: false
+      inbuilt: false,
     });
     this.setState({
       templates: temp,
-      activeKey: Number(temp.length - 1).toString()
+      activeKey: Number(temp.length - 1).toString(),
     });
   };
 
-  remove = targetKey => {
+  remove = (targetKey) => {
     let templates = this.state.templates;
     templates.splice(targetKey, 1);
     this.setState({ templates, activeKey: "0", templateName: "New Template" });
@@ -198,9 +197,9 @@ class TemplateManage extends React.Component {
             </div>
           }
           visible={this.props.visible}
-          onOk={e => this.handleSave()}
+          onOk={(e) => this.handleSave()}
           // closable={false}
-          onCancel={e => this.onCancle(e)}
+          onCancel={(e) => this.onCancle(e)}
           maskClosable={false}
           width={605}
           height={490}
@@ -239,7 +238,7 @@ class TemplateManage extends React.Component {
                         type="text"
                         placeholder="Template Name"
                         value={t.title ? t.title : this.state.templateName}
-                        onChange={e => {
+                        onChange={(e) => {
                           let temp = this.state.templates;
                           if (e.target.value) {
                             // console.log("%%%%", e.target.value);
@@ -247,7 +246,7 @@ class TemplateManage extends React.Component {
                             this.setState({
                               templateName: e.target.value,
                               templates: temp,
-                              errMsg: ""
+                              errMsg: "",
                             });
                           } else {
                             // console.log("%%%%else", e.target.value);
@@ -255,7 +254,7 @@ class TemplateManage extends React.Component {
                             this.setState({
                               templateName: "",
                               templates: temp,
-                              errMsg: "Please enter template name"
+                              errMsg: "Please enter template name",
                             });
                           }
                         }}
@@ -267,15 +266,15 @@ class TemplateManage extends React.Component {
                       )}
                     </TempName>
                   ) : (
-                      ""
-                    )}
+                    ""
+                  )}
                   {t.widgets.map((w, windex) => (
                     <TempRow>
                       <WidgetName>
                         <Switch
                           disabled={t.inbuilt}
                           checked={w.checked}
-                          onChange={checked => {
+                          onChange={(checked) => {
                             this.onChangeCheckbox(checked, windex, index);
                           }}
                         />
@@ -289,20 +288,20 @@ class TemplateManage extends React.Component {
                           placeholder="Please select pairs"
                           value={w.data}
                           // defaultValue={["XRP-BTC"]}
-                          onChange={value => {
+                          onChange={(value) => {
                             this.handleChange(value, windex, index);
                           }}
                         >
                           {this.state.pairs &&
-                            this.state.pairs.map(element1 => (
+                            this.state.pairs.map((element1) => (
                               <Option key={element1.name}>
                                 {element1.name}
                               </Option>
                             ))}
                         </TemplatePairSelect>
                       ) : (
-                          ""
-                        )}
+                        ""
+                      )}
                     </TempRow>
                   ))}
                 </TemplateTabPane>

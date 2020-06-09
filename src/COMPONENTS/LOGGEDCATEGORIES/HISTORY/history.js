@@ -212,10 +212,11 @@ class History extends Component {
     ) {
       this.props.history.push("/editProfile");
     }
+    console.log("test^^^", this.props.location);
     if (
-      this.props.location.state === undefined ||
-      this.props.location.state.flag === "" ||
-      this.props.location.state.flag === null
+      this.props.location === undefined ||
+      this.props.location.flag === "" ||
+      this.props.location.flag === null
     ) {
       this.props.history.push("/");
     }
@@ -1132,11 +1133,11 @@ class History extends Component {
 
                                 var limit_price =
                                   temps.order_type != "Market"
-                                    ? temps.limit_price
+                                    ? precision(temps.limit_price)
                                     : 0.0;
                                 var stop_price =
                                   temps.order_type == "StopLimit"
-                                    ? temps.stop_price
+                                    ? precision(temps.stop_price)
                                     : 0.0;
 
                                 console.log(self.props.profileData.id);

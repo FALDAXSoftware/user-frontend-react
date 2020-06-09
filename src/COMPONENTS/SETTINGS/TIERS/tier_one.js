@@ -134,7 +134,6 @@ class TierOne extends React.Component {
   }
   componentDidMount() {
     this.props.getProfileDataAction(this.props.isLoggedIn);
-    console.log("askdj^^^^", this.props.is_kyc_done);
     // console.log(
     //   "^^tier^",
     //   this.props.profileDetails.is_user_updated,
