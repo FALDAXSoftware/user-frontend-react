@@ -158,12 +158,10 @@ class Limit extends Component {
       }
     }
     if (this.props.io) {
-      console.log("^^^Test Did mount limit props");
       this.props.io.emit("get-limit-stop-latest", {
         symbol: `${this.state.crypto}-${this.state.currency}`,
       });
       this.props.io.on("get-latest-price", (data) => {
-        console.log("^^^^^Test Data%%%%", data);
         if (data) {
           this.setState(
             {
@@ -514,7 +512,6 @@ class Limit extends Component {
             }
           }
         } else if (this.state.amount > 0) {
-          console.log("^^^^Testdatalimit", this.state.amount);
           if (this.state.side === "Buy") {
             if (value > 0 && name === "amount") {
               if (

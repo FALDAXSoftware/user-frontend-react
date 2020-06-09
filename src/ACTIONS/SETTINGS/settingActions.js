@@ -1,4 +1,5 @@
 import { globalVariables } from "Globals.js";
+import { APIUtility } from "../../httpHelper";
 
 let { API_URL } = globalVariables;
 
@@ -70,6 +71,7 @@ export const getProfileDataAction = (token) => (dispatch) => {
       if (responseData.status == 200) {
         // console.log("----------------------->", responseData);
         dispatch(addprofileData(responseData));
+        APIUtility.getUserTradeStatusWallet(token);
       } else dispatch(profileError(responseData));
       if (responseData.status !== 403) dispatch(removeLoader());
     })

@@ -215,7 +215,6 @@ class StopLimit extends Component {
         symbol: `${this.state.crypto}-${this.state.currency}`,
       });
       this.props.io.on("get-latest-price", (data) => {
-        console.log("^^^^^Test Data%%%%", data);
         if (data) {
           this.setState(
             {
@@ -428,7 +427,6 @@ class StopLimit extends Component {
           latestFillPrice: props.latestFillPrice,
         },
         () => {
-          console.log("^^^^^s", this.state.latestFillPrice);
           if (this.state.stop_price > 0) {
             if (this.state.side === "Buy") {
               if (
@@ -642,7 +640,6 @@ class StopLimit extends Component {
             }
           }
         } else if (this.state.amount > 0) {
-          console.log("^^^^Testda", this.state.amount);
           if (this.state.side === "Buy") {
             if (value > 0 && name === "amount") {
               if (
