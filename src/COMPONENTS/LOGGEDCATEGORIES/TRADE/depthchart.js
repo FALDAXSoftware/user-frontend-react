@@ -37,7 +37,6 @@ class DepthChart extends Component {
   componentDidMount() {
     if (this.props.io) {
       this.props.io.on("depth-chart-data", (data) => {
-        console.log("^^^^data", data);
         this.updateGraph(data);
       });
     }

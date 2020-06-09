@@ -463,7 +463,6 @@ class Trade extends Component {
   }
 
   async componentDidMount() {
-    console.log("^^^^", this.state.crypto, this.state.currency);
     if (!this.props.profileDetails) {
       this.props.getProfileDataAction(this.props.isLoggedIn);
     }
@@ -499,22 +498,14 @@ class Trade extends Component {
       });
       // this.setState({ userBalLoader: true });
       this.props.io.on("symbol-high-level-info", (data) => {
-        console.log(
-          "symbol-high-level-info^^^^data",
-          this.state.crypto,
-          this.state.currency
-        );
-        console.log("symbol-high-level-info^^^^data", data);
         this.setState({
           symbolHighLevelInfo: data,
         });
       });
       this.props.io.on("users-all-trade-data", (data) => {
-        console.log("^^^^data", data);
         this.updateMyOrder(data);
       });
       this.props.io.on("users-completed-flag", (data) => {
-        console.log("^^^^dataorderSocket", data);
         this.orderSocket(this.state.timePeriod, this.state.status);
       });
       this.orderSocket(this.state.timePeriod, this.state.status);
@@ -523,11 +514,9 @@ class Trade extends Component {
         this.getInstrumentData();
       }, 10000);
       this.props.io.on("user-wallet-balance", (data) => {
-        console.log("^^^^userdata", data);
         this.setState({ userBal: data, userBalLoader: false });
       });
       this.props.io.on("trade-history-data", (data) => {
-        console.log("trade-history-data^^^^data", data[0]);
         if (data[0] && data[0].fill_price) {
           this.setState({
             latestFillPrice: data[0].fill_price,
@@ -539,7 +528,6 @@ class Trade extends Component {
         }
       });
       this.props.io.on("sell-book-data", (data) => {
-        console.log("sell^^^^sell-data Sell Book", data);
         if (data && data.total) {
           this.setState({
             sellTotal: data.total,
@@ -547,7 +535,6 @@ class Trade extends Component {
         }
       });
       this.props.io.on("buy-book-data", (data) => {
-        console.log("sell^^^^sell data Buy Book", data);
         if (data && data.total_quantity) {
           this.setState({
             buyTotal: data.total_quantity,
@@ -852,12 +839,19 @@ class Trade extends Component {
             this.t("validations:success_text.message"),
             responseData.message
           );
-        } else
+        } else if (responseData.status === 500) {
+          this.openNotificationWithIcon(
+            "error",
+            this.t("validations:error_text.message"),
+            responseData.message
+          );
+        } else {
           this.openNotificationWithIcon(
             "error",
             this.t("validations:error_text.message"),
             responseData.err
           );
+        }
         this.setState({
           butonEnable: true,
           orderTradeLoader: false,
@@ -1582,7 +1576,7 @@ class Trade extends Component {
 
   goFullScreen() {
     alert("go to full screen");
-    console.log("^^^^^^Fullscreen");
+
     let body = document.getElementsByTagName("body");
     let element = body[0];
     if (element.requestFullscreen) {
@@ -1609,8 +1603,6 @@ class Trade extends Component {
   //
 
   exitFullScreen() {
-    alert("here");
-    console.log("^^^^here exit fullscreen");
     if (document.exitFullscreen) document.exitFullscreen();
     else if (document.mozCancelFullScreen) document.mozCancelFullScreen();
     else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
