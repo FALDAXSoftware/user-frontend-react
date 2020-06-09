@@ -64,7 +64,6 @@ class SellTable extends Component {
     // var self = this;
     if (this.props.io) {
       this.props.io.on("sell-book-data", (data) => {
-        console.log("^^^^sell-data", data);
         this.updateData(data);
       });
     }
@@ -186,11 +185,9 @@ class SellTable extends Component {
   updateData(res) {
     let self = this;
     let data = res.data;
-    // console.log("buyrow------------", data);
     const row = [];
     let sum = 0;
     for (let index = 0; index < data.length; index++) {
-      console.log("Start From Here ------>", data[index]);
       const element = data[index];
       let isAdded = false;
       let value = [];

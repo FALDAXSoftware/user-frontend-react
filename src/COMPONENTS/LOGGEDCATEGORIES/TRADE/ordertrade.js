@@ -103,7 +103,6 @@ class OrderTrade extends Component {
     }
   }
   cancelOrder(id, side, type, flagValue) {
-    console.log("cancel orde^^^^^", id, side, type, flagValue);
     this.setState({
       disabled: true,
     });
@@ -174,9 +173,8 @@ class OrderTrade extends Component {
                 <tbody>
                   {this.props.orderTradeData.length > 0 ? (
                     this.props.orderTradeData.map(function (data) {
-                      console.log("data", data);
+                      // console.log("data^^^data", data);
                       var date;
-                      console.log("data.flag", data.flag);
                       var flagValue = false;
                       if (data.flag == true) {
                         data.fill_price = 0.0;
@@ -321,29 +319,35 @@ class OrderTrade extends Component {
                                   self.props.pricePrecision
                                 )}`}
                           </td>
-                          {self.props.pending === 2 &&
-                          data.order_type !== "Market" ? (
-                            <th>
-                              <CancelBTN
-                                disabled={self.state.disabled}
-                                // disabled={true}
-                                onClick={() =>
-                                  self.cancelOrder(
-                                    data.id,
-                                    data.side,
-                                    data.order_type,
-                                    flagValue
-                                  )
-                                }
-                              >
-                                <Icon
-                                  style={{ color: "#279CED", fontSize: "18px" }}
-                                  type="close-circle"
-                                />
-                              </CancelBTN>
-                            </th>
+                          {self.props.pending === 2 ? (
+                            data.order_type !== "Market" ? (
+                              <td>
+                                <CancelBTN
+                                  disabled={self.state.disabled}
+                                  // disabled={true}
+                                  onClick={() =>
+                                    self.cancelOrder(
+                                      data.id,
+                                      data.side,
+                                      data.order_type,
+                                      flagValue
+                                    )
+                                  }
+                                >
+                                  <Icon
+                                    style={{
+                                      color: "#279CED",
+                                      fontSize: "18px",
+                                    }}
+                                    type="close-circle"
+                                  />
+                                </CancelBTN>
+                              </td>
+                            ) : (
+                              <td>-</td>
+                            )
                           ) : (
-                            <td>-</td>
+                            ""
                           )}
                         </tr>
                       );
