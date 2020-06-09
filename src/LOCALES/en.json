@@ -3448,7 +3448,7 @@
       "page": "Tiers",
       "message": "Withdrawal Limits",
       "message_type": "Web content",
-      "context": "Withdrawal Limits text for label"
+      "context": "Withdrawal Limits Orders text for label"
     },
     "daily_text": {
       "page": "Tiers",
@@ -3554,7 +3554,7 @@
     },
     "2fa_note": {
       "page": "Tiers",
-      "message": "Two-Factor Authentication(2FA) must be enabled to upgrade your account to Tier 2.",
+      "message": "Two-factor Authentication(2FA) must be enabled to upgrade your account to tier 2.",
       "message_type": "Web content",
       "context": "2fa note as tier upgrade requirement"
     },
@@ -3808,7 +3808,7 @@
     },
     "all_details_on_id_text": {
       "page": "Tier Image Information",
-      "message": "All details on ID are readable",
+      "message": "All details on the ID must be legible",
       "message_type": "Web content",
       "context": "Static text"
     },
@@ -3838,7 +3838,7 @@
     },
     "id_glare_reflections_text": {
       "page": "Tier Image Information",
-      "message": "ID details are obscured by light glare or reflections (be careful with flash!)",
+      "message": "ID details are obscured by light glare or reflections (Be careful with the camera's flash!)",
       "message_type": "Web content",
       "context": "Static text"
     },
@@ -4030,7 +4030,7 @@
     },
     "govt_id_info_text": {
       "page": "Tier Image Information",
-      "message": "be accepted if it has your full legal name, photo, date of birth, and issue and expiry dates all on the front of your ID.",
+      "message": "be accepted if it has your full legal name, photo, date of birth, and the issue and expiration dates on the front of your ID.",
       "message_type": "Web content",
       "context": "Static text"
     },
@@ -4294,7 +4294,7 @@
     },
     "readable_text": {
       "page": "Tier Image Information",
-      "message": "readable",
+      "message": "Legible",
       "message_type": "Web content",
       "context": "Static text"
     },
@@ -4450,7 +4450,7 @@
     },
     "tap_id_text": {
       "page": "Tier Image Information",
-      "message": "Don't tape ID to the note.",
+      "message": "Don't tape the ID to the note.",
       "message_type": "Web content",
       "context": "Static text"
     },
@@ -4536,13 +4536,13 @@
     },
     "reject_reason_note_instituitional": {
       "page": "Tier 4",
-      "message": "Your request for institutional account upgrade is rejected by admin due to below reason.",
+      "message": "Your request for an Institutional Account upgrade was rejected by an admin due to the reason below.",
       "message_type": "Web content",
       "context": "Your request for Institutional Account upgrade is rejected by admin due to below reason."
     },
     "verified_institutional_note": {
       "page": "Tiers",
-      "message": "Your Account is Verified successfully to Institutional Account",
+      "message": "Your account is verified successfully to an Institutional Account",
       "message_type": "Web content",
       "context": "Your Account is Verified successfully to Tier text"
     },
