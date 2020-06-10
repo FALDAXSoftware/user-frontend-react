@@ -233,7 +233,7 @@ const RGL = styled(ResponsiveReactGridLayout)`
         : ""};
   }
 `;
-const PairMainDiv = styled(Col)`
+export const PairMainDiv = styled(Col)`
   background-color: ${(props) =>
     props.theme.mode === "dark" ? "#041b2c" : "white"};
   border-radius: 5px;
@@ -576,21 +576,10 @@ class Trade extends Component {
       .catch((error) => {});
   };
   joinRoom = (prevRoom = null) => {
-    console.log("joinRoom^^", this.state, prevRoom);
-    io.emit(
-      "join",
-      {
-        room: this.state.crypto + "-" + this.state.currency,
-        previous_room: prevRoom,
-      },
-      () => {
-        console.log(
-          "joinRoom after^^",
-          this.state.crypto + "-" + this.state.currency
-        );
-        console.log("joinRoom after^^", prevRoom);
-      }
-    );
+    io.emit("join", {
+      room: this.state.crypto + "-" + this.state.currency,
+      previous_room: prevRoom,
+    });
   };
   // created by Meghal Patel at 2019-04-27 15:09.
   //
@@ -688,8 +677,6 @@ class Trade extends Component {
         pairName: element.name,
       });
     }
-    console.log("instruments -----", res, data);
-
     this.setState({
       InsData: res,
       insLoader: false,
@@ -715,7 +702,11 @@ class Trade extends Component {
   //
 
   handleChangeOT(value) {
-    this.setState({ timePeriod: value.key });
+    this.setState({
+      timePeriod: value.key,
+      orderTradeData: {},
+      orderTradeLoader: true,
+    });
     this.orderSocket(value.key, this.state.status);
   }
 
@@ -735,7 +726,7 @@ class Trade extends Component {
     } else if (e.target.value === "c") {
       status = 3;
     }
-    this.setState({ status });
+    this.setState({ status, orderTradeData: {}, orderTradeLoader: true });
     this.orderSocket(this.state.timePeriod, status);
   }
 
@@ -748,19 +739,13 @@ class Trade extends Component {
 
   orderSocket(month, filter_type) {
     // io.emit("")
-    this.setState({ orderTradeLoader: true });
+    // this.setState({ orderTradeLoader: true });
     console.log({
       month,
       flag: filter_type,
       pair: `${this.state.crypto}-${this.state.currency}`,
     });
     if (this.props.io) {
-      console.log(
-        "^^^jf",
-        month,
-        filter_type,
-        `${this.state.crypto}-${this.state.currency}`
-      );
       this.props.io.emit("trade_users_history_event", {
         month: month,
         flag: filter_type,
@@ -800,9 +785,15 @@ class Trade extends Component {
   //
 
   updateMyOrder(response) {
-    this.setState({ orderTradeData: response, orderTradeLoader: false }, () => {
-      console.log("Trade data^^^", this.state.orderTradeData);
-    });
+    this.setState(
+      {
+        orderTradeData: response,
+        orderTradeLoader: false,
+      },
+      () => {
+        console.log("Trade data^^^", this.state.orderTradeData);
+      }
+    );
   }
 
   // created by Meghal Patel at 2019-04-27 15:23.
@@ -2206,11 +2197,11 @@ class Trade extends Component {
                     className="myorder"
                     // style={{ height: "100%", width: "100%", overflow: "auto" }}
                   >
-                    {this.state.orderTradeLoader === true ? (
+                    {/* {this.state.orderTradeLoader === true ? (
                       <Loader color="#1990ff" width="50" height="50" />
                     ) : (
                       ""
-                    )}
+                    )} */}
                     <LeftDiv2>
                       <OrderWrap>
                         <InstruOrder>
@@ -2260,6 +2251,7 @@ class Trade extends Component {
                         </OrderTradeWrap>
                       </OrderWrap>
                       <OrderTrade
+                        orderTradeLoader={this.state.orderTradeLoader}
                         profileDetails={this.props.profileDetails}
                         pending={this.state.status}
                         cancelOrder={(id, side, type, flagValue) => {
