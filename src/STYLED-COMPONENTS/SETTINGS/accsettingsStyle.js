@@ -14,7 +14,7 @@ export const NotiHead = styled.div`
   font-size: 20px;
   font-family: "Open Sans";
   font-weight: 600;
-  color: ${props =>
+  color: ${(props) =>
     props.theme.mode === "dark" ? "white" : "rgb( 80, 80, 80 )"};
 `;
 export const NotiDesc = styled.div`
@@ -26,7 +26,7 @@ export const NotiDesc = styled.div`
   -webkit-transform: matrix(0.99999985149599, 0, 0, 0.99949238260564, 0, 0);
   -ms-transform: matrix(0.99999985149599, 0, 0, 0.99949238260564, 0, 0);
   > span {
-    color: ${props =>
+    color: ${(props) =>
       props.theme.mode === "dark" ? "#3c4b64" : "rgb( 80, 80, 80 )"};
   }
 `;
@@ -75,7 +75,7 @@ export const Heading = styled.div`
   font-family: "Open Sans";
   font-weight: 600;
   margin-top: 10px !important;
-  color: ${props =>
+  color: ${(props) =>
     props.theme.mode === "dark" ? "white" : "rgb( 80, 80, 80 )"};
   line-height: 2.4;
   -moz-transform: matrix(1, 0, 0, 0.99859542519785, 0, 0);
@@ -91,7 +91,7 @@ export const Desc = styled.div`
   -ms-transform: matrix(0.99956308705261, 0, 0, 0.99832082554207, 0, 0);
 `;
 export const FontAwesomeIconS = styled(FontAwesomeIcon)`
-  color: ${props => (props.theme.mode === "dark" ? "white" : "black")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "black")};
 `;
 export const TableWrap = styled.div`
   margin-top: 30px;
@@ -117,9 +117,9 @@ export const TableWrap = styled.div`
     }
   }
   & .ant-table-placeholder {
-    background-color: ${props =>
+    background-color: ${(props) =>
       props.theme.mode === "dark" ? "#041421" : ""};
-    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   }
   @media (max-width: 992px) {
     width: 60%;
@@ -137,7 +137,7 @@ export const DeleteHead = styled.div`
   font-size: 20px;
   font-family: "Open Sans";
   font-weight: 600;
-  color: ${props =>
+  color: ${(props) =>
     props.theme.mode === "dark" ? "white" : "rgb( 80, 80, 80 )"};
   -moz-transform: matrix(1, 0, 0, 0.99882784793165, 0, 0);
   -webkit-transform: matrix(1, 0, 0, 0.99882784793165, 0, 0);
@@ -151,7 +151,7 @@ export const DeleteDesc = styled.div`
   margin-left: auto;
   margin-right: auto;
   justify-content: center;
-  color: ${props => (props.theme.mode === "dark" ? "#3c4b64" : "")};
+  color: ${(props) => (props.theme.mode === "dark" ? "#3c4b64" : "")};
   @media (min-width: 1980px) {
     &.maxWidth {
       width: 800px;
@@ -164,9 +164,9 @@ export const DeleteBtn = styled.div`
   margin-top: 35px;
 `;
 export const ButtonDel = styled(Button)`
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#a21d1d" : "#fce8e8"};
-  color: ${props => (props.theme.mode === "dark" ? "white" : "#fe1f1f")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "#fe1f1f")};
   border: none;
   width: 240px;
   border-radius: 40px;
@@ -174,29 +174,29 @@ export const ButtonDel = styled(Button)`
   &:hover,
   &:active,
   &:focus {
-    background-color: ${props =>
+    background-color: ${(props) =>
       props.theme.mode === "dark" ? "#a21d1d" : "#fce8e8"};
-    color: ${props => (props.theme.mode === "dark" ? "white" : "#fe1f1f")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "#fe1f1f")};
   }
 `;
 export const PaginationS = styled(Pagination)`
   margin-top: 30px !important;
   & .ant-pagination-item-link {
-    background-color: ${props =>
+    background-color: ${(props) =>
       props.theme.mode === "dark" ? "#041421" : ""};
   }
   & .ant-pagination-item-link > i {
-    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   }
   & .ant-pagination-item {
-    background-color: ${props =>
+    background-color: ${(props) =>
       props.theme.mode === "dark" ? "#041421" : ""};
   }
   & .ant-pagination-item > a {
-    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   }
   & .ant-pagination-item-link .ant-pagination-item-ellipsis {
-    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   }
 `;
 
@@ -207,37 +207,43 @@ export const NotificationTable = styled(Table)`
   margin-left: auto;
   margin-right: auto;
   td {
-    color: ${props => (props.theme.mode !== "dark" ? "" : "white !important")};
+    color: ${(props) =>
+      props.theme.mode !== "dark" ? "" : "white !important"};
   }
   th {
-    background-color: ${props =>
+    background-color: ${(props) =>
       props.theme.mode !== "dark"
         ? "#e4ecff !important"
         : "#01090f !important"};
-    color: ${props => (props.theme.mode !== "dark" ? "" : "white !important")};
+    color: ${(props) =>
+      props.theme.mode !== "dark" ? "" : "white !important"};
   }
   input {
-    background-color: ${props =>
+    background-color: ${(props) =>
       props.theme.mode !== "dark" ? "" : "#041422 !important"};
-    color: ${props => (props.theme.mode !== "dark" ? "" : "white !important")};
+    color: ${(props) =>
+      props.theme.mode !== "dark" ? "" : "white !important"};
   }
   .ant-table-tbody > tr:hover:not(.ant-table-expanded-row) > td {
     background: transparent;
   }
   .anticon-left,
   .anticon-right {
-    color: ${props => (props.theme.mode !== "dark" ? "" : "white !important")};
+    color: ${(props) =>
+      props.theme.mode !== "dark" ? "" : "white !important"};
   }
   .ant-pagination-item-active {
-    background: ${props => (props.theme.mode == "dark" ? "#041422" : "")};
+    background: ${(props) => (props.theme.mode == "dark" ? "#041422" : "")};
   }
   .ant-pagination-item > a {
-    color: ${props => (props.theme.mode !== "dark" ? "" : "white !important")};
+    color: ${(props) =>
+      props.theme.mode !== "dark" ? "" : "white !important"};
   }
   .ant-table-placeholder {
-    background-color: ${props => (props.theme.mode == "dark" ? "#041422" : "")};
+    background-color: ${(props) =>
+      props.theme.mode == "dark" ? "#041422" : ""};
     .ant-empty-description {
-      color: ${props => (props.theme.mode == "dark" ? "white" : "")};
+      color: ${(props) => (props.theme.mode == "dark" ? "white" : "")};
     }
   }
 `;
@@ -264,6 +270,7 @@ export const DeButtonDiv = styled.button`
   display: flex;
   width: 48%;
   justify-content: center;
+  align-items: center;
   background: #4c84ff;
   border: 1px solid #4c84ff;
   border: 0;
@@ -316,7 +323,8 @@ export const SummaryTable = styled.table`
       > th {
         font-size: 14px;
         font-weight: normal;
-        color: ${props => (props.theme.mode == "dark" ? "#617090" : "#a3a3a3")};
+        color: ${(props) =>
+          props.theme.mode == "dark" ? "#617090" : "#a3a3a3"};
         padding: 10px;
         border: 1px solid #c6dfff;
         border-left: 0;
@@ -329,7 +337,8 @@ export const SummaryTable = styled.table`
       > td {
         font-size: 14px;
         font-weight: 600;
-        color: ${props => (props.theme.mode == "dark" ? "#ffffff" : "#000000")};
+        color: ${(props) =>
+          props.theme.mode == "dark" ? "#ffffff" : "#000000"};
         padding: 10px;
         border: 1px solid #c6dfff;
         border-left: 0;
@@ -339,7 +348,7 @@ export const SummaryTable = styled.table`
     > tr:last-child {
       > td {
         padding: 15px 10px;
-        background: ${props =>
+        background: ${(props) =>
           props.theme.mode == "dark" ? "#01090f" : "#c6dfff"};
         font-size: 16px;
       }
@@ -373,7 +382,7 @@ export const DeactiveWrap = styled.div`
 `;
 export const Code2FADiv = styled.div`
   > p {
-    color: ${props => (props.theme.mode == "dark" ? "#ffffff" : "#000000")};
+    color: ${(props) => (props.theme.mode == "dark" ? "#ffffff" : "#000000")};
     margin: 0;
   }
 `;
