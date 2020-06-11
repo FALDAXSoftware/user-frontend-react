@@ -36,6 +36,7 @@ import {
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
 import { LogoutUser } from "../../../ACTIONS/authActions";
 import { APIUtility } from "../../../httpHelper";
+import { PaginationS } from "../../../STYLED-COMPONENTS/SETTINGS/accsettingsStyle";
 
 let { API_URL } = globalVariables;
 const { TabPane } = Tabs;
@@ -1274,7 +1275,7 @@ class History extends Component {
                     </Tablediv>
                     <PagDiv>
                       {tradeCount > 0 ? (
-                        <Pagination
+                        <PaginationS
                           className="ant-users-pagination"
                           onChange={this.handlePagination.bind(this)}
                           pageSize={limit}
@@ -1402,7 +1403,7 @@ class History extends Component {
                     </Tablediv>
                     <PagDiv>
                       {tradeCount > 0 ? (
-                        <Pagination
+                        <PaginationS
                           className="ant-users-pagination"
                           onChange={this.handlePagination.bind(this)}
                           pageSize={limit}
