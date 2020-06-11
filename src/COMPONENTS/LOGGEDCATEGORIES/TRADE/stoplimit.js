@@ -766,7 +766,12 @@ class StopLimit extends Component {
   onSubmit() {
     var self = this;
     this.marketAccess();
-    if (this.validator.allValid()) {
+    if (
+      this.validator.allValid() &&
+      !this.state.completeKYC &&
+      !this.state.completeProfile &&
+      !this.state.completeProfile
+    ) {
       let params = {
         symbol:
           self.state.crypto.toUpperCase() +
