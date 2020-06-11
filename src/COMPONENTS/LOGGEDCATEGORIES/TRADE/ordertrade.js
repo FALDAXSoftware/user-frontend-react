@@ -146,9 +146,18 @@ class OrderTrade extends Component {
                       )
                     </th>
                   )}
-                  <th>
-                    {this.t("fill_price_text.message")} ({self.props.currency})
-                  </th>
+                  {self.props.pending === 3 ? (
+                    <th>
+                      {this.t("limit_price_text.message")} (
+                      {self.props.currency})
+                    </th>
+                  ) : (
+                    <th>
+                      {this.t("fill_price_text.message")} ({self.props.currency}
+                      )
+                    </th>
+                  )}
+
                   <th>{this.t("type_text.message")}</th>
                   <th>{this.t("time_text.message")}</th>
                   <th>
