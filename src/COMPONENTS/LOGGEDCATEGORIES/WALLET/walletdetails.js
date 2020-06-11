@@ -269,6 +269,8 @@ class WalletDetails extends Component {
         fiatValue: fiat,
         fiatCurrency: currency,
       });
+    } else if (responseData.status == 401) {
+      this.props.history.push("/");
     } else if (responseData.status == 403) {
       this.openNotificationWithIcon("error", "Error", responseData.err);
       let tempValue2 = {};

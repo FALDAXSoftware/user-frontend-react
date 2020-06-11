@@ -40,9 +40,13 @@ import { globalVariables } from "Globals.js";
 import { precise } from "../../../precision";
 import { parse } from "@fortawesome/fontawesome-svg-core";
 import CountryAccess from "../../../SHARED-COMPONENTS/CountryAccess";
+import { ThirdLabel } from "../../../STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle";
+import CompleteKYC from "../../../SHARED-COMPONENTS/CompleteKYC";
+import PanicEnabled from "../../../SHARED-COMPONENTS/PanicEnabled";
+import CompleteProfile from "../../../SHARED-COMPONENTS/completeProfile";
 
 let { SOCKET_HOST } = globalVariables;
-
+const API_URL = globalVariables.API_URL;
 class Market extends Component {
   constructor(props) {
     super(props);
@@ -60,8 +64,6 @@ class Market extends Component {
       sellEstPrice: 0,
       sellPayAmt: 0,
       disabledMode: false,
-      illegalbtn: false,
-      panic_status: false,
       singlefiatCryptoValue: "",
       singlefiatCurrencyValue: "",
       fiatCryptoValue: "",
@@ -74,11 +76,15 @@ class Market extends Component {
       bestBid: 0,
       buyMaxValue: 0,
       sellMaxValue: 0,
+      completeKYC: false,
       countryAccess: false,
+      completeProfile: false,
+      panic_status: this.props.panic_status,
     };
     this.t = this.props.t;
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.marketAccess = this.marketAccess.bind(this);
     this.clearValidation = this.clearValidation.bind(this);
     this.validator = new SimpleReactValidator({
       gtzero: {
@@ -119,16 +125,40 @@ class Market extends Component {
   }
   /* Life-Cycle Methods */
 
-  componentWillReceiveProps(props, newProps) {
-    if (!props.walletIsAllowed) {
+  marketAccess() {
+    if (this.state.panic_status === true) {
+      this.setState({ panicEnabled: true });
+    } else if (
+      !this.props.profileDetails.is_user_updated &&
+      this.props.profileDetails.is_kyc_done != "2"
+    ) {
       this.setState({
-        illegalbtn: true,
+        completeProfile: true,
       });
     } else {
-      this.setState({
-        illegalbtn: false,
-      });
+      if (
+        this.props.profileDetails.is_allowed === true &&
+        this.props.profileDetails.is_kyc_done === 2
+      ) {
+        this.setState({ completeKYC: false, countryAccess: false });
+      } else {
+        if (
+          this.props.profileDetails.is_allowed === false &&
+          this.props.profileDetails.is_kyc_done !== 2
+        ) {
+          this.setState({ completeKYC: true });
+        } else if (
+          this.props.profileDetails.is_allowed === true &&
+          this.props.profileDetails.is_kyc_done !== 2
+        ) {
+          this.setState({ completeKYC: true });
+        } else {
+          this.setState({ countryAccess: true });
+        }
+      }
     }
+  }
+  componentWillReceiveProps(props, newProps) {
     if (Object.keys(props.userBal).length > 0) {
       if (
         Object.keys(props.userBal.crypto).length > 0 &&
@@ -143,7 +173,11 @@ class Market extends Component {
         });
       }
     }
-
+    if (props.panic_status && props.panic_status != this.props.panic_status) {
+      this.setState({
+        panic_status: props.panic_status,
+      });
+    }
     if (props.userBal && props.userBal != this.props.userBal) {
       this.setState({
         userBalFees: props.userBal.fees,
@@ -176,15 +210,6 @@ class Market extends Component {
     }
   }
   componentDidMount() {
-    if (!this.props.walletIsAllowed) {
-      this.setState({
-        illegalbtn: true,
-      });
-    } else {
-      this.setState({
-        illegalbtn: false,
-      });
-    }
     if (Object.keys(this.props.userBal).length > 0) {
       if (
         Object.keys(this.props.userBal.crypto).length > 0 &&
@@ -368,6 +393,9 @@ class Market extends Component {
   comingCancel = (e) => {
     this.setState({
       countryAccess: false,
+      completeKYC: false,
+      panicEnabled: false,
+      completeProfile: false,
     });
   };
   clearValidation() {
@@ -544,122 +572,117 @@ class Market extends Component {
 
   onSubmit() {
     var self = this;
-    if (this.state.illegalbtn) {
-      this.setState({
-        countryAccess: true,
-      });
-    } else {
-      if (this.validator.allValid()) {
-        let params = {
-          symbol:
-            self.state.crypto.toUpperCase() +
-            "-" +
-            self.state.currency.toUpperCase(),
-          side: self.state.side,
-          order_type: "Market",
-          orderQuantity: self.state.amount,
-        };
-        self.setState({ Loader: true });
-        fetch(
-          SOCKET_HOST +
-            `/api/v1/tradding/orders/market-${self.state.side.toLowerCase()}-create/`,
-          {
-            method: "post",
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-              "Accept-Language": localStorage["i18nextLng"],
-              Authorization: "Bearer " + self.props.isLoggedIn,
-            },
-            body: JSON.stringify(params),
-          }
-        )
-          .then((response) => response.json())
-          .then((responseData) => {
-            this.setState(
-              {
-                Loader: false,
-                total: 0,
-                amount: "",
-                buyPayAmt: 0,
-                sellPayAmt: 0,
-                buyEstPrice: 0,
-                sellEstPrice: 0,
-              },
-              () => {
-                if (this.state.side === "Buy") {
-                  this.setState({
-                    fiatCurrencyValue: 0,
-                  });
-                } else if (this.state.side === "Sell") {
-                  this.setState({
-                    fiatCurrencyValue: 0,
-                  });
-                }
-              }
-            );
-            if (responseData.status === 200) {
-              self.openNotificationWithIcon(
-                "success",
-                this.t("validations:success_text.message"),
-                responseData.message
-              );
-            } else if (responseData.status === 201) {
-              self.openNotificationWithIcon(
-                "warning",
-                this.t("validations:warning_text.message"),
-                responseData.message
-              );
-            } else if (responseData.status === 500) {
-              self.openNotificationWithIcon(
-                "error",
-                this.t("validations:error_text.message"),
-                responseData.message
-              );
-            } else {
-              self.openNotificationWithIcon(
-                "error",
-                this.t("validations:error_text.message"),
-                responseData.err
-              );
-            }
-            this.setState({
+    this.marketAccess();
+    if (this.validator.allValid()) {
+      let params = {
+        symbol:
+          self.state.crypto.toUpperCase() +
+          "-" +
+          self.state.currency.toUpperCase(),
+        side: self.state.side,
+        order_type: "Market",
+        orderQuantity: self.state.amount,
+      };
+      self.setState({ Loader: true });
+      fetch(
+        SOCKET_HOST +
+          `/api/v1/tradding/orders/market-${self.state.side.toLowerCase()}-create/`,
+        {
+          method: "post",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "Accept-Language": localStorage["i18nextLng"],
+            Authorization: "Bearer " + self.props.isLoggedIn,
+          },
+          body: JSON.stringify(params),
+        }
+      )
+        .then((response) => response.json())
+        .then((responseData) => {
+          this.setState(
+            {
               Loader: false,
-            });
-          })
-          .catch((error) => {
+              total: 0,
+              amount: "",
+              buyPayAmt: 0,
+              sellPayAmt: 0,
+              buyEstPrice: 0,
+              sellEstPrice: 0,
+            },
+            () => {
+              if (this.state.side === "Buy") {
+                this.setState({
+                  fiatCurrencyValue: 0,
+                });
+              } else if (this.state.side === "Sell") {
+                this.setState({
+                  fiatCurrencyValue: 0,
+                });
+              }
+            }
+          );
+          if (responseData.status === 200) {
+            self.openNotificationWithIcon(
+              "success",
+              this.t("validations:success_text.message"),
+              responseData.message
+            );
+          } else if (responseData.status === 201) {
+            self.openNotificationWithIcon(
+              "warning",
+              this.t("validations:warning_text.message"),
+              responseData.message
+            );
+          } else if (responseData.status === 500) {
             self.openNotificationWithIcon(
               "error",
-              self.t("validations:error_text.message"),
-              self.t("tier_changes:something_went_wrong_text.message")
+              this.t("validations:error_text.message"),
+              responseData.message
             );
-            self.setState(
-              {
-                Loader: false,
-                total: 0,
-                amount: "",
-                buyPayAmt: 0,
-                sellPayAmt: 0,
-                buyEstPrice: 0,
-                sellEstPrice: 0,
-              },
-              () => {
-                if (self.state.side === "Buy") {
-                  self.setState({
-                    fiatCurrencyValue: 0,
-                  });
-                } else if (self.state.side === "Sell") {
-                  self.setState({
-                    fiatCurrencyValue: 0,
-                  });
-                }
-              }
+          } else {
+            self.openNotificationWithIcon(
+              "error",
+              this.t("validations:error_text.message"),
+              responseData.err
             );
+          }
+          this.setState({
+            Loader: false,
           });
-      } else {
-        this.validator.showMessages();
-        this.forceUpdate();
-      }
+        })
+        .catch((error) => {
+          self.openNotificationWithIcon(
+            "error",
+            self.t("validations:error_text.message"),
+            self.t("tier_changes:something_went_wrong_text.message")
+          );
+          self.setState(
+            {
+              Loader: false,
+              total: 0,
+              amount: "",
+              buyPayAmt: 0,
+              sellPayAmt: 0,
+              buyEstPrice: 0,
+              sellEstPrice: 0,
+            },
+            () => {
+              if (self.state.side === "Buy") {
+                self.setState({
+                  fiatCurrencyValue: 0,
+                });
+              } else if (self.state.side === "Sell") {
+                self.setState({
+                  fiatCurrencyValue: 0,
+                });
+              }
+            }
+          );
+        });
+    } else {
+      this.validator.showMessages();
+      this.forceUpdate();
     }
   }
 
@@ -1131,6 +1154,18 @@ class Market extends Component {
         <CountryAccess
           comingCancel={(e) => this.comingCancel(e)}
           visible={this.state.countryAccess}
+        />
+        <CompleteKYC
+          comingCancel={(e) => this.comingCancel(e)}
+          visible={this.state.completeKYC}
+        />
+        <PanicEnabled
+          comingCancel={(e) => this.comingCancel(e)}
+          visible={this.state.panicEnabled}
+        />
+        <CompleteProfile
+          comingCancel={(e) => this.comingCancel(e)}
+          visible={this.state.completeProfile}
         />
         {this.state.Loader === true ? (
           <SpinSingle className="Single_spin">

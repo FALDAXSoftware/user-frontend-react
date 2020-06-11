@@ -390,12 +390,9 @@ class Trade extends Component {
       loader: false,
       butonEnable: false,
       symbolHighLevelInfo: "",
-      latestFillPrice: "",
-      sellTotal: "",
-      buyTotal: "",
       pricePrecision: "0",
       quantityPrecision: "0",
-      walletIsAllowed: "",
+      panic_status: false,
     };
     io = this.props.io;
     this.t = this.props.t;
@@ -411,6 +408,7 @@ class Trade extends Component {
     this.exitFullScreen = this.exitFullScreen.bind(this);
     this.callback = this.callback.bind(this);
     this.resetLayout = this.resetLayout.bind(this);
+    this.panicStatus = this.panicStatus.bind(this);
     // this.handleLayoutResize = this.handleLayoutResize.bind(this);
   }
 
@@ -466,14 +464,6 @@ class Trade extends Component {
     if (!this.props.profileDetails) {
       this.props.getProfileDataAction(this.props.isLoggedIn);
     }
-    let result = await APIUtility.getUserTradeStatusWallet(
-      this.props.isLoggedIn
-    );
-    if (result) {
-      this.setState({
-        walletIsAllowed: result.data.is_allowed,
-      });
-    }
     var self = this;
     // io.sails.headers = {
     //   Accept: "application/json",
@@ -516,36 +506,36 @@ class Trade extends Component {
       this.props.io.on("user-wallet-balance", (data) => {
         this.setState({ userBal: data, userBalLoader: false });
       });
-      this.props.io.on("trade-history-data", (data) => {
-        if (data[0] && data[0].fill_price) {
-          this.setState({
-            latestFillPrice: data[0].fill_price,
-          });
-        } else {
-          this.setState({
-            latestFillPrice: 0,
-          });
-        }
-      });
-      this.props.io.on("sell-book-data", (data) => {
-        if (data && data.total) {
-          this.setState({
-            sellTotal: data.total,
-          });
-        }
-      });
-      this.props.io.on("buy-book-data", (data) => {
-        if (data && data.total_quantity) {
-          this.setState({
-            buyTotal: data.total_quantity,
-          });
-        } else {
-          this.setState({
-            buyTotal: 0,
-          });
-        }
-      });
     }
+  }
+  panicStatus() {
+    this.setState({
+      loader: true,
+    });
+    fetch(API_URL + `/check-panic-status`, {
+      method: "get",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Accept-Language": localStorage["i18nextLng"],
+        Authorization: "Bearer " + this.props.isLoggedIn,
+      },
+    })
+      .then((response) => response.json())
+      .then((responseData) => {
+        if (responseData.status === 200) {
+          this.setState({
+            panic_status: JSON.parse(responseData.data),
+            loader: false,
+          });
+        } else {
+          this.setState({
+            panic_status: false,
+            loader: false,
+          });
+        }
+      })
+      .catch((error) => {});
   }
   getInstrumentData = () => {
     fetch(SOCKET_HOST + `/api/v1/tradding/get-instrument-data`, {
@@ -879,9 +869,11 @@ class Trade extends Component {
       currency: this.state.InsCurrency,
       prevRoom: {
         crypto: this.state.crypto,
-        currency: this.state.InsCurrency,
+        // currency: this.state.InsCurrency,
+        currency: this.state.currency,
       },
     };
+    // console.log("prev room", this.state.crypto, this.state.currency);
     this.props.cryptoCurrency(cryptoPair);
   }
 
@@ -2001,14 +1993,12 @@ class Trade extends Component {
                       >
                         <TabPane tab={this.t("market_head.message")} key="1">
                           <Market
+                            panic_status={this.state.panic_status}
                             MLS={this.state.MLS}
                             userBal={this.state.userBal}
                             crypto={this.state.crypto}
                             currency={this.state.currency}
                             io={this.props.io}
-                            // sellTotal={this.state.sellTotal}
-                            // buyTotal={this.state.buyTotal}
-                            walletIsAllowed={this.state.walletIsAllowed}
                             cryptoCode={
                               this.state.symbolHighLevelInfo.crypto_coin_code
                                 ? this.state.symbolHighLevelInfo
@@ -2038,14 +2028,12 @@ class Trade extends Component {
                         </TabPane>
                         <TabPane tab={this.t("limit_head.message")} key="2">
                           <Limit
+                            panic_status={this.state.panic_status}
                             MLS={this.state.MLS}
                             userBal={this.state.userBal}
                             crypto={this.state.crypto}
                             currency={this.state.currency}
                             io={this.props.io}
-                            walletIsAllowed={this.state.walletIsAllowed}
-                            // sellTotal={this.state.sellTotal}
-                            // buyTotal={this.state.buyTotal}
                             cryptoCode={
                               this.state.symbolHighLevelInfo.crypto_coin_code
                                 ? this.state.symbolHighLevelInfo
@@ -2078,15 +2066,12 @@ class Trade extends Component {
                           key="3"
                         >
                           <StopLimit
-                            walletIsAllowed={this.state.walletIsAllowed}
+                            panic_status={this.state.panic_status}
                             MLS={this.state.MLS}
                             userBal={this.state.userBal}
                             crypto={this.state.crypto}
                             currency={this.state.currency}
                             io={this.props.io}
-                            latestFillPrice={this.state.latestFillPrice}
-                            // sellTotal={this.state.sellTotal}
-                            // buyTotal={this.state.buyTotal}
                             cryptoCode={
                               this.state.symbolHighLevelInfo.crypto_coin_code
                                 ? this.state.symbolHighLevelInfo

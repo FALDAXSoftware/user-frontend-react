@@ -912,7 +912,7 @@ class Login_Form extends Component {
         this.props.history.push(this.props.location.state.from.pathname);
       } else {
         if (this.props.isKYCDone == 2) {
-          this.props.history.push("/conversion");
+          this.props.history.push("/trade");
         } else {
           this.props.history.push("/editProfile");
         }
