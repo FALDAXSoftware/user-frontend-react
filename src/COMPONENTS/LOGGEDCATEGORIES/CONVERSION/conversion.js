@@ -34,6 +34,7 @@ import {
 } from "../../../STYLED-COMPONENTS/CONVERSION/style";
 import { APIUtility } from "../../../httpHelper";
 import { getProfileDataAction } from "../../../ACTIONS/SETTINGS/settingActions";
+import CompleteProfile from "../../../SHARED-COMPONENTS/completeProfile";
 
 const API_URL = globalVariables.API_URL;
 
@@ -49,6 +50,7 @@ class Conversion extends React.Component {
       panic_status: false,
       is_kyc_done: "",
       is_allowed: "",
+      completeProfile: false,
       // showConversion: false
     };
     this.t = this.props.t;
@@ -116,11 +118,19 @@ class Conversion extends React.Component {
       countryAccess: false,
       completeKYC: false,
       panicEnabled: false,
+      completeProfile: false,
     });
   };
   cryptoAccess() {
     if (this.state.panic_status === true) {
       this.setState({ panicEnabled: true });
+    } else if (
+      !this.props.profileDetails.is_user_updated &&
+      this.props.profileDetails.is_kyc_done != "2"
+    ) {
+      this.setState({
+        completeProfile: true,
+      });
     } else {
       if (this.state.is_allowed === true && this.state.is_kyc_done === 2) {
         if (this.props.location.pathname !== "/crypto-conversion")
@@ -140,8 +150,20 @@ class Conversion extends React.Component {
     }
   }
   simplexAccess() {
+    console.log(
+      "here",
+      this.props.profileDetails.is_user_updated,
+      this.props.profileDetails.is_kyc_done
+    );
     if (this.state.panic_status === true) {
       this.setState({ panicEnabled: true });
+    } else if (
+      !this.props.profileDetails.is_user_updated &&
+      this.props.profileDetails.is_kyc_done != "2"
+    ) {
+      this.setState({
+        completeProfile: true,
+      });
     } else {
       if (this.state.is_allowed === true && this.state.is_kyc_done === 2) {
         if (this.props.location.pathname !== "/simplex")
@@ -393,6 +415,10 @@ class Conversion extends React.Component {
           <PanicEnabled
             comingCancel={(e) => this.comingCancel(e)}
             visible={this.state.panicEnabled}
+          />
+          <CompleteProfile
+            comingCancel={(e) => this.comingCancel(e)}
+            visible={this.state.completeProfile}
           />
           {this.state.loader === true ? <FaldaxLoader /> : ""}
         </ContactWrap>

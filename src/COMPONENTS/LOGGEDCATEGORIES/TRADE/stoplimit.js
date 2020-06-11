@@ -43,13 +43,15 @@ import {
 } from "../../../STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
 import { precise } from "../../../precision";
 import CountryAccess from "../../../SHARED-COMPONENTS/CountryAccess";
+import CompleteKYC from "../../../SHARED-COMPONENTS/CompleteKYC";
+import PanicEnabled from "../../../SHARED-COMPONENTS/PanicEnabled";
+import CompleteProfile from "../../../SHARED-COMPONENTS/completeProfile";
 
 // let { API_URL } = globalVariables;
 let { SOCKET_HOST } = globalVariables;
 class StopLimit extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       side: "Buy",
       crypto: this.props.crypto ? this.props.crypto : "XRP",
@@ -79,12 +81,15 @@ class StopLimit extends Component {
       bestAsk: 0,
       bestBid: 0,
       maxValue: 0,
-      illegalbtn: false,
+      completeKYC: false,
       countryAccess: false,
+      completeProfile: false,
+      panic_status: this.props.panic_status,
     };
     this.t = this.props.t;
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.marketAccess = this.marketAccess.bind(this);
     this.clearValidation = this.clearValidation.bind(this);
     this.validator = new SimpleReactValidator({
       gtzero: {
@@ -136,7 +141,39 @@ class StopLimit extends Component {
   }
 
   /*Life Cycle Methods  */
-
+  marketAccess() {
+    if (this.state.panic_status === true) {
+      this.setState({ panicEnabled: true });
+    } else if (
+      !this.props.profileDetails.is_user_updated &&
+      this.props.profileDetails.is_kyc_done != "2"
+    ) {
+      this.setState({
+        completeProfile: true,
+      });
+    } else {
+      if (
+        this.props.profileDetails.is_allowed === true &&
+        this.props.profileDetails.is_kyc_done === 2
+      ) {
+        this.setState({ completeKYC: false, countryAccess: false });
+      } else {
+        if (
+          this.props.profileDetails.is_allowed === false &&
+          this.props.profileDetails.is_kyc_done !== 2
+        ) {
+          this.setState({ completeKYC: true });
+        } else if (
+          this.props.profileDetails.is_allowed === true &&
+          this.props.profileDetails.is_kyc_done !== 2
+        ) {
+          this.setState({ completeKYC: true });
+        } else {
+          this.setState({ countryAccess: true });
+        }
+      }
+    }
+  }
   componentDidMount() {
     if (!this.props.walletIsAllowed) {
       this.setState({
@@ -387,6 +424,11 @@ class StopLimit extends Component {
         illegalbtn: false,
       });
     }
+    if (props.panic_status && props.panic_status != this.props.panic_status) {
+      this.setState({
+        panic_status: props.panic_status,
+      });
+    }
     if (props.userBal && props.userBal != this.props.userBal) {
       this.setState({
         userBalFees: props.userBal.fees,
@@ -482,6 +524,9 @@ class StopLimit extends Component {
   comingCancel = (e) => {
     this.setState({
       countryAccess: false,
+      completeKYC: false,
+      panicEnabled: false,
+      completeProfile: false,
     });
   };
   onChange(e) {
@@ -720,140 +765,135 @@ class StopLimit extends Component {
 
   onSubmit() {
     var self = this;
-    if (this.state.illegalbtn) {
-      this.setState({
-        countryAccess: true,
-      });
-    } else {
-      if (this.validator.allValid()) {
-        let params = {
-          symbol:
-            self.state.crypto.toUpperCase() +
-            "-" +
-            self.state.currency.toUpperCase(),
-          side: self.state.side,
-          order_type: "StopLimit",
-          orderQuantity: self.state.amount,
-          limit_price: self.state.limit_price,
-          stop_price: self.state.stop_price,
-        };
-        this.setState({ loader: true });
-        fetch(
-          SOCKET_HOST +
-            `/api/v1/tradding/orders/pending-${self.state.side.toLowerCase()}-order-create`,
-          {
-            method: "post",
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-              "Accept-Language": localStorage["i18nextLng"],
-              Authorization: "Bearer " + self.props.isLoggedIn,
-            },
-            body: JSON.stringify(params),
-          }
-        )
-          .then((response) => response.json())
-          .then((responseData) => {
-            if (responseData.status === 200) {
-              this.setState(
-                {
-                  stop_price: "",
-                  limit_price: "",
-                  total: 0,
-                  amount: "",
-                  loader: false,
-                  buyPayAmt: 0,
-                  sellPayAmt: 0,
-                  buyEstPrice: 0,
-                  sellEstPrice: 0,
-                },
-                () => {
-                  if (this.state.side === "Buy") {
-                    this.setState({
-                      fiatCurrencyValue: 0,
-                    });
-                  } else if (this.state.side === "Sell") {
-                    this.setState({
-                      fiatCurrencyValue: 0,
-                    });
-                  }
+    this.marketAccess();
+    if (this.validator.allValid()) {
+      let params = {
+        symbol:
+          self.state.crypto.toUpperCase() +
+          "-" +
+          self.state.currency.toUpperCase(),
+        side: self.state.side,
+        order_type: "StopLimit",
+        orderQuantity: self.state.amount,
+        limit_price: self.state.limit_price,
+        stop_price: self.state.stop_price,
+      };
+      this.setState({ loader: true });
+      fetch(
+        SOCKET_HOST +
+          `/api/v1/tradding/orders/pending-${self.state.side.toLowerCase()}-order-create`,
+        {
+          method: "post",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "Accept-Language": localStorage["i18nextLng"],
+            Authorization: "Bearer " + self.props.isLoggedIn,
+          },
+          body: JSON.stringify(params),
+        }
+      )
+        .then((response) => response.json())
+        .then((responseData) => {
+          if (responseData.status === 200) {
+            this.setState(
+              {
+                stop_price: "",
+                limit_price: "",
+                total: 0,
+                amount: "",
+                loader: false,
+                buyPayAmt: 0,
+                sellPayAmt: 0,
+                buyEstPrice: 0,
+                sellEstPrice: 0,
+              },
+              () => {
+                if (this.state.side === "Buy") {
+                  this.setState({
+                    fiatCurrencyValue: 0,
+                  });
+                } else if (this.state.side === "Sell") {
+                  this.setState({
+                    fiatCurrencyValue: 0,
+                  });
                 }
-              );
-              self.openNotificationWithIcon(
-                "success",
-                this.t("validations:success_text.message"),
-                responseData.message
-              );
-            } else if (responseData.status === 201) {
-              this.setState(
-                {
-                  stop_price: "",
-                  limit_price: "",
-                  total: 0,
-                  amount: "",
-                  loader: false,
-                  buyPayAmt: 0,
-                  sellPayAmt: 0,
-                  buyEstPrice: 0,
-                  sellEstPrice: 0,
-                },
-                () => {
-                  if (this.state.side === "Buy") {
-                    this.setState({
-                      fiatCurrencyValue: 0,
-                    });
-                  } else if (this.state.side === "Sell") {
-                    this.setState({
-                      fiatCurrencyValue: 0,
-                    });
-                  }
+              }
+            );
+            self.openNotificationWithIcon(
+              "success",
+              this.t("validations:success_text.message"),
+              responseData.message
+            );
+          } else if (responseData.status === 201) {
+            this.setState(
+              {
+                stop_price: "",
+                limit_price: "",
+                total: 0,
+                amount: "",
+                loader: false,
+                buyPayAmt: 0,
+                sellPayAmt: 0,
+                buyEstPrice: 0,
+                sellEstPrice: 0,
+              },
+              () => {
+                if (this.state.side === "Buy") {
+                  this.setState({
+                    fiatCurrencyValue: 0,
+                  });
+                } else if (this.state.side === "Sell") {
+                  this.setState({
+                    fiatCurrencyValue: 0,
+                  });
                 }
-              );
-              self.openNotificationWithIcon(
-                "warning",
-                this.t("validations:warning_text.message"),
-                responseData.message
-              );
-            } else if (responseData.status === 500) {
-              self.openNotificationWithIcon(
-                "error",
-                this.t("validations:error_text.message"),
-                responseData.message
-              );
-            } else {
-              this.setState({ loader: false });
-              self.openNotificationWithIcon(
-                "error",
-                this.t("validations:error_text.message"),
-                responseData.err
-              );
-            }
-            this.setState({
-              loader: false,
-            });
-          })
-          .catch((error) => {
+              }
+            );
+            self.openNotificationWithIcon(
+              "warning",
+              this.t("validations:warning_text.message"),
+              responseData.message
+            );
+          } else if (responseData.status === 500) {
             self.openNotificationWithIcon(
               "error",
-              self.t("validations:error_text.message"),
-              self.t("tier_changes:something_went_wrong_text.message")
+              this.t("validations:error_text.message"),
+              responseData.message
             );
-            this.setState({
-              stop_price: "",
-              limit_price: "",
-              total: 0,
-              amount: "",
-              loader: false,
-              buyPayAmt: 0,
-              sellPayAmt: 0,
-              buyEstPrice: 0,
-              sellEstPrice: 0,
-            });
+          } else {
+            this.setState({ loader: false });
+            self.openNotificationWithIcon(
+              "error",
+              this.t("validations:error_text.message"),
+              responseData.err
+            );
+          }
+          this.setState({
+            loader: false,
           });
-      } else {
-        this.validator.showMessages();
-        this.forceUpdate();
-      }
+        })
+        .catch((error) => {
+          self.openNotificationWithIcon(
+            "error",
+            self.t("validations:error_text.message"),
+            self.t("tier_changes:something_went_wrong_text.message")
+          );
+          this.setState({
+            stop_price: "",
+            limit_price: "",
+            total: 0,
+            amount: "",
+            loader: false,
+            buyPayAmt: 0,
+            sellPayAmt: 0,
+            buyEstPrice: 0,
+            sellEstPrice: 0,
+          });
+        });
+    } else {
+      this.validator.showMessages();
+      this.forceUpdate();
     }
   }
 
@@ -1466,6 +1506,18 @@ class StopLimit extends Component {
         <CountryAccess
           comingCancel={(e) => this.comingCancel(e)}
           visible={this.state.countryAccess}
+        />
+        <CompleteKYC
+          comingCancel={(e) => this.comingCancel(e)}
+          visible={this.state.completeKYC}
+        />
+        <PanicEnabled
+          comingCancel={(e) => this.comingCancel(e)}
+          visible={this.state.panicEnabled}
+        />
+        <CompleteProfile
+          comingCancel={(e) => this.comingCancel(e)}
+          visible={this.state.completeProfile}
         />
         {this.state.loader === true ? (
           <SpinSingle className="Single_spin">
