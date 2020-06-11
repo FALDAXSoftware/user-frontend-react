@@ -15,7 +15,7 @@ export const globalVariables = {
 
   // API_URL: "http://localhost:1440", //Mansi's
 
-  // API_URL: "http://e8789287.ngrok.io",
+  // API_URL: "http://f137efd4e530.ngrok.io",
 
   // API_URL: "http://00c912ac.ngrok.io",
 
@@ -32,7 +32,7 @@ export const globalVariables = {
   // API_URL: "https://mainnet-backend.faldax.com", //Pre-Production URL
 
   // API_URL: "http://991e8fb6.ngrok.io/api/v1/tradding/",
-  API_URL: "https://pre-prod-backend.faldax.com", //Pre-Production URL
+  // API_URL: "https://pre-prod-backend.faldax.com", //Pre-Production URL
 
   TRADE_URL: "https://preprod-trade.faldax.com",
 
@@ -97,3 +97,13 @@ export const globalVariables = {
   proof_of_active_business:
     "https://production-static-asset.s3.us-east-2.amazonaws.com/assets/pdf/FALDAX Proof of Active Business Address.pdf",
 };
+export const PAGE_SIZE_OPTIONS = [
+  "10",
+  "25",
+  "50",
+  "100",
+  "200",
+  "500",
+  "1000",
+];
+export const PAGESIZE = 50;

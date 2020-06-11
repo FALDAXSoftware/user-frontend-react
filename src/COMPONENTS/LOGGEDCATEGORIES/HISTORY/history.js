@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import "antd/dist/antd.css";
 import moment from "moment";
-import { Checkbox, Select, notification, Tabs } from "antd";
+import { Checkbox, Select, notification, Tabs, Pagination } from "antd";
 import { faExchangeAlt } from "@fortawesome/free-solid-svg-icons";
 import { CSVLink } from "react-csv";
 import { translate } from "react-i18next";
@@ -12,7 +12,7 @@ import { translate } from "react-i18next";
 /* components */
 import LoggedNavigation from "COMPONENTS/NAVIGATIONS/loggednavigation";
 import CommonFooter from "COMPONENTS/LANDING/FOOTERS/footer_home";
-import { globalVariables } from "Globals.js";
+import { globalVariables, PAGE_SIZE_OPTIONS, PAGESIZE } from "Globals.js";
 
 /* STYLED-COMPONENTS */
 import {
@@ -31,9 +31,11 @@ import {
   FontAwesomeIconS,
   Datediv,
   RangePickerS,
+  PagDiv,
 } from "STYLED-COMPONENTS/LOGGED_STYLE/historyStyle";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
 import { LogoutUser } from "../../../ACTIONS/authActions";
+import { APIUtility } from "../../../httpHelper";
 
 let { API_URL } = globalVariables;
 const { TabPane } = Tabs;
@@ -154,6 +156,8 @@ class History extends Component {
       csvFields: [],
       checkedGroupValue: ["SEND", "RECEIVE", "SELL", "BUY"],
       activeKey: "1",
+      page: 1,
+      limit: PAGESIZE,
       // csvHeadersTrade: [
       //   { label: "Date", key: "date" },
       //   { label: "Side", key: "side" },
@@ -193,6 +197,7 @@ class History extends Component {
         { label: "Stop Price", key: "stop_price" },
       ],
     };
+    this.exportCsvEle = React.createRef();
     this.historyResult = this.historyResult.bind(this);
     this.changeDate = this.changeDate.bind(this);
     this.onChangeCheck = this.onChangeCheck.bind(this);
@@ -205,21 +210,39 @@ class History extends Component {
   }
 
   /* Life-Cycle Methods */
-  componentDidMount() {
+  async componentDidMount() {
     if (
       this.props.profileData &&
       this.props.profileData.is_terms_agreed == false
     ) {
       this.props.history.push("/editProfile");
     }
-    console.log("test^^^", this.props.location);
+    console.log("^^^adngf", this.props.location);
     if (
-      this.props.location === undefined ||
-      this.props.location.flag === "" ||
-      this.props.location.flag === null
+      this.props.location.state === undefined ||
+      this.props.location.state.flag === "" ||
+      this.props.location.state.flag === null
     ) {
       this.props.history.push("/");
+    } else {
+      this.setState({
+        loader: true,
+      });
+      let result = await APIUtility.getUserTradeStatus(this.props.isLoggedIn);
+      if (result.status == 200) {
+        if (result.data.is_allowed !== true || result.data.is_kyc_done !== 2) {
+          this.props.history.push("/");
+        }
+      }
     }
+    // else {
+    //   let result = await APIUtility.getUserTradeStatus(this.props.isLoggedIn);
+    //   if (result.status == 200) {
+    //     if (result.data.is_allowed !== true || result.data.is_kyc_done !== 2) {
+    //       this.props.history.push("/");
+    //     }
+    //   }
+    // }
     if (this.props.location.tradeType === "1") {
       this.setState({ activeKey: "1" }, () => {
         this.historyResult();
@@ -300,6 +323,8 @@ class History extends Component {
         drop2Value: null,
         toDate: "",
         fromDate: "",
+        page: 1,
+        limit: PAGESIZE,
       },
       () => {
         this.loadCoinList();
@@ -308,7 +333,7 @@ class History extends Component {
     );
   }
 
-  historyResult() {
+  async historyResult(isExportToCsv = false) {
     let { drop1Value, drop2Value, toDate, fromDate, activeKey } = this.state;
     let key;
     if (activeKey === "1") {
@@ -320,9 +345,16 @@ class History extends Component {
     if (activeKey === "2") {
       key = "2";
     }
-    let url =
-      API_URL +
-      `/get-user-history?send=${this.state.send}&receive=${this.state.receive}&buy=${this.state.buy}&sell=${this.state.sell}&toDate=${this.state.toDate}&fromDate=${this.state.fromDate}&trade_type=${key}`;
+    let url;
+    if (isExportToCsv) {
+      url =
+        API_URL +
+        `/get-user-history?page=1&limit=100000&send=${this.state.send}&receive=${this.state.receive}&buy=${this.state.buy}&sell=${this.state.sell}&toDate=${this.state.toDate}&fromDate=${this.state.fromDate}&trade_type=${key}`;
+    } else {
+      url =
+        API_URL +
+        `/get-user-history?page=${this.state.page}&limit=${this.state.limit}&send=${this.state.send}&receive=${this.state.receive}&buy=${this.state.buy}&sell=${this.state.sell}&toDate=${this.state.toDate}&fromDate=${this.state.fromDate}&trade_type=${key}`;
+    }
     if (toDate && fromDate) {
       let url =
         API_URL +
@@ -349,175 +381,75 @@ class History extends Component {
         url + "&symbol=" + this.state.drop1Value + "-" + this.state.drop2Value;
     }
     this.setState({ loader: true });
-    fetch(url, {
-      method: "get",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + this.props.isLoggedIn,
-      },
-    })
-      .then((response) => response.json())
-      .then((responseData) => {
-        this.setState({ loader: false });
-        if (responseData.status === 200) {
-          if (key === "1") {
-            let csvJSTFields = [];
-            if (responseData.data && responseData.data.length > 0) {
-              for (var i = 0; i < responseData.data.length; i++) {
-                let temp = responseData.data[i];
-                let obj = {};
-                var symbol = temp.symbol;
-                var date = moment
-                  .utc(temp.created_at)
-                  .local()
-                  .format(`${this.props.profileData.date_format} HH:mm:ss`);
-                if (temp.side === "Sell") {
-                  var fill_price = precision(temp.buy_currency_amount);
-                } else {
-                  var fill_price = precision(temp.sell_currency_amount);
-                }
-                var fees_total = precision(
-                  parseFloat(temp.faldax_fees) + parseFloat(temp.network_fees)
-                );
-                var amount = precision(
-                  parseFloat(temp.execution_report.CumQty) -
-                    parseFloat(fees_total)
-                );
-                var status = temp.order_status.toUpperCase();
-                var order_id = temp.order_id;
-                obj["symbol"] = symbol;
-                obj["side"] = temp.side;
-                obj["date"] = date;
-                obj["order_id"] = order_id;
-                obj["order_status"] = status;
-                obj["filled_price"] = fill_price;
-                obj["amount"] = amount;
-                obj["fees"] = fees_total;
-                csvJSTFields.push(obj);
-              }
-              this.setState({
-                historyJSTData: responseData.data,
-                csvJSTFields,
-              });
-            } else if (responseData.data.length === 0) {
-              this.setState({
-                historyJSTData: responseData.data,
-                csvJSTFields,
-              });
+    let responseData = await (
+      await fetch(url, {
+        method: "get",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.props.isLoggedIn,
+        },
+      })
+    ).json();
+    // .then((response) => response.json())
+    // .then((responseData) =>
+    //  {
+    this.setState({ loader: false });
+    if (responseData.status === 200) {
+      if (key === "1") {
+        let csvJSTFields = [];
+        if (responseData.data && responseData.data.length > 0) {
+          for (var i = 0; i < responseData.data.length; i++) {
+            let temp = responseData.data[i];
+            let obj = {};
+            var symbol = temp.symbol;
+            var date = moment
+              .utc(temp.created_at)
+              .local()
+              .format(`${this.props.profileData.date_format} HH:mm:ss`);
+            if (temp.side === "Sell") {
+              var fill_price = precision(temp.buy_currency_amount);
             } else {
-              this.openNotificationWithIcon(
-                "error",
-                this.t("validations:error_text.message"),
-                responseData.err
-              );
+              var fill_price = precision(temp.sell_currency_amount);
             }
-          } else if (key === "2") {
-            let csvSimplexFields = [];
-            if (responseData.data && responseData.data.length > 0) {
-              for (var i = 0; i < responseData.data.length; i++) {
-                let temp = responseData.data[i];
-                let obj = {};
-                var symbol = temp.symbol;
-                var date = moment
-                  .utc(temp.created_at)
-                  .local()
-                  .format(`${this.props.profileData.date_format} HH:mm:ss`);
-                var side = temp.side;
-                var fill_price = precision(temp.fill_price);
-                var quantity = precision(temp.quantity);
-                var payment_id = temp.payment_id;
-                var quote_id = temp.quote_id;
-                var address = temp.address;
-
-                if (temp.simplex_payment_status === 1) {
-                  var simplex_payment_status = "Under Approval";
-                }
-                if (temp.simplex_payment_status === 2) {
-                  var simplex_payment_status = "Approved";
-                }
-                if (temp.simplex_payment_status === 3) {
-                  var simplex_payment_status = "Cancelled";
-                }
-                obj["symbol"] = symbol;
-                obj["date"] = date;
-                obj["filled_price"] = fill_price;
-                obj["quantity"] = quantity;
-                obj["payment_id"] = payment_id;
-                obj["quote_id"] = quote_id;
-                obj["address"] = address;
-                obj["simplex_payment_status"] = simplex_payment_status;
-                csvSimplexFields.push(obj);
-              }
-              this.setState({
-                historySimplexData: responseData.data,
-                csvSimplexFields,
-              });
-            } else if (responseData.data.length === 0) {
-              this.setState({
-                historySimplexData: responseData.data,
-                csvSimplexFields,
-              });
-            } else {
-              this.openNotificationWithIcon(
-                "error",
-                this.t("validations:error_text.message"),
-                responseData.err
-              );
-            }
-          } else if (key === "3") {
-            let csvTradeFields = [];
-            if (responseData.data && responseData.data.length > 0) {
-              for (var i = 0; i < responseData.data.length; i++) {
-                // console.log("^^^^ inside", responseData.data[i]);
-                let temp = responseData.data[i];
-                let obj = {};
-                var date = moment
-                  .utc(temp.created_at)
-                  .local()
-                  .format(`${this.props.profileData.date_format} HH:mm:ss`);
-                var limit_price =
-                  temp.order_type != "Market" ? temp.limit_price : 0.0;
-                var stop_price =
-                  temp.order_type == "SopLimit" ? temp.stop_price : 0.0;
-                obj["symbol"] = temp.symbol;
-                obj["date"] = date;
-                obj["filled_price"] = temp.fill_price;
-                obj["amount"] = temp.quantity;
-                obj["side"] = temp.side;
-                obj["order_type"] = temp.order_type;
-                obj["limit_price"] = limit_price;
-                obj["stop_price"] = stop_price;
-                csvTradeFields.push(obj);
-              }
-              // console.log(responseData.data);
-              this.setState({
-                historyTradeData: responseData.data,
-                csvTradeFields,
-              });
-            } else if (responseData.data.length === 0) {
-              this.setState({
-                historyTradeData: responseData.data,
-                csvTradeFields,
-              });
-            } else {
-              this.openNotificationWithIcon(
-                "error",
-                this.t("validations:error_text.message"),
-                responseData.err
-              );
-            }
+            var fees_total = precision(
+              parseFloat(temp.faldax_fees) + parseFloat(temp.network_fees)
+            );
+            var amount = precision(
+              parseFloat(temp.execution_report.CumQty) - parseFloat(fees_total)
+            );
+            var status = temp.order_status.toUpperCase();
+            var order_id = temp.order_id;
+            obj["symbol"] = symbol;
+            obj["side"] = temp.side;
+            obj["date"] = date;
+            obj["order_id"] = order_id;
+            obj["order_status"] = status;
+            obj["filled_price"] = fill_price;
+            obj["amount"] = amount;
+            obj["fees"] = fees_total;
+            csvJSTFields.push(obj);
           }
-        } else if (responseData.status === 403) {
-          this.openNotificationWithIcon(
-            "error",
-            this.t("validations:error_text.message"),
-            responseData.err
-          );
-          let tempValue2 = {};
-          tempValue2["user_id"] = this.props.profileData.id;
-          tempValue2["jwt_token"] = this.props.isLoggedIn;
-          this.props.LogoutUser(this.props.isLoggedIn, tempValue2);
+          if (isExportToCsv) {
+            this.setState(
+              {
+                csvJSTFields,
+              },
+              () => {
+                this.exportCsvEle.current.link.click();
+              }
+            );
+          } else {
+            this.setState({
+              historyJSTData: responseData.data,
+              csvJSTFields,
+            });
+          }
+        } else if (responseData.data.length === 0) {
+          this.setState({
+            historyJSTData: responseData.data,
+            csvJSTFields,
+          });
         } else {
           this.openNotificationWithIcon(
             "error",
@@ -525,9 +457,148 @@ class History extends Component {
             responseData.err
           );
         }
-        this.setState({ loader: false });
-      })
-      .catch((error) => {});
+      } else if (key === "2") {
+        let csvSimplexFields = [];
+        if (responseData.data && responseData.data.length > 0) {
+          for (var i = 0; i < responseData.data.length; i++) {
+            let temp = responseData.data[i];
+            let obj = {};
+            var symbol = temp.symbol;
+            var date = moment
+              .utc(temp.created_at)
+              .local()
+              .format(`${this.props.profileData.date_format} HH:mm:ss`);
+            var side = temp.side;
+            var fill_price = precision(temp.fill_price);
+            var quantity = precision(temp.quantity);
+            var payment_id = temp.payment_id;
+            var quote_id = temp.quote_id;
+            var address = temp.address;
+
+            if (temp.simplex_payment_status === 1) {
+              var simplex_payment_status = "Under Approval";
+            }
+            if (temp.simplex_payment_status === 2) {
+              var simplex_payment_status = "Approved";
+            }
+            if (temp.simplex_payment_status === 3) {
+              var simplex_payment_status = "Cancelled";
+            }
+            obj["symbol"] = symbol;
+            obj["date"] = date;
+            obj["filled_price"] = fill_price;
+            obj["quantity"] = quantity;
+            obj["payment_id"] = payment_id;
+            obj["quote_id"] = quote_id;
+            obj["address"] = address;
+            obj["simplex_payment_status"] = simplex_payment_status;
+            csvSimplexFields.push(obj);
+          }
+          if (isExportToCsv) {
+            this.setState(
+              {
+                csvSimplexFields,
+              },
+              () => {
+                this.exportCsvEle.current.link.click();
+              }
+            );
+          } else {
+            this.setState({
+              historySimplexData: responseData.data,
+              csvSimplexFields,
+            });
+          }
+        } else if (responseData.data.length === 0) {
+          this.setState({
+            historySimplexData: responseData.data,
+            csvSimplexFields,
+          });
+        } else {
+          this.openNotificationWithIcon(
+            "error",
+            this.t("validations:error_text.message"),
+            responseData.err
+          );
+        }
+      } else if (key === "3") {
+        let csvTradeFields = [];
+        if (responseData.data && responseData.data.length > 0) {
+          for (var i = 0; i < responseData.data.length; i++) {
+            // console.log("^^^^ inside", responseData.data[i]);
+            let temp = responseData.data[i];
+            let obj = {};
+            var date = moment
+              .utc(temp.created_at)
+              .local()
+              .format(`${this.props.profileData.date_format} HH:mm:ss`);
+            var limit_price =
+              temp.order_type != "Market" ? temp.limit_price : 0.0;
+            var stop_price =
+              temp.order_type == "SopLimit" ? temp.stop_price : 0.0;
+            obj["symbol"] = temp.symbol;
+            obj["date"] = date;
+            obj["filled_price"] = temp.fill_price;
+            obj["amount"] = temp.quantity;
+            obj["side"] = temp.side;
+            obj["order_type"] = temp.order_type;
+            obj["limit_price"] = limit_price;
+            obj["stop_price"] = stop_price;
+            csvTradeFields.push(obj);
+          }
+          // console.log(responseData.data);
+          if (isExportToCsv) {
+            this.setState(
+              {
+                csvTradeFields,
+              },
+              () => {
+                this.exportCsvEle.current.link.click();
+              }
+            );
+          } else {
+            this.setState({
+              historyTradeData: responseData.data,
+              csvTradeFields,
+            });
+          }
+        } else if (responseData.data.length === 0) {
+          this.setState({
+            historyTradeData: responseData.data,
+            csvTradeFields,
+          });
+        } else {
+          this.openNotificationWithIcon(
+            "error",
+            this.t("validations:error_text.message"),
+            responseData.err
+          );
+        }
+      }
+      this.setState({
+        tradeCount: responseData.tradeCount,
+      });
+    } else if (responseData.status === 403) {
+      this.openNotificationWithIcon(
+        "error",
+        this.t("validations:error_text.message"),
+        responseData.err
+      );
+      let tempValue2 = {};
+      tempValue2["user_id"] = this.props.profileData.id;
+      tempValue2["jwt_token"] = this.props.isLoggedIn;
+      this.props.LogoutUser(this.props.isLoggedIn, tempValue2);
+    } else {
+      this.openNotificationWithIcon(
+        "error",
+        this.t("validations:error_text.message"),
+        responseData.err
+      );
+    }
+    this.setState({ loader: false });
+    return true;
+    // })
+    // .catch((error) => {});
   }
 
   range(start, end) {
@@ -696,7 +767,19 @@ class History extends Component {
       }
     );
   }
-
+  handlePagination = (page) => {
+    this.setState({ page }, () => {
+      this.historyResult();
+    });
+  };
+  changePaginationSize = (current, pageSize) => {
+    this.setState({ page: current, limit: pageSize }, () => {
+      this.historyResult();
+    });
+  };
+  onExportCSV = async () => {
+    await this.historyResult(true);
+  };
   render() {
     var self = this;
     const { t } = this.props;
@@ -704,7 +787,8 @@ class History extends Component {
       { label: t("buy_text.message"), value: "BUY" },
       { label: t("sell_text.message"), value: "SELL" },
     ];
-    console.log(self.props.profileData.id);
+    let pageSizeOptions = PAGE_SIZE_OPTIONS;
+    const { tradeCount, page, limit } = this.state;
     return (
       <div>
         <ContactWrap>
@@ -898,15 +982,17 @@ class History extends Component {
                       {this.state.csvTradeFields !== undefined ? (
                         this.state.csvTradeFields.length > 0 &&
                         this.state.csvTradeFields !== null ? (
-                          <EXPButton>
+                          <>
                             <CSVLink
+                              ref={this.exportCsvEle}
                               filename="tradereportfile.csv"
                               data={this.state.csvTradeFields}
                               headers={this.state.csvHeadersTrade}
-                            >
+                            ></CSVLink>
+                            <EXPButton onClick={this.onExportCSV}>
                               {t("export_btn.message")}
-                            </CSVLink>
-                          </EXPButton>
+                            </EXPButton>
+                          </>
                         ) : (
                           ""
                         )
@@ -926,15 +1012,26 @@ class History extends Component {
                       {this.state.csvSimplexFields !== undefined ? (
                         this.state.csvSimplexFields.length > 0 &&
                         this.state.csvSimplexFields !== null ? (
-                          <EXPButton>
+                          // <EXPButton>
+                          //   <CSVLink
+                          //     filename="simplexreportfile.csv"
+                          //     data={this.state.csvSimplexFields}
+                          //     headers={this.state.csvHeadersSimplex}
+                          //   >
+                          //     {t("export_btn.message")}
+                          //   </CSVLink>
+                          // </EXPButton>
+                          <>
                             <CSVLink
+                              ref={this.exportCsvEle}
                               filename="simplexreportfile.csv"
                               data={this.state.csvSimplexFields}
                               headers={this.state.csvHeadersSimplex}
-                            >
+                            ></CSVLink>
+                            <EXPButton onClick={this.onExportCSV}>
                               {t("export_btn.message")}
-                            </CSVLink>
-                          </EXPButton>
+                            </EXPButton>
+                          </>
                         ) : (
                           ""
                         )
@@ -1175,6 +1272,22 @@ class History extends Component {
                         )}
                       </HisTable>
                     </Tablediv>
+                    <PagDiv>
+                      {tradeCount > 0 ? (
+                        <Pagination
+                          className="ant-users-pagination"
+                          onChange={this.handlePagination.bind(this)}
+                          pageSize={limit}
+                          current={page}
+                          total={tradeCount}
+                          showSizeChanger
+                          onShowSizeChange={this.changePaginationSize}
+                          pageSizeOptions={pageSizeOptions}
+                        />
+                      ) : (
+                        ""
+                      )}
+                    </PagDiv>
                   </TabPane>
                   <TabPane
                     tab={this.t(
@@ -1287,6 +1400,22 @@ class History extends Component {
                         )}
                       </HisTable>
                     </Tablediv>
+                    <PagDiv>
+                      {tradeCount > 0 ? (
+                        <Pagination
+                          className="ant-users-pagination"
+                          onChange={this.handlePagination.bind(this)}
+                          pageSize={limit}
+                          current={page}
+                          total={tradeCount}
+                          showSizeChanger
+                          onShowSizeChange={this.changePaginationSize}
+                          pageSizeOptions={pageSizeOptions}
+                        />
+                      ) : (
+                        ""
+                      )}
+                    </PagDiv>
                   </TabPane>
                 </Tabs>
               </HisWrap>
