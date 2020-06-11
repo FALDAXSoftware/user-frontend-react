@@ -68,7 +68,8 @@ export const ActTable = styled(Table)`
             : "1px solid #eeeeee"};
         color:${(props) =>
           props.theme.mode === "dark" ? "#174c7e" : "#7f7f7f"} !important;
-          min-width:100px;
+          // min-width:100px;
+          padding:10px 5px !important;
     }
     & tbody>tr>td
     {
@@ -76,17 +77,18 @@ export const ActTable = styled(Table)`
         background-color:${(props) =>
           props.theme.mode === "dark" ? "#041b2c !important" : "white"};
         border-bottom:${(props) =>
-          props.theme.mode === "dark" ? "1px solid #334553" : ""}
+          props.theme.mode === "dark" ? "1px solid #334553" : ""};
+          padding: 10px 5px !important;
     }
     & .amount{
-    width: 120px;
+    // width: 120px;
     }
     & tr td.amount{
     font-weight: 600;
     color: ${(props) => (props.theme.mode === "dark" ? "white" : "black")};
     }
     & .progress-bar-container{
-    width: 170px;
+    // width: 170px;
      & .ant-progress-text {
        color:${(props) =>
          props.theme.mode === "dark"
@@ -171,6 +173,7 @@ export const PortTable = styled(Table)`
             : "1px solid #eeeeee"};
         color:${(props) =>
           props.theme.mode === "dark" ? "#174c7e" : "#7f7f7f"};
+          padding:10px 5px !important;
     }
     & tbody>tr>td
     {
@@ -178,21 +181,25 @@ export const PortTable = styled(Table)`
         background-color:${(props) =>
           props.theme.mode === "dark" ? "#041b2c !important" : "white"};
         border-bottom:${(props) =>
-          props.theme.mode === "dark" ? "1px solid #334553" : ""}
+          props.theme.mode === "dark" ? "1px solid #334553" : ""};
+          padding:10px 5px !important;
+    }
+    & tbody>tr>td.coin{
+      font-weight: bold;
     }
     & .coin{
-        width: 150px;
+        // width: 150px;
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
       }
     & .amount{
-    width: 130px;
+    // width: 130px;
     text-align: center;
     }
     & .value{
     text-align: center;
-    width: 130px;
+    // width: 130px;
     }
     & .change{
     text-align: center;

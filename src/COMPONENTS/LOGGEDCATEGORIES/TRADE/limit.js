@@ -637,7 +637,12 @@ class Limit extends Component {
   onSubmit() {
     var self = this;
     this.marketAccess();
-    if (this.validator.allValid()) {
+    if (
+      this.validator.allValid() &&
+      !this.state.completeKYC &&
+      !this.state.completeProfile &&
+      !this.state.completeProfile
+    ) {
       this.validator.hideMessages();
       let params = {
         symbol:
