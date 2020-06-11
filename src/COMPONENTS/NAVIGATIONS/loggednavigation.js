@@ -29,7 +29,6 @@ import {
   _WALLPAPER,
 } from "CONSTANTS/images";
 import FaldaxLoader from "../../SHARED-COMPONENTS/FaldaxLoader";
-import { APIUtility } from "../../httpHelper";
 const { Header } = Layout;
 const API_URL = globalVariables.API_URL;
 const SubMenu = Menu.SubMenu;
@@ -389,8 +388,8 @@ class LoggedNavigation extends Component {
     this.cryptoAccess = this.cryptoAccess.bind(this);
     this.simplexAccess = this.simplexAccess.bind(this);
     this.walletAccess = this.walletAccess.bind(this);
+    this.historyAccess = this.historyAccess.bind(this);
     this.tokenAccess = this.tokenAccess.bind(this);
-
     this.panicStatus = this.panicStatus.bind(this);
   }
 
@@ -401,16 +400,6 @@ class LoggedNavigation extends Component {
         if (props.theme === false)
           this.setState({ faldaxLogo: _FALDAXLOGO, faldax: _FALDAX });
         else this.setState({ faldax: _FALDAXWHITE, faldaxLogo: _WHITELOGO });
-      }
-    }
-    if (props.profileDetails) {
-      let result = await APIUtility.getUserTradeStatusWallet(
-        this.props.isLoggedIn
-      );
-      if (result) {
-        this.setState({
-          walletIsAllowed: result.data.is_allowed,
-        });
       }
     }
   }
@@ -449,14 +438,6 @@ class LoggedNavigation extends Component {
     //   this.tradeAccess();
     // }
     this.panicStatus();
-    let result = await APIUtility.getUserTradeStatusWallet(
-      this.props.isLoggedIn
-    );
-    if (result) {
-      this.setState({
-        walletIsAllowed: result.data.is_allowed,
-      });
-    }
   }
 
   /* 
@@ -600,10 +581,8 @@ class LoggedNavigation extends Component {
       .then((response) => response.json())
       .then((responseData) => {
         if (responseData.status === 200) {
-          // console.log("responsedata 200", responseData.data);
           this.setState({
             panic_status: JSON.parse(responseData.data),
-            // panic_status: true,
             loader: false,
           });
         } else {
@@ -643,39 +622,94 @@ class LoggedNavigation extends Component {
     }
   }
   walletAccess() {
-    // console.log(
-    //   "^^^^walletaccess",
-    //   this.state.walletIsAllowed,
-    //   this.props.profileDetails.is_allowed
-    // );
-    if (this.props.isLoggedIn) {
-      if (this.props.profileDetails.is_user_updated) {
-        if (this.state.panic_status === true) {
-          this.setState({ panicEnabled: true });
-        } else {
-          if (this.state.walletIsAllowed === true) {
-            if (this.props.location.pathname !== "/wallet")
-              this.props.history.push({
-                pathname: "/wallet",
-                state: {
-                  flag: true,
-                },
-              });
-          } else {
-            this.setState({ countryAccess: true });
-          }
-        }
-      } else {
-        this.setState({ completeProfile: true });
-      }
+    if (this.state.panic_status === true) {
+      this.setState({ panicEnabled: true });
+    } else if (
+      !this.props.profileDetails.is_user_updated &&
+      this.props.profileDetails.is_kyc_done != "2"
+    ) {
+      this.setState({
+        completeProfile: true,
+      });
     } else {
-      this.props.history.push("/login");
+      if (
+        this.props.profileDetails.is_allowed === true &&
+        this.props.profileDetails.is_kyc_done === 2
+      ) {
+        if (this.props.location.pathname !== "/wallet")
+          this.props.history.push({
+            pathname: "/wallet",
+            state: {
+              flag: true,
+            },
+          });
+      } else {
+        if (
+          this.props.profileDetails.is_allowed === false &&
+          this.props.profileDetails.is_kyc_done !== 2
+        ) {
+          this.setState({ completeKYC: true });
+        } else if (
+          this.props.profileDetails.is_allowed === true &&
+          this.props.profileDetails.is_kyc_done !== 2
+        ) {
+          this.setState({ completeKYC: true });
+        } else {
+          this.setState({ countryAccess: true });
+        }
+      }
     }
   }
-
+  historyAccess(key) {
+    if (this.state.panic_status === true) {
+      this.setState({ panicEnabled: true });
+    } else if (
+      !this.props.profileDetails.is_user_updated &&
+      this.props.profileDetails.is_kyc_done != "2"
+    ) {
+      this.setState({
+        completeProfile: true,
+      });
+    } else {
+      if (
+        this.props.profileDetails.is_allowed === true &&
+        this.props.profileDetails.is_kyc_done === 2
+      ) {
+        // if (this.props.location.pathname !== "/history")
+        this.props.history.push({
+          pathname: "/history",
+          tradeType: key,
+          state: {
+            flag: true,
+          },
+        });
+      } else {
+        if (
+          this.props.profileDetails.is_allowed === false &&
+          this.props.profileDetails.is_kyc_done !== 2
+        ) {
+          this.setState({ completeKYC: true });
+        } else if (
+          this.props.profileDetails.is_allowed === true &&
+          this.props.profileDetails.is_kyc_done !== 2
+        ) {
+          this.setState({ completeKYC: true });
+        } else {
+          this.setState({ countryAccess: true });
+        }
+      }
+    }
+  }
   simplexAccess() {
     if (this.state.panic_status === true) {
       this.setState({ panicEnabled: true });
+    } else if (
+      !this.props.profileDetails.is_user_updated &&
+      this.props.profileDetails.is_kyc_done != "2"
+    ) {
+      this.setState({
+        completeProfile: true,
+      });
     } else {
       if (
         this.props.profileDetails.is_allowed === true &&
@@ -847,15 +881,7 @@ class LoggedNavigation extends Component {
         <Menu.Item key="1">
           <a
             onClick={() => {
-              if (this.state.walletIsAllowed) {
-                this.props.history.push({
-                  pathname: "/history",
-                  tradeType: "1",
-                  flag: true,
-                });
-              } else {
-                this.setState({ countryAccess: true });
-              }
+              this.historyAccess("1");
             }}
           >
             {this.t("trade:trade_head.message")}
@@ -864,15 +890,7 @@ class LoggedNavigation extends Component {
         <Menu.Item key="2">
           <a
             onClick={() => {
-              if (this.state.walletIsAllowed) {
-                this.props.history.push({
-                  pathname: "/history",
-                  tradeType: "2",
-                  flag: true,
-                });
-              } else {
-                this.setState({ countryAccess: true });
-              }
+              this.historyAccess("2");
             }}
           >
             {t("navbar_sub_menu_conversation_credit_card.message")}
@@ -997,15 +1015,7 @@ class LoggedNavigation extends Component {
                 //   },
                 // }}
                 onclick={() => {
-                  if (this.state.walletIsAllowed) {
-                    this.props.history.push({
-                      pathname: "/history",
-                      tradeType: "1",
-                      flag: true,
-                    });
-                  } else {
-                    this.setState({ countryAccess: true });
-                  }
+                  this.historyAccess("1");
                 }}
               >
                 {t("navbar_menu_history.message")}
@@ -1176,15 +1186,7 @@ class LoggedNavigation extends Component {
                   <Menu.Item key="1">
                     <a
                       onClick={() => {
-                        if (this.state.walletIsAllowed) {
-                          this.props.history.push({
-                            pathname: "/history",
-                            tradeType: "1",
-                            flag: true,
-                          });
-                        } else {
-                          this.setState({ countryAccess: true });
-                        }
+                        this.historyAccess("1");
                       }}
                     >
                       {this.t("trade:trade_head.message")}
@@ -1193,15 +1195,7 @@ class LoggedNavigation extends Component {
                   <Menu.Item key="2">
                     <a
                       onClick={() => {
-                        if (this.state.walletIsAllowed) {
-                          this.props.history.push({
-                            pathname: "/history",
-                            tradeType: "1",
-                            flag: true,
-                          });
-                        } else {
-                          this.setState({ countryAccess: true });
-                        }
+                        this.historyAccess("2");
                       }}
                     >
                       {t("navbar_sub_menu_conversation_credit_card.message")}

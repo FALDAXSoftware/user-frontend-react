@@ -246,3 +246,6 @@ export const FontAwesomeIconS = styled(FontAwesomeIcon)`
     color: #1890ff;
   }
 `;
+export const PagDiv = styled.div`
+  margin: 30px 0 0 0;
+`;

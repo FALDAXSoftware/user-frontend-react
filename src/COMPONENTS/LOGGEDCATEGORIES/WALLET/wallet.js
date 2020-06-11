@@ -32,6 +32,7 @@ import {
 /* Actions */
 import { walletBal, getAllCoins } from "ACTIONS/LOGGEDCAT/walletActions";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
+import { APIUtility } from "../../../httpHelper";
 /* import TableofCoinLower from './tableofcoinlower'; */
 
 /* let { API_URL } = globalVariables; */
@@ -133,13 +134,20 @@ class Wallet extends Component {
       this.props.history.push("/");
     }
   }
-  componentDidMount() {
+  async componentDidMount() {
     if (
       this.props.location.state === undefined ||
       this.props.location.state.flag === "" ||
       this.props.location.state.flag === null
     ) {
       this.props.history.push("/");
+    } else {
+      let result = await APIUtility.getUserTradeStatus(this.props.isLoggedIn);
+      if (result.status == 200) {
+        if (result.data.is_allowed !== true || result.data.is_kyc_done !== 2) {
+          this.props.history.push("/");
+        }
+      }
     }
     // var total = 0;
     // var tableData = this.props.walletDetails.activated_asset_lists;
