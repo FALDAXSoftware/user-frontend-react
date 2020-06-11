@@ -125,7 +125,7 @@ class Market extends Component {
   }
   /* Life-Cycle Methods */
 
-  marketAccess() {
+  async marketAccess() {
     if (this.state.panic_status === true) {
       this.setState({ panicEnabled: true });
     } else if (
@@ -573,7 +573,12 @@ class Market extends Component {
   onSubmit() {
     var self = this;
     this.marketAccess();
-    if (this.validator.allValid()) {
+    if (
+      this.validator.allValid() &&
+      !this.state.completeKYC &&
+      !this.state.completeProfile &&
+      !this.state.completeProfile
+    ) {
       let params = {
         symbol:
           self.state.crypto.toUpperCase() +

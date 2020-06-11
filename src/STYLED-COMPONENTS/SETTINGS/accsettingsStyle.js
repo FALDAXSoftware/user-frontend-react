@@ -198,6 +198,13 @@ export const PaginationS = styled(Pagination)`
   & .ant-pagination-item-link .ant-pagination-item-ellipsis {
     color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   }
+  &
+    .ant-pagination-options-size-changer
+    .ant-select-selection.ant-select-selection--single {
+    background-color: ${(props) =>
+      props.theme.mode === "dark" ? "#041421" : ""};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
+  }
 `;
 
 /* Threshold Notification */
