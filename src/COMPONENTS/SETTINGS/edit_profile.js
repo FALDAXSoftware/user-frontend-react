@@ -67,7 +67,7 @@ class Editprofile extends Component {
       totalUSDOfWallet: "",
       walletCoins: "",
       countryAccess: false,
-      access: false
+      access: false,
     };
     this.callback = this.callback.bind(this);
     this.getWalletSummary = this.getWalletSummary.bind(this);
@@ -88,12 +88,12 @@ class Editprofile extends Component {
         if (this.props.profileDetails.legal_allowed) {
           this.setState({
             countryAccess: false,
-            access: true
+            access: true,
           });
         } else {
           this.setState({
             countryAccess: false,
-            access: false
+            access: false,
           });
         }
       }
@@ -118,7 +118,7 @@ class Editprofile extends Component {
     if (
       newProps.profileDetails.is_kyc_done &&
       this.props.profileDetails.is_kyc_done !==
-      newProps.profileDetails.is_kyc_done
+        newProps.profileDetails.is_kyc_done
     ) {
       if (
         !newProps.profileDetails.is_user_updated &&
@@ -136,7 +136,7 @@ class Editprofile extends Component {
     if (
       newProps.profileDetails.is_user_updated &&
       this.props.profileDetails.is_user_updated !==
-      newProps.profileDetails.is_user_updated
+        newProps.profileDetails.is_user_updated
     ) {
       if (
         !newProps.profileDetails.is_user_updated &&
@@ -182,7 +182,7 @@ class Editprofile extends Component {
           });
         }
       })
-      .catch((error) => { });
+      .catch((error) => {});
   }
   comingCancel = (e) => {
     this.setState(
@@ -220,13 +220,13 @@ class Editprofile extends Component {
                     visible={this.state.countryAccess}
                   />
                 ) : (
-                    <AccSettings
-                      {...this.props}
-                      user2fastatus={this.state.user2fastatus}
-                      walletCoins={this.state.walletCoins}
-                      totalUSDOfWallet={this.state.totalUSDOfWallet}
-                    />
-                  )}
+                  <AccSettings
+                    {...this.props}
+                    user2fastatus={this.state.user2fastatus}
+                    walletCoins={this.state.walletCoins}
+                    totalUSDOfWallet={this.state.totalUSDOfWallet}
+                  />
+                )}
                 {/* <AccSettings
                   {...this.props}
                   user2fastatus={this.state.user2fastatus}
@@ -242,10 +242,12 @@ class Editprofile extends Component {
                   />
                 ) : this.state.access ? (
                   <Tier />
-                ) : <CountryAccess
-                      comingCancel={(e) => this.comingCancel(e)}
-                      visible={!this.state.access}
-                    />}
+                ) : (
+                  <CountryAccess
+                    comingCancel={(e) => this.comingCancel(e)}
+                    visible={!this.state.access}
+                  />
+                )}
               </TabPane>
               <TabPane tab={t("head_referral.message")} key="5">
                 <Referral {...this.props} />

@@ -71,7 +71,7 @@ export const getProfileDataAction = (token) => (dispatch) => {
       if (responseData.status == 200) {
         // console.log("----------------------->", responseData);
         dispatch(addprofileData(responseData));
-        APIUtility.getUserTradeStatusWallet(token);
+        // APIUtility.getUserTradeStatusWallet(token);
       } else dispatch(profileError(responseData));
       if (responseData.status !== 403) dispatch(removeLoader());
     })

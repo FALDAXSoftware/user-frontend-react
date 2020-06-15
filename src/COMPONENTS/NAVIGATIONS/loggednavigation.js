@@ -123,6 +123,9 @@ const Headermain = styled(Header)`
       font-size: 20px;
     }
   }
+  & .color_important:hover {
+    color: #1890ff !important;
+  }
   & ul {
     > li.ant-menu-item-selected {
       // border: 1px solid #1890ff !important;
@@ -835,9 +838,6 @@ class LoggedNavigation extends Component {
           >
             {t("navbar_sub_menu_conversation_crypto_only.message")}
           </a>
-          {/* <a onClick={this.cryptoAccess}>
-            {t("navbar_sub_menu_conversation_crypto_only.message")}
-          </a> */}
         </Menu.Item>
         <Menu.Item key="1">
           <a onClick={this.simplexAccess}>
@@ -858,26 +858,9 @@ class LoggedNavigation extends Component {
         </Menu.Item>
       </Menu>
     );
+
     const DropdownHistoryItems = (
       <Menu className="fixed-drop">
-        {/* <Menu.Item key="0">
-          <a
-            onClick={() =>
-              this.props.history.push({ pathname: "/history", tradeType: "1" })
-            }
-          >
-            Trade History
-          </a>
-        </Menu.Item> */}
-        {/* <Menu.Item key="0">
-          <a
-            onClick={() =>
-              this.props.history.push({ pathname: "/history", tradeType: "1" })
-            }
-          >
-            {t("navbar_sub_menu_conversation_crypto_only.message")}
-          </a>
-        </Menu.Item> */}
         <Menu.Item key="1">
           <a
             onClick={() => {
@@ -896,54 +879,15 @@ class LoggedNavigation extends Component {
             {t("navbar_sub_menu_conversation_credit_card.message")}
           </a>
         </Menu.Item>
-
-        {/* <Menu.Item key="2">
-          <a
-            onClick={() =>
-              this.props.history.push({ pathname: "/history", tradeType: "3" })
-            }
-          >
-            Trade
-          </a>
-        </Menu.Item> */}
       </Menu>
     );
-    // const langItems = (
-    //   <Radio.Group onChange={this.onChange} value={this.state.langValue}>
-    //     <Radio style={radioStyle} value="en">
-    //       English
-    //     </Radio>
-    //     <Radio style={radioStyle} value="ja">
-    //       Japanese
-    //     </Radio>
-    //   </Radio.Group>
-    // );
+
     const langItems = (
-      <Menu
-        // onClick={e => {
-        //   alert("change");
-        //   console.log("this", e.key);
-        // }}
-        onClick={this.onChange}
-      >
-        <Menu.Item
-          key="en"
-          // onClick={() => {
-          //   this.setState({
-          //     langValue: "en"
-          //   });
-          // }}
-        >
+      <Menu onClick={this.onChange}>
+        <Menu.Item key="en">
           <a>{this.t("general_4:lang_eng_text.message")}</a>
         </Menu.Item>
-        <Menu.Item
-          key="ja"
-          // onClick={() => {
-          //   this.setState({
-          //     langValue: "ja"
-          //   });
-          // }}
-        >
+        <Menu.Item key="ja">
           <a>{this.t("general_4:lang_ja_text.message")}</a>
         </Menu.Item>
       </Menu>
@@ -973,7 +917,7 @@ class LoggedNavigation extends Component {
               {this.t("trade:market_head.message")}
             </NavLink>
           </Menuitem>
-          <Menuitem key="2" onClick={this.showComing}>
+          <Menuitem key="2">
             <NavLink className="" to="/dashboard">
               {this.t("trade:dashboard_head.message")}
             </NavLink>
@@ -994,9 +938,13 @@ class LoggedNavigation extends Component {
               </NavLink>
             </DropDownDiv>
           </Menuitem>
-          {/* <Menuitem key="2" onClick={this.tradeAccess}>TRADE</Menuitem> */}
           <Menuitem key="5">
-            <a className="color_important" onClick={this.walletAccess}>
+            <a
+              className="color_important"
+              onClick={() => {
+                this.walletAccess();
+              }}
+            >
               {t("navbar_menu_wallet.message")}
             </a>
           </Menuitem>
@@ -1008,13 +956,7 @@ class LoggedNavigation extends Component {
             >
               <a
                 className="ant-dropdown-link color_important"
-                // to={{
-                //   pathname: "/history",
-                //   state: {
-                //     tradeType: "1",
-                //   },
-                // }}
-                onclick={() => {
+                onClick={() => {
                   this.historyAccess("1");
                 }}
               >
@@ -1022,29 +964,6 @@ class LoggedNavigation extends Component {
               </a>
             </DropDownDiv>
           </Menuitem>
-          {/* <Menuitem key="7">
-            <DropDownDiv
-              // className="Drop-main"
-              className="lang-main"
-              overlay={langItems}
-              trigger={["click"]}
-              // overlayClassName="custom_dropdown_menu"
-            >
-              <div className="language_head">
-                {t("general_1:language_head.message")}
-              </div>
-            </DropDownDiv>
-            {/* <Open onClick={() => this.openNav()}>&#9776;</Open> */}
-          {/* </Menuitem>  */}
-          {/* <Menuitem key="3">
-            <NavLink className="Nav_selected" to="/history">
-              HISTORY
-            </NavLink>
-          </Menuitem> */}
-          {/* <Menu_item key="1" onClick={this.showComing}><LogNav>DASHBOARD</LogNav></Menu_item>
-                    <Menu_item key="2" onClick={this.showComing}><LogNav>TRADE</LogNav></Menu_item>
-                    <Menu_item key="3" onClick={this.showComing}><LogNav>Wallet</LogNav></Menu_item>
-                    <Menu_item key="4" onClick={this.showComing}><LogNav>HISTORY</LogNav></Menu_item> */}
         </Menumain>
         <RightCol>
           <Afterlog
