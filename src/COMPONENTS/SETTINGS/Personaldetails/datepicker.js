@@ -8,11 +8,11 @@ import moment from "moment";
 
 const Picker_wrap = styled.div`
   & select[disabled] {
-    color: ${props =>
+    color: ${(props) =>
       props.theme.mode === "dark"
         ? "#ffffff7a !important"
         : "rgba(0, 0, 0, 0.4) !important"};
-    background: ${props =>
+    background: ${(props) =>
       props.theme.mode === "dark" ? "transparent !important" : ""};
   }
   & .ant-row.datepicker_main_row {
@@ -23,7 +23,7 @@ const Picker_wrap = styled.div`
       background-size: 10px 8px !important;
       background-repeat: no-repeat !important;
       background-position: top 17px right 10px !important;
-      background-image: ${props =>
+      background-image: ${(props) =>
         props.theme.mode === "dark"
           ? "url(/images/arrow_down_dark.png)!important"
           : "url(/images/arrow_down_light.png)"};
@@ -41,7 +41,7 @@ export default class Datepicker extends Component {
       day: null,
       dayCSS: "",
       monthCSS: "",
-      yearCSS: ""
+      yearCSS: "",
     };
   }
   /* Life-Cycle Methods */
@@ -72,7 +72,7 @@ export default class Datepicker extends Component {
       this.setState({
         day: parseInt(dob[0]),
         month: monthName,
-        year: dob[2]
+        year: dob[2],
       });
     }
     if (this.props.theme !== undefined) {
@@ -81,13 +81,13 @@ export default class Datepicker extends Component {
           this.setState({
             dayCSS: "profile-day",
             monthCSS: "profile-month",
-            yearCSS: "profile-year"
+            yearCSS: "profile-year",
           });
         else
           this.setState({
             dayCSS: "profile-day-night",
             monthCSS: "profile-month-night",
-            yearCSS: "profile-year-night"
+            yearCSS: "profile-year-night",
           });
       }
     }
@@ -105,14 +105,14 @@ export default class Datepicker extends Component {
         this.setState({
           day: dob.getDate(),
           month: dob.getMonth(),
-          year: dob.getFullYear()
+          year: dob.getFullYear(),
         });
       }
-    }else{
+    } else {
       this.setState({
         day: "",
-        month:"",
-        year: ""
+        month: "",
+        year: "",
       });
     }
   };
@@ -142,10 +142,11 @@ export default class Datepicker extends Component {
       this.setState({
         day: parseInt(dob[0]),
         month: monthName,
-        year: dob[2]
+        year: dob[2],
       });
     }
     if (this.props.kyc == "kyc" && this.props.kycData2 !== newProps.kycData2) {
+      console.log("kycdata^^^", newProps.kycData2.dob);
       if (newProps.kycData2) {
         var date = newProps.kycData2.dob.split("-");
         let month1 = date[1] - 1;
@@ -166,9 +167,9 @@ export default class Datepicker extends Component {
           monthName = ""; /* console.log(" i am in IF") */
         }
         this.setState({
-          day: Number(date[2]),
+          day: Number(date[0]),
           month: monthName,
-          year: date[0]
+          year: date[2],
         });
       }
     }
@@ -441,7 +442,7 @@ export default class Datepicker extends Component {
               // mandatory
               value={this.state.day !== null ? this.state.day : day ? day : ""}
               // mandatory
-              onChange={day => {
+              onChange={(day) => {
                 this.onChangeDate(day, "day");
                 /* console.log(day); */
               }}
@@ -468,7 +469,7 @@ export default class Datepicker extends Component {
                   : ""
               }
               // mandatory
-              onChange={month => {
+              onChange={(month) => {
                 this.onChangeDate(month, "month");
                 /*  console.log(month); */
               }}
@@ -491,7 +492,7 @@ export default class Datepicker extends Component {
                 this.state.year !== null ? this.state.year : year ? year : ""
               }
               // mandatory
-              onChange={year => {
+              onChange={(year) => {
                 this.onChangeDate(year, "year");
                 /* console.log(year); */
               }}

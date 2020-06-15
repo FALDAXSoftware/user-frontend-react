@@ -567,6 +567,9 @@ export const BTCWrap = styled.div`
     align-items: center;
     justify-content: space-between;
     padding: 0px 10px;
+    > span {
+      color: ${(props) => (props.theme.mode === "dark" ? "white" : "#333")};
+    }
     > a {
       padding: 5px 10px;
       border: 1px solid;
