@@ -52,15 +52,15 @@ const APIUtility = {
       },
     });
   },
-  getUserTradeStatusWallet: function (token) {
-    return axios({
-      method: "get",
-      url: API_URL + "/users/get-user-legal-status",
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    });
-  },
+  // getUserTradeStatusWallet: function (token) {
+  //   return axios({
+  //     method: "get",
+  //     url: API_URL + "/users/get-user-legal-status",
+  //     headers: {
+  //       Authorization: "Bearer " + token,
+  //     },
+  //   });
+  // },
   getCrypto: function (token) {
     return axios({
       method: "get",

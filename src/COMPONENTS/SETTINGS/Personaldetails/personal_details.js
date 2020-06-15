@@ -518,6 +518,9 @@ class PersonalDetails extends Component {
         displayCountry: true,
         phoneCountry: arr,
         phoneCode,
+        fields: {
+          country_code: country_code,
+        },
       });
     }
     if (this.props.profileDetails.phone_number) {
@@ -592,6 +595,9 @@ class PersonalDetails extends Component {
           phoneCountry: arr,
           phoneCode,
           countryJsonId: props.profileDetails.countryJsonId,
+          fields: {
+            country_code: country_code,
+          },
         });
       }
     }
@@ -804,7 +810,15 @@ class PersonalDetails extends Component {
   //   };
   //   this.onChangeField(loc, "country");
   // }
-  onCountryChange(country, state, city, country_code, phoneCode, phone_number) {
+  onCountryChange(
+    country,
+    state,
+    city,
+    country_code,
+    phoneCode,
+    phone_number,
+    countryJson
+  ) {
     // console.log("^^^kyc", country, state, city, country_code);
     let fields = this.state.fields;
     if (this.state.countrySelected === country) {
@@ -834,6 +848,7 @@ class PersonalDetails extends Component {
       this.setState({
         phoneCountry: [country_code],
         mobile,
+        countryJsonId: countryJson,
       });
     }
     let self = this;
@@ -1632,7 +1647,16 @@ class PersonalDetails extends Component {
         }
         profileData.append("default_language", this.state.language);
         profileData.append("phone_number", this.state.fields.phone_number);
-        profileData.append("country_code", this.state.fields.country_code);
+        // profileData.append("country_code", this.state.fields.country_code);
+        console.log("^^country", this.state.countryJsonId);
+        var countrySelected = CountryData.getCountryById(
+          this.state.countryJsonId - 1
+        );
+        let country_code = "";
+        if (countrySelected) {
+          country_code = countrySelected.sortname;
+        }
+        profileData.append("country_code", country_code);
         this.props.profileupdateAction(this.props.isLoggedIn, profileData);
         this.props.i18n.changeLanguage(this.state.language);
         this.props.langAction(this.state.language);
@@ -2125,7 +2149,8 @@ class PersonalDetails extends Component {
                         city,
                         country_code,
                         phoneCode,
-                        phone_number
+                        phone_number,
+                        countryJsonId
                       ) =>
                         this.onCountryChange(
                           country,
@@ -2133,7 +2158,8 @@ class PersonalDetails extends Component {
                           city,
                           country_code,
                           phoneCode,
-                          phone_number
+                          phone_number,
+                          countryJsonId
                         )
                       }
                     />

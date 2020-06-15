@@ -766,6 +766,15 @@ class WalletPopup extends Component {
               responseData.message
             );
           }
+          if (this.state.limitExceeded) {
+            this.setState({
+              disabled: true,
+            });
+          } else {
+            this.setState({
+              disabled: false,
+            });
+          }
           this.setState({
             loader: false,
           });
@@ -800,12 +809,12 @@ class WalletPopup extends Component {
         .then((response) => response.json())
         .then((responseData) => {
           if (responseData.status === 200) {
-            // console.log(responseData);
             let subtotal = precision(
               parseFloat(this.state.sendFields.subtotal) +
                 parseFloat(responseData.data)
             );
             fields["subtotal"] = subtotal;
+            console.log("subtotal^^", subtotal, this.state.singlefiatValue);
             let fiatValueamount =
               parseFloat(subtotal) * parseFloat(this.state.singlefiatValue);
             this.setState({
