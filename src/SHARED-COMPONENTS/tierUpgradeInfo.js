@@ -283,9 +283,20 @@ class TierUpgradeInfo extends Component {
               </tbody>
             </UpgradeTable>
             <BtnLink>
-              <Link to="/wallet">
-                <button>{this.t("add_funds_to_wallet_text.message")}</button>
-              </Link>
+              {/* <Link to="/wallet"> */}
+              <button
+                onClick={() => {
+                  this.props.history.push({
+                    pathname: "/wallet",
+                    state: {
+                      flag: true,
+                    },
+                  });
+                }}
+              >
+                {this.t("add_funds_to_wallet_text.message")}
+              </button>
+              {/* </Link> */}
             </BtnLink>
           </ModalAgreeWrap>
         </Modal>

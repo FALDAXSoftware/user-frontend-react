@@ -5,6 +5,7 @@ import SimpleReactValidator from "simple-react-validator";
 import "antd/dist/antd.css";
 import { Row, Col, Radio, notification, Spin, Icon } from "antd";
 import { translate } from "react-i18next";
+import { withRouter } from "react-router-dom";
 
 /* Components */
 import { globalVariables } from "Globals.js";
@@ -90,6 +91,7 @@ class StopLimit extends Component {
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.marketAccess = this.marketAccess.bind(this);
+    this.walletAccess = this.walletAccess.bind(this);
     this.clearValidation = this.clearValidation.bind(this);
     this.validator = new SimpleReactValidator({
       gtzero: {
@@ -157,6 +159,40 @@ class StopLimit extends Component {
         this.props.profileDetails.is_kyc_done === 2
       ) {
         this.setState({ completeKYC: false, countryAccess: false });
+      } else {
+        if (
+          this.props.profileDetails.is_allowed === false &&
+          this.props.profileDetails.is_kyc_done !== 2
+        ) {
+          this.setState({ completeKYC: true });
+        } else if (
+          this.props.profileDetails.is_allowed === true &&
+          this.props.profileDetails.is_kyc_done !== 2
+        ) {
+          this.setState({ completeKYC: true });
+        } else {
+          this.setState({ countryAccess: true });
+        }
+      }
+    }
+  }
+  walletAccess(coin) {
+    if (this.state.panic_status === true) {
+      this.setState({ panicEnabled: true });
+    } else if (
+      !this.props.profileDetails.is_user_updated &&
+      this.props.profileDetails.is_kyc_done != "2"
+    ) {
+      this.setState({
+        completeProfile: true,
+      });
+    } else {
+      if (
+        this.props.profileDetails.is_allowed === true &&
+        this.props.profileDetails.is_kyc_done === 2
+      ) {
+        this.setState({ completeKYC: false, countryAccess: false });
+        this.props.history.push(`/walletDetails?coinID0=${coin}`);
       } else {
         if (
           this.props.profileDetails.is_allowed === false &&
@@ -1190,7 +1226,12 @@ class StopLimit extends Component {
                     {this.props.cryptoName}{" "}
                     {this.t("header:navbar_menu_wallet.message")}?
                   </span>
-                  <a href={`/walletDetails?coinID0=${this.props.cryptoCode}`}>
+                  <a
+                    onClick={() => {
+                      this.walletAccess(this.props.cryptoCode);
+                    }}
+                    // href={`/walletDetails?coinID0=${this.props.cryptoCode}`}
+                  >
                     {this.t("general_3:generate_wallet_text.message")}
                   </a>
                 </BTCWrap>
@@ -1204,7 +1245,12 @@ class StopLimit extends Component {
                     {this.props.currencyName}{" "}
                     {this.t("header:navbar_menu_wallet.message")}?
                   </span>
-                  <a href={`/walletDetails?coinID0=${this.props.currencyCode}`}>
+                  <a
+                    onClick={() => {
+                      this.walletAccess(this.props.currencyCode);
+                    }}
+                    // href={`/walletDetails?coinID0=${this.props.currencyCode}`}
+                  >
                     {this.t("general_3:generate_wallet_text.message")}
                   </a>
                 </BTCWrap>
@@ -1562,4 +1608,4 @@ export default translate([
   "general_3",
   "tier_changes",
   "header",
-])(connect(mapStateToProps)(StopLimit));
+])(connect(mapStateToProps)(withRouter(StopLimit)));

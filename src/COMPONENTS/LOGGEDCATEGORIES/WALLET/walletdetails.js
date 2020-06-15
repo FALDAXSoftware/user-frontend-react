@@ -394,7 +394,12 @@ class WalletDetails extends Component {
       .then((response) => response.json())
       .then((responseData) => {
         if (responseData.status == 200) {
-          this.props.history.push("/wallet");
+          this.props.history.push({
+            pathname: "/wallet",
+            state: {
+              flag: true,
+            },
+          });
           this.openNotificationWithIcon(
             "success",
             this.t("validations:success_text.message"),
