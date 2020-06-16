@@ -4614,7 +4614,7 @@
     },
     "invalid_order_quantity_text": {
       "page": "Trade",
-      "message": "Invalid order quantity",
+      "message": "Your order exceeds our maximum trade size. Please decrease your total order size and try again.",
       "message_type": "Web content",
       "context": "invalid order quantity validation if the order amount exceeds buy book or sell book total value"
     },
@@ -4629,6 +4629,12 @@
       "message": "Trigger",
       "message_type": "Web content",
       "context": "Trigger Text"
+    },
+    "insufficient_balance_text": {
+      "page": "Trade",
+      "message": "Insufficient wallet balance to place order.",
+      "message_type": "Web content",
+      "context": "Insufficient wallet balance validation if the order amount exceeds wallet balance"
     }
   }
 }
