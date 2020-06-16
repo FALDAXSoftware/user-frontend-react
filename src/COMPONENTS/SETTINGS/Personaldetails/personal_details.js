@@ -1327,21 +1327,22 @@ class PersonalDetails extends Component {
             t("validations:field_is_required.message"),
         });
       }
-    } else if (field === "date_format") {
-      if (value !== "") {
-        this.setState({ dateFIcon: true });
-        document.querySelectorAll(".df_msg")[0].style.display = "none";
-      } else {
-        this.setState({ dateFIcon: false });
-        document.querySelectorAll(".df_msg")[0].style.display = "block";
-        this.setState({
-          dfmsg:
-            t("general_1:currency_text.message") +
-            " " +
-            t("validations:field_is_required.message"),
-        });
-      }
     }
+    // else if (field === "date_format") {
+    //   if (value !== "") {
+    //     this.setState({ dateFIcon: true });
+    //     document.querySelectorAll(".df_msg")[0].style.display = "none";
+    //   } else {
+    //     this.setState({ dateFIcon: false });
+    //     document.querySelectorAll(".df_msg")[0].style.display = "block";
+    //     this.setState({
+    //       dfmsg:
+    //         t("general_1:currency_text.message") +
+    //         " " +
+    //         t("validations:field_is_required.message"),
+    //     });
+    //   }
+    // }
   }
 
   /* 
@@ -1528,19 +1529,19 @@ class PersonalDetails extends Component {
             t("validations:field_is_required.message"),
         });
       }
-      if (
-        (this.state.dateFIcon !== true || this.state.dateFIcon === null) &&
-        this.props.profileDetails.date_format === ""
-      ) {
-        this.setState({ dateFIcon: false });
-        document.querySelectorAll(".df_msg")[0].style.display = "block";
-        this.setState({
-          dfmsg:
-            t("general_1:dateformat_text.message") +
-            " " +
-            t("validations:field_is_required.message"),
-        });
-      }
+      // if (
+      //   (this.state.dateFIcon !== true || this.state.dateFIcon === null) &&
+      //   this.props.profileDetails.date_format === ""
+      // ) {
+      //   this.setState({ dateFIcon: false });
+      //   document.querySelectorAll(".df_msg")[0].style.display = "block";
+      //   this.setState({
+      //     dfmsg:
+      //       t("general_1:dateformat_text.message") +
+      //       " " +
+      //       t("validations:field_is_required.message"),
+      //   });
+      // }
     });
   };
   submit = () => {
@@ -1777,19 +1778,19 @@ class PersonalDetails extends Component {
             t("validations:field_is_required.message"),
         });
       }
-      if (
-        (this.state.dateFIcon !== true || this.state.dateFIcon === null) &&
-        this.props.profileDetails.date_format === ""
-      ) {
-        this.setState({ dateFIcon: false });
-        document.querySelectorAll(".df_msg")[0].style.display = "block";
-        this.setState({
-          dfmsg:
-            t("general_1:dateformat_text.message") +
-            " " +
-            t("validations:field_is_required.message"),
-        });
-      }
+      // if (
+      //   (this.state.dateFIcon !== true || this.state.dateFIcon === null) &&
+      //   this.props.profileDetails.date_format === ""
+      // ) {
+      //   this.setState({ dateFIcon: false });
+      //   document.querySelectorAll(".df_msg")[0].style.display = "block";
+      //   this.setState({
+      //     dfmsg:
+      //       t("general_1:dateformat_text.message") +
+      //       " " +
+      //       t("validations:field_is_required.message"),
+      //   });
+      // }
     });
   };
   handleLangChange(value) {
