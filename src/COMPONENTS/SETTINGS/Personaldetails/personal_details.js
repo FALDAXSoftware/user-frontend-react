@@ -1856,11 +1856,12 @@ class PersonalDetails extends Component {
         phoneCode: phonecode,
         countryJsonId: country_id,
       });
-    } else {
-      this.setState({
-        displayCountry: false,
-      });
     }
+    // else {
+    //   this.setState({
+    //     displayCountry: false,
+    //   });
+    // }
     this.setState(
       {
         fiatIcon: null,
