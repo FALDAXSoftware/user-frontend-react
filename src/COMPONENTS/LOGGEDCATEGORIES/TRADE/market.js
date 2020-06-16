@@ -65,6 +65,7 @@ class Market extends Component {
       sellEstPrice: 0,
       sellPayAmt: 0,
       disabledMode: false,
+      disabledInvalidMode: false,
       singlefiatCryptoValue: "",
       singlefiatCurrencyValue: "",
       fiatCryptoValue: "",
@@ -225,6 +226,7 @@ class Market extends Component {
         sellEstPrice: 0,
         disabledBtn: false,
         disabledMode: false,
+        disabledInvalidMode: false,
         singlefiatCryptoValue: props.userBal.cryptoFiat,
         singlefiatCurrencyValue: props.userBal.currencyFiat,
       });
@@ -262,6 +264,7 @@ class Market extends Component {
           sellEstPrice: 0,
           disabledBtn: false,
           disabledMode: false,
+          disabledInvalidMode: false,
           singlefiatCryptoValue: this.props.userBal.cryptoFiat,
           singlefiatCurrencyValue: this.props.userBal.currencyFiat,
         });
@@ -292,8 +295,26 @@ class Market extends Component {
               if (this.state.amount > 0) {
                 if (this.state.side === "Buy") {
                   if (
+                    parseFloat(
+                      parseFloat(this.state.amount) *
+                        parseFloat(this.state.bestAsk)
+                    ) > parseFloat(this.props.userBal.currency.placed_balance)
+                  ) {
+                    this.setState({
+                      disabledInvalidMode: false,
+                      disabledMode: true,
+                    });
+                  } else if (
                     parseFloat(this.state.amount) >
-                      parseFloat(this.state.buyMaxValue) ||
+                    parseFloat(this.state.buyMaxValue)
+                  ) {
+                    this.setState({
+                      disabledInvalidMode: true,
+                      disabledMode: false,
+                    });
+                  } else if (
+                    parseFloat(this.state.amount) >
+                      parseFloat(this.state.buyMaxValue) &&
                     parseFloat(
                       parseFloat(this.state.amount) *
                         parseFloat(this.state.bestAsk)
@@ -301,9 +322,11 @@ class Market extends Component {
                   ) {
                     this.setState({
                       disabledMode: true,
+                      disabledInvalidMode: false,
                     });
                   } else {
                     this.setState({
+                      disabledInvalidMode: false,
                       disabledMode: false,
                     });
                   }
@@ -324,15 +347,33 @@ class Market extends Component {
                 } else {
                   if (
                     parseFloat(this.state.amount) >
-                      parseFloat(this.state.sellMaxValue) ||
+                    parseFloat(this.props.userBal.crypto.placed_balance)
+                  ) {
+                    this.setState({
+                      disabledInvalidMode: false,
+                      disabledMode: true,
+                    });
+                  } else if (
+                    parseFloat(this.state.amount) >
+                    parseFloat(this.state.sellMaxValue)
+                  ) {
+                    this.setState({
+                      disabledInvalidMode: true,
+                      disabledMode: false,
+                    });
+                  } else if (
+                    parseFloat(this.state.amount) >
+                      parseFloat(this.state.sellMaxValue) &&
                     parseFloat(this.state.amount) >
                       parseFloat(this.props.userBal.crypto.placed_balance)
                   ) {
                     this.setState({
                       disabledMode: true,
+                      disabledInvalidMode: false,
                     });
                   } else {
                     this.setState({
+                      disabledInvalidMode: false,
                       disabledMode: false,
                     });
                   }
@@ -502,17 +543,35 @@ class Market extends Component {
               });
             }
             if (
-              parseFloat(this.state.amount) >
-                parseFloat(this.state.buyMaxValue) ||
               parseFloat(
                 parseFloat(this.state.amount) * parseFloat(this.state.bestAsk)
               ) > parseFloat(this.props.userBal.currency.placed_balance)
             ) {
-              self.setState({
+              this.setState({
+                disabledInvalidMode: false,
+                disabledMode: true,
+              });
+            } else if (
+              parseFloat(this.state.amount) > parseFloat(this.state.buyMaxValue)
+            ) {
+              this.setState({
+                disabledMode: false,
+                disabledInvalidMode: true,
+              });
+            } else if (
+              parseFloat(this.state.amount) >
+                parseFloat(this.state.buyMaxValue) &&
+              parseFloat(
+                parseFloat(this.state.amount) * parseFloat(this.state.bestAsk)
+              ) > parseFloat(this.props.userBal.currency.placed_balance)
+            ) {
+              this.setState({
+                disabledInvalidMode: false,
                 disabledMode: true,
               });
             } else {
-              self.setState({
+              this.setState({
+                disabledInvalidMode: false,
                 disabledMode: false,
               });
             }
@@ -553,15 +612,33 @@ class Market extends Component {
             }
             if (
               parseFloat(this.state.amount) >
-                parseFloat(this.state.sellMaxValue) ||
+              parseFloat(this.props.userBal.crypto.placed_balance)
+            ) {
+              this.setState({
+                disabledInvalidMode: false,
+                disabledMode: true,
+              });
+            } else if (
+              parseFloat(this.state.amount) >
+              parseFloat(this.state.sellMaxValue)
+            ) {
+              this.setState({
+                disabledInvalidMode: true,
+                disabledMode: false,
+              });
+            } else if (
+              parseFloat(this.state.amount) >
+                parseFloat(this.state.sellMaxValue) &&
               parseFloat(this.state.amount) >
                 parseFloat(this.props.userBal.crypto.placed_balance)
             ) {
-              self.setState({
+              this.setState({
                 disabledMode: true,
+                disabledInvalidMode: false,
               });
             } else {
-              self.setState({
+              this.setState({
+                disabledInvalidMode: false,
                 disabledMode: false,
               });
             }
@@ -574,6 +651,7 @@ class Market extends Component {
               total: 0,
               fiatCurrencyValue: 0,
               disabledMode: false,
+              disabledInvalidMode: false,
             });
           } else {
             this.setState({
@@ -581,6 +659,7 @@ class Market extends Component {
               total: 0,
               fiatCurrencyValue: 0,
               disabledMode: false,
+              disabledInvalidMode: false,
             });
           }
         }
@@ -1050,11 +1129,22 @@ class Market extends Component {
             )}
             {this.state.disabledMode ? (
               <div className="trade-action-validation">
+                {this.t("tier_changes:insufficient_balance_text.message")}
+              </div>
+            ) : this.state.disabledInvalidMode ? (
+              <div className="trade-action-validation">
                 {this.t("tier_changes:invalid_order_quantity_text.message")}
               </div>
             ) : (
               ""
             )}
+            {/* {this.state.disabledInvalidMode ? (
+              <div className="trade-action-validation">
+                {this.t("tier_changes:invalid_order_quantity_text.message")}
+              </div>
+            ) : (
+              ""
+            )} */}
           </TotalWrap>
         </ETHWrap>
         <BTCWrap>
@@ -1195,7 +1285,11 @@ class Market extends Component {
         )}
         <ButtonWrap>
           <ButtonETH
-            disabled={this.state.disabledMode || this.state.disabledbtn}
+            disabled={
+              this.state.disabledMode ||
+              this.state.disabledbtn ||
+              this.state.disabledInvalidMode
+            }
             side={this.state.side}
             onClick={this.onSubmit}
           >
