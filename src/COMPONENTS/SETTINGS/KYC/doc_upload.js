@@ -207,7 +207,7 @@ class DocUpload extends Component {
                   frontWidth = img.width;
                   frontHeight = img.height;
 
-                  if (frontWidth > 450 && frontHeight > 600) {
+                  if (fileSize >= 400000) {
                     if (_self.state.targetName === "front-doc") {
                       _self.setState({ icon1: "check", displayFirst: "" });
                       reader.onload = (upload) => {
@@ -265,10 +265,10 @@ class DocUpload extends Component {
                     _self.openNotificationWithIcon(
                       "error",
                       _self.t("validations:error_text.message"),
-                      _self.t("validations:image_upload_error.message")
+                      _self.t("general_1:upload_note_text.message")
                     );
-                    document.getElementById("front").value = "";
-                    document.getElementById("back").value = "";
+                    // document.getElementById("front").value = "";
+                    // document.getElementById("back").value = "";
                   }
                 };
                 img.src = fr.result;
