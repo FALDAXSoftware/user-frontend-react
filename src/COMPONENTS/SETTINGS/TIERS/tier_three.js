@@ -280,7 +280,7 @@ class TierThree extends React.Component {
                   frontWidth = img.width;
                   frontHeight = img.height;
 
-                  if (frontWidth > 450 && frontHeight > 600) {
+                  if (fileSize >= 400000) {
                     if (_self.state.targetName === "idcp-photo") {
                       _self.setState({ icon1: "check", displayFirst: "" });
                       reader.onload = (upload) => {
@@ -336,9 +336,9 @@ class TierThree extends React.Component {
                     _self.openNotificationWithIcon(
                       "error",
                       _self.t("validations:error_text.message"),
-                      _self.t("validations:image_upload_error.message")
+                      _self.t("general_1:upload_note_text.message")
                     );
-                    document.getElementById("idcp-photo").value = "";
+                    // document.getElementById("idcp-photo").value = "";
                     // document.getElementById("residence-proof").value = "";
                   }
                 };
