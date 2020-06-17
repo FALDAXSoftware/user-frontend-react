@@ -5,9 +5,9 @@ export const globalVariables = {
 
   _AMAZONBUCKET: "https://s3.us-east-2.amazonaws.com/production-static-asset/",
 
-  // WordpressSiteURL: "https://www.faldax.com", //Live URL
+  WordpressSiteURL: "https://www.faldax.com", //Live URL
 
-  WordpressSiteURL: "https://preprod.faldax.com", //Pre-Production URL
+  // WordpressSiteURL: "https://preprod.faldax.com", //Pre-Production URL
 
   tvChartURL: "/chart",
 
@@ -29,12 +29,13 @@ export const globalVariables = {
 
   //    API_URL: "https://dev-backend.faldax.com", // DEV url
 
-  // API_URL: "https://mainnet-backend.faldax.com", //Pre-Production URL
+  API_URL: "https://mainnet-backend.faldax.com", //Mainnet Production URL
+  TRADE_URL: "https://mainnet-trade.faldax.com",
 
   // API_URL: "http://991e8fb6.ngrok.io/api/v1/tradding/",
-  API_URL: "https://pre-prod-backend.faldax.com", //Pre-Production URL
+  // API_URL: "https://pre-prod-backend.faldax.com", //Pre-Production URL
 
-  TRADE_URL: "https://preprod-trade.faldax.com",
+  // TRADE_URL: "https://preprod-trade.faldax.com",
 
   //    TRADE_URL: "https://dev-trade.faldax.com", // DEV url
 
@@ -49,7 +50,8 @@ export const globalVariables = {
         'https://dev-backend.faldax.com',
     */
   // API_URL: 'http://13.58.130.154:8989' //Client Live URL,
-  SOCKET_HOST: "https://preprod-trading.faldax.com",
+  // SOCKET_HOST: "https://preprod-trading.faldax.com",
+  SOCKET_HOST: "https://mainnet-trading.faldax.com",
   // SOCKET_HOST: "http://124863c5.ngrok.io/",
 
   Terms_and_services:
