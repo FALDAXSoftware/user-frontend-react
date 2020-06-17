@@ -267,8 +267,8 @@ class DocUpload extends Component {
                       _self.t("validations:error_text.message"),
                       _self.t("general_1:upload_note_text.message")
                     );
-                    // document.getElementById("front").value = "";
-                    // document.getElementById("back").value = "";
+                    document.getElementById("front").value = "";
+                    document.getElementById("back").value = "";
                   }
                 };
                 img.src = fr.result;
