@@ -593,7 +593,7 @@ export const FileSelectText = styled.p`
   margin-bottom: 0px;
   color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   display: block;
-  max-width: 300px;
+  max-width: 99%;
   text-overflow: ellipsis;
   overflow: hidden;
   margin-left: auto;
