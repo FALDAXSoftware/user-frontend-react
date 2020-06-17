@@ -1289,7 +1289,7 @@ class StopLimit extends Component {
             )}
             {this.state.disabledMode ? (
               <div className="trade-action-validation">
-                {this.t("tier_changes:invalid_order_quantity_text.message")}
+                {this.t("tier_changes:insufficient_balance_text.message")}
               </div>
             ) : (
               ""
