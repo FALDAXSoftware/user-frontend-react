@@ -1530,7 +1530,7 @@ class PersonalDetails extends Component {
       }
       if (
         (this.state.dateFIcon !== true || this.state.dateFIcon === null) &&
-        this.props.profileDetails.date_format === ""
+        this.state.date_format === ""
       ) {
         this.setState({ dateFIcon: false });
         document.querySelectorAll(".df_msg")[0].style.display = "block";
@@ -1560,7 +1560,7 @@ class PersonalDetails extends Component {
         this.state.street1Icon !== false &&
         this.state.street2Icon !== false &&
         this.state.postalIcon !== false &&
-        // this.state.date_format !== "" &&
+        this.state.date_format !== "" &&
         // this.state.agreeCheck !== false &&
         ((this.props.profileDetails.country !== undefined &&
           this.props.profileDetails.country !== "" &&
@@ -1779,7 +1779,7 @@ class PersonalDetails extends Component {
       }
       if (
         (this.state.dateFIcon !== true || this.state.dateFIcon === null) &&
-        this.props.profileDetails.date_format === ""
+        this.state.date_format === ""
       ) {
         this.setState({ dateFIcon: false });
         document.querySelectorAll(".df_msg")[0].style.display = "block";
@@ -1857,6 +1857,11 @@ class PersonalDetails extends Component {
         countryJsonId: country_id,
       });
     }
+    if (!this.props.profileDetails.phone_number) {
+      this.setState({
+        displayCountry: false,
+      });
+    }
     // else {
     //   this.setState({
     //     displayCountry: false,
@@ -1874,7 +1879,9 @@ class PersonalDetails extends Component {
         street2Icon: null,
         postalIcon: null,
         dataDate: null,
-        date_format: this.state.profileDetails.date_format,
+        date_format: this.state.profileDetails.date_format
+          ? this.state.profileDetails.date_format
+          : "MM/DD/YYYY",
         fiat: this.state.profileDetails.fiat,
         stateSelected: this.state.profileDetails.state,
         countrySelected: this.state.profileDetails.country,
@@ -2413,6 +2420,16 @@ class PersonalDetails extends Component {
                       <Save
                         type="primary"
                         onClick={() => {
+                          if (this.props.profileDetails.country) {
+                            let arr = [];
+                            arr.push(
+                              this.props.profileDetails.country_code.toLowerCase()
+                            );
+                            this.setState({
+                              displayCountry: true,
+                              phoneCountry: arr,
+                            });
+                          }
                           this.setState({
                             editMode: true,
                           });
@@ -2430,6 +2447,7 @@ class PersonalDetails extends Component {
                     this.agreeTerms(e);
                   } else {
                     this.props.getProfileDataAction(this.props.isLoggedIn);
+
                     this.setState({
                       editMode: true,
                       isFirstLogin: !isUpdate,
