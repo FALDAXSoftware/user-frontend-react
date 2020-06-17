@@ -450,8 +450,8 @@ class TierTwo extends React.Component {
                       _self.t("validations:error_text.message"),
                       _self.t("general_1:upload_note_text.message")
                     );
-                    // document.getElementById("valid-id").value = "";
-                    // document.getElementById("residence-proof").value = "";
+                    document.getElementById("valid-id").value = "";
+                    document.getElementById("residence-proof").value = "";
                   }
                 };
                 img.src = fr.result;
