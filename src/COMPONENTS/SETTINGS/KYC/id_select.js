@@ -15,7 +15,7 @@ import {
   _ACTIVESSN,
   _SSN,
   _LICENSELOGO,
-  _PASSPORTLOGO
+  _PASSPORTLOGO,
 } from "CONSTANTS/images";
 
 const KYCTypeSelectRow = styled.div`
@@ -23,10 +23,10 @@ const KYCTypeSelectRow = styled.div`
   margin 55px auto;
 `;
 const SelectTitle = styled(Col)`
-  margin-top: 20px;
+  margin-top: 0;
   margin-bottom: 30px;
   text-align: center;
-  color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
 `;
 const PassportCol = styled(Col)`
   @media (max-width: 575px) {
@@ -49,7 +49,7 @@ const SSNCol = styled(Col)`
   }
 `;
 export const ButtonWrap = styled.div`
-  margin-top: 230px;
+  margin-top: 0;
   text-align: center;
 `;
 export const SubWrap = styled.div``;
@@ -86,7 +86,7 @@ class IDselect extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      background: ""
+      background: "",
     };
   }
 
@@ -105,7 +105,7 @@ class IDselect extends Component {
     */
 
   next_step() {
-    let {t}=this.props;
+    let { t } = this.props;
     var kycSteps = {};
     if (document.getElementById("passport").checked) {
       kycSteps["id_type"] = 1;
@@ -134,8 +134,8 @@ class IDselect extends Component {
     } else {
       this.openNotificationWithIcon(
         "error",
-        t('validations:error_text.message'),
-        t('general_3:select_any_option.message')
+        t("validations:error_text.message"),
+        t("general_3:select_any_option.message")
       );
     }
   }
@@ -157,7 +157,7 @@ class IDselect extends Component {
   openNotificationWithIcon(type, head, desc) {
     notification[type]({
       message: head,
-      description: desc
+      description: desc,
     });
   }
 
@@ -166,189 +166,182 @@ class IDselect extends Component {
     return (
       <div>
         <KYCTypeSelectRow>
-          {/* {console.log("KYC CHECK", this.props.countryFlag)} */}
-          {this.props.countryFlag === true ? (
-            <Row>
-              <SelectTitle md={{ span: 24 }}>
-                {t("select_id_type_text.message")}
-              </SelectTitle>
-              <PassportCol
-                sm={{ span: 12 }}
-                md={{ span: 12 }}
-                lg={{ span: 12 }}
-                xl={{ span: 6 }}
-              >
-                <label className="kyc-radio-container">
-                  <input id="passport" type="radio" name="kyc_type" />
-                  <span className={`${this.state.background}`}>
-                    <img
-                      alt="ID SELECTION"
-                      src={_ACTIVEPASSPORT}
-                      className="active"
-                    />
-                    <img
-                      alt="ID SELECTION"
-                      src={_PASSPORTLOGO}
-                      className="normal"
-                    />
-                    <span className="text">
-                      {t("id_type_passport.message")}
-                    </span>
+          {/* {this.props.countryFlag === true ? ( */}
+          <Row>
+            <SelectTitle md={{ span: 24 }}>
+              {t("select_id_type_text.message")}
+            </SelectTitle>
+            <PassportCol
+              sm={{ span: 12 }}
+              md={{ span: 12 }}
+              lg={{ span: 12 }}
+              xl={{ span: 6 }}
+            >
+              <label className="kyc-radio-container">
+                <input id="passport" type="radio" name="kyc_type" />
+                <span className={`${this.state.background}`}>
+                  <img
+                    alt="ID SELECTION"
+                    src={_ACTIVEPASSPORT}
+                    className="active"
+                  />
+                  <img
+                    alt="ID SELECTION"
+                    src={_PASSPORTLOGO}
+                    className="normal"
+                  />
+                  <span className="text">{t("id_type_passport.message")}</span>
+                </span>
+              </label>
+            </PassportCol>
+            <LicenceCol
+              sm={{ span: 12 }}
+              md={{ span: 12 }}
+              lg={{ span: 12 }}
+              xl={{ span: 6 }}
+            >
+              <label className="kyc-radio-container">
+                <input id="license" type="radio" name="kyc_type" />
+                <span className={`${this.state.background} license`}>
+                  <img
+                    alt="ID SELECTION"
+                    src={_ACTIVELICENSE}
+                    className="active"
+                  />
+                  <img
+                    alt="ID SELECTION"
+                    src={_LICENSELOGO}
+                    className="normal"
+                  />
+                  <span className="text">
+                    {t("id_type_driving_licence.message")}
                   </span>
-                </label>
-              </PassportCol>
-              <LicenceCol
-                sm={{ span: 12 }}
-                md={{ span: 12 }}
-                lg={{ span: 12 }}
-                xl={{ span: 6 }}
-              >
-                <label className="kyc-radio-container">
-                  <input id="license" type="radio" name="kyc_type" />
-                  <span className={`${this.state.background} license`}>
-                    <img
-                      alt="ID SELECTION"
-                      src={_ACTIVELICENSE}
-                      className="active"
-                    />
-                    <img
-                      alt="ID SELECTION"
-                      src={_LICENSELOGO}
-                      className="normal"
-                    />
-                    <span className="text">
-                      {t("id_type_driving_licence.message")}
-                    </span>
+                </span>
+              </label>
+            </LicenceCol>
+            <IdentityCol
+              sm={{ span: 12 }}
+              md={{ span: 12 }}
+              lg={{ span: 12 }}
+              xl={{ span: 6 }}
+            >
+              <label className="kyc-radio-container">
+                <input id="identity" type="radio" name="kyc_type" />
+                <span className={`${this.state.background} identity`}>
+                  <img
+                    alt="ID SELECTION"
+                    src={_ACTIVEIDENTITY}
+                    className="active"
+                  />
+                  <img
+                    alt="ID SELECTION"
+                    src={_IDENTITYLOGO}
+                    className="normal"
+                  />
+                  <span className="text">{t("id_type_identity.message")}</span>
+                </span>
+              </label>
+            </IdentityCol>
+            <SSNCol
+              sm={{ span: 12 }}
+              md={{ span: 12 }}
+              lg={{ span: 12 }}
+              xl={{ span: 6 }}
+            >
+              <label className="kyc-radio-container">
+                <input id="ssn" type="radio" name="kyc_type" />
+                <span className={`${this.state.background} ssn`}>
+                  <img alt="ID SELECTION" src={_ACTIVESSN} className="active" />
+                  <img alt="ID SELECTION" src={_SSN} className="normal" />
+                  <span className="text">
+                    {t("tiers:govt_issued_number_text.message")}
                   </span>
-                </label>
-              </LicenceCol>
-              <IdentityCol
-                sm={{ span: 12 }}
-                md={{ span: 12 }}
-                lg={{ span: 12 }}
-                xl={{ span: 6 }}
-              >
-                <label className="kyc-radio-container">
-                  <input id="identity" type="radio" name="kyc_type" />
-                  <span className={`${this.state.background} identity`}>
-                    <img
-                      alt="ID SELECTION"
-                      src={_ACTIVEIDENTITY}
-                      className="active"
-                    />
-                    <img
-                      alt="ID SELECTION"
-                      src={_IDENTITYLOGO}
-                      className="normal"
-                    />
-                    <span className="text">
-                      {t("id_type_identity.message")}
-                    </span>
-                  </span>
-                </label>
-              </IdentityCol>
-              <SSNCol
-                sm={{ span: 12 }}
-                md={{ span: 12 }}
-                lg={{ span: 12 }}
-                xl={{ span: 6 }}
-              >
-                <label className="kyc-radio-container">
-                  <input id="ssn" type="radio" name="kyc_type" />
-                  <span className={`${this.state.background} ssn`}>
-                    <img
-                      alt="ID SELECTION"
-                      src={_ACTIVESSN}
-                      className="active"
-                    />
-                    <img alt="ID SELECTION" src={_SSN} className="normal" />
-                    <span className="text">{t("id_type_ssn.message")}</span>
-                  </span>
-                </label>
-              </SSNCol>
-            </Row>
-          ) : (
-            <Row>
-              <SelectTitle md={{ span: 24 }}>
-                {t("select_id_type_text.message")}
-              </SelectTitle>
-              <PassportCol
-                sm={{ span: 12 }}
-                md={{ span: 12 }}
-                lg={{ span: 12 }}
-                xl={{ span: 8 }}
-              >
-                <label className="kyc-radio-container">
-                  <input id="passport" type="radio" name="kyc_type" />
-                  <span className={`${this.state.background}`}>
-                    <img
-                      alt="ID SELeCTION"
-                      src={_ACTIVEPASSPORT}
-                      className="active"
-                    />
-                    <img
-                      alt="ID SELeCTION"
-                      src={_PASSPORTLOGO}
-                      className="normal"
-                    />
-                    <span className="text">
-                      {t("id_type_passport.message")}
-                    </span>
-                  </span>
-                </label>
-              </PassportCol>
-              <LicenceCol
-                sm={{ span: 12 }}
-                md={{ span: 12 }}
-                lg={{ span: 12 }}
-                xl={{ span: 8 }}
-              >
-                <label className="kyc-radio-container">
-                  <input id="license" type="radio" name="kyc_type" />
-                  <span className={`${this.state.background} license`}>
-                    <img
-                      alt="ID SELeCTION"
-                      src={_ACTIVELICENSE}
-                      className="active"
-                    />
-                    <img
-                      alt="ID SELeCTION"
-                      src={_LICENSELOGO}
-                      className="normal"
-                    />
-                    <span className="text">
-                      {t("id_type_driving_licence.message")}
-                    </span>
-                  </span>
-                </label>
-              </LicenceCol>
-              <IdentityCol
-                sm={{ span: 12 }}
-                md={{ span: 12 }}
-                lg={{ span: 12 }}
-                xl={{ span: 8 }}
-              >
-                <label className="kyc-radio-container">
-                  <input id="identity" type="radio" name="kyc_type" />
-                  <span className={`${this.state.background} identity`}>
-                    <img
-                      alt="ID SELeCTION"
-                      src={_ACTIVEIDENTITY}
-                      className="active"
-                    />
-                    <img
-                      alt="ID SELeCTION"
-                      src={_IDENTITYLOGO}
-                      className="normal"
-                    />
-                    <span className="text">
-                      {t("id_type_identity.message")}
-                    </span>
-                  </span>
-                </label>
-              </IdentityCol>
-            </Row>
-          )}
+                </span>
+              </label>
+            </SSNCol>
+          </Row>
+          {/* ) : ( */}
+          {/* // <Row>
+            //   <SelectTitle md={{ span: 24 }}>
+            //     {t("select_id_type_text.message")}
+            //   </SelectTitle>
+            //   <PassportCol
+            //     sm={{ span: 12 }}
+            //     md={{ span: 12 }}
+            //     lg={{ span: 12 }}
+            //     xl={{ span: 8 }}
+            //   >
+            //     <label className="kyc-radio-container">
+            //       <input id="passport" type="radio" name="kyc_type" />
+            //       <span className={`${this.state.background}`}>
+            //         <img
+            //           alt="ID SELeCTION"
+            //           src={_ACTIVEPASSPORT}
+            //           className="active"
+            //         />
+            //         <img
+            //           alt="ID SELeCTION"
+            //           src={_PASSPORTLOGO}
+            //           className="normal"
+            //         />
+            //         <span className="text">
+            //           {t("id_type_passport.message")}
+            //         </span>
+            //       </span>
+            //     </label>
+            //   </PassportCol>
+            //   <LicenceCol
+            //     sm={{ span: 12 }}
+            //     md={{ span: 12 }}
+            //     lg={{ span: 12 }}
+            //     xl={{ span: 8 }}
+            //   >
+            //     <label className="kyc-radio-container">
+            //       <input id="license" type="radio" name="kyc_type" />
+            //       <span className={`${this.state.background} license`}>
+            //         <img
+            //           alt="ID SELeCTION"
+            //           src={_ACTIVELICENSE}
+            //           className="active"
+            //         />
+            //         <img
+            //           alt="ID SELeCTION"
+            //           src={_LICENSELOGO}
+            //           className="normal"
+            //         />
+            //         <span className="text">
+            //           {t("id_type_driving_licence.message")}
+            //         </span>
+            //       </span>
+            //     </label>
+            //   </LicenceCol>
+            //   <IdentityCol
+            //     sm={{ span: 12 }}
+            //     md={{ span: 12 }}
+            //     lg={{ span: 12 }}
+            //     xl={{ span: 8 }}
+            //   >
+            //     <label className="kyc-radio-container">
+            //       <input id="identity" type="radio" name="kyc_type" />
+            //       <span className={`${this.state.background} identity`}>
+            //         <img
+            //           alt="ID SELeCTION"
+            //           src={_ACTIVEIDENTITY}
+            //           className="active"
+            //         />
+            //         <img
+            //           alt="ID SELeCTION"
+            //           src={_IDENTITYLOGO}
+            //           className="normal"
+            //         />
+            //         <span className="text">
+            //           {t("id_type_identity.message")}
+            //         </span>
+            //       </span>
+            //     </label>
+            //   </IdentityCol>
+            // </Row> */}
+          {/* )} */}
         </KYCTypeSelectRow>
         <ButtonWrap>
           <SubWrap>
@@ -365,20 +358,23 @@ class IDselect extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     ...state,
     isLoggedIn:
       state.simpleReducer.isLoggedIn !== undefined
         ? state.simpleReducer.isLoggedIn
-        : ""
+        : "",
   };
 };
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   kycFormAction: (is, data) => dispatch(kycFormAction(is, data)),
-  kycformData: data => dispatch(kycformData(data))
+  kycformData: (data) => dispatch(kycformData(data)),
 });
 
-export default translate(["identity_verification","general_3","validations"])(
-  connect(mapStateToProps, mapDispatchToProps)(IDselect)
-);
+export default translate([
+  "identity_verification",
+  "general_3",
+  "validations",
+  "tiers",
+])(connect(mapStateToProps, mapDispatchToProps)(IDselect));

@@ -131,7 +131,7 @@ class AgreeTerms extends Component {
     fetch(API_URL + "/users/terms-status-update", {
       method: "put",
       headers: {
-        "Accept-Language": localStorage["i18nextLng"], 
+        "Accept-Language": localStorage["i18nextLng"],
         Authorization: "Bearer " + this.props.isLoggedIn
       },
       body: JSON.stringify({ status: true })
@@ -140,6 +140,7 @@ class AgreeTerms extends Component {
       .then(responseData => {
         if (responseData.status == 200) {
           this.props.agreeTerms(e, this.props.showCancelBtn);
+          // console.log("^^^^this.props.showCancelBtn", this.props.showCancelBtn);
           this.setState({
             activeKey: "1"
           });
@@ -351,7 +352,7 @@ class AgreeTerms extends Component {
               {!this.props.showCancelBtn ? (
                 <div>
                   <NewButton onClick={this.showCofirmModal}>
-                    I disagree
+                    {t("dont_agree_btn.message")}
                   </NewButton>
                   <Modal
                     title={t("dont_agree_popup_title.message")}

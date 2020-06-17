@@ -29,7 +29,7 @@ export const ConversionContainer = styled(Container)`
   }
 `;
 export const MainRow = styled(Row)`
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#01090f" : "#ffffff"};
   padding: 40px;
   @media (max-width: 991px) {
@@ -37,7 +37,7 @@ export const MainRow = styled(Row)`
   }
 `;
 export const LeftCol = styled(Col)`
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#01090f" : "#fff"};
   position: relative;
   &:after {
@@ -48,7 +48,7 @@ export const LeftCol = styled(Col)`
     width: 0;
     height: 0;
     border: 15px solid transparent;
-    border-left-color: ${props =>
+    border-left-color: ${(props) =>
       props.theme.mode === "dark" ? "#01090f" : "#ffffff"};
     border-right: 0;
     margin-top: -15px;
@@ -88,7 +88,7 @@ export const ConversionTab = styled(Tabs)`
     text-align: center;
     font-size: 18px;
     font-weight: 700;
-    border-bottom: ${props =>
+    border-bottom: ${(props) =>
       props.theme.mode === "dark" ? "1px solid #092c43" : "1px solid #e3ebfc"};
   }
   &
@@ -99,10 +99,10 @@ export const ConversionTab = styled(Tabs)`
     > .ant-tabs-nav
     > div
     > .ant-tabs-tab.ant-tabs-tab-active {
-    background-color: ${props =>
+    background-color: ${(props) =>
       props.theme.mode === "dark" ? "#4b82fc" : "#e3ebfc"};
     position: relative;
-    color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "#ffffff" : "")};
   }
 
   &
@@ -120,7 +120,7 @@ export const ConversionTab = styled(Tabs)`
     width: 0;
     height: 0;
     border: 10px solid transparent;
-    border-top-color: ${props =>
+    border-top-color: ${(props) =>
       props.theme.mode === "dark" ? "#4b82fc" : "#e3ebfc"};
     border-bottom: 0;
     margin-left: -10px;
@@ -148,7 +148,7 @@ export const ConversionTitle = styled.span`
   font-size: 18px;
   font-family: "Open Sans";
   font-weight: bold;
-  color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "black")};
+  color: ${(props) => (props.theme.mode === "dark" ? "#ffffff" : "black")};
   padding: 0px 20px 20px;
   display: block;
 `;
@@ -216,7 +216,7 @@ export const CustomRadioContainer = styled.label`
   }
 `;
 export const BorderRow = styled(Row)`
-  border: ${props =>
+  border: ${(props) =>
     props.theme.mode === "dark" ? "1px solid #20303e" : "1px solid #dfe4f7"};
   border-radius: 5px;
   padding: 20px;
@@ -237,7 +237,7 @@ export const BorderRow = styled(Row)`
   }
 `;
 export const RadioBorderRow = styled(Row)`
-  border: ${props =>
+  border: ${(props) =>
     props.theme.mode === "dark" ? "1px solid #20303e" : "1px solid #dfe4f7"};
   border-radius: 5px;
   padding: 20px;
@@ -279,11 +279,11 @@ export const RowTitle = styled.span`
   top: -11px;
   left: 20px;
   padding: 0px 10px;
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#01090f" : "#ffffff"};
   font-weight: 600;
   font-size: 13px;
-  color: ${props =>
+  color: ${(props) =>
     props.theme.mode === "dark" ? "#617090" : "rgba(0, 0, 0, 0.65)"};
 `;
 export const ConversionInput = styled.input`
@@ -293,11 +293,11 @@ export const ConversionInput = styled.input`
     width: 100%;
     border: none;
     border-radius: 4px;
-    background-color: ${props =>
+    background-color: ${(props) =>
       props.theme.mode === "dark" ? "#021b2b" : "#f6f8fe"};
     font-weight: 600;
     font-size: 20px;
-    color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "black")};
+    color: ${(props) => (props.theme.mode === "dark" ? "#ffffff" : "black")};
     &:focus {
       border: none;
       outline: none;
@@ -311,11 +311,11 @@ export const ConversionInput = styled.input`
   width: 100%;
   border: none;
   border-radius: 4px;
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#021b2b" : "#f6f8fe"};
   font-weight: 600;
   font-size: 20px;
-  color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "black")};
+  color: ${(props) => (props.theme.mode === "dark" ? "#ffffff" : "black")};
   &:focus {
     border: none;
     outline: none;
@@ -328,12 +328,21 @@ export const ConversionDropDown = styled(Select)`
   width: 100%;
   padding: 4px 0px;
   color: black;
+  &.ant-select-open.ant-select-focused {
+    & .ant-select-selection-selected-value {
+      display: none !important;
+    }
+    & .ant-select-search__field {
+      color: ${(props) => (props.theme.mode === "dark" ? "#5d5d79" : "")};
+    }
+  }
   & .ant-select-selection {
     border: none;
     font-size: 20px;
     font-weight: 600;
-    background-color: ${props =>
+    background-color: ${(props) =>
       props.theme.mode === "dark" ? "transparent" : "white"};
+    margin: 0 0 0 15px;
   }
   &.ant-select-disabled .ant-select-selection {
     cursor: text;
@@ -341,14 +350,14 @@ export const ConversionDropDown = styled(Select)`
   & .ant-select-selection-selected-value {
     float: none;
     text-align: center;
-    color: ${props => (props.theme.mode === "dark" ? "#5d5d79" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "#5d5d79" : "")};
   }
   & .ant-select-selection:focus {
     box-shadow: none;
     ouline: none;
   }
   & .ant-select-arrow {
-    color: ${props => (props.theme.mode === "dark" ? "#5d5d79" : "black")};
+    color: ${(props) => (props.theme.mode === "dark" ? "#5d5d79" : "black")};
     // display: none;
   }
   &.ant-select-disabled .ant-select-arrow {
@@ -405,7 +414,7 @@ export const RightCol = styled(Col)`
   }
 `;
 export const RightColContainer = styled.div`
-  background-image: ${props =>
+  background-image: ${(props) =>
     props.theme.mode === "dark"
       ? "url(/images/top-zigzag-bg-dark.png)"
       : "url(/images/top-zigzag-bg.png)"};
@@ -438,7 +447,7 @@ export const RightColAmount = styled.span`
   text-align: center;
   padding-top: 75px;
   font-family: "Open Sans";
-  color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "")};
+  color: ${(props) => (props.theme.mode === "dark" ? "#ffffff" : "")};
 `;
 
 export const RightColPrice = styled.span`
@@ -462,7 +471,7 @@ export const RightSpan = styled.span`
   font-weight: 600;
   font-size: 14px;
   display: block;
-  color: ${props =>
+  color: ${(props) =>
     props.theme.mode === "dark" ? "#ffffff" : "rgba(57, 65, 77, 0.702)"};
   padding: 10px;
 `;
@@ -470,7 +479,7 @@ export const LeftSpan = styled.span`
   font-weight: 600;
   font-size: 14px;
   display: block;
-  color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "#39414d")};
+  color: ${(props) => (props.theme.mode === "dark" ? "#ffffff" : "#39414d")};
   padding: 10px;
 `;
 
@@ -512,7 +521,7 @@ export const FeesRadio = styled(Radio)`
   margin-right: 30px;
   align-items: center;
   display: inline-flex;
-  color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "#5d5d79")};
+  color: ${(props) => (props.theme.mode === "dark" ? "#ffffff" : "#5d5d79")};
   & .ant-radio-inner {
     width: 25px;
     height: 25px;
@@ -529,9 +538,9 @@ export const FeesRadio = styled(Radio)`
   }
 `;
 export const ContainerConversion = styled(Container)`
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#01090f" : "#f5f6fa"};
-  color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   max-width: 1170px;
   padding: 0 0 30px 0;
   min-height: 70vh;
@@ -547,7 +556,7 @@ export const HeadStyle = styled.span`
   font-family: "Open Sans";
   font-weight: bold;
   font-size: 38px;
-  color: ${props => (props.theme.mode === "dark" ? "white" : "#333333")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "#333333")};
   text-align: center;
   display: block;
   padding: 30px 0;
@@ -576,20 +585,20 @@ export const RowConStyle = styled.div`
 export const ColConStyle = styled.div`
   display: flex;
   flex-wrap: wrap;
-  background: ${props => (props.theme.mode === "dark" ? "#021b2b" : "#fff")};
+  background: ${(props) => (props.theme.mode === "dark" ? "#021b2b" : "#fff")};
   width: calc(33.33% - 30px);
   margin: 0 15px;
   padding: 40px 15px;
   align-items: center;
-  -webkit-box-shadow: ${props =>
+  -webkit-box-shadow: ${(props) =>
     props.theme.mode === "dark"
       ? "0px 0px 2px 0px rgb(1, 9, 15)"
       : "0px 0px 2px 0px rgba(236, 236, 236, 1)"};
-  -moz-box-shadow: ${props =>
+  -moz-box-shadow: ${(props) =>
     props.theme.mode === "dark"
       ? "0px 0px 2px 0px rgb(1, 9, 15)"
       : "0px 0px 2px 0px rgba(236, 236, 236, 1)"};
-  box-shadow: ${props =>
+  box-shadow: ${(props) =>
     props.theme.mode === "dark"
       ? "0px 0px 2px 0px rgb(1, 9, 15)"
       : "0px 0px 2px 0px rgba(236, 236, 236, 1)"};
@@ -611,15 +620,15 @@ export const ColConStyle = styled.div`
   }
   &:hover {
     cursor: pointer;
-    -webkit-box-shadow: ${props =>
+    -webkit-box-shadow: ${(props) =>
       props.theme.mode === "dark"
         ? "0px 0px 7px 0px rgb(1, 9, 15)"
         : "0px 0px 7px 0px rgba(236, 236, 236, 1)"};
-    -moz-box-shadow: ${props =>
+    -moz-box-shadow: ${(props) =>
       props.theme.mode === "dark"
         ? "0px 0px 7px 0px rgb(1, 9, 15)"
         : "0px 0px 7px 0px rgba(236, 236, 236, 1)"};
-    box-shadow: ${props =>
+    box-shadow: ${(props) =>
       props.theme.mode === "dark"
         ? "0px 0px 7px 0px rgb(1, 9, 15)"
         : "0px 0px 7px 0px rgba(236, 236, 236, 1)"};
@@ -628,20 +637,20 @@ export const ColConStyle = styled.div`
 export const ColConTokStyle = styled.a`
   display: flex;
   flex-wrap: wrap;
-  background: ${props => (props.theme.mode === "dark" ? "#021b2b" : "#fff")};
+  background: ${(props) => (props.theme.mode === "dark" ? "#021b2b" : "#fff")};
   width: 100%;
   padding: 40px 15px;
   align-items: center;
   text-decoration: none;
-  -webkit-box-shadow: ${props =>
+  -webkit-box-shadow: ${(props) =>
     props.theme.mode === "dark"
       ? "0px 0px 2px 0px rgb(1, 9, 15)"
       : "0px 0px 2px 0px rgba(236, 236, 236, 1)"};
-  -moz-box-shadow: ${props =>
+  -moz-box-shadow: ${(props) =>
     props.theme.mode === "dark"
       ? "0px 0px 2px 0px rgb(1, 9, 15)"
       : "0px 0px 2px 0px rgba(236, 236, 236, 1)"};
-  box-shadow: ${props =>
+  box-shadow: ${(props) =>
     props.theme.mode === "dark"
       ? "0px 0px 2px 0px rgb(1, 9, 15)"
       : "0px 0px 2px 0px rgba(236, 236, 236, 1)"};
@@ -660,15 +669,15 @@ export const ColConTokStyle = styled.a`
   }
   &:hover {
     cursor: pointer;
-    -webkit-box-shadow: ${props =>
+    -webkit-box-shadow: ${(props) =>
       props.theme.mode === "dark"
         ? "0px 0px 7px 0px rgb(1, 9, 15)"
         : "0px 0px 7px 0px rgba(236, 236, 236, 1)"};
-    -moz-box-shadow: ${props =>
+    -moz-box-shadow: ${(props) =>
       props.theme.mode === "dark"
         ? "0px 0px 7px 0px rgb(1, 9, 15)"
         : "0px 0px 7px 0px rgba(236, 236, 236, 1)"};
-    box-shadow: ${props =>
+    box-shadow: ${(props) =>
       props.theme.mode === "dark"
         ? "0px 0px 7px 0px rgb(1, 9, 15)"
         : "0px 0px 7px 0px rgba(236, 236, 236, 1)"};
@@ -677,7 +686,7 @@ export const ColConTokStyle = styled.a`
     content: "";
     display: flex;
     position: absolute;
-    background: ${props =>
+    background: ${(props) =>
       props.theme.mode === "dark" ? "#4d5861" : "#ffffff"};
     top: 0;
     right: 0;
@@ -715,11 +724,11 @@ export const TokComingSoon = styled.a`
   line-height: 30px;
   font-weight: 600;
   text-decoration: none;
-  color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "#333333")};
+  color: ${(props) => (props.theme.mode === "dark" ? "#ffffff" : "#333333")};
   &:hover {
     cursor: pointer;
     text-decoration: none;
-    color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "#333333")};
+    color: ${(props) => (props.theme.mode === "dark" ? "#ffffff" : "#333333")};
   }
 `;
 export const ColHeadConStyle = styled.span`
@@ -757,7 +766,7 @@ export const ConArrowWrap = styled.span`
   padding: 0 5px;
 `;
 export const ColSubHeadConStyle = styled.span`
-  color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "#000000")};
+  color: ${(props) => (props.theme.mode === "dark" ? "#ffffff" : "#000000")};
   font-size: 16px;
   line-height: 26px;
   font-family: "Open Sans";
@@ -768,13 +777,13 @@ export const ColBtnConStyle = styled.button`
   margin: 0 15px;
   font-family: "Open Sans";
   border: 1px solid;
-  border-color: ${props =>
+  border-color: ${(props) =>
     props.theme.mode === "dark" ? "#ffffff" : "#c6dfff"};
   height: 48px;
   font-size: 22px;
   font-weight: bold;
   background: #ffffff;
-  color: ${props => (props.theme.mode === "dark" ? "#4c84ff" : "#434f66")};
+  color: ${(props) => (props.theme.mode === "dark" ? "#4c84ff" : "#434f66")};
   border-radius: 30px;
   &:hover {
     background: #4c84ff;
@@ -819,7 +828,7 @@ export const RadioGroupMainRow = styled.div`
   }
 `;
 export const ConversionLeftCol = styled(Col)`
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#01090f" : "#fff"};
   position: relative;
   > .ant-collapse {
@@ -834,13 +843,13 @@ export const ConversionLeftCol = styled(Col)`
         font-size: 16px;
         font-family: "Open Sans";
         font-weight: 600;
-        border-bottom: ${props =>
+        border-bottom: ${(props) =>
           props.theme.mode === "dark"
             ? "1px dashed #021b2b !important"
             : "1px dashed #d9d9d9 !important"};
         padding: 15px 20px 15px 15px;
         > .ant-collapse-arrow {
-          top: 0;
+          top: 20px;
           left: auto;
           right: 0;
           transform: rotate(90deg) translateY(0%);
@@ -900,7 +909,7 @@ export const ConversionLeftCol = styled(Col)`
     width: 0;
     height: 0;
     border: 15px solid transparent;
-    border-left-color: ${props =>
+    border-left-color: ${(props) =>
       props.theme.mode === "dark" ? "#01090f" : "#ffffff"};
     border-right: 0;
     margin-top: -15px;
@@ -927,7 +936,7 @@ export const ConversionRightSpan = styled.span`
   font-weight: 600;
   font-size: 14px;
   display: block;
-  color: ${props =>
+  color: ${(props) =>
     props.theme.mode === "dark" ? "#ffffff" : "rgba(57, 65, 77, 0.702)"};
   padding: 10px 0;
   text-transform: uppercase;
@@ -937,7 +946,7 @@ export const ConversionLeftSpan = styled.span`
   font-weight: 600;
   font-size: 14px;
   display: block;
-  color: ${props => (props.theme.mode === "dark" ? "#ffffff" : "#39414d")};
+  color: ${(props) => (props.theme.mode === "dark" ? "#ffffff" : "#39414d")};
   padding: 10px 0;
 `;
 export const CryptoFiatRow = styled.div`
@@ -961,5 +970,5 @@ export const CryptoFiatCol = styled.span`
 export const CryptoFiatText = styled.span`
   font-size: 20px;
   font-weight: 600;
-  color: ${props => (props.theme.mode === "dark" ? "#5d5d79" : "#000000")};
+  color: ${(props) => (props.theme.mode === "dark" ? "#5d5d79" : "#000000")};
 `;

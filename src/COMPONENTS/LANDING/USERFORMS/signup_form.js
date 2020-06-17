@@ -21,8 +21,9 @@ import {
   WelcomeText,
   EmailLabel,
   EmailReq,
-  PassReq
+  PassReq,
 } from "./login_form";
+import FaldaxLoader from "../../../SHARED-COMPONENTS/FaldaxLoader";
 let { GOOGLE_SITE_KEY } = globalVariables;
 const { Option } = Select;
 export const LoginWrap = styled.div`
@@ -281,7 +282,8 @@ class SignupForm extends Component {
       isSignDisable: false,
       recaptchaToken: null,
       loadCaptch: false,
-      language: "en"
+      language: "en",
+      loader: false,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.dispModal = this.dispModal.bind(this);
@@ -293,7 +295,7 @@ class SignupForm extends Component {
   }
 
   static propTypes = {
-    form: formShape
+    form: formShape,
   };
 
   /* Life Cycle Methods */
@@ -308,7 +310,8 @@ class SignupForm extends Component {
       } else {
         this.setState(
           {
-            recaptchaToken: null
+            recaptchaToken: null,
+            loader: false,
           },
           () => {
             this.onLoadRecaptcha();
@@ -343,7 +346,7 @@ class SignupForm extends Component {
   handleLangChange(value) {
     // console.log(`selected ${value}`);
     this.setState({
-      language: value
+      language: value,
     });
   }
   _resendVerLink() {
@@ -364,18 +367,18 @@ class SignupForm extends Component {
     loadReCaptcha(GOOGLE_SITE_KEY);
     this.setState(
       {
-        loadCaptch: false
+        loadCaptch: false,
       },
       () => {
         this.setState({
-          loadCaptch: true
+          loadCaptch: true,
         });
       }
     );
   }
   verifyCallback(recaptchaToken) {
     this.setState({
-      recaptchaToken
+      recaptchaToken,
     });
   }
   /* 
@@ -415,6 +418,7 @@ class SignupForm extends Component {
         if (this.state.recaptchaToken != null) {
           obj["g_recaptcha_response"] = this.state.recaptchaToken;
           this.setState({ loader: true });
+          window.ga("send", "event", "Faldax", "Signup");
           this.props.Signup(obj);
         } else {
           this.openNotificationWithIcon(
@@ -468,7 +472,7 @@ class SignupForm extends Component {
           document.querySelector("#email_icon_success").style.display = "none";
           document.querySelectorAll(".email_sign")[0].style.display = "block";
           this.setState({
-            email_msg: this.t("validations:invalid_email_error.message")
+            email_msg: this.t("validations:invalid_email_error.message"),
           });
         }
       } else {
@@ -482,7 +486,7 @@ class SignupForm extends Component {
             email_msg:
               this.t("login_page:email_address_text.message") +
               " " +
-              this.t("validations:field_is_required.message")
+              this.t("validations:field_is_required.message"),
           });
         }
       }
@@ -502,7 +506,7 @@ class SignupForm extends Component {
             this.setState({
               first_msg: `*${this.t(
                 "validations:only_number_not_allowed.message"
-              )}`
+              )}`,
             });
           } else {
             this.setState({ firstIcon: true });
@@ -518,7 +522,7 @@ class SignupForm extends Component {
             "inline-block";
           document.querySelectorAll(".first_sign")[0].style.display = "block";
           this.setState({
-            first_msg: `*${this.t("first_name_error.message")}`
+            first_msg: `*${this.t("first_name_error.message")}`,
           });
         }
       } else {
@@ -534,7 +538,7 @@ class SignupForm extends Component {
                 "edit_profile_titles:subhead_personal_form_first_name.message"
               ) +
               " " +
-              this.t("validations:field_is_required.message")
+              this.t("validations:field_is_required.message"),
           });
         }
       }
@@ -553,7 +557,7 @@ class SignupForm extends Component {
             this.setState({
               last_msg: `*${this.t(
                 "validations:only_number_not_allowed.message"
-              )}`
+              )}`,
             });
           } else {
             this.setState({ lastIcon: true });
@@ -569,7 +573,7 @@ class SignupForm extends Component {
             "inline-block";
           document.querySelectorAll(".last_sign")[0].style.display = "block";
           this.setState({
-            last_msg: `*${this.t("last_name_error.message")}`
+            last_msg: `*${this.t("last_name_error.message")}`,
           });
         }
       } else {
@@ -585,7 +589,7 @@ class SignupForm extends Component {
                 "edit_profile_titles:subhead_personal_form_last_name.message"
               ) +
               " " +
-              this.t("validations:field_is_required.message")
+              this.t("validations:field_is_required.message"),
           });
         }
       }
@@ -640,7 +644,7 @@ class SignupForm extends Component {
               "inline-block";
             document.querySelectorAll(".pass_sign")[0].style.display = "block";
             this.setState({
-              pass_msg: this.t("validations:space_in_password.message")
+              pass_msg: this.t("validations:space_in_password.message"),
             });
           } else {
             this.setState({ newpassIcon: false });
@@ -650,7 +654,7 @@ class SignupForm extends Component {
               "inline-block";
             document.querySelectorAll(".pass_sign")[0].style.display = "block";
             this.setState({
-              pass_msg: this.t("validations:password_error.message")
+              pass_msg: this.t("validations:password_error.message"),
             });
           }
         }
@@ -665,7 +669,7 @@ class SignupForm extends Component {
             pass_msg:
               this.t("login_page:password_text.message") +
               " " +
-              this.t("validations:field_is_required.message")
+              this.t("validations:field_is_required.message"),
           });
         }
       }
@@ -691,7 +695,7 @@ class SignupForm extends Component {
           this.setState({
             confirmPass_msg: `${this.t(
               "validations:password_mismatch_error.message"
-            )}`
+            )}`,
           });
         }
       } else {
@@ -704,7 +708,7 @@ class SignupForm extends Component {
           this.setState({
             confirmPass_msg: `${this.t(
               "validations:password_mismatch_error.message"
-            )}`
+            )}`,
           });
         } else {
           document.querySelector("#confirm_icon_fail").style.display = "none";
@@ -733,7 +737,7 @@ class SignupForm extends Component {
     notification[type]({
       message: head,
       description: desc,
-      duration: 5
+      duration: 5,
     });
   }
 
@@ -821,7 +825,7 @@ class SignupForm extends Component {
                           me.onChangeField(e.target.value, "firstname");
                         }, // have to write original onChange here if you need
                         initialValue: me.props.init,
-                        rules: [{ type: "string", required: true }]
+                        rules: [{ type: "string", required: true }],
                       })}
                     />
                     <FirstIconS
@@ -854,7 +858,7 @@ class SignupForm extends Component {
                           me.onChangeField(e.target.value, "lastname");
                         }, // have to write original onChange here if you need
                         initialValue: me.props.init,
-                        rules: [{ type: "string", required: true }]
+                        rules: [{ type: "string", required: true }],
                       })}
                     />
                     <LastIconS
@@ -883,7 +887,7 @@ class SignupForm extends Component {
                           me.onChangeField(e.target.value, "email");
                         }, // have to write original onChange here if you need
                         initialValue: me.props.init,
-                        rules: [{ type: "string", required: true }]
+                        rules: [{ type: "string", required: true }],
                       })}
                     />
                     <EmailIconS
@@ -914,7 +918,7 @@ class SignupForm extends Component {
                           me.onChangeField(e.target.value, "password");
                         }, // have to write original onChange here if you need
                         initialValue: me.props.init,
-                        rules: [{ type: "string", required: true, min: 8 }]
+                        rules: [{ type: "string", required: true, min: 8 }],
                       })}
                     />
                     {this.state.PasswordtypeEye === "password" ? (
@@ -957,7 +961,7 @@ class SignupForm extends Component {
                           me.onChangeField(e.target.value, "confirm_password");
                         }, // have to write original onChange here if you need
                         initialValue: me.props.init,
-                        rules: [{ type: "string", required: true, min: 8 }]
+                        rules: [{ type: "string", required: true, min: 8 }],
                       })}
                     />
                     {this.state.repeatEye === "password" ? (
@@ -1010,7 +1014,7 @@ class SignupForm extends Component {
                         onChange() {},
                         initialValue:
                           this.state.qP === "" ? me.props.init : this.state.qP,
-                        rules: [{ type: "string", required: false }]
+                        rules: [{ type: "string", required: false }],
                       })}
                     />
                   </div>
@@ -1052,6 +1056,7 @@ class SignupForm extends Component {
             verifyCallback={this.verifyCallback}
           />
         )}
+        {this.state.loader === true ? <FaldaxLoader /> : ""}
       </LoginWrap>
     );
   }
@@ -1063,13 +1068,13 @@ function mapStateToProps(state) {
     isSignUp:
       state.simpleReducer.isSignUp !== undefined
         ? state.simpleReducer.isSignUp
-        : undefined
+        : undefined,
   };
 }
 
-const mapDispatchToProps = dispatch => ({
-  Signup: values => dispatch(Signup(values)),
-  clearSignUp: () => dispatch(clearSignUp())
+const mapDispatchToProps = (dispatch) => ({
+  Signup: (values) => dispatch(Signup(values)),
+  clearSignUp: () => dispatch(clearSignUp()),
 });
 
 export default translate([
@@ -1079,5 +1084,5 @@ export default translate([
   "general_1",
   "validations",
   "security_tab",
-  "general"
+  "general",
 ])(connect(mapStateToProps, mapDispatchToProps)(createForm()(SignupForm)));
