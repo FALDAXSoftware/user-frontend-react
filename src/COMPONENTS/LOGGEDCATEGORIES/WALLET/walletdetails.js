@@ -17,7 +17,7 @@ import { translate } from "react-i18next";
 import { Container } from "STYLED-COMPONENTS/HOMEPAGE/style";
 import {
   ContactWrap,
-  GreyWrap
+  GreyWrap,
 } from "STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle";
 import {
   RightHead,
@@ -48,7 +48,7 @@ import {
   TransTable,
   TransTitle,
   LeftHead,
-  PlacedDiv
+  PlacedDiv,
 } from "STYLED-COMPONENTS/LOGGED_STYLE/walletStyle";
 
 /* Components */
@@ -71,7 +71,7 @@ let { API_URL, _AMAZONBUCKET, WordpressSiteURL } = globalVariables;
 const Option = Select.Option;
 
 const ContainerContact = styled(Container)`
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#041422" : "white"};
   border-radius: 5px;
   padding-right: 30px;
@@ -80,7 +80,7 @@ const ContainerContact = styled(Container)`
   min-height: 70vh;
 `;
 const ContainerContact2 = styled(ContainerContact)`
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#041422" : "white"};
   border-radius: 5px;
   padding-right: 30px;
@@ -125,7 +125,7 @@ class WalletDetails extends Component {
       withdrawRequests: [],
       is_active_asset: "",
       eth_for_erc_address: "",
-      eth_for_erc_status: ""
+      eth_for_erc_status: "",
     };
     this.changeCoins = this.changeCoins.bind(this);
     this._walletCreate = this._walletCreate.bind(this);
@@ -136,7 +136,10 @@ class WalletDetails extends Component {
 
   /* Life Cycle Methods */
   componentWillMount() {
-    if (!this.props.profileDetails.is_user_updated) {
+    if (
+      !this.props.profileDetails.is_user_updated &&
+      !this.props.profileDetails.is_allowed
+    ) {
       this.props.history.push("/");
     }
   }
@@ -154,7 +157,7 @@ class WalletDetails extends Component {
     if (this.props.walletDetails !== null) {
       var tableData = this.props.walletDetails.coins;
       if (tableData !== undefined) {
-        Object.keys(tableData).map(function(index, key) {
+        Object.keys(tableData).map(function (index, key) {
           if (tableData[index].USD !== undefined)
             total =
               total +
@@ -197,11 +200,11 @@ class WalletDetails extends Component {
           Accept: "application/json",
           "Content-Type": "application/json",
           "Accept-Language": localStorage["i18nextLng"],
-          Authorization: "Bearer " + this.props.isLoggedIn
+          Authorization: "Bearer " + this.props.isLoggedIn,
         },
         body: JSON.stringify({
-          coinReceive: coin_name[1]
-        })
+          coinReceive: coin_name[1],
+        }),
       })
     ).json();
     if (responseData.status == 200) {
@@ -264,8 +267,10 @@ class WalletDetails extends Component {
         eth_for_erc_status: responseData.eth_for_erc_status,
         eth_for_erc_address: responseData.eth_for_erc_address,
         fiatValue: fiat,
-        fiatCurrency: currency
+        fiatCurrency: currency,
       });
+    } else if (responseData.status == 401) {
+      this.props.history.push("/");
     } else if (responseData.status == 403) {
       this.openNotificationWithIcon("error", "Error", responseData.err);
       let tempValue2 = {};
@@ -291,7 +296,7 @@ class WalletDetails extends Component {
     notification[type]({
       message: head,
       description: desc,
-      duration: 5
+      duration: 5,
     });
   }
   /* 
@@ -299,18 +304,18 @@ class WalletDetails extends Component {
         This method is called when we close the modal.
     */
 
-  comingCancel = e => {
+  comingCancel = (e) => {
     /* console.log(e); */
     this.setState({
       withdraw: false,
       send: false,
-      panicEnabled: false
+      panicEnabled: false,
     });
   };
 
   async panicStatus() {
     this.setState({
-      loader: true
+      loader: true,
     });
     let responseData = await (
       await fetch(API_URL + `/check-panic-status`, {
@@ -319,17 +324,17 @@ class WalletDetails extends Component {
           Accept: "application/json",
           "Content-Type": "application/json",
           "Accept-Language": localStorage["i18nextLng"],
-          Authorization: "Bearer " + this.props.isLoggedIn
-        }
+          Authorization: "Bearer " + this.props.isLoggedIn,
+        },
       })
     ).json();
     if (responseData.status === 200) {
       this.setState({
-        panic_status: JSON.parse(responseData.data)
+        panic_status: JSON.parse(responseData.data),
       });
     } else {
       this.setState({
-        panic_status: false
+        panic_status: false,
       });
     }
   }
@@ -339,7 +344,7 @@ class WalletDetails extends Component {
         This method is called when we open the modal.
     */
 
-  showModal = e => {
+  showModal = (e) => {
     if (this.state.panic_status === true) {
       this.setState({ panicEnabled: true });
     } else {
@@ -383,13 +388,18 @@ class WalletDetails extends Component {
         Accept: "application/json",
         "Content-Type": "application/json",
         "Accept-Language": localStorage["i18nextLng"],
-        Authorization: "Bearer " + this.props.isLoggedIn
-      }
+        Authorization: "Bearer " + this.props.isLoggedIn,
+      },
     })
-      .then(response => response.json())
-      .then(responseData => {
+      .then((response) => response.json())
+      .then((responseData) => {
         if (responseData.status == 200) {
-          this.props.history.push("/wallet");
+          this.props.history.push({
+            pathname: "/wallet",
+            state: {
+              flag: true,
+            },
+          });
           this.openNotificationWithIcon(
             "success",
             this.t("validations:success_text.message"),
@@ -404,7 +414,7 @@ class WalletDetails extends Component {
         }
         this.setState({ loader: false });
       })
-      .catch(error => {
+      .catch((error) => {
         // console.log(error);
         this.openNotificationWithIcon(
           "error",
@@ -422,7 +432,7 @@ class WalletDetails extends Component {
       is_active_asset,
       eth_for_erc_address,
       eth_for_erc_status,
-      currencyConv /*,  walletDetails */
+      currencyConv /*,  walletDetails */,
     } = this.state;
     let FIAT = this.props.profileDetails.fiat;
     return (
@@ -455,7 +465,7 @@ class WalletDetails extends Component {
                                 value={defaultCoin}
                               >
                                 {this.props.walletDetails.activated_asset_lists.map(
-                                  function(temp) {
+                                  function (temp) {
                                     return (
                                       <Option value={temp.coin_code}>
                                         {temp.coin}
@@ -484,7 +494,7 @@ class WalletDetails extends Component {
                                 value={defaultCoin}
                               >
                                 {this.props.walletDetails.deactivated_asset_lists.map(
-                                  function(temp) {
+                                  function (temp) {
                                     return (
                                       <Option value={temp.coin_code}>
                                         {temp.coin}
@@ -537,7 +547,9 @@ class WalletDetails extends Component {
                               {/* {console.log(walletUserData)} */}
                               {Object.keys(walletUserData).length > 0 ? (
                                 <NumberFormat
-                                  value={walletUserData.balance.toFixed(8)}
+                                  value={precision(
+                                    parseFloat(walletUserData.balance)
+                                  )}
                                   displayType={"text"}
                                   thousandSeparator={true}
                                 />
@@ -559,10 +571,10 @@ class WalletDetails extends Component {
                                       : "\u20B9"
                                     : "\u20AC"
                                   : "$"}{" "}
-                                {parseFloat(
+                                {precision(
                                   currencyConv.quote["USD"].price *
                                     walletUserData.balance
-                                ).toFixed(8)}
+                                )}
                                 <AMT>{this.translateCurrency(FIAT)}</AMT>
                               </FIATAmt>
                             ) : (
@@ -574,14 +586,14 @@ class WalletDetails extends Component {
                           {this.t("wallet:in_order_text.message")}:{" "}
                           {walletUserData.balance >
                           walletUserData.placed_balance
-                            ? (
+                            ? precision(
                                 walletUserData.balance -
-                                walletUserData.placed_balance
-                              ).toFixed(8)
-                            : (
+                                  walletUserData.placed_balance
+                              )
+                            : precision(
                                 walletUserData.placed_balance -
-                                walletUserData.balance
-                              ).toFixed(8)}
+                                  walletUserData.balance
+                              )}
                         </PlacedDiv>
                       </Col>
                       <Col xxl={8} xl={12} lg={24} md={24}>
@@ -646,7 +658,7 @@ class WalletDetails extends Component {
                     coin_max_limit={this.state.max_limit}
                     isLoggedIn={this.props.isLoggedIn}
                     title="RECEIVE"
-                    comingCancel={e => this.comingCancel(e)}
+                    comingCancel={(e) => this.comingCancel(e)}
                     visible={this.state.withdraw}
                   />
                 ) : (
@@ -663,7 +675,7 @@ class WalletDetails extends Component {
                     coin_max_limit={this.state.max_limit}
                     isLoggedIn={this.props.isLoggedIn}
                     title="SEND"
-                    comingCancel={e => this.comingCancel(e)}
+                    comingCancel={(e) => this.comingCancel(e)}
                     visible={this.state.send}
                   />
                 ) : (
@@ -814,7 +826,7 @@ class WalletDetails extends Component {
           )}
         </GreyWrap>
         <PanicEnabled
-          comingCancel={e => this.comingCancel(e)}
+          comingCancel={(e) => this.comingCancel(e)}
           visible={this.state.panicEnabled}
         />
         <CommonFooter />
@@ -843,16 +855,62 @@ function mapStateToProps(state) {
     profileDetails:
       state.simpleReducer.profileDetails !== undefined
         ? state.simpleReducer.profileDetails.data[0]
-        : ""
+        : "",
   };
 }
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   walletBal: (isLoggedIn, currency) =>
     dispatch(walletBal(isLoggedIn, currency)),
   getAllCoins: (isLoggedIn, currency) =>
     dispatch(getAllCoins(isLoggedIn, currency)),
-  LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
+  LogoutUser: (isLoggedIn, user_id) =>
+    dispatch(LogoutUser(isLoggedIn, user_id)),
 });
 export default translate(["general_2", "wallet", "header"])(
   connect(mapStateToProps, mapDispatchToProps)(WalletDetails)
 );
+function precision(x) {
+  if (Math.abs(x) < 1.0) {
+    var e = parseInt(x.toString().split("e-")[1]);
+    if (e) {
+      x *= Math.pow(10, e - 1);
+      x = "0." + new Array(e).join("0") + x.toString().substring(2);
+    }
+  } else {
+    var e = parseInt(x.toString().split("+")[1]);
+    if (e > 20) {
+      e -= 20;
+      x /= Math.pow(10, e);
+      x += new Array(e + 1).join("0");
+    }
+  }
+  if (x.toString().split(".")[1] && x.toString().split(".")[1].length > 8) {
+    {
+      x = parseFloat(x).toFixed(8);
+      if (
+        x.toString()[x.toString().length - 1] == "0" &&
+        (x.toString().split(".")[1][0] != "0" ||
+          x.toString().split(".")[1][5] != "0")
+      ) {
+        return parseFloat(x);
+      } else if (x.toString().split(".")[1][7] == "0") {
+        if (x.toString().split(".")[1][6] == "0") {
+          if (x.toString().split(".")[1][5] == "0") {
+            if (x.toString().split(".")[1][4] == "0") {
+              if (x.toString().split(".")[1][3] == "0") {
+                if (x.toString().split(".")[1][2] == "0") {
+                  if (x.toString().split(".")[1][1] == "0") {
+                    if (x.toString().split(".")[1][0] == "0") {
+                      return parseFloat(x).toFixed(0);
+                    } else return parseFloat(x).toFixed(1);
+                  } else return parseFloat(x).toFixed(2);
+                } else return parseFloat(x).toFixed(3);
+              } else return parseFloat(x).toFixed(4);
+            } else return parseFloat(x).toFixed(5);
+          } else return parseFloat(x).toFixed(6);
+        } else return parseFloat(x).toFixed(7);
+      } else return parseFloat(x).toFixed(8);
+    }
+  }
+  return x;
+}

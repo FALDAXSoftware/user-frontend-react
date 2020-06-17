@@ -29,6 +29,8 @@ volumes: [
               if (namespace){
                 sh "ls -la"
                 sh "npm cache clear --force && npm install --no-shrinkwrap --update-binary" 
+                sh "npm install --save webpack@4.42.0"
+                sh "npm install --save  webpack-dev-server@3.10.3"
                 sh "npm run build"
                 sh "ls -la" 
                 if (env.BRANCH_NAME == 'master') {

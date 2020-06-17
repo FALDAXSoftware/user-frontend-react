@@ -17,16 +17,16 @@ const Option = Select.Option;
 const data = [
   {
     key: "1",
-    referral: "test1@tesst.com"
+    referral: "test1@tesst.com",
   },
   {
     key: "2",
-    referral: "test2@tesst.com"
+    referral: "test2@tesst.com",
   },
   {
     key: "3",
-    referral: "test3@test.com"
-  }
+    referral: "test3@test.com",
+  },
 ];
 const ParentWrap = styled.div`
   margin-top: 30px;
@@ -35,7 +35,7 @@ const Header_text = styled.div`
   font-size: 25px;
   font-family: "Open Sans";
   font-weight: 600;
-  color: ${props =>
+  color: ${(props) =>
     props.theme.mode === "dark" ? "white" : "rgb( 80, 80, 80 )"};
   line-height: 2.4;
   margin-top: 10px;
@@ -44,7 +44,7 @@ const Header_text = styled.div`
 const Ref_div = styled.div`
   margin: auto;
   width: 80%;
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "041422" : "#fcfcfc"};
   border: 1px solid #d6d6d6;
   margin-top: 40px;
@@ -63,7 +63,7 @@ const Ref_div = styled.div`
     margin-left: 10px;
     font-weight: 600;
     font-family: "Open Sans";
-    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   }
   .ColWrap {
     height: 80px;
@@ -71,20 +71,20 @@ const Ref_div = styled.div`
     justify-content: center;
     align-items: center;
     .ant-select-selection--single {
-      background: ${props => (props.theme.mode === "dark" ? "#041422" : "")};
+      background: ${(props) => (props.theme.mode === "dark" ? "#041422" : "")};
       .ant-select-selection-selected-value {
-        color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+        color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
       }
     }
     .ant-select-arrow {
-      color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+      color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
     }
   }
   .earnTitle {
     font-family: "Open Sans";
     font-size: 16px;
     font-weight: bold;
-    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   }
   @media (max-width: 767px) {
     .ColWrap {
@@ -127,7 +127,7 @@ export const RefInput = styled(Search)`
 `;
 const Coming = styled.div`
   margin-top: 50px;
-  color: ${props => (props.theme.mode === "dark" ? "white" : "black")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "black")};
   font-size: 32px;
   @media (max-width: 767px) {
     font-size: 20px;
@@ -152,14 +152,15 @@ const Ref_rightcol = styled(Col)``;
 const CollectButton = styled(Button)`
   margin-top: 10px;
   margin-bottom: 30px;
-  background: ${props => (props.theme.mode == "dark" ? "#041422" : "")};
-  color: ${props => (props.theme.mode == "dark" ? "white" : "")};
+  background: ${(props) => (props.theme.mode == "dark" ? "#041422" : "")};
+  color: ${(props) => (props.theme.mode == "dark" ? "white" : "")};
 `;
 const Right_value = styled.div`
   text-align: center;
   font-size: 20.01px;
   font-family: "Open sans";
-  color: ${props => (props.theme.mode === "dark" ? "white" : "rgb( 0, 0, 0 )")};
+  color: ${(props) =>
+    props.theme.mode === "dark" ? "white" : "rgb( 0, 0, 0 )"};
   font-weight: bold;
   -moz-transform: matrix(0.99999985149599, 0, 0, 0.99949238260564, 0, 0);
   -webkit-transform: matrix(0.99999985149599, 0, 0, 0.99949238260564, 0, 0);
@@ -190,7 +191,7 @@ const Ref_acc = styled.div`
   margin: auto;
   width: 80%;
   height: 140px;
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#041422" : "#ffffff"};
   border: 1px solid #d6d6d6;
   margin-top: 40px;
@@ -209,11 +210,11 @@ const Ref_acc = styled.div`
 const RefTable = styled(Table)`
   min-width: 600px;
   & .ant-table-tbody > tr:hover > td {
-    background-color: ${props =>
+    background-color: ${(props) =>
       props.theme.mode === "dark" ? "transparent" : "transparent"};
   }
   .ant-empty-description {
-    color: ${props => (props.theme.mode === "dark" ? "white" : "black")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "black")};
   }
 `;
 
@@ -234,7 +235,7 @@ class Referral extends Component {
       perCoinEarned: "",
       totalEarned: 0,
       leftOutRef: 0,
-      loader: false
+      loader: false,
     };
     this.coinsEarned = this.coinsEarned.bind(this);
     this.collectRefCoins = this.collectRefCoins.bind(this);
@@ -261,12 +262,12 @@ class Referral extends Component {
         if (this.props.theme === false)
           this.setState({
             searchCSS: "Input_search_night",
-            referTable: "referral-table"
+            referTable: "referral-table",
           });
         else
           this.setState({
             searchCSS: "INPUT_search",
-            referTable: "referral-table-night"
+            referTable: "referral-table-night",
           });
       }
     }
@@ -274,7 +275,9 @@ class Referral extends Component {
     if (this.props.profileDetails.referral_code !== undefined) {
       this.setState({
         referralLink:
-          TRADE_URL + "/signup?refID=" + this.props.profileDetails.referral_code
+          TRADE_URL +
+          "/signup?refID=" +
+          this.props.profileDetails.referral_code,
       });
     }
   }
@@ -286,26 +289,26 @@ class Referral extends Component {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        "Accept-Language": localStorage["i18nextLng"], 
-        Authorization: "Bearer " + this.props.isLoggedIn
-      }
+        "Accept-Language": localStorage["i18nextLng"],
+        Authorization: "Bearer " + this.props.isLoggedIn,
+      },
     })
-      .then(response => response.json())
-      .then(responseData => {
+      .then((response) => response.json())
+      .then((responseData) => {
         if (responseData.status == 200) {
           let fiat = profileDetails.fiat;
           let fields = [];
           let sum = 0;
           let sum2 = 0;
-          responseData.referredData.map(function(temp) {
+          responseData.referredData.map(function (temp) {
             let fiatAmt =
               parseFloat(temp.amount) * parseFloat(temp.quote[`${fiat}`].price);
             //Sum of all fiatAmt.
-            sum = sum + parseFloat(fiatAmt.toFixed(4));
+            sum = sum + precision(fiatAmt);
             //Object Taken for fields for dropdown
             let obj = {
               coin_name: temp.coin_name,
-              amount: temp.amount
+              amount: temp.amount,
             };
             //first time obj is pushed in fields
             if (fields.length == 0) {
@@ -315,7 +318,7 @@ class Referral extends Component {
               let sum3 = 0;
               let index = "";
               //map for fields to remove duplicates
-              fields.map(function(temp2, index) {
+              fields.map(function (temp2, index) {
                 if (temp2.coin_name == obj.coin_name) {
                   flag = true;
                   fields[index].amount = fields[index].amount + obj.amount;
@@ -327,19 +330,19 @@ class Referral extends Component {
               }
             }
           });
-          responseData.leftReferredData.map(function(temp) {
+          responseData.leftReferredData.map(function (temp) {
             let fiatAmt =
               parseFloat(temp.amount) * parseFloat(temp.quote[`${fiat}`].price);
-            fiatAmt = parseFloat(fiatAmt).toFixed(8);
+            fiatAmt = precision(fiatAmt);
             sum2 = parseFloat(sum2) + parseFloat(fiatAmt);
-            sum2 = parseFloat(sum2.toFixed(8));
+            sum2 = precision(sum2);
           });
           this.setState({
             referredData: responseData.data,
             referredCoin: fields,
-            totalEarned: sum.toFixed(8),
-            leftOutRef: sum2.toFixed(8),
-            loader: false
+            totalEarned: precision(sum),
+            leftOutRef: precision(sum2),
+            loader: false,
           });
         } else if (responseData.status == 403) {
           this.openNotificationWithIcon(
@@ -353,7 +356,7 @@ class Referral extends Component {
           this.props.LogoutUser(this.props.isLoggedIn, tempValue2);
         }
       })
-      .catch(error => {
+      .catch((error) => {
         this.setState({ loader: false });
       });
   }
@@ -365,7 +368,7 @@ class Referral extends Component {
     notification[type]({
       message: msg,
       description: desc,
-      duration: 2
+      duration: 2,
     });
   };
 
@@ -377,7 +380,7 @@ class Referral extends Component {
   SearchText() {
     document.querySelectorAll(
       ".ant-input-search-button"
-    )[0].onclick = function() {
+    )[0].onclick = function () {
       if (document.querySelectorAll(".INPUT_search > input")[0] !== undefined)
         document.querySelectorAll(".INPUT_search > input")[0].select();
       document.execCommand("copy");
@@ -390,14 +393,14 @@ class Referral extends Component {
   }
   coinsEarned(coin) {
     var coinAmt = 0;
-    this.state.referredCoin.map(function(temp) {
+    this.state.referredCoin.map(function (temp) {
       if (temp.coin_name == coin) {
         coinAmt = temp.amount;
       }
     });
     this.setState({
       coinSelected: coin,
-      perCoinEarned: coinAmt
+      perCoinEarned: coinAmt,
     });
   }
   collectRefCoins() {
@@ -407,12 +410,12 @@ class Referral extends Component {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        "Accept-Language": localStorage["i18nextLng"], 
-        Authorization: "Bearer " + this.props.isLoggedIn
-      }
+        "Accept-Language": localStorage["i18nextLng"],
+        Authorization: "Bearer " + this.props.isLoggedIn,
+      },
     })
-      .then(response => response.json())
-      .then(async responseData => {
+      .then((response) => response.json())
+      .then(async (responseData) => {
         if (responseData.status == 200) {
           this.openNotificationWithIcon(
             "success",
@@ -422,7 +425,7 @@ class Referral extends Component {
           this.setState(
             {
               coinSelected: "",
-              perCoinEarned: ""
+              perCoinEarned: "",
             },
             () => {
               this.getReferralData();
@@ -437,44 +440,53 @@ class Referral extends Component {
           this.setState({ loader: false });
         }
       })
-      .catch(error => {
+      .catch((error) => {
         this.setState({ loader: false });
       });
   }
   render() {
     const [{ referralLink, referTable, referredData }, { t }] = [
       this.state,
-      this.props
+      this.props,
     ];
     const columns1 = [
       {
         title: `${t("settings:table_head_coin.message")} ${t(
           "referral_table_head_name.message"
         )}`,
-        dataIndex: "coin_name"
+        dataIndex: "coin_name",
       },
       {
         title: `${t("general_1:amount_collected_text.message")}`,
-        dataIndex: "amount"
-      }
+        dataIndex: "amount",
+      },
     ];
     const columns = [
       {
         title: "    ",
         dataIndex: "profile_pic",
-        render: text => (
+        render: (text) => (
           <img width="40px" height="40px" src={`${_AMAZONBUCKET}${text}`} />
-        )
+        ),
       },
       {
         title: `${t("referral_table_head_name.message")}`,
-        dataIndex: "full_name"
+        dataIndex: "full_name",
       },
       {
         title: `${t("referral_table_head_accounts_referred.message")}`,
-        dataIndex: "email"
-      }
+        dataIndex: "email",
+      },
     ];
+    let fiat = this.props.profileDetails.fiat;
+    let fiatDisplay;
+    if (fiat == "USD") {
+      fiatDisplay = t("settings:currency_usd.message");
+    } else if (fiat == "INR") {
+      fiatDisplay = t("edit_profile_titles:currency_inr.message");
+    } else if (fiat == "EUR") {
+      fiatDisplay = t("edit_profile_titles:currency_eur.message");
+    }
     return (
       <ParentWrap>
         <Header_text>{t("referral_head.message")}</Header_text>
@@ -493,7 +505,7 @@ class Referral extends Component {
                     placeholder={t("edit_profile_titles:head_referral.message")}
                     enterButton={t("copy_btn.message")}
                     size="large"
-                    onSearch={value => this.SearchText()}
+                    onSearch={(value) => this.SearchText()}
                   />
                 </CopiedText>
               </CopyToClipboard>
@@ -501,7 +513,7 @@ class Referral extends Component {
             <Ref_rightcol sm={24} md={6}>
               <Right_text>{t("referral_text2.message")}</Right_text>
               <Right_value>
-                {this.state.leftOutRef} {this.props.profileDetails.fiat}
+                {this.state.leftOutRef} {fiatDisplay}
               </Right_value>
               <CollectButton
                 onClick={() => {
@@ -524,7 +536,7 @@ class Referral extends Component {
                       value={this.state.coinSelected}
                       className="coin-value"
                     >
-                      {this.state.referredCoin.map(function(temp) {
+                      {this.state.referredCoin.map(function (temp) {
                         return (
                           <Option value={temp.coin_name}>
                             {temp.coin_name}
@@ -542,7 +554,7 @@ class Referral extends Component {
                     {this.state.perCoinEarned !== "" ? (
                       <span className="amtSpan">
                         {" "}
-                        {this.state.perCoinEarned.toFixed(8)}{" "}
+                        {precision(this.state.perCoinEarned)}{" "}
                         {this.state.coinSelected}
                       </span>
                     ) : (
@@ -588,8 +600,9 @@ class Referral extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
+const mapDispatchToProps = (dispatch) => ({
+  LogoutUser: (isLoggedIn, user_id) =>
+    dispatch(LogoutUser(isLoggedIn, user_id)),
 });
 
 function mapStateToProps(state) {
@@ -598,7 +611,7 @@ function mapStateToProps(state) {
     profileDetails:
       state.simpleReducer.profileDetails !== undefined
         ? state.simpleReducer.profileDetails.data[0]
-        : ""
+        : "",
   };
 }
 
@@ -607,5 +620,50 @@ export default translate([
   "edit_profile_titles",
   "conversion",
   "settings",
-  "general_1"
+  "general_1",
 ])(connect(mapStateToProps, mapDispatchToProps)(Referral));
+function precision(x) {
+  if (Math.abs(x) < 1.0) {
+    var e = parseInt(x.toString().split("e-")[1]);
+    if (e) {
+      x *= Math.pow(10, e - 1);
+      x = "0." + new Array(e).join("0") + x.toString().substring(2);
+    }
+  } else {
+    var e = parseInt(x.toString().split("+")[1]);
+    if (e > 20) {
+      e -= 20;
+      x /= Math.pow(10, e);
+      x += new Array(e + 1).join("0");
+    }
+  }
+  if (x.toString().split(".")[1] && x.toString().split(".")[1].length > 8) {
+    {
+      x = parseFloat(x).toFixed(8);
+      if (
+        x.toString()[x.toString().length - 1] == "0" &&
+        (x.toString().split(".")[1][0] != "0" ||
+          x.toString().split(".")[1][5] != "0")
+      ) {
+        return parseFloat(x);
+      } else if (x.toString().split(".")[1][7] == "0") {
+        if (x.toString().split(".")[1][6] == "0") {
+          if (x.toString().split(".")[1][5] == "0") {
+            if (x.toString().split(".")[1][4] == "0") {
+              if (x.toString().split(".")[1][3] == "0") {
+                if (x.toString().split(".")[1][2] == "0") {
+                  if (x.toString().split(".")[1][1] == "0") {
+                    if (x.toString().split(".")[1][0] == "0") {
+                      return parseFloat(x).toFixed(0);
+                    } else return parseFloat(x).toFixed(1);
+                  } else return parseFloat(x).toFixed(2);
+                } else return parseFloat(x).toFixed(3);
+              } else return parseFloat(x).toFixed(4);
+            } else return parseFloat(x).toFixed(5);
+          } else return parseFloat(x).toFixed(6);
+        } else return parseFloat(x).toFixed(7);
+      } else return parseFloat(x).toFixed(8);
+    }
+  }
+  return x;
+}
