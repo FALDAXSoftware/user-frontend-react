@@ -715,11 +715,11 @@ class Dashboard extends Component {
                         cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
                         isDraggable={
                           this.state.editState &&
-                          this.state.currentTemplateManagerTab == 1
+                          this.state.currentTemplateManagerTab == 1 && !this.state.allTemplates[this.state.currentTemplateIndex]?.inbuilt
                         }
                         isResizable={
                           this.state.editState &&
-                          this.state.currentTemplateManagerTab == 1
+                          this.state.currentTemplateManagerTab == 1 && !this.state.allTemplates[this.state.currentTemplateIndex]?.inbuilt
                         }
                         onLayoutChange={(layout, layouts) =>
                           this.onLayoutChange(layout, layouts)
