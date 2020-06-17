@@ -319,6 +319,29 @@ table .ant-table-tbody > tr > td {
 .world-map .ant-modal-body {
   padding-bottom: 50px;
 }
+.simple-maps.template_manage .ant-modal-body {
+  /* height: calc(100vh - 350px); */
+}
+.simple-maps.template_manage .ant-modal-header {
+  height: auto;
+}
+.simple-maps.template_manage .ant-modal-header .ant-modal-title div span {
+  padding: 20px 0;
+  display: inherit;
+  font-size: 20px;
+  text-transform: uppercase;
+}
+.templateSettingMenu .templates .ant-dropdown-menu-submenu-title {
+  padding-left: 26px;
+}
+.templateSettingMenu .templates .ant-dropdown-menu-submenu-title span {
+  left: 0;
+  transform: rotate(180deg);
+  right: auto;
+}
+.templateActive {
+  background-color: #e6f7ff;
+}
 @media (max-width: 425px) {
   .simple-maps img:first-child {
     width: 50px;
@@ -506,6 +529,19 @@ table .ant-table-tbody > tr > td {
 .trade-view-conversion input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+.counter_main_div {
+  text-align: center;
+}
+.counter_main_div div {
+  font-size: 24px;
+  margin: 0 0 20px 0;
+}
+.counter_main_div .ant-progress-inner {
+  margin: 0;
+}
+.reject_reason_div {
+  width: 100% !important;
 }
 @media (max-width: 991px) {
   #profile-year {
@@ -1050,10 +1086,24 @@ td.column-Email {
 .text-danger-validation {
   color: red;
 }
+.tier-text-danger-validation {
+  color: red;
+  text-align: left;
+  padding: 5px 0 0 0;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+.tier-text-danger-validation.red {
+  margin: 0 0 20px 0;
+}
 .validation-message {
   color: red;
 }
-
+.trade-action-validation {
+  color: red;
+  font-size: 13px;
+}
 /* React Date Picker Css */
 .datePicker .react-datepicker-wrapper {
   max-width: 450px;
@@ -1219,7 +1269,7 @@ td.column-Email {
 
 /*DashBoard Activity table CSS  */
 .dash-date {
-  width: 145px;
+  /* width: 145px; */
 }
 
 /* Depth Chart CSS */
@@ -1270,7 +1320,7 @@ div.scrollbar>div:nth-child(3){
   border-right: none;
   border-bottom: none;
   padding: 2px;
-  background-color: white; 
+  background-color: white;
 }
 div.scrollbar.news>div:nth-child(3){
   border: none !important;
@@ -1371,4 +1421,42 @@ div.scrollbar>div:nth-child(3)>div{
 
 .grecaptcha-badge:hover {
   width: 256px !important;
+}
+.lang-menu .ant-dropdown-menu-item .lang-menu-item {
+  display: flex;
+  align-items: center;
+}
+.lang-menu .ant-dropdown-menu-item .lang-menu-item img {
+  margin: 0 5px 0 0;
+}
+.selectedIns {
+  background-color: #1890ff21;
+}
+#depthChartContainer {
+  width: 95%;
+  height: 100%;
+}
+
+.upgrade_popup {
+  width: 35% !important;
+}
+@media (max-width: 1500px) {
+  .upgrade_popup {
+    width: 50% !important;
+  }
+}
+@media (max-width: 1024px) {
+  .upgrade_popup {
+    width: 60% !important;
+  }
+}
+@media (max-width: 767px) {
+  .upgrade_popup {
+    width: 70% !important;
+  }
+}
+@media (max-width: 600px) {
+  .upgrade_popup {
+    width: 95% !important;
+  }
 }

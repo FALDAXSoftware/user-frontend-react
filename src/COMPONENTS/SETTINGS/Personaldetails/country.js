@@ -10,14 +10,14 @@ import { translate } from "react-i18next";
 /* components */
 import { globalVariables } from "Globals.js";
 
-/* let { API_URL } = globalVariables; */
+let { API_URL } = globalVariables;
 const Option = Select.Option;
 /* var Countries = []; */
 
 const Country = styled.span`
   font-size: 14.007px;
   font-family: "Open Sans";
-  color: ${props =>
+  color: ${(props) =>
     props.theme.mode === "dark"
       ? "rgba( 152, 171, 215, 0.502 )"
       : "rgba( 80, 80, 80, 0.502 )"};
@@ -97,8 +97,11 @@ class CountryPick extends Component {
       theme: "",
       states: [],
       cities: [],
-      phone_number: ""
+      phone_number: "",
+      countryList: "",
+      country_json_id: "",
     };
+    this.getallCountriesData = this.getallCountriesData.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeState = this.handleChangeState.bind(this);
     this.handleChangeCity = this.handleChangeCity.bind(this);
@@ -108,6 +111,8 @@ class CountryPick extends Component {
 
   /* Life-Cycle Methods */
   componentDidMount() {
+    this.getallCountriesData();
+    console.log("country mount%%%", this.state.countryList);
     var countrySelected = CountryData.getCountryById(this.props.country_id - 1);
     let country_code = "";
     let phoneCode = "";
@@ -123,13 +128,13 @@ class CountryPick extends Component {
       country_json_id: this.props.country_id,
       country_code,
       phoneCode,
-      phone_number: this.props.phone_number
+      phone_number: this.props.phone_number,
     });
   }
   componentWillReceiveProps(newprops) {
     if (this.props.country_id != newprops.country_id && newprops.country_id) {
       this.setState({
-        country_json_id: newprops.country_id
+        country_json_id: newprops.country_id,
       });
     }
     if (this.props != newprops) {
@@ -147,7 +152,7 @@ class CountryPick extends Component {
         state_selected: newprops.state,
         city_selected: newprops.city,
         country_code,
-        phoneCode
+        phoneCode,
       });
     }
   }
@@ -160,7 +165,6 @@ class CountryPick extends Component {
     var newPosition = Number(position.key) - 1;
     var countrySelected = CountryData.getCountryById(newPosition);
     // console.log(countrySelected);
-
     let country_code = "";
     let phoneCode = "";
     let country_json_id = "";
@@ -178,7 +182,7 @@ class CountryPick extends Component {
         country_code,
         phoneCode,
         country_json_id,
-        phone_number: ""
+        phone_number: "",
         // stateID: null,
         // countryID: newPosition,
         // states
@@ -212,7 +216,7 @@ class CountryPick extends Component {
         state_selected: value,
         city_selected: "",
         country_code,
-        phoneCode
+        phoneCode,
 
         // country_selected: country,
         // stateID: newPosition,
@@ -242,7 +246,7 @@ class CountryPick extends Component {
     // this.props.onCountryChange(country, state, value);
   }
   getCountryId(countryName) {
-    let allCountries = CountryData.getAllCountries();
+    let allCountries = this.state.countryList;
     for (let index = 0; index < allCountries.length; index++) {
       const element = allCountries[index];
       if (countryName === element.name) {
@@ -276,9 +280,29 @@ class CountryPick extends Component {
       this.state.city_selected,
       this.state.country_code,
       this.state.phoneCode,
-      this.state.phone_number
+      this.state.phone_number,
+      this.state.country_json_id
     );
   };
+  getallCountriesData() {
+    fetch(API_URL + "/get-countries", {
+      method: "get",
+      headers: {
+        Accept: "application/json",
+        "Accept-Language": localStorage["i18nextLng"],
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + this.props.isLoggedIn,
+      },
+    })
+      .then((response) => response.json())
+      .then((responseData) => {
+        console.log("countrieslist%%%%", responseData.data);
+        this.setState({
+          countryList: responseData.data,
+        });
+      })
+      .catch((error) => {});
+  }
   render() {
     let country, state, city;
     const { t } = this.props;
@@ -298,7 +322,8 @@ class CountryPick extends Component {
       }
 
     // ----------
-    let allCountries = CountryData.getAllCountries();
+    // let allCountries = CountryData.getAllCountries();
+    let allCountries = this.state.countryList;
 
     let countryId = this.getCountryId(this.state.country_selected);
     let allStates = [];
@@ -315,8 +340,8 @@ class CountryPick extends Component {
           allCities = [
             {
               id: selectedState,
-              name: this.state.state_selected
-            }
+              name: this.state.state_selected,
+            },
           ];
         }
         selectedCity = this.state.city_selected;
@@ -350,11 +375,12 @@ class CountryPick extends Component {
                   .indexOf(input.toLowerCase()) >= 0
               }
             >
-              {allCountries.map((country, index) => (
-                <Option key={country.id} value={country.name}>
-                  {country.name}
-                </Option>
-              ))}
+              {allCountries &&
+                allCountries.map((country, index) => (
+                  <Option key={country.id} value={country.name}>
+                    {country.name}
+                  </Option>
+                ))}
             </SelectS>
           </Col>
           <Col sm={24} md={8} xl={8} xxl={8}>

@@ -11,11 +11,17 @@ import {
   TierAnswerTable,
   TierExamplesHead,
   TierExamplesSubHead,
-  TierImageWrap
+  TierImageWrap,
 } from "../../STYLED-COMPONENTS/TIER/tierStyle";
 import { Link } from "react-router-dom";
+import { translate } from "react-i18next";
 
 class TierUpgradeInfoImageRequirements extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+    this.t = this.props.t;
+  }
   render() {
     return (
       <div>
@@ -24,134 +30,125 @@ class TierUpgradeInfoImageRequirements extends React.Component {
           <TierInfoInnerWrap>
             <TierInfoContent>
               <TierInfoHead>
-                <b>Image requirements</b> for ID documents
+                <b>{this.t("image_requirements_text.message")}</b>{" "}
+                {this.t("for_id_documents_text.message")}
               </TierInfoHead>
               <p>
-                For Intermediate and Pro level verification, we only accept{" "}
+                {this.t("for_intermediate_text.message")}{" "}
                 <Link to="/tier-upgrade-information">
-                  valid government-issued ID documents.
+                  {this.t("valid_id_documents_text.message")}
                 </Link>
               </p>
-              <TierQuestion>What is an acceptable ID scan/photo?</TierQuestion>
+              <TierQuestion>
+                {this.t("acceptable_id_scan_text.message")}?
+              </TierQuestion>
               <TierAnswerTable>
                 <thead>
                   <tr>
-                    <th>Image requirements</th>
-                    <th>Reasons for rejection</th>
+                    <th>{this.t("image_requirements_text.message")}</th>
+                    <th>{this.t("reason_for_rejection_text.message")}</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td>✓ Full color image</td>
-                    <td>✘ Image is black & white (or grayscale)</td>
+                    <td>✓ {this.t("full_color_image_text.message")}</td>
+                    <td>✘ {this.t("image_black_and_white_text.message")}</td>
                   </tr>
                   <tr>
-                    <td>✓ All details on ID are readable</td>
+                    <td>✓ {this.t("all_details_on_id_text.message")}</td>
                     <td>
-                      <span>✘ Image has a watermark</span>
-                      <span>✘ Image is blurred</span>
-                      <span>✘ Image has any other obfuscation</span>
+                      <span>✘ {this.t("image_watermark_text.message")}</span>
+                      <span>✘ {this.t("image_blurred_text.message")}</span>
+                      <span>✘ {this.t("image_obfuscation_text.message")}</span>
                     </td>
                   </tr>
                   <tr>
-                    <td>✓ ID is well lit</td>
-                    <td>
-                      ✘ ID details are obscured by light glare or reflections
-                      (be careful with flash!)
-                    </td>
+                    <td>✓ {this.t("id_is_well_lit_text.message")}</td>
+                    <td>✘ {this.t("id_glare_reflections_text.message")}</td>
                   </tr>
                   <tr>
-                    <td>✓ ID is in good shape</td>
-                    <td>✘ ID is torn, badly damaged, or has holes</td>
+                    <td>✓ {this.t("id_in_good_shape_text.message")}</td>
+                    <td>✘ {this.t("id_torn_holes_text.message")}</td>
                   </tr>
                   <tr>
-                    <td>✓ ID is in upright position</td>
-                    <td>✘ ID is rotated sideways or upside-down</td>
+                    <td>✓ {this.t("id_upright_text.message")}</td>
+                    <td>✘ {this.t("id_rotated_text.message")}</td>
                   </tr>
                   <tr>
-                    <td>✓ ID occupies most of the image</td>
-                    <td>✘ Too much space around the ID</td>
+                    <td>✓ {this.t("id_occupies_most_image_text.message")}</td>
+                    <td>✘ {this.t("too_much_space_text.message")}</td>
                   </tr>
                   <tr>
-                    <td>
-                      ✓ Background is visible all around the ID by 1-2 cm
-                      (1/2"-1")
-                    </td>
-                    <td>✘ ID edge is cropped (even if "just a little bit")</td>
+                    <td>✓ {this.t("background_visible_text.message")}</td>
+                    <td>✘ {this.t("id_edge_cropped_text.message")}</td>
                   </tr>
                 </tbody>
               </TierAnswerTable>
-              <p>
-                In addition to the points above, US clients' IDs must meet the
-                following requirements:
-              </p>
+              <p>{this.t("id_must_meet_requirement_text.message")}:</p>
               <TierAnswerTable>
                 <thead>
                   <tr>
-                    <th>US Image requirements</th>
-                    <th>Reasons for rejection</th>
+                    <th>{this.t("us_image_requirement_text.message")}</th>
+                    <th>{this.t("reason_for_rejection_text.message")}</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td>
-                      ✓ Background is a contrasting color (e.g. dark for light
-                      colored ID)
-                    </td>
-                    <td>✘ Background is the same or similar color as the ID</td>
+                    <td>✓ {this.t("background_color_text.message")}</td>
+                    <td>✘ {this.t("similar_color_id_text.message")}</td>
                   </tr>
                 </tbody>
               </TierAnswerTable>
               <TierQuestion className="padding-btm">
-                How can I take a good scan/photo?
+                {this.t("good_scan_photo_text.message")}?
               </TierQuestion>
-              <p>
-                Click here for tips on how to get the scan/photo just right.
-              </p>
-              <p>
-                You will also need to make sure that your photo/scan meets our
-                technical parameters.{" "}
-              </p>
-              <TierExamplesHead>Good examples</TierExamplesHead>
+              <p>{this.t("click_here_for_tips_text.message")}</p>
+              <p>{this.t("technical_parameters_text.message")}</p>
+              <TierExamplesHead>
+                {this.t("good_examples_text.message")}
+              </TierExamplesHead>
               <TierExamplesSubHead className="green">
-                An ideal scan/photo of an ID card
+                {this.t("ideal_photo_scan_text.message")}
               </TierExamplesSubHead>
               <TierImageWrap>
                 <img src="/images/01.png" />
               </TierImageWrap>
               <TierExamplesSubHead className="green">
-                An ideal scan/photo of a passport
+                {this.t("ideal_scan_passport_text.message")}
               </TierExamplesSubHead>
               <TierImageWrap>
                 <img src="/images/07-passport.png" />
               </TierImageWrap>
-              <TierExamplesHead>Unacceptable examples</TierExamplesHead>
+              <TierExamplesHead>
+                {this.t("unacceptable_examples_text.message")}
+              </TierExamplesHead>
               <TierExamplesSubHead className="red">
-                ID is too blurry
+                {this.t("id_too_blurry_text.message")}
               </TierExamplesSubHead>
               <TierImageWrap>
                 <img src="/images/02 -blurry.png" />
               </TierImageWrap>
               <TierExamplesSubHead className="red">
-                ID edges are not visible
+                {this.t("id_edges_not_visible_text.message")}
               </TierExamplesSubHead>
               <TierImageWrap>
                 <img src="/images/03-edges .png" />
               </TierImageWrap>
               <TierExamplesSubHead className="red">
-                Even a little bit of crop is <b>not OK...</b>
+                {this.t("little_bit_crop_text.message")}
+                <b>{this.t("not_ok_text.message")}</b>
               </TierExamplesSubHead>
               <TierImageWrap>
                 <img src="/images/04-little bit of crop.png" />
               </TierImageWrap>
               <TierExamplesSubHead className="red">
-                ID is not in color
+                {this.t("id_not_in_color_text.message")}
               </TierExamplesSubHead>
               <TierImageWrap>
                 <img src="/images/05-BLACK-WHITE.png" />
               </TierImageWrap>
               <TierExamplesSubHead className="red">
-                Background is not contrasting
+                {this.t("backgrount_not_contrast_text.message")}
               </TierExamplesSubHead>
               <TierImageWrap>
                 <img src="/images/06-Background is not contrasting.png" />
@@ -165,4 +162,8 @@ class TierUpgradeInfoImageRequirements extends React.Component {
   }
 }
 
-export default TierUpgradeInfoImageRequirements;
+export default translate([
+  "static_info_pages",
+  "identity_verification",
+  "tiers",
+])(TierUpgradeInfoImageRequirements);

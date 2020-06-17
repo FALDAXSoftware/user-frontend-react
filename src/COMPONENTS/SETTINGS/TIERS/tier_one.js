@@ -15,8 +15,10 @@ import Tier from "../tier";
 import Navigation from "COMPONENTS/NAVIGATIONS/loggednavigation";
 import FooterHome from "COMPONENTS/LANDING/FOOTERS/footer_home";
 import { translate } from "react-i18next";
+import { withRouter } from "react-router-dom";
 // import CountryAccess from "../../../SHARED-COMPONENTS/CountryAccess";
 import CompleteProfile from "../../../SHARED-COMPONENTS/completeProfile";
+import { getProfileDataAction } from "../../../ACTIONS/SETTINGS/settingActions";
 
 const Step = Steps.Step;
 
@@ -25,29 +27,34 @@ export const TierWrapper = styled.div`
   padding-top: 100px;
   padding-bottom: 30px;
   min-height: calc(100vh - 380px);
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#01090f" : "#f5f6fa"};
+  color: ${(props) =>
+    props.theme.mode === "dark" ? "white" : "rgb( 80, 80, 80 )"};
 `;
 const KYCWrap = styled.div`
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#041422" : "#ffffff"};
   margin: auto;
   width: 95%;
   border-radius: 7px;
   padding: 50px 0;
+  color: ${(props) =>
+    props.theme.mode === "dark" ? "white" : "rgb( 80, 80, 80 )"};
 `;
-const KYCHead = styled.div`
-  font-size: 20px;
+export const KYCHead = styled.div`
+  font-size: 26px;
   font-family: "Open Sans";
-  font-weight: 600;
-  color: ${props =>
+  font-weight: 700;
+  color: ${(props) =>
     props.theme.mode === "dark" ? "white" : "rgb( 80, 80, 80 )"};
   text-align: center;
+  padding: 0 0 50px 0;
 `;
 const KYCProgress = styled.div`
   width: 26%;
   text-align: left;
-  margin-top: 50px;
+  margin-top: 0;
   margin-left: auto;
   margin-right: auto;
   & .ant-steps-item-icon {
@@ -64,18 +71,18 @@ const KYCProgress = styled.div`
     display: none;
   }
 `;
-const DoneWrap = styled.div`
+export const DoneWrap = styled.div`
   text-align: center;
   > .icon-display {
     font-size: 50px;
   }
 `;
-const KycSucc = styled.div`
+export const KycSucc = styled.div`
   width: 80%;
   margin: auto;
   font-size: 20px;
   font-family: "Open Sans";
-  color: ${props =>
+  color: ${(props) =>
     props.theme.mode === "dark" ? "white" : "rgb( 80, 80, 80 )"};
   margin-top: 20px;
 `;
@@ -100,16 +107,33 @@ class TierOne extends React.Component {
       nexts: 0,
       is_kyc_done: false,
       countryChange: null,
-      kycData: {}
+      kycData: {},
       // countryAccess: false
     };
+    this.t = this.props.t;
   }
 
   /* 
         Page: /editProfile --> KYC
         It is called when next button is clicked and proceed to next step. 
     */
+  componentWillMount() {
+    if (
+      this.props.location.state === undefined ||
+      this.props.location.state.flag === "" ||
+      this.props.location.state.flag === null
+    ) {
+      this.props.history.push("/");
+    }
+    if (
+      this.props.profileDetails.account_tier !== 0 &&
+      !this.props.profileDetails.is_user_updated
+    ) {
+      this.props.history.push("/");
+    }
+  }
   componentDidMount() {
+    this.props.getProfileDataAction(this.props.isLoggedIn);
     // console.log(
     //   "^^tier^",
     //   this.props.profileDetails.is_user_updated,
@@ -124,11 +148,6 @@ class TierOne extends React.Component {
     //   });
     // }
   }
-  // comingCancel = e => {
-  //   this.setState({
-  //     countryAccess: false
-  //   });
-  // };
   next_step(a, type = null, countryChange = null) {
     // console.log("--------------------->", a, type, countryChange);
     this.setState({ next: a });
@@ -161,138 +180,108 @@ class TierOne extends React.Component {
     const { next /* , is_kyc_done  */ } = this.state;
     const { t } = this.props;
     return (
-      // <KYC_wrap>
-      //     {(this.props.is_kyc_done !== true && next !== 5) ?
-      //         <div>
-      //             <KYC_head>
-      //                 Identity Verification
-      //             </KYC_head>
-      //             <KYC_progress>
-      //                 <Steps direction="horizontal" size="small" current={this.state.nexts}>
-      //                     <Step />
-      //                     <Step />
-      //                     <Step />
-      //                 </Steps>
-      //             </KYC_progress>
-      //         </div>
-      //         : <Done_wrap><Icon style={{ fontSize: "50px" }} type="check-circle" theme="twoTone" twoToneColor="#52c41a" /> <Kyc_succ><span><b>Thank you.</b> <br />All of your information has been received and will be reviewed by our Identity Verification team. You will receive a notification and an email within 24 hours informing you of our decision. If you don't hear anything after 24 hours, please visit the support page to let us know.</span></Kyc_succ></Done_wrap>}
-      //     {(this.state.next===0 && this.props.is_kyc_done !== true) ?
-      //         <KYCForm back_step={(a) => this.back_step(a)} next_step={(a, type, ssn) => this.next_step(a, type, ssn)} /> : ""
-      //     }
-      //     {(next===1 && is_kyc_done !== true) ? <IDselect kycData={this.state.kycData} {...this.props} countryFlag={this.state.countryChange} back_step={(a) => this.back_step(a)} next_step={(a, type) => this.next_step(a, type)} /> : ""}
-      //     {(next===2 && is_kyc_done !== true) ? <SSN kycData={this.state.kycData} back_step={(a) => this.back_step(a)} next_step={(a, type) => this.next_step(a, type)} /> : ""}
-      //     {(next===3 && is_kyc_done !== true) ? <DocUpload kycData={this.state.kycData} docText={this.state.docType} back_step={(a) => this.back_step(a)} next_step={(a) => this.next_step(a)} /> : ""}
-      // </KYC_wrap>
       <div>
-        {/* <Navigation /> */}
-        {/* <TierWrapper> */}
-        <KYCWrap>
-          {this.props.is_kyc_done === 0 && (
-            <div>
-              {next !== 5 && (
-                <div>
-                  <KYCHead>
-                    {t(
-                      "edit_profile_titles:head_identity_verification.message"
-                    )}
-                  </KYCHead>
-                  <KYCProgress>
-                    <Steps
-                      direction="horizontal"
-                      size="small"
-                      current={this.state.nexts}
-                    >
-                      <Step />
-                      <Step />
-                      <Step />
-                    </Steps>
-                  </KYCProgress>
-                </div>
-              )}
-              {next === 0 && (
-                <KYCForm
-                  back_step={a => this.back_step(a)}
-                  next_step={(a, type, ssn) => this.next_step(a, type, ssn)}
+        <Navigation />
+        <TierWrapper>
+          <KYCWrap>
+            {this.props.is_kyc_done === 0 && (
+              <div>
+                {next !== 5 && (
+                  <div>
+                    <KYCHead>
+                      {this.t("tiers:tier_text.message")} 1{" "}
+                      {this.t("tiers:upgrade_text.message")}
+                    </KYCHead>
+                    <KYCProgress>
+                      <Steps
+                        direction="horizontal"
+                        size="small"
+                        current={this.state.nexts}
+                      >
+                        <Step />
+                        <Step />
+                        <Step />
+                      </Steps>
+                    </KYCProgress>
+                  </div>
+                )}
+                {next === 0 && (
+                  <KYCForm
+                    back_step={(a) => this.back_step(a)}
+                    next_step={(a, type, ssn) => this.next_step(a, type, ssn)}
+                  />
+                )}
+                {next === 1 && (
+                  <IDselect
+                    kycData={this.state.kycData}
+                    {...this.props}
+                    countryFlag={this.state.countryChange}
+                    back_step={(a) => this.back_step(a)}
+                    next_step={(a, type) => this.next_step(a, type)}
+                  />
+                )}
+                {next === 2 && (
+                  <SSN
+                    {...this.props}
+                    kycData={this.state.kycData}
+                    back_step={(a) => this.back_step(a)}
+                    next_step={(a, type) => this.next_step(a, type)}
+                  />
+                )}
+                {next === 3 && (
+                  <DocUpload
+                    kycData={this.state.kycData}
+                    docText={this.state.docType}
+                    back_step={(a) => this.back_step(a)}
+                    next_step={(a) => this.next_step(a)}
+                  />
+                )}
+              </div>
+            )}
+            {this.props.is_kyc_done === 1 && (
+              <DoneWrap>
+                <Icon
+                  className="icon-display"
+                  type="info-circle"
+                  theme="twoTone"
+                  twoToneColor="#ffc107"
                 />
-              )}
-              {next === 1 && (
-                <IDselect
-                  kycData={this.state.kycData}
-                  {...this.props}
-                  countryFlag={this.state.countryChange}
-                  back_step={a => this.back_step(a)}
-                  next_step={(a, type) => this.next_step(a, type)}
+                <KycSucc>
+                  <span>
+                    <b>{t("thank_you_text.message")}</b>
+                    <br />
+                    {t("kyc_submit_text.message")}
+                  </span>
+                </KycSucc>
+              </DoneWrap>
+            )}
+            {this.props.is_kyc_done === 2 && (
+              <DoneWrap>
+                <Icon
+                  className="icon-display"
+                  type="check-circle"
+                  theme="twoTone"
+                  twoToneColor="#52c41a"
                 />
-              )}
-              {next === 2 && (
-                <SSN
-                  {...this.props}
-                  kycData={this.state.kycData}
-                  back_step={a => this.back_step(a)}
-                  next_step={(a, type) => this.next_step(a, type)}
-                />
-              )}
-              {next === 3 && (
-                <DocUpload
-                  kycData={this.state.kycData}
-                  docText={this.state.docType}
-                  back_step={a => this.back_step(a)}
-                  next_step={a => this.next_step(a)}
-                />
-              )}
-            </div>
-          )}
-          {this.props.is_kyc_done === 1 && (
-            <DoneWrap>
-              <Icon
-                className="icon-display"
-                type="info-circle"
-                theme="twoTone"
-                twoToneColor="#ffc107"
-              />
-              <KycSucc>
-                <span>
-                  <b>{t("thank_you_text.message")}</b>
-                  <br />
-                  {t("kyc_submit_text.message")}
-                </span>
-              </KycSucc>
-            </DoneWrap>
-          )}
-          {this.props.is_kyc_done === 2 && (
-            <DoneWrap>
-              <Icon
-                className="icon-display"
-                type="check-circle"
-                theme="twoTone"
-                twoToneColor="#52c41a"
-              />
-              <KycSucc>
-                <span>
-                  <b>{t("kyc_verified_text.message")}</b>
-                  <br />
-                  <br />
-                  {t("kyc_verified_text1.message")}
-                </span>
-              </KycSucc>
-            </DoneWrap>
-          )}
-        </KYCWrap>
-        {/* <CountryAccess
-          
-        /> */}
-        {/* <CompleteProfile
-          comingCancel={e => this.comingCancel(e)}
-          visible={this.state.countryAccess}
-        /> */}
-        {/* </TierWrapper> */}
-        {/* <FooterHome /> */}
+                <KycSucc>
+                  <span>
+                    <b>{t("kyc_verified_text.message")}</b>
+                    <br />
+                    <br />
+                    {t("kyc_verified_text1.message")}
+                  </span>
+                </KycSucc>
+              </DoneWrap>
+            )}
+          </KYCWrap>
+        </TierWrapper>
+        <FooterHome />
       </div>
     );
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     ...state,
     is_kyc_done:
@@ -312,13 +301,22 @@ const mapStateToProps = state => {
     isLoggedIn:
       state.simpleReducer.isLoggedIn !== undefined
         ? state.simpleReducer.isLoggedIn
-        : ""
+        : "",
   };
 };
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = (dispatch) => ({
+  getProfileDataAction: (isLoggedIn) =>
+    dispatch(getProfileDataAction(isLoggedIn)),
+});
 
 export default translate(
   "identity_verification",
-  "edit_profile_titles"
-)(connect(mapStateToProps, mapDispatchToProps)(createForm()(TierOne)));
+  "edit_profile_titles",
+  "tiers"
+)(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(createForm()(withRouter(TierOne)))
+);

@@ -26,8 +26,9 @@ import {
   _FALDAXWHITE,
   _WHITELOGO,
   _FALDAX,
-  _WALLPAPER
+  _WALLPAPER,
 } from "CONSTANTS/images";
+import FaldaxLoader from "../../SHARED-COMPONENTS/FaldaxLoader";
 const { Header } = Layout;
 const API_URL = globalVariables.API_URL;
 const SubMenu = Menu.SubMenu;
@@ -91,6 +92,9 @@ const SubMenuNav = styled(SubMenu)`
 const FALDAX = styled.img`
   cursor: pointer;
   margin-left: 10px;
+  @media (max-width: 450px) {
+    max-width: 50%;
+  }
 `;
 const Logo = styled.div`
   display: inline-flex;
@@ -105,15 +109,31 @@ const Headermain = styled(Header)`
   width: 100%;
   padding: 0;
   text-align: left;
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#041422" : "white"};
-  box-shadow: ${props =>
+  box-shadow: ${(props) =>
     props.theme.mode === "dark" ? "" : "0px 3px #f7f7f7"};
   height: 80px;
   display: flex;
   align-items: center;
   & .color_important {
-    color: black !important;
+    color: ${(props) =>
+      props.theme.mode === "dark" ? "#fff !important" : "black !important"};
+    @media (min-width: 2000px) {
+      font-size: 20px;
+    }
+  }
+  & .color_important:hover {
+    color: #1890ff !important;
+  }
+  & ul {
+    > li.ant-menu-item-selected {
+      // border: 1px solid #1890ff !important;
+      border-radius: 38px;
+      & .color_important {
+        color: #1890ff !important;
+      }
+    }
   }
 `;
 const Menumain = styled(Menu)`
@@ -122,7 +142,7 @@ const Menumain = styled(Menu)`
   text-align: right;
   border-bottom: 0px;
   vertical-align: middle;
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#041422" : "white"};
   @media (max-width: 1200px) {
     display: none;
@@ -135,7 +155,7 @@ const Menuitem = styled(Menu.Item)`
   padding: 0px 18px;
   font-size: 13px;
   font-family: "Open sans";
-  color: ${props => (props.theme.mode === "dark" ? "white" : "black")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "black")};
   font-weight: bold;
   text-transform: uppercase;
   vertical-align: unset;
@@ -154,6 +174,9 @@ const Menuitem = styled(Menu.Item)`
 ` */
 const FALDAXLOGO = styled.img`
   padding-left: 22px;
+  @media (max-width: 450px) {
+    max-width: 25%;
+  }
 `;
 const SideNav = styled.div`
   height: 100%;
@@ -280,7 +303,7 @@ const RightCol = styled.div`
     margin-left:auto;
 `;
 const NavLink = styled(Link)`
-  color: ${props =>
+  color: ${(props) =>
     props.theme.mode === "dark" ? "white" : "black"} !important;
   &:hover {
     color: #1890ff !important;
@@ -309,6 +332,15 @@ const CarLink = styled(Link)`
   }
 `;
 const DropDownDiv = styled(Dropdown)`
+  &.language_head {
+    @media (min-width: 2000px) {
+      font-size: 20px;
+    }
+  }
+  &.Drop-main {
+    > a {
+    }
+  }
   @media (max-width: 480px) {
     margin-top: 10px;
   }
@@ -325,7 +357,7 @@ const Open = styled.span`
   font-size: 30px;
   cursor: pointer;
   margin-top: 10px;
-  color: ${props => (props.theme.mode === "dark" ? "white" : "black")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "black")};
   @media (max-width: 1200px) {
     display: inline-block;
     margin-right: 15px;
@@ -349,7 +381,9 @@ class LoggedNavigation extends Component {
       completeKYC: false,
       completeProfile: false,
       panicEnabled: false,
-      panic_status: false
+      panic_status: false,
+      loader: false,
+      walletIsAllowed: "",
       // langValue: this.props.language
     };
     // this.tradeAccess = this.tradeAccess.bind(this);
@@ -357,12 +391,13 @@ class LoggedNavigation extends Component {
     this.cryptoAccess = this.cryptoAccess.bind(this);
     this.simplexAccess = this.simplexAccess.bind(this);
     this.walletAccess = this.walletAccess.bind(this);
+    this.historyAccess = this.historyAccess.bind(this);
     this.tokenAccess = this.tokenAccess.bind(this);
     this.panicStatus = this.panicStatus.bind(this);
   }
 
   /* Life-Cycle Methods */
-  componentWillReceiveProps(props, newProps) {
+  async componentWillReceiveProps(props, newProps) {
     if (props.theme !== undefined) {
       if (props.theme !== this.state.theme) {
         if (props.theme === false)
@@ -371,18 +406,25 @@ class LoggedNavigation extends Component {
       }
     }
   }
-  componentDidMount() {
+  async componentDidMount() {
     if (this.props.location) {
-      // if (this.props.location.pathname.includes("dashboard")) {
-      //   this.setState({ selected: "1" });
-      // } else if (this.props.location.pathname.includes("trade")) {
-      //   this.setState({ selected: "2" });
-      // } else
-      // if (this.props.location.pathname.includes("conversion")) {
-      //   this.setState({ selected: "3" });
-      // } else if (this.props.location.pathname.includes("wallet")) {
-      //   this.setState({ selected: "4" });
-      // } else if (this.props.location.pathname.includes("history")) {
+      if (this.props.location.pathname.includes("market")) {
+        this.setState({ selected: "1" });
+      } else if (this.props.location.pathname.includes("dashboard")) {
+        this.setState({ selected: "2" });
+      } else if (this.props.location.pathname.includes("trade")) {
+        this.setState({ selected: "3" });
+      } else if (
+        this.props.location.pathname.includes("conversion") ||
+        this.props.location.pathname.includes("simplex")
+      ) {
+        this.setState({ selected: "4" });
+      } else if (this.props.location.pathname.includes("wallet")) {
+        this.setState({ selected: "5" });
+      } else if (this.props.location.pathname.includes("history")) {
+        this.setState({ selected: "6" });
+      }
+      // else if (this.props.location.pathname.includes("history")) {
       //   this.setState({ selected: "5" });
       // } else {
       //   this.setState({ selected: "6" });
@@ -440,9 +482,10 @@ class LoggedNavigation extends Component {
     */
 
   logout() {
+    this.setState({ loader: true });
     let formData = {
       user_id: this.props.profileDetails.id,
-      jwt_token: this.props.isLoggedIn
+      jwt_token: this.props.isLoggedIn,
     };
     this.props.LogoutUser(this.props.isLoggedIn, formData);
     //this.props.Logout();
@@ -462,7 +505,7 @@ class LoggedNavigation extends Component {
         It is called to open modal of Coming Soon.
     */
 
-  handleComing = e => {
+  handleComing = (e) => {
     this.setState({ comingSoon: false });
   };
 
@@ -471,13 +514,13 @@ class LoggedNavigation extends Component {
         It is called to open modal of Coming Soon.
     */
 
-  comingCancel = e => {
+  comingCancel = (e) => {
     this.setState({
       comingSoon: false,
       countryAccess: false,
       completeKYC: false,
       panicEnabled: false,
-      completeProfile: false
+      completeProfile: false,
     });
   };
 
@@ -497,12 +540,12 @@ class LoggedNavigation extends Component {
         headers: {
           Accept: "application/json",
           "Accept-Language": localStorage["i18nextLng"],
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(values)
+        body: JSON.stringify(values),
       })
-        .then(response => response.json())
-        .then(responseData => {
+        .then((response) => response.json())
+        .then((responseData) => {
           if (responseData.status === 500) {
             this.openNotification1();
           } else {
@@ -510,7 +553,7 @@ class LoggedNavigation extends Component {
             this.setState({ visible: false, email_msg: "" });
           }
         })
-        .catch(error => {
+        .catch((error) => {
           /* console.log(error) */
         });
     } else {
@@ -527,7 +570,7 @@ class LoggedNavigation extends Component {
 
   panicStatus() {
     this.setState({
-      loader: true
+      loader: true,
     });
     fetch(API_URL + `/check-panic-status`, {
       method: "get",
@@ -535,46 +578,33 @@ class LoggedNavigation extends Component {
         Accept: "application/json",
         "Content-Type": "application/json",
         "Accept-Language": localStorage["i18nextLng"],
-        Authorization: "Bearer " + this.props.isLoggedIn
-      }
+        Authorization: "Bearer " + this.props.isLoggedIn,
+      },
     })
-      .then(response => response.json())
-      .then(responseData => {
+      .then((response) => response.json())
+      .then((responseData) => {
         if (responseData.status === 200) {
-          // console.log("responsedata 200", responseData.data);
           this.setState({
             panic_status: JSON.parse(responseData.data),
-            // panic_status: true,
-            loader: false
+            loader: false,
           });
         } else {
           this.setState({
             panic_status: false,
-            loader: false
+            loader: false,
           });
         }
       })
-      .catch(error => {});
+      .catch((error) => {});
   }
   cryptoAccess() {
-    // console.log(
-    //   "this.props.profileDetails.is_panic_enabled",
-    //   this.props.profileDetails.is_panic_enabled
-    // );
-    // let panic = JSON.parse(this.props.profileDetails.is_panic_enabled);
-    // console.log("Panic", panic);
-
     if (this.state.panic_status === true) {
-      // alert("Idf");
       this.setState({ panicEnabled: true });
     } else {
       if (
         this.props.profileDetails.is_allowed === true &&
         this.props.profileDetails.is_kyc_done === 2
       ) {
-        // alert("IF");
-        // console.log("I am here", this.props.location.pathname);
-        // this.props.history.push('/trade');
         if (this.props.location.pathname !== "/crypto-conversion")
           this.props.history.push("/crypto-conversion");
       } else {
@@ -582,48 +612,6 @@ class LoggedNavigation extends Component {
           this.props.profileDetails.is_allowed === false &&
           this.props.profileDetails.is_kyc_done !== 2
         ) {
-          // alert("ELSE IF");
-          this.setState({ completeKYC: true });
-        } else {
-          // alert("ELSE ELSE");
-          this.setState({ countryAccess: true });
-        }
-      }
-    }
-  }
-  walletAccess() {
-    if (this.props.profileDetails.is_user_updated) {
-      if (this.props.location.pathname !== "/wallet")
-        this.props.history.push("/wallet");
-    } else {
-      this.setState({ completeProfile: true });
-    }
-  }
-  simplexAccess() {
-    // console.log(
-    //   "^^^^",
-    //   this.props.profileDetails.is_allowed,
-    //   this.props.profileDetails.is_kyc_done
-    // );
-    if (this.state.panic_status === true) {
-      // alert("Idf");
-      this.setState({ panicEnabled: true });
-    } else {
-      if (
-        this.props.profileDetails.is_allowed === true &&
-        this.props.profileDetails.is_kyc_done === 2
-      ) {
-        // alert("IF");
-        // console.log("I am here", this.props.location.pathname);
-        // this.props.history.push('/trade');
-        if (this.props.location.pathname !== "/simplex")
-          this.props.history.push("/simplex");
-      } else {
-        if (
-          this.props.profileDetails.is_allowed === false &&
-          this.props.profileDetails.is_kyc_done !== 2
-        ) {
-          // alert("ELSE IF");
           this.setState({ completeKYC: true });
         } else if (
           this.props.profileDetails.is_allowed === true &&
@@ -631,7 +619,124 @@ class LoggedNavigation extends Component {
         ) {
           this.setState({ completeKYC: true });
         } else {
-          // alert("ELSE ELSE");
+          this.setState({ countryAccess: true });
+        }
+      }
+    }
+  }
+  walletAccess() {
+    if (this.state.panic_status === true) {
+      this.setState({ panicEnabled: true });
+    } else if (
+      !this.props.profileDetails.is_user_updated &&
+      this.props.profileDetails.is_kyc_done != "2"
+    ) {
+      this.setState({
+        completeProfile: true,
+      });
+    } else {
+      if (
+        this.props.profileDetails.is_allowed === true &&
+        this.props.profileDetails.is_kyc_done === 2
+      ) {
+        if (this.props.location.pathname !== "/wallet")
+          this.props.history.push({
+            pathname: "/wallet",
+            state: {
+              flag: true,
+            },
+          });
+      } else {
+        if (
+          this.props.profileDetails.is_allowed === false &&
+          this.props.profileDetails.is_kyc_done !== 2
+        ) {
+          this.setState({ completeKYC: true });
+        } else if (
+          this.props.profileDetails.is_allowed === true &&
+          this.props.profileDetails.is_kyc_done !== 2
+        ) {
+          this.setState({ completeKYC: true });
+        } else {
+          this.setState({ countryAccess: true });
+        }
+      }
+    }
+  }
+  historyAccess(key) {
+    if (this.state.panic_status === true) {
+      this.setState({ panicEnabled: true });
+    } else if (
+      !this.props.profileDetails.is_user_updated &&
+      this.props.profileDetails.is_kyc_done != "2"
+    ) {
+      this.setState({
+        completeProfile: true,
+      });
+    } else {
+      if (
+        this.props.profileDetails.is_allowed === true &&
+        this.props.profileDetails.is_kyc_done === 2
+      ) {
+        // if (this.props.location.pathname !== "/history")
+        this.props.history.push({
+          pathname: "/history",
+          tradeType: key,
+          state: {
+            flag: true,
+          },
+        });
+      } else {
+        if (
+          this.props.profileDetails.is_allowed === false &&
+          this.props.profileDetails.is_kyc_done !== 2
+        ) {
+          this.setState({ completeKYC: true });
+        } else if (
+          this.props.profileDetails.is_allowed === true &&
+          this.props.profileDetails.is_kyc_done !== 2
+        ) {
+          this.setState({ completeKYC: true });
+        } else {
+          this.setState({ countryAccess: true });
+        }
+      }
+    }
+  }
+  simplexAccess() {
+    if (this.state.panic_status === true) {
+      this.setState({ panicEnabled: true });
+    } else if (
+      !this.props.profileDetails.is_user_updated &&
+      this.props.profileDetails.is_kyc_done != "2"
+    ) {
+      this.setState({
+        completeProfile: true,
+      });
+    } else {
+      if (
+        this.props.profileDetails.is_allowed === true &&
+        this.props.profileDetails.is_kyc_done === 2
+      ) {
+        if (this.props.location.pathname !== "/simplex")
+          this.props.history.push({
+            pathname: "/simplex",
+            state: {
+              flag: true,
+            },
+          });
+      } else {
+        if (
+          this.props.profileDetails.is_allowed === false &&
+          this.props.profileDetails.is_kyc_done !== 2
+        ) {
+          this.setState({ completeKYC: true });
+        } else if (
+          this.props.profileDetails.is_allowed === true &&
+          this.props.profileDetails.is_kyc_done !== 2
+        ) {
+          this.setState({ completeKYC: true });
+        } else {
           this.setState({ countryAccess: true });
         }
       }
@@ -688,29 +793,29 @@ class LoggedNavigation extends Component {
     //   }
     // }
   }
-  onChange = e => {
-    // Pages that redirect from WordPress with lng params
-    let lngQueryParamsUrls = [
-      "/open-ticket",
-      "/simplex",
-      "/crypto-conversion",
-      "/conversion",
-      "/editProfile",
-      "/careers"
-    ];
-    // remove queryParams in case of found from list else reload component.
-    if (lngQueryParamsUrls.indexOf(window.location.pathname) != -1) {
-      window.location.href = window.location.pathname;
-    } else {
-      window.location.reload();
-    }
-    this.props.i18n.changeLanguage(e.key);
-  };
+  // onChange = e => {
+  //   // Pages that redirect from WordPress with lng params
+  //   let lngQueryParamsUrls = [
+  //     "/open-ticket",
+  //     "/simplex",
+  //     "/crypto-conversion",
+  //     "/conversion",
+  //     "/editProfile",
+  //     "/careers"
+  //   ];
+  //   // remove queryParams in case of found from list else reload component.
+  //   if (lngQueryParamsUrls.indexOf(window.location.pathname) != -1) {
+  //     window.location.href = window.location.pathname;
+  //   } else {
+  //     window.location.reload();
+  //   }
+  //   this.props.i18n.changeLanguage(e.key);
+  // };
   render() {
     const radioStyle = {
       display: "block",
       height: "30px",
-      lineHeight: "30px"
+      lineHeight: "30px",
     };
     const { t } = this.props;
     let prof_name =
@@ -733,7 +838,6 @@ class LoggedNavigation extends Component {
           >
             {t("navbar_sub_menu_conversation_crypto_only.message")}
           </a>
-          {/* <a onClick={this.cryptoAccess}>Crypto Only</a> */}
         </Menu.Item>
         <Menu.Item key="1">
           <a onClick={this.simplexAccess}>
@@ -754,82 +858,36 @@ class LoggedNavigation extends Component {
         </Menu.Item>
       </Menu>
     );
+
     const DropdownHistoryItems = (
       <Menu className="fixed-drop">
-        {/* <Menu.Item key="0">
-          <a
-            onClick={() =>
-              this.props.history.push({ pathname: "/history", tradeType: "1" })
-            }
-          >
-            Trade History
-          </a>
-        </Menu.Item> */}
-        {/* <Menu.Item key="0">
-          <a
-            onClick={() =>
-              this.props.history.push({ pathname: "/history", tradeType: "1" })
-            }
-          >
-            {t("navbar_sub_menu_conversation_crypto_only.message")}
-          </a>
-        </Menu.Item> */}
         <Menu.Item key="1">
           <a
-            onClick={() =>
-              this.props.history.push({ pathname: "/history", tradeType: "2" })
-            }
+            onClick={() => {
+              this.historyAccess("1");
+            }}
+          >
+            {this.t("trade:trade_head.message")}
+          </a>
+        </Menu.Item>
+        <Menu.Item key="2">
+          <a
+            onClick={() => {
+              this.historyAccess("2");
+            }}
           >
             {t("navbar_sub_menu_conversation_credit_card.message")}
           </a>
         </Menu.Item>
-        {/* <Menu.Item key="2">
-          <a
-            onClick={() =>
-              this.props.history.push({ pathname: "/history", tradeType: "3" })
-            }
-          >
-            Trade
-          </a>
-        </Menu.Item> */}
       </Menu>
     );
-    // const langItems = (
-    //   <Radio.Group onChange={this.onChange} value={this.state.langValue}>
-    //     <Radio style={radioStyle} value="en">
-    //       English
-    //     </Radio>
-    //     <Radio style={radioStyle} value="ja">
-    //       Japanese
-    //     </Radio>
-    //   </Radio.Group>
-    // );
+
     const langItems = (
-      <Menu
-        // onClick={e => {
-        //   alert("change");
-        //   console.log("this", e.key);
-        // }}
-        onClick={this.onChange}
-      >
-        <Menu.Item
-          key="en"
-          // onClick={() => {
-          //   this.setState({
-          //     langValue: "en"
-          //   });
-          // }}
-        >
+      <Menu onClick={this.onChange}>
+        <Menu.Item key="en">
           <a>{this.t("general_4:lang_eng_text.message")}</a>
         </Menu.Item>
-        <Menu.Item
-          key="ja"
-          // onClick={() => {
-          //   this.setState({
-          //     langValue: "ja"
-          //   });
-          // }}
-        >
+        <Menu.Item key="ja">
           <a>{this.t("general_4:lang_ja_text.message")}</a>
         </Menu.Item>
       </Menu>
@@ -854,82 +912,58 @@ class LoggedNavigation extends Component {
           defaultSelectedKeys={["1"]}
           selectedKeys={this.state.selected}
         >
-          {/* <Menuitem key="1" onClick={this.showComing}>
-            <NavLink className="" to="/dashboard">
-              DASHBOARD
+          <Menuitem key="1">
+            <NavLink className="" to="/market">
+              {this.t("trade:market_head.message")}
             </NavLink>
           </Menuitem>
-          <Menuitem key="2" onClick={this.tradeAccess}>
-            <NavLink className="" to="/trade">
-              Trade
+          <Menuitem key="2">
+            <NavLink className="" to="/dashboard">
+              {this.t("trade:dashboard_head.message")}
             </NavLink>
-          </Menuitem> */}
-          <Menuitem key="3">
+          </Menuitem>
+          <Menuitem key="3" onClick={this.tradeAccess}>
+            <NavLink className="" to="/trade">
+              {this.t("trade:trade_head.message")}
+            </NavLink>
+          </Menuitem>
+          <Menuitem key="4">
             <DropDownDiv
               className="Drop-main "
               overlay={DropdownItems}
               overlayClassName="custom_dropdown_menu"
             >
               <NavLink className="ant-dropdown-link" to="/conversion">
-                {/* Conversion */}
-                {/* <Trans i18nKey="Introduction" /> */}
                 {t("navbar_menu_conversion.message")}
               </NavLink>
             </DropDownDiv>
           </Menuitem>
-          {/* <Menuitem key="2" onClick={this.tradeAccess}>TRADE</Menuitem> */}
-          <Menuitem key="4">
+          <Menuitem key="5">
             <a
               className="color_important"
-              // to="/wallet"
-              onClick={this.walletAccess}
+              onClick={() => {
+                this.walletAccess();
+              }}
             >
               {t("navbar_menu_wallet.message")}
             </a>
-
-            {/* <NavLink className="Nav_selected" to="/wallet">
-              {t("navbar_menu_wallet.message")}
-            </NavLink> */}
           </Menuitem>
-          <Menuitem key="5">
+          <Menuitem key="6">
             <DropDownDiv
               className="Drop-main"
               overlay={DropdownHistoryItems}
               overlayClassName="custom_dropdown_menu"
             >
-              <NavLink
-                className="ant-dropdown-link "
-                to={{
-                  pathname: "/history",
-                  state: {
-                    tradeType: "1"
-                  }
+              <a
+                className="ant-dropdown-link color_important"
+                onClick={() => {
+                  this.historyAccess("1");
                 }}
               >
                 {t("navbar_menu_history.message")}
-              </NavLink>
+              </a>
             </DropDownDiv>
           </Menuitem>
-          <Menuitem key="6">
-            <DropDownDiv
-              // className="Drop-main"
-              overlay={langItems}
-              trigger={["click"]}
-              // overlayClassName="custom_dropdown_menu"
-            >
-              <div>{t("general_1:language_head.message")}</div>
-            </DropDownDiv>
-            {/* <Open onClick={() => this.openNav()}>&#9776;</Open> */}
-          </Menuitem>
-          {/* <Menuitem key="3">
-            <NavLink className="Nav_selected" to="/history">
-              HISTORY
-            </NavLink>
-          </Menuitem> */}
-          {/* <Menu_item key="1" onClick={this.showComing}><LogNav>DASHBOARD</LogNav></Menu_item>
-                    <Menu_item key="2" onClick={this.showComing}><LogNav>TRADE</LogNav></Menu_item>
-                    <Menu_item key="3" onClick={this.showComing}><LogNav>Wallet</LogNav></Menu_item>
-                    <Menu_item key="4" onClick={this.showComing}><LogNav>HISTORY</LogNav></Menu_item> */}
         </Menumain>
         <RightCol>
           <Afterlog
@@ -956,16 +990,13 @@ class LoggedNavigation extends Component {
                 {t("navbar_sub_menu_profile.message")}
               </Link>
             </LogoutStyle>
-            {/* <span>
-              <Link to="/dashboard">Dashboard</Link>
-            </span> */}
             {/* <span> <Link to="/conversion">CONVERSION</Link></span> */}
             {/* <span onClick={this.tradeAccess}>CONVERSION</span> */}
             {/* <span>
               {" "}
               <Link to="/conversion">Conversion</Link>
             </span> */}
-            <a className="DROPSUB">
+            {/* <a className="DROPSUB">
               <DropMenu mode="inline">
                 <SubMenuNav
                   key="mobsub0"
@@ -980,7 +1011,18 @@ class LoggedNavigation extends Component {
                   </Menu.Item>
                 </SubMenuNav>
               </DropMenu>
-            </a>
+            </a> */}
+            <span>
+              <Link to="/market">{this.t("trade:market_head.message")}</Link>
+            </span>
+            <span>
+              <Link to="/dashboard">
+                {this.t("trade:dashboard_head.message")}
+              </Link>
+            </span>
+            <span onClick={this.tradeAccess}>
+              <Link to="/trade">{this.t("trade:trade_head.message")}</Link>
+            </span>
             <a className="DROPSUB">
               <DropMenu mode="inline">
                 <SubMenuNav
@@ -999,7 +1041,9 @@ class LoggedNavigation extends Component {
                     >
                       {t("navbar_sub_menu_conversation_crypto_only.message")}
                     </a>
-                    {/* <a onClick={this.cryptoAccess}>Crypto Only</a> */}
+                    {/* <a onClick={this.cryptoAccess}>
+                      {t("navbar_sub_menu_conversation_crypto_only.message")}
+                    </a> */}
                   </Menu.Item>
                   <Menu.Item key="1">
                     <a onClick={this.simplexAccess}>
@@ -1022,9 +1066,6 @@ class LoggedNavigation extends Component {
                 </SubMenuNav>
               </DropMenu>
             </a>
-            {/* <span onClick={this.tradeAccess}>
-              <Link to="/trade">Trade</Link>
-            </span> */}
             <span>
               {/* <Link to="/wallet">{t("navbar_menu_wallet.message")}</Link> */}
               <a onClick={this.walletAccess}>
@@ -1063,12 +1104,18 @@ class LoggedNavigation extends Component {
                   </Menu.Item> */}
                   <Menu.Item key="1">
                     <a
-                      onClick={() =>
-                        this.props.history.push({
-                          pathname: "/history",
-                          tradeType: "2"
-                        })
-                      }
+                      onClick={() => {
+                        this.historyAccess("1");
+                      }}
+                    >
+                      {this.t("trade:trade_head.message")}
+                    </a>
+                  </Menu.Item>
+                  <Menu.Item key="2">
+                    <a
+                      onClick={() => {
+                        this.historyAccess("2");
+                      }}
                     >
                       {t("navbar_sub_menu_conversation_credit_card.message")}
                     </a>
@@ -1240,24 +1287,25 @@ class LoggedNavigation extends Component {
             </LogoutStyle>
           </SideNav>
         </ReactSwipeEvents>
+        {this.state.loader == true ? <FaldaxLoader /> : ""}
         <ComingSoon
-          comingCancel={e => this.comingCancel(e)}
+          comingCancel={(e) => this.comingCancel(e)}
           visible={this.state.comingSoon}
         />
         <CountryAccess
-          comingCancel={e => this.comingCancel(e)}
+          comingCancel={(e) => this.comingCancel(e)}
           visible={this.state.countryAccess}
         />
         <CompleteKYC
-          comingCancel={e => this.comingCancel(e)}
+          comingCancel={(e) => this.comingCancel(e)}
           visible={this.state.completeKYC}
         />
         <PanicEnabled
-          comingCancel={e => this.comingCancel(e)}
+          comingCancel={(e) => this.comingCancel(e)}
           visible={this.state.panicEnabled}
         />
         <CompleteProfile
-          comingCancel={e => this.comingCancel(e)}
+          comingCancel={(e) => this.comingCancel(e)}
           visible={this.state.completeProfile}
         />
       </Headermain>
@@ -1273,18 +1321,23 @@ function mapStateToProps(state) {
           ? state.simpleReducer.profileDetails.data[0]
           : ""
         : "",
+    isLoggedIn: state.simpleReducer.isLoggedIn,
     theme:
       state.themeReducer.theme !== undefined ? state.themeReducer.theme : "",
-    language: state.themeReducer.lang
+    language: state.themeReducer.lang,
   };
 }
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   // Logout: () => dispatch(Logout()),
   LogoutUser: (isLoggedIn, user_id) =>
     dispatch(LogoutUser(isLoggedIn, user_id)),
-  langAction: lang => dispatch(langAction(lang))
+  langAction: (lang) => dispatch(langAction(lang)),
 });
 
-export default translate(["header", "footer", "general_1", "general_4"])(
-  connect(mapStateToProps, mapDispatchToProps)(withRouter(LoggedNavigation))
-);
+export default translate([
+  "header",
+  "footer",
+  "general_1",
+  "general_4",
+  "trade",
+])(connect(mapStateToProps, mapDispatchToProps)(withRouter(LoggedNavigation)));

@@ -13,9 +13,11 @@ export const globalVariables = {
 
   //API_URL: 'http://18.191.87.133:8084', //Live URL
 
-  // API_URL: "http://192.168.0.213:1440", //Mansi's
+  // API_URL: "http://localhost:1440", //Mansi's
 
-  //API_URL: 'http://192.168.0.85:1337'
+  // API_URL: "http://f137efd4e530.ngrok.io",
+
+  // API_URL: "http://00c912ac.ngrok.io",
 
   // API_URL: "http://192.168.1.96:1337", //Jagdish's URL
 
@@ -30,13 +32,14 @@ export const globalVariables = {
   API_URL: "https://mainnet-backend.faldax.com", //Mainnet Production URL
   TRADE_URL: "https://mainnet-trade.faldax.com",
 
+  // API_URL: "http://991e8fb6.ngrok.io/api/v1/tradding/",
   // API_URL: "https://pre-prod-backend.faldax.com", //Pre-Production URL
 
   // TRADE_URL: "https://preprod-trade.faldax.com",
 
   //    TRADE_URL: "https://dev-trade.faldax.com", // DEV url
 
-  // TRADE_URL: "http://localhost:3006/"
+  // TRADE_URL: "http://localhost:3006/"s
 
   // API_URL: "https://api.faldax.com", // Live URL
 
@@ -47,6 +50,9 @@ export const globalVariables = {
         'https://dev-backend.faldax.com',
     */
   // API_URL: 'http://13.58.130.154:8989' //Client Live URL,
+  // SOCKET_HOST: "https://preprod-trading.faldax.com",
+  SOCKET_HOST: "https://mainnet-trading.faldax.com",
+  // SOCKET_HOST: "http://124863c5.ngrok.io/",
 
   Terms_and_services:
     "https://s3.us-east-2.amazonaws.com/production-static-asset/assets/pdf/FALDAX+Terms+of+Service.pdf",
@@ -58,5 +64,48 @@ export const globalVariables = {
     "https://s3.us-east-2.amazonaws.com/production-static-asset/assets/pdf/FALDAX+Anti-Money+Laundering+Policy+v2.pdf",
 
   Cookie_policy:
-    "https://s3.us-east-2.amazonaws.com/production-static-asset/assets/pdf/FALDAX+Cookie+Policy.pdf"
+    "https://s3.us-east-2.amazonaws.com/production-static-asset/assets/pdf/FALDAX+Cookie+Policy.pdf",
+
+  Proof_of_assets_form:
+    "https://production-static-asset.s3.us-east-2.amazonaws.com/assets/pdf/FALDAX+Assets+of+Form.pdf",
+
+  aml_questionnaire:
+    "https://production-static-asset.s3.us-east-2.amazonaws.com/assets/pdf/FALDAX AML Questionnaire.pdf",
+
+  comfort_letter:
+    "https://production-static-asset.s3.us-east-2.amazonaws.com/assets/pdf/FALDAX Comfort Letter.pdf",
+
+  board_resolution:
+    "https://production-static-asset.s3.us-east-2.amazonaws.com/assets/pdf/FALDAX Board Resolution.pdf",
+
+  corporate_filing_info:
+    "https://production-static-asset.s3.us-east-2.amazonaws.com/assets/pdf/FALDAX Corporate Filing Information.pdf",
+
+  beneficial_ownership_form:
+    "https://production-static-asset.s3.us-east-2.amazonaws.com/assets/pdf/FALDAX Beneficial Ownership Form.pdf",
+
+  articles_of_incorporation:
+    "https://production-static-asset.s3.us-east-2.amazonaws.com/assets/pdf/FALDAX Articles of Incorporation.pdf",
+
+  bylaws_form:
+    "https://production-static-asset.s3.us-east-2.amazonaws.com/assets/pdf/FALDAX Bylaws.pdf",
+
+  ownership_and_control_structure:
+    "https://production-static-asset.s3.us-east-2.amazonaws.com/assets/pdf/FALDAX Ownership and Control Structure.pdf",
+
+  director_list_form:
+    "https://production-static-asset.s3.us-east-2.amazonaws.com/assets/pdf/FALDAX Directors and Officers List & Personal Info Equivalent to Tier 3 Requirements.pdf",
+
+  proof_of_active_business:
+    "https://production-static-asset.s3.us-east-2.amazonaws.com/assets/pdf/FALDAX Proof of Active Business Address.pdf",
 };
+export const PAGE_SIZE_OPTIONS = [
+  "10",
+  "25",
+  "50",
+  "100",
+  "200",
+  "500",
+  "1000",
+];
+export const PAGESIZE = 50;

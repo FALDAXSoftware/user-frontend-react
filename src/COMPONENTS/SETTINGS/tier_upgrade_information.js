@@ -9,14 +9,17 @@ import {
   TierInfoContent,
   TierListingOutside,
   TierListingInside,
-  TierListingInfoHead
+  TierListingInfoHead,
 } from "../../STYLED-COMPONENTS/TIER/tierStyle";
 import { Link } from "react-router-dom";
+import { translate } from "react-i18next";
+import { faThList } from "@fortawesome/free-solid-svg-icons";
 
 class TierUpgradeInfo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.t = this.props.t;
   }
   render() {
     return (
@@ -26,100 +29,106 @@ class TierUpgradeInfo extends React.Component {
           <TierInfoInnerWrap>
             <TierInfoContent>
               <TierInfoHead>
-                <b>Document requirements</b> for verification
+                <b>{this.t("document_requirements_text.message")}</b>
+                {this.t("for_verification_text.message")}
               </TierInfoHead>
               <TierListingOutside>
                 <li>
                   <TierListingInfoHead>
-                    1. <b>Valid Government Issued ID Document</b>
+                    1. <b>{this.t("valid_govt_doc_text.message")}</b>
                   </TierListingInfoHead>
                   <div className="content">
-                    <p>Valid documents include:</p>
+                    <p>{this.t("valid_documents_include_text.message")}:</p>
                     <TierListingInside>
-                      <li>Passport</li>
-                      <li>Drivers license</li>
-                      <li>National identity card (front + back)</li>
+                      <li>
+                        {this.t(
+                          "identity_verification:id_type_passport.message"
+                        )}
+                      </li>
+                      <li>{this.t("drivers_license_text.message")}</li>
+                      <li>{this.t("national_identity_text.message")}</li>
                     </TierListingInside>
                     <p>
-                      Other valid government-issued ID <b>may</b> be accepted if
-                      it has your full legal name, photo, date of birth, and
-                      issue and expiry dates all on the front of your ID.
+                      {this.t("other_govt_issued_text.message")}
+                      <b>{this.t("may_text.message")}</b>
+                      {this.t("govt_id_info_text.message")}
                     </p>
                     <p>
-                      Firearm licenses are <b>not</b> accepted.
+                      {this.t("firearm_licenses_text.message")}
+                      <b>{this.t("not_text.message")}</b>
+                      {this.t("accepted_text.message")}
                     </p>
                     <p>
-                      Please make sure that your ID photos/scan meet these{" "}
-                      <Link to="/tier-image-information">
-                        image requirements.
+                      {this.t("scan_meet_require_text.message")}{" "}
+                      <Link
+                        className="link_initial"
+                        to="/tier-image-information"
+                      >
+                        {this.t("image_requirements_text.message")}.
                       </Link>
                     </p>
                   </div>
                 </li>
                 <li>
                   <TierListingInfoHead>
-                    2. <b>Proof of Residence Document</b>
+                    2. <b>{this.t("proof_document_text.message")}</b>
                   </TierListingInfoHead>
                   <div className="content">
                     <p>
-                      Proof of residence documents must contain your name,
-                      address, and be <b>dated less than 3 months ago</b> from
-                      the date of submission.
+                      {this.t("proof_document_require_text.message")}{" "}
+                      <b>{this.t("dated_months_ago_text.message")}</b>
+                      {this.t("from_date_submission_text.message")}
                     </p>
-                    <p>Valid documents include, but are not limited to:</p>
+                    <p>{this.t("valid_doc_include_text.message")}:</p>
                     <TierListingInside>
-                      <li>Bank statement</li>
-                      <li>Credit card statement</li>
-                      <li>
-                        Utility bill (water, electricity, gas, internet, phone)
-                      </li>
-                      <li>
-                        Payroll statement -or- Official salary document from
-                        employer
-                      </li>
-                      <li>Insurance statement</li>
-                      <li>Tax document</li>
-                      <li>Residence certificate</li>
+                      <li>{this.t("bank_statement_text.message")}</li>
+                      <li>{this.t("credit_card_statement_text.message")}</li>
+                      <li>{this.t("utility_bill_text.message")}</li>
+                      <li>{this.t("payroll_statement_text.message")}</li>
+                      <li>{this.t("insurance_statement_text.message")}</li>
+                      <li>{this.t("tax_document_text.message")}</li>
+                      <li>{this.t("residence_certificate_text.message")}</li>
                     </TierListingInside>
                     <p>
-                      We <b>do NOT</b> accept USPS change-of-address letters.
+                      {this.t("we_text.message")}
+                      <b>{this.t("do_not_text.message")}</b>
+                      {this.t("change_of_address_text.message")}
                     </p>
-                    <p>
-                      For documents in languages that use non-Latin characters
-                      (such as Russian, Chinese, Thai, Hebrew, etc.), a
-                      notarized translation of your proof of residence document
-                      will greatly speed up processing time.
-                    </p>
+                    <p>{this.t("non_latin_characters_text.message")}</p>
                   </div>
                 </li>
                 <li>
                   <TierListingInfoHead>
-                    3. Valid <b>SSN (Social Security Number)</b> or{" "}
-                    <b>ITIN (Individual Taxpayer Identification Number)</b> (US
-                    clients only)
+                    3. {this.t("valid_text.message")}{" "}
+                    <b>
+                      {this.t("ssn_text.message")} (
+                      {this.t("identity_verification:id_type_ssn.message")})
+                    </b>{" "}
+                    {this.t("or_text.message")}{" "}
+                    <b>{this.t("itin_text.message")}</b>{" "}
+                    {this.t("us_clients_only_text.message")}
                   </TierListingInfoHead>
                 </li>
                 <li>
                   <TierListingInfoHead>
-                    4. <b>ID Confirmation Photo</b> (certain countries only)
+                    4. <b>{this.t("tiers:idcp_label_text.message")}</b>{" "}
+                    {this.t("certian_countries_only_text.message")}
                   </TierListingInfoHead>
                   <div className="content">
                     <p>
-                      You will be required to provide an{" "}
+                      {this.t("required_to_provide_text.message")}{" "}
                       <Link to="/tier-idcp-confirmation">
-                        ID confirmation photo
+                        {this.t("tiers:idcp_label_text.message")}
                       </Link>{" "}
-                      for the Intermediate verification level if you are:
+                      {this.t("for_the_intermediate_verification_text.message")}
+                      :
                     </p>
                     <TierListingInside>
-                      <li>Resident in USA or Germany</li>
-                      <li>Funding with a German bank account</li>
-                      <li>Using domestic USD funding</li>
+                      <li>{this.t("resident_in_usa_text.message")}</li>
+                      <li>{this.t("german_bank_account_text.message")}</li>
+                      <li>{this.t("domestic_funding_text.message")}</li>
                     </TierListingInside>
-                    <p>
-                      However, there may also be other situations where we would
-                      require you to upload an ID confirmation photo.
-                    </p>
+                    <p>{this.t("may_be_other_situations_text.message")}</p>
                   </div>
                 </li>
               </TierListingOutside>
@@ -133,4 +142,8 @@ class TierUpgradeInfo extends React.Component {
   }
 }
 
-export default TierUpgradeInfo;
+export default translate([
+  "static_info_pages",
+  "identity_verification",
+  "tiers",
+])(TierUpgradeInfo);
