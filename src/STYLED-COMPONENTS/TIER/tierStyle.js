@@ -829,6 +829,7 @@ export const TierDropzoneStyle = styled(Dropzone)`
   > div {
     display: inherit;
     align-items: center;
+    width: 100%;
     > i {
       margin: 0 10px 0 0;
     }
