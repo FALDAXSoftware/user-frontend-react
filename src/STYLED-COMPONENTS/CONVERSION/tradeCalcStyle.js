@@ -316,6 +316,14 @@ export const ConversionDropDown = styled(Select)`
   width: 100%;
   padding: 4px 0px;
   color: black;
+  &.ant-select-open.ant-select-focused {
+    & .ant-select-selection-selected-value {
+      display: none !important;
+    }
+    & .ant-select-search__field {
+      color: ${(props) => (props.theme.mode === "dark" ? "#5d5d79" : "")};
+    }
+  }
   & .ant-select-selection {
     border: none;
     font-size: 20px;

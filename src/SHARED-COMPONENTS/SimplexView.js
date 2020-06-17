@@ -24,7 +24,7 @@ import {
   SimRightCol,
   SimMainRow,
   SimLeftCol,
-  SimLastRow
+  SimLastRow,
 } from "../STYLED-COMPONENTS/CONVERSION/tradeCalcStyle";
 
 import {
@@ -34,7 +34,7 @@ import {
   SimHead,
   SimSubHead,
   // SimLastRow,
-  SimTopHead
+  SimTopHead,
 } from "../STYLED-COMPONENTS/SIMPLEX/simplexStyle";
 
 const API_URL = globalVariables.API_URL;
@@ -56,7 +56,7 @@ class SimplexView extends React.Component {
       currencyList: [],
       wallet_address: "",
       crypto_code: "",
-      coin_name: ""
+      coin_name: "",
     };
     // this.validator1 = new SimpleReactValidator({
     //   minCurrencyValid: {
@@ -150,7 +150,7 @@ class SimplexView extends React.Component {
   //     headers: {
   //       Accept: "application/json",
   //       "Content-Type": "application/json",
-  // "Accept-Language": localStorage["i18nextLng"], 
+  // "Accept-Language": localStorage["i18nextLng"],
   //       Authorization: "Bearer " + this.props.isLoggedIn
   //     }
   //   })
@@ -168,34 +168,34 @@ class SimplexView extends React.Component {
   // }
   getCrypto() {
     this.setState({
-      loader: true
+      loader: true,
     });
     fetch(API_URL + `/get-simplex-list`, {
       method: "get",
       headers: {
         Accept: "application/json",
-        "Accept-Language": localStorage["i18nextLng"], 
-        "Content-Type": "application/json"
-      }
+        "Accept-Language": localStorage["i18nextLng"],
+        "Content-Type": "application/json",
+      },
     })
-      .then(response => response.json())
-      .then(responseData => {
+      .then((response) => response.json())
+      .then((responseData) => {
         if (responseData.status == 200) {
           // console.log("responsedata 200", responseData.object.coinList);
           this.setState({
             currencyList: responseData.object.fiat,
             cryptoList: responseData.object.coinList,
-            loader: false
+            loader: false,
           });
         } else {
           this.setState({ loader: false });
         }
       })
-      .catch(error => {});
+      .catch((error) => {});
   }
   calculateDigitalCurrency() {
     this.setState({
-      loader: true
+      loader: true,
     });
     if (
       this.state.currencyToPay === "" ||
@@ -204,7 +204,7 @@ class SimplexView extends React.Component {
     ) {
       this.setState({
         loader: false,
-        currencyToGet: null
+        currencyToGet: null,
       });
       // this.validator1.showMessages();
     } else {
@@ -212,29 +212,29 @@ class SimplexView extends React.Component {
         digital_currency: this.state.crypto,
         fiat_currency: this.state.currency,
         requested_currency: this.state.currency,
-        requested_amount: this.state.currencyToPay
+        requested_amount: this.state.currencyToPay,
       };
       fetch(`${API_URL}/get-simplex-qoute-details`, {
         method: "post",
         headers: {
           Accept: "application/json",
-          "Accept-Language": localStorage["i18nextLng"], 
-          "Content-Type": "application/json"
+          "Accept-Language": localStorage["i18nextLng"],
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(values)
+        body: JSON.stringify(values),
       })
-        .then(response => response.json())
-        .then(responseData => {
+        .then((response) => response.json())
+        .then((responseData) => {
           if (responseData.status === 200) {
             this.setState({
               loader: false,
-              currencyToGet: responseData.data.digital_money.amount
+              currencyToGet: responseData.data.digital_money.amount,
             });
           } else {
             this.setState({ loader: false });
           }
         })
-        .catch(error => {});
+        .catch((error) => {});
     }
   }
   handleCurrencyPayChange(e) {
@@ -243,12 +243,12 @@ class SimplexView extends React.Component {
     if (e.target.value === null || e.target.value === "") {
       this.setState({
         currencyToPay: e.target.value,
-        currencyToGet: null
+        currencyToGet: null,
       });
     } else {
       this.timeout = setTimeout(this.calculateDigitalCurrency, 1500);
       this.setState({
-        currencyToPay: parseFloat(e.target.value)
+        currencyToPay: parseFloat(e.target.value),
       });
     }
   }
@@ -258,9 +258,19 @@ class SimplexView extends React.Component {
   //   });
   // }
   handleCurrencyChange(value) {
+    var cryptoData = this.state.currencyList,
+      minLimit,
+      maxLimit;
+    for (var i = 0; i < cryptoData.length; i++) {
+      if (cryptoData[i].coin == value) {
+        minLimit = cryptoData[i].min_limit;
+        maxLimit = cryptoData[i].max_limit;
+      }
+    }
     this.setState(
       {
-        currency: value
+        currency: value,
+        currencyToPay: minLimit,
       },
       () => {
         this.calculateDigitalCurrency();
@@ -270,7 +280,7 @@ class SimplexView extends React.Component {
   handleCryptoChange(value) {
     this.setState(
       {
-        crypto: value
+        crypto: value,
       },
       () => {
         this.calculateDigitalCurrency();
@@ -279,7 +289,7 @@ class SimplexView extends React.Component {
   }
   btnClicked() {
     this.setState({
-      loader: false
+      loader: false,
     });
     if (this.props.isLoggedIn) {
       if (
@@ -306,7 +316,7 @@ class SimplexView extends React.Component {
   openNotificationWithIcon(type, head, desc) {
     notification[type]({
       message: head,
-      description: desc
+      description: desc,
     });
   }
   render() {
@@ -337,6 +347,7 @@ class SimplexView extends React.Component {
                   {this.state.currencyList &&
                     this.state.currencyList.length > 0 && (
                       <ConversionDropDown
+                        showSearch
                         defaultValue={this.state.currency}
                         onChange={this.handleCurrencyChange}
                       >
@@ -350,7 +361,7 @@ class SimplexView extends React.Component {
                             >
                               {" "}
                               <DropIcon
-                                src={cur.coin_icon}
+                                src={`${_AMAZONBUCKET}${cur.coin_icon}`}
                                 height="20px"
                               />{" "}
                               {cur.coin}
@@ -375,6 +386,7 @@ class SimplexView extends React.Component {
                 <Col xs={12} sm={12} md={8} className="value-display">
                   {this.state.cryptoList && this.state.cryptoList.length > 0 && (
                     <ConversionDropDown
+                      showSearch
                       defaultValue={this.state.crypto}
                       onChange={this.handleCryptoChange}
                     >
@@ -456,7 +468,7 @@ function mapStateToProps(state) {
         ? state.simpleReducer.profileDetails.data !== undefined
           ? state.simpleReducer.profileDetails.data[0]
           : ""
-        : ""
+        : "",
     /* loader:state.simpleReducer.loader?state.simpleReducer.loader:false */
   };
 }
