@@ -130,7 +130,11 @@ class Wallet extends Component {
 
   /* Life Cycle Methods */
   componentWillMount() {
-    if (!this.props.profileDetails.is_user_updated) {
+    if (
+      !this.props.profileDetails.is_user_updated &&
+      (this.props.profileDetails.is_kyc_done !== 2 ||
+        this.props.profileDetails.is_allowed !== true)
+    ) {
       this.props.history.push("/");
     }
   }

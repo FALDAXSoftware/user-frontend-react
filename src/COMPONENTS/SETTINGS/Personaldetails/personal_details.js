@@ -505,11 +505,6 @@ class PersonalDetails extends Component {
     var countrySelected = CountryData.getCountryById(
       this.props.profileDetails.countryJsonId - 1
     );
-    console.log(
-      "countrySelected^^^",
-      countrySelected,
-      this.props.profileDetails.country
-    );
     let country_code = "";
     let arr = [];
     let phoneCode = "";
@@ -519,21 +514,27 @@ class PersonalDetails extends Component {
       arr.push(country_code);
     }
     if (this.props.profileDetails.country) {
-      this.setState(
-        {
-          displayCountry: true,
-          phoneCountry: arr,
-          phoneCode,
-          fields: {
-            country_code: country_code,
-          },
+      this.setState({
+        displayCountry: true,
+        phoneCountry: arr,
+        phoneCode,
+        fields: {
+          country_code: country_code,
         },
-        () => {
-          console.log("countrySelected^^^", this.state.phoneCountry);
-        }
+      });
+    } else {
+      console.log(
+        "countrySelectdisplayCountryed^^^",
+        this.state.displayCountry
       );
+      this.setState({
+        displayCountry: false,
+      });
     }
-    if (this.props.profileDetails.phone_number) {
+    if (
+      this.props.profileDetails.phone_number &&
+      this.props.profileDetails.country
+    ) {
       let phone = this.props.profileDetails.phone_number;
       this.setState({
         displayCountry: true,
@@ -1851,7 +1852,11 @@ class PersonalDetails extends Component {
         country_id = country.id;
       }
     });
-    if (this.state.profileDetails.phone_number) {
+    console.log("couyntry^^^", this.state.profileDetails.country);
+    if (
+      this.state.profileDetails.phone_number &&
+      this.state.profileDetails.country
+    ) {
       arr.push(country_code);
       let temp = this.props.profileDetails.phone_number;
       var mob = temp.split(`+${phonecode}`);
@@ -1866,8 +1871,7 @@ class PersonalDetails extends Component {
         phoneCode: phonecode,
         countryJsonId: country_id,
       });
-    }
-    if (!this.props.profileDetails.phone_number) {
+    } else {
       this.setState({
         displayCountry: false,
       });
@@ -1931,7 +1935,7 @@ class PersonalDetails extends Component {
     const { t } = this.props;
     const { profileDetails } = this.state;
     var me = this;
-    console.log("phoneCountry countrySelected^^", this.state.phoneCountry);
+    console.log("phoneCountry countrySelected^^", this.state.displayCountry);
     return (
       <Profilewrap
         className={
