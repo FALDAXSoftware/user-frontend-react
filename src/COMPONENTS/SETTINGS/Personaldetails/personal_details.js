@@ -522,8 +522,19 @@ class PersonalDetails extends Component {
           country_code: country_code,
         },
       });
+    } else {
+      console.log(
+        "countrySelectdisplayCountryed^^^",
+        this.state.displayCountry
+      );
+      this.setState({
+        displayCountry: false,
+      });
     }
-    if (this.props.profileDetails.phone_number) {
+    if (
+      this.props.profileDetails.phone_number &&
+      this.props.profileDetails.country
+    ) {
       let phone = this.props.profileDetails.phone_number;
       this.setState({
         displayCountry: true,
@@ -1841,7 +1852,11 @@ class PersonalDetails extends Component {
         country_id = country.id;
       }
     });
-    if (this.state.profileDetails.phone_number) {
+    console.log("couyntry^^^", this.state.profileDetails.country);
+    if (
+      this.state.profileDetails.phone_number &&
+      this.state.profileDetails.country
+    ) {
       arr.push(country_code);
       let temp = this.props.profileDetails.phone_number;
       var mob = temp.split(`+${phonecode}`);
@@ -1856,8 +1871,7 @@ class PersonalDetails extends Component {
         phoneCode: phonecode,
         countryJsonId: country_id,
       });
-    }
-    if (!this.props.profileDetails.phone_number) {
+    } else {
       this.setState({
         displayCountry: false,
       });
@@ -1921,7 +1935,7 @@ class PersonalDetails extends Component {
     const { t } = this.props;
     const { profileDetails } = this.state;
     var me = this;
-
+    console.log("phoneCountry countrySelected^^", this.state.displayCountry);
     return (
       <Profilewrap
         className={
@@ -2422,13 +2436,15 @@ class PersonalDetails extends Component {
                         onClick={() => {
                           if (this.props.profileDetails.country) {
                             let arr = [];
-                            arr.push(
-                              this.props.profileDetails.country_code.toLowerCase()
-                            );
-                            this.setState({
-                              displayCountry: true,
-                              phoneCountry: arr,
-                            });
+                            if (this.props.profileDetails.country_code) {
+                              arr.push(
+                                this.props.profileDetails.country_code.toLowerCase()
+                              );
+                              this.setState({
+                                displayCountry: true,
+                                phoneCountry: arr,
+                              });
+                            }
                           }
                           this.setState({
                             editMode: true,
