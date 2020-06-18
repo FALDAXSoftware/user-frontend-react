@@ -49,7 +49,7 @@ const Select1 = styled(Select)`
   }
   & .ant-select-selection {
     background-color: ${(props) =>
-      props.theme.mode === "dark" ? "#01090f" : ""};
+    props.theme.mode === "dark" ? "#01090f" : ""};
   }
   & .ant-select-arrow > i {
     color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
@@ -70,7 +70,7 @@ const Select2 = styled(Select)`
   }
   & .ant-select-selection {
     background-color: ${(props) =>
-      props.theme.mode === "dark" ? "#01090f" : ""};
+    props.theme.mode === "dark" ? "#01090f" : ""};
   }
   & .ant-select-arrow > i {
     color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
@@ -102,7 +102,7 @@ const NDF = styled.tbody`
     > td {
       border-top: 0 !important;
       background: ${(props) =>
-        props.theme.mode === "dark" ? "#041422" : "white"};
+    props.theme.mode === "dark" ? "#041422" : "white"};
     }
   }
   @media (max-width: 767px) {
@@ -286,7 +286,7 @@ class History extends Component {
             drop2List: responseData.coinList,
           });
         })
-        .catch((error) => {});
+        .catch((error) => { });
     } else if (this.state.activeKey === "2") {
       fetch(API_URL + "/get-simplex-coin-list", {
         method: "get",
@@ -312,7 +312,7 @@ class History extends Component {
             this.props.LogoutUser(this.props.isLoggedIn, tempValue2);
           }
         })
-        .catch((error) => {});
+        .catch((error) => { });
     }
   }
 
@@ -360,9 +360,9 @@ class History extends Component {
       let url =
         API_URL +
         `/get-user-history?send=${this.state.send}&receive=${
-          this.state.receive
+        this.state.receive
         }&buy=${this.state.buy}&sell=${
-          this.state.sell
+        this.state.sell
         }&toDate=${this.state.toDate.format(
           "YYYY-MM-DD"
         )}&fromDate=${this.state.fromDate.format(
@@ -920,8 +920,8 @@ class History extends Component {
                         color="#909090"
                       />
                     ) : (
-                      <FontAwesomeIconS icon={faExchangeAlt} color="#909090" />
-                    )}
+                        <FontAwesomeIconS icon={faExchangeAlt} color="#909090" />
+                      )}
                     <Select2
                       showSearch
                       className="display-value"
@@ -982,24 +982,24 @@ class History extends Component {
                       </EXPButton>
                       {this.state.csvTradeFields !== undefined ? (
                         this.state.csvTradeFields.length > 0 &&
-                        this.state.csvTradeFields !== null ? (
-                          <>
-                            <CSVLink
-                              ref={this.exportCsvEle}
-                              filename="tradereportfile.csv"
-                              data={this.state.csvTradeFields}
-                              headers={this.state.csvHeadersTrade}
-                            ></CSVLink>
-                            <EXPButton onClick={this.onExportCSV}>
-                              {t("export_btn.message")}
-                            </EXPButton>
-                          </>
-                        ) : (
-                          ""
-                        )
+                          this.state.csvTradeFields !== null ? (
+                            <>
+                              <CSVLink
+                                ref={this.exportCsvEle}
+                                filename="tradereportfile.csv"
+                                data={this.state.csvTradeFields}
+                                headers={this.state.csvHeadersTrade}
+                              ></CSVLink>
+                              <EXPButton onClick={this.onExportCSV}>
+                                {t("export_btn.message")}
+                              </EXPButton>
+                            </>
+                          ) : (
+                            ""
+                          )
                       ) : (
-                        ""
-                      )}
+                          ""
+                        )}
                     </div>
                   )}
                   {this.state.activeKey === "2" && (
@@ -1012,33 +1012,33 @@ class History extends Component {
                       </EXPButton>
                       {this.state.csvSimplexFields !== undefined ? (
                         this.state.csvSimplexFields.length > 0 &&
-                        this.state.csvSimplexFields !== null ? (
-                          // <EXPButton>
-                          //   <CSVLink
-                          //     filename="simplexreportfile.csv"
-                          //     data={this.state.csvSimplexFields}
-                          //     headers={this.state.csvHeadersSimplex}
-                          //   >
-                          //     {t("export_btn.message")}
-                          //   </CSVLink>
-                          // </EXPButton>
-                          <>
-                            <CSVLink
-                              ref={this.exportCsvEle}
-                              filename="simplexreportfile.csv"
-                              data={this.state.csvSimplexFields}
-                              headers={this.state.csvHeadersSimplex}
-                            ></CSVLink>
-                            <EXPButton onClick={this.onExportCSV}>
-                              {t("export_btn.message")}
-                            </EXPButton>
-                          </>
-                        ) : (
-                          ""
-                        )
+                          this.state.csvSimplexFields !== null ? (
+                            // <EXPButton>
+                            //   <CSVLink
+                            //     filename="simplexreportfile.csv"
+                            //     data={this.state.csvSimplexFields}
+                            //     headers={this.state.csvHeadersSimplex}
+                            //   >
+                            //     {t("export_btn.message")}
+                            //   </CSVLink>
+                            // </EXPButton>
+                            <>
+                              <CSVLink
+                                ref={this.exportCsvEle}
+                                filename="simplexreportfile.csv"
+                                data={this.state.csvSimplexFields}
+                                headers={this.state.csvHeadersSimplex}
+                              ></CSVLink>
+                              <EXPButton onClick={this.onExportCSV}>
+                                {t("export_btn.message")}
+                              </EXPButton>
+                            </>
+                          ) : (
+                            ""
+                          )
                       ) : (
-                        ""
-                      )}
+                          ""
+                        )}
                     </div>
                   )}
                   {this.state.activeKey === "3" && (
@@ -1061,25 +1061,25 @@ class History extends Component {
                             </CSVLink>
                           </EXPButton>
                         ) : (
-                          ""
-                        )
+                            ""
+                          )
                       ) : (
-                        ""
-                      )}
+                          ""
+                        )}
                     </div>
                   )}
                 </Filter>
                 {this.state.activeKey === "2" ? (
                   ""
                 ) : (
-                  <FilterDivSelection>
-                    <CheckboxGroupS
-                      options={options}
-                      value={this.state.checkedGroupValue}
-                      onChange={this.onChangeCheck}
-                    />
-                  </FilterDivSelection>
-                )}
+                    <FilterDivSelection>
+                      <CheckboxGroupS
+                        options={options}
+                        value={this.state.checkedGroupValue}
+                        onChange={this.onChangeCheck}
+                      />
+                    </FilterDivSelection>
+                  )}
               </HeadHis>
               <HisWrap>
                 <Tabs activeKey={this.state.activeKey} onChange={this.callback}>
@@ -1223,11 +1223,11 @@ class History extends Component {
                                   );
                                 var side =
                                   Number(temps.user_id) ===
-                                  self.props.profileData.id
+                                    self.props.profileData.id
                                     ? temps.side
                                     : temps.side === "Buy"
-                                    ? "Sell"
-                                    : "Buy";
+                                      ? "Sell"
+                                      : "Buy";
 
                                 var limit_price =
                                   temps.order_type != "Market"
@@ -1260,17 +1260,17 @@ class History extends Component {
                               })}
                             </tbody>
                           ) : (
-                            <NDF>
-                              <tr>
-                                <td colSpan="8">
-                                  {t("support:no_data_found.message")}
-                                </td>
-                              </tr>
-                            </NDF>
-                          )
+                              <NDF>
+                                <tr>
+                                  <td colSpan="8">
+                                    {t("support:no_data_found.message")}
+                                  </td>
+                                </tr>
+                              </NDF>
+                            )
                         ) : (
-                          ""
-                        )}
+                            ""
+                          )}
                       </HisTable>
                     </Tablediv>
                     <PagDiv>
@@ -1286,8 +1286,8 @@ class History extends Component {
                           pageSizeOptions={pageSizeOptions}
                         />
                       ) : (
-                        ""
-                      )}
+                          ""
+                        )}
                     </PagDiv>
                   </TabPane>
                   <TabPane
@@ -1339,11 +1339,11 @@ class History extends Component {
                                   );
                                 var side =
                                   Number(temps.user_id) ===
-                                  self.props.profileData.id
+                                    self.props.profileData.id
                                     ? temps.side
                                     : temps.side === "Buy"
-                                    ? t("sell_text.message")
-                                    : t("buy_text.message");
+                                      ? t("sell_text.message")
+                                      : t("buy_text.message");
                                 if (temps.simplex_payment_status === 1) {
                                   var simplex_payment_status = "Under Approval";
                                 }
@@ -1353,6 +1353,8 @@ class History extends Component {
                                 if (temps.simplex_payment_status === 3) {
                                   var simplex_payment_status = "Cancelled";
                                 }
+                                let url;
+                                url = "https://payment-status.simplex.com/#/payment/" + temps.payment_id;
                                 return (
                                   <tr>
                                     <td>{temps.symbol}</td>
@@ -1360,17 +1362,19 @@ class History extends Component {
                                     <td>{temps.fill_price}</td>
                                     <td>{temps.quantity}</td>
                                     <td>{temps.address}</td>
-                                    <td>{temps.payment_id}</td>
+                                    <td><a target="_blank" href={url}>
+                                      {temps.payment_id}
+                                    </a></td>
                                     <td>{temps.quote_id}</td>
                                     <td>
                                       {simplex_payment_status ==
                                         "Under Approval" && (
-                                        <span className="order-inapproval">
-                                          {self.t(
-                                            "under_approval_text.message"
-                                          )}
-                                        </span>
-                                      )}
+                                          <span className="order-inapproval">
+                                            {self.t(
+                                              "under_approval_text.message"
+                                            )}
+                                          </span>
+                                        )}
                                       {simplex_payment_status == "Approved" && (
                                         <span className="order-sucess">
                                           {self.t("approved_text.message")}
@@ -1378,27 +1382,27 @@ class History extends Component {
                                       )}
                                       {simplex_payment_status ==
                                         "Cancelled" && (
-                                        <span className="order-cancelled">
-                                          {self.t("cancelled_text.message")}
-                                        </span>
-                                      )}
+                                          <span className="order-cancelled">
+                                            {self.t("cancelled_text.message")}
+                                          </span>
+                                        )}
                                     </td>
                                   </tr>
                                 );
                               })}
                             </tbody>
                           ) : (
-                            <NDF>
-                              <tr>
-                                <td colSpan="8">
-                                  {t("support:no_data_found.message")}
-                                </td>
-                              </tr>
-                            </NDF>
-                          )
+                              <NDF>
+                                <tr>
+                                  <td colSpan="8">
+                                    {t("support:no_data_found.message")}
+                                  </td>
+                                </tr>
+                              </NDF>
+                            )
                         ) : (
-                          ""
-                        )}
+                            ""
+                          )}
                       </HisTable>
                     </Tablediv>
                     <PagDiv>
@@ -1414,8 +1418,8 @@ class History extends Component {
                           pageSizeOptions={pageSizeOptions}
                         />
                       ) : (
-                        ""
-                      )}
+                          ""
+                        )}
                     </PagDiv>
                   </TabPane>
                 </Tabs>
