@@ -331,7 +331,7 @@ class Login_Form extends Component {
     );
   }
   componentDidMount() {
-    document.cookie = "isLoggedInPreprod=false; domain=faldax.com";
+    document.cookie = `${process.env.REACT_COOKIE}=false; domain=faldax.com`;
   }
   verifyCallback(recaptchaToken) {
     this.setState({
@@ -626,7 +626,7 @@ class Login_Form extends Component {
   }
 
   componentDidMount() {
-    document.cookie = "isLoggedInPreprod=false; domain=faldax.com";
+    document.cookie = `${process.env.REACT_COOKIE}=false; domain=faldax.com`;
 
     if (!this.props.isLoggedIn) {
       loadReCaptcha(GOOGLE_SITE_KEY);

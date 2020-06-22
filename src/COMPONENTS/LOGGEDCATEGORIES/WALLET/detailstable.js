@@ -187,6 +187,7 @@ class DetailsTable extends React.Component {
                         let url;
                         if (me.props.coin_code != undefined) {
                           switch (me.props.coin_code) {
+                            // For Testnet
                             case "tbtc":
                               url =
                                 "https://blockstream.info/testnet/tx/" +
@@ -212,9 +213,36 @@ class DetailsTable extends React.Component {
                                 "https://kovan.etherscan.io/tx/" +
                                 details[index].transaction_id;
                               break;
+
+                            // For Mainnet
+                            case "btc":
+                              url =
+                                "https://blockchair.com/bitcoin/transaction/" +
+                                details[index].transaction_id;
+                              break;
+                            case "xrp":
+                              url =
+                                "https://blockchair.com/ripple/transaction/" +
+                                details[index].transaction_id;
+                              break;
+                            case "ltc":
+                              url =
+                                "https://blockchair.com/litecoin/transaction/" +
+                                details[index].transaction_id;
+                              break;
+                            case "bch":
+                              url =
+                                "https://blockchair.com/bitcoin-cash/transaction/" +
+                                details[index].transaction_id;
+                              break;
+                            case "eth":
+                              url =
+                                "https://etherscan.io/tx/" +
+                                details[index].transaction_id;
+                              break;
                             case "SUSU":
                               url =
-                                "http://explore.susukino.com/tx/" +
+                                "https://explore.susukino.com/tx/" +
                                 details[index].transaction_id;
                               break;
                             default:
