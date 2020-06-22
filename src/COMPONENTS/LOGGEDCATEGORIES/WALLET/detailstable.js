@@ -187,6 +187,34 @@ class DetailsTable extends React.Component {
                         let url;
                         if (me.props.coin_code != undefined) {
                           switch (me.props.coin_code) {
+                            // For Testnet
+                            case "tbtc":
+                              url =
+                                "https://blockstream.info/testnet/tx/" +
+                                details[index].transaction_id;
+                              break;
+                            case "txrp":
+                              url =
+                                "https://test.bithomp.com/explorer/" +
+                                details[index].transaction_id;
+                              break;
+                            case "tltc":
+                              url =
+                                "https://blockexplorer.one/litecoin/testnet/tx/" +
+                                details[index].transaction_id;
+                              break;
+                            case "tbch":
+                              url =
+                                "https://explorer.bitcoin.com/tbch/tx/" +
+                                details[index].transaction_id;
+                              break;
+                            case "teth":
+                              url =
+                                "https://kovan.etherscan.io/tx/" +
+                                details[index].transaction_id;
+                              break;
+
+                            // For Mainnet
                             case "btc":
                               url =
                                 "https://blockchair.com/bitcoin/transaction/" +

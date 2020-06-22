@@ -1,7 +1,7 @@
 export default (
   state = {
     profileDetails: undefined,
-    profileError: undefined
+    profileError: undefined,
   },
   action
 ) => {
@@ -10,18 +10,18 @@ export default (
       if (action.payload !== undefined) {
         if (action.payload.token) {
           document.cookie = "isLoggedIn=true";
-          document.cookie = "isLoggedInLive=true; domain=faldax.com";
+          document.cookie = `${process.env.REACT_COOKIE}=true; domain=faldax.com`;
         }
         return {
           ...state,
           isLoggedIn: action.payload.token,
           isKYCDone: action.payload.user.is_kyc_done,
-          errorStatus: action.payload
+          errorStatus: action.payload,
         };
       } else {
         return {
           ...state,
-          errorStatus: undefined
+          errorStatus: undefined,
         };
       }
 
@@ -29,7 +29,7 @@ export default (
       return {
         ...state,
         isOtpRequired: true,
-        OtpParams: action.payload
+        OtpParams: action.payload,
       };
 
     case "ERROR":
@@ -37,35 +37,35 @@ export default (
       if (action.status === "login") {
         return {
           ...state,
-          errorStatus: action.payload
+          errorStatus: action.payload,
         };
       } else {
         return {
           ...state,
-          isSignUp: action.payload
+          isSignUp: action.payload,
         };
       }
 
     case "LOGOUT":
       document.cookie = "isLoggedIn=false";
-      document.cookie = "isLoggedInLive=false; domain=faldax.com";
+      document.cookie = `${process.env.REACT_COOKIE}=false; domain=faldax.com`;
       return {
         ...state,
         isLoggedIn: undefined,
         isKYCDone: undefined,
-        profileDetails: undefined
+        profileDetails: undefined,
       };
 
     case "SIGNUP":
       return {
         ...state,
-        isSignUp: action.payload
+        isSignUp: action.payload,
       };
 
     case "FORGOT":
       return {
         ...state,
-        forgot: action.payload
+        forgot: action.payload,
       };
 
     case "EDITPROFILE":
@@ -76,37 +76,37 @@ export default (
       /* console.log("ADDPROFILE", action.payload) */
       return {
         ...state,
-        profileDetails: action.payload
+        profileDetails: action.payload,
       };
     case "ERRORPROFILE":
       return {
         ...state,
-        profileError: action.payload
+        profileError: action.payload,
       };
     case "REMOVELOADER":
       /* console.log("REMOVELOADER",action.payload) */
       return {
         ...state,
-        loader: action.payload
+        loader: action.payload,
       };
 
     case "ADDLOADER":
       /* console.log("ADDLOADER",action.payload) */
       return {
         ...state,
-        loader: action.payload
+        loader: action.payload,
       };
 
     case "RESET":
       return {
         ...state,
-        resetPass: action.payload
+        resetPass: action.payload,
       };
 
     case "CHANGEPASSWORD":
       return {
         ...state,
-        changePass: action.payload
+        changePass: action.payload,
       };
 
     default:
