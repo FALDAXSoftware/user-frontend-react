@@ -5,52 +5,15 @@ export const globalVariables = {
 
   _AMAZONBUCKET: "https://s3.us-east-2.amazonaws.com/production-static-asset/",
 
-  // WordpressSiteURL: "https://www.faldax.com", //Live URL
-
-  WordpressSiteURL: "https://preprod.faldax.com", //Pre-Production URL
-
   tvChartURL: "/chart",
 
-  //API_URL: 'http://18.191.87.133:8084', //Live URL
+  WordpressSiteURL: process.env.REACT_APP_WORDPRESS_ENDPOINT,
 
-  // API_URL: "http://localhost:1440", //Mansi's
+  API_URL: process.env.REACT_APP_API_ENDPOINT,
 
-  // API_URL: "http://f137efd4e530.ngrok.io",
+  TRADE_URL: process.env.REACT_APP_TRADE_ENDPOINT,
 
-  // API_URL: "http://00c912ac.ngrok.io",
-
-  // API_URL: "http://192.168.1.96:1337", //Jagdish's URL
-
-  // API_URL: 'http://192.168.0.224:1337', //Kalpit Local URL
-
-  // API_URL: "http://192.168.3.32:1337" //Krina Local URL
-
-  //API_URL: 'http://192.168.0.93:1337'
-
-  //    API_URL: "https://dev-backend.faldax.com", // DEV url
-
-  // API_URL: "https://mainnet-backend.faldax.com", //Pre-Production URL
-
-  // API_URL: "http://991e8fb6.ngrok.io/api/v1/tradding/",
-  API_URL: "https://pre-prod-backend.faldax.com", //Pre-Production URL
-
-  TRADE_URL: "https://preprod-trade.faldax.com",
-
-  //    TRADE_URL: "https://dev-trade.faldax.com", // DEV url
-
-  // TRADE_URL: "http://localhost:3006/"s
-
-  // API_URL: "https://api.faldax.com", // Live URL
-
-  // TRADE_URL: "https://trade.faldax.com" // Live URL
-
-  //API_URL: process.env.REACT_APP_ENV_URL==='production' ?
-  /* 'https://prod-backend.faldax.com':
-        'https://dev-backend.faldax.com',
-    */
-  // API_URL: 'http://13.58.130.154:8989' //Client Live URL,
-  SOCKET_HOST: "https://preprod-trading.faldax.com",
-  // SOCKET_HOST: "http://124863c5.ngrok.io/",
+  SOCKET_HOST: process.env.REACT_APP_SOCKET_ENDPOINT,
 
   Terms_and_services:
     "https://s3.us-east-2.amazonaws.com/production-static-asset/assets/pdf/FALDAX+Terms+of+Service.pdf",

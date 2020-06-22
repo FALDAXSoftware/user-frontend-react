@@ -138,7 +138,8 @@ class WalletDetails extends Component {
   componentWillMount() {
     if (
       !this.props.profileDetails.is_user_updated &&
-      !this.props.profileDetails.is_allowed
+      (this.props.profileDetails.is_kyc_done !== 2 ||
+        this.props.profileDetails.is_allowed !== true)
     ) {
       this.props.history.push("/");
     }
@@ -177,9 +178,12 @@ class WalletDetails extends Component {
     if (this.props.location !== undefined) {
       if (
         this.props.location.search.includes("coinID") &&
-        this.props.profileDetails.is_user_updated
+        this.props.profileDetails.is_kyc_done == 2 &&
+        this.props.profileDetails.is_allowed == true
       ) {
         await this.walletDetailsApi();
+      } else {
+        this.props.history.push("/");
       }
     }
     this.setState({ loader: false });

@@ -342,7 +342,7 @@ class Tier extends Component {
                         {tier.is_verified && (
                           <Link
                             to={{
-                              pathname: `/tier${tier.id}`,
+                              pathname: `/tier${tier.tier_step}`,
                               state: {
                                 flag: true,
                               },
@@ -356,11 +356,11 @@ class Tier extends Component {
                         {tier.is_active && (
                           <TierUpdate
                             onClick={() => {
-                              self.checkTierRequirements(tier.id);
+                              self.checkTierRequirements(tier.tier_step);
                             }}
-                            key={tier.id}
-                            id={tier.id}
-                            data-id={tier.id}
+                            key={tier.tier_step}
+                            id={tier.tier_step}
+                            data-id={tier.tier_step}
                             className="upgrade-btn"
                           >
                             {tier.account_details
