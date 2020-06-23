@@ -10,7 +10,7 @@ export default (
       if (action.payload !== undefined) {
         if (action.payload.token) {
           document.cookie = "isLoggedIn=true";
-          document.cookie = `${process.env.REACT_COOKIE}=true; domain=faldax.com`;
+          document.cookie = `${process.env.REACT_APP_COOKIE_NAME}=true; domain=faldax.com`;
         }
         return {
           ...state,
@@ -48,7 +48,7 @@ export default (
 
     case "LOGOUT":
       document.cookie = "isLoggedIn=false";
-      document.cookie = `${process.env.REACT_COOKIE}=false; domain=faldax.com`;
+      document.cookie = `${process.env.REACT_APP_COOKIE_NAME}=false; domain=faldax.com`;
       return {
         ...state,
         isLoggedIn: undefined,
