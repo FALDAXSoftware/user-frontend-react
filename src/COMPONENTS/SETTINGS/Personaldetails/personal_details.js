@@ -1852,15 +1852,15 @@ class PersonalDetails extends Component {
         country_id = country.id;
       }
     });
-    console.log("couyntry^^^", this.state.profileDetails.country);
     if (
       this.state.profileDetails.phone_number &&
       this.state.profileDetails.country
     ) {
-      arr.push(country_code);
+      arr.push(country_code.toLowerCase());
       let temp = this.props.profileDetails.phone_number;
       var mob = temp.split(`+${phonecode}`);
       let phone = this.props.profileDetails.phone_number;
+      console.log("mob countrySelected^^^^^", mob);
       this.setState({
         mobile: mob[1],
         displayCountry: true,
@@ -1935,7 +1935,14 @@ class PersonalDetails extends Component {
     const { t } = this.props;
     const { profileDetails } = this.state;
     var me = this;
-    console.log("phoneCountry countrySelected^^", this.state.displayCountry);
+    console.log(
+      "phoneCountry countrySelected^^",
+      this.state.displayCountry,
+      this.state.phoneCountry,
+      this.state.mobile,
+      this.state.fields.phone_number,
+      this.state.countryJsonId
+    );
     return (
       <Profilewrap
         className={
@@ -2139,7 +2146,6 @@ class PersonalDetails extends Component {
                     xxl={{ span: 24 }}
                   >
                     <CountryPick
-                      // {...this.props}
                       disabled={!this.state.editMode}
                       theme={this.props.theme}
                       country={
@@ -2157,14 +2163,8 @@ class PersonalDetails extends Component {
                           ? this.state.citySelected
                           : this.props.profileDetails.city_town
                       }
-                      // onCountryChange={(country, state, city) =>
-                      //   this.onCountryChange(country, state, city)
-                      // }
                       country_id={this.state.countryJsonId}
                       phone_number={this.state.fields.phone_number}
-                      // onCountryChange={(country, state, city) =>
-                      //   this.onCountryChange(country, state, city)
-                      // }
                       onCountryChange={(
                         country,
                         state,
@@ -2222,7 +2222,7 @@ class PersonalDetails extends Component {
                                 : ""
                             }
                             allowDropdown={false}
-                            autoHideDialCode={true}
+                            autoHideDialCode={false}
                             preferredCountries={[]}
                             inputClassName="intl-tel-input form-control"
                             onlyCountries={

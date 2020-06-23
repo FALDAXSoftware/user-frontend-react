@@ -112,7 +112,6 @@ class CountryPick extends Component {
   /* Life-Cycle Methods */
   componentDidMount() {
     this.getallCountriesData();
-    console.log("country mount%%%", this.state.countryList);
     var countrySelected = CountryData.getCountryById(this.props.country_id - 1);
     let country_code = "";
     let phoneCode = "";
@@ -296,7 +295,6 @@ class CountryPick extends Component {
     })
       .then((response) => response.json())
       .then((responseData) => {
-        console.log("countrieslist%%%%", responseData.data);
         this.setState({
           countryList: responseData.data,
         });
