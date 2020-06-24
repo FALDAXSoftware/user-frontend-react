@@ -304,7 +304,7 @@ class Referral extends Component {
             let fiatAmt =
               parseFloat(temp.amount) * parseFloat(temp.quote[`${fiat}`].price);
             //Sum of all fiatAmt.
-            sum = sum + precision(fiatAmt);
+            sum = sum + parseFloat(fiatAmt);
             //Object Taken for fields for dropdown
             let obj = {
               coin_name: temp.coin_name,
