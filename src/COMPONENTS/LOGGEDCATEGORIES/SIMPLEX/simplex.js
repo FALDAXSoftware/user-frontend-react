@@ -483,7 +483,8 @@ class Simplex extends React.Component {
                     {this.state.cryptoList && this.state.cryptoList.length > 0 && (
                       <ConversionDropDown
                         showSearch
-                        defaultValue={this.state.crypto}
+                        // defaultValue={this.state.crypto}
+                        defaultValue={this.state.cryptoList[0].coin}
                         onChange={this.handleCryptoChange}
                       >
                         {this.state.cryptoList.map((element, index) => {
