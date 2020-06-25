@@ -838,12 +838,18 @@ class WalletPopup extends Component {
               this.t("validations:error_text.message"),
               responseData.err
             );
+            this.setState({
+              disabled: true,
+            });
           } else {
             this.openNotificationWithIcon(
               "error",
               this.t("validations:error_text.message"),
               responseData.message
             );
+            this.setState({
+              disabled: true,
+            });
           }
           // code here for getting limits
           this.getTierLimits();
