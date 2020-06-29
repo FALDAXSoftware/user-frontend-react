@@ -215,8 +215,8 @@ class AppRouter extends Component {
           },
         },
       },
-      transports: ["websocket"],
-      upgrade: false,
+      // transports: ["websocket"],
+      // upgrade: false,
     });
   }
   componentDidMount() {
