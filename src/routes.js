@@ -83,7 +83,7 @@ const routes = [
   {
     exact: false,
     path: "/chart/:pair",
-    component: (props) => (<Tradingviewchart io={io} />),
+    component: (props) => <Tradingviewchart io={io} />,
   },
   {
     exact: false,
@@ -215,6 +215,8 @@ class AppRouter extends Component {
           },
         },
       },
+      transports: ["websocket"],
+      upgrade: false,
     });
   }
   componentDidMount() {
@@ -281,8 +283,8 @@ class AppRouter extends Component {
           })}
           <Route
             component={NotFound}
-          // path="/privacy-policy"
-          // loc="https://meetflo.zendesk.com/hc/en-us/articles/230425728-Privacy-Policies"
+            // path="/privacy-policy"
+            // loc="https://meetflo.zendesk.com/hc/en-us/articles/230425728-Privacy-Policies"
           />
           {/* <Route
   path="/privacy-policy"
