@@ -37,6 +37,9 @@ class DepthChartAm extends Component {
     };
     this.t = this.props.t;
   }
+  componentWillUnmount() {
+    chart.dataSource.reloadFrequency = 0;
+  }
   componentDidMount() {
     chart = am4core.create("depthChartContainer", am4charts.XYChart);
     chart.dataSource.url = `${SOCKET_HOST}/api/v1/tradding/depth-chart-details?symbol=${this.props.crypto}-${this.props.currency}`;
