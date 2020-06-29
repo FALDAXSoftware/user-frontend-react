@@ -214,9 +214,9 @@ class AppRouter extends Component {
             Authorization: "Bearer " + this.props.isLoggedIn, //ahiya header pass karide auth
           },
         },
+        transports: ["websocket"],
+        upgrade: false,
       },
-      // transports: ["websocket"],
-      // upgrade: false,
     });
   }
   componentDidMount() {
