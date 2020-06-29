@@ -459,7 +459,11 @@ class Trade extends Component {
       }
     }
   }
-
+  componentWillUnmount() {
+    clearInterval(this.interval);
+    console.log("thisd unmount", this.props);
+    this.props.io.disconnect();
+  }
   async componentDidMount() {
     if (!this.props.profileDetails) {
       this.props.getProfileDataAction(this.props.isLoggedIn);
@@ -500,7 +504,7 @@ class Trade extends Component {
       });
       this.orderSocket(this.state.timePeriod, this.state.status);
       this.getInstrumentData();
-      setInterval(() => {
+      this.interval = setInterval(() => {
         this.getInstrumentData();
       }, 10000);
       this.props.io.on("user-wallet-balance", (data) => {

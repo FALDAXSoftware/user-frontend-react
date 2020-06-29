@@ -248,6 +248,7 @@ class Market extends Component {
     }
   }
   componentDidMount() {
+    console.log("test", this.props.userBal);
     if (Object.keys(this.props.userBal).length > 0) {
       if (
         Object.keys(this.props.userBal.crypto).length > 0 &&
