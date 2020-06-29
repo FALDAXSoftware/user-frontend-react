@@ -36,8 +36,6 @@ class BuySell extends React.Component {
           {this.props.currency}
         </Instru>
         <BBCWrap>
-          {console.log(this.props.height)}
-
           <BuyTable
             currency={this.props.currency}
             crypto={this.props.crypto}
