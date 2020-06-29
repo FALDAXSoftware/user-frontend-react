@@ -201,7 +201,7 @@ class TierUpgradeInfo extends Component {
                   </td>
                   <td>{minimumAccountAge}</td>
                   <td className={ageCheck ? "green" : "red"}>
-                    {response1.ageRemaining}
+                    {response1.ageRemaining ? response1.ageRemaining : 0}
                   </td>
                 </tr>
                 <tr>
