@@ -31,7 +31,7 @@ volumes: [
                 sh "npm cache clear --force && npm install --no-shrinkwrap --update-binary" 
                 sh "npm install --save webpack@4.42.0"
                 sh "npm install --save  webpack-dev-server@3.10.3"
-                sh "npm run build"
+                sh "npm run build${getEnvConfig(myRepo.GIT_BRANCH)}"
                 sh "ls -la" 
                 if (env.BRANCH_NAME == 'master') {
                         withAWS(credentials:'jenkins_s3_upload') {
@@ -71,4 +71,12 @@ def getNamespace(branch){
         case 'mainnet' : return "mainnet";
         default : return null;
     }
+}
+def getEnvConfig(branch){
+  switch(branch){
+      case 'development' :  return ":preprod";
+      case 'preprod' :  return ":preprod";
+      case 'mainnet' :  return ":mainnet";
+      default : return "";
+  }
 }

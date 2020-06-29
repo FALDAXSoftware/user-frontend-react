@@ -569,12 +569,15 @@ export const BTCWrap = styled.div`
     padding: 0px 10px;
     > span {
       color: ${(props) => (props.theme.mode === "dark" ? "white" : "#333")};
+      word-break: break-word;
     }
     > a {
       padding: 5px 10px;
       border: 1px solid;
       border-radius: 4px;
       color: #4c84ff;
+      min-width: 125px;
+      margin: 0 0 0 5px;
     }
   }
 `;
