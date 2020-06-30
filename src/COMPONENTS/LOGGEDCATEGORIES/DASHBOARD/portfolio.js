@@ -51,7 +51,9 @@ class Portfolio extends Component {
               coin: element.name,
               amount: precision(element.Amount) + " " + element.symbol,
               value: precision(element.average_price) + " " + userFiat,
-              change: precisionTwo(element.percentchange) + "%",
+              change: element.percentchange
+                ? precisionTwo(element.percentchange) + "%"
+                : "0 %",
             });
           });
           self.setState({
@@ -102,7 +104,10 @@ class Portfolio extends Component {
         </Topic>
         <HighLow>
           <LeftHl>
-            {precision(parseFloat(this.state.total))} {userFiat}
+            {/* {precision(parseFloat(this.state.total))} {userFiat} */}
+            {this.state.total == "Infinity"
+              ? `0 ${userFiat}`
+              : `${precision(parseFloat(this.state.total))} ${userFiat}`}
           </LeftHl>
           <RightHl
             className={
