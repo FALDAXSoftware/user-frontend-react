@@ -11,6 +11,7 @@ import PersonalDetails from "./Personaldetails/personal_details";
 import Referral from "./referral";
 import Navigation from "COMPONENTS/NAVIGATIONS/loggednavigation";
 import FooterHome from "COMPONENTS/LANDING/FOOTERS/footer_home";
+import CountryAccess from "SHARED-COMPONENTS/CountryAccess";
 import Passwordchange from "./changePassword/password_change";
 import AccSettings from "./Account_settings/acc_settings";
 import TierOne from "./TIERS/tier_one";
@@ -19,6 +20,7 @@ import TierOne from "./TIERS/tier_one";
 import SupportHub from "./Account_settings/support_hub";
 import { translate } from "react-i18next";
 import CompleteProfile from "../../SHARED-COMPONENTS/completeProfile";
+import Tier from "./tier";
 // import AgreeTerms from "../../SHARED-COMPONENTS/AgreeTerms";
 
 const TabPane = Tabs.TabPane;
@@ -27,11 +29,11 @@ let { API_URL } = globalVariables;
 export const ProfileWrapper = styled.div`
   padding-top: 100px;
   padding-bottom: 30px;
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#01090f" : "#f5f6fa"};
 `;
 export const ProfileDiv = styled.div`
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#041422" : "#ffffff"};
   margin: auto;
   width: 95%;
@@ -46,13 +48,13 @@ const TabsStyle = styled(Tabs)`
     background-color: rgb(0, 170, 250);
   }
   & .ant-tabs-tab-prev-icon > i {
-    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   }
   & .ant-tabs-tab-prev-icon > i {
-    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   }
   & .ant-tabs-tab-next-icon > i {
-    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   }
 `;
 
@@ -64,14 +66,15 @@ class Editprofile extends Component {
       user2fastatus: "",
       totalUSDOfWallet: "",
       walletCoins: "",
-      countryAccess: false
+      countryAccess: false,
+      access: false,
     };
     this.callback = this.callback.bind(this);
     this.getWalletSummary = this.getWalletSummary.bind(this);
   }
   callback(key) {
     this.setState({
-      activeKey: key
+      activeKey: key,
     });
     if (key == "4") {
       if (
@@ -79,12 +82,20 @@ class Editprofile extends Component {
         this.props.profileDetails.is_kyc_done != "2"
       ) {
         this.setState({
-          countryAccess: true
+          countryAccess: true,
         });
       } else {
-        this.setState({
-          countryAccess: false
-        });
+        if (this.props.profileDetails.legal_allowed) {
+          this.setState({
+            countryAccess: false,
+            access: true,
+          });
+        } else {
+          this.setState({
+            countryAccess: false,
+            access: false,
+          });
+        }
       }
     }
   }
@@ -95,11 +106,11 @@ class Editprofile extends Component {
       this.props.profileDetails.is_kyc_done != "2"
     ) {
       this.setState({
-        countryAccess: true
+        countryAccess: true,
       });
     } else {
       this.setState({
-        countryAccess: false
+        countryAccess: false,
       });
     }
   }
@@ -114,11 +125,11 @@ class Editprofile extends Component {
         newProps.profileDetails.is_kyc_done != "2"
       ) {
         this.setState({
-          countryAccess: true
+          countryAccess: true,
         });
       } else {
         this.setState({
-          countryAccess: false
+          countryAccess: false,
         });
       }
     }
@@ -132,18 +143,18 @@ class Editprofile extends Component {
         newProps.profileDetails.is_kyc_done != "2"
       ) {
         this.setState({
-          countryAccess: true
+          countryAccess: true,
         });
       } else {
         this.setState({
-          countryAccess: false
+          countryAccess: false,
         });
       }
     }
   }
   getWalletSummary() {
     this.setState({
-      loader: true
+      loader: true,
     });
     fetch(API_URL + `/user/deleteAccountCheck`, {
       method: "get",
@@ -151,32 +162,33 @@ class Editprofile extends Component {
         Accept: "application/json",
         "Content-Type": "application/json",
         "Accept-Language": localStorage["i18nextLng"],
-        Authorization: "Bearer " + this.props.isLoggedIn
-      }
+        Authorization: "Bearer " + this.props.isLoggedIn,
+      },
     })
-      .then(response => response.json())
-      .then(responseData => {
+      .then((response) => response.json())
+      .then((responseData) => {
         if (responseData.status == 201) {
           this.setState({
             totalUSDOfWallet: responseData.usd_price.toFixed(2),
             walletCoins: responseData.data,
             user2fastatus: responseData.user2fastatus,
-            loader: false
+            loader: false,
           });
         } else if (responseData.status == 200) {
           this.setState({
             walletCoins: null,
             user2fastatus: responseData.user2fastatus,
-            loader: false
+            loader: false,
           });
         }
       })
-      .catch(error => {});
+      .catch((error) => {});
   }
-  comingCancel = e => {
+  comingCancel = (e) => {
     this.setState(
       {
-        countryAccess: false
+        countryAccess: false,
+        access: false,
       },
       () => {
         this.props.history.push("/editProfile");
@@ -202,21 +214,39 @@ class Editprofile extends Component {
                 <Passwordchange {...this.props} />
               </TabPane>
               <TabPane tab={t("head_settings.message")} key="3">
-                <AccSettings
+                {this.state.countryAccess ? (
+                  <CompleteProfile
+                    comingCancel={(e) => this.comingCancel(e)}
+                    visible={this.state.countryAccess}
+                  />
+                ) : (
+                  <AccSettings
+                    {...this.props}
+                    user2fastatus={this.state.user2fastatus}
+                    walletCoins={this.state.walletCoins}
+                    totalUSDOfWallet={this.state.totalUSDOfWallet}
+                  />
+                )}
+                {/* <AccSettings
                   {...this.props}
                   user2fastatus={this.state.user2fastatus}
                   walletCoins={this.state.walletCoins}
                   totalUSDOfWallet={this.state.totalUSDOfWallet}
-                />
+                /> */}
               </TabPane>
               <TabPane tab={t("head_identity_verification.message")} key="4">
                 {this.state.countryAccess ? (
                   <CompleteProfile
-                    comingCancel={e => this.comingCancel(e)}
+                    comingCancel={(e) => this.comingCancel(e)}
                     visible={this.state.countryAccess}
                   />
+                ) : this.state.access ? (
+                  <Tier />
                 ) : (
-                  <TierOne />
+                  <CountryAccess
+                    comingCancel={(e) => this.comingCancel(e)}
+                    visible={!this.state.access}
+                  />
                 )}
               </TabPane>
               <TabPane tab={t("head_referral.message")} key="5">
@@ -242,7 +272,7 @@ function mapStateToProps(state) {
         ? state.simpleReducer.profileDetails.data[0]
         : "",
     theme:
-      state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
+      state.themeReducer.theme !== undefined ? state.themeReducer.theme : "",
   };
 }
 

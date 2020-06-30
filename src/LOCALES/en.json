@@ -1054,7 +1054,7 @@
     },
     "id_type_driving_licence": {
       "page": "Edit Profile > Identity Verification > Step 2",
-      "message": "Driving license",
+      "message": "Driver's License",
       "message_type": "Web content",
       "context": "Driving licence text"
     },
@@ -1102,7 +1102,7 @@
     },
     "kyc_verified_text": {
       "page": "Edit Profile > Identity Verification",
-      "message": "Verification Completed.",
+      "message": "Verification Complete.",
       "message_type": "Web content",
       "context": "Identity verification kyc submit text"
     },
@@ -1406,7 +1406,7 @@
     },
     "wallet_generation_in_process": {
       "page": "Wallet Details",
-      "message": "Your wallet is being generated and you will receive a notification when it is ready for use. If you do not receive a notification within 24 hours, or if you have any other concerns, please feel free to contact us",
+      "message": "Your wallet is being generated and you will receive a notification when it is ready for use. If you do not receive a notification within 24 hours, or if you have any other concerns, please feel free to contact us ",
       "message_type": "Web content",
       "context": "wallet generation under process message"
     },
@@ -1498,7 +1498,7 @@
     },
     "under_approval_text": {
       "page": "History",
-      "message": "Under Approval",
+      "message": "Pending",
       "message_type": "Web content",
       "context": "Under Approval text for status"
     },
@@ -2042,7 +2042,7 @@
     },
     "two_factor_authentication_subhead": {
       "page": "Edit Profile > Security > Regenerate Backup code",
-      "message": "Please SAVE this backup code. It will be required to change your Two-Factor Authentication in the future if you no longer have the device you orginally associated with your 2FA.",
+      "message": "Please SAVE this backup code. It will be required to change your Two-Factor Authentication in the future if you no longer have the device you originally associated with your 2FA.",
       "message_type": "Web content",
       "context": "Two Factor Authentication sub text"
     },
@@ -2704,7 +2704,7 @@
     },
     "transition_error_please_try": {
       "page": "Simplex",
-      "message": "There is some error in the transaction. Please retry.",
+      "message": "There was an error with the transaction. Please try again.",
       "message_type": "Web content",
       "context": "Error"
     },
@@ -2770,7 +2770,7 @@
     },
     "cover_latter_text": {
       "page": "Jobs",
-      "message": "Cover Letter",
+      "message": "Cover Letter.",
       "message_type": "Web content",
       "context": "Text"
     },
@@ -2880,7 +2880,7 @@
     },
     "idcp_text_note_brief": {
       "page": "Profile Backup",
-      "message": "The handwritten note must say 'only for trading digital currency on www.faldax.com' and include: the current date your signature Pay close attention when writing the handwritten note! If even one word is different in the note, the IDCP may not be accepted.",
+      "message": "The handwritten note must say \"Only for trading digital currency on www.faldax.com\" and must include the current date with your signature. Pay close attention when writing the handwritten note! If even one word is different in the note, the IDCP may not be accepted.",
       "message_type": "Web content",
       "context": "profile backup clarity text"
     },
@@ -2925,6 +2925,1716 @@
       "message": "Japanese",
       "message_type": "Web content",
       "context": "Japanese text"
+    }
+  },
+  "market": {
+    "crypto_screener": {
+      "page": "Market",
+      "message": "CRYPTO SCREENER",
+      "message_type": "Web content",
+      "context": "CRYPTO SCREENER Widget header"
+    },
+    "overview": {
+      "page": "Market",
+      "message": "Overview",
+      "message_type": "Web content",
+      "context": "Overview Tab of crypto screener"
+    },
+    "performance": {
+      "page": "Market",
+      "message": "Performance",
+      "message_type": "Web content",
+      "context": "Performance Tab of crypto screener"
+    },
+    "oscillators": {
+      "page": "Market",
+      "message": "Oscillators",
+      "message_type": "Web content",
+      "context": "Oscillators Tab of crypto screener"
+    },
+    "trend_following": {
+      "page": "Market",
+      "message": "Trend-Following",
+      "message_type": "Web content",
+      "context": "Trend-Following Tab of crypto screener"
+    },
+    "rise_fall": {
+      "page": "Market",
+      "message": "RISING/FALLING",
+      "message_type": "Web content",
+      "context": "RISING/FALLING Tab of crypto screener"
+    },
+    "cryptocurrency_market_text": {
+      "page": "Market",
+      "message": "Cryptocurrency Markets",
+      "message_type": "Web content",
+      "context": "copyright text at bottom"
+    },
+    "by_tradingview_text": {
+      "page": "Market",
+      "message": "by TradingView",
+      "message_type": "Web content",
+      "context": "copyright text at bottom"
+    }
+  },
+  "trade": {
+    "market_head": {
+      "page": "Header",
+      "message": "Market",
+      "message_type": "Web content",
+      "context": "menu text of header"
+    },
+    "dashboard_head": {
+      "page": "Header",
+      "message": "Dashboard",
+      "message_type": "Web content",
+      "context": "menu text of header"
+    },
+    "trade_head": {
+      "page": "Header",
+      "message": "Trade",
+      "message_type": "Web content",
+      "context": "menu text of header"
+    },
+    "order_type_text": {
+      "page": "History > Trade",
+      "message": "Order Type",
+      "message_type": "Web content",
+      "context": "text of table"
+    },
+    "limit_price_text": {
+      "page": "History > Trade",
+      "message": "Limit Price",
+      "message_type": "Web content",
+      "context": "text of table"
+    },
+    "stop_price_text": {
+      "page": "History > Trade",
+      "message": "Stop Price",
+      "message_type": "Web content",
+      "context": "text of table"
+    },
+    "edit_layout_text": {
+      "page": "Trade",
+      "message": "Edit Layout",
+      "message_type": "Web content",
+      "context": "text of trade screen"
+    },
+    "exit_full_screen_text": {
+      "page": "Trade",
+      "message": "Exit Full Screen",
+      "message_type": "Web content",
+      "context": "text of trade screen"
+    },
+    "full_screen_text": {
+      "page": "Trade",
+      "message": "Full Screen",
+      "message_type": "Web content",
+      "context": "text of trade screen"
+    },
+    "clear_layout_text": {
+      "page": "Trade",
+      "message": "Clear Layout",
+      "message_type": "Web content",
+      "context": "text of trade screen"
+    },
+    "reset_layout_text": {
+      "page": "Trade",
+      "message": "Reset Layout",
+      "message_type": "Web content",
+      "context": "text of trade screen"
+    },
+    "instruments_text": {
+      "page": "Trade",
+      "message": "INSTRUMENTS",
+      "message_type": "Web content",
+      "context": "text of trade screen"
+    },
+    "limit_head": {
+      "page": "Trade",
+      "message": "Limit",
+      "message_type": "Web content",
+      "context": "Text of trade action"
+    },
+    "stop_limit_head": {
+      "page": "Trade",
+      "message": "Stop Limit",
+      "message_type": "Web content",
+      "context": "Text of trade action"
+    },
+    "my_order_and_trade_head": {
+      "page": "Trade",
+      "message": "MY ORDERS AND TRADES",
+      "message_type": "Web content",
+      "context": "Text of MY ORDERS AND TRADES"
+    },
+    "month_text": {
+      "page": "Trade",
+      "message": "Month",
+      "message_type": "Web content",
+      "context": "Text of dropdown month"
+    },
+    "months_text": {
+      "page": "Trade",
+      "message": "Months",
+      "message_type": "Web content",
+      "context": "Text of dropdown months"
+    },
+    "completed_text": {
+      "page": "Trade",
+      "message": "Completed",
+      "message_type": "Web content",
+      "context": "Text of tab completed"
+    },
+    "pending_text": {
+      "page": "Trade",
+      "message": "Pending",
+      "message_type": "Web content",
+      "context": "Text of tab Pending"
+    },
+    "cancelled_text": {
+      "page": "Trade",
+      "message": "Cancelled",
+      "message_type": "Web content",
+      "context": "Text of tab cancelled"
+    },
+    "change_text": {
+      "page": "Trade",
+      "message": "Change",
+      "message_type": "Web content",
+      "context": "change Text of instrument table head"
+    },
+    "volume_text": {
+      "page": "Trade",
+      "message": "Volume",
+      "message_type": "Web content",
+      "context": "volume Text of instrument table head"
+    },
+    "market_depth_text": {
+      "page": "Trade",
+      "message": "MARKET DEPTH",
+      "message_type": "Web content",
+      "context": "MARKET DEPTH Text of depth chart"
+    },
+    "ask_text": {
+      "page": "Trade",
+      "message": "Ask",
+      "message_type": "Web content",
+      "context": "ask Text of depth chart"
+    },
+    "bid_text": {
+      "page": "Trade",
+      "message": "Bid",
+      "message_type": "Web content",
+      "context": "bid Text of depth chart"
+    },
+    "order_book_text": {
+      "page": "Trade",
+      "message": "ORDER BOOK",
+      "message_type": "Web content",
+      "context": "ORDER BOOK Text of Buy/Sell book"
+    },
+    "buying_text": {
+      "page": "Trade",
+      "message": "BUYING",
+      "message_type": "Web content",
+      "context": "BUYING Text of Buy/Sell book"
+    },
+    "my_size_text": {
+      "page": "Trade",
+      "message": "MY SIZE",
+      "message_type": "Web content",
+      "context": "my size Text of Buy/Sell book"
+    },
+    "selling_text": {
+      "page": "Trade",
+      "message": "SELLING",
+      "message_type": "Web content",
+      "context": "SELLING Text of Buy/Sell book"
+    },
+    "order_history_text": {
+      "page": "Trade",
+      "message": "ORDER HISTORY",
+      "message_type": "Web content",
+      "context": "ORDER HISTORY Text"
+    },
+    "fill_price_text": {
+      "page": "Trade",
+      "message": "Fill Price",
+      "message_type": "Web content",
+      "context": "Fill price Text of order history"
+    },
+    "time_text": {
+      "page": "Trade",
+      "message": "Time",
+      "message_type": "Web content",
+      "context": "Time price Text of order history"
+    },
+    "type_text": {
+      "page": "Trade",
+      "message": "Type",
+      "message_type": "Web content",
+      "context": "Type Text of order history"
+    },
+    "unfilled_text": {
+      "page": "Trade",
+      "message": "Unfilled",
+      "message_type": "Web content",
+      "context": "Unfilled Text of order history"
+    },
+    "actions_text": {
+      "page": "Trade",
+      "message": "Actions",
+      "message_type": "Web content",
+      "context": "Actions Text of order history"
+    },
+    "3_decimal_error": {
+      "page": "Trade > market Order",
+      "message": "Value must be less than or equal to 3 digits after decimal point.",
+      "message_type": "Web content",
+      "context": "Value must be less than or equal to 3 digits after decimal point error"
+    },
+    "5_decimal_error": {
+      "page": "Trade > market Order",
+      "message": "value must be less than or equal to 5 digits after decimal point.",
+      "message_type": "Web content",
+      "context": "Value must be less than or equal to 5 digits after decimal point error"
+    },
+    "balance_text": {
+      "page": "Trade > market Order",
+      "message": "Balance",
+      "message_type": "Web content",
+      "context": "Balance Text of order history"
+    },
+    "best_text": {
+      "page": "Trade > market Order",
+      "message": "Best",
+      "message_type": "Web content",
+      "context": "Best Text of trade action"
+    },
+    "you_approximate_text": {
+      "page": "Trade > market Order",
+      "message": "You will approximately",
+      "message_type": "Web content",
+      "context": "You will approximately Text tradeaction"
+    },
+    "pay_text": {
+      "page": "Trade > market Order",
+      "message": "pay",
+      "message_type": "Web content",
+      "context": "pay Text tradeaction"
+    },
+    "receive_text": {
+      "page": "Trade > market Order",
+      "message": "receive",
+      "message_type": "Web content",
+      "context": "receive Text tradeaction"
+    },
+    "estimated_best_price_text": {
+      "page": "Trade > market Order",
+      "message": "Estimated Best Price",
+      "message_type": "Web content",
+      "context": "receive Text tradeaction"
+    },
+    "must_be_a_number": {
+      "page": "Trade > Limit Order",
+      "message": "must be a number.",
+      "message_type": "Web content",
+      "context": "validation message for number"
+    },
+    "should_be_greater_than_0": {
+      "page": "Trade > Limit Order",
+      "message": "should be greater than zero.",
+      "message_type": "Web content",
+      "context": "validation message for amount greater than 0"
+    }
+  },
+  "dashboard": {
+    "invalid_template_code_error": {
+      "page": "Dashboard",
+      "message": "Invalid Template Code",
+      "message_type": "Web content",
+      "context": "validation message for Invalid Template Code"
+    },
+    "customize_text": {
+      "page": "Dashboard",
+      "message": "Customize",
+      "message_type": "Web content",
+      "context": "Customize text on dashboard screen"
+    },
+    "save_before_share_error": {
+      "page": "Dashboard",
+      "message": "You must save the dashboard template before you can share it.",
+      "message_type": "Web content",
+      "context": "validation message for Save template before share"
+    },
+    "close_text": {
+      "page": "Dashboard",
+      "message": "Close",
+      "message_type": "Web content",
+      "context": "Close text on dashboard screen"
+    },
+    "close_template_before_save": {
+      "page": "Dashboard",
+      "message": "Are you sure want to close before saving?",
+      "message_type": "Web content",
+      "context": "Do you want to close text on dashboard screen"
+    },
+    "unsave_data_popup_desc": {
+      "page": "Dashboard",
+      "message": "This page may contain unsaved work. You will lose all unsaved data.",
+      "message_type": "Web content",
+      "context": "Unsaved data popup description on dashboard screen"
+    },
+    "templates_text": {
+      "page": "Dashboard",
+      "message": "Templates",
+      "message_type": "Web content",
+      "context": "Templates text on dashboard screen"
+    },
+    "add_item_text": {
+      "page": "Dashboard",
+      "message": "Create custom template",
+      "message_type": "Web content",
+      "context": "Add item text on dashboard screen"
+    },
+    "note_template_text": {
+      "page": "Dashboard",
+      "message": "If you want a customized dashboard, create a custom template.",
+      "message_type": "Web content",
+      "context": "Note for the templates that are not customizable(default templates)"
+    },
+    "template_label": {
+      "page": "Dashboard",
+      "message": "Template Name",
+      "message_type": "Web content",
+      "context": "Template Name label"
+    },
+    "template_name_placeholder": {
+      "page": "Dashboard",
+      "message": "Enter Template Name",
+      "message_type": "Web content",
+      "context": "Template Name placeholder"
+    },
+    "widgets_text": {
+      "page": "Dashboard",
+      "message": "Widgets",
+      "message_type": "Web content",
+      "context": "Widgets text"
+    },
+    "select_pair_placeholder": {
+      "page": "Dashboard",
+      "message": "Select Pair",
+      "message_type": "Web content",
+      "context": "Select Pair placeholder"
+    },
+    "delete_template_btn": {
+      "page": "Dashboard",
+      "message": "Delete Template",
+      "message_type": "Web content",
+      "context": "Delete Template button text"
+    },
+    "want_to_share_text": {
+      "page": "Dashboard",
+      "message": "Want to share your",
+      "message_type": "Web content",
+      "context": "text"
+    },
+    "template_with_text": {
+      "page": "Dashboard",
+      "message": "Template with someone?",
+      "message_type": "Web content",
+      "context": "text"
+    },
+    "generate_code_btn": {
+      "page": "Dashboard",
+      "message": "Generate Code",
+      "message_type": "Web content",
+      "context": "Generate Code button text"
+    },
+    "copied_text": {
+      "page": "Dashboard",
+      "message": "Copied",
+      "message_type": "Web content",
+      "context": "copied text"
+    },
+    "click_to_copy_text": {
+      "page": "Dashboard",
+      "message": "Click to copy",
+      "message_type": "Web content",
+      "context": "Click to copy text"
+    },
+    "already_have_template_code_text": {
+      "page": "Dashboard",
+      "message": "Already have a template code? Enter the code below to import a template.",
+      "message_type": "Web content",
+      "context": "Already have template code? Enter here to Import. text"
+    },
+    "import_text": {
+      "page": "Dashboard",
+      "message": "Import",
+      "message_type": "Web content",
+      "context": "Import text"
+    },
+    "back_to_edit_text": {
+      "page": "Dashboard",
+      "message": "Back to edit",
+      "message_type": "Web content",
+      "context": "Back to edit text"
+    },
+    "share_import_template_text": {
+      "page": "Dashboard",
+      "message": "Share / Import Template",
+      "message_type": "Web content",
+      "context": "Share / Import Template text"
+    },
+    "customize_dashboard_text": {
+      "page": "Dashboard",
+      "message": "Customize Dashboard",
+      "message_type": "Web content",
+      "context": "Customize Dashboard text"
+    }
+  },
+  "tiers": {
+    "tier_text": {
+      "page": "Tiers",
+      "message": "Tier",
+      "message_type": "Web content",
+      "context": "Tier text for label"
+    },
+    "Minimum_account_activity_thresholds_text": {
+      "page": "Tiers",
+      "message": "Minimum Account Activity Thresholds",
+      "message_type": "Web content",
+      "context": "Minimum Account Activity Thresholds text for label"
+    },
+    "Minimum_account_age_text": {
+      "page": "Tiers",
+      "message": "Minimum Account Age (Days)",
+      "message_type": "Web content",
+      "context": "Minimum Account Age (Days) text for label"
+    },
+    "Minimum_no_of_trades_text": {
+      "page": "Tiers",
+      "message": "Minimum Number of Trades",
+      "message_type": "Web content",
+      "context": "Minimum Number of Trades text for label"
+    },
+    "Minimum_total_value_of_trades_text": {
+      "page": "Tiers",
+      "message": "Minimum Total USD Value of Trades",
+      "message_type": "Web content",
+      "context": "Minimum Total USD Value of Trades text for label"
+    },
+    "deposit_cryptocurrencies_text": {
+      "page": "Tiers",
+      "message": "Deposit Cryptocurrencies",
+      "message_type": "Web content",
+      "context": "Deposit Cryptocurrencies text for label"
+    },
+    "unlimited_text": {
+      "page": "Tiers",
+      "message": "Unlimited",
+      "message_type": "Web content",
+      "context": "Unlimited text for value"
+    },
+    "total_wallet_balance_text": {
+      "page": "Tiers",
+      "message": "Total Wallet Balance",
+      "message_type": "Web content",
+      "context": "Total Wallet Balance text for label"
+    },
+    "withdrawal_limits_orders_text": {
+      "page": "Tiers",
+      "message": "Withdrawal Limits",
+      "message_type": "Web content",
+      "context": "Withdrawal Limits Orders text for label"
+    },
+    "daily_text": {
+      "page": "Tiers",
+      "message": "Daily",
+      "message_type": "Web content",
+      "context": "Daily text for label"
+    },
+    "monthly_text": {
+      "page": "Tiers",
+      "message": "Monthly",
+      "message_type": "Web content",
+      "context": "Monthly text for label"
+    },
+    "requirements_text": {
+      "page": "Tiers",
+      "message": "Requirements",
+      "message_type": "Web content",
+      "context": "Requirements text for label"
+    },
+    "rejected_text": {
+      "page": "Tiers",
+      "message": "Rejected",
+      "message_type": "Web content",
+      "context": "Rejected text for label"
+    },
+    "upgrade_text": {
+      "page": "Tiers",
+      "message": "Upgrade",
+      "message_type": "Web content",
+      "context": "Upgrade text for label"
+    },
+    "tier_upgrade_info_text": {
+      "page": "Tier upgrade info Popup",
+      "message": "Tier Upgrade Info",
+      "message_type": "Web content",
+      "context": "Tier Upgrade Info text for label of popup"
+    },
+    "tier_popup_subtext1_text": {
+      "page": "Tier upgrade info Popup",
+      "message": "Before upgrading to Tier",
+      "message_type": "Web content",
+      "context": "Before upgrading to Tier text for subtext of popup"
+    },
+    "tier_popup_subtext2_text": {
+      "page": "Tier upgrade info Popup",
+      "message": "account, Please fulfill any of the below requirement set.",
+      "message_type": "Web content",
+      "context": "subtext of popup"
+    },
+    "title_text": {
+      "page": "Tier upgrade info Popup",
+      "message": "Title",
+      "message_type": "Web content",
+      "context": "Title text of popup table"
+    },
+    "requirement_text": {
+      "page": "Tier upgrade info Popup",
+      "message": "Requirement",
+      "message_type": "Web content",
+      "context": "Requirement text for label"
+    },
+    "your_data_text": {
+      "page": "Tier upgrade info Popup",
+      "message": "Your Data",
+      "message_type": "Web content",
+      "context": "Your Data text for popup table"
+    },
+    "trade_now_text": {
+      "page": "Tier upgrade info Popup",
+      "message": "Trade Now",
+      "message_type": "Web content",
+      "context": "Trade Now btn text for popup table"
+    },
+    "total_value_of_trades_text": {
+      "page": "Tier upgrade info Popup",
+      "message": "Total USD Value of Trades",
+      "message_type": "Web content",
+      "context": "Total USD Value of Trades text for label"
+    },
+    "add_funds_to_wallet_text": {
+      "page": "Tier upgrade info Popup",
+      "message": "Add Funds to Wallet",
+      "message_type": "Web content",
+      "context": "Add Funds to Wallet btn text"
+    },
+    "reject_reason_note": {
+      "page": "Tiers",
+      "message": "Your request for tier upgrade is rejected by admin due to below reason.",
+      "message_type": "Web content",
+      "context": "reject reason text"
+    },
+    "feel_free_note": {
+      "page": "Tiers",
+      "message": "Feel free to contact us",
+      "message_type": "Web content",
+      "context": "reject reason subtext"
+    },
+    "verified_tier_note": {
+      "page": "Tiers",
+      "message": "Your Account is Verified successfully to Tier",
+      "message_type": "Web content",
+      "context": "Your Account is Verified successfully to Tier text"
+    },
+    "2fa_note": {
+      "page": "Tiers",
+      "message": "Two-factor Authentication(2FA) must be enabled to upgrade your account to tier 2.",
+      "message_type": "Web content",
+      "context": "2fa note as tier upgrade requirement"
+    },
+    "2fa_note_2": {
+      "page": "Tiers",
+      "message": "Please click the link below to enable 2FA",
+      "message_type": "Web content",
+      "context": "2fa note as tier upgrade requirement"
+    },
+    "second_photo_text": {
+      "page": "Tiers",
+      "message": "Second Photo ID",
+      "message_type": "Web content",
+      "context": "Second Photo ID label text"
+    },
+    "see_details_text": {
+      "page": "Tiers",
+      "message": "See Details",
+      "message_type": "Web content",
+      "context": "See details label text"
+    },
+    "reupload_it_text": {
+      "page": "Tiers",
+      "message": "Reupload it",
+      "message_type": "Web content",
+      "context": "Reupload it status text"
+    },
+    "proof_of_residence_text": {
+      "page": "Tiers",
+      "message": "Proof of Residence",
+      "message_type": "Web content",
+      "context": "Proof of Residence label text"
+    },
+    "govt_issued_number_text": {
+      "page": "Tiers",
+      "message": "Government Issued ID Number",
+      "message_type": "Web content",
+      "context": "Govt. Issued ID Number label text"
+    },
+    "validate_not_gt_20_ch": {
+      "page": "Tiers",
+      "message": "may not be greater than 20 characters.",
+      "message_type": "Web content",
+      "context": "Field Validation"
+    },
+    "min_2_error": {
+      "page": "Tiers",
+      "message": "must be at least 4 characters.",
+      "message_type": "Web content",
+      "context": "Minimum 2 error"
+    },
+    "idcp_label_text": {
+      "page": "Tiers",
+      "message": "ID Confirmation Photo",
+      "message_type": "Web content",
+      "context": "ID Confirmation Photo label text"
+    },
+    "proof_of_assets_form_text": {
+      "page": "Tiers",
+      "message": "Proof of Assets Form",
+      "message_type": "Web content",
+      "context": "Proof of Assets Form label text"
+    },
+    "click_to_download_text": {
+      "page": "Tiers",
+      "message": "Click Here to Download the Form",
+      "message_type": "Web content",
+      "context": "Click Here to Download the Form text"
+    },
+    "rejection_reason_text": {
+      "page": "Tiers",
+      "message": "Rejection Reason",
+      "message_type": "Web content",
+      "context": "Rejection Reason text"
+    },
+    "your_files_uploaded_text": {
+      "page": "Tiers",
+      "message": "Your files are being uploaded.",
+      "message_type": "Web content",
+      "context": "Your files are being uploaded. text"
+    },
+    "aml_questionnaire_text": {
+      "page": "Tier 4",
+      "message": "AML Questionnaire",
+      "message_type": "Web content",
+      "context": "AML Questionnaire label text"
+    },
+    "comfort_letter_text": {
+      "page": "Tier 4",
+      "message": "Comfort Letter",
+      "message_type": "Web content",
+      "context": "Comfort Letter label text"
+    },
+    "board_resolution_text": {
+      "page": "Tier 4",
+      "message": "Board Resolution",
+      "message_type": "Web content",
+      "context": "Board Resolution label text"
+    },
+    "2_months_bank_statements_text": {
+      "page": "Tier 4",
+      "message": "Bank Statement (2 Months)",
+      "message_type": "Web content",
+      "context": "2 Months Bank Statements label text"
+    },
+    "corporate_filing_information_text": {
+      "page": "Tier 4",
+      "message": "Corporate Filing Documents",
+      "message_type": "Web content",
+      "context": "Corporate Filing Information label text"
+    },
+    "beneficial_ownership_form_text": {
+      "page": "Tier 4",
+      "message": "Beneficial Ownership Form",
+      "message_type": "Web content",
+      "context": "Beneficial Ownership Form label text"
+    },
+    "articles_of_incorporation_text": {
+      "page": "Tier 4",
+      "message": "Articles of Incorporation",
+      "message_type": "Web content",
+      "context": "Articles of Incorporation label text"
+    },
+    "bylaws_text": {
+      "page": "Tier 4",
+      "message": "Company Bylaws",
+      "message_type": "Web content",
+      "context": "Bylaws label text"
+    },
+    "ownership_and_control_structure_text": {
+      "page": "Tier 4",
+      "message": "Ownership and Control Structure",
+      "message_type": "Web content",
+      "context": "Ownership and Control Structure label text"
+    },
+    "director_list_text": {
+      "page": "Tier 4",
+      "message": "ID Verification Documents of Directors and Officers with 10% Equity or Higher",
+      "message_type": "Web content",
+      "context": "Directors and Officers List & Personal Info Equivalent to Tier 3 Requirements"
+    },
+    "active_business_proof_text": {
+      "page": "Tier 4",
+      "message": "Proof of Active Business Address",
+      "message_type": "Web content",
+      "context": "Proof of Active Business Address label text"
+    },
+    "document_availability_policy_text": {
+      "page": "Tier 4",
+      "message": "Document Availability Policy",
+      "message_type": "Web content",
+      "context": "Document Availability Policy label text"
+    },
+    "cookies_policy_text": {
+      "page": "Tier 4",
+      "message": "Cookies Policy",
+      "message_type": "Web content",
+      "context": "Cookies Policy label text"
+    },
+    "privacy_policy_text": {
+      "page": "Tier 4",
+      "message": "Privacy Policy",
+      "message_type": "Web content",
+      "context": "Privacy Policy label text"
+    },
+    "aml_policy_text": {
+      "page": "Tier 4",
+      "message": "AML Policy",
+      "message_type": "Web content",
+      "context": "AML Policy label text"
+    },
+    "terms_of_service_text": {
+      "page": "Tier 4",
+      "message": "Terms of Service",
+      "message_type": "Web content",
+      "context": "Terms of Service label text"
+    },
+    "tier_limit_text": {
+      "page": "Wallet Popup",
+      "message": "Tier Limit",
+      "message_type": "Web content",
+      "context": "Tier Limit label text"
+    },
+    "available_limit_text": {
+      "page": "Wallet Popup",
+      "message": "Available Limit",
+      "message_type": "Web content",
+      "context": "Available Limit label text"
+    },
+    "limit_after_transfer_text": {
+      "page": "Wallet Popup",
+      "message": "Limit after transfer",
+      "message_type": "Web content",
+      "context": "Limit after transfer label text"
+    },
+    "limit_exceeded_text": {
+      "page": "Wallet Popup",
+      "message": "Limit Exceeded",
+      "message_type": "Web content",
+      "context": "Limit Exceeded label text"
+    }
+  },
+  "static_info_pages": {
+    "image_requirements_text": {
+      "page": "Tier Image Information",
+      "message": "Image requirements",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "for_id_documents_text": {
+      "page": "Tier Image Information",
+      "message": "for ID documents",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "for_intermediate_text": {
+      "page": "Tier Image Information",
+      "message": "For Intermediate and Pro level verification, we only accept",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "valid_id_documents_text": {
+      "page": "Tier Image Information",
+      "message": "valid government-issued ID documents.",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "acceptable_id_scan_text": {
+      "page": "Tier Image Information",
+      "message": "What is an acceptable ID scan/photo",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "reason_for_rejection_text": {
+      "page": "Tier Image Information",
+      "message": "Reasons for rejection",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "full_color_image_text": {
+      "page": "Tier Image Information",
+      "message": "Full color image",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "image_black_and_white_text": {
+      "page": "Tier Image Information",
+      "message": "Image is black & white (or grayscale)",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "all_details_on_id_text": {
+      "page": "Tier Image Information",
+      "message": "All details on the ID must be legible",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "image_watermark_text": {
+      "page": "Tier Image Information",
+      "message": "Image has a watermark",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "image_blurred_text": {
+      "page": "Tier Image Information",
+      "message": "Image is blurred",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "image_obfuscation_text": {
+      "page": "Tier Image Information",
+      "message": "Image has any other obfuscation",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "id_is_well_lit_text": {
+      "page": "Tier Image Information",
+      "message": "ID is well lit",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "id_glare_reflections_text": {
+      "page": "Tier Image Information",
+      "message": "ID details are obscured by light glare or reflections (Be careful with the camera's flash!)",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "id_in_good_shape_text": {
+      "page": "Tier Image Information",
+      "message": "ID is in good shape",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "id_torn_holes_text": {
+      "page": "Tier Image Information",
+      "message": "ID is torn, badly damaged, or has holes",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "id_upright_text": {
+      "page": "Tier Image Information",
+      "message": "ID is in upright position",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "id_rotated_text": {
+      "page": "Tier Image Information",
+      "message": "ID is rotated sideways or upside-down",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "id_occupies_most_image_text": {
+      "page": "Tier Image Information",
+      "message": "ID occupies most of the image",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "too_much_space_text": {
+      "page": "Tier Image Information",
+      "message": "Too much space around the ID",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "background_visible_text": {
+      "page": "Tier Image Information",
+      "message": "Background is visible all around the ID by 1-2 cm (1/2'-1')",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "id_edge_cropped_text": {
+      "page": "Tier Image Information",
+      "message": "ID edge is cropped (even if 'just a little bit')",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "us_image_requirement_text": {
+      "page": "Tier Image Information",
+      "message": "US Image requirements",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "background_color_text": {
+      "page": "Tier Image Information",
+      "message": "Background is a contrasting color (e.g. dark for light colored ID)",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "similar_color_id_text": {
+      "page": "Tier Image Information",
+      "message": "Background is the same or similar color as the ID",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "good_scan_photo_text": {
+      "page": "Tier Image Information",
+      "message": "How can I take a good scan/photo",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "click_here_for_tips_text": {
+      "page": "Tier Image Information",
+      "message": "Click here for tips on how to get the scan/photo just right.",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "technical_parameters_text": {
+      "page": "Tier Image Information",
+      "message": "You will also need to make sure that your photo/scan meets our technical parameters.",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "good_examples_text": {
+      "page": "Tier Image Information",
+      "message": "Good examples",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "ideal_photo_scan_text": {
+      "page": "Tier Image Information",
+      "message": "An ideal scan/photo of an ID card",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "ideal_scan_passport_text": {
+      "page": "Tier Image Information",
+      "message": "An ideal scan/photo of a passport",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "unacceptable_examples_text": {
+      "page": "Tier Image Information",
+      "message": "Unacceptable examples",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "id_too_blurry_text": {
+      "page": "Tier Image Information",
+      "message": "ID is too blurry",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "id_edges_not_visible_text": {
+      "page": "Tier Image Information",
+      "message": "ID edges are not visible",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "little_bit_crop_text": {
+      "page": "Tier Image Information",
+      "message": "Even a little bit of crop is",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "not_ok_text": {
+      "page": "Tier Image Information",
+      "message": "not OK...",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "id_not_in_color_text": {
+      "page": "Tier Image Information",
+      "message": "ID is not in color",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "document_requirements_text": {
+      "page": "Tier Image Information",
+      "message": "Document requirements",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "for_verification_text": {
+      "page": "Tier Image Information",
+      "message": "for verification",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "valid_govt_doc_text": {
+      "page": "Tier Image Information",
+      "message": "Valid Government Issued ID Document",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "valid_documents_include_text": {
+      "page": "Tier Image Information",
+      "message": "Valid documents include",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "drivers_license_text": {
+      "page": "Tier Image Information",
+      "message": "Drivers license",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "national_identity_text": {
+      "page": "Tier Image Information",
+      "message": "National identity card (front + back)",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "other_govt_issued_text": {
+      "page": "Tier Image Information",
+      "message": "Other valid government-issued ID",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "may_text": {
+      "page": "Tier Image Information",
+      "message": "may",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "govt_id_info_text": {
+      "page": "Tier Image Information",
+      "message": "be accepted if it has your full legal name, photo, date of birth, and the issue and expiration dates on the front of your ID.",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "firearm_licenses_text": {
+      "page": "Tier Image Information",
+      "message": "Firearm licenses are",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "not_text": {
+      "page": "Tier Image Information",
+      "message": "not",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "accepted_text": {
+      "page": "Tier Image Information",
+      "message": "accepted.",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "scan_meet_require_text": {
+      "page": "Tier Image Information",
+      "message": "Please make sure that your ID photos/scan meet these",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "proof_document_text": {
+      "page": "Tier Image Information",
+      "message": "Proof of Residence Document",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "proof_document_require_text": {
+      "page": "Tier Image Information",
+      "message": "Proof of residence documents must contain your name, address, and be",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "dated_months_ago_text": {
+      "page": "Tier Image Information",
+      "message": "dated less than 3 months ago",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "from_date_submission_text": {
+      "page": "Tier Image Information",
+      "message": "from the date of submission.",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "valid_doc_include_text": {
+      "page": "Tier Image Information",
+      "message": "Valid documents include, but are not limited to",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "bank_statement_text": {
+      "page": "Tier Image Information",
+      "message": "Bank statement",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "credit_card_statement_text": {
+      "page": "Tier Image Information",
+      "message": "Credit card statement",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "utility_bill_text": {
+      "page": "Tier Image Information",
+      "message": "Utility bill (water, electricity, gas, internet, phone)",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "payroll_statement_text": {
+      "page": "Tier Image Information",
+      "message": "Payroll statement -or- Official salary document from employer",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "insurance_statement_text": {
+      "page": "Tier Image Information",
+      "message": "Insurance statement",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "tax_document_text": {
+      "page": "Tier Image Information",
+      "message": "Tax document",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "residence_certificate_text": {
+      "page": "Tier Image Information",
+      "message": "Residence certificate",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "we_text": {
+      "page": "Tier Image Information",
+      "message": "We",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "do_not_text": {
+      "page": "Tier Image Information",
+      "message": "do NOT",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "change_of_address_text": {
+      "page": "Tier Image Information",
+      "message": "accept USPS change-of-address letters.",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "non_latin_characters_text": {
+      "page": "Tier Image Information",
+      "message": "For documents in languages that use non-Latin characters (such as Russian, Chinese, Thai, Hebrew, etc.), a notarized translation of your proof of residence document will greatly speed up processing time.",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "or_text": {
+      "page": "Tier Image Information",
+      "message": "or",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "valid_text": {
+      "page": "Tier Image Information",
+      "message": "Valid",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "ssn_text": {
+      "page": "Tier Image Information",
+      "message": "SSN",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "itin_text": {
+      "page": "Tier Image Information",
+      "message": "ITIN (Individual Taxpayer Identification Number)",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "us_clients_only_text": {
+      "page": "Tier Image Information",
+      "message": "(US clients only)",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "certian_countries_only_text": {
+      "page": "Tier Image Information",
+      "message": "(certain countries only)",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "required_to_provide_text": {
+      "page": "Tier Image Information",
+      "message": "You will be required to provide an",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "for_the_intermediate_verification_text": {
+      "page": "Tier Image Information",
+      "message": "for the Intermediate verification level if you are",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "resident_in_usa_text": {
+      "page": "Tier Image Information",
+      "message": "Resident in USA or Germany",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "german_bank_account_text": {
+      "page": "Tier Image Information",
+      "message": "Funding with a German bank account",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "domestic_funding_text": {
+      "page": "Tier Image Information",
+      "message": "Using domestic USD funding",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "may_be_other_situations_text": {
+      "page": "Tier Image Information",
+      "message": "However, there may also be other situations where we would require you to upload an ID confirmation photo.",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "id_confirmation_text": {
+      "page": "Tier Image Information",
+      "message": "ID confirmation",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "photo_instruction_text": {
+      "page": "Tier Image Information",
+      "message": "photo (IDCP) instructions",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "an_text": {
+      "page": "Tier Image Information",
+      "message": "An",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "photo_of_you_text": {
+      "page": "Tier Image Information",
+      "message": "(IDCP) is a photo of you, the account holder, holding your",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "id_document_text": {
+      "page": "Tier Image Information",
+      "message": "ID document",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "and_handwritten_text": {
+      "page": "Tier Image Information",
+      "message": "and a handwritten",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "note_text": {
+      "page": "Tier Image Information",
+      "message": "note",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "next_to_your_face_text": {
+      "page": "Tier Image Information",
+      "message": "next to your face",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "checklist_for_idcp_text": {
+      "page": "Tier Image Information",
+      "message": "Below is a checklist for producing a proper IDCP that can be accepted by our verification team",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "id_holding_text": {
+      "page": "Tier Image Information",
+      "message": "The ID you're holding must be the same ID used for KYC verification.",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "the_details_on_id_text": {
+      "page": "Tier Image Information",
+      "message": "The details on the ID in the photo must be",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "readable_text": {
+      "page": "Tier Image Information",
+      "message": "Legible",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "cannot_be_blurry_text": {
+      "page": "Tier Image Information",
+      "message": "They cannot be blurry or out of focus.",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "handwritten_note_must_say_text": {
+      "page": "Tier Image Information",
+      "message": "The handwritten note must say",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "only_for_faldax_text": {
+      "page": "Tier Image Information",
+      "message": "only for trading digital currency on www.faldax.com",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "and_include_text": {
+      "page": "Tier Image Information",
+      "message": "and include",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "the_text": {
+      "page": "Tier Image Information",
+      "message": "the",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "your_text": {
+      "page": "Tier Image Information",
+      "message": "your",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "current_date_text": {
+      "page": "Tier Image Information",
+      "message": "current date",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "signature_text": {
+      "page": "Tier Image Information",
+      "message": "signature",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "pay_close_attention_text": {
+      "page": "Tier Image Information",
+      "message": "Pay close attention when writing the handwritten note! If even one word is different in the note, the IDCP may not be accepted.",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "be_aware_text": {
+      "page": "Tier Image Information",
+      "message": "Be aware that in certain situations we may request that you write something else on the handwritten note. Follow the instructions provided to you in your ticket closely.",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "dos_text": {
+      "page": "Tier Image Information",
+      "message": "Dos",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "donts_text": {
+      "page": "Tier Image Information",
+      "message": "Don'ts",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "write_note_text": {
+      "page": "Tier Image Information",
+      "message": "Write the note with your hand.",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "dont_type_text": {
+      "page": "Tier Image Information",
+      "message": "Don't type the note.",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "write_note_exactly_text": {
+      "page": "Tier Image Information",
+      "message": "Write the note exactly as instructed",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "change_wording_text": {
+      "page": "Tier Image Information",
+      "message": "Don't change the wording or meaning of the note.",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "we_accept_note_text": {
+      "page": "Tier Image Information",
+      "message": "We accept translations of the note in other languages as long as it keeps the same meaning.",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "photo_requirements_text": {
+      "page": "Tier Image Information",
+      "message": "Photo requirements",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "how_to_put_together_text": {
+      "page": "Tier Image Information",
+      "message": "How to put the ID and note together",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "high_quality_photo_text": {
+      "page": "Tier Image Information",
+      "message": "Use a high-quality photo and make sure the text and numbers on the ID are readable. Your whole face and arms should also be visible.",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "not_cover_parts_text": {
+      "page": "Tier Image Information",
+      "message": "Do not cover parts of the ID, message, or your face.",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "id_in_your_hands_text": {
+      "page": "Tier Image Information",
+      "message": "You must be holding the ID in your hands; your hands and arms should be visible in the image. Do not wear sunglasses, hats, or anything that covers your facial features.",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "do_not_cover_text": {
+      "page": "Tier Image Information",
+      "message": "Do not cover parts of the ID, message, or your face.",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "hold_the_id_text": {
+      "page": "Tier Image Information",
+      "message": "Hold the ID and note in your hand(s)",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "someone_else_hold_text": {
+      "page": "Tier Image Information",
+      "message": "Don't have someone else hold the note.",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "tap_id_text": {
+      "page": "Tier Image Information",
+      "message": "Don't tape the ID to the note.",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "clearly_visible_text": {
+      "page": "Tier Image Information",
+      "message": "The ID and the note all have to be clearly visible.",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "details_on_id_text": {
+      "page": "Tier Image Information",
+      "message": "Don't cover any details on the ID or note with your fingers.",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "upload_instructions_text": {
+      "page": "Tier Image Information",
+      "message": "Upload instructions",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "upload_instruct_text": {
+      "page": "Tier Image Information",
+      "message": "You can upload your IDCP in your FALDAX account on the",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "idcp_on_that_page_text": {
+      "page": "Tier Image Information",
+      "message": "If you do not see the section to upload the IDCP on that page",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "contact_support_text": {
+      "page": "Tier Image Information",
+      "message": "contact support",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "backgrount_not_contrast_text": {
+      "page": "Tier Image Information",
+      "message": "Background is not contrasting",
+      "message_type": "Web content",
+      "context": "Static text"
+    },
+    "id_must_meet_requirement_text": {
+      "page": "Tier Image Information",
+      "message": "In addition to the points above, US clients' IDs must meet the following requirements",
+      "message_type": "Web content",
+      "context": "Static text"
+    }
+  },
+  "tier_changes": {
+    "under_review_text": {
+      "page": "Tier",
+      "message": "Under Review",
+      "message_type": "Web content",
+      "context": "Under Review text"
+    },
+    "or_text": {
+      "page": "Tier",
+      "message": "OR",
+      "message_type": "Web content",
+      "context": "Or text"
+    },
+    "download_example_letter_text": {
+      "page": "Tier",
+      "message": "Click Here to Download an Example Letter",
+      "message_type": "Web content",
+      "context": "Click Here to Download an Example Letter text"
+    },
+    "institutional_account_text": {
+      "page": "Tier",
+      "message": "Institutional Account",
+      "message_type": "Web content",
+      "context": "Click Here to Download an Example Letter text"
+    },
+    "unsupported_file_format_text": {
+      "page": "Tier",
+      "message": "Unsupported file format",
+      "message_type": "Web content",
+      "context": "Unsupported file format validation on wrong file selection"
+    },
+    "reject_reason_note_instituitional": {
+      "page": "Tier 4",
+      "message": "Your request for an Institutional Account upgrade was rejected by an admin due to the reason below.",
+      "message_type": "Web content",
+      "context": "Your request for Institutional Account upgrade is rejected by admin due to below reason."
+    },
+    "verified_institutional_note": {
+      "page": "Tiers",
+      "message": "Your account is verified successfully to an Institutional Account",
+      "message_type": "Web content",
+      "context": "Your Account is Verified successfully to Tier text"
+    },
+    "2fa_note_validation": {
+      "page": "Tiers",
+      "message": "Your 2FA must be enabled to proceed further.",
+      "message_type": "Web content",
+      "context": "2fa validation text"
+    },
+    "activity_text": {
+      "page": "Tiers",
+      "message": "Activity",
+      "message_type": "Web content",
+      "context": "activity text"
+    },
+    "portfolio_text": {
+      "page": "Tiers",
+      "message": "Portfolio",
+      "message_type": "Web content",
+      "context": "Portfolio text"
+    },
+    "symbol_text": {
+      "page": "Tiers",
+      "message": "Symbol",
+      "message_type": "Web content",
+      "context": "Symbol text"
+    },
+    "reupload_doc_text": {
+      "page": "Tiers",
+      "message": "Please re-upload your documents.",
+      "message_type": "Web content",
+      "context": "Please re-upload your documents text"
+    },
+    "last_price_text": {
+      "page": "Trade",
+      "message": "Last Price",
+      "message_type": "Web content",
+      "context": "Last Price text"
+    },
+    "24h_change_text": {
+      "page": "Trade",
+      "message": "24h Change",
+      "message_type": "Web content",
+      "context": "24h Change text"
+    },
+    "24h_high_text": {
+      "page": "Trade",
+      "message": "24h High",
+      "message_type": "Web content",
+      "context": "24h High text"
+    },
+    "24h_low_text": {
+      "page": "Trade",
+      "message": "24h Low",
+      "message_type": "Web content",
+      "context": "24h Low text"
+    },
+    "24h_volume_text": {
+      "page": "Trade",
+      "message": "24h Volume",
+      "message_type": "Web content",
+      "context": "24h Volume text"
+    },
+    "something_went_wrong_text": {
+      "page": "Trade",
+      "message": "Something went wrong!",
+      "message_type": "Web content",
+      "context": "Something went wrong text when api timeout"
+    },
+    "invalid_order_quantity_text": {
+      "page": "Trade",
+      "message": "Your order exceeds our maximum trade size. Please decrease your total order size and try again.",
+      "message_type": "Web content",
+      "context": "invalid order quantity validation if the order amount exceeds buy book or sell book total value"
+    },
+    "trade_history_text": {
+      "page": "Trade",
+      "message": "TRADE HISTORY",
+      "message_type": "Web content",
+      "context": "TRADE HISTORY Text"
+    },
+    "trigger_text": {
+      "page": "Stop limit",
+      "message": "Trigger",
+      "message_type": "Web content",
+      "context": "Trigger Text"
+    },
+    "insufficient_balance_text": {
+      "page": "Trade",
+      "message": "Insufficient wallet balance to place order.",
+      "message_type": "Web content",
+      "context": "Insufficient wallet balance validation if the order amount exceeds wallet balance"
     }
   }
 }

@@ -342,6 +342,7 @@ export const ConversionDropDown = styled(Select)`
     font-weight: 600;
     background-color: ${(props) =>
       props.theme.mode === "dark" ? "transparent" : "white"};
+    margin: 0 0 0 15px;
   }
   &.ant-select-disabled .ant-select-selection {
     cursor: text;
@@ -848,7 +849,7 @@ export const ConversionLeftCol = styled(Col)`
             : "1px dashed #d9d9d9 !important"};
         padding: 15px 20px 15px 15px;
         > .ant-collapse-arrow {
-          top: 0;
+          top: 20px;
           left: auto;
           right: 0;
           transform: rotate(90deg) translateY(0%);

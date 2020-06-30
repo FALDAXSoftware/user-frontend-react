@@ -18,7 +18,7 @@ const SSNWrap = styled.div`
   margin-left: auto;
   margin-right: auto;
   // border:1px solid #e8ebee;
-  margin-top: 88px;
+  margin-top: 50px;
   text-align: left;
   @media (max-width: 1024px) {
     width: 70%;
@@ -28,7 +28,7 @@ const SSNWrap = styled.div`
   }
 `;
 const SSNSub = styled.div`
-  color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
 `;
 const SSNlabel = styled.label`
   display: block;
@@ -70,9 +70,9 @@ export const ButtonUp = styled.button`
   width: 100%;
   /* margin: 0 auto; */
   height: 145px;
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#01090f" : "white"};
-  color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   box-shadow: none;
   border: 1px solid rgb(0, 170, 250);
   border-radius: 20px;
@@ -113,10 +113,10 @@ const Fileinput2 = styled.input`
   position: absolute;
 `;
 export const RemoveIcon1 = styled(Icon)`
-  color: ${props => (props.theme.mode == "dark" ? "white" : "black")};
+  color: ${(props) => (props.theme.mode == "dark" ? "white" : "black")};
 `;
 const RemoveIcon2 = styled(RemoveIcon1)`
-  color: ${props => (props.theme.mode == "dark" ? "white" : "black")};
+  color: ${(props) => (props.theme.mode == "dark" ? "white" : "black")};
 `;
 class DocUpload extends Component {
   constructor(props) {
@@ -142,7 +142,7 @@ class DocUpload extends Component {
       targetName: "",
       fileTarget: null,
       displayFirst: "none",
-      displaySecond: "none"
+      displaySecond: "none",
     };
     this.handleProfile = this.handleProfile.bind(this);
     this.t = this.props.t;
@@ -184,7 +184,7 @@ class DocUpload extends Component {
     _self.setState(
       {
         targetName: name,
-        fileTarget: target
+        fileTarget: target,
       },
       () => {
         var frontWidth, frontHeight;
@@ -201,33 +201,33 @@ class DocUpload extends Component {
             if (fileType === "image" && fileSize < 4194304) {
               var fr = new FileReader();
               fr.readAsDataURL(file);
-              fr.onload = function() {
+              fr.onload = function () {
                 var img = new Image();
-                img.onload = function() {
+                img.onload = function () {
                   frontWidth = img.width;
                   frontHeight = img.height;
 
-                  if (frontWidth > 450 && frontHeight > 600) {
+                  if (fileSize >= 400000) {
                     if (_self.state.targetName === "front-doc") {
                       _self.setState({ icon1: "check", displayFirst: "" });
-                      reader.onload = upload => {
+                      reader.onload = (upload) => {
                         _self.setState({
                           profileImg: upload.target.result,
                           imageName: file.name,
                           imageType: file.type,
                           profileImage: file,
-                          imagemsg: ""
+                          imagemsg: "",
                         });
                       };
                     } else {
                       _self.setState({ icon2: "check", displaySecond: "" });
-                      reader.onload = upload => {
+                      reader.onload = (upload) => {
                         _self.setState({
                           profileImg2: upload.target.result,
                           imageName2: file.name,
                           imageType2: file.type,
                           profileImage2: file,
-                          imagemsg2: ""
+                          imagemsg2: "",
                         });
                       };
                     }
@@ -250,7 +250,7 @@ class DocUpload extends Component {
                         imageType: fileType,
                         profileImage: "",
                         icon1: "plus",
-                        displayFirst: "none"
+                        displayFirst: "none",
                       });
                     } else {
                       _self.setState({
@@ -259,13 +259,13 @@ class DocUpload extends Component {
                         imageType2: fileType,
                         profileImage2: "",
                         icon2: "plus",
-                        displaySecond: "none"
+                        displaySecond: "none",
                       });
                     }
                     _self.openNotificationWithIcon(
                       "error",
                       _self.t("validations:error_text.message"),
-                      _self.t("validations:image_upload_error.message")
+                      _self.t("general_1:upload_note_text.message")
                     );
                     document.getElementById("front").value = "";
                     document.getElementById("back").value = "";
@@ -282,7 +282,7 @@ class DocUpload extends Component {
                   profileImage: "",
                   icon1: "plus",
                   displayFirst: "none",
-                  imagemsg: _self.t("general_1:max_image_size_error.message")
+                  imagemsg: _self.t("general_1:max_image_size_error.message"),
                 });
               } else {
                 _self.setState({
@@ -292,7 +292,7 @@ class DocUpload extends Component {
                   imagemsg2: _self.t("general_1:max_image_size_error.message"),
                   profileImage2: "",
                   icon2: "plus",
-                  displaySecond: "none"
+                  displaySecond: "none",
                 });
               }
               _self.openNotificationWithIcon(
@@ -330,7 +330,7 @@ class DocUpload extends Component {
         profileImage: "",
         imagemsg: "",
         icon1: "plus",
-        displayFirst: "none"
+        displayFirst: "none",
       });
       document.getElementById("front").value = "";
     } else {
@@ -341,7 +341,7 @@ class DocUpload extends Component {
         profileImage2: "",
         imagemsg2: "",
         icon2: "plus",
-        displaySecond: "none"
+        displaySecond: "none",
       });
       document.getElementById("back").value = "";
     }
@@ -354,7 +354,7 @@ class DocUpload extends Component {
   openNotificationWithIcon(type, head, desc) {
     notification[type]({
       message: head,
-      description: desc
+      description: desc,
     });
   }
 
@@ -466,7 +466,7 @@ class DocUpload extends Component {
                 />
                 <ButtonUp2
                   style={{
-                    backgroundImage: `url('${this.state.profileImg2}')`
+                    backgroundImage: `url('${this.state.profileImg2}')`,
                   }}
                   className="file-select-btn"
                   onClick={() => {
@@ -510,7 +510,7 @@ class DocUpload extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     ...state,
     image_path:
@@ -525,18 +525,18 @@ const mapStateToProps = state => {
       state.simpleReducer.profileDetails !== undefined
         ? state.simpleReducer.profileDetails.data[0].is_kyc_done
         : "",
-    loader: state.simpleReducer.loader
+    loader: state.simpleReducer.loader,
   };
 };
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   kycDoc: (is, Data, type) => dispatch(kycDoc(is, Data, type)),
   kycFormAction: (isLoggedIn, value) =>
-    dispatch(kycFormAction(isLoggedIn, value))
+    dispatch(kycFormAction(isLoggedIn, value)),
 });
 
 export default translate([
   "identity_verification",
   "validations",
   "general_1",
-  "general_3"
+  "general_3",
 ])(connect(mapStateToProps, mapDispatchToProps)(DocUpload));
