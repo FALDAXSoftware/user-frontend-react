@@ -3,27 +3,31 @@ import React from "react";
 import { connect } from "react-redux";
 import { widget } from "CHARTING_LIB/charting_library.min";
 import { globalVariables } from "Globals.js";
-
+import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 const API_URL = globalVariables.API_URL;
 
 const TVChart = styled.div`
   margin-top: 0px;
-  height: 100vh;
+  // height: 100vh;
+  height: 100%;
+  &.Full_chart_height {
+    height: 100vh;
+  }
 `;
 
 class TradingViewChart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      crypto: "XRP",
-      currency: "BTC"
+      crypto: "ETH",
+      currency: "BTC",
     };
   }
   static defaultProps = {
-    symbol: `XRP-BTC`,
+    symbol: `ETH-BTC`,
     // symbol: 'AAPL',
-    interval: "1",
+    interval: "15",
     containerId: "tv_chart_container",
     // datafeedUrl: 'https://demo_feed.tradingview.com',
     datafeedUrl: `${API_URL}/tradingview`,
@@ -34,7 +38,7 @@ class TradingViewChart extends React.Component {
     userId: "public_user_id",
     fullscreen: false,
     autosize: true,
-    studiesOverrides: {}
+    studiesOverrides: {},
   };
   tvWidget = null;
   componentWillReceiveProps(props, newProps) {
@@ -63,22 +67,23 @@ class TradingViewChart extends React.Component {
         interval: props.interval,
         container_id: props.containerId,
         library_path: props.libraryPath,
-        locale: "en",
+        locale: localStorage["i18nextLng"],
         disabled_features: [
-          "use_localstorage_for_settings",
-          "header_symbol_search",
-          "symbol_search_hot_key",
+          // "use_localstorage_for_settings",
+          // "header_symbol_search",
+          // "symbol_search_hot_key",
           "header_compare",
           "compare_symbol",
-          "header_saveload",
-          "header_settings",
-          "left_toolbar",
-          "header_undo_redo",
-          "study_dialog_search_control",
-          "go_to_date",
-          "timeframes_toolbar"
+          // "header_saveload",
+          // "header_settings",
+          // "left_toolbar",
+          // "header_undo_redo",
+          // "study_dialog_search_control",
+          // "go_to_date",
+          // "timeframes_toolbar",
+          "volume_force_overlay",
         ],
-        enabled_features: [],
+        enabled_features: ["high_density_bars"],
         charts_storage_url: props.chartsStorageUrl,
         charts_storage_api_version: props.chartsStorageApiVersion,
         client_id: props.clientId,
@@ -86,7 +91,15 @@ class TradingViewChart extends React.Component {
         fullscreen: props.fullscreen,
         autosize: props.autosize,
         studies_overrides: props.studiesOverrides,
-        theme: props.theme === true ? "Dark" : "Light"
+        theme: props.theme === true ? "Dark" : "Light",
+        overrides: {
+          "mainSeriesProperties.candleStyle.wickUpColor": "#008000",
+          "mainSeriesProperties.candleStyle.wickDownColor": "#ff0000",
+          "mainSeriesProperties.candleStyle.upColor": "#008000",
+          "mainSeriesProperties.candleStyle.downColor": "#ff0000",
+          "mainSeriesProperties.candleStyle.borderUpColor": "#008000",
+          "mainSeriesProperties.candleStyle.borderDownColor": "#ff0000",
+        },
       };
 
       const tvWidget = new widget(widgetOptions);
@@ -109,8 +122,18 @@ class TradingViewChart extends React.Component {
   }
 
   componentDidMount() {
+    console.log(
+      "^^^prods",
+      window.location.href,
+      this.props,
+      this.props.match.params.pair
+    );
     let currency, crypto;
-    if (this.props.cryptoPair.crypto === undefined) {
+
+    if (this.props.match.params.pair) {
+      currency = this.props.match.params.pair.split("-")[1];
+      crypto = this.props.match.params.pair.split("-")[0];
+    } else if (this.props.cryptoPair.crypto === undefined) {
       currency = this.state.currency;
       crypto = this.state.crypto;
     } else {
@@ -126,22 +149,23 @@ class TradingViewChart extends React.Component {
       interval: this.props.interval,
       container_id: this.props.containerId,
       library_path: this.props.libraryPath,
-      locale: "en",
+      locale: localStorage["i18nextLng"],
       disabled_features: [
-        "use_localstorage_for_settings",
-        "header_symbol_search",
-        "symbol_search_hot_key",
+        // "use_localstorage_for_settings",
+        // "header_symbol_search",
+        // "symbol_search_hot_key",
         "header_compare",
         "compare_symbol",
-        "header_saveload",
-        "header_settings",
-        "left_toolbar",
-        "header_undo_redo",
-        "study_dialog_search_control",
-        "go_to_date",
-        "timeframes_toolbar"
+        // "header_saveload",
+        // "header_settings",
+        // "left_toolbar",
+        // "header_undo_redo",
+        // "study_dialog_search_control",
+        // "go_to_date",
+        // "timeframes_toolbar",
+        "volume_force_overlay",
       ],
-      enabled_features: [],
+      enabled_features: ["high_density_bars"],
       charts_storage_url: this.props.chartsStorageUrl,
       charts_storage_api_version: this.props.chartsStorageApiVersion,
       client_id: this.props.clientId,
@@ -149,7 +173,15 @@ class TradingViewChart extends React.Component {
       fullscreen: this.props.fullscreen,
       autosize: this.props.autosize,
       studies_overrides: this.props.studiesOverrides,
-      theme: this.props.theme === true ? "Dark" : "Light"
+      theme: this.props.theme === true ? "Dark" : "Light",
+      overrides: {
+        "mainSeriesProperties.candleStyle.wickUpColor": "#008000",
+        "mainSeriesProperties.candleStyle.wickDownColor": "#ff0000",
+        "mainSeriesProperties.candleStyle.upColor": "#008000",
+        "mainSeriesProperties.candleStyle.downColor": "#ff0000",
+        "mainSeriesProperties.candleStyle.borderUpColor": "#008000",
+        "mainSeriesProperties.candleStyle.borderDownColor": "#ff0000",
+      },
     };
 
     const tvWidget = new widget(widgetOptions);
@@ -171,7 +203,14 @@ class TradingViewChart extends React.Component {
   }
   render() {
     return (
-      <TVChart id={this.props.containerId} className={"TVChartContainer"} />
+      <TVChart
+        id={this.props.containerId}
+        className={
+          window.location.href.includes("/chart")
+            ? "Full_chart_height"
+            : "TVChartContainer"
+        }
+      />
     );
   }
 }
@@ -182,10 +221,10 @@ function mapStateToProps(state) {
     cryptoPair:
       state.walletReducer.cryptoPair !== undefined
         ? state.walletReducer.cryptoPair
-        : ""
+        : "",
     /*  profileDetails: state.simpleReducer.profileDetails !== undefined ? state.simpleReducer.profileDetails.data[0] : "", */
     /* loader:state.simpleReducer.loader?state.simpleReducer.loader:false */
   };
 }
 
-export default connect(mapStateToProps, null)(TradingViewChart);
+export default withRouter(connect(mapStateToProps, null)(TradingViewChart));
