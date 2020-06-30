@@ -578,7 +578,7 @@
     },
     "two_factor_text_point2": {
       "page": "Edit Profile > Securtiy > Two-Factor Authentication",
-      "message": "Scan the QR code when prompted by your Authenticator.",
+      "message": "Scan the QR code when prompted by your authenticator.",
       "message_type": "Web content",
       "context": "text"
     },
@@ -2344,7 +2344,7 @@
     },
     "forgot_message_text": {
       "page": "Forgot Password",
-      "message": "Don't worry, It happens to the best of us.",
+      "message": "Don't worry, it happens to the best of us.",
       "message_type": "Web content",
       "context": "Forgot password message"
     },
@@ -4614,7 +4614,7 @@
     },
     "invalid_order_quantity_text": {
       "page": "Trade",
-      "message": "Your order exceeds our maximum trade size. Please decrease your total order size and try again.",
+      "message": "Invalid order quantity",
       "message_type": "Web content",
       "context": "invalid order quantity validation if the order amount exceeds buy book or sell book total value"
     },
@@ -4632,7 +4632,7 @@
     },
     "insufficient_balance_text": {
       "page": "Trade",
-      "message": "Insufficient wallet balance to place order.",
+      "message": "Insufficient funds in your wallet to place this order.",
       "message_type": "Web content",
       "context": "Insufficient wallet balance validation if the order amount exceeds wallet balance"
     }
