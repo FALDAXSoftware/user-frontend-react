@@ -352,7 +352,6 @@ class KYCForm extends Component {
       .then((responseData) => {
         if (responseData.status === 200) {
           let fields = {};
-          console.log("kycdata^^^", this.props.profileDetails);
           let profileData = this.props.profileDetails;
           fields["first_name"] =
             profileData.first_name !== null ? profileData.first_name : "";
@@ -383,10 +382,27 @@ class KYCForm extends Component {
           let country_code = profileData.country_code;
           fields["phone_number"] = profileData.phone_number.replace(/ /g, "");
           let arr = [];
-          arr.push(country_code);
+          if (country_code !== "undefined") {
+            arr.push(country_code);
+          }
+          if (profileData.countryJsonId) {
+            var countrySelected = CountryData.getCountryById(
+              profileData.countryJsonId - 1
+            );
+            let country_code = "";
+            let phoneCode = "";
+            if (countrySelected) {
+              country_code = countrySelected.sortname;
+              phoneCode = countrySelected.phonecode;
+              arr.push(country_code.toLowerCase());
+            }
+            let temp = profileData.phone_number;
+            var mob = temp.split(`+${phoneCode}`);
+          }
           this.setState({
             countrychange: true,
-            mobile: profileData.phone_number.replace(/ /g, ""),
+            // mobile: profileData.phone_number.replace(/ /g, ""),
+            mobile: mob[1],
             phoneCountry: arr,
             displayCountry: true,
             fields,
