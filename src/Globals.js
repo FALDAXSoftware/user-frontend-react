@@ -1,8 +1,6 @@
 export const globalVariables = {
   HubSpotKey: "e2032f87-8de8-4e18-8f16-f4210e714245",
-
   GOOGLE_SITE_KEY: "6Lcy2qEUAAAAAKZb48HgTmF9sxI1v4CFq5OrMsXo",
-
   _AMAZONBUCKET: "https://s3.us-east-2.amazonaws.com/production-static-asset/",
 
   tvChartURL: "/chart",
