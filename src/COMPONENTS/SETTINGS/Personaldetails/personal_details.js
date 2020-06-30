@@ -523,10 +523,6 @@ class PersonalDetails extends Component {
         },
       });
     } else {
-      console.log(
-        "countrySelectdisplayCountryed^^^",
-        this.state.displayCountry
-      );
       this.setState({
         displayCountry: false,
       });
@@ -1659,7 +1655,6 @@ class PersonalDetails extends Component {
         profileData.append("default_language", this.state.language);
         profileData.append("phone_number", this.state.fields.phone_number);
         // profileData.append("country_code", this.state.fields.country_code);
-        console.log("^^country", this.state.countryJsonId);
         var countrySelected = CountryData.getCountryById(
           this.state.countryJsonId - 1
         );
@@ -1810,7 +1805,6 @@ class PersonalDetails extends Component {
     });
   }
   changeNumber(a, mob, code) {
-    console.log("^^^code", code, mob);
     if (mob.trim !== "") {
       var temp = `+${code.dialCode}`;
       var mobile = mob.includes(`+${code.dialCode}`) ? mob : temp.concat(mob);
@@ -1860,7 +1854,6 @@ class PersonalDetails extends Component {
       let temp = this.props.profileDetails.phone_number;
       var mob = temp.split(`+${phonecode}`);
       let phone = this.props.profileDetails.phone_number;
-      console.log("mob countrySelected^^^^^", mob);
       this.setState({
         mobile: mob[1],
         displayCountry: true,
@@ -1935,14 +1928,14 @@ class PersonalDetails extends Component {
     const { t } = this.props;
     const { profileDetails } = this.state;
     var me = this;
-    console.log(
-      "phoneCountry countrySelected^^",
-      this.state.displayCountry,
-      this.state.phoneCountry,
-      this.state.mobile,
-      this.state.fields.phone_number,
-      this.state.countryJsonId
-    );
+    // console.log(
+    //   "phoneCountry countrySelected^^",
+    //   this.state.displayCountry,
+    //   this.state.phoneCountry,
+    //   this.state.mobile,
+    //   this.state.fields.phone_number,
+    //   this.state.countryJsonId
+    // );
     return (
       <Profilewrap
         className={
@@ -2440,6 +2433,21 @@ class PersonalDetails extends Component {
                               arr.push(
                                 this.props.profileDetails.country_code.toLowerCase()
                               );
+                              this.setState({
+                                displayCountry: true,
+                                phoneCountry: arr,
+                              });
+                            }
+                            if (this.props.profileDetails.countryJsonId) {
+                              var countrySelected = CountryData.getCountryById(
+                                this.props.profileDetails.countryJsonId - 1
+                              );
+                              let country_code = "";
+                              let arr = [];
+                              if (countrySelected) {
+                                country_code = countrySelected.sortname;
+                                arr.push(country_code.toLowerCase());
+                              }
                               this.setState({
                                 displayCountry: true,
                                 phoneCountry: arr,
