@@ -16,8 +16,8 @@ class FaldaxLoader extends React.Component {
           {this.state.theme === true ? (
             <SpinImg src="/images/darkLoader.gif" />
           ) : (
-            <SpinImg src="/images/lightLoader.gif" />
-          )}
+              <SpinImg src="/images/lightLoader.gif" />
+            )}
         </SpinDiv>
       </SpinEx>
     );

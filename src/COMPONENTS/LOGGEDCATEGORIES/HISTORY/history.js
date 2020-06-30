@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import "antd/dist/antd.css";
 import moment from "moment";
-import { Checkbox, Select, notification, Tabs } from "antd";
+import { Checkbox, Select, notification, Tabs, Pagination } from "antd";
 import { faExchangeAlt } from "@fortawesome/free-solid-svg-icons";
 import { CSVLink } from "react-csv";
 import { translate } from "react-i18next";
@@ -12,12 +12,12 @@ import { translate } from "react-i18next";
 /* components */
 import LoggedNavigation from "COMPONENTS/NAVIGATIONS/loggednavigation";
 import CommonFooter from "COMPONENTS/LANDING/FOOTERS/footer_home";
-import { globalVariables } from "Globals.js";
+import { globalVariables, PAGE_SIZE_OPTIONS, PAGESIZE } from "Globals.js";
 
 /* STYLED-COMPONENTS */
 import {
   ContactWrap,
-  GreyWrap
+  GreyWrap,
 } from "STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle";
 import {
   ContainerContact,
@@ -30,10 +30,13 @@ import {
   EXPButton,
   FontAwesomeIconS,
   Datediv,
-  RangePickerS
+  RangePickerS,
+  PagDiv,
 } from "STYLED-COMPONENTS/LOGGED_STYLE/historyStyle";
 import FaldaxLoader from "SHARED-COMPONENTS/FaldaxLoader";
 import { LogoutUser } from "../../../ACTIONS/authActions";
+import { APIUtility } from "../../../httpHelper";
+import { PaginationS } from "../../../STYLED-COMPONENTS/SETTINGS/accsettingsStyle";
 
 let { API_URL } = globalVariables;
 const { TabPane } = Tabs;
@@ -45,20 +48,20 @@ const Select1 = styled(Select)`
     width: 120px;
   }
   & .ant-select-selection {
-    background-color: ${props =>
-      props.theme.mode === "dark" ? "#01090f" : ""};
+    background-color: ${(props) =>
+    props.theme.mode === "dark" ? "#01090f" : ""};
   }
   & .ant-select-arrow > i {
-    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   }
   & .ant-select-selection-selected-value {
-    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   }
   & .ant-select-search__field {
-    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   }
   & .ant-select-search__field {
-    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   }
 `;
 const Select2 = styled(Select)`
@@ -66,29 +69,29 @@ const Select2 = styled(Select)`
     width: 120px;
   }
   & .ant-select-selection {
-    background-color: ${props =>
-      props.theme.mode === "dark" ? "#01090f" : ""};
+    background-color: ${(props) =>
+    props.theme.mode === "dark" ? "#01090f" : ""};
   }
   & .ant-select-arrow > i {
-    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   }
   & .ant-select-selection-selected-value {
-    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   }
   & .ant-select-search__field {
-    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   }
 `;
 const CheckboxGroupS = styled(CheckboxGroup)`
   & .ant-checkbox-group-item > span {
-    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   }
 `;
 const NDF = styled.tbody`
   text-align: center;
   font-weight: 600;
   font-size: 17px;
-  color: ${props => (props.theme.mode === "dark" ? "white" : "black")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "black")};
   font-family: "Open Sans";
   height: 500px;
   display: flex !important;
@@ -98,8 +101,8 @@ const NDF = styled.tbody`
   > tr {
     > td {
       border-top: 0 !important;
-      background: ${props =>
-        props.theme.mode === "dark" ? "#041422" : "white"};
+      background: ${(props) =>
+    props.theme.mode === "dark" ? "#041422" : "white"};
     }
   }
   @media (max-width: 767px) {
@@ -113,7 +116,7 @@ const NDF = styled.tbody`
   }
 `;
 const SideBuySell = styled.td`
-  color: ${props => (props.side === true ? "#59b55d" : "#f13e46")} !important;
+  color: ${(props) => (props.side === true ? "#59b55d" : "#f13e46")} !important;
 `;
 
 export const FilterDiv = styled.div`
@@ -153,15 +156,17 @@ class History extends Component {
       loader: false,
       csvFields: [],
       checkedGroupValue: ["SEND", "RECEIVE", "SELL", "BUY"],
-      activeKey: "2",
-      csvHeadersTrade: [
-        { label: "Date", key: "date" },
-        { label: "Side", key: "side" },
-        { label: "Filled Price", key: "filled_price" },
-        { label: "Amount", key: "amount" },
-        { label: "Fee", key: "fee" },
-        { label: "Volume", key: "volume" }
-      ],
+      activeKey: "1",
+      page: 1,
+      limit: PAGESIZE,
+      // csvHeadersTrade: [
+      //   { label: "Date", key: "date" },
+      //   { label: "Side", key: "side" },
+      //   { label: "Filled Price", key: "filled_price" },
+      //   { label: "Amount", key: "amount" },
+      //   { label: "Fee", key: "fee" },
+      //   { label: "Volume", key: "volume" }
+      // ],
       csvHeadersSimplex: [
         { label: "Coin", key: "symbol" },
         { label: "Date", key: "date" },
@@ -170,7 +175,7 @@ class History extends Component {
         { label: "Wallet Address", key: "address" },
         { label: "Payment Id", key: "payment_id" },
         { label: "Quote Id", key: "quote_id" },
-        { label: "Payment Status", key: "simplex_payment_status" }
+        { label: "Payment Status", key: "simplex_payment_status" },
       ],
       csvHeadersJST: [
         { label: "Coin", key: "symbol" },
@@ -180,19 +185,20 @@ class History extends Component {
         { label: "Order Id", key: "order_id" },
         { label: "Filled Price", key: "filled_price" },
         { label: "Amount", key: "amount" },
-        { label: "Fees", key: "fees" }
+        { label: "Fees", key: "fees" },
       ],
       csvHeadersTrade: [
         { label: "Coin", key: "symbol" },
-        { label: "Side", key: "side" },
         { label: "Date", key: "date" },
-        { label: "Date", key: "date" },
-        { label: "Order Id", key: "order_id" },
         { label: "Filled Price", key: "filled_price" },
         { label: "Amount", key: "amount" },
-        { label: "Fees", key: "fees" }
-      ]
+        { label: "Side", key: "side" },
+        { label: "Order Type", key: "order_type" },
+        { label: "Limit Price", key: "limit_price" },
+        { label: "Stop Price", key: "stop_price" },
+      ],
     };
+    this.exportCsvEle = React.createRef();
     this.historyResult = this.historyResult.bind(this);
     this.changeDate = this.changeDate.bind(this);
     this.onChangeCheck = this.onChangeCheck.bind(this);
@@ -205,13 +211,39 @@ class History extends Component {
   }
 
   /* Life-Cycle Methods */
-  componentDidMount() {
+  async componentDidMount() {
     if (
       this.props.profileData &&
       this.props.profileData.is_terms_agreed == false
     ) {
       this.props.history.push("/editProfile");
     }
+    console.log("^^^adngf", this.props.location);
+    if (
+      this.props.location.state === undefined ||
+      this.props.location.state.flag === "" ||
+      this.props.location.state.flag === null
+    ) {
+      this.props.history.push("/");
+    } else {
+      this.setState({
+        loader: true,
+      });
+      let result = await APIUtility.getUserTradeStatus(this.props.isLoggedIn);
+      if (result.status == 200) {
+        if (result.data.is_allowed !== true || result.data.is_kyc_done !== 2) {
+          this.props.history.push("/");
+        }
+      }
+    }
+    // else {
+    //   let result = await APIUtility.getUserTradeStatus(this.props.isLoggedIn);
+    //   if (result.status == 200) {
+    //     if (result.data.is_allowed !== true || result.data.is_kyc_done !== 2) {
+    //       this.props.history.push("/");
+    //     }
+    //   }
+    // }
     if (this.props.location.tradeType === "1") {
       this.setState({ activeKey: "1" }, () => {
         this.historyResult();
@@ -236,41 +268,42 @@ class History extends Component {
   loadCoinList() {
     var self = this;
     if (this.state.activeKey === "1") {
+      // if (this.state.activeKey === "1" || this.state.activeKey === "3") {
       fetch(API_URL + "/conversion/get-jst-pair", {
         method: "get",
         headers: {
           Accept: "application/json",
-          "Accept-Language": localStorage["i18nextLng"], 
+          "Accept-Language": localStorage["i18nextLng"],
           "Content-Type": "application/json",
-          Authorization: "Bearer " + this.props.isLoggedIn
-        }
+          Authorization: "Bearer " + this.props.isLoggedIn,
+        },
       })
-        .then(response => response.json())
-        .then(responseData => {
+        .then((response) => response.json())
+        .then((responseData) => {
           self.setState({
             coinList: responseData.coinList,
             drop1List: responseData.coinList,
-            drop2List: responseData.coinList
+            drop2List: responseData.coinList,
           });
         })
-        .catch(error => {});
+        .catch((error) => { });
     } else if (this.state.activeKey === "2") {
       fetch(API_URL + "/get-simplex-coin-list", {
         method: "get",
         headers: {
           Accept: "application/json",
-          "Accept-Language": localStorage["i18nextLng"], 
+          "Accept-Language": localStorage["i18nextLng"],
           "Content-Type": "application/json",
-          Authorization: "Bearer " + this.props.isLoggedIn
-        }
+          Authorization: "Bearer " + this.props.isLoggedIn,
+        },
       })
-        .then(response => response.json())
-        .then(responseData => {
+        .then((response) => response.json())
+        .then((responseData) => {
           if (responseData.status === 200) {
             self.setState({
               coinList: responseData.object.coinList,
               drop1List: responseData.object.coinList,
-              drop2List: responseData.object.fiat
+              drop2List: responseData.object.fiat,
             });
           } else if (responseData.status === 403) {
             let tempValue2 = {};
@@ -279,7 +312,7 @@ class History extends Component {
             this.props.LogoutUser(this.props.isLoggedIn, tempValue2);
           }
         })
-        .catch(error => {});
+        .catch((error) => { });
     }
   }
 
@@ -290,7 +323,9 @@ class History extends Component {
         drop1Value: null,
         drop2Value: null,
         toDate: "",
-        fromDate: ""
+        fromDate: "",
+        page: 1,
+        limit: PAGESIZE,
       },
       () => {
         this.loadCoinList();
@@ -299,220 +334,123 @@ class History extends Component {
     );
   }
 
-  historyResult() {
+  async historyResult(isExportToCsv = false) {
     let { drop1Value, drop2Value, toDate, fromDate, activeKey } = this.state;
-    let url =
-      API_URL +
-      `/get-user-history?send=${this.state.send}&receive=${this.state.receive}&buy=${this.state.buy}&sell=${this.state.sell}&toDate=${this.state.toDate}&fromDate=${this.state.fromDate}&trade_type=${this.state.activeKey}`;
+    let key;
+    if (activeKey === "1") {
+      key = "3";
+    }
+    if (activeKey === "3") {
+      key = "1";
+    }
+    if (activeKey === "2") {
+      key = "2";
+    }
+    let url;
+    if (isExportToCsv) {
+      url =
+        API_URL +
+        `/get-user-history?page=1&limit=100000&send=${this.state.send}&receive=${this.state.receive}&buy=${this.state.buy}&sell=${this.state.sell}&toDate=${this.state.toDate}&fromDate=${this.state.fromDate}&trade_type=${key}`;
+    } else {
+      url =
+        API_URL +
+        `/get-user-history?page=${this.state.page}&limit=${this.state.limit}&send=${this.state.send}&receive=${this.state.receive}&buy=${this.state.buy}&sell=${this.state.sell}&toDate=${this.state.toDate}&fromDate=${this.state.fromDate}&trade_type=${key}`;
+    }
     if (toDate && fromDate) {
       let url =
         API_URL +
         `/get-user-history?send=${this.state.send}&receive=${
-          this.state.receive
+        this.state.receive
         }&buy=${this.state.buy}&sell=${
-          this.state.sell
+        this.state.sell
         }&toDate=${this.state.toDate.format(
           "YYYY-MM-DD"
-        )}&fromDate=${this.state.fromDate.format("YYYY-MM-DD")}&trade_type=${
-          this.state.activeKey
-        }`;
+        )}&fromDate=${this.state.fromDate.format(
+          "YYYY-MM-DD"
+        )}&trade_type=${key}`;
     }
-    if (drop1Value && drop2Value && activeKey === "1") {
+    if (drop1Value && drop2Value && key === "1") {
       url =
         url + "&symbol=" + this.state.drop1Value + "/" + this.state.drop2Value;
     }
-    if (drop1Value && drop2Value && activeKey === "2") {
+    if (drop1Value && drop2Value && key === "2") {
+      url =
+        url + "&symbol=" + this.state.drop1Value + "-" + this.state.drop2Value;
+    }
+    if (drop1Value && drop2Value && key === "3") {
       url =
         url + "&symbol=" + this.state.drop1Value + "-" + this.state.drop2Value;
     }
     this.setState({ loader: true });
-    fetch(url, {
-      method: "get",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + this.props.isLoggedIn
-      }
-    })
-      .then(response => response.json())
-      .then(responseData => {
-        this.setState({ loader: false });
-        if (responseData.status === 200) {
-          if (this.state.activeKey === "1") {
-            let csvJSTFields = [];
-            if (responseData.data && responseData.data.length > 0) {
-              for (var i = 0; i < responseData.data.length; i++) {
-                let temp = responseData.data[i];
-                let obj = {};
-                var symbol = temp.symbol;
-                var date = moment
-                  .utc(temp.created_at)
-                  .local()
-                  .format(`${this.props.profileData.date_format} HH:mm:ss`);
-                if (temp.side === "Sell") {
-                  var fill_price = parseFloat(temp.buy_currency_amount).toFixed(
-                    8
-                  );
-                } else {
-                  var fill_price = parseFloat(
-                    temp.sell_currency_amount
-                  ).toFixed(8);
-                }
-                var fees_total = parseFloat(
-                  parseFloat(temp.faldax_fees) + parseFloat(temp.network_fees)
-                ).toFixed(8);
-                var amount = parseFloat(
-                  parseFloat(temp.execution_report.CumQty) -
-                    parseFloat(fees_total)
-                ).toFixed(8);
-                var status = temp.order_status.toUpperCase();
-                var order_id = temp.order_id;
-                obj["symbol"] = symbol;
-                obj["side"] = temp.side;
-                obj["date"] = date;
-                obj["order_id"] = order_id;
-                obj["order_status"] = status;
-                obj["filled_price"] = fill_price;
-                obj["amount"] = amount;
-                obj["fees"] = fees_total;
-                csvJSTFields.push(obj);
-              }
-              this.setState({
-                historyJSTData: responseData.data,
-                csvJSTFields
-              });
-            } else if (responseData.data.length === 0) {
-              this.setState({
-                historyJSTData: responseData.data,
-                csvJSTFields
-              });
+    let responseData = await (
+      await fetch(url, {
+        method: "get",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.props.isLoggedIn,
+        },
+      })
+    ).json();
+    // .then((response) => response.json())
+    // .then((responseData) =>
+    //  {
+    this.setState({ loader: false });
+    if (responseData.status === 200) {
+      if (key === "1") {
+        let csvJSTFields = [];
+        if (responseData.data && responseData.data.length > 0) {
+          for (var i = 0; i < responseData.data.length; i++) {
+            let temp = responseData.data[i];
+            let obj = {};
+            var symbol = temp.symbol;
+            var date = moment
+              .utc(temp.created_at)
+              .local()
+              .format(`${this.props.profileData.date_format} HH:mm:ss`);
+            if (temp.side === "Sell") {
+              var fill_price = precision(temp.buy_currency_amount);
             } else {
-              this.openNotificationWithIcon(
-                "error",
-                this.t("validations:error_text.message"),
-                responseData.err
-              );
+              var fill_price = precision(temp.sell_currency_amount);
             }
-          } else if (this.state.activeKey === "2") {
-            let csvSimplexFields = [];
-            if (responseData.data && responseData.data.length > 0) {
-              for (var i = 0; i < responseData.data.length; i++) {
-                let temp = responseData.data[i];
-                let obj = {};
-                var symbol = temp.symbol;
-                var date = moment
-                  .utc(temp.created_at)
-                  .local()
-                  .format(`${this.props.profileData.date_format} HH:mm:ss`);
-                var side = temp.side;
-                var fill_price = parseFloat(temp.fill_price).toFixed(8);
-                var quantity = parseFloat(temp.quantity).toFixed(8);
-                var payment_id = temp.payment_id;
-                var quote_id = temp.quote_id;
-                var address = temp.address;
-
-                if (temp.simplex_payment_status === 1) {
-                  var simplex_payment_status = "Under Approval";
-                }
-                if (temp.simplex_payment_status === 2) {
-                  var simplex_payment_status = "Approved";
-                }
-                if (temp.simplex_payment_status === 3) {
-                  var simplex_payment_status = "Cancelled";
-                }
-                obj["symbol"] = symbol;
-                obj["date"] = date;
-                obj["filled_price"] = fill_price;
-                obj["quantity"] = quantity;
-                obj["payment_id"] = payment_id;
-                obj["quote_id"] = quote_id;
-                obj["address"] = address;
-                obj["simplex_payment_status"] = simplex_payment_status;
-                csvSimplexFields.push(obj);
-              }
-              this.setState({
-                historySimplexData: responseData.data,
-                csvSimplexFields
-              });
-            } else if (responseData.data.length === 0) {
-              this.setState({
-                historySimplexData: responseData.data,
-                csvSimplexFields
-              });
-            } else {
-              this.openNotificationWithIcon(
-                "error",
-                this.t("validations:error_text.message"),
-                responseData.err
-              );
-            }
-          } else if (this.state.activeKey === "3") {
-            // alert("trade");
-            let csvTradeFields = [];
-            if (responseData.data && responseData.data.length > 0) {
-              for (var i = 0; i < responseData.data.length; i++) {
-                let temp = responseData.data[i];
-                let obj = {};
-                var symbol = temp.symbol;
-                var date = moment
-                  .utc(temp.created_at)
-                  .local()
-                  .format(`${this.props.profileData.date_format} HH:mm:ss`);
-                if (temp.side === "Sell") {
-                  var fill_price = parseFloat(temp.buy_currency_amount).toFixed(
-                    8
-                  );
-                } else {
-                  var fill_price = parseFloat(
-                    temp.sell_currency_amount
-                  ).toFixed(8);
-                }
-                var fees_total = parseFloat(
-                  parseFloat(temp.faldax_fees) + parseFloat(temp.network_fees)
-                ).toFixed(8);
-                var amount = parseFloat(
-                  parseFloat(temp.execution_report.CumQty) -
-                    parseFloat(fees_total)
-                ).toFixed(8);
-                var status = temp.order_status.toUpperCase();
-                var order_id = temp.order_id;
-                obj["symbol"] = symbol;
-                obj["side"] = temp.side;
-                obj["date"] = date;
-                obj["order_id"] = order_id;
-                obj["order_status"] = status;
-                obj["filled_price"] = fill_price;
-                obj["amount"] = amount;
-                obj["fees"] = fees_total;
-                csvTradeFields.push(obj);
-              }
-              this.setState({
-                historyTradeData: responseData.data,
-                csvTradeFields
-              });
-            } else if (responseData.data.length === 0) {
-              this.setState({
-                historyTradeData: responseData.data,
-                csvTradeFields
-              });
-            } else {
-              this.openNotificationWithIcon(
-                "error",
-                this.t("validations:error_text.message"),
-                responseData.err
-              );
-            }
+            var fees_total = precision(
+              parseFloat(temp.faldax_fees) + parseFloat(temp.network_fees)
+            );
+            var amount = precision(
+              parseFloat(temp.execution_report.CumQty) - parseFloat(fees_total)
+            );
+            var status = temp.order_status.toUpperCase();
+            var order_id = temp.order_id;
+            obj["symbol"] = symbol;
+            obj["side"] = temp.side;
+            obj["date"] = date;
+            obj["order_id"] = order_id;
+            obj["order_status"] = status;
+            obj["filled_price"] = fill_price;
+            obj["amount"] = amount;
+            obj["fees"] = fees_total;
+            csvJSTFields.push(obj);
           }
-        } else if (responseData.status === 403) {
-          this.openNotificationWithIcon(
-            "error",
-            this.t("validations:error_text.message"),
-            responseData.err
-          );
-          let tempValue2 = {};
-          tempValue2["user_id"] = this.props.profileData.id;
-          tempValue2["jwt_token"] = this.props.isLoggedIn;
-          this.props.LogoutUser(this.props.isLoggedIn, tempValue2);
+          if (isExportToCsv) {
+            this.setState(
+              {
+                csvJSTFields,
+              },
+              () => {
+                this.exportCsvEle.current.link.click();
+              }
+            );
+          } else {
+            this.setState({
+              historyJSTData: responseData.data,
+              csvJSTFields,
+            });
+          }
+        } else if (responseData.data.length === 0) {
+          this.setState({
+            historyJSTData: responseData.data,
+            csvJSTFields,
+          });
         } else {
           this.openNotificationWithIcon(
             "error",
@@ -520,9 +458,148 @@ class History extends Component {
             responseData.err
           );
         }
-        this.setState({ loader: false });
-      })
-      .catch(error => {});
+      } else if (key === "2") {
+        let csvSimplexFields = [];
+        if (responseData.data && responseData.data.length > 0) {
+          for (var i = 0; i < responseData.data.length; i++) {
+            let temp = responseData.data[i];
+            let obj = {};
+            var symbol = temp.symbol;
+            var date = moment
+              .utc(temp.created_at)
+              .local()
+              .format(`${this.props.profileData.date_format} HH:mm:ss`);
+            var side = temp.side;
+            var fill_price = precision(temp.fill_price);
+            var quantity = precision(temp.quantity);
+            var payment_id = temp.payment_id;
+            var quote_id = temp.quote_id;
+            var address = temp.address;
+
+            if (temp.simplex_payment_status === 1) {
+              var simplex_payment_status = "Under Approval";
+            }
+            if (temp.simplex_payment_status === 2) {
+              var simplex_payment_status = "Approved";
+            }
+            if (temp.simplex_payment_status === 3) {
+              var simplex_payment_status = "Cancelled";
+            }
+            obj["symbol"] = symbol;
+            obj["date"] = date;
+            obj["filled_price"] = fill_price;
+            obj["quantity"] = quantity;
+            obj["payment_id"] = payment_id;
+            obj["quote_id"] = quote_id;
+            obj["address"] = address;
+            obj["simplex_payment_status"] = simplex_payment_status;
+            csvSimplexFields.push(obj);
+          }
+          if (isExportToCsv) {
+            this.setState(
+              {
+                csvSimplexFields,
+              },
+              () => {
+                this.exportCsvEle.current.link.click();
+              }
+            );
+          } else {
+            this.setState({
+              historySimplexData: responseData.data,
+              csvSimplexFields,
+            });
+          }
+        } else if (responseData.data.length === 0) {
+          this.setState({
+            historySimplexData: responseData.data,
+            csvSimplexFields,
+          });
+        } else {
+          this.openNotificationWithIcon(
+            "error",
+            this.t("validations:error_text.message"),
+            responseData.err
+          );
+        }
+      } else if (key === "3") {
+        let csvTradeFields = [];
+        if (responseData.data && responseData.data.length > 0) {
+          for (var i = 0; i < responseData.data.length; i++) {
+            // console.log("^^^^ inside", responseData.data[i]);
+            let temp = responseData.data[i];
+            let obj = {};
+            var date = moment
+              .utc(temp.created_at)
+              .local()
+              .format(`${this.props.profileData.date_format} HH:mm:ss`);
+            var limit_price =
+              temp.order_type != "Market" ? temp.limit_price : 0.0;
+            var stop_price =
+              temp.order_type == "SopLimit" ? temp.stop_price : 0.0;
+            obj["symbol"] = temp.symbol;
+            obj["date"] = date;
+            obj["filled_price"] = temp.fill_price;
+            obj["amount"] = temp.quantity;
+            obj["side"] = temp.side;
+            obj["order_type"] = temp.order_type;
+            obj["limit_price"] = limit_price;
+            obj["stop_price"] = stop_price;
+            csvTradeFields.push(obj);
+          }
+          // console.log(responseData.data);
+          if (isExportToCsv) {
+            this.setState(
+              {
+                csvTradeFields,
+              },
+              () => {
+                this.exportCsvEle.current.link.click();
+              }
+            );
+          } else {
+            this.setState({
+              historyTradeData: responseData.data,
+              csvTradeFields,
+            });
+          }
+        } else if (responseData.data.length === 0) {
+          this.setState({
+            historyTradeData: responseData.data,
+            csvTradeFields,
+          });
+        } else {
+          this.openNotificationWithIcon(
+            "error",
+            this.t("validations:error_text.message"),
+            responseData.err
+          );
+        }
+      }
+      this.setState({
+        tradeCount: responseData.tradeCount,
+      });
+    } else if (responseData.status === 403) {
+      this.openNotificationWithIcon(
+        "error",
+        this.t("validations:error_text.message"),
+        responseData.err
+      );
+      let tempValue2 = {};
+      tempValue2["user_id"] = this.props.profileData.id;
+      tempValue2["jwt_token"] = this.props.isLoggedIn;
+      this.props.LogoutUser(this.props.isLoggedIn, tempValue2);
+    } else {
+      this.openNotificationWithIcon(
+        "error",
+        this.t("validations:error_text.message"),
+        responseData.err
+      );
+    }
+    this.setState({ loader: false });
+    return true;
+    // })
+    // .catch((error) => {});
   }
 
   range(start, end) {
@@ -542,13 +619,13 @@ class History extends Component {
       return {
         disabledHours: () => this.range(0, 60).splice(4, 20),
         disabledMinutes: () => this.range(30, 60),
-        disabledSeconds: () => [55, 56]
+        disabledSeconds: () => [55, 56],
       };
     }
     return {
       disabledHours: () => this.range(0, 60).splice(20, 4),
       disabledMinutes: () => this.range(0, 31),
-      disabledSeconds: () => [55, 56]
+      disabledSeconds: () => [55, 56],
     };
   }
 
@@ -608,7 +685,7 @@ class History extends Component {
       this.setState(
         {
           drop2List: coinList,
-          drop1Value: value
+          drop1Value: value,
         },
         () => {
           self.loadCoinList();
@@ -620,7 +697,7 @@ class History extends Component {
         {
           drop2List: coinList,
           drop1Value: value,
-          drop2Value: null
+          drop2Value: null,
         },
         () => {
           self.loadCoinList();
@@ -643,7 +720,7 @@ class History extends Component {
       this.setState(
         {
           drop1List: coinList,
-          drop2Value: value
+          drop2Value: value,
         },
         () => {
           self.loadCoinList();
@@ -655,7 +732,7 @@ class History extends Component {
         {
           drop1List: coinList,
           drop2Value: value,
-          drop1Value: null
+          drop1Value: null,
         },
         () => {
           self.loadCoinList();
@@ -668,7 +745,7 @@ class History extends Component {
     notification[type]({
       message: head,
       description: desc,
-      duration: 5
+      duration: 5,
     });
   }
 
@@ -683,7 +760,7 @@ class History extends Component {
         receive: true,
         drop1Value: null,
         drop2Value: null,
-        checkedGroupValue: ["SEND", "RECEIVE", "SELL", "BUY"]
+        checkedGroupValue: ["SEND", "RECEIVE", "SELL", "BUY"],
       },
       () => {
         this.loadCoinList();
@@ -691,14 +768,28 @@ class History extends Component {
       }
     );
   }
-
+  handlePagination = (page) => {
+    this.setState({ page }, () => {
+      this.historyResult();
+    });
+  };
+  changePaginationSize = (current, pageSize) => {
+    this.setState({ page: current, limit: pageSize }, () => {
+      this.historyResult();
+    });
+  };
+  onExportCSV = async () => {
+    await this.historyResult(true);
+  };
   render() {
     var self = this;
     const { t } = this.props;
     const options = [
       { label: t("buy_text.message"), value: "BUY" },
-      { label: t("sell_text.message"), value: "SELL" }
+      { label: t("sell_text.message"), value: "SELL" },
     ];
+    let pageSizeOptions = PAGE_SIZE_OPTIONS;
+    const { tradeCount, page, limit } = this.state;
     return (
       <div>
         <ContactWrap>
@@ -715,12 +806,14 @@ class History extends Component {
                       value={this.state.drop1Value}
                     >
                       {this.state.drop1List &&
-                        this.state.drop1List.map(element => {
+                        this.state.drop1List.map((element) => {
                           if (this.state.activeKey === "1") {
-                            if (this.state.drop2Value === "XRP") {
+                            if (this.state.drop2Value === "ETH") {
                               if (
                                 element.coin != this.state.drop2Value &&
-                                element.coin != "LTC"
+                                element.coin != "BTC" &&
+                                element.coin != "SUSU" &&
+                                element.coin != "ERC20"
                               ) {
                                 return (
                                   <Option value={element.coin}>
@@ -728,10 +821,10 @@ class History extends Component {
                                   </Option>
                                 );
                               }
-                            } else if (this.state.drop2Value === "LTC") {
+                            } else if (this.state.drop2Value === "BTC") {
                               if (
                                 element.coin != this.state.drop2Value &&
-                                element.coin != "XRP"
+                                element.coin != "ERC20"
                               ) {
                                 return (
                                   <Option value={element.coin}>
@@ -748,6 +841,51 @@ class History extends Component {
                                 );
                               }
                             }
+                            // if (this.state.drop2Value === "XRP") {
+                            //   if (
+                            //     element.coin != this.state.drop2Value &&
+                            //     element.coin != "LTC" &&
+                            //     element.coin != "ETH"
+                            //   ) {
+                            //     return (
+                            //       <Option value={element.coin}>
+                            //         {element.coin}
+                            //       </Option>
+                            //     );
+                            //   }
+                            // } else if (this.state.drop2Value === "LTC") {
+                            //   if (
+                            //     element.coin != this.state.drop2Value &&
+                            //     element.coin != "XRP" &&
+                            //     element.coin != "ETH"
+                            //   ) {
+                            //     return (
+                            //       <Option value={element.coin}>
+                            //         {element.coin}
+                            //       </Option>
+                            //     );
+                            //   }
+                            // } else if (this.state.drop2Value === "ETH") {
+                            //   if (
+                            //     element.coin != this.state.drop2Value &&
+                            //     element.coin != "XRP" &&
+                            //     element.coin != "LTC"
+                            //   ) {
+                            //     return (
+                            //       <Option value={element.coin}>
+                            //         {element.coin}
+                            //       </Option>
+                            //     );
+                            //   }
+                            // } else {
+                            //   if (element.coin != this.state.drop2Value) {
+                            //     return (
+                            //       <Option value={element.coin}>
+                            //         {element.coin}
+                            //       </Option>
+                            //     );
+                            //   }
+                            // }
                           } else {
                             if (element.coin != this.state.drop2Value) {
                               return (
@@ -759,7 +897,31 @@ class History extends Component {
                           }
                         })}
                     </Select1>
-                    <FontAwesomeIconS icon={faExchangeAlt} color="#909090" />
+                    {this.state.activeKey === "3" ? (
+                      <FontAwesomeIconS
+                        className="click_change"
+                        onClick={() => {
+                          if (this.state.drop1Value && this.state.drop2Value) {
+                            let temp1 = this.state.drop1Value;
+                            let temp2 = this.state.drop2Value;
+                            this.setState(
+                              {
+                                drop1Value: temp2,
+                                drop2Value: temp1,
+                              },
+                              () => {
+                                this.loadCoinList();
+                                this.historyResult();
+                              }
+                            );
+                          }
+                        }}
+                        icon={faExchangeAlt}
+                        color="#909090"
+                      />
+                    ) : (
+                        <FontAwesomeIconS icon={faExchangeAlt} color="#909090" />
+                      )}
                     <Select2
                       showSearch
                       className="display-value"
@@ -767,31 +929,15 @@ class History extends Component {
                       value={this.state.drop2Value}
                     >
                       {this.state.drop2List &&
-                        this.state.drop2List.map(element => {
+                        this.state.drop2List.map((element) => {
                           if (this.state.activeKey === "1") {
-                            if (this.state.drop1Value === "XRP") {
-                              if (
-                                element.coin != this.state.drop1Value &&
-                                element.coin != "LTC"
-                              ) {
-                                return (
-                                  <Option value={element.coin}>
-                                    {element.coin}
-                                  </Option>
-                                );
-                              }
-                            } else if (this.state.drop1Value === "LTC") {
-                              if (
-                                element.coin != this.state.drop1Value &&
-                                element.coin != "XRP"
-                              ) {
-                                return (
-                                  <Option value={element.coin}>
-                                    {element.coin}
-                                  </Option>
-                                );
-                              }
-                            } else {
+                            if (
+                              element.coin != "BCH" &&
+                              element.coin != "LTC" &&
+                              element.coin != "SUSU" &&
+                              element.coin != "ERC20" &&
+                              element.coin != "XRP"
+                            ) {
                               if (element.coin != this.state.drop1Value) {
                                 return (
                                   <Option value={element.coin}>
@@ -816,7 +962,10 @@ class History extends Component {
                     <RangePickerS
                       disabledDate={this.disabledDate}
                       disabledTime={this.disabledRangeTime}
-                      placeholder={[this.t("start_date_text.message"),this.t("end_date_text.message")]}
+                      placeholder={[
+                        this.t("start_date_text.message"),
+                        this.t("end_date_text.message"),
+                      ]}
                       onChange={this.changeDate}
                       allowClear={false}
                       value={[this.state.fromDate, this.state.toDate]}
@@ -824,6 +973,75 @@ class History extends Component {
                     />
                   </Datediv>
                   {this.state.activeKey === "1" && (
+                    <div>
+                      <EXPButton
+                        onClick={this.resetFilters}
+                        className="reset_btn"
+                      >
+                        {t("reset_btn.message")}
+                      </EXPButton>
+                      {this.state.csvTradeFields !== undefined ? (
+                        this.state.csvTradeFields.length > 0 &&
+                          this.state.csvTradeFields !== null ? (
+                            <>
+                              <CSVLink
+                                ref={this.exportCsvEle}
+                                filename="tradereportfile.csv"
+                                data={this.state.csvTradeFields}
+                                headers={this.state.csvHeadersTrade}
+                              ></CSVLink>
+                              <EXPButton onClick={this.onExportCSV}>
+                                {t("export_btn.message")}
+                              </EXPButton>
+                            </>
+                          ) : (
+                            ""
+                          )
+                      ) : (
+                          ""
+                        )}
+                    </div>
+                  )}
+                  {this.state.activeKey === "2" && (
+                    <div>
+                      <EXPButton
+                        onClick={this.resetFilters}
+                        className="reset_btn"
+                      >
+                        {t("reset_btn.message")}
+                      </EXPButton>
+                      {this.state.csvSimplexFields !== undefined ? (
+                        this.state.csvSimplexFields.length > 0 &&
+                          this.state.csvSimplexFields !== null ? (
+                            // <EXPButton>
+                            //   <CSVLink
+                            //     filename="simplexreportfile.csv"
+                            //     data={this.state.csvSimplexFields}
+                            //     headers={this.state.csvHeadersSimplex}
+                            //   >
+                            //     {t("export_btn.message")}
+                            //   </CSVLink>
+                            // </EXPButton>
+                            <>
+                              <CSVLink
+                                ref={this.exportCsvEle}
+                                filename="simplexreportfile.csv"
+                                data={this.state.csvSimplexFields}
+                                headers={this.state.csvHeadersSimplex}
+                              ></CSVLink>
+                              <EXPButton onClick={this.onExportCSV}>
+                                {t("export_btn.message")}
+                              </EXPButton>
+                            </>
+                          ) : (
+                            ""
+                          )
+                      ) : (
+                          ""
+                        )}
+                    </div>
+                  )}
+                  {this.state.activeKey === "3" && (
                     <div>
                       <EXPButton
                         onClick={this.resetFilters}
@@ -843,80 +1061,25 @@ class History extends Component {
                             </CSVLink>
                           </EXPButton>
                         ) : (
-                          ""
-                        )
+                            ""
+                          )
                       ) : (
-                        ""
-                      )}
-                    </div>
-                  )}
-                  {this.state.activeKey === "2" && (
-                    <div>
-                      <EXPButton
-                        onClick={this.resetFilters}
-                        className="reset_btn"
-                      >
-                        {t("reset_btn.message")}
-                      </EXPButton>
-                      {this.state.csvSimplexFields !== undefined ? (
-                        this.state.csvSimplexFields.length > 0 &&
-                        this.state.csvSimplexFields !== null ? (
-                          <EXPButton>
-                            <CSVLink
-                              filename="simplexreportfile.csv"
-                              data={this.state.csvSimplexFields}
-                              headers={this.state.csvHeadersSimplex}
-                            >
-                              {t("export_btn.message")}
-                            </CSVLink>
-                          </EXPButton>
-                        ) : (
                           ""
-                        )
-                      ) : (
-                        ""
-                      )}
-                    </div>
-                  )}
-                  {this.state.activeKey === "3" && (
-                    <div>
-                      <EXPButton
-                        onClick={this.resetFilters}
-                        className="reset_btn"
-                      >
-                        RESET
-                      </EXPButton>
-                      {this.state.csvTradeFields !== undefined ? (
-                        this.state.csvTradeFields.length > 0 ? (
-                          <EXPButton>
-                            <CSVLink
-                              filename="tradereportfile.csv"
-                              data={this.state.csvTradeFields}
-                              headers={this.state.csvHeadersTrade}
-                            >
-                              EXPORT
-                            </CSVLink>
-                          </EXPButton>
-                        ) : (
-                          ""
-                        )
-                      ) : (
-                        ""
-                      )}
+                        )}
                     </div>
                   )}
                 </Filter>
                 {this.state.activeKey === "2" ? (
                   ""
                 ) : (
-                  <FilterDivSelection>
-                    <CheckboxGroupS
-                      options={options}
-                      value={this.state.checkedGroupValue}
-                      onChange={this.onChangeCheck}
-                    />
-                  </FilterDivSelection>
-                )}
+                    <FilterDivSelection>
+                      <CheckboxGroupS
+                        options={options}
+                        value={this.state.checkedGroupValue}
+                        onChange={this.onChangeCheck}
+                      />
+                    </FilterDivSelection>
+                  )}
               </HeadHis>
               <HisWrap>
                 <Tabs activeKey={this.state.activeKey} onChange={this.callback}>
@@ -956,10 +1119,10 @@ class History extends Component {
                                   .format(
                                     `${self.props.profileData.date_format} HH:mm:ss`
                                   );
-                                var fees_total = (
+                                var fees_total = precision(
                                   parseFloat(temps.faldax_fees) +
                                   parseFloat(temps.network_fees)
-                                ).toFixed(8);
+                                );
                                 var coin =
                                   temps.side == "Buy"
                                     ? temps.currency
@@ -973,17 +1136,15 @@ class History extends Component {
                                 //   8
                                 // );
                                 if (temps.side === "Sell") {
-                                  var fill_price = parseFloat(
+                                  var fill_price = precision(
                                     temps.buy_currency_amount
-                                  ).toFixed(8);
+                                  );
                                 } else {
-                                  var fill_price = parseFloat(
+                                  var fill_price = precision(
                                     temps.sell_currency_amount
-                                  ).toFixed(8);
+                                  );
                                 }
-                                var amount = parseFloat(temps.quantity).toFixed(
-                                  8
-                                );
+                                var amount = precision(temps.quantity);
                                 var str = temps.order_status;
                                 var status =
                                   str.charAt(0).toUpperCase() + str.slice(1);
@@ -1026,7 +1187,109 @@ class History extends Component {
                         )}
                       </HisTable>
                     </Tablediv>
-                  </TabPane>  */}
+                  </TabPane> */}
+                  <TabPane tab={this.t("trade:trade_head.message")} key="1">
+                    <Tablediv>
+                      <HisTable responsive striped condensed>
+                        <thead>
+                          <tr>
+                            <th>
+                              {this.t("settings:table_head_coin.message")}
+                            </th>
+                            <th>{this.t("wallet:date_text.message")}</th>
+                            <th>
+                              {this.t("history:filled_text.message")}{" "}
+                              {this.t("history:price_text.message")}
+                            </th>
+                            <th>{this.t("wallet:amount_text.message")}</th>
+                            <th>{this.t("history:side_text.message")}</th>
+                            <th>{this.t("trade:order_type_text.message")}</th>
+                            <th>{this.t("trade:limit_price_text.message")}</th>
+                            <th>{this.t("trade:stop_price_text.message")}</th>
+                          </tr>
+                        </thead>
+                        {/* {console.log(this.state.historyTradeData)} */}
+                        {this.state.historyTradeData !== undefined ? (
+                          this.state.historyTradeData.length > 0 ? (
+                            <tbody>
+                              {this.state.historyTradeData.map(function (
+                                temps
+                              ) {
+                                var date = moment
+                                  .utc(temps.created_at)
+                                  .local()
+                                  .format(
+                                    `${self.props.profileData.date_format} HH:mm:ss`
+                                  );
+                                var side =
+                                  Number(temps.user_id) ===
+                                    self.props.profileData.id
+                                    ? temps.side
+                                    : temps.side === "Buy"
+                                      ? "Sell"
+                                      : "Buy";
+
+                                var limit_price =
+                                  temps.order_type != "Market"
+                                    ? precision(temps.limit_price)
+                                    : 0.0;
+                                var stop_price =
+                                  temps.order_type == "StopLimit"
+                                    ? precision(temps.stop_price)
+                                    : 0.0;
+
+                                console.log(self.props.profileData.id);
+                                return (
+                                  <tr>
+                                    <td>{temps.symbol}</td>
+                                    <td>{date}</td>
+                                    <td>{temps.fill_price}</td>
+                                    <td>{temps.quantity}</td>
+                                    <td
+                                      className={
+                                        side == "Buy" ? "green" : "red"
+                                      }
+                                    >
+                                      {side}
+                                    </td>
+                                    <td>{temps.order_type}</td>
+                                    <td>{limit_price}</td>
+                                    <td>{stop_price}</td>
+                                  </tr>
+                                );
+                              })}
+                            </tbody>
+                          ) : (
+                              <NDF>
+                                <tr>
+                                  <td colSpan="8">
+                                    {t("support:no_data_found.message")}
+                                  </td>
+                                </tr>
+                              </NDF>
+                            )
+                        ) : (
+                            ""
+                          )}
+                      </HisTable>
+                    </Tablediv>
+                    <PagDiv>
+                      {tradeCount > 0 ? (
+                        <PaginationS
+                          className="ant-users-pagination"
+                          onChange={this.handlePagination.bind(this)}
+                          pageSize={limit}
+                          current={page}
+                          total={tradeCount}
+                          showSizeChanger
+                          onShowSizeChange={this.changePaginationSize}
+                          pageSizeOptions={pageSizeOptions}
+                        />
+                      ) : (
+                          ""
+                        )}
+                    </PagDiv>
+                  </TabPane>
                   <TabPane
                     tab={this.t(
                       "header:navbar_sub_menu_conversation_credit_card.message"
@@ -1065,7 +1328,7 @@ class History extends Component {
                         {this.state.historySimplexData !== undefined ? (
                           this.state.historySimplexData.length > 0 ? (
                             <tbody>
-                              {this.state.historySimplexData.map(function(
+                              {this.state.historySimplexData.map(function (
                                 temps
                               ) {
                                 var date = moment
@@ -1076,11 +1339,11 @@ class History extends Component {
                                   );
                                 var side =
                                   Number(temps.user_id) ===
-                                  self.props.profileData.id
+                                    self.props.profileData.id
                                     ? temps.side
                                     : temps.side === "Buy"
-                                    ? t("sell_text.message")
-                                    : t("buy_text.message");
+                                      ? t("sell_text.message")
+                                      : t("buy_text.message");
                                 if (temps.simplex_payment_status === 1) {
                                   var simplex_payment_status = "Under Approval";
                                 }
@@ -1090,6 +1353,8 @@ class History extends Component {
                                 if (temps.simplex_payment_status === 3) {
                                   var simplex_payment_status = "Cancelled";
                                 }
+                                let url;
+                                url = "https://payment-status.simplex.com/#/payment/" + temps.payment_id;
                                 return (
                                   <tr>
                                     <td>{temps.symbol}</td>
@@ -1097,106 +1362,66 @@ class History extends Component {
                                     <td>{temps.fill_price}</td>
                                     <td>{temps.quantity}</td>
                                     <td>{temps.address}</td>
-                                    <td>{temps.payment_id}</td>
+                                    <td><a target="_blank" href={url}>
+                                      {temps.payment_id}
+                                    </a></td>
                                     <td>{temps.quote_id}</td>
                                     <td>
                                       {simplex_payment_status ==
                                         "Under Approval" && (
-                                        <span className="order-inapproval">
-                                          {simplex_payment_status}
-                                        </span>
-                                      )}
+                                          <span className="order-inapproval">
+                                            {self.t(
+                                              "under_approval_text.message"
+                                            )}
+                                          </span>
+                                        )}
                                       {simplex_payment_status == "Approved" && (
                                         <span className="order-sucess">
-                                          {simplex_payment_status}
+                                          {self.t("approved_text.message")}
                                         </span>
                                       )}
                                       {simplex_payment_status ==
                                         "Cancelled" && (
-                                        <span className="order-cancelled">
-                                          {simplex_payment_status}
-                                        </span>
-                                      )}
+                                          <span className="order-cancelled">
+                                            {self.t("cancelled_text.message")}
+                                          </span>
+                                        )}
                                     </td>
                                   </tr>
                                 );
                               })}
                             </tbody>
                           ) : (
-                            <NDF>
-                              <tr>
-                                <td colSpan="8">
-                                  {t("support:no_data_found.message")}
-                                </td>
-                              </tr>
-                            </NDF>
-                          )
+                              <NDF>
+                                <tr>
+                                  <td colSpan="8">
+                                    {t("support:no_data_found.message")}
+                                  </td>
+                                </tr>
+                              </NDF>
+                            )
                         ) : (
-                          ""
-                        )}
+                            ""
+                          )}
                       </HisTable>
                     </Tablediv>
+                    <PagDiv>
+                      {tradeCount > 0 ? (
+                        <PaginationS
+                          className="ant-users-pagination"
+                          onChange={this.handlePagination.bind(this)}
+                          pageSize={limit}
+                          current={page}
+                          total={tradeCount}
+                          showSizeChanger
+                          onShowSizeChange={this.changePaginationSize}
+                          pageSizeOptions={pageSizeOptions}
+                        />
+                      ) : (
+                          ""
+                        )}
+                    </PagDiv>
                   </TabPane>
-                  {/* <TabPane tab="Trade" key="3">
-                    <Tablediv>
-                      <HisTable responsive striped condensed>
-                        <thead>
-                          <tr>
-                            <th>Coin</th>
-                            <th>Date</th>
-                            <th>Filled Price</th>
-                            <th>Amount</th>
-                            <th>Wallet Address</th>
-                            <th>Payment Id</th>
-                            <th>Quote Id</th>
-                            <th>Payment Status</th>
-                          </tr>
-                        </thead>
-                        {this.state.historyTradeData !== undefined ? (
-                          this.state.historyTradeData.length > 0 ? (
-                            <tbody>
-                              {this.state.historyTradeData.map(function(temps) {
-                                var date = moment
-                                  .utc(temps.created_at)
-                                  .local()
-                                  .format(
-                                    `${self.props.profileData.date_format} HH:mm:ss`
-                                  );
-                                var side =
-                                  Number(temps.user_id) ===
-                                  self.props.profileData.id
-                                    ? temps.side
-                                    : temps.side === "Buy"
-                                    ? "Sell"
-                                    : "Buy";
-
-                                return (
-                                  <tr>
-                                    <td>{temps.symbol}</td>
-                                    <td>{date}</td>
-                                    <td>{temps.fill_price}</td>
-                                    <td>{temps.quantity}</td>
-                                    <td>{temps.address}</td>
-                                    <td>{temps.payment_id}</td>
-                                    <td>{temps.quote_id}</td>
-                                    <td>{temps.symbol}</td>
-                                  </tr>
-                                );
-                              })}
-                            </tbody>
-                          ) : (
-                            <NDF>
-                              <tr>
-                                <td colSpan="8">No Data Found</td>
-                              </tr>
-                            </NDF>
-                          )
-                        ) : (
-                          ""
-                        )}
-                      </HisTable>
-                    </Tablediv>
-                  </TabPane> */}
                 </Tabs>
               </HisWrap>
             </ContainerContact>
@@ -1208,8 +1433,9 @@ class History extends Component {
     );
   }
 }
-const mapDispatchToProps = dispatch => ({
-  LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
+const mapDispatchToProps = (dispatch) => ({
+  LogoutUser: (isLoggedIn, user_id) =>
+    dispatch(LogoutUser(isLoggedIn, user_id)),
 });
 function mapStateToProps(state) {
   return {
@@ -1219,7 +1445,7 @@ function mapStateToProps(state) {
     profileData:
       state.simpleReducer.profileDetails !== undefined
         ? state.simpleReducer.profileDetails.data[0]
-        : {}
+        : {},
   };
 }
 
@@ -1230,5 +1456,51 @@ export default translate([
   "security_tab",
   "footer",
   "header",
-  "support"
+  "support",
+  "trade",
 ])(connect(mapStateToProps, mapDispatchToProps)(History));
+function precision(x) {
+  if (Math.abs(x) < 1.0) {
+    var e = parseInt(x.toString().split("e-")[1]);
+    if (e) {
+      x *= Math.pow(10, e - 1);
+      x = "0." + new Array(e).join("0") + x.toString().substring(2);
+    }
+  } else {
+    var e = parseInt(x.toString().split("+")[1]);
+    if (e > 20) {
+      e -= 20;
+      x /= Math.pow(10, e);
+      x += new Array(e + 1).join("0");
+    }
+  }
+  if (x.toString().split(".")[1] && x.toString().split(".")[1].length > 8) {
+    {
+      x = parseFloat(x).toFixed(8);
+      if (
+        x.toString()[x.toString().length - 1] == "0" &&
+        (x.toString().split(".")[1][0] != "0" ||
+          x.toString().split(".")[1][5] != "0")
+      ) {
+        return parseFloat(x);
+      } else if (x.toString().split(".")[1][7] == "0") {
+        if (x.toString().split(".")[1][6] == "0") {
+          if (x.toString().split(".")[1][5] == "0") {
+            if (x.toString().split(".")[1][4] == "0") {
+              if (x.toString().split(".")[1][3] == "0") {
+                if (x.toString().split(".")[1][2] == "0") {
+                  if (x.toString().split(".")[1][1] == "0") {
+                    if (x.toString().split(".")[1][0] == "0") {
+                      return parseFloat(x).toFixed(0);
+                    } else return parseFloat(x).toFixed(1);
+                  } else return parseFloat(x).toFixed(2);
+                } else return parseFloat(x).toFixed(3);
+              } else return parseFloat(x).toFixed(4);
+            } else return parseFloat(x).toFixed(5);
+          } else return parseFloat(x).toFixed(6);
+        } else return parseFloat(x).toFixed(7);
+      } else return parseFloat(x).toFixed(8);
+    }
+  }
+  return x;
+}

@@ -29,14 +29,14 @@ import {
   BtnApply,
   FileSelectText,
   DropzoneStyle,
-  IconS
+  IconS,
 } from "STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle";
 import { globalVariables } from "Globals.js";
 
 let { API_URL, GOOGLE_SITE_KEY } = globalVariables;
 
 export const ContainerContact = styled(Container)`
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#041422" : "white"};
   border-radius: 5px;
   padding-right: 30px;
@@ -52,7 +52,7 @@ const CareerTitle = styled.span`
   font-weight: bold;
   display: block;
   text-align: center;
-  color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   &:before {
     content: "";
     width: calc(50% - 140px);
@@ -95,6 +95,11 @@ export const SupportText = styled.span`
   font-family: Open Sans;
   color: rgb(128, 128, 128);
   font-style: italic;
+  &.tier_support_text {
+    display: inherit;
+    width: 100%;
+    justify-content: center;
+  }
 `;
 
 class ApplyJob extends Component {
@@ -119,8 +124,8 @@ class ApplyJob extends Component {
         coverLimit: null,
         resumeLimit: null,
         recaptchaToken: null,
-        loadCaptch: false
-      }
+        loadCaptch: false,
+      },
     };
     this._onChangeFields = this._onChangeFields.bind(this);
     this.onLoadRecaptcha = this.onLoadRecaptcha.bind(this);
@@ -139,7 +144,7 @@ class ApplyJob extends Component {
             return false;
           }
           return true;
-        }
+        },
       },
       resumeValid: {
         // name the rule
@@ -151,7 +156,7 @@ class ApplyJob extends Component {
             return false;
           }
           return true;
-        }
+        },
       },
       coverValid: {
         // name the rule
@@ -163,7 +168,7 @@ class ApplyJob extends Component {
             return false;
           }
           return true;
-        }
+        },
       },
       validEmail: {
         // name the rule
@@ -174,7 +179,7 @@ class ApplyJob extends Component {
           var re = /^[-a-zA-Z0-9~!$%^&*_=+}{\'?]+(\.[-a-zA-Z0-9~!$%^&*_=+}{\'?]+)*@([a-zA-Z0-9_][-a-zA-Z0-9_]*(\.[-a-zA-Z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|AERO|ARPA|BIZ|COM|COOP|EDU|GOV|INFO|INT|MIL|MUSEUM|NAME|NET|ORG|PRO|TRAVEL|MOBI|[a-zA-Z][a-zA-Z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/;
           var bool = re.test(String(val).toLowerCase());
           return bool;
-        }
+        },
       },
       coverLimit: {
         message: this.t("general_3:file_size_3_mb.message"), // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
@@ -185,7 +190,7 @@ class ApplyJob extends Component {
             return false;
           }
           return true;
-        }
+        },
       },
       resumeLimit: {
         message: this.t("general_3:file_size_3_mb.message"), // give a message that will display when there is an error. :attribute will be replaced by the name you supply in calling it.
@@ -196,7 +201,7 @@ class ApplyJob extends Component {
             return false;
           }
           return true;
-        }
+        },
       },
       websiteurl: {
         // name the rule
@@ -209,7 +214,7 @@ class ApplyJob extends Component {
             var bool = re.test(String(val).toLowerCase());
             return bool;
           }
-        }
+        },
       },
       linkedinurl: {
         // name the rule
@@ -222,8 +227,8 @@ class ApplyJob extends Component {
             var bool = re.test(String(val).toLowerCase());
             return bool;
           }
-        }
-      }
+        },
+      },
     });
   }
 
@@ -255,7 +260,7 @@ class ApplyJob extends Component {
       this.setState({
         flag_drop: flag,
         resumeLimit: flagLimit,
-        fields: { ...this.state.fields, resume: files[0] }
+        fields: { ...this.state.fields, resume: files[0] },
       });
     } else {
       let flag = false,
@@ -269,7 +274,7 @@ class ApplyJob extends Component {
       this.setState({
         cover_flag: flag,
         coverLimit: flagLimit,
-        fields: { ...this.state.fields, cover_letter: files[0] }
+        fields: { ...this.state.fields, cover_letter: files[0] },
       });
     }
   }
@@ -309,7 +314,7 @@ class ApplyJob extends Component {
     notification[type]({
       message: head,
       description: desc,
-      duration: 5
+      duration: 5,
     });
   }
 
@@ -347,13 +352,13 @@ class ApplyJob extends Component {
         fetch(API_URL + "/apply-job", {
           method: "post",
           headers: {
-            "Accept-Language": localStorage["i18nextLng"], 
-            'Content-Type': 'application/json'
+            "Accept-Language": localStorage["i18nextLng"],
+            "Content-Type": "application/json",
           },
-          body: formdata
+          body: formdata,
         })
-          .then(response => response.json())
-          .then(responseData => {
+          .then((response) => response.json())
+          .then((responseData) => {
             this.openNotificationWithIcon(
               "success",
               this.t("general_3:job_applied_text.message"),
@@ -375,7 +380,7 @@ class ApplyJob extends Component {
                 flag_drop: null,
                 cover_flag: null,
                 loader: false,
-                recaptchaToken: null
+                recaptchaToken: null,
               },
               () => {
                 this.validator.hideMessages();
@@ -386,7 +391,7 @@ class ApplyJob extends Component {
               }
             );
           })
-          .catch(error => {});
+          .catch((error) => {});
       } else {
         this.openNotificationWithIcon(
           "error",
@@ -410,11 +415,11 @@ class ApplyJob extends Component {
     loadReCaptcha(GOOGLE_SITE_KEY);
     this.setState(
       {
-        loadCaptch: false
+        loadCaptch: false,
       },
       () => {
         this.setState({
-          loadCaptch: true
+          loadCaptch: true,
         });
       }
     );
@@ -439,7 +444,7 @@ class ApplyJob extends Component {
     // Here you will get the final recaptchaToken!!!
     // console.log(recaptchaToken, "<= your recaptcha token");
     this.setState({
-      recaptchaToken
+      recaptchaToken,
     });
   }
   render() {
@@ -499,7 +504,7 @@ class ApplyJob extends Component {
                                 "edit_profile_titles:subhead_personal_form_first_name.message"
                               ) +
                               " " +
-                              this.t("general_3:validate_not_gt_30_ch.message")
+                              this.t("general_3:validate_not_gt_30_ch.message"),
                           }
                         )}
                       </LeftWing>
@@ -540,7 +545,7 @@ class ApplyJob extends Component {
                                 "edit_profile_titles:subhead_personal_form_last_name.message"
                               ) +
                               " " +
-                              this.t("general_3:validate_not_gt_30_ch.message")
+                              this.t("general_3:validate_not_gt_30_ch.message"),
                           }
                         )}
                       </RightWing>
@@ -592,7 +597,7 @@ class ApplyJob extends Component {
                               max:
                                 this.t("apply_job:phone_label.message") +
                                 " " +
-                                this.t("general_3:validate_not_gt_15.message")
+                                this.t("general_3:validate_not_gt_15.message"),
                             }
                           )}
                         </RightWing>
@@ -621,7 +626,7 @@ class ApplyJob extends Component {
                                 "security_tab:subhead_title_email.message"
                               ) +
                               " " +
-                              this.t("validations:field_is_required.message")
+                              this.t("validations:field_is_required.message"),
                           }
                         )}
                       </Col>
@@ -745,7 +750,7 @@ class ApplyJob extends Component {
                             required:
                               this.t("apply_job:linkedin_label.message") +
                               " " +
-                              this.t("validations:field_is_required.message")
+                              this.t("validations:field_is_required.message"),
                           }
                         )}
                       </Col>
@@ -802,5 +807,5 @@ export default translate([
   "login_page",
   "apply_job",
   "security_tab",
-  "edit_profile_titles"
+  "edit_profile_titles",
 ])(ApplyJob);

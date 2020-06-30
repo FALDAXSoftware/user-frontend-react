@@ -43,8 +43,8 @@ class SimplexExchange extends React.Component {
     super(props);
     this.state = {
       loader: false,
-      minCurrency: "50",
-      maxCurrency: "20000",
+      minCurrency: "",
+      maxCurrency: "",
       cryptoList: [],
       response: "",
       destination_wallet: "",
@@ -67,7 +67,7 @@ class SimplexExchange extends React.Component {
       minCurrencyValid: {
         message: `${this.t("general_3:amount_gte_validation.message")} ${
           this.state.minCurrency
-        }`,
+          }`,
         rule: (val, params, validator) => {
           if (parseFloat(val) >= parseFloat(this.state.minCurrency)) {
             return true;
@@ -80,7 +80,7 @@ class SimplexExchange extends React.Component {
       maxCurrencyValid: {
         message: `${this.t("general_3:amount_lte_validation.message")} ${
           this.state.maxCurrency
-        }`,
+          }`,
         rule: (val, params, validator) => {
           if (parseFloat(val) > parseFloat(this.state.maxCurrency)) {
             return false;
@@ -127,33 +127,41 @@ class SimplexExchange extends React.Component {
   componentWillMount() {
     if (
       this.props.location.state === undefined ||
-      this.props.location.state.currencyToPay === "" ||
-      this.props.location.state.currencyToPay === null
+      this.props.location.state.flag === "" ||
+      this.props.location.state.flag === null
     ) {
-      this.setState({
-        currencyToPay: null,
-        currencyToGet: null,
-        crypto: "XRP",
-        currency: "USD",
-        quote_id: null,
-        address: null,
-        cryptoCode: null,
-        wallet_details: null,
-        coin_name: null,
-      });
-      this.props.history.push("/simplex");
+      this.props.history.push("/conversion");
     } else {
-      this.setState({
-        currencyToPay: this.props.location.state.currencyToPay,
-        currencyToGet: this.props.location.state.currencyToGet,
-        crypto: this.props.location.state.crypto,
-        currency: this.props.location.state.currency,
-        quote_id: this.props.location.state.id,
-        address: this.props.location.state.wallet_address,
-        cryptoCode: this.props.location.state.crypto_code,
-        wallet_details: this.props.location.state.wallet_address,
-        coin_name: this.props.location.state.coin_name,
-      });
+      if (
+        this.props.location.state === undefined ||
+        this.props.location.state.currencyToPay === "" ||
+        this.props.location.state.currencyToPay === null
+      ) {
+        this.setState({
+          currencyToPay: null,
+          currencyToGet: null,
+          crypto: "XRP",
+          currency: "USD",
+          quote_id: null,
+          address: null,
+          cryptoCode: null,
+          wallet_details: null,
+          coin_name: null,
+        });
+        this.props.history.push("/simplex");
+      } else {
+        this.setState({
+          currencyToPay: this.props.location.state.currencyToPay,
+          currencyToGet: this.props.location.state.currencyToGet,
+          crypto: this.props.location.state.crypto,
+          currency: this.props.location.state.currency,
+          quote_id: this.props.location.state.id,
+          address: this.props.location.state.wallet_address,
+          cryptoCode: this.props.location.state.crypto_code,
+          wallet_details: this.props.location.state.wallet_address,
+          coin_name: this.props.location.state.coin_name,
+        });
+      }
     }
   }
 
@@ -180,9 +188,20 @@ class SimplexExchange extends React.Component {
       this.setState({ loader: true });
       let result = await APIUtility.getCrypto(this.props.isLoggedIn);
       if (result.status == 200) {
+        var cryptoData = result.object.fiat,
+          minLimit,
+          maxLimit;
+        for (var i = 0; i < cryptoData.length; i++) {
+          if (cryptoData[i].coin == this.state.currency) {
+            minLimit = cryptoData[i].min_limit;
+            maxLimit = cryptoData[i].max_limit;
+          }
+        }
         this.setState({
           currencyList: result.object.fiat,
           cryptoList: result.object.coinList,
+          minCurrency: minLimit,
+          maxCurrency: maxLimit,
         });
       }
     } catch (error) {
@@ -465,10 +484,10 @@ class SimplexExchange extends React.Component {
     this.setState(
       {
         currency: value,
-        showTFAModal: false,
         minCurrency: minLimit,
         maxCurrency: maxLimit,
         currencyToPay: minLimit,
+        showTFAModal: false,
       },
       () => {
         this.calculateDigitalCurrency();
@@ -549,6 +568,11 @@ class SimplexExchange extends React.Component {
               // console.log(this.state.response);
               document.getElementById("frm_sumbit").click();
               // window.location = this.state.response.action;
+            } else if (responseData.status === 202) {
+              this.setState({
+                showTFAModal: true,
+                // loader: false
+              });
             } else {
               // this.setState({
               //   loader: false
@@ -568,7 +592,7 @@ class SimplexExchange extends React.Component {
               // showTFAModal: false
             });
           })
-          .catch((error) => {});
+          .catch((error) => { });
       } else {
         this.setState({
           loader: true,
@@ -638,7 +662,7 @@ class SimplexExchange extends React.Component {
               // showTFAModal: false
             });
           })
-          .catch((error) => {});
+          .catch((error) => { });
       }
     } else {
       this.validator1.showMessages();
@@ -734,14 +758,15 @@ class SimplexExchange extends React.Component {
                       placeholder="0"
                       readOnly
                       value={this.state.currencyToGet}
-                      // onChange={this.handleCurrencyGetChange}
+                    // onChange={this.handleCurrencyGetChange}
                     />
                   </Col>
                   <Col xs={12} sm={12} md={8} className="currency-display">
                     {this.state.cryptoList && this.state.cryptoList.length > 0 && (
                       <ConversionDropDown
                         showSearch
-                        defaultValue={this.state.crypto}
+                        // defaultValue={this.state.crypto}
+                        defaultValue={this.state.cryptoList[0].coin}
                         onChange={this.handleCryptoChange}
                       >
                         {this.state.cryptoList.map((element, index) => {
@@ -815,40 +840,40 @@ class SimplexExchange extends React.Component {
                     </Row>
                   </div>
                 ) : (
-                  <div>
-                    <BorderRow>
-                      <Col>
-                        <ConversionInput
-                          className="address_field"
-                          type="text"
-                          placeholder={this.t("wallet:address_text.message")}
-                          value={this.state.address}
-                          // readOnly
-                          onChange={this.handleAddressChange}
-                        />
-                        {/* {this.validator1.message(
+                    <div>
+                      <BorderRow>
+                        <Col>
+                          <ConversionInput
+                            className="address_field"
+                            type="text"
+                            placeholder={this.t("wallet:address_text.message")}
+                            value={this.state.address}
+                            // readOnly
+                            onChange={this.handleAddressChange}
+                          />
+                          {/* {this.validator1.message(
                         "address",
                         this.state.address,
                         `required|alpha_num|min:15|max:120`,
                         "text-danger-validation"
                       )} */}
-                      </Col>
-                    </BorderRow>
-                    <Row>
-                      <Col>
-                        <ConversionSubmitBtn
-                          onClick={() => this.btnClicked()}
-                          type="primary"
-                          size="large"
-                          block
-                          disabled={this.state.btnDisabled}
-                        >
-                          {this.t("continue_btn.message")}
-                        </ConversionSubmitBtn>
-                      </Col>
-                    </Row>
-                  </div>
-                )}
+                        </Col>
+                      </BorderRow>
+                      <Row>
+                        <Col>
+                          <ConversionSubmitBtn
+                            onClick={() => this.btnClicked()}
+                            type="primary"
+                            size="large"
+                            block
+                            disabled={this.state.btnDisabled}
+                          >
+                            {this.t("continue_btn.message")}
+                          </ConversionSubmitBtn>
+                        </Col>
+                      </Row>
+                    </div>
+                  )}
                 {/* {this.state.address === "" ? (
                 <CreateWalletRow className="create-wallet-link">
                   <Col>

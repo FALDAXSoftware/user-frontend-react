@@ -16,7 +16,7 @@ import {
   Route,
   Switch,
   Redirect,
-  withRouter
+  withRouter,
 } from "react-router-dom";
 import HomePage from "COMPONENTS/LANDING/homepage";
 import Wallet from "COMPONENTS/LOGGEDCATEGORIES/WALLET/wallet";
@@ -25,29 +25,35 @@ import History2 from "COMPONENTS/LOGGEDCATEGORIES/HISTORY/history";
 import OpenTicket from "COMPONENTS/LANDINGCATEGORIES/open_ticket";
 import { globalVariables } from "./Globals.js";
 import { LogoutUser } from "ACTIONS/authActions";
+import MarketPage from "./COMPONENTS/LOGGEDCATEGORIES/MARKET/market_page";
 
-/* import Chart from "COMPONENTS/tradingviewchart"; */
+// import Chart from "COMPONENTS/tradingviewchart";
 import Conversion from "COMPONENTS/LOGGEDCATEGORIES/CONVERSION/conversion";
-// import ConversionDetail from "COMPONENTS/LOGGEDCATEGORIES/CONVERSION/conversion_detail";
+import ConversionDetail from "COMPONENTS/LOGGEDCATEGORIES/CONVERSION/conversion_detail";
 import TierUpgradeInfo from "./COMPONENTS/SETTINGS/tier_upgrade_information.js";
 import TierUpgradeInfoImageRequirements from "./COMPONENTS/SETTINGS/tier-upgrade-info-image-requirements.js";
 import TierIDConfirmation from "./COMPONENTS/SETTINGS/tier_id_confirmation.js";
 import Simplex from "./COMPONENTS/LOGGEDCATEGORIES/SIMPLEX/simplex.js";
 import SimplexExchange from "./COMPONENTS/LOGGEDCATEGORIES/SIMPLEX/simplex_exchange.js";
 import NotFound from "./SHARED-COMPONENTS/NotFound.js";
-// import Dashboard from "./COMPONENTS/LOGGEDCATEGORIES/DASHBOARD/dashboard.js";
-// import Trade from "./COMPONENTS/LOGGEDCATEGORIES/TRADE/trade.js";
-// import Tradingviewchart from "./COMPONENTS/tradingviewchart.js";
+import Dashboard from "./COMPONENTS/LOGGEDCATEGORIES/DASHBOARD/dashboard.js";
+import Trade from "./COMPONENTS/LOGGEDCATEGORIES/TRADE/trade.js";
+import Tradingviewchart from "./COMPONENTS/tradingviewchart.js";
+import TierOne from "./COMPONENTS/SETTINGS/TIERS/tier_one.js";
+import TierTwo from "./COMPONENTS/SETTINGS/TIERS/tier_two.js";
+import TierThree from "./COMPONENTS/SETTINGS/TIERS/tier_three.js";
+import TierFour from "./COMPONENTS/SETTINGS/TIERS/tier_four.js";
 // let { API_URL } = globalVariables;
-// const socketIOClient = require("socket.io-client");
+const socketIOClient = require("socket.io-client");
 // const sailsIOClient = require("sails.io.js");
-// let io = socketIOClient(globalVariables.SOCKET_HOST)
-
+// let io = sailsIOClient(socketIOClient);
+// io.sails.url = API_URL;
+let io = null;
 const routes = [
   {
     exact: false,
     path: "/editProfile",
-    component: Editprofile
+    component: Editprofile,
   },
   // {
   //   exact: false,
@@ -57,52 +63,58 @@ const routes = [
   {
     exact: false,
     path: "/wallet",
-    component: Wallet
+    component: Wallet,
   },
   {
     exact: false,
     path: "/walletDetails",
-    component: WalletDetails
+    component: WalletDetails,
   },
-  // {
-  //   exact: false,
-  //   path: "/trade",
-  //   component: () => <Trade io={io} />
-  // },
-  // {
-  //   exact: false,
-  //   path: "/chart",
-  //   component: () => <Tradingviewchart io={io} />
-  // },
+  {
+    exact: false,
+    path: "/market",
+    component: () => <MarketPage />,
+  },
+  {
+    exact: false,
+    path: "/trade",
+    component: () => <Trade io={io} />,
+  },
+  {
+    exact: false,
+    path: "/chart/:pair",
+    component: (props) => <Tradingviewchart io={io} />,
+  },
   {
     exact: false,
     path: "/history",
-    component: History2
+    component: History2,
   },
-  // {
-  //   exact: false,
-  //   path: "/dashboard",
-  //   component: () => <Dashboard io={io} />,
-  //   io: io
-  // },
+  {
+    exact: false,
+    path: "/dashboard",
+    component: () => <Dashboard io={io} />,
+    io: io,
+  },
   {
     exact: false,
     path: "/open-ticket",
-    component: () => <OpenTicket />
+    component: () => <OpenTicket />,
     // io: io
   },
   {
     exact: false,
     path: "/conversion",
-    component: () => <Conversion />
+    component: () => <Conversion />,
     // io: io
   },
-  // {
-  //   exact: false,
-  //   path: "/crypto-conversion",
-  //   component: () => <ConversionDetail io={io} />,
-  //   io: io
-  // },{`${globalVariables.WordpressSiteURL}/crypto-only-coming-soon`}
+  {
+    exact: false,
+    path: "/crypto-conversion",
+    component: () => <ConversionDetail io={io} />,
+    io: io,
+  },
+  // {`${globalVariables.WordpressSiteURL}/crypto-only-coming-soon`}
   // {
   //   exact: false,
   //   path: "/crypto-conversion",
@@ -116,12 +128,12 @@ const routes = [
   {
     exact: false,
     path: "/simplex",
-    component: () => <Simplex />
+    component: () => <Simplex />,
   },
   {
     exact: false,
     path: "/simplex-exchange",
-    component: () => <SimplexExchange />
+    component: () => <SimplexExchange />,
   },
   // {
   //   exact: false,
@@ -141,50 +153,46 @@ const routes = [
   //   component: () => <TokenDashboard io={io} />,
   //   io: io
   // },
-  // {
-  //   exact: false,
-  //   path: "/tier1",
-  //   component: () => <TierOne io={io} />,
-  //   io: io
-  // },
-  // {
-  //   exact: false,
-  //   path: "/tier2",
-  //   component: () => <TierTwo io={io} />,
-  //   io: io
-  // },
-  // {
-  //   exact: false,
-  //   path: "/tier3",
-  //   component: () => <TierThree io={io} />,
-  //   io: io
-  // },
-  // {
-  //   exact: false,
-  //   path: "/tier4",
-  //   component: () => <TierFour io={io} />,
-  //   io: io
-  // },
+  {
+    exact: false,
+    path: "/tier1",
+    component: () => <TierOne />,
+  },
+  {
+    exact: false,
+    path: "/tier2",
+    component: () => <TierTwo />,
+  },
+  {
+    exact: false,
+    path: "/tier3",
+    component: () => <TierThree />,
+  },
+  {
+    exact: false,
+    path: "/tier4",
+    component: () => <TierFour />,
+  },
   {
     exact: false,
     path: "/tier-upgrade-information",
-    component: () => <TierUpgradeInfo />
+    component: () => <TierUpgradeInfo />,
   },
   {
     exact: false,
     path: "/tier-image-information",
-    component: () => <TierUpgradeInfoImageRequirements />
+    component: () => <TierUpgradeInfoImageRequirements />,
   },
   {
     exact: false,
     path: "/tier-idcp-confirmation",
-    component: () => <TierIDConfirmation />
+    component: () => <TierIDConfirmation />,
   },
   {
     exact: false,
     path: "/tickets",
-    component: () => <HubspotTickets />
-  }
+    component: () => <HubspotTickets />,
+  },
   // {
   //   exact: true,
   //   path: "*",
@@ -199,8 +207,30 @@ class AppRouter extends Component {
     /* this.onAction = this._onAction.bind(this)
     this.onActive = this._onActive.bind(this) */
     this.onIdle = this._onIdle.bind(this);
+    io = socketIOClient(globalVariables.SOCKET_HOST, {
+      transportOptions: {
+        polling: {
+          extraHeaders: {
+            Authorization: "Bearer " + this.props.isLoggedIn, //ahiya header pass karide auth
+          },
+        },
+        transports: ["websocket"],
+        upgrade: false,
+      },
+    });
   }
-  componentDidMount() {}
+  componentDidMount() {
+    // console.log("^^headert", this.props.isLoggedIn);
+    // io = socketIOClient(globalVariables.SOCKET_HOST, {
+    //   transportOptions: {
+    //     polling: {
+    //       extraHeaders: {
+    //         Authorization: "Bearer " + this.props.isLoggedIn //ahiya header pass karide auth
+    //       }
+    //     }
+    //   }
+    // });
+  }
   /*   _onAction(e) {
       console.log('user did something', e)
     }
@@ -214,7 +244,7 @@ class AppRouter extends Component {
     // console.log(this.props);
     this.props.LogoutUser(this.props.isLoggedIn, {
       jwt_token: this.props.isLoggedIn,
-      user_id: this.props.profileDetails.id
+      user_id: this.props.profileDetails.id,
     });
     // console.log("user is idle", e);
     // console.log(
@@ -227,7 +257,7 @@ class AppRouter extends Component {
     return (
       <div>
         <IdleTimer
-          ref={ref => {
+          ref={(ref) => {
             this.idleTimer = ref;
           }}
           element={document}
@@ -239,7 +269,7 @@ class AppRouter extends Component {
         />
         {/* {console.log("App.js")} */}
         <Switch>
-          {routes.map(singleRoute => {
+          {routes.map((singleRoute) => {
             const { path, exact, ...otherProps } = singleRoute;
             return (
               <Route
@@ -270,7 +300,7 @@ class AppRouter extends Component {
 function mapDispatchToProps(dispatch) {
   return {
     LogoutUser: (isLoggedIn, user_id) =>
-      dispatch(LogoutUser(isLoggedIn, user_id))
+      dispatch(LogoutUser(isLoggedIn, user_id)),
   };
 }
 function mapStateToProps(state, ownProps) {
@@ -286,7 +316,7 @@ function mapStateToProps(state, ownProps) {
         ? state.simpleReducer.isLoggedIn
         : false,
     theme:
-      state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
+      state.themeReducer.theme !== undefined ? state.themeReducer.theme : "",
   };
 }
 

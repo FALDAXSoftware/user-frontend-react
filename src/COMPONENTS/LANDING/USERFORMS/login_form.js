@@ -302,7 +302,7 @@ class Login_Form extends Component {
       recaptchaToken: null,
       showBackUpInput: false,
       backupIcon: null,
-      loadCaptch: false
+      loadCaptch: false,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.IpVerify = this.IpVerify.bind(this);
@@ -315,27 +315,27 @@ class Login_Form extends Component {
   }
 
   static propTypes = {
-    form: formShape
+    form: formShape,
   };
   onLoadRecaptcha() {
     loadReCaptcha(GOOGLE_SITE_KEY);
     this.setState(
       {
-        loadCaptch: false
+        loadCaptch: false,
       },
       () => {
         this.setState({
-          loadCaptch: true
+          loadCaptch: true,
         });
       }
     );
   }
   componentDidMount() {
-    document.cookie = "isLoggedInLive=false; domain=faldax.com";
+    document.cookie = `${process.env.REACT_APP_COOKIE_NAME}=false; domain=faldax.com`;
   }
   verifyCallback(recaptchaToken) {
     this.setState({
-      recaptchaToken
+      recaptchaToken,
     });
   }
   submit = () => {
@@ -351,7 +351,7 @@ class Login_Form extends Component {
             "inline-block";
           document.querySelectorAll(".otp_msg")[0].style.display = "block";
           this.setState({
-            otp_msg: this.t("general_1:otp_required_error.message")
+            otp_msg: this.t("general_1:otp_required_error.message"),
           });
         }
       } else if (
@@ -368,7 +368,7 @@ class Login_Form extends Component {
             "inline-block";
           document.querySelectorAll(".backup_msg")[0].style.display = "block";
           this.setState({
-            backup_msg: this.t("login_page:backup_required_text.message")
+            backup_msg: this.t("login_page:backup_required_text.message"),
           });
         }
       }
@@ -433,7 +433,7 @@ class Login_Form extends Component {
               pass_msg:
                 this.t("login_page:password_text.message") +
                 " " +
-                this.t("validations:field_is_required.message")
+                this.t("validations:field_is_required.message"),
             });
           }
           if (error["email"] !== undefined) {
@@ -448,7 +448,7 @@ class Login_Form extends Component {
                 email_msg:
                   this.t("security_tab:subhead_title_email.message") +
                   " " +
-                  this.t("validations:field_is_required.message")
+                  this.t("validations:field_is_required.message"),
               });
           }
         } else {
@@ -483,7 +483,7 @@ class Login_Form extends Component {
     notification[type]({
       message: head,
       description: desc,
-      duration: 5
+      duration: 5,
     });
   }
 
@@ -511,7 +511,7 @@ class Login_Form extends Component {
             "none";
           document.querySelectorAll(".user_msg")[0].style.display = "block";
           this.setState({
-            email_msg: this.t("validations:invalid_email_error.message")
+            email_msg: this.t("validations:invalid_email_error.message"),
           });
         }
       } else {
@@ -524,7 +524,7 @@ class Login_Form extends Component {
           email_msg:
             this.t("sign_up:email_address_text.message") +
             " " +
-            this.t("validations:field_is_required.message")
+            this.t("validations:field_is_required.message"),
         });
       }
     } else if (field === "password") {
@@ -544,7 +544,7 @@ class Login_Form extends Component {
           pass_msg:
             this.t("login_page:password_text.message") +
             " " +
-            this.t("validations:field_is_required.message")
+            this.t("validations:field_is_required.message"),
         });
       }
     } else if (field === "otp") {
@@ -564,7 +564,7 @@ class Login_Form extends Component {
             "inline-block";
           document.querySelectorAll(".otp_msg")[0].style.display = "block";
           this.setState({
-            otp_msg: this.t("validations:otp_error.message")
+            otp_msg: this.t("validations:otp_error.message"),
           });
         }
       } else {
@@ -573,7 +573,7 @@ class Login_Form extends Component {
         document.querySelector("#otp_icon_fail").style.display = "inline-block";
         document.querySelectorAll(".otp_msg")[0].style.display = "block";
         this.setState({
-          otp_msg: this.t("general_1:otp_required_error.message")
+          otp_msg: this.t("general_1:otp_required_error.message"),
         });
       }
     } else if (field === "twofactor_backup_code") {
@@ -594,7 +594,7 @@ class Login_Form extends Component {
             "inline-block";
           document.querySelectorAll(".backup_msg")[0].style.display = "block";
           this.setState({
-            backup_msg: this.t("login_page:backup_alpha_error_text.message")
+            backup_msg: this.t("login_page:backup_alpha_error_text.message"),
           });
         }
       } else {
@@ -604,7 +604,7 @@ class Login_Form extends Component {
           "inline-block";
         document.querySelectorAll(".backup_msg")[0].style.display = "block";
         this.setState({
-          backup_msg: this.t("login_page:backup_required_text.message")
+          backup_msg: this.t("login_page:backup_required_text.message"),
         });
       }
     }
@@ -626,7 +626,7 @@ class Login_Form extends Component {
   }
 
   componentDidMount() {
-    document.cookie = "isLoggedInPreprod=false; domain=faldax.com";
+    document.cookie = `${process.env.REACT_APP_COOKIE_NAME}=false; domain=faldax.com`;
 
     if (!this.props.isLoggedIn) {
       loadReCaptcha(GOOGLE_SITE_KEY);
@@ -658,19 +658,20 @@ class Login_Form extends Component {
     if (props.errorStatus) {
       if (props.errorStatus.status == 200) {
         this.props.i18n.changeLanguage(props.errorStatus.user.default_language);
-        this.openNotificationWithIcon(
-          "success",
-          this.t("validations:success_text.message"),
-          props.errorStatus.message
-        );
         // console.log("thisd^^^", props.errorStatus.user.is_kyc_done);
         if (this.state.verify == true) {
+          // this.openNotificationWithIcon(
+          //   "success",
+          //   this.t("validations:success_text.message"),
+          //   props.errorStatus.message
+          // );
+          this.setState({ loader: false, verify: true });
+        } else {
           this.openNotificationWithIcon(
             "success",
-            this.t("login_page:login_successful_text.message"),
+            this.t("validations:success_text.message"),
             props.errorStatus.message
           );
-          this.setState({ loader: false, verify: true });
         }
       } else if (props.errorStatus.status == 201) {
         this.setState(
@@ -713,17 +714,18 @@ class Login_Form extends Component {
       method: "post",
       headers: {
         Authorization: "Bearer " + this.propsisLoggedIn,
-        "Accept-Language": localStorage["i18nextLng"]
+        "Accept-Language": localStorage["i18nextLng"],
       },
-      body: JSON.stringify(queryObj)
+      body: JSON.stringify(queryObj),
     })
-      .then(response => response.json())
-      .then(responseData => {
+      .then((response) => response.json())
+      .then((responseData) => {
         this.setState({ loader: false });
         if (responseData.status === 200) {
-          responseData.message = "";
-          this.props.loginAction(responseData);
-          this.setState({ verify: true });
+          // responseData.message = "";
+          this.setState({ verify: true }, () => {
+            this.props.loginAction(responseData);
+          });
           this.openNotificationWithIcon(
             "success",
             this.t("login_page:verified_text.message"),
@@ -745,7 +747,7 @@ class Login_Form extends Component {
           );
         }
       })
-      .catch(error => {
+      .catch((error) => {
         /* console.log(error) */
       });
   }
@@ -763,12 +765,12 @@ class Login_Form extends Component {
       method: "post",
       headers: {
         Authorization: "Bearer " + this.propsisLoggedIn,
-        "Accept-Language": localStorage["i18nextLng"]
+        "Accept-Language": localStorage["i18nextLng"],
       },
-      body: JSON.stringify(queryObj)
+      body: JSON.stringify(queryObj),
     })
-      .then(response => response.json())
-      .then(responseData => {
+      .then((response) => response.json())
+      .then((responseData) => {
         this.setState({ loader: false });
         if (responseData.status === 200) {
           this.openNotificationWithIcon(
@@ -783,7 +785,7 @@ class Login_Form extends Component {
             responseData.err
           );
       })
-      .catch(error => {
+      .catch((error) => {
         /* console.log(error) */
       });
   }
@@ -801,12 +803,12 @@ class Login_Form extends Component {
       method: "post",
       headers: {
         Authorization: "Bearer " + this.propsisLoggedIn,
-        "Accept-Language": localStorage["i18nextLng"]
+        "Accept-Language": localStorage["i18nextLng"],
       },
-      body: JSON.stringify(queryObj)
+      body: JSON.stringify(queryObj),
     })
-      .then(response => response.json())
-      .then(responseData => {
+      .then((response) => response.json())
+      .then((responseData) => {
         this.setState({ loader: false });
         if (responseData.status === 200) {
           this.setState({ verify: true }, () => {
@@ -820,7 +822,7 @@ class Login_Form extends Component {
             responseData.err
           );
       })
-      .catch(error => {
+      .catch((error) => {
         /* console.log(error) */
       });
   }
@@ -868,7 +870,7 @@ class Login_Form extends Component {
 
   onClickTFA() {
     this.setState({
-      showBackUpInput: !this.state.showBackUpInput
+      showBackUpInput: !this.state.showBackUpInput,
     });
   }
 
@@ -890,16 +892,27 @@ class Login_Form extends Component {
         this.props.location.state.from &&
         this.props.location.state.from.pathname == "/simplex"
       ) {
-        this.props.history.push(this.props.location.state.from.pathname);
+        this.props.history.push({
+          pathname: this.props.location.state.from.pathname,
+          state: {
+            flag: true,
+          },
+        });
       } else if (
         this.props.location.state &&
         this.props.location.state.from &&
         this.props.location.state.from.pathname == "/crypto-conversion"
       ) {
         this.props.history.push(this.props.location.state.from.pathname);
+      } else if (
+        this.props.location.state &&
+        this.props.location.state.from &&
+        this.props.location.state.from.pathname == "/trade"
+      ) {
+        this.props.history.push(this.props.location.state.from.pathname);
       } else {
         if (this.props.isKYCDone == 2) {
-          this.props.history.push("/conversion");
+          this.props.history.push("/trade");
         } else {
           this.props.history.push("/editProfile");
         }
@@ -918,7 +931,7 @@ class Login_Form extends Component {
                 href={
                   globalVariables.WordpressSiteURL +
                   (localStorage["i18nextLng"] &&
-                  localStorage["i18nextLng"] !== "en"
+                    localStorage["i18nextLng"] !== "en"
                     ? "/" + localStorage["i18nextLng"]
                     : "")
                 }
@@ -953,7 +966,7 @@ class Login_Form extends Component {
                           onChange(e) {
                             me.onChangeField(e.target.value, "username");
                           }, // have to write original onChange here if you need
-                          rules: [{ type: "email", required: true }]
+                          rules: [{ type: "email", required: true }],
                         })}
                       />
                       <UserIconS
@@ -984,17 +997,17 @@ class Login_Form extends Component {
                           onChange(e) {
                             me.onChangeField(e.target.value, "password");
                           }, // have to write original onChange here if you need
-                          rules: [{ type: "string", required: true }]
+                          rules: [{ type: "string", required: true }],
                         })}
                       />
                       {this.state.typeEye === "password" ? (
                         <FAI src={_EYE} onClick={this.handleEye.bind(this)} />
                       ) : (
-                        <ActiveFAI
-                          src={_ACTIVEEYE}
-                          onClick={this.handleEye.bind(this)}
-                        />
-                      )}
+                          <ActiveFAI
+                            src={_ACTIVEEYE}
+                            onClick={this.handleEye.bind(this)}
+                          />
+                        )}
                       <PassIconS
                         id="passlog_icon_success"
                         type="check-circle"
@@ -1024,7 +1037,7 @@ class Login_Form extends Component {
                               onChange(e) {
                                 me.onChangeField(e.target.value, "otp");
                               }, // have to write original onChange here if you need
-                              rules: [{ required: true }]
+                              rules: [{ required: true }],
                             })}
                           />
                           <UserIconS
@@ -1045,8 +1058,8 @@ class Login_Form extends Component {
                         </PassReq>
                       </div>
                     ) : (
-                      ""
-                    )}
+                        ""
+                      )}
                     <ButtonValue type="submit" value="Submit" />
                   </form>
                   {!this.state.isOtpRequired && (
@@ -1065,8 +1078,8 @@ class Login_Form extends Component {
                       </Forgot>
                     </CheckWrap>
                   ) : (
-                    ""
-                  )}
+                      ""
+                    )}
                   {this.state.showBackUpInput ? (
                     <CheckWrap>
                       {/* <Remember>
@@ -1076,8 +1089,8 @@ class Login_Form extends Component {
                       </Forgot>
                     </CheckWrap>
                   ) : (
-                    ""
-                  )}
+                      ""
+                    )}
                   {this.state.showBackUpInput && (
                     <BackUpOtp className="backuptext">
                       <OtpLabel>
@@ -1093,7 +1106,7 @@ class Login_Form extends Component {
                                 "twofactor_backup_code"
                               );
                             }, // have to write original onChange here if you need
-                            rules: [{ required: false }]
+                            rules: [{ required: false }],
                           })}
                         />
                         <UserIconS
@@ -1135,7 +1148,7 @@ class Login_Form extends Component {
                     {this.t("login_page:no_account_text.message")}?{" "}
                     <Signa
                       href="/signup"
-                      // onClick={() => this.dispModal("signup")}
+                    // onClick={() => this.dispModal("signup")}
                     >
                       {this.t("login_page:sign_up_text.message")}
                     </Signa>
@@ -1165,16 +1178,16 @@ function mapStateToProps(state) {
       state.simpleReducer.errorStatus !== undefined
         ? state.simpleReducer.errorStatus
         : undefined,
-    isKYCDone: state.simpleReducer.isKYCDone
+    isKYCDone: state.simpleReducer.isKYCDone,
   };
 }
 
-const mapDispatchToProps = dispatch => ({
-  Login: values => dispatch(Login(values)),
+const mapDispatchToProps = (dispatch) => ({
+  Login: (values) => dispatch(Login(values)),
   clearLogin: () => dispatch(clearLogin()),
-  getProfileDataAction: isLoggedIn =>
+  getProfileDataAction: (isLoggedIn) =>
     dispatch(getProfileDataAction(isLoggedIn)),
-  loginAction: value => dispatch(loginAction(value))
+  loginAction: (value) => dispatch(loginAction(value)),
 });
 
 export default translate([
@@ -1184,5 +1197,5 @@ export default translate([
   "validations",
   "security_tab",
   "general_1",
-  "sign_up"
+  "sign_up",
 ])(connect(mapStateToProps, mapDispatchToProps)(createForm()(Login_Form)));

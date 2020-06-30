@@ -8,7 +8,7 @@ export const HeadContact = styled.div``;
 export const HeadSpan = styled.p`
   font-size: 20px;
   font-family: "Open Sans";
-  color: ${props =>
+  color: ${(props) =>
     props.theme.mode === "dark" ? "white" : "rgb(51, 51, 51)"};
   font-weight: bold;
   text-transform: uppercase;
@@ -21,11 +21,37 @@ export const HeadSpan = styled.p`
 `;
 export const ContactWrap = styled.div`
   background-color: #f5f6fa;
+  & .sidebar-layout {
+    background: ${(props) =>
+      props.theme.mode === "dark" ? "#01090f" : "#f0f2f5"};
+    & .ant-layout-sider {
+      background: ${(props) =>
+        props.theme.mode === "dark"
+          ? "rgb(4, 27, 44) !important"
+          : "rgb(255, 255, 255)"};
+      border-top-right-radius: 5px;
+      color: ${(props) => (props.theme.mode === "dark" ? "#fff" : "#000")};
+      border-bottom-right-radius: 5px;
+      & h5 {
+        color: ${(props) => (props.theme.mode === "dark" ? "#fff" : "#000")};
+      }
+      & .ant-switch {
+        background-color: ${(props) =>
+          props.theme.mode === "dark"
+            ? "rgb(1, 9, 15)"
+            : "rgba(0, 0, 0, 0.25)"};
+      }
+      & .ant-switch-checked {
+        background-color: #1890ff;
+      }
+    }
+  }
 `;
 export const GreyWrap = styled.div`
   padding-top: 110px;
   padding-bottom: 30px;
-  background-color: ${props => (props.theme.mode === "dark" ? "#01090f" : "")};
+  background-color: ${(props) =>
+    props.theme.mode === "dark" ? "#01090f" : ""};
 `;
 export const RowWrap = styled.div`
   padding-bottom: 80px;
@@ -39,7 +65,7 @@ export const LeftCol = styled.div`
 export const SubHead = styled.p`
   font-size: 19.975px;
   font-family: "Open Sans";
-  color: ${props =>
+  color: ${(props) =>
     props.theme.mode === "dark" ? "white" : "rgb( 51, 51, 51 )"};
   margin-top: 30px;
   font-weight: 600;
@@ -51,15 +77,15 @@ export const FirstLabel = styled.label`
   display: block;
   font-size: 13px;
   font-family: "Open Sans";
-  color: ${props =>
+  color: ${(props) =>
     props.theme.mode === "dark" ? "white" : "rgba( 0, 0, 0, 0.502 )"};
-  caret-color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+  caret-color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
 `;
 export const FirstInput = styled.input`
   border: 1px solid #e2e6ea;
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#020e18" : "#f8f8f8"};
-  color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   border-radius: 5px;
   min-height: 45px;
   width: 100%;
@@ -79,13 +105,13 @@ export const FourthLabel = styled(FirstLabel)`
 `;
 export const FourthArea = styled.textarea`
   border: 1px solid #e2e6ea;
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#01090f" : "#f8f8f8"};
   border-radius: 5px;
   min-height: 145px;
   width: 100%;
-  color: ${props => (props.theme.mode === "dark" ? "white" : "")};
-  caret-color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
+  caret-color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
 `;
 export const FifthDiv = styled.div`
   margin-top: 30px;
@@ -164,14 +190,14 @@ export const Img3 = styled(Img2)`
 export const SubSpan = styled.span`
   font-size: 15.983px;
   font-family: "Open Sans";
-  color: ${props =>
+  color: ${(props) =>
     props.theme.mode === "dark" ? "white" : "rgb( 51, 51, 51 )"};
   font-weight: 600;
 `;
 export const SubP = styled.p`
   font-size: 13.985px;
   font-family: "Open Sans";
-  color: ${props =>
+  color: ${(props) =>
     props.theme.mode ? "#7e868d" : "rgba( 51, 51, 51, 0.502 )"};
   margin-bottom: 0px !important;
 `;
@@ -279,7 +305,7 @@ export const MediaLI = styled.li`
 export const MediaSpan = styled.span`
   font-size: 17.93px;
   font-family: "Open Sans";
-  color: ${props =>
+  color: ${(props) =>
     props.theme.mode === "dark" ? "white" : "rgb(74, 74, 74)"};
   font-weight: bold;
   text-transform: uppercase;
@@ -287,7 +313,7 @@ export const MediaSpan = styled.span`
 export const MediaP = styled.p`
     font-size: 13.94px;
     font-family: "Open Sans";
-    color:${props =>
+    color:${(props) =>
       props.theme.mode === "dark" ? "white" : "rgb(51, 51, 51)"}
     font-weight:600;
 `;
@@ -302,7 +328,7 @@ export const BlueTagP = styled.a`
 
 export const Head = styled.div`
   margin-bottom: 60px;
-  color: ${props =>
+  color: ${(props) =>
     props.theme.mode === "dark" ? "white" : "rgb(51, 51, 51)"};
   @media (max-width: 480px) {
     padding-right: 10px;
@@ -337,7 +363,7 @@ export const Body = styled.div`
 export const BodyText = styled.span`
   font-size: 20px;
   font-family: "Open Sans";
-  color: ${props =>
+  color: ${(props) =>
     props.theme.mode === "dark" ? "white" : "rgb(51, 51, 51)"};
 `;
 export const BodyForm = styled.div`
@@ -359,7 +385,8 @@ export const Left = styled.div`
     margin-bottom: 0px;
     font-size: 13px;
     font-family: "Open Sans";
-    color: ${props => (props.theme.mode === "dark" ? "white" : "rgb(0, 0, 0)")};
+    color: ${(props) =>
+      props.theme.mode === "dark" ? "white" : "rgb(0, 0, 0)"};
     font-weight: 600;
   }
   @media (max-width: 1199px) {
@@ -378,9 +405,9 @@ export const RightInput = styled.div`
   }
   & .form-control {
     border: 1px solid #e2e6ea;
-    background-color: ${props =>
+    background-color: ${(props) =>
       props.theme.mode === "dark" ? "#020e18" : "#f8f8f8"};
-    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
     border-radius: 5px;
     min-height: 45px;
     width: 100%;
@@ -398,9 +425,9 @@ export const SecurityInput = styled(Select)`
   }
   & .ant-select-selection {
     border: 1px solid #e2e6ea;
-    background-color: ${props =>
+    background-color: ${(props) =>
       props.theme.mode === "dark" ? "#020e18" : "#f8f8f8"};
-    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
     border-radius: 5px;
     min-height: 45px;
     width: 100%;
@@ -410,7 +437,7 @@ export const SecurityInput = styled(Select)`
 `;
 export const IntlTelInputS = styled(IntlTelInput)`
   & .selected-dial-code {
-    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   }
 `;
 export const URLInput = styled(FirstInput)`
@@ -418,9 +445,9 @@ export const URLInput = styled(FirstInput)`
 `;
 export const TargetInput = styled(DatePicker)`
   border: 1px solid #e2e6ea;
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#020e18" : "#f8f8f8"};
-  color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   border-radius: 5px;
   min-height: 45px;
   width: 100%;
@@ -430,10 +457,10 @@ export const TargetInput = styled(DatePicker)`
 export const EmailInput = styled(URLInput)``;
 export const MsgInput = styled(FourthArea)`
   max-width: 450px;
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#020e18" : "#f8f8f8"};
-  caret-color: ${props => (props.theme.mode === "dark" ? "white" : "")};
-  color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+  caret-color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
 `;
 export const OneDiv = styled.div``;
 export const FifthDiv2 = styled.div`
@@ -490,7 +517,7 @@ export const TitleApply = styled.div`
 export const TitleSpan = styled.span`
   font-size: 20px;
   font-family: "Open Sans";
-  color: ${props =>
+  color: ${(props) =>
     props.theme.mode === "dark" ? "white" : "rgb( 51, 51, 51 )"};
   font-weight: bold;
   text-transform: uppercase;
@@ -522,14 +549,15 @@ export const LeftWing = styled.div`
 export const LabelOne = styled.label`
   font-size: 13px;
   font-family: "Open Sans";
-  color: ${props => (props.theme.mode === "dark" ? "white" : "rgb( 0, 0, 0 )")};
+  color: ${(props) =>
+    props.theme.mode === "dark" ? "white" : "rgb( 0, 0, 0 )"};
   font-weight: 600;
 `;
 export const InputOne = styled.input`
   border: 1px solid #e2e6ea;
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#01090f" : "#f8f8f8"};
-  color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   border-radius: 5px;
   min-height: 45px;
   width: 100%;
@@ -554,18 +582,18 @@ export const BtnApply = styled(AddButton)`
   cursor: pointer;
 `;
 export const DropzoneStyle = styled(Dropzone)`
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#01090f" : "#f8f8f8"};
 `;
 export const IconS = styled(Icon)`
-  color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   fontsize: 30px;
 `;
 export const FileSelectText = styled.p`
   margin-bottom: 0px;
-  color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   display: block;
-  max-width: 300px;
+  max-width: 99%;
   text-overflow: ellipsis;
   overflow: hidden;
   margin-left: auto;
@@ -600,17 +628,17 @@ export const BodyP = styled.p`
 export const LocationP = styled.p`
   font-size: 12.984px;
   font-family: "Open Sans";
-  color: ${props =>
+  color: ${(props) =>
     props.theme.mode === "dark" ? "white" : "rgba( 51, 51, 51, 0.6 )"};
 `;
 export const DetailsP = styled.p`
   font-size: 13.983px;
   font-family: "Open Sans";
-  color: ${props =>
+  color: ${(props) =>
     props.theme.mode === "dark" ? "white" : "rgb( 25, 25, 25 )"} !important;
   & body {
     background: transparent;
-    color: ${props =>
+    color: ${(props) =>
       props.theme.mode === "dark" ? "white" : "rgb( 25, 25, 25 )"} !important;
   }
 `;
@@ -623,13 +651,13 @@ export const CareerDesc = styled.div`
 export const DescHead = styled.p`
   font-size: 17.978px;
   font-family: "Open Sans";
-  color: ${props =>
+  color: ${(props) =>
     props.theme.mode === "dark" ? "white" : "rgb( 51, 51, 51 )"};
 `;
 export const DescBody = styled.p`
   font-size: 13.983px;
   font-family: "Open Sans";
-  color: ${props =>
+  color: ${(props) =>
     props.theme.mode === "dark" ? "white" : "rgb( 25, 25, 25 )"} !important;
 `;
 export const JobWrap = styled.div`
@@ -638,7 +666,7 @@ export const JobWrap = styled.div`
 export const JobHead = styled.p`
   font-size: 17.978px;
   font-family: "Open Sans";
-  color: ${props =>
+  color: ${(props) =>
     props.theme.mode === "dark" ? "white" : "rgb( 51, 51, 51 )"};
   margin-bottom: 15px;
   font-weight: 600;
