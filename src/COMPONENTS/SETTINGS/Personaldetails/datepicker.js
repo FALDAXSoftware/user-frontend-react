@@ -146,7 +146,6 @@ export default class Datepicker extends Component {
       });
     }
     if (this.props.kyc == "kyc" && this.props.kycData2 !== newProps.kycData2) {
-      console.log("kycdata^^^", newProps.kycData2.dob);
       if (newProps.kycData2) {
         var date = newProps.kycData2.dob.split("-");
         let month1 = date[1] - 1;
