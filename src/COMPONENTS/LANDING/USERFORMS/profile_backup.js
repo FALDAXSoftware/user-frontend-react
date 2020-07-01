@@ -17,7 +17,7 @@ import {
   ButtonUp,
   Plus,
   Plustext,
-  Fileinput
+  Fileinput,
 } from "COMPONENTS/SETTINGS/KYC/doc_upload";
 
 let { API_URL } = globalVariables;
@@ -180,7 +180,7 @@ class ProfileBackup extends Component {
       click: "",
       displayFirst: "none",
       flagImage: false,
-      email: ""
+      email: "",
     };
     this.handleProfile = this.handleProfile.bind(this);
     this.submitProfile = this.submitProfile.bind(this);
@@ -192,7 +192,7 @@ class ProfileBackup extends Component {
     notification[type]({
       message: head,
       description: desc,
-      duration: 5
+      duration: 5,
     });
   }
   _resendVerification = () => {
@@ -202,12 +202,12 @@ class ProfileBackup extends Component {
         method: "post",
         headers: {
           "Content-Type": "application/json",
-          "Accept-Language": localStorage["i18nextLng"]
+          "Accept-Language": localStorage["i18nextLng"],
         },
-        body: JSON.stringify(this.state.fields)
+        body: JSON.stringify(this.state.fields),
       })
-        .then(response => response.json())
-        .then(responseData => {
+        .then((response) => response.json())
+        .then((responseData) => {
           if (responseData.status == 200) {
             this.setState({ loader: false });
             this.props.history.push("/signup-success");
@@ -220,7 +220,7 @@ class ProfileBackup extends Component {
             );
           }
         })
-        .catch(error => {
+        .catch((error) => {
           this.setState({ loader: false });
           this.openNotificationWithIcon(
             "error",
@@ -234,13 +234,13 @@ class ProfileBackup extends Component {
       this.forceUpdate();
     }
   };
-  _handleChange = e => {
+  _handleChange = (e) => {
     let fields = {};
     if (e.target.value.trim() !== "") fields["email"] = e.target.value;
     else fields["email"] = "";
 
     this.setState({
-      fields
+      fields,
     });
   };
 
@@ -258,7 +258,7 @@ class ProfileBackup extends Component {
     _self.setState(
       {
         targetName: name,
-        fileTarget: target
+        fileTarget: target,
       },
       () => {
         var frontWidth, frontHeight;
@@ -276,23 +276,23 @@ class ProfileBackup extends Component {
               if (fileType === "image" && fileSize < 5242880) {
                 var fr = new FileReader();
                 fr.readAsDataURL(file);
-                fr.onload = function() {
+                fr.onload = function () {
                   var img = new Image();
-                  img.onload = function() {
+                  img.onload = function () {
                     frontWidth = img.width;
                     frontHeight = img.height;
 
                     if (frontWidth > 450 && frontHeight > 600) {
                       if (_self.state.targetName === "front-doc") {
                         _self.setState({ icon1: "check", displayFirst: "" });
-                        reader.onload = upload => {
+                        reader.onload = (upload) => {
                           _self.setState({
                             profileImg: upload.target.result,
                             imageName: file.name,
                             imageType: file.type,
                             profileImage: file,
                             imagemsg: "",
-                            flagImage: true
+                            flagImage: true,
                           });
                         };
                       }
@@ -305,8 +305,8 @@ class ProfileBackup extends Component {
                       _self.setState({ flagImage: false });
                       _self.openNotificationWithIcon(
                         "error",
-                        this.t("validations:error_text.message"),
-                        this.t("validations:image_upload_error.message")
+                        _self.t("validations:error_text.message"),
+                        _self.t("validations:image_upload_error.message")
                       );
                     }
                   };
@@ -318,22 +318,22 @@ class ProfileBackup extends Component {
                     profileImg: "Default Photo",
                     imageName: "",
                     imageType: fileType,
-                    imagemsg: "Please select image with less than 5 mb"
+                    imagemsg: "Please select image with less than 5 mb",
                   });
                 }
                 _self.setState({ flagImage: false });
                 _self.openNotificationWithIcon(
                   "error",
-                  this.t("validations:error_text.message"),
-                  this.t("max_image_size_5_error.message")
+                  _self.t("validations:error_text.message"),
+                  _self.t("max_image_size_5_error.message")
                 );
                 document.getElementById("front").value = "";
               }
             } else {
               _self.openNotificationWithIcon(
                 "error",
-                this.t("validations:error_text.message"),
-                this.t("general_1:only_images_error.message")
+                _self.t("validations:error_text.message"),
+                _self.t("general_1:only_images_error.message")
               );
               document.getElementById("front").value = "";
             }
@@ -357,7 +357,7 @@ class ProfileBackup extends Component {
         imagemsg: "",
         icon1: "plus",
         displayFirst: "none",
-        flagImage: false
+        flagImage: false,
       });
       document.getElementById("front").value = "";
     }
@@ -365,7 +365,6 @@ class ProfileBackup extends Component {
 
   submitProfile() {
     if (this.state.flagImage) {
-      // console.log(this.state, this.state.profileImage, this.state.email);
       let dataForm = new FormData();
       dataForm.append("email", this.state.email);
       dataForm.append("uploaded_file", this.state.profileImage);
@@ -373,13 +372,12 @@ class ProfileBackup extends Component {
       fetch(API_URL + "/users/forgot-twofactors", {
         method: "post",
         headers: {
-          "Content-Type": "application/json",
-          "Accept-Language": localStorage["i18nextLng"]
+          "Accept-Language": localStorage["i18nextLng"],
         },
-        body: dataForm
+        body: dataForm,
       })
-        .then(response => response.json())
-        .then(responseData => {
+        .then((response) => response.json())
+        .then((responseData) => {
           if (responseData.status == 200) {
             this.setState({ loader: false });
             this.props.history.push("/login");
@@ -398,7 +396,7 @@ class ProfileBackup extends Component {
             );
           }
         })
-        .catch(error => {
+        .catch((error) => {
           this.setState({ loader: false });
           this.openNotificationWithIcon(
             "error",
@@ -413,7 +411,7 @@ class ProfileBackup extends Component {
       if (this.props.match.params)
         if (this.props.match.params.email)
           this.setState({
-            email: decodeURIComponent(this.props.match.params.email)
+            email: decodeURIComponent(this.props.match.params.email),
           });
   }
   render() {
@@ -477,7 +475,7 @@ class ProfileBackup extends Component {
                     {/* {this.state)} */}
                     <ButtonUpDup
                       style={{
-                        backgroundImage: `url('${this.state.profileImg}')`
+                        backgroundImage: `url('${this.state.profileImg}')`,
                       }}
                       className="file-select-btn"
                       onClick={() => {
@@ -517,7 +515,7 @@ class ProfileBackup extends Component {
 
 function mapStateToProps(state, ownProps) {
   return {
-    isLoggedIn: state.simpleReducer.isLoggedIn !== undefined ? true : false
+    isLoggedIn: state.simpleReducer.isLoggedIn !== undefined ? true : false,
   };
 }
 
@@ -527,5 +525,5 @@ export default translate([
   "general_1",
   "settings",
   "general_4",
-  "identity_verification"
+  "identity_verification",
 ])(withRouter(connect(mapStateToProps, null)(ProfileBackup)));
