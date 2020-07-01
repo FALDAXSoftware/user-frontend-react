@@ -141,8 +141,11 @@ class Simplex extends React.Component {
       this.props.location.state.flag === "" ||
       this.props.location.state.flag === null
     ) {
-      this.props.history.push("/conversion");
+      if (!window.flag) {
+        this.props.history.push("/conversion");
+      }
     }
+    console.log("Test", window.flag);
     // if (
     //   this.props.profileDetails.is_allowed === true &&
     //   this.props.profileDetails.is_kyc_done === 2
