@@ -581,11 +581,6 @@ class TierTwo extends React.Component {
       values.append("files", this.state.validID);
       values.append("files", this.state.residenceProof);
       // values.append("residence_proof", this.state.residenceProof);
-      console.log(
-        "Submit tier2 data^^^^",
-        this.state.validID,
-        this.state.residenceProof
-      );
       fetch(API_URL + `/users/upload-user-documents?${query}`, {
         method: "post",
         headers: {
@@ -597,7 +592,6 @@ class TierTwo extends React.Component {
         .then((response) => response.json())
         .then((responseData) => {
           if (responseData.status == 200) {
-            console.log("^^^^response", responseData);
             this.setState(
               {
                 loader: false,
