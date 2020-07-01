@@ -296,10 +296,11 @@ class SimplexView extends React.Component {
         this.props.profileDetails.is_allowed &&
         this.props.profileDetails.is_kyc_done == 2
       ) {
-        window.open(
+        var newWindow = window.open(
           TRADE_URL + "/simplex",
           "_blank" // <- This is what makes it open in a new window.
         );
+        newWindow.flag = true;
       } else {
         window.open(
           TRADE_URL + "/conversion",
