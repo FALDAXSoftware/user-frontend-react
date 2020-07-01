@@ -34,6 +34,7 @@ import {
   SimTopHead,
 } from "../../../STYLED-COMPONENTS/SIMPLEX/simplexStyle";
 import { LogoutUser } from "../../../ACTIONS/authActions";
+import { getProfileDataAction } from "../../../ACTIONS/SETTINGS/settingActions";
 
 const API_URL = globalVariables.API_URL;
 const _AMAZONBUCKET = globalVariables._AMAZONBUCKET;
@@ -141,7 +142,9 @@ class Simplex extends React.Component {
       this.props.location.state.flag === "" ||
       this.props.location.state.flag === null
     ) {
-      this.props.history.push("/conversion");
+      if (!window.flag) {
+        this.props.history.push("/conversion");
+      }
     }
     // if (
     //   this.props.profileDetails.is_allowed === true &&
@@ -164,6 +167,9 @@ class Simplex extends React.Component {
 
   componentDidMount(e) {
     this.getCrypto();
+    if (!this.props.profileDetails) {
+      this.props.getProfileDataAction(this.props.isLoggedIn);
+    }
   }
 
   getCrypto() {
@@ -553,6 +559,8 @@ class Simplex extends React.Component {
 const mapDispatchToProps = (dispatch) => ({
   LogoutUser: (isLoggedIn, user_id) =>
     dispatch(LogoutUser(isLoggedIn, user_id)),
+  getProfileDataAction: (isLoggedIn) =>
+    dispatch(getProfileDataAction(isLoggedIn)),
 });
 // export default Conversion;
 function mapStateToProps(state) {
