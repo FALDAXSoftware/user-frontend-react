@@ -181,6 +181,9 @@ export const ButtonDel = styled(Button)`
 `;
 export const PaginationS = styled(Pagination)`
   margin-top: 30px !important;
+  &.trade_pagination {
+    margin: 30px;
+  }
   & .ant-pagination-item-link {
     background-color: ${(props) =>
       props.theme.mode === "dark" ? "#041421" : ""};

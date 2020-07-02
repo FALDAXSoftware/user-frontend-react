@@ -16,17 +16,18 @@ class CompleteProfile extends React.Component {
     this.state = {
       comingSoon: this.props.visible ? true : "",
       email_address: "",
-      email_msg: ""
+      email_msg: "",
     };
     this.t = this.props.t;
   }
 
-  handleComing = e => {
+  handleComing = (e) => {
     this.setState({ comingSoon: false });
   };
 
-  comingCancel = e => {
+  comingCancel = (e) => {
     this.setState({ comingSoon: false });
+    this.props.history.push("/editProfile");
     this.props.comingCancel(e);
   };
 
@@ -35,7 +36,7 @@ class CompleteProfile extends React.Component {
       message: "Thank You",
       description: "You will receive an email shortly",
       duration: 6,
-      icon: <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
+      icon: <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" />,
     });
   }
   openNotification1() {
@@ -43,13 +44,13 @@ class CompleteProfile extends React.Component {
       message: "Subscribed",
       description: "You have already Subscribed for FALDAX.",
       duration: 6,
-      icon: <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
+      icon: <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" />,
     });
   }
   openNotificationWithIcon(type, head, desc) {
     notification[type]({
       message: head,
-      description: desc
+      description: desc,
     });
   }
 
@@ -64,9 +65,9 @@ class CompleteProfile extends React.Component {
             </div>
           }
           visible={this.props.visible}
-          onOk={e => this.handleComing()}
+          onOk={(e) => this.handleComing()}
           // closable={false}
-          onCancel={e => this.comingCancel(e)}
+          onCancel={(e) => this.comingCancel(e)}
           maskClosable={false}
           footer={null}
           width={605}
