@@ -496,8 +496,12 @@ class PersonalDetails extends Component {
 
   componentDidMount() {
     this.getallCountriesData();
-    this.getStatesOfACountry(this.props.profileDetails.countryJsonId);
-    this.getCitiesOfAState(this.props.profileDetails.stateJsonId);
+    if (this.props.profileDetails.countryJsonId) {
+      this.getStatesOfACountry(this.props.profileDetails.countryJsonId);
+    }
+    if (this.props.profileDetails.stateJsonId) {
+      this.getCitiesOfAState(this.props.profileDetails.stateJsonId);
+    }
     this.props.getProfileDataAction(this.props.isLoggedIn);
     if (this.props.profileDetails.default_language) {
       this.setState({
@@ -604,6 +608,20 @@ class PersonalDetails extends Component {
       .catch((error) => {});
   }
   componentWillReceiveProps(props) {
+    if (
+      this.props.profileDetails.countryJsonId !==
+        props.profileDetails.countryJsonId &&
+      props.profileDetails.countryJsonId
+    ) {
+      this.getStatesOfACountry(props.profileDetails.countryJsonId);
+    }
+    if (
+      this.props.profileDetails.stateJsonId !==
+        props.profileDetails.stateJsonId &&
+      props.profileDetails.stateJsonId
+    ) {
+      this.getCitiesOfAState(props.profileDetails.stateJsonId);
+    }
     if (
       props.profileDetails.countryJsonId &&
       props.profileDetails.countryJsonId !==
