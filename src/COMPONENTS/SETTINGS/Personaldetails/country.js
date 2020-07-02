@@ -99,13 +99,19 @@ class CountryPick extends Component {
       cities: [],
       phone_number: "",
       countryList: "",
+      stateList: "",
+      cityList: "",
       country_json_id: "",
+      countrySelectedId: "",
+      stateSelectedId: "",
     };
     this.getallCountriesData = this.getallCountriesData.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeState = this.handleChangeState.bind(this);
     this.handleChangeCity = this.handleChangeCity.bind(this);
     this.getCountryId = this.getCountryId.bind(this);
+    this.getStatesOfACountry = this.getStatesOfACountry.bind(this);
+    this.getCitiesOfAState = this.getCitiesOfAState.bind(this);
     this.t = this.props.t;
   }
 
@@ -118,6 +124,17 @@ class CountryPick extends Component {
     if (countrySelected) {
       country_code = countrySelected.sortname;
       phoneCode = countrySelected.phonecode;
+    }
+    console.log("^^statelist", this.props.stateList);
+    if (this.props.stateList) {
+      this.setState({
+        stateList: this.props.stateList,
+      });
+    }
+    if (this.props.cityList) {
+      this.setState({
+        cityList: this.props.cityList,
+      });
     }
     // console.log("country", this.props.phone_number);
     this.setState({
@@ -134,6 +151,17 @@ class CountryPick extends Component {
     if (this.props.country_id != newprops.country_id && newprops.country_id) {
       this.setState({
         country_json_id: newprops.country_id,
+      });
+    }
+    console.log("^^statelist", newprops.stateList);
+    if (this.props.stateList !== newprops.stateList && newprops.stateList) {
+      this.setState({
+        stateList: newprops.stateList,
+      });
+    }
+    if (this.props.cityList !== newprops.cityList && newprops.cityList) {
+      this.setState({
+        cityList: newprops.cityList,
       });
     }
     if (this.props != newprops) {
@@ -162,6 +190,7 @@ class CountryPick extends Component {
 
   handleChange(value, position) {
     var newPosition = Number(position.key) - 1;
+    console.log("^^^check state", position.key);
     var countrySelected = CountryData.getCountryById(newPosition);
     // console.log(countrySelected);
     let country_code = "";
@@ -182,11 +211,15 @@ class CountryPick extends Component {
         phoneCode,
         country_json_id,
         phone_number: "",
+        countrySelectedId: position.key,
+        stateList: "",
+        cityList: "",
         // stateID: null,
         // countryID: newPosition,
         // states
       },
       () => {
+        this.getStatesOfACountry(this.state.countrySelectedId);
         this.passOnChangeToParent();
       }
     );
@@ -201,6 +234,7 @@ class CountryPick extends Component {
     */
 
   handleChangeState(value, position) {
+    console.log("^^^teste state value", value, position);
     var countrySelected = CountryData.getCountryById(
       this.state.country_json_id - 1
     );
@@ -216,12 +250,14 @@ class CountryPick extends Component {
         city_selected: "",
         country_code,
         phoneCode,
-
+        stateSelectedId: position.key,
+        cityList: "",
         // country_selected: country,
         // stateID: newPosition,
         // cities
       },
       () => {
+        this.getCitiesOfAState(this.state.stateSelectedId);
         this.passOnChangeToParent();
       }
     );
@@ -280,7 +316,8 @@ class CountryPick extends Component {
       this.state.country_code,
       this.state.phoneCode,
       this.state.phone_number,
-      this.state.country_json_id
+      this.state.country_json_id,
+      this.state.stateSelectedId
     );
   };
   getallCountriesData() {
@@ -297,6 +334,42 @@ class CountryPick extends Component {
       .then((responseData) => {
         this.setState({
           countryList: responseData.data,
+        });
+      })
+      .catch((error) => {});
+  }
+  getStatesOfACountry(id) {
+    fetch(API_URL + `/get-states?country_id=${id}`, {
+      method: "get",
+      headers: {
+        Accept: "application/json",
+        "Accept-Language": localStorage["i18nextLng"],
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + this.props.isLoggedIn,
+      },
+    })
+      .then((response) => response.json())
+      .then((responseData) => {
+        this.setState({
+          stateList: responseData.data,
+        });
+      })
+      .catch((error) => {});
+  }
+  getCitiesOfAState(id) {
+    fetch(API_URL + `/get-city?state_id=${id}`, {
+      method: "get",
+      headers: {
+        Accept: "application/json",
+        "Accept-Language": localStorage["i18nextLng"],
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + this.props.isLoggedIn,
+      },
+    })
+      .then((response) => response.json())
+      .then((responseData) => {
+        this.setState({
+          cityList: responseData.data,
         });
       })
       .catch((error) => {});
@@ -323,28 +396,33 @@ class CountryPick extends Component {
     // let allCountries = CountryData.getAllCountries();
     let allCountries = this.state.countryList;
 
-    let countryId = this.getCountryId(this.state.country_selected);
-    let allStates = [];
-    let allCities = [];
-    let selectedState,
-      selectedCity = null;
-    if (countryId) {
-      allStates = CountryData.getStatesOfCountry(countryId);
+    // let countryId = this.getCountryId(this.state.country_selected);
+    let allStates = this.state.stateList;
+    let allCities = this.state.cityList;
+    // let selectedState,
+    //   selectedCity = null;
+    // if (this.state.countrySelectedId) {
+    //   console.log("^^^id test", this.state.countrySelectedId);
+    //   allStates = this.getStatesOfACountry(this.state.countrySelectedId);
+    // }
+    // if (countryId) {
+    //   // allStates = CountryData.getStatesOfCountry(countryId);
+    //   // allStates = getStatesOfACountry(this.state.countrySelectedId);
 
-      selectedState = this.getStateId(countryId, this.state.state_selected);
-      if (selectedState) {
-        allCities = CountryData.getCitiesOfState(selectedState);
-        if (allCities.length == 0) {
-          allCities = [
-            {
-              id: selectedState,
-              name: this.state.state_selected,
-            },
-          ];
-        }
-        selectedCity = this.state.city_selected;
-      }
-    }
+    //   selectedState = this.getStateId(countryId, this.state.state_selected);
+    //   if (selectedState) {
+    //     allCities = CountryData.getCitiesOfState(selectedState);
+    //     if (allCities.length == 0) {
+    //       allCities = [
+    //         {
+    //           id: selectedState,
+    //           name: this.state.state_selected,
+    //         },
+    //       ];
+    //     }
+    //     selectedCity = this.state.city_selected;
+    //   }
+    // }
     // ----------
     return (
       <CountryWrap>
@@ -406,11 +484,12 @@ class CountryPick extends Component {
                     .indexOf(input.toLowerCase()) >= 0
                 }
               >
-                {allStates.map((state, index) => (
-                  <Option key={state.id} value={state.name}>
-                    {state.name}
-                  </Option>
-                ))}
+                {allStates &&
+                  allStates.map((state, index) => (
+                    <Option key={state.id} value={state.name}>
+                      {state.name}
+                    </Option>
+                  ))}
               </SelectS>
             </SelectWrap>
           </Col>
@@ -439,11 +518,12 @@ class CountryPick extends Component {
                     .indexOf(input.toLowerCase()) >= 0
                 }
               >
-                {allCities.map((city, index) => (
-                  <Option key={city.id} value={city.name}>
-                    {city.name}
-                  </Option>
-                ))}
+                {allCities &&
+                  allCities.map((city, index) => (
+                    <Option key={city.id} value={city.name}>
+                      {city.name}
+                    </Option>
+                  ))}
               </SelectS>
             </SelectWrap>
           </Col>

@@ -462,9 +462,13 @@ class PersonalDetails extends Component {
       countryJsonId: "",
       profileDetails: [],
       countryList: "",
+      stateList: "",
+      cityList: "",
     };
     this.datePickerChild = React.createRef();
     this.getallCountriesData = this.getallCountriesData.bind(this);
+    this.getStatesOfACountry = this.getStatesOfACountry.bind(this);
+    this.getCitiesOfAState = this.getCitiesOfAState.bind(this);
     this.handleProfile = this.handleProfile.bind(this);
     this.handleLangChange = this.handleLangChange.bind(this);
     this.t = this.props.t;
@@ -492,6 +496,8 @@ class PersonalDetails extends Component {
 
   componentDidMount() {
     this.getallCountriesData();
+    this.getStatesOfACountry(this.props.profileDetails.countryJsonId);
+    this.getCitiesOfAState(this.props.profileDetails.stateJsonId);
     this.props.getProfileDataAction(this.props.isLoggedIn);
     if (this.props.profileDetails.default_language) {
       this.setState({
@@ -575,6 +581,24 @@ class PersonalDetails extends Component {
       .then((responseData) => {
         this.setState({
           countryList: responseData.data,
+        });
+      })
+      .catch((error) => {});
+  }
+  getCitiesOfAState(id) {
+    fetch(API_URL + `/get-city?state_id=${id}`, {
+      method: "get",
+      headers: {
+        Accept: "application/json",
+        "Accept-Language": localStorage["i18nextLng"],
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + this.props.isLoggedIn,
+      },
+    })
+      .then((response) => response.json())
+      .then((responseData) => {
+        this.setState({
+          cityList: responseData.data,
         });
       })
       .catch((error) => {});
@@ -1921,7 +1945,24 @@ class PersonalDetails extends Component {
       }
     );
   };
-
+  getStatesOfACountry(id) {
+    fetch(API_URL + `/get-states?country_id=${id}`, {
+      method: "get",
+      headers: {
+        Accept: "application/json",
+        "Accept-Language": localStorage["i18nextLng"],
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + this.props.isLoggedIn,
+      },
+    })
+      .then((response) => response.json())
+      .then((responseData) => {
+        this.setState({
+          stateList: responseData.data,
+        });
+      })
+      .catch((error) => {});
+  }
   render() {
     let errors;
     const { getFieldProps, getFieldError } = this.props.form;
@@ -2165,6 +2206,8 @@ class PersonalDetails extends Component {
                           ? this.state.citySelected
                           : this.props.profileDetails.city_town
                       }
+                      stateList={this.state.stateList}
+                      cityList={this.state.cityList}
                       country_id={this.state.countryJsonId}
                       phone_number={this.state.fields.phone_number}
                       onCountryChange={(
