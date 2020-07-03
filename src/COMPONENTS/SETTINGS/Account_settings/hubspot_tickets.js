@@ -27,7 +27,7 @@ import {
   Date,
   NDF,
   TicketA,
-  TicketTitle
+  TicketTitle,
 } from "STYLED-COMPONENTS/SETTINGS/hubspotStyle";
 import styled from "styled-components";
 
@@ -49,7 +49,7 @@ class HubSpotTickets extends Component {
     this.state = {
       ticketData: null,
       loader: false,
-      showDescription: false
+      showDescription: false,
     };
     this.t = this.props.t;
   }
@@ -60,39 +60,48 @@ class HubSpotTickets extends Component {
       method: "get",
       headers: {
         Accept: "application/json",
-        "Accept-Language": localStorage["i18nextLng"], 
+        "Accept-Language": localStorage["i18nextLng"],
         "Content-Type": "application/json",
-        Authorization: "Bearer " + this.props.isLoggedIn
-      }
+        Authorization: "Bearer " + this.props.isLoggedIn,
+      },
     })
-      .then(response => response.json())
-      .then(responseData => {
+      .then((response) => response.json())
+      .then((responseData) => {
         this.setState({ loader: false, ticketData: responseData.tickets });
       })
-      .catch(error => {
+      .catch((error) => {
         this.setState({ loader: false });
       });
   }
   render() {
     const { ticketData, loader, ticketCount } = this.state;
-    const statusArray = [
-      {
+    const statusArray = {
+      0: {
         title: this.t("general_1:ticket_status_new_text.message"),
-        color: "#6fa82f"
+        color: "#6fa82f",
+        font_color: "#FFFFFF",
       },
-      {
+      1: {
         title: this.t("general_1:ticket_status_waiting_text.message"),
-        color: "#ffc107"
+        color: "#ffff00",
+        font_color: "#000000",
       },
-      {
+      2: {
         title: this.t("general_1:ticket_status_waiting_us_text.message"),
-        color: "#ffc107"
+        color: "#ffff00",
+        font_color: "#000000",
       },
-      {
+      3: {
         title: this.t("general_1:ticket_status_closed_text.message"),
-        color: "#f5222d"
-      }
-    ];
+        color: "#1890ff ",
+        font_color: "#FFFFFF",
+      },
+      420731: {
+        title: this.t("general_1:ticket_status_unresolved_closed_text.message"),
+        color: "#FF0000",
+        font_color: "#ffffff",
+      },
+    };
 
     return (
       <div>
@@ -111,7 +120,7 @@ class HubSpotTickets extends Component {
                   ? ticketData &&
                     ticketData.map((temp, index) => (
                       <TicketWrap>
-                        <Col md={4} lg={3}>
+                        <Col md={4} lg={5}>
                           <Date>
                             {temp.properties.subject &&
                               moment
@@ -132,12 +141,26 @@ class HubSpotTickets extends Component {
                           </Date>
                           {temp.properties.hs_pipeline_stage && (
                             <Status
+                              className={
+                                statusArray[
+                                  parseInt(
+                                    temp.properties.hs_pipeline_stage.value
+                                  ) - 1
+                                ].title
+                              }
                               color={
                                 statusArray[
                                   parseInt(
                                     temp.properties.hs_pipeline_stage.value
                                   ) - 1
                                 ].color
+                              }
+                              font_color={
+                                statusArray[
+                                  parseInt(
+                                    temp.properties.hs_pipeline_stage.value
+                                  ) - 1
+                                ].font_color
                               }
                             >
                               {
@@ -150,7 +173,7 @@ class HubSpotTickets extends Component {
                             </Status>
                           )}
                         </Col>
-                        <Col md={20} lg={21}>
+                        <Col md={20} lg={19}>
                           <Title>
                             {temp.properties.subject &&
                               temp.properties.subject.value}
@@ -191,7 +214,7 @@ function mapStateToProps(state) {
     profileDetails:
       state.simpleReducer.profileDetails !== undefined
         ? state.simpleReducer.profileDetails.data[0]
-        : ""
+        : "",
   };
 }
 export default translate(["support", "general_1"])(

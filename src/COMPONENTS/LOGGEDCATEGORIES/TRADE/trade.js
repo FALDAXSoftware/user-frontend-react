@@ -38,11 +38,12 @@ import BuySell from "./buysell";
 import OrderHIstory from "./orderhistory";
 import DepthChart from "./depthchart";
 import OrderTrade from "./ordertrade";
-import { globalVariables } from "Globals.js";
+import { globalVariables, PAGE_SIZE_OPTIONS, PAGESIZE } from "Globals.js";
 import TradingViewChart from "COMPONENTS/tradingviewchart";
 import { translate } from "react-i18next";
 import NumberFormat from "react-number-format";
 /* import FaldaxLoader from 'SHARED-COMPONENTS/FaldaxLoader'; */
+import { PaginationS } from "../../../STYLED-COMPONENTS/SETTINGS/accsettingsStyle";
 
 /* Styled-Components */
 import {
@@ -393,6 +394,9 @@ class Trade extends Component {
       pricePrecision: "0",
       quantityPrecision: "0",
       panic_status: false,
+      page: 1,
+      limit: PAGESIZE,
+      myOrderCount: 100,
     };
     io = this.props.io;
     this.t = this.props.t;
@@ -946,6 +950,7 @@ class Trade extends Component {
 
   onLayoutChange(currentLayout, wholeLayout) {
     /*        let self = this; */
+
     let instrumentTableHeight,
       orderHistoryTableHeight,
       myOrderTableHeight,
@@ -974,9 +979,9 @@ class Trade extends Component {
       if (element.i === "myorder") {
         let newHeight = 0;
         if (element.h === 2) {
-          newHeight = 130;
+          newHeight = 85;
         } else {
-          newHeight = 130 + 160 * (element.h - 2);
+          newHeight = 85 + 160 * (element.h - 2);
         }
         myOrderTableHeight = newHeight;
       }
@@ -1605,8 +1610,19 @@ class Trade extends Component {
   // Description: Render method starts.
   //
   //
-
+  handlePagination = (page) => {
+    this.setState({ page }, () => {
+      // this.historyResult();
+    });
+  };
+  changePaginationSize = (current, pageSize) => {
+    this.setState({ page: current, limit: pageSize }, () => {
+      // this.historyResult();
+    });
+  };
   render() {
+    let pageSizeOptions = PAGE_SIZE_OPTIONS;
+    const { myOrderCount, page, limit } = this.state;
     var self = this;
     const columns = [
       {
@@ -2248,12 +2264,27 @@ class Trade extends Component {
                         }}
                         orderTradeData={this.state.orderTradeData}
                         height={self.state.myOrderTableHeight}
+                        // height="570"
                         butonEnable={this.state.butonEnable}
                         currency={this.state.currency}
                         crypto={this.state.crypto}
                         pricePrecision={this.state.pricePrecision}
                         qtyPrecision={this.state.quantityPrecision}
                       />
+                      {myOrderCount > 0 ? (
+                        <PaginationS
+                          className="ant-users-pagination trade_pagination"
+                          onChange={this.handlePagination.bind(this)}
+                          pageSize={limit}
+                          current={page}
+                          total={myOrderCount}
+                          showSizeChanger
+                          onShowSizeChange={this.changePaginationSize}
+                          pageSizeOptions={pageSizeOptions}
+                        />
+                      ) : (
+                        ""
+                      )}
                     </LeftDiv2>
                   </div>
                 </div>
