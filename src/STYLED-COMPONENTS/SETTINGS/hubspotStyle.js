@@ -47,13 +47,12 @@ export const Desc = styled.div`
   }
 `;
 export const Status = styled.div`
-  color: white;
+  color: ${props => props.font_color};
   margin-top: 13px;
   display: flex;
   align-items: center;
   padding: 3px 10px;
   font-size: 14px;
-  color: white;
   width: 80px;
   text-align: center;
   display: block;
