@@ -20,8 +20,8 @@ class TradingViewChart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      crypto: "ETH",
-      currency: "BTC",
+      crypto: this.props.crypto ? this.props.crypto : "ETH",
+      currency: this.props.currency ? this.props.currency : "BTC",
     };
   }
   static defaultProps = {
@@ -122,12 +122,12 @@ class TradingViewChart extends React.Component {
   }
 
   componentDidMount() {
-    console.log(
-      "^^^prods",
-      window.location.href,
-      this.props,
-      this.props.match.params.pair
-    );
+    // console.log(
+    //   "^^^prods",
+    //   window.location.href,
+    //   this.props,
+    //   this.props.match.params.pair
+    // );
     let currency, crypto;
 
     if (this.props.match.params.pair) {
