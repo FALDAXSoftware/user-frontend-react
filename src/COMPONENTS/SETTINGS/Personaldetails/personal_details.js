@@ -1010,20 +1010,20 @@ class PersonalDetails extends Component {
         citySelected: city,
         fields,
         phoneCode,
-      },
-      () => {
-        // To rerender the mobile input field
-        self.setState(
-          {
-            displayCountry: false,
-          },
-          () => {
-            self.setState({
-              displayCountry: true,
-            });
-          }
-        );
       }
+      // () => {
+      //   // To rerender the mobile input field
+      //   self.setState(
+      //     {
+      //       displayCountry: false,
+      //     },
+      //     () => {
+      //       self.setState({
+      //         displayCountry: true,
+      //       });
+      //     }
+      //   );
+      // }
     );
     var loc = {
       country: country,
