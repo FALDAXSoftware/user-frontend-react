@@ -272,6 +272,7 @@ const MobileInput = styled(Input)`
     align-items: center;
     > img {
       margin: 0 10px 0 0;
+      max-width: 30px;
     }
     > span {
       font-weight: 600;
@@ -963,7 +964,7 @@ class PersonalDetails extends Component {
     countryJson
   ) {
     console.log(
-      "^^^testing",
+      "^^^country.js testing",
       country,
       state,
       city,
@@ -972,7 +973,9 @@ class PersonalDetails extends Component {
       phone_number,
       countryJson,
       this.state.countrySelected,
-      this.props.profileDetails.country
+      this.props.profileDetails.country,
+      this.state.fields.phone_number,
+      this.state.mobile
     );
     let fields = this.state.fields;
     if (this.props.profileDetails.country === country) {
@@ -981,32 +984,13 @@ class PersonalDetails extends Component {
         var mob = temp.split(`+${phoneCode}`);
         this.setState({
           mobile: mob[1],
+          phoneCode,
         });
-        //   fields["phone_number"] = phone_number;
-        //   let mobile = phone_number;
-        //   this.setState({
-        //     phoneCountry: [country_code],
-        //     mobile,
-        //   });
-        // } else {
-        //   fields["phone_number"] = this.state.fields.phone_number;
-        //   let mobile = this.state.mobile;
-        //   this.setState({
-        //     phoneCountry: [country_code],
-        //     mobile,
-        //   });
       }
     } else {
       let mobile = this.state.mobile;
-      // fields["phone_number"] = phone_number;
-      // if (
-      //   this.state.phoneCountry &&
-      //   this.state.phoneCountry[0] != country_code
-      // ) {
-      //   mobile = `+${phoneCode}`;
-      // }
+
       this.setState({
-        // phoneCountry: [country_code],
         mobile: phone_number,
         countryJsonId: countryJson,
         phoneCode,
@@ -1020,6 +1004,7 @@ class PersonalDetails extends Component {
         stateSelected: state,
         citySelected: city,
         fields,
+        phoneCode,
       },
       () => {
         // To rerender the mobile input field
@@ -2118,8 +2103,8 @@ class PersonalDetails extends Component {
     const { profileDetails } = this.state;
     var me = this;
     console.log(
-      "phoneCountry countrySelected^^",
-      this.state.displayCountry
+      "countryJsonId^^",
+      this.state.countryJsonId
       // this.state.phoneCountry,
       // this.state.mobile,
       // this.state.fields.phone_number,
@@ -2396,7 +2381,10 @@ class PersonalDetails extends Component {
                       <MobileInput
                         addonBefore={
                           <span className="addon">
-                            <img src="http://localhost:3000/images/en.png" />
+                            <img
+                              alt="flag"
+                              src={`https://production-static-asset.s3.us-east-2.amazonaws.com/country/${this.state.countryJsonId}.png`}
+                            />
                             <span>+{this.state.phoneCode}</span>
                           </span>
                         }
