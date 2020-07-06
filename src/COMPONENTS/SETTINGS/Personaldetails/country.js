@@ -417,7 +417,7 @@ class CountryPick extends Component {
             countrySelectedData: responseData.data[0],
           },
           () => {
-            console.log("^^^country data test", this.state.countrySelectedData);
+            console.log("^^^country.js", this.state.countrySelectedData);
             let country_code = "";
             let phoneCode = "";
             let country_json_id = "";
@@ -433,6 +433,7 @@ class CountryPick extends Component {
                 phone_number: "",
               },
               () => {
+                console.log("^^^country.js Test", this.state.phoneCode);
                 this.passOnChangeToParent();
               }
             );
