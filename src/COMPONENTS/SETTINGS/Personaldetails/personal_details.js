@@ -1010,6 +1010,7 @@ class PersonalDetails extends Component {
         citySelected: city,
         fields,
         phoneCode,
+        displayCountry: true,
       }
       // () => {
       //   // To rerender the mobile input field
@@ -2109,7 +2110,7 @@ class PersonalDetails extends Component {
     var me = this;
     console.log(
       "countryJsonId^^",
-      this.state.countryJsonId
+      this.state.displayCountry
       // this.state.phoneCountry,
       // this.state.mobile,
       // this.state.fields.phone_number,
