@@ -984,12 +984,17 @@ class PersonalDetails extends Component {
         var mob = temp.split(`+${phoneCode}`);
         this.setState({
           mobile: mob[1],
+          countryJsonId: countryJson,
+          phoneCode,
+        });
+      } else {
+        this.setState({
+          countryJsonId: countryJson,
           phoneCode,
         });
       }
     } else {
       let mobile = this.state.mobile;
-
       this.setState({
         mobile: phone_number,
         countryJsonId: countryJson,
