@@ -1230,6 +1230,10 @@ class StopLimit extends Component {
                     onClick={() => {
                       this.walletAccess(this.props.cryptoCode);
                     }}
+                    disabled={this.props.userBal.cryptoinactive}
+                    className={
+                      this.props.userBal.cryptoinactive ? "inactive" : ""
+                    }
                     // href={`/walletDetails?coinID0=${this.props.cryptoCode}`}
                   >
                     {this.t("general_3:generate_wallet_text.message")}
@@ -1249,6 +1253,10 @@ class StopLimit extends Component {
                     onClick={() => {
                       this.walletAccess(this.props.currencyCode);
                     }}
+                    disabled={this.props.userBal.currencyinactive}
+                    className={
+                      this.props.userBal.currencyinactive ? "inactive" : ""
+                    }
                     // href={`/walletDetails?coinID0=${this.props.currencyCode}`}
                   >
                     {this.t("general_3:generate_wallet_text.message")}
