@@ -29,6 +29,7 @@ class CompleteProfile extends React.Component {
     this.setState({ comingSoon: false });
     this.props.history.push("/editProfile");
     this.props.comingCancel(e);
+    this.props.history.push("/editProfile");
   };
 
   openNotification() {

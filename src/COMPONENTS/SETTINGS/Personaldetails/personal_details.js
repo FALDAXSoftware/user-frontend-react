@@ -2242,7 +2242,9 @@ class PersonalDetails extends Component {
                 </FirstRow>
                 <FourthRow>
                   <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }}>
-                    <Postal>Email</Postal>
+                    <Postal>
+                      {t("security_tab:subhead_title_email.message")}
+                    </Postal>
                     <Postalinput
                       disabled
                       value={this.props.profileDetails.email}
@@ -2794,4 +2796,5 @@ export default translate([
   "settings",
   "sign_up",
   "identity_verification",
+  "security_tab",
 ])(connect(mapStateToProps, mapDispatchToProps)(createForm()(PersonalDetails)));

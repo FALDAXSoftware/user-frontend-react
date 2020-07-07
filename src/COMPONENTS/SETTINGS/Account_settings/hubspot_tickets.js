@@ -27,7 +27,7 @@ import {
   Date,
   NDF,
   TicketA,
-  TicketTitle
+  TicketTitle,
 } from "STYLED-COMPONENTS/SETTINGS/hubspotStyle";
 import styled from "styled-components";
 
@@ -49,7 +49,7 @@ class HubSpotTickets extends Component {
     this.state = {
       ticketData: null,
       loader: false,
-      showDescription: false
+      showDescription: false,
     };
     this.t = this.props.t;
   }
@@ -62,14 +62,14 @@ class HubSpotTickets extends Component {
         Accept: "application/json",
         "Accept-Language": localStorage["i18nextLng"],
         "Content-Type": "application/json",
-        Authorization: "Bearer " + this.props.isLoggedIn
-      }
+        Authorization: "Bearer " + this.props.isLoggedIn,
+      },
     })
-      .then(response => response.json())
-      .then(responseData => {
+      .then((response) => response.json())
+      .then((responseData) => {
         this.setState({ loader: false, ticketData: responseData.tickets });
       })
-      .catch(error => {
+      .catch((error) => {
         this.setState({ loader: false });
       });
   }
@@ -79,34 +79,34 @@ class HubSpotTickets extends Component {
       0: {
         title: this.t("general_1:ticket_status_new_text.message"),
         color: "#6fa82f",
-        font_color: '#FFFFFF'
+        font_color: "#FFFFFF",
       },
       1: {
         title: this.t("general_1:ticket_status_waiting_text.message"),
         color: "#ffff00",
-        font_color: '#000000'
+        font_color: "#000000",
       },
       2: {
         title: this.t("general_1:ticket_status_waiting_us_text.message"),
         color: "#ffff00",
-        font_color: '#000000'
+        font_color: "#000000",
       },
       3: {
         title: this.t("general_1:ticket_status_closed_text.message"),
-        color: "#0000ff",
-        font_color: '#FFFFFF'
+        color: "#1890ff ",
+        font_color: "#FFFFFF",
       },
       420731: {
         title: this.t("general_1:ticket_status_unresolved_closed_text.message"),
         color: "#FF0000",
-        font_color: '#000000'
-      }
+        font_color: "#ffffff",
+      },
     };
 
     return (
       <div>
         {/* <LoggedNavigation /> */}
-        < Navigation />
+        <Navigation />
         <ProfileWrapper>
           <TicketContainer>
             <TicketDiv>
@@ -118,77 +118,84 @@ class HubSpotTickets extends Component {
               <WholeWrap>
                 {ticketData && ticketData.length > 0
                   ? ticketData &&
-                  ticketData.map((temp, index) => (
-                    <TicketWrap>
-                      <Col md={4} lg={3}>
-                        <Date>
-                          {temp.properties.subject &&
-                            moment
-                              .utc(temp.properties.subject.timestamp)
-                              .local()
-                              .format(
-                                this.props.profileDetails.date_format
-                              )}{" "}
-                        </Date>
-                        <Date>
-                          <DateSpan>
+                    ticketData.map((temp, index) => (
+                      <TicketWrap>
+                        <Col md={4} lg={5}>
+                          <Date>
                             {temp.properties.subject &&
                               moment
                                 .utc(temp.properties.subject.timestamp)
                                 .local()
-                                .format("hh:mm A")}
-                          </DateSpan>{" "}
-                        </Date>
-                        {temp.properties.hs_pipeline_stage && (
-                          <Status
-                            color={
-                              statusArray[
-                                parseInt(
-                                  temp.properties.hs_pipeline_stage.value
-                                ) - 1
-                              ].color
-                            }
-                            font_color={
-                              statusArray[
-                                parseInt(
-                                  temp.properties.hs_pipeline_stage.value
-                                ) - 1
-                              ].font_color
-                            }
+                                .format(
+                                  this.props.profileDetails.date_format
+                                )}{" "}
+                          </Date>
+                          <Date>
+                            <DateSpan>
+                              {temp.properties.subject &&
+                                moment
+                                  .utc(temp.properties.subject.timestamp)
+                                  .local()
+                                  .format("hh:mm A")}
+                            </DateSpan>{" "}
+                          </Date>
+                          {temp.properties.hs_pipeline_stage && (
+                            <Status
+                              className={
+                                statusArray[
+                                  parseInt(
+                                    temp.properties.hs_pipeline_stage.value
+                                  ) - 1
+                                ].title
+                              }
+                              color={
+                                statusArray[
+                                  parseInt(
+                                    temp.properties.hs_pipeline_stage.value
+                                  ) - 1
+                                ].color
+                              }
+                              font_color={
+                                statusArray[
+                                  parseInt(
+                                    temp.properties.hs_pipeline_stage.value
+                                  ) - 1
+                                ].font_color
+                              }
+                            >
+                              {
+                                statusArray[
+                                  parseInt(
+                                    temp.properties.hs_pipeline_stage.value
+                                  ) - 1
+                                ].title
+                              }
+                            </Status>
+                          )}
+                        </Col>
+                        <Col md={20} lg={19}>
+                          <Title>
+                            {temp.properties.subject &&
+                              temp.properties.subject.value}
+                          </Title>
+                          <ShowMore
+                            lines={4}
+                            more={this.t(
+                              "general_1:ticket_read_more_text.message"
+                            )}
+                            less={this.t(
+                              "general_1:ticket_read_less_text.message"
+                            )}
+                            anchorClass=""
                           >
-                            {
-                              statusArray[
-                                parseInt(
-                                  temp.properties.hs_pipeline_stage.value
-                                ) - 1
-                              ].title
-                            }
-                          </Status>
-                        )}
-                      </Col>
-                      <Col md={20} lg={21}>
-                        <Title>
-                          {temp.properties.subject &&
-                            temp.properties.subject.value}
-                        </Title>
-                        <ShowMore
-                          lines={4}
-                          more={this.t(
-                            "general_1:ticket_read_more_text.message"
-                          )}
-                          less={this.t(
-                            "general_1:ticket_read_less_text.message"
-                          )}
-                          anchorClass=""
-                        >
-                          {temp.properties.content &&
+                            {temp.properties.content &&
                             temp.properties.content.value
-                            ? temp.properties.content.value
-                            : ""}
-                        </ShowMore>
-                      </Col>
-                    </TicketWrap>
-                  ))
+                              ? temp.properties.content.value
+                              : ""}
+                          </ShowMore>
+                        </Col>
+                      </TicketWrap>
+                    ))
                   : !loader && <NDF>{this.t("no_data_found.message")}</NDF>}
               </WholeWrap>
             </TicketDiv>
@@ -196,7 +203,7 @@ class HubSpotTickets extends Component {
         </ProfileWrapper>
         <FooterHome />
         {loader === true ? <FaldaxLoader /> : ""}
-      </div >
+      </div>
     );
   }
 }
@@ -207,7 +214,7 @@ function mapStateToProps(state) {
     profileDetails:
       state.simpleReducer.profileDetails !== undefined
         ? state.simpleReducer.profileDetails.data[0]
-        : ""
+        : "",
   };
 }
 export default translate(["support", "general_1"])(
