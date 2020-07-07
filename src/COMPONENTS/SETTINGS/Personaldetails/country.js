@@ -128,7 +128,7 @@ class CountryPick extends Component {
       country_code = countrySelected.sortname.toLowerCase();
       phoneCode = countrySelected.phonecode;
     }
-    console.log("^^statelist", this.props.stateList);
+    // console.log("^^statelist", this.props.stateList);
     if (this.props.stateList) {
       this.setState({
         stateList: this.props.stateList,
@@ -186,10 +186,10 @@ class CountryPick extends Component {
       // );
       let country_code = "";
       let phoneCode = "";
-      console.log(
-        "^^^^^^^^^newprops.countrySelectedData",
-        newprops.countrySelectedData
-      );
+      // console.log(
+      //   "^^^^^^^^^newprops.countrySelectedData",
+      //   newprops.countrySelectedData
+      // );
       if (newprops.countrySelectedData) {
         let countrySelected = newprops.countrySelectedData;
         country_code = countrySelected.sortname.toLowerCase();
@@ -211,7 +211,7 @@ class CountryPick extends Component {
 
   handleChange(value, position) {
     var newPosition = Number(position.key) - 1;
-    console.log("^^^check state", position.key);
+    // console.log("^^^check state", position.key);
     // var countrySelected = CountryData.getCountryById(newPosition);
     // console.log(countrySelected);
     let country_code = "";
@@ -257,7 +257,7 @@ class CountryPick extends Component {
     */
 
   handleChangeState(value, position) {
-    console.log("^^^teste state value", value, position);
+    // console.log("^^^teste state value", value, position);
     // var countrySelected = CountryData.getCountryById(
     //   this.state.country_json_id - 1
     // );
@@ -411,13 +411,13 @@ class CountryPick extends Component {
     })
       .then((response) => response.json())
       .then((responseData) => {
-        console.log("^^^country data test", responseData.data[0]);
+        // console.log("^^^country data test", responseData.data[0]);
         this.setState(
           {
             countrySelectedData: responseData.data[0],
           },
           () => {
-            console.log("^^^country.js", this.state.countrySelectedData);
+            // console.log("^^^country.js", this.state.countrySelectedData);
             let country_code = "";
             let phoneCode = "";
             let country_json_id = "";
@@ -433,7 +433,7 @@ class CountryPick extends Component {
                 phone_number: "",
               },
               () => {
-                console.log("^^^country.js Test", this.state.phoneCode);
+                // console.log("^^^country.js Test", this.state.phoneCode);
                 this.passOnChangeToParent();
               }
             );
