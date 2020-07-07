@@ -21,7 +21,7 @@ import { translate } from "react-i18next";
 /* Components */
 import Datepicker from "./datepicker";
 import CountryPick from "./country";
-import CountryData from "country-state-city";
+// import CountryData from "country-state-city";
 import { EmailReq } from "COMPONENTS/LANDING/USERFORMS/login_form";
 import { globalVariables } from "Globals.js";
 import {
@@ -248,6 +248,39 @@ const Postalkyc = styled(Postal)`
     margin-top: 0px;
   }
 `;
+const MobileInput = styled(Input)`
+  width: 95%;
+  &.enabled {
+    & .ant-input {
+      background-color: ${(props) =>
+        props.theme.mode === "dark" ? "#020f18" : "#f5f5f5"};
+      color: ${(props) =>
+        props.theme.mode === "dark" ? "#fff" : "rgba(0, 0, 0, 0.65)"};
+    }
+  }
+  & .ant-input {
+    height: 42px;
+    font-weight: 600;
+  }
+  & .ant-input-group-addon {
+    color: rgba(0, 0, 0, 0.4);
+    background-color: ${(props) =>
+      props.theme.mode === "dark" ? "transparent" : "#f5f5f5"};
+  }
+  & .addon {
+    display: flex;
+    align-items: center;
+    > img {
+      margin: 0 10px 0 0;
+      max-width: 30px;
+    }
+    > span {
+      font-weight: 600;
+      color: ${(props) =>
+        props.theme.mode === "dark" ? "#ffffff7a" : "rgba(0, 0, 0, 0.4)"};
+    }
+  }
+`;
 const PhoneDiv = styled.div`
   > .intl-tel-input {
     width: 95%;
@@ -462,13 +495,20 @@ class PersonalDetails extends Component {
       countryJsonId: "",
       profileDetails: [],
       countryList: "",
+      stateList: "",
+      cityList: "",
+      countrySelectedData: "",
     };
     this.datePickerChild = React.createRef();
     this.getallCountriesData = this.getallCountriesData.bind(this);
+    this.getStatesOfACountry = this.getStatesOfACountry.bind(this);
+    this.getCitiesOfAState = this.getCitiesOfAState.bind(this);
+    this.getCountryByUsingId = this.getCountryByUsingId.bind(this);
     this.handleProfile = this.handleProfile.bind(this);
     this.handleLangChange = this.handleLangChange.bind(this);
     this.t = this.props.t;
     this.changeNumber = this.changeNumber.bind(this);
+    this.onchangeNum = this.onchangeNum.bind(this);
     this.clearValidation = this.clearValidation.bind(this);
     this.validator = new SimpleReactValidator({
       mobileVal: {
@@ -492,6 +532,13 @@ class PersonalDetails extends Component {
 
   componentDidMount() {
     this.getallCountriesData();
+    if (this.props.profileDetails.countryJsonId) {
+      this.getStatesOfACountry(this.props.profileDetails.countryJsonId);
+      this.getCountryByUsingId(this.props.profileDetails.countryJsonId);
+    }
+    if (this.props.profileDetails.stateJsonId) {
+      this.getCitiesOfAState(this.props.profileDetails.stateJsonId);
+    }
     this.props.getProfileDataAction(this.props.isLoggedIn);
     if (this.props.profileDetails.default_language) {
       this.setState({
@@ -502,21 +549,22 @@ class PersonalDetails extends Component {
         language: "en",
       });
     }
-    var countrySelected = CountryData.getCountryById(
-      this.props.profileDetails.countryJsonId - 1
-    );
+    // var countrySelected = CountryData.getCountryById(
+    //   this.props.profileDetails.countryJsonId - 1
+    // );
     let country_code = "";
-    let arr = [];
+    // let arr = [];
     let phoneCode = "";
-    if (countrySelected) {
+    if (this.state.countrySelectedData) {
+      let countrySelected = this.state.countrySelectedData;
       country_code = countrySelected.sortname;
       phoneCode = countrySelected.phonecode;
-      arr.push(country_code);
+      // arr.push(country_code.toLowerCase());
     }
     if (this.props.profileDetails.country) {
       this.setState({
         displayCountry: true,
-        phoneCountry: arr,
+        // phoneCountry: arr,
         phoneCode,
         fields: {
           country_code: country_code,
@@ -532,12 +580,14 @@ class PersonalDetails extends Component {
       this.props.profileDetails.country
     ) {
       let phone = this.props.profileDetails.phone_number;
+      let temp = this.state.fields.phone_number;
+      var mob = temp.split(`+${phoneCode}`);
       this.setState({
         displayCountry: true,
         fields: {
           phone_number: phone,
         },
-        mobile: phone,
+        mobile: mob[1],
       });
     }
     if (this.props.profileDetails.country) {
@@ -579,22 +629,107 @@ class PersonalDetails extends Component {
       })
       .catch((error) => {});
   }
+  getCitiesOfAState(id) {
+    fetch(API_URL + `/get-city?state_id=${id}`, {
+      method: "get",
+      headers: {
+        Accept: "application/json",
+        "Accept-Language": localStorage["i18nextLng"],
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + this.props.isLoggedIn,
+      },
+    })
+      .then((response) => response.json())
+      .then((responseData) => {
+        this.setState({
+          cityList: responseData.data,
+        });
+      })
+      .catch((error) => {});
+  }
+  getCountryByUsingId(id) {
+    fetch(API_URL + `/get-countries-by-id?country_id=${id}`, {
+      method: "get",
+      headers: {
+        Accept: "application/json",
+        "Accept-Language": localStorage["i18nextLng"],
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + this.props.isLoggedIn,
+      },
+    })
+      .then((response) => response.json())
+      .then((responseData) => {
+        // console.log("^^^country data test", responseData.data[0]);
+        this.setState(
+          {
+            countrySelectedData: responseData.data[0],
+          },
+          () => {
+            let country_code = "";
+            let phoneCode = "";
+            let arr = [];
+            if (this.state.countrySelectedData) {
+              let countrySelected = this.state.countrySelectedData;
+              country_code = countrySelected.sortname;
+              phoneCode = countrySelected.phonecode;
+              // arr.push(country_code.toLowerCase());
+              if (this.props.profileDetails.phone_number) {
+                let temp = this.props.profileDetails.phone_number;
+                var mob = temp.split(`+${phoneCode}`);
+              }
+            }
+            this.setState({
+              displayCountry: true,
+              phoneCountry: arr,
+              phoneCode,
+              countryJsonId: id,
+              fields: {
+                country_code: country_code,
+              },
+              mobile: mob[1],
+            });
+          }
+        );
+      })
+      .catch((error) => {});
+  }
+  onchangeNum(e) {
+    this.setState({
+      mobile: e.target.value,
+    });
+  }
   componentWillReceiveProps(props) {
+    if (
+      this.props.profileDetails.countryJsonId !==
+        props.profileDetails.countryJsonId &&
+      props.profileDetails.countryJsonId
+    ) {
+      this.getStatesOfACountry(props.profileDetails.countryJsonId);
+      this.getCountryByUsingId(props.profileDetails.countryJsonId);
+    }
+    if (
+      this.props.profileDetails.stateJsonId !==
+        props.profileDetails.stateJsonId &&
+      props.profileDetails.stateJsonId
+    ) {
+      this.getCitiesOfAState(props.profileDetails.stateJsonId);
+    }
     if (
       props.profileDetails.countryJsonId &&
       props.profileDetails.countryJsonId !==
         this.props.profileDetails.countryJsonId
     ) {
-      var countrySelected = CountryData.getCountryById(
-        props.profileDetails.countryJsonId - 1
-      );
+      // var countrySelected = CountryData.getCountryById(
+      //   props.profileDetails.countryJsonId - 1
+      // );
       let country_code = "";
       let phoneCode = "";
       let arr = [];
-      if (countrySelected) {
+      if (this.state.countrySelectedData) {
+        let countrySelected = this.state.countrySelectedData;
         country_code = countrySelected.sortname;
         phoneCode = countrySelected.phonecode;
-        arr.push(country_code);
+        arr.push(country_code.toLowerCase());
       }
       if (props.profileDetails.country) {
         this.setState({
@@ -617,11 +752,12 @@ class PersonalDetails extends Component {
       //   "^^^ recieve props phone number",
       //   props.profileDetails.phone_number
       // );
-      var countrySelected = CountryData.getCountryById(
-        props.profileDetails.countryJsonId - 1
-      );
+      // var countrySelected = CountryData.getCountryById(
+      //   props.profileDetails.countryJsonId - 1
+      // );
       let phoneCode = "";
-      if (countrySelected) {
+      if (this.state.countrySelectedData) {
+        let countrySelected = this.state.countrySelectedData;
         phoneCode = countrySelected.phonecode;
       }
       // if (this.state.phoneCode) {
@@ -637,6 +773,7 @@ class PersonalDetails extends Component {
       //   phoneCode,
       //   mob
       // );
+      // console.log("^^^^^test number", mob);
       let phone = props.profileDetails.phone_number;
       this.setState({
         mobile: mob[1],
@@ -826,36 +963,42 @@ class PersonalDetails extends Component {
     phone_number,
     countryJson
   ) {
-    // console.log("^^^kyc", country, state, city, country_code);
+    // console.log(
+    //   "^^^country.js testing",
+    //   country,
+    //   state,
+    //   city,
+    //   country_code,
+    //   phoneCode,
+    //   phone_number,
+    //   countryJson,
+    //   this.state.countrySelected,
+    //   this.props.profileDetails.country,
+    //   this.state.fields.phone_number,
+    //   this.state.mobile
+    // );
     let fields = this.state.fields;
-    if (this.state.countrySelected === country) {
-      if (this.state.fields.phone_number === phone_number) {
-        fields["phone_number"] = phone_number;
-        let mobile = phone_number;
+    if (this.props.profileDetails.country === country) {
+      if (this.state.fields.phone_number) {
+        let temp = this.state.fields.phone_number;
+        var mob = temp.split(`+${phoneCode}`);
         this.setState({
-          phoneCountry: [country_code],
-          mobile,
+          mobile: mob[1],
+          countryJsonId: countryJson,
+          phoneCode,
         });
       } else {
-        fields["phone_number"] = this.state.fields.phone_number;
-        let mobile = this.state.mobile;
         this.setState({
-          phoneCountry: [country_code],
-          mobile,
+          countryJsonId: countryJson,
+          phoneCode,
         });
       }
     } else {
       let mobile = this.state.mobile;
-      if (
-        this.state.phoneCountry &&
-        this.state.phoneCountry[0] != country_code
-      ) {
-        mobile = `+${phoneCode}`;
-      }
       this.setState({
-        phoneCountry: [country_code],
-        mobile,
+        mobile: phone_number,
         countryJsonId: countryJson,
+        phoneCode,
       });
     }
     let self = this;
@@ -866,20 +1009,22 @@ class PersonalDetails extends Component {
         stateSelected: state,
         citySelected: city,
         fields,
-      },
-      () => {
-        // To rerender the mobile input field
-        self.setState(
-          {
-            displayCountry: false,
-          },
-          () => {
-            self.setState({
-              displayCountry: true,
-            });
-          }
-        );
+        phoneCode,
+        displayCountry: true,
       }
+      // () => {
+      //   // To rerender the mobile input field
+      //   self.setState(
+      //     {
+      //       displayCountry: false,
+      //     },
+      //     () => {
+      //       self.setState({
+      //         displayCountry: true,
+      //       });
+      //     }
+      //   );
+      // }
     );
     var loc = {
       country: country,
@@ -1653,13 +1798,17 @@ class PersonalDetails extends Component {
           profileData.append("profile_pic", this.state.profileImage);
         }
         profileData.append("default_language", this.state.language);
-        profileData.append("phone_number", this.state.fields.phone_number);
-        // profileData.append("country_code", this.state.fields.country_code);
-        var countrySelected = CountryData.getCountryById(
-          this.state.countryJsonId - 1
+        profileData.append(
+          "phone_number",
+          "+" + `${this.state.phoneCode}` + `${this.state.mobile}`
         );
+        // profileData.append("country_code", this.state.fields.country_code);
+        // var countrySelected = CountryData.getCountryById(
+        //   this.state.countryJsonId - 1
+        // );
         let country_code = "";
-        if (countrySelected) {
+        if (this.state.countrySelectedData) {
+          let countrySelected = this.state.countrySelectedData;
           country_code = countrySelected.sortname;
         }
         profileData.append("country_code", country_code);
@@ -1840,7 +1989,7 @@ class PersonalDetails extends Component {
     let phonecode, country_code, country_id;
     let arr = [];
     allCountries.map((country, index) => {
-      if (country.name == this.props.profileDetails.country) {
+      if (country.name === this.props.profileDetails.country) {
         phonecode = country.phonecode;
         country_code = country.sortname;
         country_id = country.id;
@@ -1854,16 +2003,30 @@ class PersonalDetails extends Component {
       let temp = this.props.profileDetails.phone_number;
       var mob = temp.split(`+${phonecode}`);
       let phone = this.props.profileDetails.phone_number;
-      this.setState({
-        mobile: mob[1],
-        displayCountry: true,
-        fields: {
-          phone_number: phone,
+      this.setState(
+        {
+          mobile: mob[1],
+          displayCountry: true,
+          fields: {
+            phone_number: phone,
+          },
+          phoneCountry: arr,
+          phoneCode: phonecode,
+          countryJsonId: country_id,
         },
-        phoneCountry: arr,
-        phoneCode: phonecode,
-        countryJsonId: country_id,
-      });
+        () => {
+          this.setState(
+            {
+              displayCountry: false,
+            },
+            () => {
+              this.setState({
+                displayCountry: true,
+              });
+            }
+          );
+        }
+      );
     } else {
       this.setState({
         displayCountry: false,
@@ -1921,7 +2084,24 @@ class PersonalDetails extends Component {
       }
     );
   };
-
+  getStatesOfACountry(id) {
+    fetch(API_URL + `/get-states?country_id=${id}`, {
+      method: "get",
+      headers: {
+        Accept: "application/json",
+        "Accept-Language": localStorage["i18nextLng"],
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + this.props.isLoggedIn,
+      },
+    })
+      .then((response) => response.json())
+      .then((responseData) => {
+        this.setState({
+          stateList: responseData.data,
+        });
+      })
+      .catch((error) => {});
+  }
   render() {
     let errors;
     const { getFieldProps, getFieldError } = this.props.form;
@@ -1929,12 +2109,12 @@ class PersonalDetails extends Component {
     const { profileDetails } = this.state;
     var me = this;
     // console.log(
-    //   "phoneCountry countrySelected^^",
-    //   this.state.displayCountry,
-    //   this.state.phoneCountry,
-    //   this.state.mobile,
-    //   this.state.fields.phone_number,
-    //   this.state.countryJsonId
+    //   "countryJsonId^^",
+    //   this.state.displayCountry
+    //   // this.state.phoneCountry,
+    //   // this.state.mobile,
+    //   // this.state.fields.phone_number,
+    //   // this.state.countryJsonId
     // );
     return (
       <Profilewrap
@@ -2167,6 +2347,9 @@ class PersonalDetails extends Component {
                           ? this.state.citySelected
                           : this.props.profileDetails.city_town
                       }
+                      stateList={this.state.stateList}
+                      cityList={this.state.cityList}
+                      countrySelectedData={this.state.countrySelectedData}
                       country_id={this.state.countryJsonId}
                       phone_number={this.state.fields.phone_number}
                       onCountryChange={(
@@ -2194,7 +2377,56 @@ class PersonalDetails extends Component {
                     </CountryMsg>
                   </Col>
                 </FourthRow>
-                {this.state.displayCountry && this.state.phoneCountry ? (
+                {this.state.displayCountry && (
+                  <FourthRow>
+                    <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }}>
+                      <Postalkyc>
+                        {this.t(
+                          "identity_verification:subhead_mobile_no.message"
+                        )}
+                        *
+                      </Postalkyc>
+                      <MobileInput
+                        addonBefore={
+                          <span className="addon">
+                            <img
+                              alt="flag"
+                              src={`https://production-static-asset.s3.us-east-2.amazonaws.com/country/${this.state.countryJsonId}.png`}
+                            />
+                            <span>+{this.state.phoneCode}</span>
+                          </span>
+                        }
+                        onChange={(e) => {
+                          this.onchangeNum(e);
+                        }}
+                        type="text"
+                        disabled={!this.state.editMode}
+                        value={this.state.mobile}
+                        className={
+                          !this.state.editMode ? "disabled" : "enabled"
+                        }
+                      />
+                      {this.validator.message(
+                        "phone_number",
+                        this.state.mobile,
+                        "required|mobileVal|min:5|max:30",
+                        "text-danger-validation",
+                        {
+                          required:
+                            this.t(
+                              "identity_verification:subhead_mobile_no.message"
+                            ) +
+                            " " +
+                            t("validations:field_is_required.message"),
+                          min: t("validations:mobile_no_min_error.message"),
+                          max: t("validations:mobile_no_max_error.message"),
+                        }
+                      )}
+                    </Col>
+                  </FourthRow>
+                )}
+
+                {/* {this.state.displayCountry && this.state.phoneCountry ? (
                   <FourthRow>
                     <Col
                       md={{ span: 24 }}
@@ -2230,13 +2462,15 @@ class PersonalDetails extends Component {
                             preferredCountries={[]}
                             inputClassName="intl-tel-input form-control"
                             onlyCountries={
+                              this.state.phoneCountry &&
                               this.state.phoneCountry[0] !== null
                                 ? this.state.phoneCountry
                                 : ""
                             }
                             defaultCountry={
+                              this.state.phoneCountry &&
                               this.state.phoneCountry[0] !== null
-                                ? this.state.phoneCountry[0].toLowerCase()
+                                ? this.state.phoneCountry[0]
                                 : ""
                             }
                             separateDialCode={true}
@@ -2266,7 +2500,7 @@ class PersonalDetails extends Component {
                   </FourthRow>
                 ) : (
                   ""
-                )}
+                )} */}
                 <FourthRow>
                   <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }}>
                     <Postal>
@@ -2450,12 +2684,18 @@ class PersonalDetails extends Component {
                               });
                             }
                             if (this.props.profileDetails.countryJsonId) {
-                              var countrySelected = CountryData.getCountryById(
-                                this.props.profileDetails.countryJsonId - 1
-                              );
+                              // var countrySelected = CountryData.getCountryById(
+                              //   this.props.profileDetails.countryJsonId - 1
+                              // );
                               let country_code = "";
                               let arr = [];
-                              if (countrySelected) {
+                              if (this.state.countrySelectedData) {
+                                let countrySelected = this.state
+                                  .countrySelectedData;
+                                // console.log(
+                                //   "^^^^^^^^^^^countrySelected",
+                                //   countrySelected
+                                // );
                                 country_code = countrySelected.sortname;
                                 arr.push(country_code.toLowerCase());
                               }

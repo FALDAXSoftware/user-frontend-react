@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import "antd/dist/antd.css";
 import styled from "styled-components";
-import CountryData from "country-state-city";
+// import CountryData from "country-state-city";
 import { Select, Row, Col } from "antd";
 import { connect } from "react-redux";
 import { createForm, formShape } from "rc-form";
@@ -99,25 +99,50 @@ class CountryPick extends Component {
       cities: [],
       phone_number: "",
       countryList: "",
+      stateList: "",
+      cityList: "",
       country_json_id: "",
+      countrySelectedId: "",
+      stateSelectedId: "",
+      countrySelectedData: "",
     };
     this.getallCountriesData = this.getallCountriesData.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeState = this.handleChangeState.bind(this);
     this.handleChangeCity = this.handleChangeCity.bind(this);
     this.getCountryId = this.getCountryId.bind(this);
+    this.getStatesOfACountry = this.getStatesOfACountry.bind(this);
+    this.getCitiesOfAState = this.getCitiesOfAState.bind(this);
+    this.getCountryByUsingId = this.getCountryByUsingId.bind(this);
     this.t = this.props.t;
   }
 
   /* Life-Cycle Methods */
   componentDidMount() {
     this.getallCountriesData();
-    var countrySelected = CountryData.getCountryById(this.props.country_id - 1);
+    // var countrySelected = CountryData.getCountryById(this.props.country_id - 1);
     let country_code = "";
     let phoneCode = "";
-    if (countrySelected) {
-      country_code = countrySelected.sortname;
+    if (this.state.countrySelectedData) {
+      let countrySelected = this.state.countrySelectedData;
+      country_code = countrySelected.sortname.toLowerCase();
       phoneCode = countrySelected.phonecode;
+    }
+    // console.log("^^statelist", this.props.stateList);
+    if (this.props.stateList) {
+      this.setState({
+        stateList: this.props.stateList,
+      });
+    }
+    if (this.props.cityList) {
+      this.setState({
+        cityList: this.props.cityList,
+      });
+    }
+    if (this.props.countrySelectedData) {
+      this.setState({
+        countrySelectedData: this.props.countrySelectedData,
+      });
     }
     // console.log("country", this.props.phone_number);
     this.setState({
@@ -136,14 +161,38 @@ class CountryPick extends Component {
         country_json_id: newprops.country_id,
       });
     }
+    // console.log("^^statelist", newprops.stateList);
+    if (this.props.stateList !== newprops.stateList && newprops.stateList) {
+      this.setState({
+        stateList: newprops.stateList,
+      });
+    }
+    if (this.props.cityList !== newprops.cityList && newprops.cityList) {
+      this.setState({
+        cityList: newprops.cityList,
+      });
+    }
+    if (
+      this.props.countrySelectedData !== newprops.countrySelectedData &&
+      newprops.countrySelectedData
+    ) {
+      this.setState({
+        countrySelectedData: newprops.countrySelectedData,
+      });
+    }
     if (this.props != newprops) {
-      var countrySelected = CountryData.getCountryById(
-        this.state.country_json_id - 1
-      );
+      // var countrySelected = CountryData.getCountryById(
+      //   this.state.country_json_id - 1
+      // );
       let country_code = "";
       let phoneCode = "";
-      if (countrySelected) {
-        country_code = countrySelected.sortname;
+      // console.log(
+      //   "^^^^^^^^^newprops.countrySelectedData",
+      //   newprops.countrySelectedData
+      // );
+      if (newprops.countrySelectedData) {
+        let countrySelected = newprops.countrySelectedData;
+        country_code = countrySelected.sortname.toLowerCase();
         phoneCode = countrySelected.phonecode;
       }
       this.setState({
@@ -162,13 +211,15 @@ class CountryPick extends Component {
 
   handleChange(value, position) {
     var newPosition = Number(position.key) - 1;
-    var countrySelected = CountryData.getCountryById(newPosition);
+    // console.log("^^^check state", position.key);
+    // var countrySelected = CountryData.getCountryById(newPosition);
     // console.log(countrySelected);
     let country_code = "";
     let phoneCode = "";
     let country_json_id = "";
-    if (countrySelected) {
-      country_code = countrySelected.sortname;
+    if (this.state.countrySelectedData) {
+      let countrySelected = this.state.countrySelectedData;
+      country_code = countrySelected.sortname.toLowerCase();
       phoneCode = countrySelected.phonecode;
       country_json_id = countrySelected.id;
     }
@@ -182,11 +233,16 @@ class CountryPick extends Component {
         phoneCode,
         country_json_id,
         phone_number: "",
+        countrySelectedId: position.key,
+        stateList: "",
+        cityList: "",
         // stateID: null,
         // countryID: newPosition,
         // states
       },
       () => {
+        this.getStatesOfACountry(this.state.countrySelectedId);
+        this.getCountryByUsingId(this.state.countrySelectedId);
         this.passOnChangeToParent();
       }
     );
@@ -201,13 +257,15 @@ class CountryPick extends Component {
     */
 
   handleChangeState(value, position) {
-    var countrySelected = CountryData.getCountryById(
-      this.state.country_json_id - 1
-    );
+    // console.log("^^^teste state value", value, position);
+    // var countrySelected = CountryData.getCountryById(
+    //   this.state.country_json_id - 1
+    // );
     let country_code = "";
     let phoneCode = "";
-    if (countrySelected) {
-      country_code = countrySelected.sortname;
+    if (this.state.countrySelectedData) {
+      let countrySelected = this.state.countrySelectedData;
+      country_code = countrySelected.sortname.toLowerCase();
       phoneCode = countrySelected.phonecode;
     }
     this.setState(
@@ -216,12 +274,14 @@ class CountryPick extends Component {
         city_selected: "",
         country_code,
         phoneCode,
-
+        stateSelectedId: position.key,
+        cityList: "",
         // country_selected: country,
         // stateID: newPosition,
         // cities
       },
       () => {
+        this.getCitiesOfAState(this.state.stateSelectedId);
         this.passOnChangeToParent();
       }
     );
@@ -230,13 +290,14 @@ class CountryPick extends Component {
   }
 
   handleChangeCity(value, position) {
-    var countrySelected = CountryData.getCountryById(
-      this.state.country_json_id - 1
-    );
+    // var countrySelected = CountryData.getCountryById(
+    //   this.state.country_json_id - 1
+    // );
     let country_code = "";
     let phoneCode = "";
-    if (countrySelected) {
-      country_code = countrySelected.sortname;
+    if (this.state.countrySelectedData) {
+      let countrySelected = this.state.countrySelectedData;
+      country_code = countrySelected.sortname.toLowerCase();
       phoneCode = countrySelected.phonecode;
     }
     this.setState({ city_selected: value, country_code, phoneCode }, () => {
@@ -260,16 +321,16 @@ class CountryPick extends Component {
         It is method to get state ID of selected state.
     */
 
-  getStateId(countryId, stateName) {
-    let allStates = CountryData.getStatesOfCountry(countryId);
-    for (let index = 0; index < allStates.length; index++) {
-      const element = allStates[index];
-      if (stateName === element.name) {
-        return element.id;
-      }
-    }
-    return undefined;
-  }
+  // getStateId(countryId, stateName) {
+  //   let allStates = CountryData.getStatesOfCountry(countryId);
+  //   for (let index = 0; index < allStates.length; index++) {
+  //     const element = allStates[index];
+  //     if (stateName === element.name) {
+  //       return element.id;
+  //     }
+  //   }
+  //   return undefined;
+  // }
   passOnChangeToParent = () => {
     // console.log(this.state.phoneCode);
 
@@ -280,7 +341,8 @@ class CountryPick extends Component {
       this.state.country_code,
       this.state.phoneCode,
       this.state.phone_number,
-      this.state.country_json_id
+      this.state.country_json_id,
+      this.state.stateSelectedId
     );
   };
   getallCountriesData() {
@@ -298,6 +360,85 @@ class CountryPick extends Component {
         this.setState({
           countryList: responseData.data,
         });
+      })
+      .catch((error) => {});
+  }
+  getStatesOfACountry(id) {
+    fetch(API_URL + `/get-states?country_id=${id}`, {
+      method: "get",
+      headers: {
+        Accept: "application/json",
+        "Accept-Language": localStorage["i18nextLng"],
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + this.props.isLoggedIn,
+      },
+    })
+      .then((response) => response.json())
+      .then((responseData) => {
+        this.setState({
+          stateList: responseData.data,
+        });
+      })
+      .catch((error) => {});
+  }
+  getCitiesOfAState(id) {
+    fetch(API_URL + `/get-city?state_id=${id}`, {
+      method: "get",
+      headers: {
+        Accept: "application/json",
+        "Accept-Language": localStorage["i18nextLng"],
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + this.props.isLoggedIn,
+      },
+    })
+      .then((response) => response.json())
+      .then((responseData) => {
+        this.setState({
+          cityList: responseData.data,
+        });
+      })
+      .catch((error) => {});
+  }
+  getCountryByUsingId(id) {
+    fetch(API_URL + `/get-countries-by-id?country_id=${id}`, {
+      method: "get",
+      headers: {
+        Accept: "application/json",
+        "Accept-Language": localStorage["i18nextLng"],
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + this.props.isLoggedIn,
+      },
+    })
+      .then((response) => response.json())
+      .then((responseData) => {
+        // console.log("^^^country data test", responseData.data[0]);
+        this.setState(
+          {
+            countrySelectedData: responseData.data[0],
+          },
+          () => {
+            // console.log("^^^country.js", this.state.countrySelectedData);
+            let country_code = "";
+            let phoneCode = "";
+            let country_json_id = "";
+            let countrySelected = this.state.countrySelectedData;
+            country_code = countrySelected.sortname.toLowerCase();
+            phoneCode = countrySelected.phonecode;
+            country_json_id = countrySelected.id;
+            this.setState(
+              {
+                country_code,
+                phoneCode,
+                country_json_id,
+                phone_number: "",
+              },
+              () => {
+                // console.log("^^^country.js Test", this.state.phoneCode);
+                this.passOnChangeToParent();
+              }
+            );
+          }
+        );
       })
       .catch((error) => {});
   }
@@ -323,28 +464,33 @@ class CountryPick extends Component {
     // let allCountries = CountryData.getAllCountries();
     let allCountries = this.state.countryList;
 
-    let countryId = this.getCountryId(this.state.country_selected);
-    let allStates = [];
-    let allCities = [];
-    let selectedState,
-      selectedCity = null;
-    if (countryId) {
-      allStates = CountryData.getStatesOfCountry(countryId);
+    // let countryId = this.getCountryId(this.state.country_selected);
+    let allStates = this.state.stateList;
+    let allCities = this.state.cityList;
+    // let selectedState,
+    //   selectedCity = null;
+    // if (this.state.countrySelectedId) {
+    //   console.log("^^^id test", this.state.countrySelectedId);
+    //   allStates = this.getStatesOfACountry(this.state.countrySelectedId);
+    // }
+    // if (countryId) {
+    //   // allStates = CountryData.getStatesOfCountry(countryId);
+    //   // allStates = getStatesOfACountry(this.state.countrySelectedId);
 
-      selectedState = this.getStateId(countryId, this.state.state_selected);
-      if (selectedState) {
-        allCities = CountryData.getCitiesOfState(selectedState);
-        if (allCities.length == 0) {
-          allCities = [
-            {
-              id: selectedState,
-              name: this.state.state_selected,
-            },
-          ];
-        }
-        selectedCity = this.state.city_selected;
-      }
-    }
+    //   selectedState = this.getStateId(countryId, this.state.state_selected);
+    //   if (selectedState) {
+    //     allCities = CountryData.getCitiesOfState(selectedState);
+    //     if (allCities.length == 0) {
+    //       allCities = [
+    //         {
+    //           id: selectedState,
+    //           name: this.state.state_selected,
+    //         },
+    //       ];
+    //     }
+    //     selectedCity = this.state.city_selected;
+    //   }
+    // }
     // ----------
     return (
       <CountryWrap>
@@ -406,11 +552,12 @@ class CountryPick extends Component {
                     .indexOf(input.toLowerCase()) >= 0
                 }
               >
-                {allStates.map((state, index) => (
-                  <Option key={state.id} value={state.name}>
-                    {state.name}
-                  </Option>
-                ))}
+                {allStates &&
+                  allStates.map((state, index) => (
+                    <Option key={state.id} value={state.name}>
+                      {state.name}
+                    </Option>
+                  ))}
               </SelectS>
             </SelectWrap>
           </Col>
@@ -439,11 +586,12 @@ class CountryPick extends Component {
                     .indexOf(input.toLowerCase()) >= 0
                 }
               >
-                {allCities.map((city, index) => (
-                  <Option key={city.id} value={city.name}>
-                    {city.name}
-                  </Option>
-                ))}
+                {allCities &&
+                  allCities.map((city, index) => (
+                    <Option key={city.id} value={city.name}>
+                      {city.name}
+                    </Option>
+                  ))}
               </SelectS>
             </SelectWrap>
           </Col>

@@ -27,6 +27,7 @@ class CompleteProfile extends React.Component {
 
   comingCancel = (e) => {
     this.setState({ comingSoon: false });
+    this.props.history.push("/editProfile");
     this.props.comingCancel(e);
     this.props.history.push("/editProfile");
   };
