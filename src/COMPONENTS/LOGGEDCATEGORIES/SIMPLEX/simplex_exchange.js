@@ -67,7 +67,7 @@ class SimplexExchange extends React.Component {
       minCurrencyValid: {
         message: `${this.t("general_3:amount_gte_validation.message")} ${
           this.state.minCurrency
-        }`,
+          }`,
         rule: (val, params, validator) => {
           if (parseFloat(val) >= parseFloat(this.state.minCurrency)) {
             return true;
@@ -80,7 +80,7 @@ class SimplexExchange extends React.Component {
       maxCurrencyValid: {
         message: `${this.t("general_3:amount_lte_validation.message")} ${
           this.state.maxCurrency
-        }`,
+          }`,
         rule: (val, params, validator) => {
           if (parseFloat(val) > parseFloat(this.state.maxCurrency)) {
             return false;
@@ -592,7 +592,7 @@ class SimplexExchange extends React.Component {
               // showTFAModal: false
             });
           })
-          .catch((error) => {});
+          .catch((error) => { });
       } else {
         this.setState({
           loader: true,
@@ -662,7 +662,7 @@ class SimplexExchange extends React.Component {
               // showTFAModal: false
             });
           })
-          .catch((error) => {});
+          .catch((error) => { });
       }
     } else {
       this.validator1.showMessages();
@@ -758,7 +758,7 @@ class SimplexExchange extends React.Component {
                       placeholder="0"
                       readOnly
                       value={this.state.currencyToGet}
-                      // onChange={this.handleCurrencyGetChange}
+                    // onChange={this.handleCurrencyGetChange}
                     />
                   </Col>
                   <Col xs={12} sm={12} md={8} className="currency-display">
@@ -840,40 +840,40 @@ class SimplexExchange extends React.Component {
                     </Row>
                   </div>
                 ) : (
-                  <div>
-                    <BorderRow>
-                      <Col>
-                        <ConversionInput
-                          className="address_field"
-                          type="text"
-                          placeholder={this.t("wallet:address_text.message")}
-                          value={this.state.address}
-                          // readOnly
-                          onChange={this.handleAddressChange}
-                        />
-                        {/* {this.validator1.message(
+                    <div>
+                      <BorderRow>
+                        <Col>
+                          <ConversionInput
+                            className="address_field"
+                            type="text"
+                            placeholder={this.t("wallet:address_text.message")}
+                            value={this.state.address}
+                            // readOnly
+                            onChange={this.handleAddressChange}
+                          />
+                          {/* {this.validator1.message(
                         "address",
                         this.state.address,
                         `required|alpha_num|min:15|max:120`,
                         "text-danger-validation"
                       )} */}
-                      </Col>
-                    </BorderRow>
-                    <Row>
-                      <Col>
-                        <ConversionSubmitBtn
-                          onClick={() => this.btnClicked()}
-                          type="primary"
-                          size="large"
-                          block
-                          disabled={this.state.btnDisabled}
-                        >
-                          {this.t("continue_btn.message")}
-                        </ConversionSubmitBtn>
-                      </Col>
-                    </Row>
-                  </div>
-                )}
+                        </Col>
+                      </BorderRow>
+                      <Row>
+                        <Col>
+                          <ConversionSubmitBtn
+                            onClick={() => this.btnClicked()}
+                            type="primary"
+                            size="large"
+                            block
+                            disabled={this.state.btnDisabled}
+                          >
+                            {this.t("continue_btn.message")}
+                          </ConversionSubmitBtn>
+                        </Col>
+                      </Row>
+                    </div>
+                  )}
                 {/* {this.state.address === "" ? (
                 <CreateWalletRow className="create-wallet-link">
                   <Col>

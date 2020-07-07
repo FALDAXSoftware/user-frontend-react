@@ -4,7 +4,7 @@ import { ProfileDiv } from "COMPONENTS/SETTINGS/edit_profile";
 import { Container } from "STYLED-COMPONENTS/HOMEPAGE/style";
 
 export const TicketContainer = styled(Container)`
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#041422" : "white"};
   border-radius: 5px;
   padding-right: 30px;
@@ -19,15 +19,15 @@ export const WholeWrap = styled.div`
 `;
 export const TicketWrap = styled(Row)`
   border-radius: 10px;
-  border: ${props => (props.theme.mode == "dark" ? "1px solid white" : "")};
-  background-color: ${props =>
+  border: ${(props) => (props.theme.mode == "dark" ? "1px solid white" : "")};
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#041422" : "rgb( 255, 255, 255 )"};
   box-shadow: 0px 2px 7px 0px rgba(51, 51, 51, 0.16);
   padding: 40px;
   margin-bottom: 20px;
 `;
 export const Title = styled.div`
-  color: ${props => (props.theme.mode === "dark" ? "white" : "black")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "black")};
   font-family: "Open Sans";
   font-size: 20px;
   font-weight: bold;
@@ -37,7 +37,7 @@ export const TicketA = styled.a`
   display: block;
 `;
 export const Desc = styled.div`
-  color: ${props => (props.theme.mode === "dark" ? "white" : "#666666")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "#666666")};
   margin-top: 10px;
   font-size: 16px;
   &.description {
@@ -47,24 +47,32 @@ export const Desc = styled.div`
   }
 `;
 export const Status = styled.div`
-  color: ${props => props.font_color};
+  color: ${(props) => props.font_color};
   margin-top: 13px;
   display: flex;
   align-items: center;
   padding: 3px 10px;
   font-size: 14px;
-  width: 80px;
+  width: auto;
+  max-width: 75%;
   text-align: center;
   display: block;
   border-radius: 5px;
-  background-color: ${props => props.color};
+  background-color: ${(props) => props.color};
+  @media (max-width: 767px) {
+    max-width: 150px;
+  }
+  &.New {
+    max-width: 30%;
+  }
 `;
 export const Date = styled.span`
   padding-right: 8px;
   font-size: 14px;
   line-height: 2.3;
   display: block;
-  color: ${props => (props.theme.mode === "dark" ? "#ccbebe69" : "#00000070")};
+  color: ${(props) =>
+    props.theme.mode === "dark" ? "#ccbebe69" : "#00000070"};
 `;
 export const NDF = styled.div`
   height: 300px;
@@ -72,7 +80,7 @@ export const NDF = styled.div`
   justify-content: center;
   align-items: center;
   font-weight: 600;
-  color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   font-family: "Open Sans";
 `;
 export const TicketTitle = styled.span`
@@ -81,7 +89,7 @@ export const TicketTitle = styled.span`
   font-weight: bold;
   display: block;
   text-align: center;
-  color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   &:before {
     content: "";
     width: calc(50% - 180px);
