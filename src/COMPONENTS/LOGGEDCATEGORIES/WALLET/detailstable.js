@@ -253,7 +253,7 @@ class DetailsTable extends React.Component {
                         // console.log("^^^erc", me.props.isERC);
                         if (me.props.isERC) {
                           url =
-                            "https://etherscan.io/token/" +
+                            "https://etherscan.io/tx/" +
                             details[index].transaction_id;
                         }
                         return (
