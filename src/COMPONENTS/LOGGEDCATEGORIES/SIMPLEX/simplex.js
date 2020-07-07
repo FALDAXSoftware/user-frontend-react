@@ -66,7 +66,7 @@ class Simplex extends React.Component {
         // message: this.t("validations:simplex_min_limit_error.message"),
         message: `${this.t("general_3:amount_gte_validation.message")} ${
           this.state.minCurrency
-        }`,
+          }`,
         rule: (val, params, validator) => {
           if (parseFloat(val) >= parseFloat(this.state.minCurrency)) {
             return true;
@@ -79,7 +79,7 @@ class Simplex extends React.Component {
       maxCurrencyValid: {
         message: `${this.t("general_3:amount_lte_validation.message")} ${
           this.state.maxCurrency
-        }`,
+          }`,
         rule: (val, params, validator) => {
           if (parseFloat(val) > parseFloat(this.state.maxCurrency)) {
             return false;
@@ -212,7 +212,7 @@ class Simplex extends React.Component {
         }
         this.setState({ loader: false });
       })
-      .catch((error) => {});
+      .catch((error) => { });
   }
   calculateDigitalCurrency() {
     this.setState({
@@ -290,7 +290,7 @@ class Simplex extends React.Component {
             );
           }
         })
-        .catch((error) => {});
+        .catch((error) => { });
     }
   }
   handleCurrencyPayChange(e) {
@@ -482,7 +482,7 @@ class Simplex extends React.Component {
                       placeholder="0"
                       readOnly
                       value={this.state.currencyToGet}
-                      // onChange={this.handleCurrencyGetChange}
+                    // onChange={this.handleCurrencyGetChange}
                     />
                   </Col>
                   <Col xs={12} sm={12} md={8} className="value-display">
