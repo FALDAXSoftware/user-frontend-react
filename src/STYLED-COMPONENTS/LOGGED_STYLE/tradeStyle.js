@@ -579,7 +579,7 @@ export const BTCWrap = styled.div`
       min-width: 125px;
       margin: 0 0 0 5px;
       &.inactive {
-        background: #c7c7cb;
+        color: #c7c7cb;
       }
       &.inactive:hover {
         cursor: not-allowed;
