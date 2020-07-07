@@ -2,12 +2,12 @@
 import React, { Component } from "react";
 import "antd/dist/antd.css";
 import { connect } from "react-redux";
-import { Col, notification } from "antd";
+import { Col, notification, Input } from "antd";
 import styled from "styled-components";
 import SimpleReactValidator from "simple-react-validator";
 import moment from "moment";
-import CountryData from "country-state-city";
-import "react-intl-tel-input/dist/main.css";
+// import CountryData from "country-state-city";
+// import "react-intl-tel-input/dist/main.css";
 
 /* Components */
 import Datepicker from "../Personaldetails/datepicker";
@@ -18,7 +18,7 @@ import { globalVariables } from "Globals.js";
 import { translate } from "react-i18next";
 
 /* STYLED-COMPONENTS */
-import { IntlTelInputS } from "STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle";
+// import { IntlTelInputS } from "STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle";
 import {
   Save,
   FifthRow,
@@ -48,6 +48,39 @@ const Savekyc = styled(Save)`
   margin-left: 0px;
   @media (max-width: 992px) {
     width: 70px;
+  }
+`;
+const MobileInput = styled(Input)`
+  width: 95%;
+  &.enabled {
+    & .ant-input {
+      background-color: ${(props) =>
+        props.theme.mode === "dark" ? "#020f18" : "#f5f5f5"};
+      color: ${(props) =>
+        props.theme.mode === "dark" ? "#fff" : "rgba(0, 0, 0, 0.65)"};
+    }
+  }
+  & .ant-input {
+    height: 42px;
+    font-weight: 600;
+  }
+  & .ant-input-group-addon {
+    color: rgba(0, 0, 0, 0.4);
+    background-color: ${(props) =>
+      props.theme.mode === "dark" ? "transparent" : "#f5f5f5"};
+  }
+  & .addon {
+    display: flex;
+    align-items: center;
+    > img {
+      margin: 0 10px 0 0;
+      max-width: 30px;
+    }
+    > span {
+      font-weight: 600;
+      color: ${(props) =>
+        props.theme.mode === "dark" ? "#ffffff7a" : "rgba(0, 0, 0, 0.4)"};
+    }
   }
 `;
 const FifthRowkyc = styled(FifthRow)`
@@ -183,6 +216,8 @@ class KYCForm extends Component {
       displayCountry: false,
       loader: false,
       disableform: false,
+      countryJsonId: "",
+      phoneCode: "",
       fields: {
         first_name: "",
         last_name: "",
@@ -288,10 +323,11 @@ class KYCForm extends Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.onCountryName = this.onCountryName.bind(this);
     this.getKYCDetails = this.getKYCDetails.bind(this);
+    this.getCountryByUsingId = this.getCountryByUsingId.bind(this);
   }
 
   /* Life-Cycle Methods */
-  componentWillReceiveProps(props, newProps) {
+  async componentWillReceiveProps(props, newProps) {
     if (
       props.profileDetails.is_user_updated &&
       this.props.profileDetails.is_user_updated !==
@@ -319,10 +355,11 @@ class KYCForm extends Component {
       this.props.profileDetails != props.profileDetails &&
       props.profileDetails
     ) {
+      await this.getCountryByUsingId(this.props.profileDetails.countryJsonId);
       this.getKYCDetails();
     }
   }
-  componentDidMount() {
+  async componentDidMount() {
     this.setState({ loader: true });
     if (
       !this.props.profileDetails.is_user_updated &&
@@ -333,6 +370,7 @@ class KYCForm extends Component {
       this.setState({
         disableform: false,
       });
+      await this.getCountryByUsingId(this.props.profileDetails.countryJsonId);
       this.getKYCDetails();
     }
   }
@@ -351,6 +389,7 @@ class KYCForm extends Component {
       .then((response) => response.json())
       .then((responseData) => {
         if (responseData.status === 200) {
+          // console.log("Test kyc ", this.props.profileDetails);
           let fields = {};
           let profileData = this.props.profileDetails;
           fields["first_name"] =
@@ -382,38 +421,46 @@ class KYCForm extends Component {
           let country_code = profileData.country_code;
           fields["phone_number"] = profileData.phone_number.replace(/ /g, "");
           let arr = [];
-          if (country_code !== "undefined") {
-            arr.push(country_code);
-          }
+          // if (country_code !== "undefined") {
+          //   arr.push(country_code);
+          // }
+          // if (profileData.countryJsonId) {
+          //   var countrySelected = CountryData.getCountryById(
+          //     profileData.countryJsonId - 1
+          //   );
+          //   let country_code = "";
+          //   let phoneCode = "";
+          //   if (countrySelected) {
+          //     country_code = countrySelected.sortname;
+          //     phoneCode = countrySelected.phonecode;
+          //     arr.push(country_code.toLowerCase());
+          //   }
+          // }
+          let temp = profileData.phone_number;
+          var mob = temp.split(`+${this.state.phoneCode}`);
+          // console.log("test", mob, profileData.phone_number);
           if (profileData.countryJsonId) {
-            var countrySelected = CountryData.getCountryById(
-              profileData.countryJsonId - 1
-            );
-            let country_code = "";
-            let phoneCode = "";
-            if (countrySelected) {
-              country_code = countrySelected.sortname;
-              phoneCode = countrySelected.phonecode;
-              arr.push(country_code.toLowerCase());
-            }
-            let temp = profileData.phone_number;
-            var mob = temp.split(`+${phoneCode}`);
+            this.setState({
+              countryJsonId: profileData.countryJsonId,
+              country_code: profileData.country_code,
+            });
           }
-          this.setState({
-            countrychange: true,
-            // mobile: profileData.phone_number.replace(/ /g, ""),
-            mobile: mob[1],
-            phoneCountry: arr,
-            displayCountry: true,
-            fields,
-            showSSN: true,
-            loader: false,
-            kycData: fields,
-          });
-          // let temp = profileData;
-          // temp["dob"] = moment(profileData.dob, "DD-MM-YYYY").format(
-          //   "YYYY-MM-DD"
-          // );
+          this.setState(
+            {
+              countrychange: true,
+              mobile: mob[1],
+              displayCountry: false,
+              fields,
+              showSSN: true,
+              loader: false,
+              kycData: fields,
+            },
+            () => {
+              this.setState({
+                displayCountry: true,
+              });
+            }
+          );
         } else {
           this.openNotificationWithIcon(
             "error",
@@ -428,6 +475,28 @@ class KYCForm extends Component {
       .catch((error) => {
         this.setState({ loader: false });
       });
+  }
+  async getCountryByUsingId(id) {
+    this.setState({
+      loader: true,
+    });
+    fetch(API_URL + `/get-countries-by-id?country_id=${id}`, {
+      method: "get",
+      headers: {
+        Accept: "application/json",
+        "Accept-Language": localStorage["i18nextLng"],
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + this.props.isLoggedIn,
+      },
+    })
+      .then((response) => response.json())
+      .then((responseData) => {
+        this.setState({
+          phoneCode: responseData.data[0].phonecode,
+          loader: false,
+        });
+      })
+      .catch((error) => {});
   }
   /* 
         Page: /editProfile --> KYC
@@ -1014,34 +1083,57 @@ class KYCForm extends Component {
                     this.state.phoneCountry[0]
                   )} */}
                   {this.state.displayCountry && (
-                    <IntlTelInputS
-                      value={
-                        this.state.mobile
-                          ? typeof this.state.mobile == "string"
-                            ? this.state.mobile.replace(/ /g, "")
-                            : this.state.mobile
-                          : ""
-                      }
-                      allowDropdown={false}
-                      autoHideDialCode={true}
-                      preferredCountries={[]}
-                      inputClassName="intl-tel-input form-control"
-                      onlyCountries={
-                        this.state.phoneCountry[0] !== null
-                          ? this.state.phoneCountry
-                          : ""
-                      }
-                      defaultCountry={
-                        this.state.phoneCountry[0] !== null
-                          ? this.state.phoneCountry[0].toLowerCase()
-                          : ""
-                      }
-                      separateDialCode={true}
-                      disabled
-                      onPhoneNumberChange={(a, b, c) =>
-                        this.changeNumber(a, b, c)
-                      }
-                    />
+                    // <IntlTelInputS
+                    //   value={
+                    //     this.state.mobile
+                    //       ? typeof this.state.mobile == "string"
+                    //         ? this.state.mobile.replace(/ /g, "")
+                    //         : this.state.mobile
+                    //       : ""
+                    //   }
+                    //   allowDropdown={false}
+                    //   autoHideDialCode={true}
+                    //   preferredCountries={[]}
+                    //   inputClassName="intl-tel-input form-control"
+                    //   onlyCountries={
+                    //     this.state.phoneCountry[0] !== null
+                    //       ? this.state.phoneCountry
+                    //       : ""
+                    //   }
+                    //   defaultCountry={
+                    //     this.state.phoneCountry[0] !== null
+                    //       ? this.state.phoneCountry[0].toLowerCase()
+                    //       : ""
+                    //   }
+                    //   separateDialCode={true}
+                    //   disabled
+                    //   onPhoneNumberChange={(a, b, c) =>
+                    //     this.changeNumber(a, b, c)
+                    //   }
+                    // />
+
+                    <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }}>
+                      <MobileInput
+                        addonBefore={
+                          <span className="addon">
+                            <img
+                              alt="flag"
+                              src={`https://production-static-asset.s3.us-east-2.amazonaws.com/country/${this.state.countryJsonId}.png`}
+                            />
+                            <span>+{this.state.phoneCode}</span>
+                          </span>
+                        }
+                        onChange={(e) => {
+                          this.onchangeNum(e);
+                        }}
+                        type="text"
+                        disabled={true}
+                        value={this.state.mobile}
+                        className={
+                          !this.state.editMode ? "disabled" : "enabled"
+                        }
+                      />
+                    </Col>
                   )}
                 </PhoneDiv>
                 {this.validator.message(
@@ -1063,6 +1155,7 @@ class KYCForm extends Component {
           ) : (
             ""
           )}
+
           <SixthRowkyc>
             <Col
               md={{ span: 24 }}
