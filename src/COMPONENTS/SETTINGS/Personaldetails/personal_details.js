@@ -686,7 +686,7 @@ class PersonalDetails extends Component {
               fields: {
                 country_code: country_code,
               },
-              mobile: mob[1],
+              mobile: mob != undefined ? mob[1] : "",
             });
           }
         );
