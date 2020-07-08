@@ -355,7 +355,7 @@ class KYCForm extends Component {
       this.props.profileDetails != props.profileDetails &&
       props.profileDetails
     ) {
-      await this.getCountryByUsingId(this.props.profileDetails.countryJsonId);
+      // await this.getCountryByUsingId(this.props.profileDetails.countryJsonId);
       this.getKYCDetails();
     }
   }
@@ -370,13 +370,14 @@ class KYCForm extends Component {
       this.setState({
         disableform: false,
       });
-      await this.getCountryByUsingId(this.props.profileDetails.countryJsonId);
+      // await this.getCountryByUsingId(this.props.profileDetails.countryJsonId);
       this.getKYCDetails();
     }
   }
-  getKYCDetails() {
+  async getKYCDetails() {
     var self = this;
     this.setState({ loader: true });
+    await this.getCountryByUsingId(this.props.profileDetails.countryJsonId);
     fetch(API_URL + "/users/get-kyc-detail", {
       method: "get",
       headers: {
