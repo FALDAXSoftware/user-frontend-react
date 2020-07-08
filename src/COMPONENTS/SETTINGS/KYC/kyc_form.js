@@ -377,127 +377,148 @@ class KYCForm extends Component {
   async getKYCDetails() {
     var self = this;
     this.setState({ loader: true });
+    console.log("test", this.props.profileDetails.countryJsonId);
     await this.getCountryByUsingId(this.props.profileDetails.countryJsonId);
-    fetch(API_URL + "/users/get-kyc-detail", {
-      method: "get",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "Accept-Language": localStorage["i18nextLng"],
-        Authorization: "Bearer " + this.props.isLoggedIn,
-      },
-    })
-      .then((response) => response.json())
-      .then((responseData) => {
-        if (responseData.status === 200) {
-          // console.log("Test kyc ", this.props.profileDetails);
-          let fields = {};
-          let profileData = this.props.profileDetails;
-          fields["first_name"] =
-            profileData.first_name !== null ? profileData.first_name : "";
-          fields["last_name"] =
-            profileData.last_name !== null ? profileData.last_name : "";
-          fields["address"] =
-            profileData.street_address !== null
-              ? profileData.street_address
-              : "";
-          fields["address_2"] =
-            profileData.street_address_2 !== null
-              ? profileData.street_address_2
-              : "";
-          fields["zip"] =
-            profileData.postal_code !== null ? profileData.postal_code : "";
-          fields["city_town"] =
-            profileData.city_town !== null ? profileData.city_town : "";
-          fields["country"] =
-            profileData.country !== null ? profileData.country : "";
-          fields["state"] = profileData.state !== null ? profileData.state : "";
-          // fields["dob"] =
-          //   profileData.dob === null || profileData.dob === "Invalid date"
-          //     ? ""
-          //     : moment(profileData.dob, "DD-MM-YYYY").format("YYYY-MM-DD");
-          fields["dob"] = profileData.dob ? profileData.dob : "";
-          fields["country_code"] =
-            profileData.country_code !== null ? profileData.country_code : "";
-          let country_code = profileData.country_code;
-          fields["phone_number"] = profileData.phone_number.replace(/ /g, "");
-          let arr = [];
-          // if (country_code !== "undefined") {
-          //   arr.push(country_code);
-          // }
-          // if (profileData.countryJsonId) {
-          //   var countrySelected = CountryData.getCountryById(
-          //     profileData.countryJsonId - 1
-          //   );
-          //   let country_code = "";
-          //   let phoneCode = "";
-          //   if (countrySelected) {
-          //     country_code = countrySelected.sortname;
-          //     phoneCode = countrySelected.phonecode;
-          //     arr.push(country_code.toLowerCase());
-          //   }
-          // }
-          let temp = profileData.phone_number;
-          var mob = temp.split(`+${this.state.phoneCode}`);
-          // console.log("test", mob, profileData.phone_number);
-          if (profileData.countryJsonId) {
-            this.setState({
-              countryJsonId: profileData.countryJsonId,
-              country_code: profileData.country_code,
-            });
-          }
-          this.setState(
-            {
-              countrychange: true,
-              mobile: mob[1],
-              displayCountry: false,
-              fields,
-              showSSN: true,
-              loader: false,
-              kycData: fields,
-            },
-            () => {
-              this.setState({
-                displayCountry: true,
-              });
-            }
-          );
-        } else {
-          this.openNotificationWithIcon(
-            "error",
-            `${this.t("validations:error_text.message")}: ${
-              responseData.status
-            }`,
-            responseData.err
-          );
-          this.setState({ loader: false });
-        }
+    let responseData = await (
+      await fetch(API_URL + "/users/get-kyc-detail", {
+        method: "get",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Accept-Language": localStorage["i18nextLng"],
+          Authorization: "Bearer " + this.props.isLoggedIn,
+        },
       })
-      .catch((error) => {
-        this.setState({ loader: false });
-      });
+    ).json();
+    // fetch(API_URL + "/users/get-kyc-detail", {
+    //   method: "get",
+    //   headers: {
+    //     Accept: "application/json",
+    //     "Content-Type": "application/json",
+    //     "Accept-Language": localStorage["i18nextLng"],
+    //     Authorization: "Bearer " + this.props.isLoggedIn,
+    //   },
+    // })
+    //   .then((response) => response.json())
+    //   .then((responseData) => {
+    if (responseData.status === 200) {
+      // console.log("Test kyc ", this.props.profileDetails);
+      let fields = {};
+      let profileData = this.props.profileDetails;
+      fields["first_name"] =
+        profileData.first_name !== null ? profileData.first_name : "";
+      fields["last_name"] =
+        profileData.last_name !== null ? profileData.last_name : "";
+      fields["address"] =
+        profileData.street_address !== null ? profileData.street_address : "";
+      fields["address_2"] =
+        profileData.street_address_2 !== null
+          ? profileData.street_address_2
+          : "";
+      fields["zip"] =
+        profileData.postal_code !== null ? profileData.postal_code : "";
+      fields["city_town"] =
+        profileData.city_town !== null ? profileData.city_town : "";
+      fields["country"] =
+        profileData.country !== null ? profileData.country : "";
+      fields["state"] = profileData.state !== null ? profileData.state : "";
+      // fields["dob"] =
+      //   profileData.dob === null || profileData.dob === "Invalid date"
+      //     ? ""
+      //     : moment(profileData.dob, "DD-MM-YYYY").format("YYYY-MM-DD");
+      fields["dob"] = profileData.dob ? profileData.dob : "";
+      fields["country_code"] =
+        profileData.country_code !== null ? profileData.country_code : "";
+      let country_code = profileData.country_code;
+      fields["phone_number"] = profileData.phone_number.replace(/ /g, "");
+      let arr = [];
+      // if (country_code !== "undefined") {
+      //   arr.push(country_code);
+      // }
+      // if (profileData.countryJsonId) {
+      //   var countrySelected = CountryData.getCountryById(
+      //     profileData.countryJsonId - 1
+      //   );
+      //   let country_code = "";
+      //   let phoneCode = "";
+      //   if (countrySelected) {
+      //     country_code = countrySelected.sortname;
+      //     phoneCode = countrySelected.phonecode;
+      //     arr.push(country_code.toLowerCase());
+      //   }
+      // }
+      let temp = profileData.phone_number;
+      var mob = temp.split(`+${this.state.phoneCode}`);
+      // console.log("test", mob, profileData.phone_number);
+      if (profileData.countryJsonId) {
+        this.setState({
+          countryJsonId: profileData.countryJsonId,
+          country_code: profileData.country_code,
+        });
+      }
+      this.setState(
+        {
+          countrychange: true,
+          mobile: mob[1],
+          displayCountry: false,
+          fields,
+          showSSN: true,
+          loader: false,
+          kycData: fields,
+        },
+        () => {
+          this.setState({
+            displayCountry: true,
+          });
+        }
+      );
+    } else {
+      this.openNotificationWithIcon(
+        "error",
+        `${this.t("validations:error_text.message")}: ${responseData.status}`,
+        responseData.err
+      );
+      this.setState({ loader: false });
+    }
+    // })
+    // .catch((error) => {
+    //   this.setState({ loader: false });
+    // });
   }
   async getCountryByUsingId(id) {
     this.setState({
       loader: true,
     });
-    fetch(API_URL + `/get-countries-by-id?country_id=${id}`, {
-      method: "get",
-      headers: {
-        Accept: "application/json",
-        "Accept-Language": localStorage["i18nextLng"],
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + this.props.isLoggedIn,
-      },
-    })
-      .then((response) => response.json())
-      .then((responseData) => {
-        this.setState({
-          phoneCode: responseData.data[0].phonecode,
-          loader: false,
-        });
+    // let responseData = await await fetch(
+    //   API_URL + `/get-countries-by-id?country_id=${id}`,
+    //   {
+    //     method: "get",
+    //     headers: {
+    //       Accept: "application/json",
+    //       "Accept-Language": localStorage["i18nextLng"],
+    //       "Content-Type": "application/json",
+    //       Authorization: "Bearer " + this.props.isLoggedIn,
+    //     },
+    //   }
+    // ).json();
+    let responseData = await (
+      await fetch(API_URL + `/get-countries-by-id?country_id=${id}`, {
+        method: "get",
+        headers: {
+          Accept: "application/json",
+          "Accept-Language": localStorage["i18nextLng"],
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.props.isLoggedIn,
+        },
       })
-      .catch((error) => {});
+    ).json();
+    // .then((response) => response.json())
+    if (responseData) {
+      this.setState({
+        phoneCode: responseData.data[0].phonecode,
+        // loader: false,
+      });
+    }
   }
   /* 
         Page: /editProfile --> KYC
