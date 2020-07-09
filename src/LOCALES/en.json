@@ -2204,19 +2204,25 @@
     },
     "ticket_status_waiting_text": {
       "page": "View all tickets",
-      "message": "Waiting On Contact",
+      "message": "Waiting on Customer Feedback",
       "message_type": "Web content",
       "context": "Ticket status Waiting On Contact text"
     },
     "ticket_status_waiting_us_text": {
       "page": "View all tickets",
-      "message": "Waiting On Us",
+      "message": "Waiting on FALDAX",
       "message_type": "Web content",
       "context": "Ticket status Waiting On Us text"
     },
     "ticket_status_closed_text": {
       "page": "View all tickets",
-      "message": "Closed",
+      "message": "Closed - Resolved",
+      "message_type": "Web content",
+      "context": "Ticket status Closed text"
+    },
+    "ticket_status_unresolved_closed_text": {
+      "page": "View all tickets",
+      "message": "Closed - Unresolved",
       "message_type": "Web content",
       "context": "Ticket status Closed text"
     },
