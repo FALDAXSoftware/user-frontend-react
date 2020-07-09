@@ -1875,7 +1875,7 @@ class PersonalDetails extends Component {
         ) {
           countrymsg = t("validations:required_city.message");
         } else {
-          countrymsg = t("validations:required_country.message");
+          countrymsg = t("validations:required_country_state_city.message");
         }
         this.setState({ countrymsg });
       }
@@ -1995,6 +1995,7 @@ class PersonalDetails extends Component {
         country_id = country.id;
       }
     });
+
     if (
       this.state.profileDetails.phone_number &&
       this.state.profileDetails.country
@@ -2027,10 +2028,15 @@ class PersonalDetails extends Component {
           );
         }
       );
-    } else {
+    } else if (!this.state.profileDetails.country) {
       this.setState({
         displayCountry: false,
       });
+    } else if (
+      this.state.profileDetails.phone_number == "" &&
+      this.state.profileDetails.country
+    ) {
+      this.getCountryByUsingId(this.state.profileDetails.countryJsonId);
     }
     // else {
     //   this.setState({
