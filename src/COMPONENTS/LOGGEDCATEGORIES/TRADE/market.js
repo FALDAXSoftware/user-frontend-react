@@ -816,10 +816,6 @@ class Market extends Component {
       amount,
     } = this.state;
     const RadioGroup = Radio.Group;
-    console.log(
-      "%%%%this.props.qtyPrecision",
-      this.props.qtyPrecision.toString()
-    );
     let stepValue;
     switch (this.props.qtyPrecision.toString()) {
       case "0":
@@ -1071,6 +1067,10 @@ class Market extends Component {
                     onClick={() => {
                       this.walletAccess(this.props.cryptoCode);
                     }}
+                    disabled={this.props.userBal.cryptoinactive}
+                    className={
+                      this.props.userBal.cryptoinactive ? "inactive" : ""
+                    }
                     //  href={`/walletDetails?coinID0=${this.props.cryptoCode}`}
                   >
                     {this.t("general_3:generate_wallet_text.message")}
@@ -1090,6 +1090,10 @@ class Market extends Component {
                     onClick={() => {
                       this.walletAccess(this.props.currencyCode);
                     }}
+                    disabled={this.props.userBal.currencyinactive}
+                    className={
+                      this.props.userBal.currencyinactive ? "inactive" : ""
+                    }
                     // href={`/walletDetails?coinID0=${this.props.currencyCode}`}
                   >
                     {this.t("general_3:generate_wallet_text.message")}

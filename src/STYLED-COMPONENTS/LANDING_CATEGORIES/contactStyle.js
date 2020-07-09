@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Row, Col, Icon, Select } from "antd";
 import DatePicker from "react-datepicker";
 import Dropzone from "react-dropzone";
-import IntlTelInput from "react-intl-tel-input";
+// import IntlTelInput from "react-intl-tel-input";
 
 export const HeadContact = styled.div``;
 export const HeadSpan = styled.p`
@@ -435,11 +435,11 @@ export const SecurityInput = styled(Select)`
     padding-top: 5px;
   }
 `;
-export const IntlTelInputS = styled(IntlTelInput)`
-  & .selected-dial-code {
-    color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
-  }
-`;
+// export const IntlTelInputS = styled(IntlTelInput)`
+//   & .selected-dial-code {
+//     color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
+//   }
+// `;
 export const URLInput = styled(FirstInput)`
   max-width: 450px;
 `;
