@@ -1995,6 +1995,7 @@ class PersonalDetails extends Component {
         country_id = country.id;
       }
     });
+
     if (
       this.state.profileDetails.phone_number &&
       this.state.profileDetails.country
@@ -2027,10 +2028,15 @@ class PersonalDetails extends Component {
           );
         }
       );
-    } else {
+    } else if (!this.state.profileDetails.country) {
       this.setState({
-        // displayCountry: false,
+        displayCountry: false,
       });
+    } else if (
+      this.state.profileDetails.phone_number == "" &&
+      this.state.profileDetails.country
+    ) {
+      this.getCountryByUsingId(this.state.profileDetails.countryJsonId);
     }
     // else {
     //   this.setState({
