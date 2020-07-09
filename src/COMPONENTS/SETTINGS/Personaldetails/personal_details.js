@@ -1875,7 +1875,7 @@ class PersonalDetails extends Component {
         ) {
           countrymsg = t("validations:required_city.message");
         } else {
-          countrymsg = t("validations:required_country.message");
+          countrymsg = t("validations:required_country_state_city.message");
         }
         this.setState({ countrymsg });
       }
@@ -2029,7 +2029,7 @@ class PersonalDetails extends Component {
       );
     } else {
       this.setState({
-        displayCountry: false,
+        // displayCountry: false,
       });
     }
     // else {
