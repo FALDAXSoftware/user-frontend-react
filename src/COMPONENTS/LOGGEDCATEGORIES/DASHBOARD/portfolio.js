@@ -110,16 +110,14 @@ class Portfolio extends Component {
               : `${precision(parseFloat(this.state.total))} ${userFiat}`}
           </LeftHl>
           <RightHl
-            className={
-              parseFloat(this.state.diffrence) <= 0 ? "red_colour" : ""
-            }
+            className={parseFloat(this.state.diffrence) > 0 ? "red_colour" : ""}
           >
-            {parseFloat(this.state.diffrence) <= 0 ? (
+            {parseFloat(this.state.diffrence) > 0 ? (
               <Icon type="arrow-down" />
             ) : (
               <Icon type="arrow-up" />
             )}
-            {precision(parseFloat(this.state.diffrence))} {userFiat}
+            {Math.abs(this.state.diffrence)} {userFiat}
           </RightHl>
         </HighLow>
         <ActDiv>
