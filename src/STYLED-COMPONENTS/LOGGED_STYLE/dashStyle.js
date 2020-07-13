@@ -202,7 +202,13 @@ export const PortTable = styled(Table)`
     // width: 130px;
     }
     & .change{
-    text-align: center;
+      text-align: center;
+      > .green {
+        color:green;
+      }
+      > .red {
+        color:red;
+      }
     }
     & .ant-table-placeholder
     {
