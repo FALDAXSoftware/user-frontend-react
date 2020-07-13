@@ -495,57 +495,57 @@ class StopLimit extends Component {
         this.setState({ currency: props.cryptoPair.currency });
       }
     }
-    if (
-      props.latestFillPrice &&
-      props.latestFillPrice != this.props.latestFillPrice
-    ) {
-      this.setState(
-        {
-          disabledBtn: false,
-          latestFillPrice: props.latestFillPrice,
-        },
-        () => {
-          if (this.state.stop_price > 0) {
-            if (this.state.side === "Buy") {
-              if (
-                parseFloat(this.state.stop_price) >
-                parseFloat(this.state.latestFillPrice)
-              ) {
-                this.setState({
-                  disabledBtn: false,
-                });
-              } else {
-                this.setState({
-                  disabledBtn: true,
-                });
-              }
-            } else {
-              if (
-                parseFloat(this.state.stop_price) <
-                parseFloat(this.state.latestFillPrice)
-              ) {
-                this.setState({
-                  disabledBtn: false,
-                });
-              } else {
-                this.setState({
-                  disabledBtn: true,
-                });
-              }
-            }
-          } else {
-            this.setState({
-              disabledBtn: false,
-            });
-          }
-        }
-      );
-    } else {
-      this.setState({
-        latestFillPrice: this.props.latestFillPrice,
-        disabledBtn: false,
-      });
-    }
+    // if (
+    //   props.latestFillPrice &&
+    //   props.latestFillPrice != this.props.latestFillPrice
+    // ) {
+    //   this.setState(
+    //     {
+    //       disabledBtn: false,
+    //       latestFillPrice: props.latestFillPrice,
+    //     },
+    //     () => {
+    //       if (this.state.stop_price > 0) {
+    //         if (this.state.side === "Buy") {
+    //           if (
+    //             parseFloat(this.state.stop_price) >
+    //             parseFloat(this.state.latestFillPrice)
+    //           ) {
+    //             this.setState({
+    //               disabledBtn: false,
+    //             });
+    //           } else {
+    //             this.setState({
+    //               disabledBtn: true,
+    //             });
+    //           }
+    //         } else {
+    //           if (
+    //             parseFloat(this.state.stop_price) <
+    //             parseFloat(this.state.latestFillPrice)
+    //           ) {
+    //             this.setState({
+    //               disabledBtn: false,
+    //             });
+    //           } else {
+    //             this.setState({
+    //               disabledBtn: true,
+    //             });
+    //           }
+    //         }
+    //       } else {
+    //         this.setState({
+    //           disabledBtn: false,
+    //         });
+    //       }
+    //     }
+    //   );
+    // } else {
+    //   this.setState({
+    //     latestFillPrice: this.props.latestFillPrice,
+    //     disabledBtn: false,
+    //   });
+    // }
   }
 
   /* 
