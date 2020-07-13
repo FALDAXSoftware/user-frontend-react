@@ -94,6 +94,15 @@ class Portfolio extends Component {
         key: "change",
         dataIndex: "change",
         className: "change",
+        render: (change) => (
+          <>
+            {parseFloat(change) <= 0 ? (
+              <p className="red">{Math.abs(parseFloat(change))}%</p>
+            ) : (
+              <p className="green">{Math.abs(parseFloat(change))}%</p>
+            )}
+          </>
+        ),
       },
     ];
     const { userFiat } = this.state;
