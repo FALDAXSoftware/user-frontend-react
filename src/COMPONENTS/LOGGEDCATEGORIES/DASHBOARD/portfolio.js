@@ -128,7 +128,7 @@ class Portfolio extends Component {
             ) : (
               <Icon type="arrow-up" />
             )}
-            {precision(parseFloat(this.state.diffrence))} {userFiat}
+            {Math.abs(this.state.diffrence)} {userFiat}
           </RightHl>
         </HighLow>
         <ActDiv>
