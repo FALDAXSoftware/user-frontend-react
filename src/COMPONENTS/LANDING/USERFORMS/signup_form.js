@@ -426,6 +426,16 @@ class SignupForm extends Component {
             this.t("validations:error_text.message"),
             this.t("general:captcha_not_loaded_error_head.message")
           );
+          this.setState(
+            {
+              recaptchaToken: null,
+              loader: false,
+            },
+            () => {
+              this.onLoadRecaptcha();
+            }
+          );
+          this.setState({ isSignDisable: false });
         }
       } else {
         if (error !== undefined && error !== null) {
