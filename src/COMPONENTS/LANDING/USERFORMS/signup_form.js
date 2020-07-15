@@ -418,7 +418,7 @@ class SignupForm extends Component {
         if (this.state.recaptchaToken != null) {
           obj["g_recaptcha_response"] = this.state.recaptchaToken;
           this.setState({ loader: true });
-          window.ga("send", "event", "Faldax", "Signup");
+          // window.ga("send", "event", "Faldax", "Signup");
           this.props.Signup(obj);
         } else {
           this.openNotificationWithIcon(
