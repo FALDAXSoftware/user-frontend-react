@@ -72,7 +72,11 @@ class MarketPage extends React.PureComponent {
   componentDidMount() {
     this.getPairs();
   }
-
+  componentWillMount() {
+    if (!this.props.profileDetails.is_terms_agreed) {
+      this.props.history.push("/editProfile");
+    }
+  }
   getPairs = () => {
     fetch(API_URL + `/users/get-all-pair`, {
       method: "get",
@@ -324,10 +328,14 @@ function mapStateToProps(state) {
       state.walletReducer.cryptoPair !== undefined
         ? state.walletReducer.cryptoPair
         : "",
+    profileDetails:
+      state.simpleReducer.profileDetails !== undefined
+        ? state.simpleReducer.profileDetails.data[0]
+        : "",
     /* loader:state.simpleReducer.loader?state.simpleReducer.loader:false */
   };
 }
 
 export default translate(["header", "footer", "general_1", "general_4"])(
-  connect(mapStateToProps)(MarketPage)
+  connect(mapStateToProps)(withRouter(MarketPage))
 );
