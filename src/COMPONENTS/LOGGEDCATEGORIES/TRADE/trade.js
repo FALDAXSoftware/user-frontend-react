@@ -42,6 +42,7 @@ import { globalVariables } from "Globals.js";
 import TradingViewChart from "COMPONENTS/tradingviewchart";
 import { translate } from "react-i18next";
 import NumberFormat from "react-number-format";
+import { withRouter } from "react-router-dom";
 /* import FaldaxLoader from 'SHARED-COMPONENTS/FaldaxLoader'; */
 
 /* Styled-Components */
@@ -463,6 +464,11 @@ class Trade extends Component {
     clearInterval(this.interval);
     console.log("thisd unmount", this.props);
     this.props.io.disconnect();
+  }
+  componentWillMount() {
+    if (!this.props.profileDetails.is_terms_agreed) {
+      this.props.history.push("/editProfile");
+    }
   }
   async componentDidMount() {
     if (!this.props.profileDetails) {
@@ -2295,7 +2301,7 @@ export default translate([
   "referral",
   "history",
   "validations",
-])(connect(mapStateToProps, mapDispatchToProps)(Trade));
+])(connect(mapStateToProps, mapDispatchToProps)(withRouter(Trade)));
 
 function getFromLS(key) {
   let ls = {};
