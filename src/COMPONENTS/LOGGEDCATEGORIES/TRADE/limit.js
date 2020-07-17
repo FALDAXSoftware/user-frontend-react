@@ -466,7 +466,7 @@ class Limit extends Component {
     var self = this;
     let obj = {};
     let name = e.target.name;
-    let value = e.target.value;
+    let value = parseFloat(e.target.value).toFixed(8);
     obj[name] = value;
     // this.setState({
     //   fiatCurrencyValue: 0
