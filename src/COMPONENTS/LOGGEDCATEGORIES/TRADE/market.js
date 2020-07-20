@@ -495,8 +495,8 @@ class Market extends Component {
       fiatCurrencyValue: 0,
     });
     this.clearValidation();
-    obj[name] = value;
     if (name === "side") {
+      obj[name] = value;
       obj["amount"] = "";
       obj["total"] = 0;
       if (e.target.value === "Buy") {
@@ -513,7 +513,7 @@ class Market extends Component {
         });
       }
     } else {
-      value = parseFloat(e.target.value).toFixed(8);
+      obj[name] = parseFloat(value).toFixed(8);
     }
     this.setState(
       {
