@@ -466,12 +466,12 @@ class Limit extends Component {
     var self = this;
     let obj = {};
     let name = e.target.name;
-    let value = parseFloat(e.target.value).toFixed(8);
-    obj[name] = value;
+    let value = e.target.value;
     // this.setState({
     //   fiatCurrencyValue: 0
     // });
     if (name === "side") {
+      obj[name] = value;
       obj["amount"] = "";
       obj["total"] = 0;
       obj["limit_price"] = "";
@@ -485,6 +485,8 @@ class Limit extends Component {
           fiatCurrencyValue: 0,
         });
       }
+    } else {
+      obj[name] = parseFloat(value).toFixed(8);
     }
     this.setState(
       {
