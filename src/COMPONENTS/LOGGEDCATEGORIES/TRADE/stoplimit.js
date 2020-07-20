@@ -569,7 +569,7 @@ class StopLimit extends Component {
     var self = this;
     let obj = {};
     let name = e.target.name;
-    let value = parseFloat(e.target.value).toFixed(8);
+    let value = e.target.value;
     obj[name] = value;
     if (name === "side") {
       obj["amount"] = "";
@@ -586,6 +586,8 @@ class StopLimit extends Component {
           fiatCurrencyValue: 0,
         });
       }
+    } else {
+      value = parseFloat(e.target.value).toFixed(8);
     }
     this.setState(
       {

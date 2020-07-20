@@ -490,7 +490,7 @@ class Market extends Component {
     var self = this;
     let obj = {};
     let name = e.target.name;
-    let value = parseFloat(e.target.value).toFixed(8);
+    let value = e.target.value;
     this.setState({
       fiatCurrencyValue: 0,
     });
@@ -512,6 +512,8 @@ class Market extends Component {
           total: 0,
         });
       }
+    } else {
+      value = parseFloat(e.target.value).toFixed(8);
     }
     this.setState(
       {
