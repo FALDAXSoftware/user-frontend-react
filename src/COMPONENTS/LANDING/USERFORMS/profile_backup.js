@@ -308,6 +308,7 @@ class ProfileBackup extends Component {
                         _self.t("validations:error_text.message"),
                         _self.t("validations:image_upload_error.message")
                       );
+                      document.getElementById("front").value = "";
                     }
                   };
                   img.src = fr.result;

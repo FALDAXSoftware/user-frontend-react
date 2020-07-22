@@ -198,7 +198,6 @@ class OrderTrade extends Component {
                         if (data.flag == true) {
                           flagValue = true;
                         }
-                        console.log("flagValue", flagValue);
                         if (
                           self.props.profileDetails.date_format === "MM/DD/YYYY"
                         )
