@@ -42,6 +42,7 @@ import { globalVariables } from "Globals.js";
 import TradingViewChart from "COMPONENTS/tradingviewchart";
 import { translate } from "react-i18next";
 import NumberFormat from "react-number-format";
+import { withRouter } from "react-router-dom";
 /* import FaldaxLoader from 'SHARED-COMPONENTS/FaldaxLoader'; */
 
 /* Styled-Components */
@@ -463,6 +464,11 @@ class Trade extends Component {
     clearInterval(this.interval);
     console.log("thisd unmount", this.props);
     this.props.io.disconnect();
+  }
+  componentWillMount() {
+    if (!this.props.profileDetails.is_terms_agreed) {
+      this.props.history.push("/editProfile");
+    }
   }
   async componentDidMount() {
     if (!this.props.profileDetails) {
@@ -1127,7 +1133,7 @@ class Trade extends Component {
               x: 0,
               y: 0,
               i: "tradeView",
-              minW: 6,
+              minW: 4,
               minH: 3,
               moved: false,
               static: false,
@@ -1138,7 +1144,7 @@ class Trade extends Component {
               x: 8,
               y: 0,
               i: "instruments",
-              minW: 4,
+              minW: 3,
               minH: 2,
               moved: false,
               static: false,
@@ -1161,7 +1167,7 @@ class Trade extends Component {
               x: 8,
               y: 4,
               i: "buysellBook",
-              minW: 4,
+              minW: 3,
               minH: 3,
               moved: false,
               static: false,
@@ -1172,7 +1178,7 @@ class Trade extends Component {
               x: 4,
               y: 8,
               i: "depthChart",
-              minW: 4,
+              minW: 3,
               minH: 4,
               maxH: 5,
               moved: false,
@@ -1184,7 +1190,7 @@ class Trade extends Component {
               x: 0,
               y: 4,
               i: "orderHistory",
-              minW: 4,
+              minW: 3,
               minH: 2,
               moved: false,
               static: false,
@@ -1195,7 +1201,7 @@ class Trade extends Component {
               x: 0,
               y: 12,
               i: "myorder",
-              minW: 6,
+              minW: 3,
               minH: 2,
               moved: false,
               static: false,
@@ -2295,7 +2301,7 @@ export default translate([
   "referral",
   "history",
   "validations",
-])(connect(mapStateToProps, mapDispatchToProps)(Trade));
+])(connect(mapStateToProps, mapDispatchToProps)(withRouter(Trade)));
 
 function getFromLS(key) {
   let ls = {};
@@ -2310,7 +2316,7 @@ function getFromLS(key) {
               x: 0,
               y: 0,
               i: "tradeView",
-              minW: 6,
+              minW: 4,
               minH: 3,
               moved: false,
               static: false,
@@ -2321,7 +2327,7 @@ function getFromLS(key) {
               x: 8,
               y: 0,
               i: "instruments",
-              minW: 4,
+              minW: 3,
               minH: 2,
               moved: false,
               static: false,
@@ -2344,7 +2350,7 @@ function getFromLS(key) {
               x: 8,
               y: 4,
               i: "buysellBook",
-              minW: 4,
+              minW: 3,
               minH: 3,
               moved: false,
               static: false,
@@ -2355,7 +2361,7 @@ function getFromLS(key) {
               x: 4,
               y: 8,
               i: "depthChart",
-              minW: 4,
+              minW: 3,
               minH: 4,
               maxH: 5,
               moved: false,
@@ -2367,7 +2373,7 @@ function getFromLS(key) {
               x: 0,
               y: 4,
               i: "orderHistory",
-              minW: 4,
+              minW: 3,
               minH: 2,
               moved: false,
               static: false,
@@ -2378,7 +2384,7 @@ function getFromLS(key) {
               x: 0,
               y: 12,
               i: "myorder",
-              minW: 6,
+              minW: 3,
               minH: 2,
               moved: false,
               static: false,

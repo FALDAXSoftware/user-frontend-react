@@ -15,7 +15,7 @@ import {
   Dropdown,
   Button,
   Tooltip,
-  Layout
+  Layout,
 } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquareFull } from "@fortawesome/free-solid-svg-icons";
@@ -26,11 +26,12 @@ import { Scrollbars } from "react-custom-scrollbars";
 import LoggedNavigation from "COMPONENTS/NAVIGATIONS/loggednavigation";
 import CommonFooter from "COMPONENTS/LANDING/FOOTERS/footer_home";
 import { globalVariables } from "Globals.js";
+import { withRouter } from "react-router-dom";
 
 /*Styled-components*/
 import {
   ContactWrap,
-  GreyWrap
+  GreyWrap,
 } from "STYLED-COMPONENTS/LANDING_CATEGORIES/contactStyle";
 import { SettingButton } from "../../../STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
 import SubMenu from "antd/lib/menu/SubMenu";
@@ -51,7 +52,7 @@ const { Content, Footer, Sider } = Layout;
 let { API_URL } = globalVariables;
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 const WhiteBgWrapper = styled.div`
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.mode === "dark" ? "#041b2c" : "white"};
   -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
   -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -79,14 +80,14 @@ const Overlay = styled.div`
 `;
 const RGL = styled(ResponsiveReactGridLayout)`
   & .react-resizable-handle::after {
-    border-right: ${props =>
-    props.theme.mode === "dark"
-      ? "2px solid rgb(255, 255, 255) !important"
-      : ""};
-    border-bottom: ${props =>
-    props.theme.mode === "dark"
-      ? "2px solid rgb(255, 255, 255) !important"
-      : ""};
+    border-right: ${(props) =>
+      props.theme.mode === "dark"
+        ? "2px solid rgb(255, 255, 255) !important"
+        : ""};
+    border-bottom: ${(props) =>
+      props.theme.mode === "dark"
+        ? "2px solid rgb(255, 255, 255) !important"
+        : ""};
   }
 `;
 
@@ -108,10 +109,10 @@ class Dashboard extends Component {
       isSaving: false,
       currentTemplate: {
         widgets: [],
-        layouts: {}
+        layouts: {},
       },
       isSaved: true,
-      currentTemplateManagerTab: 1
+      currentTemplateManagerTab: 1,
     };
     this.t = this.props.t;
     io = this.props.io;
@@ -153,11 +154,11 @@ class Dashboard extends Component {
                         height: "98%",
                         symbol: `BINANCE:${innerElement.split("-")[0]}${
                           innerElement.split("-")[1]
-                          }`,
+                        }`,
                         showIntervalTabs: true,
                         locale: localStorage["i18nextLng"],
                         colorTheme: this.props.theme ? "dark" : "light",
-                        largeChartUrl: "https://faldax.com"
+                        largeChartUrl: "https://faldax.com",
                       }}
                     />
                   </WhiteBgWrapper>
@@ -180,7 +181,7 @@ class Dashboard extends Component {
                       market: "crypto",
                       showToolbar: true,
                       colorTheme: this.props.theme ? "dark" : "light",
-                      locale: localStorage["i18nextLng"]
+                      locale: localStorage["i18nextLng"],
                     }}
                   />
                 </WhiteBgWrapper>
@@ -201,7 +202,7 @@ class Dashboard extends Component {
                       screener_type: "crypto_mkt",
                       displayCurrency: "USD",
                       colorTheme: this.props.theme ? "dark" : "light",
-                      locale: localStorage["i18nextLng"]
+                      locale: localStorage["i18nextLng"],
                     }}
                   />
                 </WhiteBgWrapper>
@@ -317,39 +318,44 @@ class Dashboard extends Component {
         w: 5,
         y: Infinity,
         x: 0,
-        i: key
+        i: key,
       });
       selfLayout.md.push({
         h: 3,
         w: 12,
         y: 0,
         x: 0,
-        i: key
+        i: key,
       });
       selfLayout.sm.push({
         h: 3,
         w: 12,
         y: 0,
         x: 0,
-        i: key
+        i: key,
       });
       selfLayout.xs.push({
         h: 3,
         w: 12,
         y: 0,
         x: 0,
-        i: key
+        i: key,
       });
       selfLayout.xxs.push({
         h: 3,
         w: 12,
         y: 0,
         x: 0,
-        i: key
+        i: key,
       });
     }
     return selfLayout;
   };
+  componentWillMount() {
+    if (!this.props.profileDetails.is_terms_agreed) {
+      this.props.history.push("/editProfile");
+    }
+  }
   componentDidMount() {
     var self = this;
     self.getPairs();
@@ -366,16 +372,16 @@ class Dashboard extends Component {
         Accept: "application/json",
         "Content-Type": "application/json",
         "Accept-Language": localStorage["i18nextLng"],
-        Authorization: "Bearer " + this.props.isLoggedIn
-      }
+        Authorization: "Bearer " + this.props.isLoggedIn,
+      },
     })
-      .then(response => response.json())
-      .then(responseData => {
+      .then((response) => response.json())
+      .then((responseData) => {
         let templates = [];
         if (responseData.data?.dashboard_layout?.templates) {
           templates = [
             ...inbuiltTemplates,
-            ...responseData.data.dashboard_layout.templates
+            ...responseData.data.dashboard_layout.templates,
           ];
         } else {
           templates = [...inbuiltTemplates];
@@ -402,10 +408,10 @@ class Dashboard extends Component {
           allTemplates: templates,
           currentTemplateIndex: currentSelectedTemplate,
           currentTemplate: templates[currentSelectedTemplate],
-          isSaved: true
+          isSaved: true,
         });
       })
-      .catch(error => { });
+      .catch((error) => {});
   };
   getPairs = () => {
     fetch(API_URL + `/users/get-all-pair`, {
@@ -413,22 +419,22 @@ class Dashboard extends Component {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        "Accept-Language": localStorage["i18nextLng"]
-      }
+        "Accept-Language": localStorage["i18nextLng"],
+      },
     })
-      .then(response => response.json())
-      .then(responseData => {
+      .then((response) => response.json())
+      .then((responseData) => {
         if (responseData.status == 200) {
           this.setState({
-            pairs: responseData.data
+            pairs: responseData.data,
           });
         }
       })
-      .catch(error => { });
+      .catch((error) => {});
   };
-  onCancle = e => {
+  onCancle = (e) => {
     this.setState({
-      templateManage: false
+      templateManage: false,
     });
   };
   onLayoutChange = (layout, layouts) => {
@@ -436,15 +442,15 @@ class Dashboard extends Component {
     let allTemplates = JSON.parse(JSON.stringify(this.state.allTemplates));
     allTemplates[this.state.currentTemplateIndex] = {
       ...JSON.parse(JSON.stringify(this.state.currentTemplate)),
-      layouts: { ...layouts }
+      layouts: { ...layouts },
     };
     this.setState(
       {
         currentTemplate: {
-          ...allTemplates[this.state.currentTemplateIndex]
+          ...allTemplates[this.state.currentTemplateIndex],
         },
         isSaved: false,
-        allTemplates
+        allTemplates,
         // editState: false
       },
       () => {
@@ -452,13 +458,13 @@ class Dashboard extends Component {
       }
     );
   };
-  onCurrentTemplateChange = index => {
+  onCurrentTemplateChange = (index) => {
     this.setState(
       {
         currentTemplate: this.state.allTemplates[index],
         currentTemplateIndex: index,
         showLayout: false,
-        isSaved: false
+        isSaved: false,
       },
       () => {
         // this.saveToDB();
@@ -466,7 +472,7 @@ class Dashboard extends Component {
       }
     );
   };
-  importTemplate = template => {
+  importTemplate = (template) => {
     let allTemplates = this.state.allTemplates;
     allTemplates.push(template);
     let currentTemplateIndex = allTemplates.length - 1;
@@ -475,19 +481,19 @@ class Dashboard extends Component {
       currentTemplateIndex,
       currentTemplate: allTemplates[currentTemplateIndex],
       currentTemplateManagerTab: 1,
-      isSaved: false
+      isSaved: false,
     });
   };
-  onTemplateManagerTabChange = currentTab => {
+  onTemplateManagerTabChange = (currentTab) => {
     this.setState({
-      currentTemplateManagerTab: currentTab
+      currentTemplateManagerTab: currentTab,
     });
   };
   enableEditLayout = () => {
     this.setState(
       {
         editState: true,
-        showLayout: false
+        showLayout: false,
       },
       () => {
         this.setState({ showLayout: true });
@@ -499,7 +505,7 @@ class Dashboard extends Component {
     this.setState({ isSaving: true });
     let dashboard_layout = {};
     dashboard_layout.currentSelectedTemplate = this.state.currentTemplateIndex;
-    let temp = this.state.allTemplates.filter(e => {
+    let temp = this.state.allTemplates.filter((e) => {
       if (e.inbuilt) {
         return false;
       } else {
@@ -513,14 +519,14 @@ class Dashboard extends Component {
         Accept: "application/json",
         "Content-Type": "application/json",
         "Accept-Language": localStorage["i18nextLng"],
-        Authorization: "Bearer " + this.props.isLoggedIn
+        Authorization: "Bearer " + this.props.isLoggedIn,
       },
       body: JSON.stringify({
-        dashboard_layout
-      })
+        dashboard_layout,
+      }),
     })
-      .then(response => response.json())
-      .then(responseData => {
+      .then((response) => response.json())
+      .then((responseData) => {
         if (responseData.status == 200) {
           console.log("respondata", responseData);
           this.setState({ isSaving: false, isSaved: true });
@@ -532,14 +538,14 @@ class Dashboard extends Component {
       {
         showLayout: false,
         editState: false,
-        currentTemplateManagerTab: 1
+        currentTemplateManagerTab: 1,
       },
       () => {
         this.getTemplates();
       }
     );
   };
-  handleTemplateSave = templates => {
+  handleTemplateSave = (templates) => {
     this.setState(
       {
         allTemplates: templates,
@@ -548,12 +554,12 @@ class Dashboard extends Component {
         isSaved: false,
         currentTemplate: templates[this.state.currentTemplateIndex]
           ? templates[this.state.currentTemplateIndex]
-          : templates[templates.length - 1]
+          : templates[templates.length - 1],
       },
       () => {
         // this.saveToDB();
         this.setState({
-          showLayout: true
+          showLayout: true,
         });
       }
     );
@@ -567,7 +573,7 @@ class Dashboard extends Component {
       currentTemplateIndex,
       currentTemplate: allTemplates[currentTemplateIndex],
       currentTemplateManagerTab: 1,
-      isSaved: false
+      isSaved: false,
     });
   };
   render() {
@@ -594,7 +600,7 @@ class Dashboard extends Component {
             disabled={this.state.editState}
             onClick={() => {
               this.setState({
-                templateManage: true
+                templateManage: true,
               });
             }}
           >
@@ -710,22 +716,28 @@ class Dashboard extends Component {
                           md: 768,
                           sm: 480,
                           xs: 480,
-                          xxs: 0
+                          xxs: 0,
                         }}
                         cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
                         isDraggable={
                           this.state.editState &&
-                          this.state.currentTemplateManagerTab == 1 && !this.state.allTemplates[this.state.currentTemplateIndex]?.inbuilt
+                          this.state.currentTemplateManagerTab == 1 &&
+                          !this.state.allTemplates[
+                            this.state.currentTemplateIndex
+                          ]?.inbuilt
                         }
                         isResizable={
                           this.state.editState &&
-                          this.state.currentTemplateManagerTab == 1 && !this.state.allTemplates[this.state.currentTemplateIndex]?.inbuilt
+                          this.state.currentTemplateManagerTab == 1 &&
+                          !this.state.allTemplates[
+                            this.state.currentTemplateIndex
+                          ]?.inbuilt
                         }
                         onLayoutChange={(layout, layouts) =>
                           this.onLayoutChange(layout, layouts)
                         }
                       >
-                        {renderLayout.map(el => el)}
+                        {renderLayout.map((el) => el)}
                       </RGL>
                     )}
                   </Col>
@@ -737,7 +749,7 @@ class Dashboard extends Component {
         </ContactWrap>
         {this.state.templateManage && this.state.pairs.length > 0 && (
           <TemplateManage
-            onCancle={e => this.onCancle(e)}
+            onCancle={(e) => this.onCancle(e)}
             onSave={this.handleTemplateSave}
             visible={this.state.templateManage}
             templates={this.state.allTemplates}
@@ -757,19 +769,19 @@ function mapStateToProps(state) {
         ? state.simpleReducer.profileDetails.data[0]
         : "",
     theme:
-      state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
+      state.themeReducer.theme !== undefined ? state.themeReducer.theme : "",
   };
 }
 
 export default translate(["dashboard", "trade", "edit_profile_titles"])(
-  connect(mapStateToProps)(Dashboard)
+  connect(mapStateToProps)(withRouter(Dashboard))
 );
 function getFromLS(key) {
   let ls = {};
   if (global.localStorage) {
     try {
       ls = JSON.parse(global.localStorage.getItem("rgl-8")) || {
-        layouts: {}
+        layouts: {},
       };
     } catch (e) {
       /*Ignore*/

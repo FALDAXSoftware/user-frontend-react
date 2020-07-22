@@ -578,6 +578,12 @@ export const BTCWrap = styled.div`
       color: #4c84ff;
       min-width: 125px;
       margin: 0 0 0 5px;
+      &.inactive {
+        color: #c7c7cb;
+      }
+      &.inactive:hover {
+        cursor: not-allowed;
+      }
     }
   }
 `;
