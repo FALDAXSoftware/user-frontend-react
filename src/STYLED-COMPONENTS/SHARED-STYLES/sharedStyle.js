@@ -245,6 +245,7 @@ export const UpgradeTable = styled.table`
       > tr {
         > td {
           padding: 5px;
+          color: ${(props) => (props.theme.mode == "dark" ? "#fff" : "#000")};
         }
       }
     }

@@ -656,6 +656,10 @@ class WalletPopup extends Component {
         This method is called when fields are change in SEND Form.
     */
   sendAddressChange(e) {
+    if (this.state.loader) {
+      return false;
+    }
+    clearTimeout(this.timeout);
     var fields = this.state.sendFields;
     var name = e.target.name;
     fields[name] = e.target.value;
