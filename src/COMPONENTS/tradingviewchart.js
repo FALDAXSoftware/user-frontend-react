@@ -99,7 +99,6 @@ class TradingViewChart extends React.Component {
           "mainSeriesProperties.candleStyle.downColor": "#ff0000",
           "mainSeriesProperties.candleStyle.borderUpColor": "#008000",
           "mainSeriesProperties.candleStyle.borderDownColor": "#ff0000",
-          "mainSeriesProperties.candleStyle.barColorsOnPrevClose": true,
         },
       };
 
@@ -182,7 +181,6 @@ class TradingViewChart extends React.Component {
         "mainSeriesProperties.candleStyle.downColor": "#ff0000",
         "mainSeriesProperties.candleStyle.borderUpColor": "#008000",
         "mainSeriesProperties.candleStyle.borderDownColor": "#ff0000",
-        "mainSeriesProperties.candleStyle.barColorsOnPrevClose": true,
       },
     };
 
