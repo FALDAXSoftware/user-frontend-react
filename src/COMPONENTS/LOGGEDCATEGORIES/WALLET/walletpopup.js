@@ -1113,9 +1113,9 @@ class WalletPopup extends Component {
                               {`(${this.props.coinFee}%)`}:{" "}
                             </b>
                             {this.props.coinFee
-                              ? `${this.state.faldaxFee}${" "}${
-                                  this.props.coin_code
-                                }`
+                              ? `${
+                                  this.state.faldaxFee
+                                }${" "}${this.props.coin_code.toUpperCase()}`
                               : 0}
                           </span>
                         </span>
@@ -1126,9 +1126,9 @@ class WalletPopup extends Component {
                               {this.t("conversion:fee_text.message")}*:
                             </b>
                             {this.props.coinFee
-                              ? `${this.state.networkFee}${" "}${
-                                  this.props.coin_code
-                                }`
+                              ? `${
+                                  this.state.networkFee
+                                }${" "}${this.props.coin_code.toUpperCase()}`
                               : 0}
                           </span>
                         </span>
@@ -1138,7 +1138,7 @@ class WalletPopup extends Component {
                               {this.t("wallet_total_payout_text.message")}:{" "}
                             </b>
                             {`${this.state.sendFields.subtotal}
-                          ${this.props.coin_code}`}
+                          ${this.props.coin_code.toUpperCase()}`}
                           </span>
                         </span>
                       </Fee>
