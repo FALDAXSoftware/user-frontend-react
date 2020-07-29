@@ -53,6 +53,10 @@ const SpanCoinPrice = styled.span`
   word-break: break-word;
   padding: 0 12px 0 0;
   display: inherit;
+  > .value {
+  }
+  > .currency {
+  }
 `;
 
 const SpanCoinPercentage = styled.span`
@@ -270,8 +274,10 @@ class Mini_graph extends React.Component {
         <Row>
           <Col xs={24} md={16}>
             <SpanCoinPrice>
-              {price ? `${precision(price)}` : "0"}
-              {this.props.currency}{" "}
+              <span className="value">
+                {price ? `${precision(price)}` : "0"}
+              </span>
+              <span className="currency"> {this.props.currency} </span>
             </SpanCoinPrice>
           </Col>
           <Col xs={24} md={8}>
