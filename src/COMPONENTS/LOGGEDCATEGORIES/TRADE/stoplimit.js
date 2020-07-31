@@ -82,6 +82,8 @@ class StopLimit extends Component {
       bestAsk: 0,
       bestBid: 0,
       maxValue: 0,
+      minCryptoValue: 0,
+      disabledCryptoMode: false,
       completeKYC: false,
       countryAccess: false,
       completeProfile: false,
@@ -235,54 +237,6 @@ class StopLimit extends Component {
       }
     }
     let fiat, currency;
-    // if (this.props.latestFillPrice) {
-    //   this.setState(
-    //     {
-    //       disabledBtn: false,
-    //       latestFillPrice: this.props.latestFillPrice,
-    //     },
-    //     () => {
-    //       if (this.state.stop_price > 0) {
-    //         if (this.state.side === "Buy") {
-    //           if (
-    //             parseFloat(this.state.stop_price) >
-    //             parseFloat(this.state.latestFillPrice)
-    //           ) {
-    //             this.setState({
-    //               disabledBtn: false,
-    //             });
-    //           } else {
-    //             this.setState({
-    //               disabledBtn: true,
-    //             });
-    //           }
-    //         } else {
-    //           if (
-    //             parseFloat(this.state.stop_price) <
-    //             parseFloat(this.state.latestFillPrice)
-    //           ) {
-    //             this.setState({
-    //               disabledBtn: false,
-    //             });
-    //           } else {
-    //             this.setState({
-    //               disabledBtn: true,
-    //             });
-    //           }
-    //         }
-    //       } else {
-    //         this.setState({
-    //           disabledBtn: false,
-    //         });
-    //       }
-    //     }
-    //   );
-    // } else {
-    //   this.setState({
-    //     latestFillPrice: "",
-    //     disabledBtn: false,
-    //   });
-    // }
     if (this.props.io) {
       this.props.io.emit("get-limit-stop-latest", {
         symbol: `${this.state.crypto}-${this.state.currency}`,
@@ -293,24 +247,24 @@ class StopLimit extends Component {
             {
               bestAsk: data.askPrice,
               bestBid: data.bidPrice,
-              // maxValue: data.maximumValue,
               latestFillPrice: data.lastPrice,
+              minCryptoValue: data.minimumValue,
             },
             () => {
               if (this.state.amount > 0) {
                 if (this.state.side === "Buy") {
-                  // if (
-                  //   parseFloat(this.state.amount) >
-                  //   parseFloat(this.state.maxValue)
-                  // ) {
-                  //   this.setState({
-                  //     disabledMode: true,
-                  //   });
-                  // } else {
-                  //   this.setState({
-                  //     disabledMode: false,
-                  //   });
-                  // }
+                  if (
+                    parseFloat(this.state.amount) <
+                    parseFloat(this.state.minCryptoValue)
+                  ) {
+                    this.setState({
+                      disabledCryptoMode: true,
+                    });
+                  } else {
+                    this.setState({
+                      disabledCryptoMode: false,
+                    });
+                  }
                   this.setState({
                     buyPayAmt:
                       parseFloat(this.state.amount) *
@@ -326,6 +280,18 @@ class StopLimit extends Component {
                       ).toFixed(8),
                   });
                 } else {
+                  if (
+                    parseFloat(this.state.amount) <
+                    parseFloat(this.state.minCryptoValue)
+                  ) {
+                    this.setState({
+                      disabledCryptoMode: true,
+                    });
+                  } else {
+                    this.setState({
+                      disabledCryptoMode: false,
+                    });
+                  }
                   this.setState({
                     sellPayAmt:
                       Number(this.state.amount) *
@@ -479,6 +445,7 @@ class StopLimit extends Component {
         singlefiatCryptoValue: props.userBal.cryptoFiat,
         singlefiatCurrencyValue: props.userBal.currencyFiat,
         disabledMode: false,
+        disabledCryptoMode: false,
       });
     } else {
       this.setState({
@@ -725,35 +692,51 @@ class StopLimit extends Component {
           if (this.state.side === "Buy") {
             if (value > 0 && name === "amount") {
               if (
-                // parseFloat(this.state.amount) >
-                //   parseFloat(this.state.maxValue) ||
+                parseFloat(this.state.amount) <
+                parseFloat(this.state.minCryptoValue)
+              ) {
+                self.setState({
+                  disabledMode: false,
+                  disabledCryptoMode: true,
+                });
+              } else if (
                 parseFloat(
                   parseFloat(this.state.amount) * parseFloat(this.state.bestAsk)
                 ) > parseFloat(this.props.userBal.currency.placed_balance)
               ) {
                 self.setState({
                   disabledMode: true,
+                  disabledCryptoMode: false,
                 });
               } else {
                 self.setState({
                   disabledMode: false,
+                  disabledCryptoMode: false,
                 });
               }
             }
           } else if (this.state.side === "Sell") {
             if (value > 0 && name === "amount") {
               if (
-                // parseFloat(this.state.amount) >
-                //   parseFloat(this.state.maxValue) ||
+                parseFloat(this.state.amount) <
+                parseFloat(this.state.minCryptoValue)
+              ) {
+                self.setState({
+                  disabledMode: false,
+                  disabledCryptoMode: true,
+                });
+              } else if (
                 parseFloat(this.state.amount) >
                 parseFloat(this.props.userBal.crypto.placed_balance)
               ) {
                 self.setState({
                   disabledMode: true,
+                  disabledCryptoMode: false,
                 });
               } else {
                 self.setState({
                   disabledMode: false,
+                  disabledCryptoMode: false,
                 });
               }
             }
@@ -767,6 +750,7 @@ class StopLimit extends Component {
               buyEstPrice: 0,
               disabledMode: false,
               disabledBtn: false,
+              disabledCryptoMode: false,
             });
           } else if (this.state.side === "Sell") {
             this.setState({
@@ -775,6 +759,7 @@ class StopLimit extends Component {
               sellEstPrice: 0,
               disabledMode: false,
               disabledBtn: false,
+              disabledCryptoMode: false,
             });
           }
         }
@@ -1300,6 +1285,11 @@ class StopLimit extends Component {
               <div className="trade-action-validation">
                 {this.t("tier_changes:insufficient_balance_text.message")}
               </div>
+            ) : this.state.disabledCryptoMode ? (
+              <div className="trade-action-validation">
+                {this.t("tier_changes:min_limit_check_text.message")}
+                {this.state.minCryptoValue} {this.state.crypto}
+              </div>
             ) : (
               ""
             )}
@@ -1555,7 +1545,8 @@ class StopLimit extends Component {
             disabled={
               this.state.disabledBtn ||
               this.state.disabledMode ||
-              this.state.disabledBtnMode
+              this.state.disabledBtnMode ||
+              this.state.disabledCryptoMode
             }
             side={this.state.side}
             onClick={this.onSubmit}

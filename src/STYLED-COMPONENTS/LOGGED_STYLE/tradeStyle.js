@@ -8,6 +8,7 @@ import {
   Dropdown,
   Radio,
   Select,
+  Tooltip,
 } from "antd";
 import styled from "styled-components";
 import { DropdownButton, ButtonToolbar } from "react-bootstrap";
@@ -662,7 +663,20 @@ export const WillpayBelow = styled.div`
   font-size: 12px;
   color: ${(props) => (props.theme.mode === "dark" ? "white" : "#333")};
   min-width: 50%;
+
+  &.right:hover {
+    cursor: pointer;
+  }
 `;
+export const TooltipDiv = styled.div`
+  // display: flex;
+  // align-items: center;
+  > p {
+    margin: 0;
+    padding: 5px 5px;
+  }
+`;
+export const MakerTaker = styled(Tooltip)``;
 export const WillpayBelow2 = styled.div`
   line-height: 1;
   font-weight: bold;
