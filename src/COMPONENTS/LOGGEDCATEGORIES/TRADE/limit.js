@@ -75,9 +75,11 @@ class Limit extends Component {
       buyTotal: 0,
       disabledMode: false,
       disabledbtn: false,
+      disabledCryptoMode: false,
       bestAsk: 0,
       bestBid: 0,
       maxValue: 0,
+      minCryptoValue: 0,
       completeKYC: false,
       countryAccess: false,
       completeProfile: false,
@@ -240,23 +242,24 @@ class Limit extends Component {
             {
               bestAsk: data.askPrice,
               bestBid: data.bidPrice,
+              minCryptoValue: data.minimumValue,
               // maxValue: data.maximumValue,
             },
             () => {
               if (this.state.amount > 0) {
                 if (this.state.side === "Buy") {
-                  // if (
-                  //   parseFloat(this.state.amount) >
-                  //   parseFloat(this.state.maxValue)
-                  // ) {
-                  //   this.setState({
-                  //     disabledMode: true,
-                  //   });
-                  // } else {
-                  //   this.setState({
-                  //     disabledMode: false,
-                  //   });
-                  // }
+                  if (
+                    parseFloat(this.state.amount) <
+                    parseFloat(this.state.minCryptoValue)
+                  ) {
+                    this.setState({
+                      disabledCryptoMode: true,
+                    });
+                  } else {
+                    this.setState({
+                      disabledCryptoMode: false,
+                    });
+                  }
                   this.setState({
                     buyPayAmt:
                       parseFloat(this.state.amount) *
@@ -272,6 +275,18 @@ class Limit extends Component {
                       ).toFixed(8),
                   });
                 } else {
+                  if (
+                    parseFloat(this.state.amount) <
+                    parseFloat(this.state.minCryptoValue)
+                  ) {
+                    this.setState({
+                      disabledCryptoMode: true,
+                    });
+                  } else {
+                    this.setState({
+                      disabledCryptoMode: false,
+                    });
+                  }
                   this.setState({
                     sellPayAmt:
                       Number(this.state.amount) *
@@ -381,6 +396,7 @@ class Limit extends Component {
         singlefiatCryptoValue: props.userBal.cryptoFiat,
         singlefiatCurrencyValue: props.userBal.currencyFiat,
         disabledMode: false,
+        disabledCryptoMode: false,
       });
     } else {
       this.setState({
@@ -509,10 +525,12 @@ class Limit extends Component {
             ) {
               self.setState({
                 disabledMode: true,
+                disabledCryptoMode: false,
               });
             } else {
               self.setState({
                 disabledMode: false,
+                disabledCryptoMode: false,
               });
             }
             self.setState({
@@ -543,10 +561,12 @@ class Limit extends Component {
               ) {
                 self.setState({
                   disabledMode: true,
+                  disabledCryptoMode: false,
                 });
               } else {
                 self.setState({
                   disabledMode: false,
+                  disabledCryptoMode: false,
                 });
               }
             }
@@ -597,6 +617,14 @@ class Limit extends Component {
           if (this.state.side === "Buy") {
             if (value > 0 && name === "amount") {
               if (
+                parseFloat(this.state.amount) <
+                parseFloat(this.state.minCryptoValue)
+              ) {
+                self.setState({
+                  disabledMode: false,
+                  disabledCryptoMode: true,
+                });
+              } else if (
                 // parseFloat(this.state.amount) >
                 //   parseFloat(this.state.maxValue) ||
                 parseFloat(
@@ -605,16 +633,26 @@ class Limit extends Component {
               ) {
                 self.setState({
                   disabledMode: true,
+                  disabledCryptoMode: false,
                 });
               } else {
                 self.setState({
                   disabledMode: false,
+                  disabledCryptoMode: false,
                 });
               }
             }
           } else if (this.state.side === "Sell") {
             if (value > 0 && name === "amount") {
               if (
+                parseFloat(this.state.amount) <
+                parseFloat(this.state.minCryptoValue)
+              ) {
+                self.setState({
+                  disabledMode: false,
+                  disabledCryptoMode: true,
+                });
+              } else if (
                 // parseFloat(this.state.amount) >
                 //   parseFloat(this.state.maxValue) ||
                 parseFloat(this.state.amount) >
@@ -622,10 +660,12 @@ class Limit extends Component {
               ) {
                 self.setState({
                   disabledMode: true,
+                  disabledCryptoMode: false,
                 });
               } else {
                 self.setState({
                   disabledMode: false,
+                  disabledCryptoMode: false,
                 });
               }
             }
@@ -638,6 +678,7 @@ class Limit extends Component {
               buyPayAmt: 0,
               buyEstPrice: 0,
               disabledMode: false,
+              disabledCryptoMode: false,
             });
           } else if (this.state.side === "Sell") {
             this.setState({
@@ -645,6 +686,7 @@ class Limit extends Component {
               sellPayAmt: 0,
               sellEstPrice: 0,
               disabledMode: false,
+              disabledCryptoMode: false,
             });
           }
           // obj["amount"] = Number(this.state.amount).toFixed(3);
@@ -1171,6 +1213,11 @@ class Limit extends Component {
               <div className="trade-action-validation">
                 {this.t("tier_changes:insufficient_balance_text.message")}
               </div>
+            ) : this.state.disabledCryptoMode ? (
+              <div className="trade-action-validation">
+                {this.t("tier_changes:min_limit_check_text.message")}
+                {this.state.minCryptoValue} {this.state.crypto}
+              </div>
             ) : (
               ""
             )}
@@ -1327,7 +1374,11 @@ class Limit extends Component {
         )}
         <ButtonWrap>
           <ButtonETH
-            disabled={this.state.disabledMode || this.state.disabledbtn}
+            disabled={
+              this.state.disabledMode ||
+              this.state.disabledbtn ||
+              this.state.disabledCryptoMode
+            }
             side={this.state.side}
             onClick={this.onSubmit}
           >
