@@ -4641,6 +4641,12 @@
       "message": "Insufficient funds in your wallet to place this order.",
       "message_type": "Web content",
       "context": "Insufficient wallet balance validation if the order amount exceeds wallet balance"
+    },
+    "min_limit_check_text": {
+      "page": "Trade",
+      "message": "Order Quantity must be greater than ",
+      "message_type": "Web content",
+      "context": "Order Quantity must be greater than minimum asset limit"
     }
   }
 }
