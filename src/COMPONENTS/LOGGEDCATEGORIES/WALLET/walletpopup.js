@@ -9,6 +9,7 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import moment from "moment";
 import { connect } from "react-redux";
 import { translate } from "react-i18next";
+import { withRouter } from "react-router-dom";
 /* Styled-Components */
 
 /* Components */
@@ -257,6 +258,7 @@ class WalletPopup extends Component {
       monthlyLimitAfter: "",
       showDeatils: false,
       limitUnlimited: false,
+      tierZeroAccount: false,
     };
     this.timeout = null;
     this.validator = new SimpleReactValidator({
@@ -471,6 +473,13 @@ class WalletPopup extends Component {
             this.setState({
               availableBalance: precision(parseFloat(responseData.data)),
             });
+          } else if (responseData.status === 401) {
+            this.openNotificationWithIcon(
+              "error",
+              this.t("validations:error_text.message"),
+              responseData.err
+            );
+            this.props.history.push("/");
           } else {
             this.openNotificationWithIcon(
               "error",
@@ -727,6 +736,7 @@ class WalletPopup extends Component {
                 responseData.data.current_limit_left_montly_amount,
               limitExceeded: false,
               showDeatils: true,
+              tierZeroAccount: false,
             });
           } else if (responseData.status === 201) {
             this.setState({
@@ -736,6 +746,7 @@ class WalletPopup extends Component {
               monthlyLimitLeft: responseData.data.monthly_limit_left,
               limitExceeded: true,
               showDeatils: true,
+              tierZeroAccount: false,
             });
           } else if (responseData.status === 202) {
             this.setState({
@@ -756,6 +767,27 @@ class WalletPopup extends Component {
               limitUnlimited: true,
               showDeatils: true,
               limitExceeded: false,
+              tierZeroAccount: false,
+            });
+          } else if (responseData.status === 207) {
+            this.setState({
+              dailyLimit: responseData.data.daily_limit_actual,
+              dailyLimitLeft: responseData.data.daily_limit_left,
+              showDeatils: true,
+              limitExceeded: true,
+              limitUnlimited: false,
+              tierZeroAccount: true,
+            });
+          } else if (responseData.status === 206) {
+            this.setState({
+              showDeatils: true,
+              dailyLimit: responseData.data.daily_limit_actual,
+              dailyLimitLeft: responseData.data.daily_limit_left,
+              dailyLimitAfter:
+                responseData.data.current_limit_left_daily_amount,
+              limitExceeded: false,
+              limitUnlimited: false,
+              tierZeroAccount: true,
             });
           } else if (responseData.status === 500) {
             this.openNotificationWithIcon(
@@ -970,6 +1002,7 @@ class WalletPopup extends Component {
       dailyLimitAfter,
       monthlyLimitAfter,
       showDeatils,
+      tierZeroAccount,
     } = this.state;
     return (
       <div>
@@ -1177,7 +1210,11 @@ class WalletPopup extends Component {
                       <tr>
                         <th></th>
                         <th>{this.t("tiers:daily_text.message")}</th>
-                        <th>{this.t("tiers:monthly_text.message")}</th>
+                        {tierZeroAccount ? (
+                          ""
+                        ) : (
+                          <th>{this.t("tiers:monthly_text.message")}</th>
+                        )}
                       </tr>
                     </thead>
                     <tbody>
@@ -1198,20 +1235,26 @@ class WalletPopup extends Component {
                             />
                           )}
                         </td>
-                        <td>
-                          {this.state.limitUnlimited ? (
-                            this.t("tiers:unlimited_text.message")
-                          ) : (
-                            <NumberFormat
-                              value={
-                                monthlyLimit ? precisionTwo(monthlyLimit) : "0"
-                              }
-                              displayType={"text"}
-                              thousandSeparator={true}
-                              prefix="$"
-                            />
-                          )}
-                        </td>
+                        {tierZeroAccount ? (
+                          ""
+                        ) : (
+                          <td>
+                            {this.state.limitUnlimited && !tierZeroAccount ? (
+                              this.t("tiers:unlimited_text.message")
+                            ) : (
+                              <NumberFormat
+                                value={
+                                  monthlyLimit
+                                    ? precisionTwo(monthlyLimit)
+                                    : "0"
+                                }
+                                displayType={"text"}
+                                thousandSeparator={true}
+                                prefix="$"
+                              />
+                            )}
+                          </td>
+                        )}
                       </tr>
                       <tr>
                         <td>{this.t("tiers:available_limit_text.message")}:</td>
@@ -1231,33 +1274,40 @@ class WalletPopup extends Component {
                             />
                           )}
                         </td>
-                        <td>
-                          {this.state.limitUnlimited ? (
-                            this.t("tiers:unlimited_text.message")
-                          ) : (
-                            <NumberFormat
-                              value={
-                                monthlyLimitLeft
-                                  ? precisionTwo(monthlyLimitLeft)
-                                  : "0"
-                              }
-                              displayType={"text"}
-                              thousandSeparator={true}
-                              prefix="$"
-                            />
-                          )}
-                        </td>
+                        {tierZeroAccount ? (
+                          ""
+                        ) : (
+                          <td>
+                            {this.state.limitUnlimited ? (
+                              this.t("tiers:unlimited_text.message")
+                            ) : (
+                              <NumberFormat
+                                value={
+                                  monthlyLimitLeft
+                                    ? precisionTwo(monthlyLimitLeft)
+                                    : "0"
+                                }
+                                displayType={"text"}
+                                thousandSeparator={true}
+                                prefix="$"
+                              />
+                            )}
+                          </td>
+                        )}
                       </tr>
                       {this.state.limitExceeded ? (
                         <tr className="limit_exceed">
                           <td>
                             {this.t("tiers:limit_after_transfer_text.message")}:
                           </td>
-                          <td className="center" colSpan="2">
+                          <td
+                            className={tierZeroAccount ? "left" : "center"}
+                            colSpan={tierZeroAccount ? "1" : "2"}
+                          >
                             {this.t("tiers:limit_exceeded_text.message")}
                           </td>
                         </tr>
-                      ) : this.state.limitUnlimited ? (
+                      ) : this.state.limitUnlimited && !tierZeroAccount ? (
                         ""
                       ) : (
                         <tr>
@@ -1276,18 +1326,22 @@ class WalletPopup extends Component {
                               prefix="$"
                             />
                           </td>
-                          <td>
-                            <NumberFormat
-                              value={
-                                monthlyLimitAfter
-                                  ? precisionTwo(monthlyLimitAfter)
-                                  : "0"
-                              }
-                              displayType={"text"}
-                              thousandSeparator={true}
-                              prefix="$"
-                            />
-                          </td>
+                          {tierZeroAccount ? (
+                            ""
+                          ) : (
+                            <td>
+                              <NumberFormat
+                                value={
+                                  monthlyLimitAfter
+                                    ? precisionTwo(monthlyLimitAfter)
+                                    : "0"
+                                }
+                                displayType={"text"}
+                                thousandSeparator={true}
+                                prefix="$"
+                              />
+                            </td>
+                          )}
                         </tr>
                       )}
                     </tbody>
@@ -1360,7 +1414,7 @@ export default translate([
   "settings",
   "referral",
   "tiers",
-])(connect(mapStateToProps, mapDispatchToProps)(WalletPopup));
+])(connect(mapStateToProps, mapDispatchToProps)(withRouter(WalletPopup)));
 function precision(x) {
   if (Math.abs(x) < 1.0) {
     var e = parseInt(x.toString().split("e-")[1]);
