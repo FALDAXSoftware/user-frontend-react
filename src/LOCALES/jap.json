@@ -4638,7 +4638,7 @@
     },
     "min_limit_check_text": {
       "page": "Trade",
-      "message": "\u767a\u6ce8\u6570\u91cf\u304c\u3088\u308a\u5927\u304d\u304f\u306a\u3051\u308c\u3070\u306a\u308a\u307e\u305b\u3093",
+      "message": "\n\u6ce8\u6587\u6570\u91cf\u306f",
       "message_type": "Web content",
       "context": "Order Quantity must be greater than minimum asset limit"
     }
