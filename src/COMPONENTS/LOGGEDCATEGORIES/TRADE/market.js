@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import SimpleReactValidator from "simple-react-validator";
 import "antd/dist/antd.css";
-import { Row, Col, Radio, notification, Spin } from "antd";
+import { Row, Col, Radio, notification, Spin, Tooltip, Icon } from "antd";
 import { translate } from "react-i18next";
 import { withRouter } from "react-router-dom";
 
@@ -78,6 +78,7 @@ class Market extends Component {
       bestBid: 0,
       buyMaxValue: 0,
       sellMaxValue: 0,
+      minCryptoLimit: 20,
       completeKYC: false,
       countryAccess: false,
       completeProfile: false,
@@ -195,58 +196,6 @@ class Market extends Component {
       }
     }
   }
-  componentWillReceiveProps(props, newProps) {
-    if (Object.keys(props.userBal).length > 0) {
-      if (
-        Object.keys(props.userBal.crypto).length > 0 &&
-        Object.keys(props.userBal.currency).length > 0
-      ) {
-        this.setState({
-          disabledbtn: false,
-        });
-      } else {
-        this.setState({
-          disabledbtn: true,
-        });
-      }
-    }
-    if (props.panic_status && props.panic_status != this.props.panic_status) {
-      this.setState({
-        panic_status: props.panic_status,
-      });
-    }
-    if (props.userBal && props.userBal != this.props.userBal) {
-      this.setState({
-        userBalFees: props.userBal.fees,
-        amount: "",
-        total: 0,
-        buyPayAmt: 0,
-        sellPayAmt: 0,
-        buyEstPrice: 0,
-        sellEstPrice: 0,
-        disabledBtn: false,
-        disabledMode: false,
-        disabledInvalidMode: false,
-        singlefiatCryptoValue: props.userBal.cryptoFiat,
-        singlefiatCurrencyValue: props.userBal.currencyFiat,
-      });
-    } else {
-      this.setState({
-        userBalFees: props.userBal.fees,
-        disabledBtn: false,
-        singlefiatCryptoValue: props.userBal.cryptoFiat,
-        singlefiatCurrencyValue: props.userBal.currencyFiat,
-      });
-    }
-    if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
-      if (props.cryptoPair.crypto !== this.state.crypto) {
-        this.setState({ crypto: props.cryptoPair.crypto });
-      }
-      if (props.cryptoPair.currency !== this.state.currency) {
-        this.setState({ currency: props.cryptoPair.currency });
-      }
-    }
-  }
   componentDidMount() {
     if (Object.keys(this.props.userBal).length > 0) {
       if (
@@ -256,6 +205,7 @@ class Market extends Component {
         this.setState({
           disabledbtn: false,
           userBalFees: this.props.userBal.fees,
+          userBalFeesMaker: this.props.userBal.makerFee,
           amount: "",
           total: 0,
           buyPayAmt: 0,
@@ -272,6 +222,7 @@ class Market extends Component {
         this.setState({
           disabledbtn: true,
           userBalFees: this.props.userBal.fees,
+          userBalFeesMaker: this.props.userBal.makerFee,
           disabledBtn: false,
           singlefiatCryptoValue: this.props.userBal.cryptoFiat,
           singlefiatCurrencyValue: this.props.userBal.currencyFiat,
@@ -290,17 +241,28 @@ class Market extends Component {
               bestBid: data.bidPrice,
               buyMaxValue: data.buyMaximumValue,
               sellMaxValue: data.sellMaximumValue,
+              minCryptoLimit: data.minimumValue,
             },
             () => {
               if (this.state.amount > 0) {
                 if (this.state.side === "Buy") {
                   if (
+                    parseFloat(this.state.amount) <
+                    parseFloat(this.state.minCryptoLimit)
+                  ) {
+                    this.setState({
+                      disabledCryptoMode: true,
+                      disabledInvalidMode: false,
+                      disabledMode: false,
+                    });
+                  } else if (
                     parseFloat(
                       parseFloat(this.state.amount) *
                         parseFloat(this.state.bestAsk)
                     ) > parseFloat(this.props.userBal.currency.placed_balance)
                   ) {
                     this.setState({
+                      disabledCryptoMode: false,
                       disabledInvalidMode: false,
                       disabledMode: true,
                     });
@@ -309,6 +271,7 @@ class Market extends Component {
                     parseFloat(this.state.buyMaxValue)
                   ) {
                     this.setState({
+                      disabledCryptoMode: false,
                       disabledInvalidMode: true,
                       disabledMode: false,
                     });
@@ -323,11 +286,13 @@ class Market extends Component {
                     this.setState({
                       disabledMode: true,
                       disabledInvalidMode: false,
+                      disabledCryptoMode: false,
                     });
                   } else {
                     this.setState({
                       disabledInvalidMode: false,
                       disabledMode: false,
+                      disabledCryptoMode: false,
                     });
                   }
                   this.setState({
@@ -346,12 +311,22 @@ class Market extends Component {
                   });
                 } else {
                   if (
+                    parseFloat(this.state.amount) <
+                    parseFloat(this.state.minCryptoLimit)
+                  ) {
+                    this.setState({
+                      disabledCryptoMode: true,
+                      disabledInvalidMode: false,
+                      disabledMode: false,
+                    });
+                  } else if (
                     parseFloat(this.state.amount) >
                     parseFloat(this.props.userBal.crypto.placed_balance)
                   ) {
                     this.setState({
                       disabledInvalidMode: false,
                       disabledMode: true,
+                      disabledCryptoMode: false,
                     });
                   } else if (
                     parseFloat(this.state.amount) >
@@ -360,6 +335,7 @@ class Market extends Component {
                     this.setState({
                       disabledInvalidMode: true,
                       disabledMode: false,
+                      disabledCryptoMode: false,
                     });
                   } else if (
                     parseFloat(this.state.amount) >
@@ -370,11 +346,13 @@ class Market extends Component {
                     this.setState({
                       disabledMode: true,
                       disabledInvalidMode: false,
+                      disabledCryptoMode: false,
                     });
                   } else {
                     this.setState({
                       disabledInvalidMode: false,
                       disabledMode: false,
+                      disabledCryptoMode: false,
                     });
                   }
                   this.setState({
@@ -463,6 +441,61 @@ class Market extends Component {
     //     }
     //   }
   }
+  componentWillReceiveProps(props, newProps) {
+    if (Object.keys(props.userBal).length > 0) {
+      if (
+        Object.keys(props.userBal.crypto).length > 0 &&
+        Object.keys(props.userBal.currency).length > 0
+      ) {
+        this.setState({
+          disabledbtn: false,
+        });
+      } else {
+        this.setState({
+          disabledbtn: true,
+        });
+      }
+    }
+    if (props.panic_status && props.panic_status != this.props.panic_status) {
+      this.setState({
+        panic_status: props.panic_status,
+      });
+    }
+    if (props.userBal && props.userBal != this.props.userBal) {
+      this.setState({
+        userBalFees: props.userBal.fees,
+        userBalFeesMaker: props.userBal.makerFee,
+        amount: "",
+        total: 0,
+        buyPayAmt: 0,
+        sellPayAmt: 0,
+        buyEstPrice: 0,
+        sellEstPrice: 0,
+        disabledBtn: false,
+        disabledMode: false,
+        disabledInvalidMode: false,
+        disabledCryptoMode: false,
+        singlefiatCryptoValue: props.userBal.cryptoFiat,
+        singlefiatCurrencyValue: props.userBal.currencyFiat,
+      });
+    } else {
+      this.setState({
+        userBalFees: props.userBal.fees,
+        userBalFeesMaker: props.userBal.makerFee,
+        disabledBtn: false,
+        singlefiatCryptoValue: props.userBal.cryptoFiat,
+        singlefiatCurrencyValue: props.userBal.currencyFiat,
+      });
+    }
+    if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
+      if (props.cryptoPair.crypto !== this.state.crypto) {
+        this.setState({ crypto: props.cryptoPair.crypto });
+      }
+      if (props.cryptoPair.currency !== this.state.currency) {
+        this.setState({ currency: props.cryptoPair.currency });
+      }
+    }
+  }
   /*
         Page: /trade --> market
         this method is called for clearing validation messages.
@@ -495,8 +528,8 @@ class Market extends Component {
       fiatCurrencyValue: 0,
     });
     this.clearValidation();
-    obj[name] = value;
     if (name === "side") {
+      obj[name] = value;
       obj["amount"] = "";
       obj["total"] = 0;
       if (e.target.value === "Buy") {
@@ -512,6 +545,8 @@ class Market extends Component {
           total: 0,
         });
       }
+    } else {
+      obj[name] = parseFloat(value).toFixed(8);
     }
     this.setState(
       {
@@ -543,11 +578,21 @@ class Market extends Component {
               });
             }
             if (
+              parseFloat(this.state.amount) <
+              parseFloat(this.state.minCryptoLimit)
+            ) {
+              this.setState({
+                disabledCryptoMode: true,
+                disabledInvalidMode: false,
+                disabledMode: false,
+              });
+            } else if (
               parseFloat(
                 parseFloat(this.state.amount) * parseFloat(this.state.bestAsk)
               ) > parseFloat(this.props.userBal.currency.placed_balance)
             ) {
               this.setState({
+                disabledCryptoMode: false,
                 disabledInvalidMode: false,
                 disabledMode: true,
               });
@@ -555,6 +600,7 @@ class Market extends Component {
               parseFloat(this.state.amount) > parseFloat(this.state.buyMaxValue)
             ) {
               this.setState({
+                disabledCryptoMode: false,
                 disabledMode: false,
                 disabledInvalidMode: true,
               });
@@ -566,11 +612,13 @@ class Market extends Component {
               ) > parseFloat(this.props.userBal.currency.placed_balance)
             ) {
               this.setState({
+                disabledCryptoMode: false,
                 disabledInvalidMode: false,
                 disabledMode: true,
               });
             } else {
               this.setState({
+                disabledCryptoMode: false,
                 disabledInvalidMode: false,
                 disabledMode: false,
               });
@@ -611,12 +659,22 @@ class Market extends Component {
               });
             }
             if (
+              parseFloat(this.state.amount) <
+              parseFloat(this.state.minCryptoLimit)
+            ) {
+              this.setState({
+                disabledInvalidMode: false,
+                disabledMode: false,
+                disabledCryptoMode: true,
+              });
+            } else if (
               parseFloat(this.state.amount) >
               parseFloat(this.props.userBal.crypto.placed_balance)
             ) {
               this.setState({
                 disabledInvalidMode: false,
                 disabledMode: true,
+                disabledCryptoMode: false,
               });
             } else if (
               parseFloat(this.state.amount) >
@@ -625,6 +683,7 @@ class Market extends Component {
               this.setState({
                 disabledInvalidMode: true,
                 disabledMode: false,
+                disabledCryptoMode: false,
               });
             } else if (
               parseFloat(this.state.amount) >
@@ -635,11 +694,13 @@ class Market extends Component {
               this.setState({
                 disabledMode: true,
                 disabledInvalidMode: false,
+                disabledCryptoMode: false,
               });
             } else {
               this.setState({
                 disabledInvalidMode: false,
                 disabledMode: false,
+                disabledCryptoMode: false,
               });
             }
           }
@@ -652,6 +713,7 @@ class Market extends Component {
               fiatCurrencyValue: 0,
               disabledMode: false,
               disabledInvalidMode: false,
+              disabledCryptoMode: false,
             });
           } else {
             this.setState({
@@ -660,6 +722,7 @@ class Market extends Component {
               fiatCurrencyValue: 0,
               disabledMode: false,
               disabledInvalidMode: false,
+              disabledCryptoMode: false,
             });
           }
         }
@@ -815,6 +878,7 @@ class Market extends Component {
       amount,
     } = this.state;
     const RadioGroup = Radio.Group;
+
     let stepValue;
     switch (this.props.qtyPrecision.toString()) {
       case "0":
@@ -1139,6 +1203,11 @@ class Market extends Component {
               <div className="trade-action-validation">
                 {this.t("tier_changes:invalid_order_quantity_text.message")}
               </div>
+            ) : this.state.disabledCryptoMode ? (
+              <div className="trade-action-validation">
+                {this.t("tier_changes:min_limit_check_text.message")}
+                {this.state.minCryptoLimit} {this.state.crypto}
+              </div>
             ) : (
               ""
             )}
@@ -1205,23 +1274,9 @@ class Market extends Component {
                 </ApproxBelow>
                 <ApproxBelow>
                   <WillpayBelow>
-                    {this.t("conversion:fee_text.message")}{" "}
+                    {this.t("conversion:fee_text.message")}:{" "}
                     {this.state.userBalFees} %
                   </WillpayBelow>
-                  <WillpayBelow2>
-                    {/* {console.log(
-                      "buyPayAmt - buyEstPrice %%%",
-                      amount,
-                      (amount * this.state.userBalFees) / 100
-                    )} */}
-                    {/* {(buyPayAmt - buyEstPrice).toFixed(8)} {this.state.crypto} */}
-                    {/* {precision(buyPayAmt - buyEstPrice)} {this.state.crypto} */}
-                    {/* {precise(
-                      (amount * this.state.userBalFees) / 100,
-                      this.props.pricePrecision
-                    )}{" "}
-                    {this.state.crypto} */}
-                  </WillpayBelow2>
                 </ApproxBelow>
               </Esti>
             </Pay>
@@ -1263,23 +1318,9 @@ class Market extends Component {
                 </ApproxBelow>
                 <ApproxBelow>
                   <WillpayBelow>
-                    {this.t("conversion:fee_text.message")}{" "}
+                    {this.t("conversion:fee_text.message")}:{" "}
                     {this.state.userBalFees} %
                   </WillpayBelow>
-                  <WillpayBelow2>
-                    {/* {console.log(
-                      "sellPayAmt - sellEstPrice %%%",
-                      sellPayAmt,
-                      sellEstPrice
-                    )} */}
-                    {/* {(sellPayAmt - sellEstPrice).toFixed(8)}{" "} */}
-                    {/* {precision(sellPayAmt - sellEstPrice)} {this.state.currency} */}
-                    {/* {precise(
-                      (this.state.total * this.state.userBalFees) / 100,
-                      this.props.pricePrecision
-                    )}{" "}
-                    {this.state.currency} */}
-                  </WillpayBelow2>
                 </ApproxBelow>
               </Esti>
             </Pay>
@@ -1292,7 +1333,8 @@ class Market extends Component {
             disabled={
               this.state.disabledMode ||
               this.state.disabledbtn ||
-              this.state.disabledInvalidMode
+              this.state.disabledInvalidMode ||
+              this.state.disabledCryptoMode
             }
             side={this.state.side}
             onClick={this.onSubmit}

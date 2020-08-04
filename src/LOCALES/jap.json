@@ -2204,25 +2204,19 @@
     },
     "ticket_status_waiting_text": {
       "page": "View all tickets",
-      "message": "\u30ab\u30b9\u30bf\u30de\u30fc\u30d5\u30a3\u30fc\u30c9\u30d0\u30c3\u30af\u3092\u5f85\u3063\u3066\u3044\u307e\u3059",
+      "message": "\u4e0a\u306e\u63a5\u89e6\u3092\u5f85\u3063\u3066\u3044\u307e\u3059",
       "message_type": "Web content",
       "context": "Ticket status Waiting On Contact text"
     },
     "ticket_status_waiting_us_text": {
       "page": "View all tickets",
-      "message": "FALDAX\u3067\u5f85\u6a5f\u4e2d",
+      "message": "\u79c1\u305f\u3061\u3092\u5f85\u3063\u3066\u3044\u307e\u3059",
       "message_type": "Web content",
       "context": "Ticket status Waiting On Us text"
     },
     "ticket_status_closed_text": {
       "page": "View all tickets",
-      "message": "\u30af\u30ed\u30fc\u30ba - \u89e3\u6c7a\u6e08\u307f",
-      "message_type": "Web content",
-      "context": "Ticket status Closed text"
-    },
-    "ticket_status_unresolved_closed_text": {
-      "page": "View all tickets",
-      "message": "\u30af\u30ed\u30fc\u30ba - \u672a\u89e3\u6c7a",
+      "message": "\u9589\u307e\u3063\u3066\u3044\u308b",
       "message_type": "Web content",
       "context": "Ticket status Closed text"
     },
@@ -4641,6 +4635,12 @@
       "message": "\u3053\u306e\u9806\u5e8f\u3092\u7f6e\u304f\u305f\u3081\u306b\u3042\u306a\u305f\u306e\u8ca1\u5e03\u306e\u4e2d\u306b\u8cc7\u91d1\u4e0d\u8db3\u3002",
       "message_type": "Web content",
       "context": "Insufficient wallet balance validation if the order amount exceeds wallet balance"
+    },
+    "min_limit_check_text": {
+      "page": "Trade",
+      "message": "\n\u6ce8\u6587\u6570\u91cf\u306f",
+      "message_type": "Web content",
+      "context": "Order Quantity must be greater than minimum asset limit"
     }
   }
 }
