@@ -58,6 +58,7 @@ import {
 } from "../../SETTINGS/changePassword/change_email";
 import { parse } from "@fortawesome/fontawesome-svg-core";
 import { LogoutUser } from "../../../ACTIONS/authActions";
+import { precise } from "../../../precision";
 
 const API_URL = globalVariables.API_URL;
 const _AMAZONBUCKET = globalVariables._AMAZONBUCKET;
@@ -3127,9 +3128,7 @@ class ConversionDetail extends React.Component {
                             <ConversionLeftSpan>
                               {/* {this.state.totalAmount}{" "} */}
                               <NumberFormat
-                                value={parseFloat(
-                                  this.state.totalAmount
-                                ).toFixed(8)}
+                                value={precise(this.state.totalAmount, "8")}
                                 displayType={"text"}
                                 thousandSeparator={true}
                               />{" "}
@@ -3138,9 +3137,7 @@ class ConversionDetail extends React.Component {
                           ) : (
                             <ConversionLeftSpan>
                               <NumberFormat
-                                value={parseFloat(this.state.subTotal).toFixed(
-                                  8
-                                )}
+                                value={precise(this.state.subTotal, "8")}
                                 displayType={"text"}
                                 thousandSeparator={true}
                               />{" "}
@@ -3161,9 +3158,7 @@ class ConversionDetail extends React.Component {
                           <ConversionLeftSpan>
                             (
                             <NumberFormat
-                              value={parseFloat(this.state.faldaxFee).toFixed(
-                                8
-                              )}
+                              value={precise(this.state.faldaxFee, "8")}
                               displayType={"text"}
                               thousandSeparator={true}
                             />
@@ -3188,9 +3183,7 @@ class ConversionDetail extends React.Component {
                           <ConversionLeftSpan>
                             (
                             <NumberFormat
-                              value={parseFloat(this.state.networkFee).toFixed(
-                                8
-                              )}
+                              value={precise(this.state.networkFee, "8")}
                               displayType={"text"}
                               thousandSeparator={true}
                             />
@@ -3426,9 +3419,7 @@ class ConversionDetail extends React.Component {
                           {this.state.includeFees === 1 ? (
                             <LeftTotal>
                               <NumberFormat
-                                value={parseFloat(this.state.subTotal).toFixed(
-                                  8
-                                )}
+                                value={precise(this.state.subTotal, "8")}
                                 displayType={"text"}
                                 thousandSeparator={true}
                               />{" "}
@@ -3437,9 +3428,7 @@ class ConversionDetail extends React.Component {
                           ) : (
                             <LeftTotal>
                               <NumberFormat
-                                value={parseFloat(
-                                  this.state.totalAmount
-                                ).toFixed(8)}
+                                value={precise(this.state.totalAmount, "8")}
                                 displayType={"text"}
                                 thousandSeparator={true}
                               />{" "}
