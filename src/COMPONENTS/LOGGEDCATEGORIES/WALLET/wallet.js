@@ -153,25 +153,6 @@ class Wallet extends Component {
         }
       }
     }
-    // var total = 0;
-    // var tableData = this.props.walletDetails.activated_asset_lists;
-    // var FIAT = this.props.profileDetails.fiat;
-    // if (tableData !== undefined) {
-    //   tableData.map(function(index, key) {
-    //     // console.log(index.quote);
-    //     if (index.quote !== null)
-    //       if (
-    //         index.quote[`${FIAT}`].price !== undefined &&
-    //         index.quote[`${FIAT}`].price !== null
-    //       ) {
-    //         var fiat = this.props.profileDetails.fiat;
-
-    //         total = total + index.quote[`${fiat}`].price * index.balance;
-    //       }
-    //   });
-    //   console.log("Total^^^", total);
-    //   this.setState({ total });
-    // }
     var coll = document.getElementsByClassName("collapsible");
     var i;
     for (i = 0; i < coll.length; i++) {
@@ -193,39 +174,6 @@ class Wallet extends Component {
     }
     this.props.walletBal(this.props.isLoggedIn);
     this.props.getAllCoins(this.props.isLoggedIn);
-    // var total = 0,
-    //   me = this;
-    // if (this.props.walletDetails !== null) {
-    //   console.log("props", this.props.walletDetails);
-    //   var tableData = this.props.walletDetails;
-    //   var FIAT = this.props.profileDetails.fiat;
-    //   if (tableData !== undefined) {
-    //     tableData.map(function(index, key) {
-    //       // console.log(index.quote);
-    //       if (index.quote !== null)
-    //         if (
-    //           index.quote[`${FIAT}`].price !== undefined &&
-    //           index.quote[`${FIAT}`].price !== null
-    //         ) {
-    //           var fiat = me.props.profileDetails.fiat;
-
-    //           total = total + index.quote[`${fiat}`].price * index.balance;
-    //           console.log(
-    //             "fiat",
-    //             fiat,
-    //             index.quote[`${fiat}`].price,
-    //             index.balance,
-    //             total
-    //           );
-    //         }
-    //     });
-    //     // console.log(total)
-    //   }
-    // } else {
-    //   console.log("mount", this.props);
-    // }
-    // this.setState({ total });
-    // console.log("mount", this.props.walletDetails);
   }
   componentWillReceiveProps(newProps) {
     var total = 0;

@@ -78,7 +78,14 @@ class SSN extends Component {
         Page: /editProfile --> KYC
         It is called when next button is clicked and proceed to next step. 
     */
-
+  componentDidMount() {
+    console.log("test1", this.props.profileDetails.ssn_number);
+    if (this.props.profileDetails.ssn_number) {
+      this.setState({
+        value_input: this.props.profileDetails.ssn_number,
+      });
+    }
+  }
   next_step() {
     var kycSSN = {};
     if (this.validator.allValid()) {
@@ -124,7 +131,10 @@ class SSN extends Component {
             <SSNLabel>
               {this.t("tiers:govt_issued_number_text.message")}
             </SSNLabel>
-            <SSNInput onChange={this.input_change.bind(this)} />
+            <SSNInput
+              value={this.state.value_input}
+              onChange={this.input_change.bind(this)}
+            />
             {this.validator.message(
               "postal_code",
               this.state.value_input,
@@ -170,6 +180,10 @@ const mapStateToProps = (state) => {
     isLoggedIn:
       state.simpleReducer.isLoggedIn !== undefined
         ? state.simpleReducer.isLoggedIn
+        : "",
+    profileDetails:
+      state.simpleReducer.profileDetails !== undefined
+        ? state.simpleReducer.profileDetails.data[0]
         : "",
   };
 };

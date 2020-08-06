@@ -177,8 +177,21 @@ class Limit extends Component {
   walletAccess(coin) {
     if (this.state.panic_status === true) {
       this.setState({ panicEnabled: true });
+    } else if (this.props.profileDetails.is_tier_enabled) {
+      if (this.props.profileDetails.is_user_updated) {
+        if (this.props.profileDetails.legal_allowed) {
+          this.props.history.push(`/walletDetails?coinID0=${coin}`);
+        } else {
+          this.setState({ countryAccess: true });
+        }
+      } else {
+        this.setState({
+          completeProfile: true,
+        });
+      }
     } else if (
       !this.props.profileDetails.is_user_updated &&
+      !this.props.profileDetails.is_tier_enabled &&
       this.props.profileDetails.is_kyc_done != "2"
     ) {
       this.setState({
