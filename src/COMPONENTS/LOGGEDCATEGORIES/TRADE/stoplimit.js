@@ -47,6 +47,7 @@ import CountryAccess from "../../../SHARED-COMPONENTS/CountryAccess";
 import CompleteKYC from "../../../SHARED-COMPONENTS/CompleteKYC";
 import PanicEnabled from "../../../SHARED-COMPONENTS/PanicEnabled";
 import CompleteProfile from "../../../SHARED-COMPONENTS/completeProfile";
+import TrialTierUpgrade from "../../../SHARED-COMPONENTS/trailTierUpgrade";
 
 // let { API_URL } = globalVariables;
 let { SOCKET_HOST } = globalVariables;
@@ -88,12 +89,20 @@ class StopLimit extends Component {
       countryAccess: false,
       completeProfile: false,
       panic_status: this.props.panic_status,
+      tradeLimit: 0,
+      tradeLimitLeft: 0,
+      tradeLimitLeftAfter: 0,
+      tradeLimitFlag: false,
+      trialTierUpgrade: false,
+      tradeDaysCompleted: false,
     };
+    this.timeout = null;
     this.t = this.props.t;
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.marketAccess = this.marketAccess.bind(this);
     this.walletAccess = this.walletAccess.bind(this);
+    this.emitAmount = this.emitAmount.bind(this);
     this.clearValidation = this.clearValidation.bind(this);
     this.validator = new SimpleReactValidator({
       gtzero: {
@@ -145,10 +154,29 @@ class StopLimit extends Component {
   }
 
   /*Life Cycle Methods  */
-  marketAccess() {
+  async marketAccess() {
     if (this.state.panic_status === true) {
       this.setState({ panicEnabled: true });
+    } else if (this.props.profileDetails.is_tier_enabled) {
+      if (this.props.profileDetails.is_user_updated) {
+        console.log(
+          "this.props.profileDetails.legal_allowed",
+          this.props.profileDetails.legal_allowed
+        );
+        if (this.props.profileDetails.legal_allowed) {
+          console.log("INSIDE IF");
+        } else {
+          console.log("INSIDE ELSE", this.state);
+          await this.setState({ countryAccess: true });
+          console.log(this.state);
+        }
+      } else {
+        this.setState({
+          completeProfile: true,
+        });
+      }
     } else if (
+      !this.props.profileDetails.is_tier_enabled &&
       !this.props.profileDetails.is_user_updated &&
       this.props.profileDetails.is_kyc_done != "2"
     ) {
@@ -378,6 +406,35 @@ class StopLimit extends Component {
           });
         }
       });
+      this.props.io.emit("tier-0-trade-limit", {
+        amount: 0,
+        crypto: this.state.crypto,
+      });
+      this.props.io.on("trade-user-limit-availability", (data) => {
+        console.log("data", data);
+        if (data) {
+          this.setState(
+            {
+              tradeLimit: data.valueObject.available_trade_limit_actual,
+              tradeLimitLeft: data.valueObject.current_left_limit,
+              tradeLimitLeftAfter: data.valueObject.amount_left_after_trade,
+              tradeLimitFlag: !data.leftFlag,
+              tradeDaysCompleted: data.response_flag,
+            },
+            () => {
+              if (this.state.tradeDaysCompleted) {
+                this.setState({
+                  trialTierUpgrade: true,
+                });
+              } else {
+                this.setState({
+                  trialTierUpgrade: false,
+                });
+              }
+            }
+          );
+        }
+      });
     }
     if (this.props.profileDetails) {
       switch (this.props.profileDetails.fiat) {
@@ -543,9 +600,21 @@ class StopLimit extends Component {
       completeKYC: false,
       panicEnabled: false,
       completeProfile: false,
+      trialTierUpgrade: false,
     });
   };
+  emitAmount() {
+    console.log("test", this.state.amount);
+    this.props.io.emit("tier-0-trade-limit", {
+      amount: parseFloat(this.state.amount),
+      crypto: this.state.crypto,
+    });
+  }
   onChange(e) {
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => {
+      this.emitAmount();
+    }, 1500);
     var self = this;
     let obj = {};
     let name = e.target.name;
@@ -946,6 +1015,9 @@ class StopLimit extends Component {
       buyPayAmt,
       sellEstPrice,
       sellPayAmt,
+      tradeLimit,
+      tradeLimitLeft,
+      tradeLimitLeftAfter
     } = this.state;
     const RadioGroup = Radio.Group;
     let stepValue, limitPrecision;
@@ -1485,6 +1557,29 @@ class StopLimit extends Component {
                     {this.state.crypto} */}
                   </WillpayBelow2>
                 </ApproxBelow>
+                <hr />
+                {this.props.profileDetails.is_tier_enabled && (
+                  <>
+                    <ApproxBelow>
+                      <WillpayBelow>Trade Limit</WillpayBelow>
+                      <WillpayBelow2>
+                        {precise(parseFloat(tradeLimit), "2")} USD
+                      </WillpayBelow2>
+                    </ApproxBelow>
+                    <ApproxBelow>
+                      <WillpayBelow>Available Trade Limit</WillpayBelow>
+                      <WillpayBelow2>
+                        {precise(parseFloat(tradeLimitLeft), "2")} USD
+                      </WillpayBelow2>
+                    </ApproxBelow>
+                    <ApproxBelow>
+                      <WillpayBelow>Available Limit after Trade</WillpayBelow>
+                      <WillpayBelow2>
+                        {precise(parseFloat(tradeLimitLeftAfter), "2")} USD
+                      </WillpayBelow2>
+                    </ApproxBelow>
+                  </>
+                )}
               </Esti>
             </Pay>
           ) : (
@@ -1533,6 +1628,29 @@ class StopLimit extends Component {
                     {this.state.currency} */}
                   </WillpayBelow2>
                 </ApproxBelow>
+                <hr />
+                {this.props.profileDetails.is_tier_enabled && (
+                  <>
+                    <ApproxBelow>
+                      <WillpayBelow>Trade Limit</WillpayBelow>
+                      <WillpayBelow2>
+                        {precise(parseFloat(tradeLimit), "2")} USD
+                      </WillpayBelow2>
+                    </ApproxBelow>
+                    <ApproxBelow>
+                      <WillpayBelow>Available Trade Limit</WillpayBelow>
+                      <WillpayBelow2>
+                        {precise(parseFloat(tradeLimitLeft), "2")} USD
+                      </WillpayBelow2>
+                    </ApproxBelow>
+                    <ApproxBelow>
+                      <WillpayBelow>Available Limit after Trade</WillpayBelow>
+                      <WillpayBelow2>
+                        {precise(parseFloat(tradeLimitLeftAfter), "2")} USD
+                      </WillpayBelow2>
+                    </ApproxBelow>
+                  </>
+                )}
               </Esti>
             </Pay>
           )
@@ -1559,7 +1677,8 @@ class StopLimit extends Component {
               this.state.disabledBtn ||
               this.state.disabledMode ||
               this.state.disabledBtnMode ||
-              this.state.disabledCryptoMode
+              this.state.disabledCryptoMode ||
+              this.state.tradeLimitFlag
             }
             side={this.state.side}
             onClick={this.onSubmit}
@@ -1582,6 +1701,10 @@ class StopLimit extends Component {
         <CompleteProfile
           comingCancel={(e) => this.comingCancel(e)}
           visible={this.state.completeProfile}
+        />
+        <TrialTierUpgrade
+          comingCancel={(e) => this.comingCancel(e)}
+          visible={this.state.trialTierUpgrade}
         />
         {this.state.loader === true ? (
           <SpinSingle className="Single_spin">

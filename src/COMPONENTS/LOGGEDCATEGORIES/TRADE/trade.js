@@ -364,7 +364,7 @@ class Trade extends Component {
     this.state = {
       timePeriod: "1",
       status: "1",
-      crypto: "ETH",
+      crypto: "XRP",
       currency: "BTC",
       prevRoom: {},
       orderTradeData: {},

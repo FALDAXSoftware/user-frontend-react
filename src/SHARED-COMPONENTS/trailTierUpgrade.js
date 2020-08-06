@@ -77,17 +77,11 @@ class TrialTierUpgrade extends React.Component {
         >
           <ModalWrap className="country-wrap">
             <p className="first-subhead">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book. It has sosed
-              to using 'Content here, content here', making it look like
-              readable English. Many desktop publishing packages and web page
-              editors now use Lorem Ipsum as their default model text, and a
-              search for 'lorem ipsum' will uncover many web sites still in
-              their infancy. Various versions have evolved over the years,
-              sometimes by accident, sometimes on purpose (injected humour and
-              the like).
+              Your Maximum Allowable Days for trade for your Tier
+                has been completed.
+
+              To do More trade please sumbit your Identity Verification
+              and further do Unlimited Trades
             </p>
             {/* <h3>{this.t("illegal_popup_head.message")}</h3>
             <p className="first-subhead">
