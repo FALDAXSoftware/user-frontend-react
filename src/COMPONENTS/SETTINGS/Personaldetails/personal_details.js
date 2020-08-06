@@ -1166,6 +1166,7 @@ class PersonalDetails extends Component {
       field !== "dob" &&
       field !== "country" &&
       field !== "postal_code" &&
+      field !== "ssn_number" &&
       field !== "first_name" &&
       field !== "last_name" &&
       field !== "street_address" &&
@@ -1441,6 +1442,49 @@ class PersonalDetails extends Component {
           });
         }
       }
+    } else if (field === "ssn_number") {
+      if (value !== "") {
+        var reg = /^[a-zA-Z0-9-_]*$/;
+        var bool = reg.test(value);
+        if (bool === true) {
+          if (value.length < 4 || value.length > 20) {
+            this.setState({ ssnIcon: false });
+            document.querySelectorAll(".ssn_msg")[0].style.display = "block";
+            this.setState({
+              ssnmsg:
+                "SSN Number should have a minimum of 4 and a maximum of 20 characters",
+            });
+          } else {
+            this.setState({ ssnIcon: true });
+            document.querySelectorAll(".ssn_msg")[0].style.display = "none";
+          }
+        } else {
+          this.setState({ ssnIcon: false });
+          document.querySelectorAll(".ssn_msg")[0].style.display = "block";
+          if (value.length < 4 || value.length > 20) {
+            this.setState({
+              ssnmsg:
+                "SSN Number should have a minimum of 4 and a maximum of 20 characters",
+            });
+          } else {
+            this.setState({
+              ssnmsg:
+                "SSN Number may only contain letters, numbers, and dashes",
+            });
+          }
+        }
+      } else {
+        this.setState({ ssnIcon: true });
+        document.querySelectorAll(".ssn_msg")[0].style.display = "none";
+        // this.setState({ ssnIcon: false });
+        // document.querySelectorAll(".ssn_msg")[0].style.display = "block";
+        // this.setState({
+        //   ssnmsg:
+        //     t("subhead_personal_form_postal_code.message") +
+        //     " " +
+        //     t("validations:field_is_required.message"),
+        // });
+      }
     } else if (field === "postal_code") {
       if (value !== "") {
         var reg = /^[a-zA-Z0-9-_]*$/;
@@ -1541,6 +1585,7 @@ class PersonalDetails extends Component {
         this.state.street1Icon !== false &&
         this.state.street2Icon !== false &&
         this.state.postalIcon !== false &&
+        this.state.ssnIcon !== false &&
         ((this.props.profileDetails.country !== undefined &&
           this.props.profileDetails.country !== "" &&
           this.props.profileDetails.country !== null) ||
@@ -1712,6 +1757,8 @@ class PersonalDetails extends Component {
         this.state.street1Icon !== false &&
         this.state.street2Icon !== false &&
         this.state.postalIcon !== false &&
+        this.state.ssnIcon !== false &&
+        this.state.ssnIcon !== false &&
         this.state.date_format !== "" &&
         // this.state.agreeCheck !== false &&
         ((this.props.profileDetails.country !== undefined &&
@@ -1730,6 +1777,7 @@ class PersonalDetails extends Component {
         document.querySelectorAll(".street2_msg")[0].style.display = "none";
         /* document.querySelectorAll(".city_msg")[0].style.display = "none"; */
         document.querySelectorAll(".postal_msg")[0].style.display = "none";
+        document.querySelectorAll(".ssn_msg")[0].style.display = "none";
         this.setState({
           first_msg: null,
           last_msg: null,
@@ -1772,6 +1820,7 @@ class PersonalDetails extends Component {
         )
           profileData.append("street_address_2", value.street_address_2);
         profileData.append("postal_code", number);
+        profileData.append("ssn_number", value.ssn_number);
         var fiat =
           this.state.fiat !== ""
             ? this.state.fiat
@@ -1812,6 +1861,7 @@ class PersonalDetails extends Component {
           country_code = countrySelected.sortname;
         }
         profileData.append("country_code", country_code);
+        console.log("test", profileData);
         this.props.profileupdateAction(this.props.isLoggedIn, profileData);
         this.props.i18n.changeLanguage(this.state.language);
         this.props.langAction(this.state.language);
@@ -2054,6 +2104,7 @@ class PersonalDetails extends Component {
         street1Icon: null,
         street2Icon: null,
         postalIcon: null,
+        ssnIcon: null,
         dataDate: null,
         date_format: this.state.profileDetails.date_format
           ? this.state.profileDetails.date_format
@@ -2085,6 +2136,7 @@ class PersonalDetails extends Component {
         document.querySelectorAll(".street2_msg")[0].style.display = "none";
         /* document.querySelectorAll(".city_msg")[0].style.display = "none"; */
         document.querySelectorAll(".postal_msg")[0].style.display = "none";
+        document.querySelectorAll(".ssn_msg")[0].style.display = "none";
         document.querySelectorAll(".df_msg")[0].style.display = "none";
         this.clearValidation();
       }
@@ -2507,6 +2559,25 @@ class PersonalDetails extends Component {
                 ) : (
                   ""
                 )} */}
+                <FourthRow>
+                  <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }}>
+                    <Postal>SSN Number</Postal>
+                    <Postalinput
+                      disabled={!this.state.editMode}
+                      placeholder="SSN Number"
+                      {...getFieldProps("ssn_number", {
+                        onChange(e) {
+                          me.onChangeField(e.target.value, "ssn_number");
+                        },
+                        initialValue: profileDetails.ssn_number, // have to write original onChange here if you need
+                        rules: [{ type: "string" }],
+                      })}
+                    />
+                    <PostalMsg className="ssn_msg">
+                      {this.state.ssnmsg}
+                    </PostalMsg>
+                  </Col>
+                </FourthRow>
                 <FourthRow>
                   <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }}>
                     <Postal>

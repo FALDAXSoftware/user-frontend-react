@@ -138,12 +138,12 @@ class Tier extends Component {
       <div>
         <TierMainWrap>
           <TierMainInnerWrap>
-            {tierData.length > 0
+            {tierData && tierData.length > 0
               ? tierData.map(function (tier, index) {
                   var liClasses = classNames({
                     "tier-active": tier.is_verified === true,
-                    "tier-enabled": tier.is_active === true,
-                    "tier-main": !tier.is_verified && !tier.is_active,
+                    "tier-enabled": tier.is_tier_active === true,
+                    "tier-main": !tier.is_verified && !tier.is_tier_active,
                   });
                   return (
                     <TierSubMain key={tier.id} className={liClasses}>
@@ -353,7 +353,7 @@ class Tier extends Component {
                             </TierUpdate>
                           </Link>
                         )}
-                        {tier.is_active && (
+                        {tier.is_tier_active && (
                           <TierUpdate
                             onClick={() => {
                               self.checkTierRequirements(tier.tier_step);
@@ -374,7 +374,7 @@ class Tier extends Component {
                               : self.t("upgrade_text.message")}
                           </TierUpdate>
                         )}
-                        {!tier.is_active && !tier.is_verified && (
+                        {!tier.is_tier_active && !tier.is_verified && (
                           <TierUpdate className="upgrade-btn">
                             {self.t("upgrade_text.message")}
                           </TierUpdate>

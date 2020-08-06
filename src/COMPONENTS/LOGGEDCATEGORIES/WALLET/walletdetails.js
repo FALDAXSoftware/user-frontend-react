@@ -176,7 +176,14 @@ class WalletDetails extends Component {
       }
     }
     if (this.props.location !== undefined) {
+      console.log("Here", this.props.profileDetails);
       if (
+        this.props.location.search.includes("coinID") &&
+        this.props.profileDetails.is_tier_enabled &&
+        this.props.profileDetails.legal_allowed
+      ) {
+        await this.walletDetailsApi();
+      } else if (
         this.props.location.search.includes("coinID") &&
         this.props.profileDetails.is_kyc_done == 2 &&
         this.props.profileDetails.is_allowed == true
