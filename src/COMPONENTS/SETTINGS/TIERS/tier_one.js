@@ -179,6 +179,7 @@ class TierOne extends React.Component {
   render() {
     const { next /* , is_kyc_done  */ } = this.state;
     const { t } = this.props;
+    console.log("test", next);
     return (
       <div>
         <Navigation />
