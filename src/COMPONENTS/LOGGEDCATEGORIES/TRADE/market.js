@@ -47,6 +47,7 @@ import { ThirdLabel } from "../../../STYLED-COMPONENTS/LANDING_CATEGORIES/contac
 import CompleteKYC from "../../../SHARED-COMPONENTS/CompleteKYC";
 import PanicEnabled from "../../../SHARED-COMPONENTS/PanicEnabled";
 import CompleteProfile from "../../../SHARED-COMPONENTS/completeProfile";
+import TrialTierUpgrade from "../../../SHARED-COMPONENTS/trailTierUpgrade";
 
 let { SOCKET_HOST } = globalVariables;
 const API_URL = globalVariables.API_URL;
@@ -88,13 +89,18 @@ class Market extends Component {
       tradeLimit: "",
       tradeLimitLeft: "",
       tradeLimitLeftAfter: "",
+      tradeLimitFlag: false,
+      trialTierUpgrade: false,
+      tradeDaysCompleted: false,
     };
+    this.timeout = null;
     this.t = this.props.t;
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.marketAccess = this.marketAccess.bind(this);
     this.walletAccess = this.walletAccess.bind(this);
     this.clearValidation = this.clearValidation.bind(this);
+    this.emitAmount = this.emitAmount.bind(this);
     this.validator = new SimpleReactValidator({
       gtzero: {
         // name the rule
@@ -137,7 +143,26 @@ class Market extends Component {
   async marketAccess() {
     if (this.state.panic_status === true) {
       this.setState({ panicEnabled: true });
+    } else if (this.props.profileDetails.is_tier_enabled) {
+      if (this.props.profileDetails.is_user_updated) {
+        console.log(
+          "this.props.profileDetails.legal_allowed",
+          this.props.profileDetails.legal_allowed
+        );
+        if (this.props.profileDetails.legal_allowed) {
+          console.log("INSIDE IF");
+        } else {
+          console.log("INSIDE ELSE", this.state);
+          await this.setState({ countryAccess: true });
+          console.log(this.state);
+        }
+      } else {
+        this.setState({
+          completeProfile: true,
+        });
+      }
     } else if (
+      !this.props.profileDetails.is_tier_enabled &&
       !this.props.profileDetails.is_user_updated &&
       this.props.profileDetails.is_kyc_done != "2"
     ) {
@@ -414,11 +439,26 @@ class Market extends Component {
       this.props.io.on("trade-user-limit-availability", (data) => {
         console.log("data", data);
         if (data) {
-          this.setState({
-            tradeLimit: data.valueObject.available_trade_limit_actual,
-            tradeLimitLeft: data.valueObject.current_left_limit,
-            tradeLimitLeftAfter: data.valueObject.amount_left_after_trade,
-          });
+          this.setState(
+            {
+              tradeLimit: data.valueObject.available_trade_limit_actual,
+              tradeLimitLeft: data.valueObject.current_left_limit,
+              tradeLimitLeftAfter: data.valueObject.amount_left_after_trade,
+              tradeLimitFlag: !data.leftFlag,
+              tradeDaysCompleted: data.response_flag,
+            },
+            () => {
+              if (this.state.tradeDaysCompleted) {
+                this.setState({
+                  trialTierUpgrade: true,
+                });
+              } else {
+                this.setState({
+                  trialTierUpgrade: false,
+                });
+              }
+            }
+          );
         }
       });
     }
@@ -538,6 +578,7 @@ class Market extends Component {
       completeKYC: false,
       panicEnabled: false,
       completeProfile: false,
+      trialTierUpgrade: false,
     });
   };
   clearValidation() {
@@ -550,8 +591,18 @@ class Market extends Component {
         Page: /trade --> market
         this method is called to change BUY/SELL side.
     */
-
+  emitAmount() {
+    console.log("test", this.state.amount);
+    this.props.io.emit("tier-0-trade-limit", {
+      amount: parseFloat(this.state.amount),
+      crypto: this.state.crypto,
+    });
+  }
   onChange(e) {
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => {
+      this.emitAmount();
+    }, 1500);
     var self = this;
     let obj = {};
     let name = e.target.name;
@@ -587,10 +638,7 @@ class Market extends Component {
       () => {
         obj = {};
         if (this.state.amount > 0) {
-          this.props.io.emit("tier-0-trade-limit", {
-            amount: parseFloat(this.state.amount),
-            crypto: this.state.crypto,
-          });
+          // this.timeout = setTimeout(this.emitAmount(), 1500);
           if (this.state.side === "Buy") {
             self.setState({
               // buyPayAmt: Number(this.state.amount) * this.props.userBal.buyPay,
@@ -784,14 +832,14 @@ class Market extends Component {
         this method is called when u submit form to BUY/SELL.
     */
 
-  onSubmit() {
+  async onSubmit() {
     var self = this;
-    this.marketAccess();
+    await this.marketAccess();
     if (
       this.validator.allValid() &&
       !this.state.completeKYC &&
       !this.state.completeProfile &&
-      !this.state.completeProfile
+      !this.state.countryAccess
     ) {
       let params = {
         symbol:
@@ -1334,18 +1382,7 @@ class Market extends Component {
                     {this.state.currency}
                   </WillpayBelow2>
                 </ApproxBelow>
-                <ApproxBelow>
-                  <WillpayBelow>Trade Limit</WillpayBelow>
-                  <WillpayBelow2>{tradeLimit}</WillpayBelow2>
-                </ApproxBelow>
-                <ApproxBelow>
-                  <WillpayBelow>Available Trade Limit</WillpayBelow>
-                  <WillpayBelow2>{tradeLimitLeft}</WillpayBelow2>
-                </ApproxBelow>
-                <ApproxBelow>
-                  <WillpayBelow>Available Limit after Trade</WillpayBelow>
-                  <WillpayBelow2>{tradeLimitLeftAfter}</WillpayBelow2>
-                </ApproxBelow>
+
                 <ApproxBelow>
                   <WillpayBelow>
                     {this.t("conversion:fee_text.message")}:{" "}
@@ -1384,6 +1421,29 @@ class Market extends Component {
                     {this.state.crypto} */}
                   </WillpayBelow>
                 </ApproxBelow>
+                <hr />
+                {this.props.profileDetails.is_tier_enabled && (
+                  <>
+                    <ApproxBelow>
+                      <WillpayBelow>Trade Limit</WillpayBelow>
+                      <WillpayBelow2>
+                        {precise(parseFloat(tradeLimit), "2")} USD
+                      </WillpayBelow2>
+                    </ApproxBelow>
+                    <ApproxBelow>
+                      <WillpayBelow>Available Trade Limit</WillpayBelow>
+                      <WillpayBelow2>
+                        {precise(parseFloat(tradeLimitLeft), "2")} USD
+                      </WillpayBelow2>
+                    </ApproxBelow>
+                    <ApproxBelow>
+                      <WillpayBelow>Available Limit after Trade</WillpayBelow>
+                      <WillpayBelow2>
+                        {precise(parseFloat(tradeLimitLeftAfter), "2")} USD
+                      </WillpayBelow2>
+                    </ApproxBelow>
+                  </>
+                )}
               </Esti>
             </Pay>
           ) : (
@@ -1422,18 +1482,7 @@ class Market extends Component {
                     {this.state.currency}
                   </WillpayBelow2>
                 </ApproxBelow>
-                <ApproxBelow>
-                  <WillpayBelow>Trade Limit</WillpayBelow>
-                  <WillpayBelow2>{tradeLimit}</WillpayBelow2>
-                </ApproxBelow>
-                <ApproxBelow>
-                  <WillpayBelow>Available Trade Limit</WillpayBelow>
-                  <WillpayBelow2>{tradeLimitLeft}</WillpayBelow2>
-                </ApproxBelow>
-                <ApproxBelow>
-                  <WillpayBelow>Available Limit after Trade</WillpayBelow>
-                  <WillpayBelow2>{tradeLimitLeftAfter}</WillpayBelow2>
-                </ApproxBelow>
+
                 <ApproxBelow>
                   <WillpayBelow>
                     {this.t("conversion:fee_text.message")}:{" "}
@@ -1456,6 +1505,29 @@ class Market extends Component {
                     {this.state.currency} */}
                   {/* </WillpayBelow> */}
                 </ApproxBelow>
+                <hr />
+                {this.props.profileDetails.is_tier_enabled && (
+                  <>
+                    <ApproxBelow>
+                      <WillpayBelow>Trade Limit</WillpayBelow>
+                      <WillpayBelow2>
+                        {precise(parseFloat(tradeLimit), "2")} USD
+                      </WillpayBelow2>
+                    </ApproxBelow>
+                    <ApproxBelow>
+                      <WillpayBelow>Available Trade Limit</WillpayBelow>
+                      <WillpayBelow2>
+                        {precise(parseFloat(tradeLimitLeft), "2")} USD
+                      </WillpayBelow2>
+                    </ApproxBelow>
+                    <ApproxBelow>
+                      <WillpayBelow>Available Limit after Trade</WillpayBelow>
+                      <WillpayBelow2>
+                        {precise(parseFloat(tradeLimitLeftAfter), "2")} USD
+                      </WillpayBelow2>
+                    </ApproxBelow>
+                  </>
+                )}
               </Esti>
             </Pay>
           )
@@ -1468,7 +1540,8 @@ class Market extends Component {
               this.state.disabledMode ||
               this.state.disabledbtn ||
               this.state.disabledInvalidMode ||
-              this.state.disabledCryptoMode
+              this.state.disabledCryptoMode ||
+              this.state.tradeLimitFlag
             }
             side={this.state.side}
             onClick={this.onSubmit}
@@ -1491,6 +1564,10 @@ class Market extends Component {
         <CompleteProfile
           comingCancel={(e) => this.comingCancel(e)}
           visible={this.state.completeProfile}
+        />
+        <TrialTierUpgrade
+          comingCancel={(e) => this.comingCancel(e)}
+          visible={this.state.trialTierUpgrade}
         />
         {this.state.Loader === true ? (
           <SpinSingle className="Single_spin">
