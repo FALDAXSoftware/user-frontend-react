@@ -627,7 +627,26 @@ class LoggedNavigation extends Component {
   walletAccess() {
     if (this.state.panic_status === true) {
       this.setState({ panicEnabled: true });
+    } else if (this.props.profileDetails.is_tier_enabled) {
+      if (this.props.profileDetails.is_user_updated) {
+        if (this.props.profileDetails.legal_allowed) {
+          if (this.props.location.pathname !== "/wallet")
+            this.props.history.push({
+              pathname: "/wallet",
+              state: {
+                flag: true,
+              },
+            });
+        } else {
+          this.setState({ countryAccess: true });
+        }
+      } else {
+        this.setState({
+          completeProfile: true,
+        });
+      }
     } else if (
+      !this.props.profileDetails.is_tier_enabled &&
       !this.props.profileDetails.is_user_updated &&
       this.props.profileDetails.is_kyc_done != "2"
     ) {
