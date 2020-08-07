@@ -8,10 +8,16 @@ import { Line } from "react-chartjs-2";
 import { translate } from "react-i18next";
 
 /*STYLED-COMPONENTS*/
-import { Instru2, WrapDepth } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
+import {
+  Instru2,
+  WrapDepth,
+  TopDiv,
+  InstruTest,
+} from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import { globalVariables } from "../../../Globals";
+import { precise } from "../../../precision";
 // import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 
 // // am4core.useTheme(am4themes_animated);
@@ -34,6 +40,7 @@ class DepthChartAm extends Component {
       askData: [],
       bidData: [],
       zoom: 1,
+      spreadPer: "",
     };
     this.t = this.props.t;
   }
@@ -45,8 +52,6 @@ class DepthChartAm extends Component {
     chart.dataSource.url = `${SOCKET_HOST}/api/v1/tradding/depth-chart-details?symbol=${this.props.crypto}-${this.props.currency}`;
     chart.dataSource.reloadFrequency = 10000;
     chart.dataSource.adapter.add("parsedData", function (data) {
-      console.log();
-
       // Function to process (sort and calculate cummulative volume)
       function processData(list, type, desc) {
         // Convert to data points
@@ -97,12 +102,10 @@ class DepthChartAm extends Component {
           }
         }
       }
-
       // Init
       let res = [];
       processData(data.data.buyDetails, "bids", true);
       processData(data.data.sellDetails, "asks", false);
-
       return res;
     });
     // Set up precision for numbers
@@ -249,11 +252,17 @@ class DepthChartAm extends Component {
   render() {
     return (
       <WrapDepth style={{ fontSize: "8px", fontWeight: "300" }}>
-        <Instru2 style={{ width: "calc(100% - 20px)" }}>
-          {this.t("market_depth_text.message")} {this.props.crypto}/
-          {this.props.currency}
-        </Instru2>
+        <TopDiv>
+          <Instru2>
+            {this.t("market_depth_text.message")} {this.props.crypto}/
+            {this.props.currency}
+          </Instru2>
+          {this.props.spread && (
+            <Instru2 className="spread">Spread : {this.props.spread}%</Instru2>
+          )}
+        </TopDiv>
         <Row>
+          {/* <InstruTest>{this.props.spread} %</InstruTest> */}
           <Col xl={24} style={{ height: this.props.height }}>
             <div id="depthChartContainer"></div>
           </Col>
