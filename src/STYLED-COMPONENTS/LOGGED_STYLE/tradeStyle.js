@@ -774,16 +774,38 @@ export const BBC2 = styled(BBC)`
 /* Depth Chart */
 
 export const Instru2 = styled(Instru)`
-  margin-top: 25px;
-  margin-left: 10px;
+  margin: 0;
   & .controlls {
     float:right button {
       margin: 0 5px;
     }
   }
+  &.spread {
+    font-size: 12px;
+    font-weight: 600;
+  }
 `;
-
-export const WrapDepth = styled.div``;
+export const InstruTest = styled.p`
+  font-size: 12px;
+  font-weight: 600;
+  position: absolute;
+  top: 50vh;
+  /* right: 0; */
+  /* bottom: 0; */
+  left: 50vh;
+  margin: auto;
+  z-index: 9999999;
+`;
+export const WrapDepth = styled.div`
+  fontsize: 8px;
+  fontweight: 300;
+`;
+export const TopDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+`;
 
 export const HistoryWrap = styled.div``;
 export const HistoryWrap1 = styled.div`
