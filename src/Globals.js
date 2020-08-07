@@ -7,7 +7,7 @@ export const globalVariables = {
 
   WordpressSiteURL: process.env.REACT_APP_WORDPRESS_ENDPOINT,
 
-  API_URL: "http://e35ada822ec5.ngrok.io",
+  API_URL: process.env.REACT_APP_API_ENDPOINT,
 
   TRADE_URL: process.env.REACT_APP_TRADE_ENDPOINT,
 
