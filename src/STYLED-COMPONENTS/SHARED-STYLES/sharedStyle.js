@@ -271,6 +271,10 @@ export const UpgradeTable = styled.table`
     > tr.limit_exceed {
       > td.center {
         text-align: center;
+        color: red;
+      }
+      > td.left {
+        color: red;
       }
     }
     > tr {

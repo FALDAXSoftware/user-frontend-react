@@ -1452,7 +1452,7 @@ class PersonalDetails extends Component {
             document.querySelectorAll(".ssn_msg")[0].style.display = "block";
             this.setState({
               ssnmsg:
-                "SSN Number should have a minimum of 4 and a maximum of 20 characters",
+                "Government Issued ID Number should have a minimum of 4 and a maximum of 20 characters",
             });
           } else {
             this.setState({ ssnIcon: true });
@@ -1464,12 +1464,12 @@ class PersonalDetails extends Component {
           if (value.length < 4 || value.length > 20) {
             this.setState({
               ssnmsg:
-                "SSN Number should have a minimum of 4 and a maximum of 20 characters",
+                "Government Issued ID Number should have a minimum of 4 and a maximum of 20 characters",
             });
           } else {
             this.setState({
               ssnmsg:
-                "SSN Number may only contain letters, numbers, and dashes",
+                "Government Issued ID Number may only contain letters, numbers, and dashes",
             });
           }
         }
@@ -2561,10 +2561,10 @@ class PersonalDetails extends Component {
                 )} */}
                 <FourthRow>
                   <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }}>
-                    <Postal>SSN Number</Postal>
+                    <Postal>Government Issued ID Number</Postal>
                     <Postalinput
                       disabled={!this.state.editMode}
-                      placeholder="SSN Number"
+                      placeholder="Government Issued ID Number"
                       {...getFieldProps("ssn_number", {
                         onChange(e) {
                           me.onChangeField(e.target.value, "ssn_number");
