@@ -27,7 +27,7 @@ class TradingViewChart extends React.Component {
   static defaultProps = {
     symbol: `ETH-BTC`,
     // symbol: 'AAPL',
-    interval: "15",
+    interval: "240",
     containerId: "tv_chart_container",
     // datafeedUrl: 'https://demo_feed.tradingview.com',
     datafeedUrl: `${API_URL}/tradingview`,

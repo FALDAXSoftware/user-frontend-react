@@ -10,7 +10,7 @@ import PanicEnabled from "SHARED-COMPONENTS/PanicEnabled";
 import { walletBal, getAllCoins } from "ACTIONS/LOGGEDCAT/walletActions";
 import { translate } from "react-i18next";
 // import { Tabs } from 'antd';
-
+import { Link } from "react-router-dom";
 /* import { DropdownButton, ButtonToolbar } from 'react-bootstrap'; */
 
 /* Styled-Components */
@@ -69,7 +69,16 @@ function callback(key) {
 }
 let { API_URL, _AMAZONBUCKET, WordpressSiteURL } = globalVariables;
 const Option = Select.Option;
-
+const StripContent = styled.div`
+  max-width: 1170px;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  padding: 10px;
+  font-weight: bold;
+  color: ${(props) =>
+    props.theme.mode === "dark" ? "#fff" : "rgb( 80,80,80 )"};
+`;
 const ContainerContact = styled(Container)`
   background-color: ${(props) =>
     props.theme.mode === "dark" ? "#041422" : "white"};
@@ -450,6 +459,14 @@ class WalletDetails extends Component {
       <ContactWrap>
         <LoggedNavigation />
         <GreyWrap>
+          {this.props.profileDetails.is_tier_enabled && (
+            <StripContent>
+              Starter Profile has low Trade and Withdrawal limits. To increase
+              your Trade and Withdrawal Limits, please complete your Tier 1
+              Upgrade from the Identity Verification tab under Profile Section.{" "}
+              <Link to="editProfile">Click Here</Link>
+            </StripContent>
+          )}
           {Object.keys(walletUserData).length > 0 ? (
             walletUserData.flag == 0 ? (
               <ContainerContact2>
