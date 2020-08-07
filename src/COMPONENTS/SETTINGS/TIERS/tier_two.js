@@ -355,6 +355,7 @@ class TierTwo extends React.Component {
                 reUpload3: reupload3,
                 ssnStatus: ssn,
                 ssnNote: tierDoc.public_note,
+                id_number: tierDoc.ssn,
               });
               return;
             case 4:
