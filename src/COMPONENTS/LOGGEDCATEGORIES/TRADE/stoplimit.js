@@ -1609,7 +1609,7 @@ class StopLimit extends Component {
                       </WillpayBelow2>
                     </ApproxBelow>
                   </>
-                ) : (
+                ) : this.props.profileDetails.is_tier_enabled ? (
                   <>
                     <hr />
                     <ApproxBelow>
@@ -1624,6 +1624,8 @@ class StopLimit extends Component {
                       </WillpayBelow>
                     </ApproxBelow>
                   </>
+                ) : (
+                  ""
                 )}
               </Esti>
             </Pay>
@@ -1703,7 +1705,7 @@ class StopLimit extends Component {
                       </WillpayBelow2>
                     </ApproxBelow>
                   </>
-                ) : (
+                ) : this.props.profileDetails.is_tier_enabled ? (
                   <>
                     <hr />
                     <ApproxBelow>
@@ -1718,6 +1720,8 @@ class StopLimit extends Component {
                       </WillpayBelow>
                     </ApproxBelow>
                   </>
+                ) : (
+                  ""
                 )}
               </Esti>
             </Pay>
