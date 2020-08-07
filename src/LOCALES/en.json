@@ -3752,7 +3752,7 @@
     },
     "limit_after_transfer_text": {
       "page": "Wallet Popup",
-      "message": "Limit after transfer",
+      "message": "Available limit after transfer",
       "message_type": "Web content",
       "context": "Limit after transfer label text"
     },

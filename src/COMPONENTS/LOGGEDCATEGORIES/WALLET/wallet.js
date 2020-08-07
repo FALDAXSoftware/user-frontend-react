@@ -27,6 +27,7 @@ import {
   SearchCoin2,
   HeaderWrap2,
 } from "STYLED-COMPONENTS/LOGGED_STYLE/walletStyle";
+import { Link } from "react-router-dom";
 /* import { globalVariables } from 'Globals.js'; */
 
 /* Actions */
@@ -37,7 +38,16 @@ import { APIUtility } from "../../../httpHelper";
 
 /* let { API_URL } = globalVariables; */
 const Search = Input.Search;
-
+const StripContent = styled.div`
+  max-width: 1170px;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  padding: 10px;
+  font-weight: bold;
+  color: ${(props) =>
+    props.theme.mode === "dark" ? "#fff" : "rgb( 80,80,80 )"};
+`;
 const ContainerContact = styled(Container)`
   background-color: ${(props) =>
     props.theme.mode === "dark" ? "#041422" : "white"};
@@ -320,6 +330,14 @@ class Wallet extends Component {
         <LoggedNavigation />
         <GreyWrap>
           {/* walletDetails > activated_asset_lists start */}
+          {this.props.profileDetails.is_tier_enabled && (
+            <StripContent>
+              Starter Profile has low Trade and Withdrawal limits. To increase
+              your Trade and Withdrawal Limits, please complete your Tier 1
+              Upgrade from the Identity Verification tab under Profile Section.{" "}
+              <Link to="editProfile">Click Here</Link>
+            </StripContent>
+          )}
           {this.props.walletDetails &&
             this.props.walletDetails["activated_asset_lists"].length > 0 && (
               <ContainerContact>
