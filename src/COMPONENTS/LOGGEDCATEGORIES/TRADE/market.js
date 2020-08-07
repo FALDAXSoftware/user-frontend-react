@@ -5,7 +5,7 @@ import SimpleReactValidator from "simple-react-validator";
 import "antd/dist/antd.css";
 import { Row, Col, Radio, notification, Spin, Tooltip, Icon } from "antd";
 import { translate } from "react-i18next";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 
 /* STYLED-COMPONENTS */
 import {
@@ -92,6 +92,7 @@ class Market extends Component {
       tradeLimitFlag: false,
       trialTierUpgrade: false,
       tradeDaysCompleted: false,
+      freeTierDays: "",
     };
     this.timeout = null;
     this.t = this.props.t;
@@ -430,8 +431,20 @@ class Market extends Component {
         crypto: this.state.crypto,
       });
       this.props.io.on("trade-user-limit-availability", (data) => {
+        console.log("data", data);
         if (data) {
-          if (data.account_tier_flag)
+          if (data.account_tier_flag && data.response_flag) {
+            if (data.response_flag) {
+              this.setState({
+                trialTierUpgrade: true,
+                freeTierDays: data.days,
+              });
+            } else {
+              this.setState({
+                trialTierUpgrade: false,
+              });
+            }
+          } else if (data.account_tier_flag && data.tier_flag == false) {
             if (!data.tier_flag) {
               this.setState({
                 completeKYC: true,
@@ -441,6 +454,7 @@ class Market extends Component {
                 completeKYC: false,
               });
             }
+          }
           if (data.valueObject) {
             this.setState(
               {
@@ -1430,11 +1444,12 @@ class Market extends Component {
                     {this.state.crypto} */}
                   </WillpayBelow>
                 </ApproxBelow>
-                {this.props.profileDetails.is_tier_enabled && (
+                {this.props.profileDetails.is_tier_enabled &&
+                !this.state.trialTierUpgrade ? (
                   <>
                     <hr />
                     <ApproxBelow>
-                      <WillpayBelow>Trade Limit</WillpayBelow>
+                      <WillpayBelow>Starter Trade Limit (Daily)</WillpayBelow>
                       <WillpayBelow2>
                         {precise(parseFloat(tradeLimit), "2")} USD
                       </WillpayBelow2>
@@ -1446,10 +1461,32 @@ class Market extends Component {
                       </WillpayBelow2>
                     </ApproxBelow>
                     <ApproxBelow>
-                      <WillpayBelow>Available Limit after Trade</WillpayBelow>
-                      <WillpayBelow2>
-                        {precise(parseFloat(tradeLimitLeftAfter), "2")} USD
+                      <WillpayBelow>Estimated Limit after Trade</WillpayBelow>
+                      <WillpayBelow2
+                        className={this.state.tradeLimitFlag ? "red" : ""}
+                      >
+                        {this.state.tradeLimitFlag
+                          ? "Exceeds Trade Limit"
+                          : `${precise(
+                              parseFloat(tradeLimitLeftAfter),
+                              "2"
+                            )} USD`}
                       </WillpayBelow2>
+                    </ApproxBelow>
+                  </>
+                ) : (
+                  <>
+                    <hr />
+                    <ApproxBelow>
+                      <WillpayBelow className="tier_upgrade">
+                        Congratulations! You have completed{" "}
+                        {this.state.freeTierDays} days on FALDAX and it is time
+                        we upgrade your Starter Tier privileges. To continue
+                        further trade on the platform, please complete your Tier
+                        1 Upgrade from the Identity Verification tab under
+                        Profile Section.
+                        <Link to="/editProfile"> Click Here.</Link>
+                      </WillpayBelow>
                     </ApproxBelow>
                   </>
                 )}
@@ -1514,11 +1551,12 @@ class Market extends Component {
                     {this.state.currency} */}
                   {/* </WillpayBelow> */}
                 </ApproxBelow>
-                {this.props.profileDetails.is_tier_enabled && (
+                {this.props.profileDetails.is_tier_enabled &&
+                !this.state.trialTierUpgrade ? (
                   <>
                     <hr />
                     <ApproxBelow>
-                      <WillpayBelow>Trade Limit</WillpayBelow>
+                      <WillpayBelow>Starter Trade Limit (Daily)</WillpayBelow>
                       <WillpayBelow2>
                         {precise(parseFloat(tradeLimit), "2")} USD
                       </WillpayBelow2>
@@ -1530,10 +1568,32 @@ class Market extends Component {
                       </WillpayBelow2>
                     </ApproxBelow>
                     <ApproxBelow>
-                      <WillpayBelow>Available Limit after Trade</WillpayBelow>
-                      <WillpayBelow2>
-                        {precise(parseFloat(tradeLimitLeftAfter), "2")} USD
+                      <WillpayBelow>Estimated Limit after Trade</WillpayBelow>
+                      <WillpayBelow2
+                        className={this.state.tradeLimitFlag ? "red" : ""}
+                      >
+                        {this.state.tradeLimitFlag
+                          ? "Exceeds Trade Limit"
+                          : `${precise(
+                              parseFloat(tradeLimitLeftAfter),
+                              "2"
+                            )} USD`}
                       </WillpayBelow2>
+                    </ApproxBelow>
+                  </>
+                ) : (
+                  <>
+                    <hr />
+                    <ApproxBelow>
+                      <WillpayBelow className="tier_upgrade">
+                        Congratulations! You have completed{" "}
+                        {this.state.freeTierDays} days on FALDAX and it is time
+                        we upgrade your Starter Tier privileges. To continue
+                        further trade on the platform, please complete your Tier
+                        1 Upgrade from the Identity Verification tab under
+                        Profile Section.
+                        <Link to="/editProfile"> Click Here.</Link>
+                      </WillpayBelow>
                     </ApproxBelow>
                   </>
                 )}
@@ -1574,10 +1634,10 @@ class Market extends Component {
           comingCancel={(e) => this.comingCancel(e)}
           visible={this.state.completeProfile}
         />
-        <TrialTierUpgrade
+        {/* <TrialTierUpgrade
           comingCancel={(e) => this.comingCancel(e)}
           visible={this.state.trialTierUpgrade}
-        />
+        /> */}
         {this.state.Loader === true ? (
           <SpinSingle className="Single_spin">
             <Spin size="small" />
