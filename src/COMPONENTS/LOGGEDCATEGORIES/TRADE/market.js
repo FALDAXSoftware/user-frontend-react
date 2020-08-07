@@ -437,9 +437,9 @@ class Market extends Component {
         crypto: this.state.crypto,
       });
       this.props.io.on("trade-user-limit-availability", (data) => {
-        console.log("data", data);
+        console.log("data123", data);
         if (data) {
-          if (!data.account_tier_flag)
+          if (data.account_tier_flag)
             if (!data.tier_flag) {
               this.setState({
                 completeKYC: true,
@@ -1439,9 +1439,9 @@ class Market extends Component {
                     {this.state.crypto} */}
                   </WillpayBelow>
                 </ApproxBelow>
-                <hr />
                 {this.props.profileDetails.is_tier_enabled && (
                   <>
+                    <hr />
                     <ApproxBelow>
                       <WillpayBelow>Trade Limit</WillpayBelow>
                       <WillpayBelow2>
@@ -1523,9 +1523,9 @@ class Market extends Component {
                     {this.state.currency} */}
                   {/* </WillpayBelow> */}
                 </ApproxBelow>
-                <hr />
                 {this.props.profileDetails.is_tier_enabled && (
                   <>
+                    <hr />
                     <ApproxBelow>
                       <WillpayBelow>Trade Limit</WillpayBelow>
                       <WillpayBelow2>
