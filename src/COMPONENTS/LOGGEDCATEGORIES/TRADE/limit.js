@@ -155,16 +155,9 @@ class Limit extends Component {
       this.setState({ panicEnabled: true });
     } else if (this.props.profileDetails.is_tier_enabled) {
       if (this.props.profileDetails.is_user_updated) {
-        console.log(
-          "this.props.profileDetails.legal_allowed",
-          this.props.profileDetails.legal_allowed
-        );
         if (this.props.profileDetails.legal_allowed) {
-          console.log("INSIDE IF");
         } else {
-          console.log("INSIDE ELSE", this.state);
           await this.setState({ countryAccess: true });
-          console.log(this.state);
         }
       } else {
         this.setState({
@@ -367,7 +360,6 @@ class Limit extends Component {
         crypto: this.state.crypto,
       });
       this.props.io.on("trade-user-limit-availability", (data) => {
-        console.log("data123", data);
         if (data) {
           if (data.account_tier_flag)
             if (!data.tier_flag) {
@@ -562,7 +554,6 @@ class Limit extends Component {
     });
   };
   emitAmount() {
-    console.log("test", this.state.amount);
     this.props.io.emit("tier-0-trade-limit", {
       amount: this.state.amount ? parseFloat(this.state.amount) : 0,
       crypto: this.state.crypto,
