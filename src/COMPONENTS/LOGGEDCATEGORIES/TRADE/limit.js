@@ -312,7 +312,7 @@ class Limit extends Component {
                       parseFloat(this.state.singlefiatCurrencyValue) *
                       parseFloat(
                         Number(this.state.amount) *
-                        parseFloat(this.state.bestAsk)
+                          parseFloat(this.state.bestAsk)
                       ).toFixed(8),
                   });
                 } else {
@@ -339,7 +339,7 @@ class Limit extends Component {
                       parseFloat(this.state.singlefiatCurrencyValue) *
                       parseFloat(
                         Number(this.state.amount) *
-                        parseFloat(this.state.bestBid)
+                          parseFloat(this.state.bestBid)
                       ).toFixed(8),
                   });
                 }
@@ -367,17 +367,18 @@ class Limit extends Component {
         crypto: this.state.crypto,
       });
       this.props.io.on("trade-user-limit-availability", (data) => {
-        console.log("data", data);
+        console.log("data123", data);
         if (data) {
-          if (!data.tier_flag) {
-            this.setState({
-              completeKYC: true,
-            });
-          } else {
-            this.setState({
-              completeKYC: false,
-            });
-          }
+          if (data.account_tier_flag)
+            if (!data.tier_flag) {
+              this.setState({
+                completeKYC: true,
+              });
+            } else {
+              this.setState({
+                completeKYC: false,
+              });
+            }
           if (data.valueObject) {
             this.setState(
               {
@@ -388,7 +389,6 @@ class Limit extends Component {
                 tradeDaysCompleted: data.response_flag,
               },
               () => {
-
                 if (this.state.tradeDaysCompleted) {
                   this.setState({
                     trialTierUpgrade: true,
@@ -564,7 +564,7 @@ class Limit extends Component {
   emitAmount() {
     console.log("test", this.state.amount);
     this.props.io.emit("tier-0-trade-limit", {
-      amount: parseFloat(this.state.amount),
+      amount: this.state.amount ? parseFloat(this.state.amount) : 0,
       crypto: this.state.crypto,
     });
   }
@@ -595,6 +595,12 @@ class Limit extends Component {
           fiatCurrencyValue: 0,
         });
       }
+      this.emitAmount();
+      this.setState({
+        tradeLimit: 0,
+        tradeLimitLeft: 0,
+        tradeLimitLeftAfter: 0,
+      });
     } else {
       obj[name] = parseFloat(value).toFixed(8);
     }
@@ -831,7 +837,7 @@ class Limit extends Component {
       this.setState({ loader: true });
       fetch(
         SOCKET_HOST +
-        `/api/v1/tradding/orders/limit-${self.state.side.toLowerCase()}-order-create`,
+          `/api/v1/tradding/orders/limit-${self.state.side.toLowerCase()}-order-create`,
         {
           method: "post",
           headers: {
@@ -946,7 +952,7 @@ class Limit extends Component {
     }
   }
 
-  onChangeCheck(e) { }
+  onChangeCheck(e) {}
 
   render() {
     const {
@@ -957,7 +963,7 @@ class Limit extends Component {
       sellPayAmt,
       tradeLimit,
       tradeLimitLeft,
-      tradeLimitLeftAfter
+      tradeLimitLeftAfter,
     } = this.state;
     const RadioGroup = Radio.Group;
     let stepValue, limitPrecision;
@@ -1044,243 +1050,243 @@ class Limit extends Component {
 
         {Object.keys(this.props.userBal).length > 0 ? (
           Object.keys(this.props.userBal.crypto).length > 0 &&
-            Object.keys(this.props.userBal.currency).length > 0 ? (
-              this.state.side === "Buy" ? (
-                <BalanceWrap>
-                  <Row>
-                    <Col xs={24} sm={12}>
-                      <Row>
-                        <Col span={24}>
-                          <Balance1>{this.t("balance_text.message")}</Balance1>
-                        </Col>
-                        <Col span={24}>
-                          <Balance>
-                            {this.props.userBal.currency
-                              ? this.props.userBal.currency.placed_balance
-                                ? `${precise(
+          Object.keys(this.props.userBal.currency).length > 0 ? (
+            this.state.side === "Buy" ? (
+              <BalanceWrap>
+                <Row>
+                  <Col xs={24} sm={12}>
+                    <Row>
+                      <Col span={24}>
+                        <Balance1>{this.t("balance_text.message")}</Balance1>
+                      </Col>
+                      <Col span={24}>
+                        <Balance>
+                          {this.props.userBal.currency
+                            ? this.props.userBal.currency.placed_balance
+                              ? `${precise(
                                   this.props.userBal.currency.placed_balance,
                                   this.props.pricePrecision
                                 )}${" "}`
-                                : `0${" "}`
-                              : `0${" "}`}
-                            {this.state.currency}
-                          </Balance>
-                        </Col>
-                      </Row>
-                    </Col>
-                    <Col xs={24} sm={12}>
-                      <Row>
-                        <Col span={24}>
-                          <Balance1>
-                            {this.t("conversion:total_text.message")}
-                          </Balance1>
-                        </Col>
-                        <Col span={24}>
-                          <Balance>
-                            {this.props.userBal.currency
-                              ? this.props.userBal.currency.balance
-                                ? `${precise(
+                              : `0${" "}`
+                            : `0${" "}`}
+                          {this.state.currency}
+                        </Balance>
+                      </Col>
+                    </Row>
+                  </Col>
+                  <Col xs={24} sm={12}>
+                    <Row>
+                      <Col span={24}>
+                        <Balance1>
+                          {this.t("conversion:total_text.message")}
+                        </Balance1>
+                      </Col>
+                      <Col span={24}>
+                        <Balance>
+                          {this.props.userBal.currency
+                            ? this.props.userBal.currency.balance
+                              ? `${precise(
                                   this.props.userBal.currency.balance,
                                   this.props.pricePrecision
                                 )}${" "}`
-                                : `0${" "}`
-                              : `0${" "}`}
-                            {this.state.currency}
-                          </Balance>
-                        </Col>
-                      </Row>
-                    </Col>
-                    <Col xs={24} sm={12}>
-                      <Row>
-                        <Col span={24}>
-                          <Balance1>
-                            {this.t("wallet:in_order_text.message")}
-                          </Balance1>
-                        </Col>
-                        <Col span={24}>
-                          <Balance>
-                            {this.props.userBal.currency
-                              ? this.props.userBal.currency.balance
-                                ? `${precise(
+                              : `0${" "}`
+                            : `0${" "}`}
+                          {this.state.currency}
+                        </Balance>
+                      </Col>
+                    </Row>
+                  </Col>
+                  <Col xs={24} sm={12}>
+                    <Row>
+                      <Col span={24}>
+                        <Balance1>
+                          {this.t("wallet:in_order_text.message")}
+                        </Balance1>
+                      </Col>
+                      <Col span={24}>
+                        <Balance>
+                          {this.props.userBal.currency
+                            ? this.props.userBal.currency.balance
+                              ? `${precise(
                                   Math.abs(
                                     this.props.userBal.currency.balance -
-                                    this.props.userBal.currency.placed_balance
+                                      this.props.userBal.currency.placed_balance
                                   ),
                                   this.props.pricePrecision
                                 )}${" "}`
-                                : `0${" "}`
-                              : `0${" "}`}
-                            {this.state.currency}
-                          </Balance>
-                        </Col>
-                      </Row>
-                    </Col>
-                    <Col xs={24} sm={12}>
-                      <Row>
-                        <Col span={24}>
-                          <Balance1>
-                            {this.t("best_text.message")}{" "}
-                            {this.t("ask_text.message")}
-                          </Balance1>
-                        </Col>
-                        <Col span={24}>
-                          <Balance>
-                            {precise(
-                              this.state.bestAsk,
-                              this.props.pricePrecision
-                            )}{" "}
-                            {this.state.currency}
-                          </Balance>
-                        </Col>
-                      </Row>
-                    </Col>
-                  </Row>
-                </BalanceWrap>
-              ) : (
-                  <BalanceWrap>
-                    <Row>
-                      <Col xs={24} sm={12}>
-                        <Row>
-                          <Col span={24}>
-                            <Balance1>{this.t("balance_text.message")}</Balance1>
-                          </Col>
-                          <Col span={24}>
-                            <Balance>
-                              {this.props.userBal.crypto
-                                ? this.props.userBal.crypto.placed_balance
-                                  ? `${precise(
-                                    this.props.userBal.crypto.placed_balance,
-                                    this.props.pricePrecision
-                                  )}${" "}`
-                                  : `0${" "}`
-                                : `0${" "}`}
-                              {this.state.crypto}
-                            </Balance>
-                          </Col>
-                        </Row>
-                      </Col>
-                      <Col xs={24} sm={12}>
-                        <Row>
-                          <Col span={24}>
-                            <Balance1>
-                              {this.t("conversion:total_text.message")}
-                            </Balance1>
-                          </Col>
-                          <Col span={24}>
-                            <Balance>
-                              {this.props.userBal.crypto
-                                ? this.props.userBal.crypto.balance
-                                  ? `${precise(
-                                    this.props.userBal.crypto.balance,
-                                    this.props.pricePrecision
-                                  )}${" "}`
-                                  : `0${" "}`
-                                : `0${" "}`}
-                              {this.state.crypto}
-                            </Balance>
-                          </Col>
-                        </Row>
-                      </Col>
-                      <Col xs={24} sm={12}>
-                        <Row>
-                          <Col span={24}>
-                            <Balance1>
-                              {this.t("wallet:in_order_text.message")}
-                            </Balance1>
-                          </Col>
-                          <Col span={24}>
-                            <Balance>
-                              {this.props.userBal.crypto
-                                ? this.props.userBal.crypto.balance
-                                  ? `${precise(
-                                    Math.abs(
-                                      this.props.userBal.crypto.balance -
-                                      this.props.userBal.crypto.placed_balance
-                                    ),
-                                    this.props.pricePrecision
-                                  )}${" "}`
-                                  : `0${" "}`
-                                : `0${" "}`}
-                              {this.state.crypto}
-                            </Balance>
-                          </Col>
-                        </Row>
-                      </Col>
-                      <Col xs={24} sm={12}>
-                        <Row>
-                          <Col span={24}>
-                            <Balance1>
-                              {this.t("best_text.message")}{" "}
-                              {this.t("bid_text.message")}
-                            </Balance1>
-                          </Col>
-                          <Col span={24}>
-                            <Balance>
-                              {precise(
-                                this.state.bestBid,
-                                this.props.pricePrecision
-                              )}{" "}
-                              {this.state.currency}
-                            </Balance>
-                          </Col>
-                        </Row>
+                              : `0${" "}`
+                            : `0${" "}`}
+                          {this.state.currency}
+                        </Balance>
                       </Col>
                     </Row>
-                  </BalanceWrap>
-                )
+                  </Col>
+                  <Col xs={24} sm={12}>
+                    <Row>
+                      <Col span={24}>
+                        <Balance1>
+                          {this.t("best_text.message")}{" "}
+                          {this.t("ask_text.message")}
+                        </Balance1>
+                      </Col>
+                      <Col span={24}>
+                        <Balance>
+                          {precise(
+                            this.state.bestAsk,
+                            this.props.pricePrecision
+                          )}{" "}
+                          {this.state.currency}
+                        </Balance>
+                      </Col>
+                    </Row>
+                  </Col>
+                </Row>
+              </BalanceWrap>
             ) : (
-              <div>
-                {!Object.keys(this.props.userBal.crypto).length > 0 ? (
-                  <BTCWrap className="no_wallet">
-                    <span>
-                      {this.t("general_3:dont_have_text.message")}{" "}
-                      {this.props.cryptoName}{" "}
-                      {this.t("header:navbar_menu_wallet.message")}?
-                  </span>
-                    <a
-                      onClick={() => {
-                        this.walletAccess(this.props.cryptoCode);
-                      }}
-                      disabled={this.props.userBal.cryptoinactive}
-                      className={
-                        this.props.userBal.cryptoinactive ? "inactive" : ""
-                      }
-                    // href={`/walletDetails?coinID0=${this.props.cryptoCode}`}
-                    >
-                      {this.t("general_3:generate_wallet_text.message")}
-                    </a>
-                  </BTCWrap>
-                ) : (
-                    ""
-                  )}
-                {!Object.keys(this.props.userBal.currency).length > 0 ? (
-                  <BTCWrap className="no_wallet">
-                    <span>
-                      {this.t("general_3:dont_have_text.message")}{" "}
-                      {this.props.currencyName}{" "}
-                      {this.t("header:navbar_menu_wallet.message")}?
-                  </span>
-                    <a
-                      onClick={() => {
-                        this.walletAccess(this.props.currencyCode);
-                      }}
-                      disabled={this.props.userBal.currencyinactive}
-                      className={
-                        this.props.userBal.currencyinactive ? "inactive" : ""
-                      }
-                    // href={`/walletDetails?coinID0=${this.props.currencyCode}`}
-                    >
-                      {this.t("general_3:generate_wallet_text.message")}
-                    </a>
-                  </BTCWrap>
-                ) : (
-                    ""
-                  )}
-              </div>
+              <BalanceWrap>
+                <Row>
+                  <Col xs={24} sm={12}>
+                    <Row>
+                      <Col span={24}>
+                        <Balance1>{this.t("balance_text.message")}</Balance1>
+                      </Col>
+                      <Col span={24}>
+                        <Balance>
+                          {this.props.userBal.crypto
+                            ? this.props.userBal.crypto.placed_balance
+                              ? `${precise(
+                                  this.props.userBal.crypto.placed_balance,
+                                  this.props.pricePrecision
+                                )}${" "}`
+                              : `0${" "}`
+                            : `0${" "}`}
+                          {this.state.crypto}
+                        </Balance>
+                      </Col>
+                    </Row>
+                  </Col>
+                  <Col xs={24} sm={12}>
+                    <Row>
+                      <Col span={24}>
+                        <Balance1>
+                          {this.t("conversion:total_text.message")}
+                        </Balance1>
+                      </Col>
+                      <Col span={24}>
+                        <Balance>
+                          {this.props.userBal.crypto
+                            ? this.props.userBal.crypto.balance
+                              ? `${precise(
+                                  this.props.userBal.crypto.balance,
+                                  this.props.pricePrecision
+                                )}${" "}`
+                              : `0${" "}`
+                            : `0${" "}`}
+                          {this.state.crypto}
+                        </Balance>
+                      </Col>
+                    </Row>
+                  </Col>
+                  <Col xs={24} sm={12}>
+                    <Row>
+                      <Col span={24}>
+                        <Balance1>
+                          {this.t("wallet:in_order_text.message")}
+                        </Balance1>
+                      </Col>
+                      <Col span={24}>
+                        <Balance>
+                          {this.props.userBal.crypto
+                            ? this.props.userBal.crypto.balance
+                              ? `${precise(
+                                  Math.abs(
+                                    this.props.userBal.crypto.balance -
+                                      this.props.userBal.crypto.placed_balance
+                                  ),
+                                  this.props.pricePrecision
+                                )}${" "}`
+                              : `0${" "}`
+                            : `0${" "}`}
+                          {this.state.crypto}
+                        </Balance>
+                      </Col>
+                    </Row>
+                  </Col>
+                  <Col xs={24} sm={12}>
+                    <Row>
+                      <Col span={24}>
+                        <Balance1>
+                          {this.t("best_text.message")}{" "}
+                          {this.t("bid_text.message")}
+                        </Balance1>
+                      </Col>
+                      <Col span={24}>
+                        <Balance>
+                          {precise(
+                            this.state.bestBid,
+                            this.props.pricePrecision
+                          )}{" "}
+                          {this.state.currency}
+                        </Balance>
+                      </Col>
+                    </Row>
+                  </Col>
+                </Row>
+              </BalanceWrap>
             )
+          ) : (
+            <div>
+              {!Object.keys(this.props.userBal.crypto).length > 0 ? (
+                <BTCWrap className="no_wallet">
+                  <span>
+                    {this.t("general_3:dont_have_text.message")}{" "}
+                    {this.props.cryptoName}{" "}
+                    {this.t("header:navbar_menu_wallet.message")}?
+                  </span>
+                  <a
+                    onClick={() => {
+                      this.walletAccess(this.props.cryptoCode);
+                    }}
+                    disabled={this.props.userBal.cryptoinactive}
+                    className={
+                      this.props.userBal.cryptoinactive ? "inactive" : ""
+                    }
+                    // href={`/walletDetails?coinID0=${this.props.cryptoCode}`}
+                  >
+                    {this.t("general_3:generate_wallet_text.message")}
+                  </a>
+                </BTCWrap>
+              ) : (
+                ""
+              )}
+              {!Object.keys(this.props.userBal.currency).length > 0 ? (
+                <BTCWrap className="no_wallet">
+                  <span>
+                    {this.t("general_3:dont_have_text.message")}{" "}
+                    {this.props.currencyName}{" "}
+                    {this.t("header:navbar_menu_wallet.message")}?
+                  </span>
+                  <a
+                    onClick={() => {
+                      this.walletAccess(this.props.currencyCode);
+                    }}
+                    disabled={this.props.userBal.currencyinactive}
+                    className={
+                      this.props.userBal.currencyinactive ? "inactive" : ""
+                    }
+                    // href={`/walletDetails?coinID0=${this.props.currencyCode}`}
+                  >
+                    {this.t("general_3:generate_wallet_text.message")}
+                  </a>
+                </BTCWrap>
+              ) : (
+                ""
+              )}
+            </div>
+          )
         ) : (
-            ""
-          )}
+          ""
+        )}
         <ETHWrap>
           <Label>{this.t("wallet:amount_text.message")}</Label>
           <TotalWrap>
@@ -1316,8 +1322,8 @@ class Limit extends Component {
                 {this.state.minCryptoValue} {this.state.crypto}
               </div>
             ) : (
-                  ""
-                )}
+              ""
+            )}
           </TotalWrap>
         </ETHWrap>
         <BTCWrap>
@@ -1415,9 +1421,9 @@ class Limit extends Component {
                     {this.state.crypto} */}
                   </WillpayBelow2>
                 </ApproxBelow>
-                <hr />
                 {this.props.profileDetails.is_tier_enabled && (
                   <>
+                    <hr />
                     <ApproxBelow>
                       <WillpayBelow>Trade Limit</WillpayBelow>
                       <WillpayBelow2>
@@ -1441,80 +1447,80 @@ class Limit extends Component {
               </Esti>
             </Pay>
           ) : (
-              <Pay>
-                <Approx>
-                  <Willpay>
-                    {this.t("you_approximate_text.message")}{" "}
-                    {this.t("receive_text.message")}
-                  </Willpay>
-                  <Willpay2>
+            <Pay>
+              <Approx>
+                <Willpay>
+                  {this.t("you_approximate_text.message")}{" "}
+                  {this.t("receive_text.message")}
+                </Willpay>
+                <Willpay2>
+                  {precise(sellEstPrice, this.props.pricePrecision)}{" "}
+                  {this.state.currency}
+                </Willpay2>
+              </Approx>
+              <Esti>
+                <ApproxBelow>
+                  <WillpayBelow>
+                    {this.t(
+                      "settings:deactivate_popup_table_head_fiat_value.message"
+                    )}
+                  </WillpayBelow>
+                  <WillpayBelow2>
+                    {precise(this.state.fiatCurrencyValue, "2")}{" "}
+                    {this.state.fiatCurrency}
+                  </WillpayBelow2>
+                </ApproxBelow>
+                <ApproxBelow>
+                  <WillpayBelow>
+                    {this.t("estimated_best_price_text.message")}
+                  </WillpayBelow>
+                  <WillpayBelow2>
                     {precise(sellEstPrice, this.props.pricePrecision)}{" "}
                     {this.state.currency}
-                  </Willpay2>
-                </Approx>
-                <Esti>
-                  <ApproxBelow>
-                    <WillpayBelow>
-                      {this.t(
-                        "settings:deactivate_popup_table_head_fiat_value.message"
-                      )}
-                    </WillpayBelow>
-                    <WillpayBelow2>
-                      {precise(this.state.fiatCurrencyValue, "2")}{" "}
-                      {this.state.fiatCurrency}
-                    </WillpayBelow2>
-                  </ApproxBelow>
-                  <ApproxBelow>
-                    <WillpayBelow>
-                      {this.t("estimated_best_price_text.message")}
-                    </WillpayBelow>
-                    <WillpayBelow2>
-                      {precise(sellEstPrice, this.props.pricePrecision)}{" "}
-                      {this.state.currency}
-                    </WillpayBelow2>
-                  </ApproxBelow>
-                  <ApproxBelow>
-                    <WillpayBelow>
-                      {this.t("conversion:fee_text.message")} {userBalFees} %
+                  </WillpayBelow2>
+                </ApproxBelow>
+                <ApproxBelow>
+                  <WillpayBelow>
+                    {this.t("conversion:fee_text.message")} {userBalFees} %
                   </WillpayBelow>
-                    <WillpayBelow2>
-                      {/* {precision(sellPayAmt - sellEstPrice)} {this.state.currency} */}
-                      {/* {precise(
+                  <WillpayBelow2>
+                    {/* {precision(sellPayAmt - sellEstPrice)} {this.state.currency} */}
+                    {/* {precise(
                       (this.state.total * this.state.userBalFees) / 100,
                       this.props.pricePrecision
                     )}{" "}
                     {this.state.currency} */}
-                    </WillpayBelow2>
-                  </ApproxBelow>
-                  <hr />
-                  {this.props.profileDetails.is_tier_enabled && (
-                    <>
-                      <ApproxBelow>
-                        <WillpayBelow>Trade Limit</WillpayBelow>
-                        <WillpayBelow2>
-                          {precise(parseFloat(tradeLimit), "2")} USD
+                  </WillpayBelow2>
+                </ApproxBelow>
+                {this.props.profileDetails.is_tier_enabled && (
+                  <>
+                    <hr />
+                    <ApproxBelow>
+                      <WillpayBelow>Trade Limit</WillpayBelow>
+                      <WillpayBelow2>
+                        {precise(parseFloat(tradeLimit), "2")} USD
                       </WillpayBelow2>
-                      </ApproxBelow>
-                      <ApproxBelow>
-                        <WillpayBelow>Available Trade Limit</WillpayBelow>
-                        <WillpayBelow2>
-                          {precise(parseFloat(tradeLimitLeft), "2")} USD
+                    </ApproxBelow>
+                    <ApproxBelow>
+                      <WillpayBelow>Available Trade Limit</WillpayBelow>
+                      <WillpayBelow2>
+                        {precise(parseFloat(tradeLimitLeft), "2")} USD
                       </WillpayBelow2>
-                      </ApproxBelow>
-                      <ApproxBelow>
-                        <WillpayBelow>Available Limit after Trade</WillpayBelow>
-                        <WillpayBelow2>
-                          {precise(parseFloat(tradeLimitLeftAfter), "2")} USD
+                    </ApproxBelow>
+                    <ApproxBelow>
+                      <WillpayBelow>Available Limit after Trade</WillpayBelow>
+                      <WillpayBelow2>
+                        {precise(parseFloat(tradeLimitLeftAfter), "2")} USD
                       </WillpayBelow2>
-                      </ApproxBelow>
-                    </>
-                  )}
-                </Esti>
-              </Pay>
-            )
+                    </ApproxBelow>
+                  </>
+                )}
+              </Esti>
+            </Pay>
+          )
         ) : (
-            ""
-          )}
+          ""
+        )}
         <ButtonWrap>
           <ButtonETH
             disabled={
@@ -1554,8 +1560,8 @@ class Limit extends Component {
             <Spin size="small" />
           </SpinSingle>
         ) : (
-            ""
-          )}
+          ""
+        )}
       </MarketWrap>
     );
   }

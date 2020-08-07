@@ -199,6 +199,11 @@ class TierTwo extends React.Component {
       console.log(error);
     } finally {
     }
+    if (this.props.profileDetails.ssn_number) {
+      this.setState({
+        id_number: this.props.profileDetails.ssn_number,
+      });
+    }
     this.setState(
       {
         is_twofactor_enabled: this.props.profileDetails.is_twofactor,
@@ -216,6 +221,15 @@ class TierTwo extends React.Component {
     ) {
       this.setState({
         is_twofactor_enabled: newProps.profileDetails.is_twofactor,
+      });
+    }
+    if (
+      newProps.profileDetails.ssn_number &&
+      newProps.profileDetails.ssn_number !==
+        this.props.profileDetails.ssn_number
+    ) {
+      this.setState({
+        id_number: newProps.profileDetails.ssn_number,
       });
     }
   }
@@ -341,6 +355,7 @@ class TierTwo extends React.Component {
                 reUpload3: reupload3,
                 ssnStatus: ssn,
                 ssnNote: tierDoc.public_note,
+                id_number: tierDoc.ssn,
               });
               return;
             case 4:
@@ -649,7 +664,7 @@ class TierTwo extends React.Component {
       icon2: "plus",
       displaySecond: "none",
       residenceProof: "",
-      id_number: "",
+      id_number: this.props.profileDetails.ssn_number,
       TwoFactorMessage: false,
     });
     document.getElementById("valid-id").value = "";
