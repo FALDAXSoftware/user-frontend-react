@@ -1455,7 +1455,7 @@ class Limit extends Component {
                       </WillpayBelow2>
                     </ApproxBelow>
                   </>
-                ) : (
+                ) : this.props.profileDetails.is_tier_enabled ? (
                   <>
                     <hr />
                     <ApproxBelow>
@@ -1470,6 +1470,8 @@ class Limit extends Component {
                       </WillpayBelow>
                     </ApproxBelow>
                   </>
+                ) : (
+                  ""
                 )}
               </Esti>
             </Pay>
@@ -1549,7 +1551,7 @@ class Limit extends Component {
                       </WillpayBelow2>
                     </ApproxBelow>
                   </>
-                ) : (
+                ) : this.props.profileDetails.is_tier_enabled ? (
                   <>
                     <hr />
                     <ApproxBelow>
@@ -1564,6 +1566,8 @@ class Limit extends Component {
                       </WillpayBelow>
                     </ApproxBelow>
                   </>
+                ) : (
+                  ""
                 )}
               </Esti>
             </Pay>
