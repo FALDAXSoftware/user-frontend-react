@@ -663,7 +663,7 @@ class TierTwo extends React.Component {
       icon2: "plus",
       displaySecond: "none",
       residenceProof: "",
-      id_number: "",
+      id_number: this.props.profileDetails.ssn_number,
       TwoFactorMessage: false,
     });
     document.getElementById("valid-id").value = "";

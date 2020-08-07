@@ -369,15 +369,16 @@ class Limit extends Component {
       this.props.io.on("trade-user-limit-availability", (data) => {
         console.log("data", data);
         if (data) {
-          if (!data.tier_flag) {
-            this.setState({
-              completeKYC: true,
-            });
-          } else {
-            this.setState({
-              completeKYC: false,
-            });
-          }
+          if (!data.account_tier_flag)
+            if (!data.tier_flag) {
+              this.setState({
+                completeKYC: true,
+              });
+            } else {
+              this.setState({
+                completeKYC: false,
+              });
+            }
           if (data.valueObject) {
             this.setState(
               {
