@@ -461,10 +461,10 @@ class WalletDetails extends Component {
         <GreyWrap>
           {this.props.profileDetails.is_tier_enabled && (
             <StripContent>
-              Starter Profile has low Trade and Withdrawal limits. To increase
-              your Trade and Withdrawal Limits, please complete your Tier 1
-              Upgrade from the Identity Verification tab under Profile Section.{" "}
-              <Link to="editProfile">Click Here</Link>
+              {this.t("tier_0_text:wallet_info_strip_text.message")}{" "}
+              <Link to="editProfile">
+                {this.t("settings:deactivate_popup_click_here.message")}
+              </Link>
             </StripContent>
           )}
           {Object.keys(walletUserData).length > 0 ? (
@@ -894,9 +894,13 @@ const mapDispatchToProps = (dispatch) => ({
   LogoutUser: (isLoggedIn, user_id) =>
     dispatch(LogoutUser(isLoggedIn, user_id)),
 });
-export default translate(["general_2", "wallet", "header"])(
-  connect(mapStateToProps, mapDispatchToProps)(WalletDetails)
-);
+export default translate([
+  "general_2",
+  "wallet",
+  "header",
+  "tier_0_text",
+  "settings",
+])(connect(mapStateToProps, mapDispatchToProps)(WalletDetails));
 function precision(x) {
   if (Math.abs(x) < 1.0) {
     var e = parseInt(x.toString().split("e-")[1]);

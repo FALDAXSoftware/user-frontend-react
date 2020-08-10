@@ -332,10 +332,10 @@ class Wallet extends Component {
           {/* walletDetails > activated_asset_lists start */}
           {this.props.profileDetails.is_tier_enabled && (
             <StripContent>
-              Starter Profile has low Trade and Withdrawal limits. To increase
-              your Trade and Withdrawal Limits, please complete your Tier 1
-              Upgrade from the Identity Verification tab under Profile Section.{" "}
-              <Link to="editProfile">Click Here</Link>
+              {this.t("tier_0_text:wallet_info_strip_text.message")}{" "}
+              <Link to="editProfile">
+                {this.t("settings:deactivate_popup_click_here.message")}
+              </Link>
             </StripContent>
           )}
           {this.props.walletDetails &&
@@ -610,6 +610,8 @@ export default translate([
   "general_2",
   "setting",
   "edit_profile_titles",
+  "tier_0_text",
+  "settings",
 ])(connect(mapStateToProps, mapDispatchToProps)(Wallet));
 function precisionTwo(x) {
   if (Math.abs(x) < 1.0) {
