@@ -786,7 +786,10 @@ class WalletPopup extends Component {
               dailyLimitAfter:
                 responseData.data.current_limit_left_daily_amount,
               limitExceeded: false,
-              limitUnlimited: false,
+              limitUnlimited:
+                responseData.data.daily_limit_actual == "Unlimited"
+                  ? true
+                  : false,
               tierZeroAccount: true,
             });
           } else if (responseData.status === 500) {
@@ -1315,16 +1318,20 @@ class WalletPopup extends Component {
                             {this.t("tiers:limit_after_transfer_text.message")}:
                           </td>
                           <td>
-                            <NumberFormat
-                              value={
-                                dailyLimitAfter
-                                  ? precisionTwo(dailyLimitAfter)
-                                  : "0"
-                              }
-                              displayType={"text"}
-                              thousandSeparator={true}
-                              prefix="$"
-                            />
+                            {dailyLimitAfter == "Unlimited" ? (
+                              this.t("tiers:unlimited_text.message")
+                            ) : (
+                              <NumberFormat
+                                value={
+                                  dailyLimitAfter
+                                    ? precisionTwo(dailyLimitAfter)
+                                    : "0"
+                                }
+                                displayType={"text"}
+                                thousandSeparator={true}
+                                prefix="$"
+                              />
+                            )}
                           </td>
                           {tierZeroAccount ? (
                             ""
