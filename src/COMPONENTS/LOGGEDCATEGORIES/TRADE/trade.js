@@ -517,6 +517,16 @@ class Trade extends Component {
       this.props.io.on("user-wallet-balance", (data) => {
         this.setState({ userBal: data, userBalLoader: false });
       });
+      this.props.io.on("spread-values", (data) => {
+        if (data) {
+          let spread =
+            (data.ask_price - data.bid_price) /
+            ((data.bid_price + data.ask_price) / 2);
+          this.setState({
+            spreadPer: precise(parseFloat(spread), "8"),
+          });
+        }
+      });
     }
   }
   panicStatus() {
@@ -560,12 +570,8 @@ class Trade extends Component {
       .then((response) => response.json())
       .then((responseData) => {
         if (responseData.status == 200) {
-          for (
-            let index = 0;
-            index < responseData.data.instrumentDataValue.length;
-            index++
-          ) {
-            const element = responseData.data.instrumentDataValue[index];
+          for (let index = 0; index < responseData.data.length; index++) {
+            const element = responseData.data[index];
             if (element.name == `${this.state.crypto}-${this.state.currency}`) {
               let pricePrecision = element.price_precision;
               let qtyPrecision = element.quantity_precision;
@@ -574,17 +580,8 @@ class Trade extends Component {
                 quantityPrecision: qtyPrecision,
               });
             }
-            const ele = responseData.data.spread[index];
-            if (ele.name == `${this.state.crypto}-${this.state.currency}`) {
-              let spread =
-                (ele.ask_price - ele.bid_price) /
-                ((ele.bid_price + ele.ask_price) / 2);
-              this.setState({
-                spreadPer: precise(parseFloat(spread), "8"),
-              });
-            }
           }
-          this.updateInstrumentsData(responseData.data.instrumentDataValue);
+          this.updateInstrumentsData(responseData.data);
         }
       })
       .catch((error) => {});
