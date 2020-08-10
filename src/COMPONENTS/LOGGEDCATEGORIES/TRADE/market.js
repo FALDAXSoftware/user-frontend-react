@@ -579,10 +579,14 @@ class Market extends Component {
     }
     if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
       if (props.cryptoPair.crypto !== this.state.crypto) {
-        this.setState({ crypto: props.cryptoPair.crypto });
+        this.setState({ crypto: props.cryptoPair.crypto }, () => {
+          this.emitAmount();
+        });
       }
       if (props.cryptoPair.currency !== this.state.currency) {
-        this.setState({ currency: props.cryptoPair.currency });
+        this.setState({ currency: props.cryptoPair.currency }, () => {
+          this.emitAmount();
+        });
       }
     }
   }
@@ -1451,13 +1455,17 @@ class Market extends Component {
                     <ApproxBelow>
                       <WillpayBelow>Starter Trade Limit (Daily)</WillpayBelow>
                       <WillpayBelow2>
-                        {precise(parseFloat(tradeLimit), "2")} USD
+                        {tradeLimit == "Unlimited"
+                          ? "Unlimited"
+                          : `${precise(parseFloat(tradeLimit), "2")} USD`}
                       </WillpayBelow2>
                     </ApproxBelow>
                     <ApproxBelow>
                       <WillpayBelow>Available Trade Limit</WillpayBelow>
                       <WillpayBelow2>
-                        {precise(parseFloat(tradeLimitLeft), "2")} USD
+                        {tradeLimitLeft == "Unlimited"
+                          ? "Unlimited"
+                          : `${precise(parseFloat(tradeLimitLeft), "2")} USD`}
                       </WillpayBelow2>
                     </ApproxBelow>
                     <ApproxBelow>
@@ -1467,6 +1475,8 @@ class Market extends Component {
                       >
                         {this.state.tradeLimitFlag
                           ? "Exceeds Trade Limit"
+                          : tradeLimitLeftAfter == "Unlimited"
+                          ? "Unlimited"
                           : `${precise(
                               parseFloat(tradeLimitLeftAfter),
                               "2"
@@ -1560,13 +1570,17 @@ class Market extends Component {
                     <ApproxBelow>
                       <WillpayBelow>Starter Trade Limit (Daily)</WillpayBelow>
                       <WillpayBelow2>
-                        {precise(parseFloat(tradeLimit), "2")} USD
+                        {tradeLimit == "Unlimited"
+                          ? "Unlimited"
+                          : `${precise(parseFloat(tradeLimit), "2")} USD`}
                       </WillpayBelow2>
                     </ApproxBelow>
                     <ApproxBelow>
                       <WillpayBelow>Available Trade Limit</WillpayBelow>
                       <WillpayBelow2>
-                        {precise(parseFloat(tradeLimitLeft), "2")} USD
+                        {tradeLimitLeft == "Unlimited"
+                          ? "Unlimited"
+                          : `${precise(parseFloat(tradeLimitLeft), "2")} USD`}
                       </WillpayBelow2>
                     </ApproxBelow>
                     <ApproxBelow>
@@ -1576,6 +1590,8 @@ class Market extends Component {
                       >
                         {this.state.tradeLimitFlag
                           ? "Exceeds Trade Limit"
+                          : tradeLimitLeftAfter == "Unlimited"
+                          ? "Unlimited"
                           : `${precise(
                               parseFloat(tradeLimitLeftAfter),
                               "2"
