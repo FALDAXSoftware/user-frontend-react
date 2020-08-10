@@ -1319,7 +1319,7 @@ class WalletPopup extends Component {
                           </td>
                           <td>
                             {dailyLimitAfter == "Unlimited" ? (
-                              "Unlimited"
+                              this.t("tiers:unlimited_text.message")
                             ) : (
                               <NumberFormat
                                 value={

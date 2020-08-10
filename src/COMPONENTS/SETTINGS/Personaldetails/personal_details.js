@@ -1451,8 +1451,7 @@ class PersonalDetails extends Component {
             this.setState({ ssnIcon: false });
             document.querySelectorAll(".ssn_msg")[0].style.display = "block";
             this.setState({
-              ssnmsg:
-                "Government Issued ID Number should have a minimum of 4 and a maximum of 20 characters",
+              ssnmsg: this.t("tier_0_text:min_max_govt_issued.message"),
             });
           } else {
             this.setState({ ssnIcon: true });
@@ -1463,13 +1462,11 @@ class PersonalDetails extends Component {
           document.querySelectorAll(".ssn_msg")[0].style.display = "block";
           if (value.length < 4 || value.length > 20) {
             this.setState({
-              ssnmsg:
-                "Government Issued ID Number should have a minimum of 4 and a maximum of 20 characters",
+              ssnmsg: this.t("tier_0_text:min_max_govt_issued.message"),
             });
           } else {
             this.setState({
-              ssnmsg:
-                "Government Issued ID Number may only contain numbers, and dashes",
+              ssnmsg: this.t("tier_0_text:num_and_dashes_govt_issued.message"),
             });
           }
         }
@@ -2561,10 +2558,14 @@ class PersonalDetails extends Component {
                 )} */}
                 <FourthRow>
                   <Col md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }}>
-                    <Postal>Government Issued ID Number</Postal>
+                    <Postal>
+                      {this.t("tiers:govt_issued_number_text.message")}
+                    </Postal>
                     <Postalinput
                       disabled={!this.state.editMode}
-                      placeholder="Government Issued ID Number"
+                      placeholder={this.t(
+                        "tiers:govt_issued_number_text.message"
+                      )}
                       {...getFieldProps("ssn_number", {
                         onChange(e) {
                           me.onChangeField(e.target.value, "ssn_number");
@@ -2874,4 +2875,6 @@ export default translate([
   "sign_up",
   "identity_verification",
   "security_tab",
+  "tiers",
+  "tier_0_text",
 ])(connect(mapStateToProps, mapDispatchToProps)(createForm()(PersonalDetails)));
