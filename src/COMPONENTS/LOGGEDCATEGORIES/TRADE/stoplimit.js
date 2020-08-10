@@ -543,10 +543,14 @@ class StopLimit extends Component {
     }
     if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
       if (props.cryptoPair.crypto !== this.state.crypto) {
-        this.setState({ crypto: props.cryptoPair.crypto });
+        this.setState({ crypto: props.cryptoPair.crypto }, () => {
+          this.emitAmount();
+        });
       }
       if (props.cryptoPair.currency !== this.state.currency) {
-        this.setState({ currency: props.cryptoPair.currency });
+        this.setState({ currency: props.cryptoPair.currency }, () => {
+          this.emitAmount();
+        });
       }
     }
     // if (
@@ -1584,24 +1588,42 @@ class StopLimit extends Component {
                   <>
                     <hr />
                     <ApproxBelow>
-                      <WillpayBelow>Starter Trade Limit (Daily)</WillpayBelow>
+                      <WillpayBelow>
+                        {this.t("tier_0_text:starter_trade_limit_text.message")}
+                      </WillpayBelow>
                       <WillpayBelow2>
-                        {precise(parseFloat(tradeLimit), "2")} USD
+                        {tradeLimit == "Unlimited"
+                          ? this.t("tiers:unlimited_text.message")
+                          : `${precise(parseFloat(tradeLimit), "2")} USD`}
                       </WillpayBelow2>
                     </ApproxBelow>
                     <ApproxBelow>
-                      <WillpayBelow>Available Trade Limit</WillpayBelow>
+                      <WillpayBelow>
+                        {this.t(
+                          "tier_0_text:available_trade_limit_text.message"
+                        )}
+                      </WillpayBelow>
                       <WillpayBelow2>
-                        {precise(parseFloat(tradeLimitLeft), "2")} USD
+                        {tradeLimitLeft == "Unlimited"
+                          ? this.t("tiers:unlimited_text.message")
+                          : `${precise(parseFloat(tradeLimitLeft), "2")} USD`}
                       </WillpayBelow2>
                     </ApproxBelow>
                     <ApproxBelow>
-                      <WillpayBelow>Estimated Limit after Trade</WillpayBelow>
+                      <WillpayBelow>
+                        {this.t(
+                          "tier_0_text:estimated_limit_after_trade_text.message"
+                        )}
+                      </WillpayBelow>
                       <WillpayBelow2
                         className={this.state.tradeLimitFlag ? "red" : ""}
                       >
                         {this.state.tradeLimitFlag
-                          ? "Exceeds Trade Limit"
+                          ? this.t(
+                              "tier_0_text:exceeds_trade_limit_text.message"
+                            )
+                          : tradeLimitLeftAfter == "Unlimited"
+                          ? this.t("tiers:unlimited_text.message")
                           : `${precise(
                               parseFloat(tradeLimitLeftAfter),
                               "2"
@@ -1614,13 +1636,16 @@ class StopLimit extends Component {
                     <hr />
                     <ApproxBelow>
                       <WillpayBelow className="tier_upgrade">
-                        Congratulations! You have completed{" "}
-                        {this.state.freeTierDays} days on FALDAX and it is time
-                        we upgrade your Starter Tier privileges. To continue
-                        further trade on the platform, please complete your Tier
-                        1 Upgrade from the Identity Verification tab under
-                        Profile Section.
-                        <Link to="/editProfile"> Click Here.</Link>
+                        {this.t("tier_0_text:congratulations_text.message")}{" "}
+                        {this.state.freeTierDays}{" "}
+                        {this.t("tier_0_text:congratulations_text1.message")}
+                        <Link to="/editProfile">
+                          {" "}
+                          {this.t(
+                            "settings:deactivate_popup_click_here.message"
+                          )}
+                          .
+                        </Link>
                       </WillpayBelow>
                     </ApproxBelow>
                   </>
@@ -1680,24 +1705,42 @@ class StopLimit extends Component {
                   <>
                     <hr />
                     <ApproxBelow>
-                      <WillpayBelow>Starter Trade Limit (Daily)</WillpayBelow>
+                      <WillpayBelow>
+                        {this.t("tier_0_text:starter_trade_limit_text.message")}
+                      </WillpayBelow>
                       <WillpayBelow2>
-                        {precise(parseFloat(tradeLimit), "2")} USD
+                        {tradeLimit == "Unlimited"
+                          ? this.t("tiers:unlimited_text.message")
+                          : `${precise(parseFloat(tradeLimit), "2")} USD`}
                       </WillpayBelow2>
                     </ApproxBelow>
                     <ApproxBelow>
-                      <WillpayBelow>Available Trade Limit</WillpayBelow>
+                      <WillpayBelow>
+                        {this.t(
+                          "tier_0_text:available_trade_limit_text.message"
+                        )}
+                      </WillpayBelow>
                       <WillpayBelow2>
-                        {precise(parseFloat(tradeLimitLeft), "2")} USD
+                        {tradeLimitLeft == "Unlimited"
+                          ? this.t("tiers:unlimited_text.message")
+                          : `${precise(parseFloat(tradeLimitLeft), "2")} USD`}
                       </WillpayBelow2>
                     </ApproxBelow>
                     <ApproxBelow>
-                      <WillpayBelow>Estimated Limit after Trade</WillpayBelow>
+                      <WillpayBelow>
+                        {this.t(
+                          "tier_0_text:estimated_limit_after_trade_text.message"
+                        )}
+                      </WillpayBelow>
                       <WillpayBelow2
                         className={this.state.tradeLimitFlag ? "red" : ""}
                       >
                         {this.state.tradeLimitFlag
-                          ? "Exceeds Trade Limit"
+                          ? this.t(
+                              "tier_0_text:exceeds_trade_limit_text.message"
+                            )
+                          : tradeLimitLeftAfter == "Unlimited"
+                          ? this.t("tiers:unlimited_text.message")
                           : `${precise(
                               parseFloat(tradeLimitLeftAfter),
                               "2"
@@ -1710,13 +1753,16 @@ class StopLimit extends Component {
                     <hr />
                     <ApproxBelow>
                       <WillpayBelow className="tier_upgrade">
-                        Congratulations! You have completed{" "}
-                        {this.state.freeTierDays} days on FALDAX and it is time
-                        we upgrade your Starter Tier privileges. To continue
-                        further trade on the platform, please complete your Tier
-                        1 Upgrade from the Identity Verification tab under
-                        Profile Section.
-                        <Link to="/editProfile"> Click Here.</Link>
+                        {this.t("tier_0_text:congratulations_text.message")}{" "}
+                        {this.state.freeTierDays}{" "}
+                        {this.t("tier_0_text:congratulations_text1.message")}
+                        <Link to="/editProfile">
+                          {" "}
+                          {this.t(
+                            "settings:deactivate_popup_click_here.message"
+                          )}
+                          .
+                        </Link>
                       </WillpayBelow>
                     </ApproxBelow>
                   </>
@@ -1816,4 +1862,7 @@ export default translate([
   "general_3",
   "tier_changes",
   "header",
+  "tier_0_text",
+  "settings",
+  "tiers",
 ])(connect(mapStateToProps)(withRouter(StopLimit)));

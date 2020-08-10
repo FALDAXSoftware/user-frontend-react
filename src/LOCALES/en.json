@@ -4648,5 +4648,61 @@
       "message_type": "Web content",
       "context": "Order Quantity must be greater than minimum asset limit"
     }
+  },
+  "tier_0_text": {
+    "starter_trade_limit_text": {
+      "page": "Trade",
+      "message": "Starter Trade Limit (Daily)",
+      "message_type": "Web content",
+      "context": "Starter Trade Limit (Daily) text"
+    },
+    "available_trade_limit_text": {
+      "page": "Trade",
+      "message": "Available Trade Limit",
+      "message_type": "Web content",
+      "context": "Available Trade Limit text"
+    },
+    "estimated_limit_after_trade_text": {
+      "page": "Trade",
+      "message": "Estimated Limit after Trade",
+      "message_type": "Web content",
+      "context": "Estimated Limit after Trade text"
+    },
+    "exceeds_trade_limit_text": {
+      "page": "Trade",
+      "message": "Exceeds Trade Limit",
+      "message_type": "Web content",
+      "context": "Exceeds Trade Limit text"
+    },
+    "congratulations_text": {
+      "page": "Trade",
+      "message": "Congratulations! You have completed",
+      "message_type": "Web content",
+      "context": "Congratulations! You have completed text"
+    },
+    "congratulations_text1": {
+      "page": "Trade",
+      "message": "days on FALDAX and it is time we upgrade your Starter Tier privileges. To continue further trade on the platform, please complete your Tier 1 Upgrade from the Identity Verification tab under Profile Section.",
+      "message_type": "Web content",
+      "context": "Congratulations text"
+    },
+    "min_max_govt_issued": {
+      "page": "Trade",
+      "message": "Government Issued ID Number should have a minimum of 4 and a maximum of 20 characters",
+      "message_type": "Web content",
+      "context": "min max government issued id number validation text"
+    },
+    "num_and_dashes_govt_issued": {
+      "page": "Trade",
+      "message": "Government Issued ID Number may only contain numbers, and dashes",
+      "message_type": "Web content",
+      "context": "Number and dashes government issued id number validation text"
+    },
+    "wallet_info_strip_text": {
+      "page": "Wallet",
+      "message": "Starter Profile has low Trade and Withdrawal limits. To increase your Trade and Withdrawal Limits, please complete your Tier 1 Upgrade from the Identity Verification tab under Profile Section.",
+      "message_type": "Web content",
+      "context": "wallet ifo strip for tier 0 account users"
+    }
   }
 }
