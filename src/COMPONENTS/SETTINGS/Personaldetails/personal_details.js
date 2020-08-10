@@ -1444,7 +1444,7 @@ class PersonalDetails extends Component {
       }
     } else if (field === "ssn_number") {
       if (value !== "") {
-        var reg = /^[a-zA-Z0-9-_]*$/;
+        var reg = /^[0-9-_]*$/;
         var bool = reg.test(value);
         if (bool === true) {
           if (value.length < 4 || value.length > 20) {
@@ -1469,7 +1469,7 @@ class PersonalDetails extends Component {
           } else {
             this.setState({
               ssnmsg:
-                "Government Issued ID Number may only contain letters, numbers, and dashes",
+                "Government Issued ID Number may only contain numbers, and dashes",
             });
           }
         }
