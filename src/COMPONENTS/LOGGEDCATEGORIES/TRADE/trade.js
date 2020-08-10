@@ -518,10 +518,11 @@ class Trade extends Component {
         this.setState({ userBal: data, userBalLoader: false });
       });
       this.props.io.on("spread-values", (data) => {
+        console.log("dataspread",data)
         if (data) {
           let spread =
-            (data.ask_price - data.bid_price) /
-            ((data.bid_price + data.ask_price) / 2);
+            (data[0].ask_price - data[0].bid_price) /
+            ((data[0].bid_price + data[0].ask_price) / 2);
           this.setState({
             spreadPer: precise(parseFloat(spread), "8"),
           });
