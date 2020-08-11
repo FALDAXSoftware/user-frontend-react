@@ -698,6 +698,7 @@ class LoggedNavigation extends Component {
         this.setState({ countryAccess: true });
       }
     } else if (
+      !this.props.profileDetails.is_tier_enabled &&
       !this.props.profileDetails.is_user_updated &&
       this.props.profileDetails.is_kyc_done != "2"
     ) {
@@ -908,15 +909,17 @@ class LoggedNavigation extends Component {
             {this.t("trade:trade_head.message")}
           </a>
         </Menu.Item>
-        <Menu.Item key="2">
-          <a
-            onClick={() => {
-              this.historyAccess("2");
-            }}
-          >
-            {t("navbar_sub_menu_conversation_credit_card.message")}
-          </a>
-        </Menu.Item>
+        {!this.props.profileDetails.is_tier_enabled && (
+          <Menu.Item key="2">
+            <a
+              onClick={() => {
+                this.historyAccess("2");
+              }}
+            >
+              {t("navbar_sub_menu_conversation_credit_card.message")}
+            </a>
+          </Menu.Item>
+        )}
       </Menu>
     );
 
@@ -1149,15 +1152,18 @@ class LoggedNavigation extends Component {
                       {this.t("trade:trade_head.message")}
                     </a>
                   </Menu.Item>
-                  <Menu.Item key="2">
-                    <a
-                      onClick={() => {
-                        this.historyAccess("2");
-                      }}
-                    >
-                      {t("navbar_sub_menu_conversation_credit_card.message")}
-                    </a>
-                  </Menu.Item>
+                  {!this.props.profileDetails.is_tier_enabled && (
+                    <Menu.Item key="2">
+                      <a
+                        onClick={() => {
+                          this.historyAccess("2");
+                        }}
+                      >
+                        {t("navbar_sub_menu_conversation_credit_card.message")}
+                      </a>
+                    </Menu.Item>
+                  )}
+
                   {/* <Menu.Item key="2">
                     <a
                       onClick={() =>

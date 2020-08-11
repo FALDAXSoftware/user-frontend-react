@@ -459,9 +459,15 @@ class Market extends Component {
           if (data.valueObject) {
             this.setState(
               {
-                tradeLimit: data.valueObject.available_trade_limit_actual,
-                tradeLimitLeft: data.valueObject.current_left_limit,
-                tradeLimitLeftAfter: data.valueObject.amount_left_after_trade,
+                tradeLimit: data.valueObject.available_trade_limit_actual
+                  ? data.valueObject.available_trade_limit_actual
+                  : "0",
+                tradeLimitLeft: data.valueObject.current_left_limit
+                  ? data.valueObject.current_left_limit
+                  : "0",
+                tradeLimitLeftAfter: data.valueObject.amount_left_after_trade
+                  ? data.valueObject.amount_left_after_trade
+                  : "0",
                 tradeLimitFlag: !data.leftFlag,
                 tradeDaysCompleted: data.response_flag,
               },
