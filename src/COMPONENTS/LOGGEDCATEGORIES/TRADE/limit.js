@@ -574,6 +574,7 @@ class Limit extends Component {
     this.props.io.emit("tier-0-trade-limit", {
       amount: this.state.amount ? parseFloat(this.state.amount) : 0,
       crypto: this.state.crypto,
+      symbol: `${this.state.crypto}-${this.state.currency}`,
     });
   }
   onChange(e) {
