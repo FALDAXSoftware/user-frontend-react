@@ -685,6 +685,18 @@ class LoggedNavigation extends Component {
   historyAccess(key) {
     if (this.state.panic_status === true) {
       this.setState({ panicEnabled: true });
+    } else if (this.props.profileDetails.is_tier_enabled) {
+      if (this.props.profileDetails.legal_allowed) {
+        this.props.history.push({
+          pathname: "/history",
+          tradeType: "1",
+          state: {
+            flag: true,
+          },
+        });
+      } else {
+        this.setState({ countryAccess: true });
+      }
     } else if (
       !this.props.profileDetails.is_user_updated &&
       this.props.profileDetails.is_kyc_done != "2"
@@ -725,7 +737,14 @@ class LoggedNavigation extends Component {
   simplexAccess() {
     if (this.state.panic_status === true) {
       this.setState({ panicEnabled: true });
+    } else if (this.props.profileDetails.is_tier_enabled) {
+      if (this.props.profileDetails.legal_allowed) {
+        this.setState({ completeKYC: true });
+      } else {
+        this.setState({ countryAccess: true });
+      }
     } else if (
+      !this.props.profileDetails.is_tier_enabled &&
       !this.props.profileDetails.is_user_updated &&
       this.props.profileDetails.is_kyc_done != "2"
     ) {
