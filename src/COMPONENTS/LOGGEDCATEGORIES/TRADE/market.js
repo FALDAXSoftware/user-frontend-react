@@ -913,6 +913,7 @@ class Market extends Component {
               sellEstPrice: 0,
             },
             () => {
+              this.emitAmount();
               if (this.state.side === "Buy") {
                 this.setState({
                   fiatCurrencyValue: 0,
