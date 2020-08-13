@@ -1852,13 +1852,15 @@ class PersonalDetails extends Component {
         // var countrySelected = CountryData.getCountryById(
         //   this.state.countryJsonId - 1
         // );
-        let country_code = "";
-        if (this.state.countrySelectedData) {
-          let countrySelected = this.state.countrySelectedData;
-          country_code = countrySelected.sortname;
-        }
-        profileData.append("country_code", country_code);
-        console.log("test", profileData);
+        // let country_code = "";
+        // if (this.state.countrySelectedData) {
+        //   let countrySelected = this.state.countrySelectedData;
+        //   country_code = countrySelected.sortname;
+        // }
+        profileData.append(
+          "country_code",
+          this.state.fields.country_code.toUpperCase()
+        );
         this.props.profileupdateAction(this.props.isLoggedIn, profileData);
         this.props.i18n.changeLanguage(this.state.language);
         this.props.langAction(this.state.language);

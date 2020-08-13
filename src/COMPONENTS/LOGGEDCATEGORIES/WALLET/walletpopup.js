@@ -951,6 +951,14 @@ class WalletPopup extends Component {
         },
         () => {
           if (
+            parseFloat(this.state.availableBalance) <
+            parseFloat(this.state.sendFields.amount)
+          ) {
+            this.setState({
+              disabled: true,
+            });
+          }
+          if (
             this.state.sendFields.destination_address &&
             this.validator.allValid()
           ) {
