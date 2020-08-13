@@ -1305,142 +1305,146 @@ class History extends Component {
                       )}
                     </PagDiv>
                   </TabPane>
-                  <TabPane
-                    tab={this.t(
-                      "header:navbar_sub_menu_conversation_credit_card.message"
-                    )}
-                    key="2"
-                  >
-                    <Tablediv>
-                      <HisTable responsive striped condensed>
-                        <thead>
-                          <tr>
-                            <th>{t("settings:table_head_coin.message")}</th>
-                            <th>{t("wallet:date_text.message")}</th>
-                            <th>
-                              {t("filled_text.message")}&nbsp;
-                              {t("price_text.message")}
-                            </th>
-                            <th>{t("wallet:amount_text.message")}</th>
-                            <th>
-                              {t("header:navbar_menu_wallet.message")}&nbsp;
-                              {t("wallet:address_text.message")}
-                            </th>
-                            <th>
-                              {t("payment_text.message")}&nbsp;
-                              {t("id_text.message")}
-                            </th>
-                            <th>
-                              {t("quote_text.message")}&nbsp;
-                              {t("id_text.message")}
-                            </th>
-                            <th>
-                              {t("payment_text.message")}&nbsp;
-                              {t("security_tab:title_status.message")}
-                            </th>
-                          </tr>
-                        </thead>
-                        {this.state.historySimplexData !== undefined ? (
-                          this.state.historySimplexData.length > 0 ? (
-                            <tbody>
-                              {this.state.historySimplexData.map(function (
-                                temps
-                              ) {
-                                var date = moment
-                                  .utc(temps.created_at)
-                                  .local()
-                                  .format(
-                                    `${self.props.profileData.date_format} HH:mm:ss`
+                  {!this.props.profileData.is_tier_enabled && (
+                    <TabPane
+                      tab={this.t(
+                        "header:navbar_sub_menu_conversation_credit_card.message"
+                      )}
+                      key="2"
+                    >
+                      <Tablediv>
+                        <HisTable responsive striped condensed>
+                          <thead>
+                            <tr>
+                              <th>{t("settings:table_head_coin.message")}</th>
+                              <th>{t("wallet:date_text.message")}</th>
+                              <th>
+                                {t("filled_text.message")}&nbsp;
+                                {t("price_text.message")}
+                              </th>
+                              <th>{t("wallet:amount_text.message")}</th>
+                              <th>
+                                {t("header:navbar_menu_wallet.message")}&nbsp;
+                                {t("wallet:address_text.message")}
+                              </th>
+                              <th>
+                                {t("payment_text.message")}&nbsp;
+                                {t("id_text.message")}
+                              </th>
+                              <th>
+                                {t("quote_text.message")}&nbsp;
+                                {t("id_text.message")}
+                              </th>
+                              <th>
+                                {t("payment_text.message")}&nbsp;
+                                {t("security_tab:title_status.message")}
+                              </th>
+                            </tr>
+                          </thead>
+                          {this.state.historySimplexData !== undefined ? (
+                            this.state.historySimplexData.length > 0 ? (
+                              <tbody>
+                                {this.state.historySimplexData.map(function (
+                                  temps
+                                ) {
+                                  var date = moment
+                                    .utc(temps.created_at)
+                                    .local()
+                                    .format(
+                                      `${self.props.profileData.date_format} HH:mm:ss`
+                                    );
+                                  var side =
+                                    Number(temps.user_id) ===
+                                    self.props.profileData.id
+                                      ? temps.side
+                                      : temps.side === "Buy"
+                                      ? t("sell_text.message")
+                                      : t("buy_text.message");
+                                  if (temps.simplex_payment_status === 1) {
+                                    var simplex_payment_status =
+                                      "Under Approval";
+                                  }
+                                  if (temps.simplex_payment_status === 2) {
+                                    var simplex_payment_status = "Approved";
+                                  }
+                                  if (temps.simplex_payment_status === 3) {
+                                    var simplex_payment_status = "Cancelled";
+                                  }
+                                  let url;
+                                  url =
+                                    "https://payment-status.simplex.com/#/payment/" +
+                                    temps.payment_id;
+                                  return (
+                                    <tr>
+                                      <td>{temps.symbol}</td>
+                                      <td>{date}</td>
+                                      <td>{temps.fill_price}</td>
+                                      <td>{temps.quantity}</td>
+                                      <td>{temps.address}</td>
+                                      <td>
+                                        <a target="_blank" href={url}>
+                                          {temps.payment_id}
+                                        </a>
+                                      </td>
+                                      <td>{temps.quote_id}</td>
+                                      <td>
+                                        {simplex_payment_status ==
+                                          "Under Approval" && (
+                                          <span className="order-inapproval">
+                                            {self.t(
+                                              "under_approval_text.message"
+                                            )}
+                                          </span>
+                                        )}
+                                        {simplex_payment_status ==
+                                          "Approved" && (
+                                          <span className="order-sucess">
+                                            {self.t("approved_text.message")}
+                                          </span>
+                                        )}
+                                        {simplex_payment_status ==
+                                          "Cancelled" && (
+                                          <span className="order-cancelled">
+                                            {self.t("cancelled_text.message")}
+                                          </span>
+                                        )}
+                                      </td>
+                                    </tr>
                                   );
-                                var side =
-                                  Number(temps.user_id) ===
-                                  self.props.profileData.id
-                                    ? temps.side
-                                    : temps.side === "Buy"
-                                    ? t("sell_text.message")
-                                    : t("buy_text.message");
-                                if (temps.simplex_payment_status === 1) {
-                                  var simplex_payment_status = "Under Approval";
-                                }
-                                if (temps.simplex_payment_status === 2) {
-                                  var simplex_payment_status = "Approved";
-                                }
-                                if (temps.simplex_payment_status === 3) {
-                                  var simplex_payment_status = "Cancelled";
-                                }
-                                let url;
-                                url =
-                                  "https://payment-status.simplex.com/#/payment/" +
-                                  temps.payment_id;
-                                return (
-                                  <tr>
-                                    <td>{temps.symbol}</td>
-                                    <td>{date}</td>
-                                    <td>{temps.fill_price}</td>
-                                    <td>{temps.quantity}</td>
-                                    <td>{temps.address}</td>
-                                    <td>
-                                      <a target="_blank" href={url}>
-                                        {temps.payment_id}
-                                      </a>
-                                    </td>
-                                    <td>{temps.quote_id}</td>
-                                    <td>
-                                      {simplex_payment_status ==
-                                        "Under Approval" && (
-                                        <span className="order-inapproval">
-                                          {self.t(
-                                            "under_approval_text.message"
-                                          )}
-                                        </span>
-                                      )}
-                                      {simplex_payment_status == "Approved" && (
-                                        <span className="order-sucess">
-                                          {self.t("approved_text.message")}
-                                        </span>
-                                      )}
-                                      {simplex_payment_status ==
-                                        "Cancelled" && (
-                                        <span className="order-cancelled">
-                                          {self.t("cancelled_text.message")}
-                                        </span>
-                                      )}
-                                    </td>
-                                  </tr>
-                                );
-                              })}
-                            </tbody>
+                                })}
+                              </tbody>
+                            ) : (
+                              <NDF>
+                                <tr>
+                                  <td colSpan="8">
+                                    {t("support:no_data_found.message")}
+                                  </td>
+                                </tr>
+                              </NDF>
+                            )
                           ) : (
-                            <NDF>
-                              <tr>
-                                <td colSpan="8">
-                                  {t("support:no_data_found.message")}
-                                </td>
-                              </tr>
-                            </NDF>
-                          )
+                            ""
+                          )}
+                        </HisTable>
+                      </Tablediv>
+                      <PagDiv>
+                        {tradeCount > 0 ? (
+                          <PaginationS
+                            className="ant-users-pagination"
+                            onChange={this.handlePagination.bind(this)}
+                            pageSize={limit}
+                            current={page}
+                            total={tradeCount}
+                            showSizeChanger
+                            onShowSizeChange={this.changePaginationSize}
+                            pageSizeOptions={pageSizeOptions}
+                          />
                         ) : (
                           ""
                         )}
-                      </HisTable>
-                    </Tablediv>
-                    <PagDiv>
-                      {tradeCount > 0 ? (
-                        <PaginationS
-                          className="ant-users-pagination"
-                          onChange={this.handlePagination.bind(this)}
-                          pageSize={limit}
-                          current={page}
-                          total={tradeCount}
-                          showSizeChanger
-                          onShowSizeChange={this.changePaginationSize}
-                          pageSizeOptions={pageSizeOptions}
-                        />
-                      ) : (
-                        ""
-                      )}
-                    </PagDiv>
-                  </TabPane>
+                      </PagDiv>
+                    </TabPane>
+                  )}
                 </Tabs>
               </HisWrap>
             </ContainerContact>
