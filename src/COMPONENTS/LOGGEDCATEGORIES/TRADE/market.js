@@ -93,6 +93,7 @@ class Market extends Component {
       trialTierUpgrade: false,
       tradeDaysCompleted: false,
       freeTierDays: "",
+      showTierOne: false,
     };
     this.timeout = null;
     this.t = this.props.t;
@@ -432,20 +433,17 @@ class Market extends Component {
         symbol: `${this.state.crypto}-${this.state.currency}`,
       });
       this.props.io.on("trade-user-limit-availability", (data) => {
-        console.log("data", data);
         if (data) {
-          if (data.account_tier_flag && data.response_flag) {
-            if (data.response_flag) {
-              this.setState({
-                trialTierUpgrade: true,
-                freeTierDays: data.days,
-              });
-            } else {
-              this.setState({
-                trialTierUpgrade: false,
-              });
-            }
+          if (data.account_tier_flag && data.response_flag && data.tier_flag) {
+            this.setState({
+              trialTierUpgrade: true,
+              freeTierDays: data.days,
+              showTierOne: true,
+            });
           } else if (data.account_tier_flag && data.tier_flag == false) {
+            this.setState({
+              showTierOne: false,
+            });
             if (!data.tier_flag) {
               this.setState({
                 completeKYC: true,
@@ -455,6 +453,10 @@ class Market extends Component {
                 completeKYC: false,
               });
             }
+          } else if (!data.account_tier_flag) {
+            this.setState({
+              showTierOne: false,
+            });
           }
           if (data.valueObject) {
             this.setState(
@@ -470,6 +472,7 @@ class Market extends Component {
                   : "0",
                 tradeLimitFlag: !data.leftFlag,
                 tradeDaysCompleted: data.response_flag,
+                showTierOne: true,
               },
               () => {
                 if (this.state.tradeDaysCompleted) {
@@ -1457,8 +1460,7 @@ class Market extends Component {
                     {this.state.crypto} */}
                   </WillpayBelow>
                 </ApproxBelow>
-                {this.props.profileDetails.is_tier_enabled &&
-                !this.state.trialTierUpgrade ? (
+                {this.state.showTierOne && !this.state.trialTierUpgrade ? (
                   <>
                     <hr />
                     <ApproxBelow>
@@ -1505,7 +1507,7 @@ class Market extends Component {
                       </WillpayBelow2>
                     </ApproxBelow>
                   </>
-                ) : this.props.profileDetails.is_tier_enabled ? (
+                ) : this.state.showTierOne ? (
                   <>
                     <hr />
                     <ApproxBelow>
@@ -1587,8 +1589,7 @@ class Market extends Component {
                     {this.state.currency} */}
                   {/* </WillpayBelow> */}
                 </ApproxBelow>
-                {this.props.profileDetails.is_tier_enabled &&
-                !this.state.trialTierUpgrade ? (
+                {this.state.showTierOne && !this.state.trialTierUpgrade ? (
                   <>
                     <hr />
                     <ApproxBelow>
@@ -1635,7 +1636,7 @@ class Market extends Component {
                       </WillpayBelow2>
                     </ApproxBelow>
                   </>
-                ) : this.props.profileDetails.is_tier_enabled ? (
+                ) : this.state.showTierOne ? (
                   <>
                     <hr />
                     <ApproxBelow>
