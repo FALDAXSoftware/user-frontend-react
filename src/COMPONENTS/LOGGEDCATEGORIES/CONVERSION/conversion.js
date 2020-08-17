@@ -155,6 +155,8 @@ class Conversion extends React.Component {
     } else if (this.props.profileDetails.is_tier_enabled) {
       if (this.props.profileDetails.legal_allowed) {
         this.setState({ completeKYC: true });
+      } else if (!this.props.profileDetails.is_user_updated) {
+        this.setState({ completeProfile: true });
       } else {
         this.setState({ countryAccess: true });
       }
