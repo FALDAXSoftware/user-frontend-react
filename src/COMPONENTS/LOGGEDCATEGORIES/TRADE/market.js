@@ -282,6 +282,7 @@ class Market extends Component {
               minCryptoLimit: data.minimumValue,
             },
             () => {
+              this.emitAmount();
               if (this.state.amount > 0) {
                 if (this.state.side === "Buy") {
                   if (
