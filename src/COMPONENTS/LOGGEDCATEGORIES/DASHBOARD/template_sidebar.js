@@ -12,7 +12,7 @@ import {
   Tooltip,
   Button,
   Modal,
-  notification
+  notification,
 } from "antd";
 import { connect } from "react-redux";
 import styled from "styled-components";
@@ -24,14 +24,14 @@ let { API_URL } = globalVariables;
 const { Sider } = Layout;
 const SidebarHeader = styled.h4`
   font-weight: bold;
-  color: ${props => (props.theme.mode === "dark" ? "#fff" : "#000")};
+  color: ${(props) => (props.theme.mode === "dark" ? "#fff" : "#000")};
   i.close {
     position: absolute;
     top: 0;
     right: 0;
     cursor: pointer;
     :hover {
-      color: ${props => (props.theme.mode === "dark" ? "#fff" : "#000")};
+      color: ${(props) => (props.theme.mode === "dark" ? "#fff" : "#000")};
     }
   }
   i.save {
@@ -43,12 +43,12 @@ const SidebarHeader = styled.h4`
     font-size: 21px;
     font-weight: 700;
     line-height: 1;
-    color: ${props => (props.theme.mode === "dark" ? "#fff" : "#000")};
+    color: ${(props) => (props.theme.mode === "dark" ? "#fff" : "#000")};
     text-shadow: 0 1px 0 #fff;
     filter: alpha(opacity=20);
     opacity: 0.2;
     :hover {
-      color: ${props => (props.theme.mode === "dark" ? "#fff" : "#000")};
+      color: ${(props) => (props.theme.mode === "dark" ? "#fff" : "#000")};
       text-decoration: none;
       cursor: pointer;
       filter: alpha(opacity=50);
@@ -64,12 +64,12 @@ const SidebarHeader = styled.h4`
     font-size: 21px;
     font-weight: 700;
     line-height: 1;
-    color: ${props => (props.theme.mode === "dark" ? "#fff" : "#000")};
+    color: ${(props) => (props.theme.mode === "dark" ? "#fff" : "#000")};
     text-shadow: 0 1px 0 #fff;
     filter: alpha(opacity=20);
     opacity: 0.2;
     :hover {
-      color: ${props => (props.theme.mode === "dark" ? "#fff" : "#000")};
+      color: ${(props) => (props.theme.mode === "dark" ? "#fff" : "#000")};
       text-decoration: none;
       cursor: pointer;
       filter: alpha(opacity=50);
@@ -116,7 +116,7 @@ class TemplateSideBar extends Component {
       generatingLink: false,
       tooltipTitle: "click to copy",
       code: "",
-      importLoading: false
+      importLoading: false,
     };
     this.t = this.props.t;
   }
@@ -124,7 +124,7 @@ class TemplateSideBar extends Component {
     this.setState({ templates: [...this.props.templates] }, () => {
       if (this.state.templates[this.props.selected]) {
         this.setState({
-          templateName: this.state.templates[this.props.selected].title
+          templateName: this.state.templates[this.props.selected].title,
         });
       }
     });
@@ -137,22 +137,22 @@ class TemplateSideBar extends Component {
         Accept: "application/json",
         "Content-Type": "application/json",
         "Accept-Language": localStorage["i18nextLng"],
-        Authorization: "Bearer " + this.props.isLoggedIn
+        Authorization: "Bearer " + this.props.isLoggedIn,
       },
       body: JSON.stringify({
-        layout_data: this.state.templates[this.props.selected]
-      })
+        layout_data: this.state.templates[this.props.selected],
+      }),
     })
-      .then(response => response.json())
-      .then(responseData => {
+      .then((response) => response.json())
+      .then((responseData) => {
         if (responseData.status == 200) {
           this.setState({
             link: responseData.data,
-            generatingLink: false
+            generatingLink: false,
           });
         }
       })
-      .catch(error => {});
+      .catch((error) => {});
   };
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (
@@ -161,7 +161,7 @@ class TemplateSideBar extends Component {
     ) {
       this.setState({ templates: [...nextProps.templates] }, () => {
         this.setState({
-          templateName: nextProps.templates[this.props.selected].title
+          templateName: nextProps.templates[this.props.selected].title,
         });
       });
     }
@@ -173,7 +173,6 @@ class TemplateSideBar extends Component {
   };
   onWidgetDataChange = (value, widgetIndex) => {
     let templates = [...this.state.templates];
-    console.log(templates[this.props.selected].widgets[widgetIndex], value);
     templates[this.props.selected].widgets[widgetIndex].data = value;
     this.props.onChange(templates);
   };
@@ -193,19 +192,18 @@ class TemplateSideBar extends Component {
       newTemplate["widgets"].push({
         ...w,
         data: [],
-        checked: false
+        checked: false,
       });
     }
     templates.push(newTemplate);
     this.props.onChange(templates);
   };
-  onNameChange = e => {
+  onNameChange = (e) => {
     this.setState({
-      templateName: e.target.value
+      templateName: e.target.value,
     });
   };
-  handleNameInputBlur = e => {
-    console.log(e.target.value);
+  handleNameInputBlur = (e) => {
     let templates = [...this.state.templates];
     if (
       e.target.value &&
@@ -215,14 +213,14 @@ class TemplateSideBar extends Component {
       this.props.onChange(templates);
     } else {
       this.setState({
-        templateName: templates[this.props.selected].title
+        templateName: templates[this.props.selected].title,
       });
     }
   };
-  changeTab = key => {
+  changeTab = (key) => {
     this.setState(
       {
-        showTab: key
+        showTab: key,
       },
       () => {
         this.props.onTabChange(key);
@@ -237,23 +235,22 @@ class TemplateSideBar extends Component {
         Accept: "application/json",
         "Content-Type": "application/json",
         "Accept-Language": localStorage["i18nextLng"],
-        Authorization: "Bearer " + this.props.isLoggedIn
+        Authorization: "Bearer " + this.props.isLoggedIn,
       },
       body: JSON.stringify({
-        code: this.state.code
-      })
+        code: this.state.code,
+      }),
     })
-      .then(response => response.json())
-      .then(responseData => {
+      .then((response) => response.json())
+      .then((responseData) => {
         if (responseData.status == 200) {
-          console.log(responseData);
           if (responseData.data.length) {
             let layout = responseData.data[0].layout_data;
             this.setState(
               {
                 code: "",
                 importLoading: false,
-                showTab: 1
+                showTab: 1,
               },
               () => {
                 this.props.importTemplate(layout);
@@ -262,15 +259,15 @@ class TemplateSideBar extends Component {
           } else {
             notification.error({
               message: this.t("validations:error_text.message"),
-              description: this.t("invalid_template_code_error.message")
+              description: this.t("invalid_template_code_error.message"),
             });
             this.setState({
-              importLoading: false
+              importLoading: false,
             });
           }
         }
       })
-      .catch(error => {});
+      .catch((error) => {});
   };
   render() {
     return (
@@ -282,7 +279,7 @@ class TemplateSideBar extends Component {
           marginTop: "90px",
           marginBottom: "10px",
           padding: "30px 20px",
-          boxShadow: "-1px 5px 31px -10px rgba(0,0,0,0.53)"
+          boxShadow: "-1px 5px 31px -10px rgba(0,0,0,0.53)",
         }}
       >
         <Row>
@@ -299,7 +296,7 @@ class TemplateSideBar extends Component {
                     } else {
                       notification.error({
                         message: this.t("validations:error_text.message"),
-                        description: this.t("save_before_share_error.message")
+                        description: this.t("save_before_share_error.message"),
                       });
                     }
                   }}
@@ -334,7 +331,7 @@ class TemplateSideBar extends Component {
                         onOk: () => {
                           this.props.closeEditing();
                         },
-                        onCancel: () => {}
+                        onCancel: () => {},
                       });
                     } else {
                       this.props.closeEditing();
@@ -359,13 +356,13 @@ class TemplateSideBar extends Component {
                   value={this.props.selected}
                   style={{ width: "100%" }}
                   onChange={this.props.onCurrentTemplateChange}
-                  dropdownRender={menu => (
+                  dropdownRender={(menu) => (
                     <div>
                       {menu}
                       <Divider style={{ margin: "4px 0" }} />
                       <div
                         style={{ padding: "4px 8px", cursor: "pointer" }}
-                        onMouseDown={e => e.preventDefault()}
+                        onMouseDown={(e) => e.preventDefault()}
                         onClick={this.addNewTemplate}
                       >
                         <Icon type="plus" /> {this.t("add_item_text.message")}
@@ -430,7 +427,7 @@ class TemplateSideBar extends Component {
                               this.state.templates[this.props.selected].inbuilt
                             }
                             checked={w.checked}
-                            onChange={checked => {
+                            onChange={(checked) => {
                               this.onWidgetCheckChange(checked, index);
                             }}
                           ></Switch>
@@ -442,7 +439,7 @@ class TemplateSideBar extends Component {
                               value={w.data}
                               mode="multiple"
                               style={{ width: "100%", marginTop: "10px" }}
-                              onChange={value => {
+                              onChange={(value) => {
                                 this.onWidgetDataChange(value, index);
                               }}
                               placeholder={this.t(
@@ -453,7 +450,7 @@ class TemplateSideBar extends Component {
                                   .inbuilt
                               }
                             >
-                              {this.props.pairs.map(p => (
+                              {this.props.pairs.map((p) => (
                                 <Select.Option key={p.name}>
                                   {p.name}
                                 </Select.Option>
@@ -511,13 +508,13 @@ class TemplateSideBar extends Component {
                       text={this.state.link}
                       onCopy={() => {
                         this.setState({
-                          tooltipTitle: `${this.t("copied_text.message")}`
+                          tooltipTitle: `${this.t("copied_text.message")}`,
                         });
                         setTimeout(() => {
                           this.setState({
                             tooltipTitle: `${this.t(
                               "click_to_copy_text.message"
-                            )}`
+                            )}`,
                           });
                         }, 3000);
                       }}
@@ -539,7 +536,7 @@ class TemplateSideBar extends Component {
               <Col>
                 <Input
                   value={this.state.code}
-                  onChange={e => {
+                  onChange={(e) => {
                     this.setState({ code: e.target.value });
                   }}
                 />
@@ -564,7 +561,7 @@ class TemplateSideBar extends Component {
                   onClick={() => {
                     this.setState({
                       link: "",
-                      generatingLink: false
+                      generatingLink: false,
                     });
                     this.changeTab(1);
                   }}
@@ -588,7 +585,7 @@ function mapStateToProps(state) {
         ? state.simpleReducer.profileDetails.data[0]
         : "",
     theme:
-      state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
+      state.themeReducer.theme !== undefined ? state.themeReducer.theme : "",
   };
 }
 

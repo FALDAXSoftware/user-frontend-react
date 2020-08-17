@@ -208,7 +208,6 @@ class DocUpload extends Component {
                   frontHeight = img.height;
 
                   if (fileSize >= 400000) {
-                    console.log("test here");
                     if (_self.state.targetName === "front-doc") {
                       _self.setState({ icon1: "check", displayFirst: "" });
                       reader.onload = (upload) => {

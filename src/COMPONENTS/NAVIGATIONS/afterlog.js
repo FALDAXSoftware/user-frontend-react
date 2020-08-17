@@ -407,7 +407,6 @@ class Afterlog extends Component {
         ) : (
           <LoginButton
             onClick={() => {
-              console.log("ashgd");
               this.props.history.push("/");
             }}
           >
