@@ -853,7 +853,6 @@ class WalletPopup extends Component {
                 parseFloat(responseData.data)
             );
             fields["subtotal"] = subtotal;
-            console.log("subtotal^^", subtotal, this.state.singlefiatValue);
             let fiatValueamount =
               parseFloat(subtotal) * parseFloat(this.state.singlefiatValue);
             this.setState({

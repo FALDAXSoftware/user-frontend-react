@@ -79,7 +79,6 @@ class SSN extends Component {
         It is called when next button is clicked and proceed to next step. 
     */
   componentDidMount() {
-    console.log("test1", this.props.profileDetails.ssn_number);
     if (this.props.profileDetails.ssn_number) {
       this.setState({
         value_input: this.props.profileDetails.ssn_number,

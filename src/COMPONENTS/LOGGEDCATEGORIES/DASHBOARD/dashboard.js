@@ -392,13 +392,6 @@ class Dashboard extends Component {
         if (!currentSelectedTemplate) {
           currentSelectedTemplate = 0;
         }
-        console.log(
-          currentSelectedTemplate >= templates.length,
-          currentSelectedTemplate,
-          templates.length,
-          templates
-        );
-
         if (currentSelectedTemplate >= templates.length) {
           currentSelectedTemplate = 0;
         }
@@ -438,7 +431,6 @@ class Dashboard extends Component {
     });
   };
   onLayoutChange = (layout, layouts) => {
-    console.log(layout);
     let allTemplates = JSON.parse(JSON.stringify(this.state.allTemplates));
     allTemplates[this.state.currentTemplateIndex] = {
       ...JSON.parse(JSON.stringify(this.state.currentTemplate)),
@@ -528,7 +520,6 @@ class Dashboard extends Component {
       .then((response) => response.json())
       .then((responseData) => {
         if (responseData.status == 200) {
-          console.log("respondata", responseData);
           this.setState({ isSaving: false, isSaved: true });
         }
       });
