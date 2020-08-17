@@ -1458,295 +1458,301 @@ class Acc_settings extends Component {
             </DeactivateButtonWarp>
           </div>
         </VerifyModal>
-        <VerifyModal
-          visible={this.state.showDeactivateModal}
-          onCancel={this.closeModal}
-          title={t("deactivate_popup_title.message")}
-          footer={null}
-          className="deactivate_modal"
-        >
-          {this.state.walletCoins ? (
-            <div>
-              <Description>{t("deactivate_popup_text.message")}</Description>
-              <SummaryTable>
-                <thead>
-                  <tr>
-                    <th>{t("deactivate_popup_table_head_coins.message")}</th>
-                    <th>{t("deactivate_popup_table_head_quantity.message")}</th>
-                    <th>
-                      {t("deactivate_popup_table_head_fiat_value.message")}
-                    </th>
-                  </tr>
-                </thead>
+        {this.state.showDeactivateModal == true ? (
+          <VerifyModal
+            visible={this.state.showDeactivateModal}
+            onCancel={this.closeModal}
+            title={t("deactivate_popup_title.message")}
+            footer={null}
+            className="deactivate_modal"
+          >
+            {this.state.walletCoins ? (
+              <div>
+                <Description>{t("deactivate_popup_text.message")}</Description>
+                <SummaryTable>
+                  <thead>
+                    <tr>
+                      <th>{t("deactivate_popup_table_head_coins.message")}</th>
+                      <th>
+                        {t("deactivate_popup_table_head_quantity.message")}
+                      </th>
+                      <th>
+                        {t("deactivate_popup_table_head_fiat_value.message")}
+                      </th>
+                    </tr>
+                  </thead>
 
-                <tbody>
-                  {this.state.walletCoins.map(function (temps) {
-                    var balance = parseFloat(temps.totalAmount).toFixed(8);
-                    var fiat = parseFloat(
-                      temps.fiat * temps.totalAmount
-                    ).toFixed(2);
-                    return (
-                      <tr>
-                        <td>{temps.coin_name}</td>
-                        <td>{balance}</td>
-                        <td>$ {fiat}</td>
-                      </tr>
-                    );
-                  })}
-                  <tr>
-                    <td colSpan="2">
-                      {t("deactivate_popup_table_footer_head.message")}
-                    </td>
-                    <td>$ {this.state.totalUSDOfWallet}</td>
-                  </tr>
-                </tbody>
-              </SummaryTable>
-            </div>
-          ) : (
-            ""
-          )}
-
-          <DeactiveWrap className="" id="deactivate">
-            <Description className="final_deactivate">
-              {t("deactivate_popup_text_confirm.message")}
-            </Description>
-            <DeactivateButtonWarp className="final_deactivate">
-              <DeButtonDiv
-                className="final_deactivate"
-                onClick={this.closeModal}
-              >
-                <DeNewButton>
-                  {t("edit_profile_titles:dont_agree_no_btn.message")}
-                </DeNewButton>
-              </DeButtonDiv>
-              <DeButtonDiv
-                className="right_btn final_deactivate"
-                onClick={this.handleDeactivateYes}
-              >
-                <DeNewButton className="right_text">
-                  {t("edit_profile_titles:dont_agree_yes_btn.message")}
-                </DeNewButton>
-              </DeButtonDiv>
-            </DeactivateButtonWarp>
-          </DeactiveWrap>
-          {this.state.walletCoins ? (
-            <DeactivateWrapper className="wrapper" id="wrapper">
-              <Description>
-                *{t("deactivate_popup_text_note.message")}
-              </Description>
-              <div className="nav__body">
-                <NewP className="deactivate">
-                  <InputLabel>
-                    {t("deactivate_popup_label3.message")}
-                  </InputLabel>
-                  <div className="otp-input-wrap">
-                    <OTPInput
-                      className="otp-input"
-                      value={this.state.deleteText}
-                      size="medium"
-                      onChange={this.deleteText.bind(this)}
-                      name="ip"
-                      // style={{ marginBottom: "20px" }}
-                    />
-                    {this.validator1.message(
-                      "text",
-                      this.state.deleteText,
-                      "required|matchDelete",
-                      "text-danger-validation",
-                      {
-                        required: this.t(
-                          "general_1:this_field_required_error.message"
-                        ),
-                      }
-                    )}
-                  </div>
-                  {this.state.user2fastatus ? (
-                    <div>
-                      <InputLabel>
-                        {t("deactivate_popup_label2.message")}:
-                      </InputLabel>
-                      <div>
-                        <OTPInput
-                          min="1"
-                          value={this.state.code2fa}
-                          type="text"
-                          size="medium"
-                          onChange={this.code2fa.bind(this)}
-                          name="2FA code"
-                        />
-                        {this.validator1.message(
-                          "2FA code",
-                          this.state.code2fa,
-                          "required|numeric|min:6|max:6",
-                          "text-danger-validation",
-                          {
-                            required: t(
-                              "general_1:2fa_field_required_error.message"
-                            ),
-                            numeric: t(
-                              "general_1:2fa_must_number_error.message"
-                            ),
-                            min: t("general_1:2fa_min_error.message"),
-                            max: t("general_1:2fa_max_error.message"),
-                          }
-                        )}
-                      </div>
-                    </div>
-                  ) : (
-                    <Code2FADiv>
-                      <p>{t("deactivate_popup_text1.message")}</p>
-                      <p>{t("deactivate_popup_text2.message")}</p>
-                      <Link to={"/editProfile"}>
-                        {t("deactivate_popup_click_here.message")}
-                      </Link>
-                    </Code2FADiv>
-                  )}
-                </NewP>
-                <DeactivateButtonWarp className="final_deactivate">
-                  <DeButtonDiv
-                    className="final_deactivate"
-                    onClick={this.closeModal}
-                  >
-                    <DeNewButton>
-                      {t(
-                        "edit_profile_titles:subhead_personal_form_cancel_btn.message"
-                      )}
-                    </DeNewButton>
-                  </DeButtonDiv>
-                  {this.state.user2fastatus ? (
-                    <DeButtonDiv
-                      className="right_btn final_deactivate"
-                      onClick={this.deleteUserAccount}
-                    >
-                      <DeNewButton className="right_text">
-                        {t("conversion:confirm_btn.message")}
-                      </DeNewButton>
-                    </DeButtonDiv>
-                  ) : (
-                    <DeButtonDiv
-                      disabled
-                      className="right_btn final_deactivate disabled"
-                      onClick={this.deleteUserAccount}
-                    >
-                      <DeNewButton className="right_text">
-                        {t("conversion:confirm_btn.message")}
-                      </DeNewButton>
-                    </DeButtonDiv>
-                  )}
-                </DeactivateButtonWarp>
+                  <tbody>
+                    {this.state.walletCoins.map(function (temps) {
+                      var balance = parseFloat(temps.totalAmount).toFixed(8);
+                      var fiat = parseFloat(
+                        temps.fiat * temps.totalAmount
+                      ).toFixed(2);
+                      return (
+                        <tr>
+                          <td>{temps.coin_name}</td>
+                          <td>{balance}</td>
+                          <td>$ {fiat}</td>
+                        </tr>
+                      );
+                    })}
+                    <tr>
+                      <td colSpan="2">
+                        {t("deactivate_popup_table_footer_head.message")}
+                      </td>
+                      <td>$ {this.state.totalUSDOfWallet}</td>
+                    </tr>
+                  </tbody>
+                </SummaryTable>
               </div>
-            </DeactivateWrapper>
-          ) : (
-            <DeactivateWrapper className="wrapper" id="wrapper">
-              {/* <Description>
+            ) : (
+              ""
+            )}
+
+            <DeactiveWrap className="" id="deactivate">
+              <Description className="final_deactivate">
+                {t("deactivate_popup_text_confirm.message")}
+              </Description>
+              <DeactivateButtonWarp className="final_deactivate">
+                <DeButtonDiv
+                  className="final_deactivate"
+                  onClick={this.closeModal}
+                >
+                  <DeNewButton>
+                    {t("edit_profile_titles:dont_agree_no_btn.message")}
+                  </DeNewButton>
+                </DeButtonDiv>
+                <DeButtonDiv
+                  className="right_btn final_deactivate"
+                  onClick={this.handleDeactivateYes}
+                >
+                  <DeNewButton className="right_text">
+                    {t("edit_profile_titles:dont_agree_yes_btn.message")}
+                  </DeNewButton>
+                </DeButtonDiv>
+              </DeactivateButtonWarp>
+            </DeactiveWrap>
+            {this.state.walletCoins ? (
+              <DeactivateWrapper className="wrapper" id="wrapper">
+                <Description>
+                  *{t("deactivate_popup_text_note.message")}
+                </Description>
+                <div className="nav__body">
+                  <NewP className="deactivate">
+                    <InputLabel>
+                      {t("deactivate_popup_label3.message")}
+                    </InputLabel>
+                    <div className="otp-input-wrap">
+                      <OTPInput
+                        className="otp-input"
+                        value={this.state.deleteText}
+                        size="medium"
+                        onChange={this.deleteText.bind(this)}
+                        name="ip"
+                        // style={{ marginBottom: "20px" }}
+                      />
+                      {this.validator1.message(
+                        "text",
+                        this.state.deleteText,
+                        "required|matchDelete",
+                        "text-danger-validation",
+                        {
+                          required: this.t(
+                            "general_1:this_field_required_error.message"
+                          ),
+                        }
+                      )}
+                    </div>
+                    {this.state.user2fastatus ? (
+                      <div>
+                        <InputLabel>
+                          {t("deactivate_popup_label2.message")}:
+                        </InputLabel>
+                        <div>
+                          <OTPInput
+                            min="1"
+                            value={this.state.code2fa}
+                            type="text"
+                            size="medium"
+                            onChange={this.code2fa.bind(this)}
+                            name="2FA code"
+                          />
+                          {this.validator1.message(
+                            "2FA code",
+                            this.state.code2fa,
+                            "required|numeric|min:6|max:6",
+                            "text-danger-validation",
+                            {
+                              required: t(
+                                "general_1:2fa_field_required_error.message"
+                              ),
+                              numeric: t(
+                                "general_1:2fa_must_number_error.message"
+                              ),
+                              min: t("general_1:2fa_min_error.message"),
+                              max: t("general_1:2fa_max_error.message"),
+                            }
+                          )}
+                        </div>
+                      </div>
+                    ) : (
+                      <Code2FADiv>
+                        <p>{t("deactivate_popup_text1.message")}</p>
+                        <p>{t("deactivate_popup_text2.message")}</p>
+                        <Link to={"/editProfile"}>
+                          {t("deactivate_popup_click_here.message")}
+                        </Link>
+                      </Code2FADiv>
+                    )}
+                  </NewP>
+                  <DeactivateButtonWarp className="final_deactivate">
+                    <DeButtonDiv
+                      className="final_deactivate"
+                      onClick={this.closeModal}
+                    >
+                      <DeNewButton>
+                        {t(
+                          "edit_profile_titles:subhead_personal_form_cancel_btn.message"
+                        )}
+                      </DeNewButton>
+                    </DeButtonDiv>
+                    {this.state.user2fastatus ? (
+                      <DeButtonDiv
+                        className="right_btn final_deactivate"
+                        onClick={this.deleteUserAccount}
+                      >
+                        <DeNewButton className="right_text">
+                          {t("conversion:confirm_btn.message")}
+                        </DeNewButton>
+                      </DeButtonDiv>
+                    ) : (
+                      <DeButtonDiv
+                        disabled
+                        className="right_btn final_deactivate disabled"
+                        onClick={this.deleteUserAccount}
+                      >
+                        <DeNewButton className="right_text">
+                          {t("conversion:confirm_btn.message")}
+                        </DeNewButton>
+                      </DeButtonDiv>
+                    )}
+                  </DeactivateButtonWarp>
+                </div>
+              </DeactivateWrapper>
+            ) : (
+              <DeactivateWrapper className="wrapper" id="wrapper">
+                {/* <Description>
                 *Any funds in your wallet will no longer be accessible after
                 deactivation of account.
               </Description> */}
-              <div className="nav__body">
-                <NewP className="deactivate deactivate_no_funds">
-                  <InputLabel>
-                    {t("deactivate_popup_label1.message")}:
-                  </InputLabel>
-                  <div className="otp-input-wrap">
-                    <OTPInput
-                      className="otp-input"
-                      value={this.state.deactivateText}
-                      size="medium"
-                      onChange={this.deactivateText.bind(this)}
-                      name="ip"
-                      // style={{ marginBottom: "20px" }}
-                    />
-                    {this.validator1.message(
-                      "text",
-                      this.state.deactivateText,
-                      "required|matchDeactivate",
-                      "text-danger-validation",
-                      {
-                        required: this.t(
-                          "general_1:this_field_required_error.message"
-                        ),
-                      }
-                    )}
-                  </div>
-                  {this.state.user2fastatus ? (
-                    <div>
-                      <InputLabel>
-                        {this.t("deactivate_popup_label2.message")}:
-                      </InputLabel>
-                      <div>
-                        <OTPInput
-                          // style={{ paddingRight: "10px" }}
-                          min="1"
-                          value={this.state.code2fa}
-                          type="text"
-                          size="medium"
-                          onChange={this.code2fa.bind(this)}
-                          name="2FA code"
-                        />
-                        {this.validator1.message(
-                          "2FA code",
-                          this.state.code2fa,
-                          "required|numeric|min:6|max:6",
-                          "text-danger-validation",
-                          {
-                            required: this.t(
-                              "general_1:2fa_field_required_error.message"
-                            ),
-                            numeric: this.t(
-                              "general_1:2fa_must_number_error.message"
-                            ),
-                            min: this.t("general_1:2fa_min_error.message"),
-                            max: this.t("general_1:2fa_max_error.message"),
-                          }
-                        )}
-                      </div>
-                    </div>
-                  ) : (
-                    <Code2FADiv>
-                      <p>{t("deactivate_popup_text1.message")}</p>
-                      <p>{t("deactivate_popup_text2.message")}</p>
-                      <Link to={"/editProfile"}>
-                        {t("deactivate_popup_click_here.message")}
-                      </Link>
-                    </Code2FADiv>
-                  )}
-                </NewP>
-                <DeactivateButtonWarp className="final_deactivate">
-                  <DeButtonDiv
-                    className="final_deactivate"
-                    onClick={this.closeModal}
-                  >
-                    <DeNewButton>
-                      {t(
-                        "edit_profile_titles:subhead_personal_form_cancel_btn.message"
+                <div className="nav__body">
+                  <NewP className="deactivate deactivate_no_funds">
+                    <InputLabel>
+                      {t("deactivate_popup_label1.message")}:
+                    </InputLabel>
+                    <div className="otp-input-wrap">
+                      <OTPInput
+                        className="otp-input"
+                        value={this.state.deactivateText}
+                        size="medium"
+                        onChange={this.deactivateText.bind(this)}
+                        name="ip"
+                        // style={{ marginBottom: "20px" }}
+                      />
+                      {this.validator1.message(
+                        "text",
+                        this.state.deactivateText,
+                        "required|matchDeactivate",
+                        "text-danger-validation",
+                        {
+                          required: this.t(
+                            "general_1:this_field_required_error.message"
+                          ),
+                        }
                       )}
-                    </DeNewButton>
-                  </DeButtonDiv>
-                  {this.state.user2fastatus ? (
+                    </div>
+                    {this.state.user2fastatus ? (
+                      <div>
+                        <InputLabel>
+                          {this.t("deactivate_popup_label2.message")}:
+                        </InputLabel>
+                        <div>
+                          <OTPInput
+                            // style={{ paddingRight: "10px" }}
+                            min="1"
+                            value={this.state.code2fa}
+                            type="text"
+                            size="medium"
+                            onChange={this.code2fa.bind(this)}
+                            name="2FA code"
+                          />
+                          {this.validator1.message(
+                            "2FA code",
+                            this.state.code2fa,
+                            "required|numeric|min:6|max:6",
+                            "text-danger-validation",
+                            {
+                              required: this.t(
+                                "general_1:2fa_field_required_error.message"
+                              ),
+                              numeric: this.t(
+                                "general_1:2fa_must_number_error.message"
+                              ),
+                              min: this.t("general_1:2fa_min_error.message"),
+                              max: this.t("general_1:2fa_max_error.message"),
+                            }
+                          )}
+                        </div>
+                      </div>
+                    ) : (
+                      <Code2FADiv>
+                        <p>{t("deactivate_popup_text1.message")}</p>
+                        <p>{t("deactivate_popup_text2.message")}</p>
+                        <Link to={"/editProfile"}>
+                          {t("deactivate_popup_click_here.message")}
+                        </Link>
+                      </Code2FADiv>
+                    )}
+                  </NewP>
+                  <DeactivateButtonWarp className="final_deactivate">
                     <DeButtonDiv
-                      className="right_btn final_deactivate"
-                      onClick={this.deleteUserAccount}
+                      className="final_deactivate"
+                      onClick={this.closeModal}
                     >
-                      <DeNewButton className="right_text">
-                        {t("conversion:confirm_btn.message")}
+                      <DeNewButton>
+                        {t(
+                          "edit_profile_titles:subhead_personal_form_cancel_btn.message"
+                        )}
                       </DeNewButton>
                     </DeButtonDiv>
-                  ) : (
-                    <DeButtonDiv
-                      disabled
-                      className="right_btn final_deactivate disabled"
-                      onClick={this.deleteUserAccount}
-                    >
-                      <DeNewButton className="right_text">
-                        {t("conversion:confirm_btn.message")}
-                      </DeNewButton>
-                    </DeButtonDiv>
-                  )}
-                </DeactivateButtonWarp>
-              </div>
-            </DeactivateWrapper>
-          )}
-        </VerifyModal>
+                    {this.state.user2fastatus ? (
+                      <DeButtonDiv
+                        className="right_btn final_deactivate"
+                        onClick={this.deleteUserAccount}
+                      >
+                        <DeNewButton className="right_text">
+                          {t("conversion:confirm_btn.message")}
+                        </DeNewButton>
+                      </DeButtonDiv>
+                    ) : (
+                      <DeButtonDiv
+                        disabled
+                        className="right_btn final_deactivate disabled"
+                        onClick={this.deleteUserAccount}
+                      >
+                        <DeNewButton className="right_text">
+                          {t("conversion:confirm_btn.message")}
+                        </DeNewButton>
+                      </DeButtonDiv>
+                    )}
+                  </DeactivateButtonWarp>
+                </div>
+              </DeactivateWrapper>
+            )}
+          </VerifyModal>
+        ) : (
+          ""
+        )}
       </AccWrap>
     );
   }
