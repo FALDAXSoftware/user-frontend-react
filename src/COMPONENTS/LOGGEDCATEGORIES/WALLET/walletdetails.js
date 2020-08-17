@@ -424,6 +424,8 @@ class WalletDetails extends Component {
             this.t("validations:success_text.message"),
             responseData.message
           );
+        } else if (responseData.status == 401) {
+          this.props.history.push("/");
         } else {
           this.openNotificationWithIcon(
             "error",
