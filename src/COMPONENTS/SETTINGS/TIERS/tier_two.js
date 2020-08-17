@@ -244,7 +244,6 @@ class TierTwo extends React.Component {
         values
       );
       if (result.status == 200) {
-        console.log("result^^^", result.data);
         this.setState({
           tierData: result.data,
         });
@@ -434,9 +433,7 @@ class TierTwo extends React.Component {
                     var DataForm = new FormData();
                     DataForm.append("image", file);
                     if (_self.state.targetName === "valid-id") {
-                      _self.setState({ validID: file }, () => {
-                        console.log(_self.state.validID.name);
-                      });
+                      _self.setState({ validID: file });
                     } else {
                       _self.setState({ residenceProof: file });
                     }
