@@ -282,6 +282,7 @@ class Limit extends Component {
               // maxValue: data.maximumValue,
             },
             () => {
+              this.emitAmount();
               if (this.state.amount > 0) {
                 if (this.state.side === "Buy") {
                   if (
