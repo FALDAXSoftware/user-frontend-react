@@ -250,7 +250,6 @@ class DetailsTable extends React.Component {
                               break;
                           }
                         }
-                        // console.log("^^^erc", me.props.isERC);
                         if (me.props.isERC) {
                           url =
                             "https://etherscan.io/tx/" +
@@ -291,15 +290,13 @@ class DetailsTable extends React.Component {
                               {details[index].faldax_fee === "-"
                                 ? details[index].faldax_fee
                                 : precision(details[index].faldax_fee)}
-                              {/* {parseFloat(details[index].faldax_fee).toFixed(8)} */}
                             </td>
                             <td>
-                              {details[index].network_fees === "-"
-                                ? details[index].network_fees
-                                : precision(details[index].network_fees)}
-                              {/* {parseFloat(details[index].network_fees).toFixed(
-                                8
-                              )} */}
+                              {details[index].network_fees
+                                ? details[index].network_fees === "-"
+                                  ? details[index].network_fees
+                                  : precision(details[index].network_fees)
+                                : "-"}
                             </td>
                             <td>
                               {details[index].total

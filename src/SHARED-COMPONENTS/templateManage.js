@@ -146,12 +146,10 @@ class TemplateManage extends React.Component {
   };
 
   onChange = (activeKey) => {
-    console.log("aksfjh^", activeKey);
     this.setState({ activeKey });
   };
 
   onEdit = (targetKey, action) => {
-    console.log(targetKey);
     this[action](targetKey);
   };
 
@@ -176,7 +174,6 @@ class TemplateManage extends React.Component {
   };
   handleChange(value, widgetIndex, templateIndex) {
     let templates = this.state.templates;
-    console.log(value);
 
     templates[templateIndex].widgets[widgetIndex].data = value;
     this.setState({ templates });

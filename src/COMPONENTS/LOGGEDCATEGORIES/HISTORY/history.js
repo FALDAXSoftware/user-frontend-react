@@ -49,7 +49,7 @@ const Select1 = styled(Select)`
   }
   & .ant-select-selection {
     background-color: ${(props) =>
-    props.theme.mode === "dark" ? "#01090f" : ""};
+      props.theme.mode === "dark" ? "#01090f" : ""};
   }
   & .ant-select-arrow > i {
     color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
@@ -70,7 +70,7 @@ const Select2 = styled(Select)`
   }
   & .ant-select-selection {
     background-color: ${(props) =>
-    props.theme.mode === "dark" ? "#01090f" : ""};
+      props.theme.mode === "dark" ? "#01090f" : ""};
   }
   & .ant-select-arrow > i {
     color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
@@ -102,7 +102,7 @@ const NDF = styled.tbody`
     > td {
       border-top: 0 !important;
       background: ${(props) =>
-    props.theme.mode === "dark" ? "#041422" : "white"};
+        props.theme.mode === "dark" ? "#041422" : "white"};
     }
   }
   @media (max-width: 767px) {
@@ -218,7 +218,6 @@ class History extends Component {
     ) {
       this.props.history.push("/editProfile");
     }
-    console.log("^^^adngf", this.props.location);
     if (
       this.props.location.state === undefined ||
       this.props.location.state.flag === "" ||
@@ -286,7 +285,7 @@ class History extends Component {
             drop2List: responseData.coinList,
           });
         })
-        .catch((error) => { });
+        .catch((error) => {});
     } else if (this.state.activeKey === "2") {
       fetch(API_URL + "/get-simplex-coin-list", {
         method: "get",
@@ -312,7 +311,7 @@ class History extends Component {
             this.props.LogoutUser(this.props.isLoggedIn, tempValue2);
           }
         })
-        .catch((error) => { });
+        .catch((error) => {});
     }
   }
 
@@ -360,9 +359,9 @@ class History extends Component {
       let url =
         API_URL +
         `/get-user-history?send=${this.state.send}&receive=${
-        this.state.receive
+          this.state.receive
         }&buy=${this.state.buy}&sell=${
-        this.state.sell
+          this.state.sell
         }&toDate=${this.state.toDate.format(
           "YYYY-MM-DD"
         )}&fromDate=${this.state.fromDate.format(
@@ -920,8 +919,8 @@ class History extends Component {
                         color="#909090"
                       />
                     ) : (
-                        <FontAwesomeIconS icon={faExchangeAlt} color="#909090" />
-                      )}
+                      <FontAwesomeIconS icon={faExchangeAlt} color="#909090" />
+                    )}
                     <Select2
                       showSearch
                       className="display-value"
@@ -982,24 +981,24 @@ class History extends Component {
                       </EXPButton>
                       {this.state.csvTradeFields !== undefined ? (
                         this.state.csvTradeFields.length > 0 &&
-                          this.state.csvTradeFields !== null ? (
-                            <>
-                              <CSVLink
-                                ref={this.exportCsvEle}
-                                filename="tradereportfile.csv"
-                                data={this.state.csvTradeFields}
-                                headers={this.state.csvHeadersTrade}
-                              ></CSVLink>
-                              <EXPButton onClick={this.onExportCSV}>
-                                {t("export_btn.message")}
-                              </EXPButton>
-                            </>
-                          ) : (
-                            ""
-                          )
-                      ) : (
+                        this.state.csvTradeFields !== null ? (
+                          <>
+                            <CSVLink
+                              ref={this.exportCsvEle}
+                              filename="tradereportfile.csv"
+                              data={this.state.csvTradeFields}
+                              headers={this.state.csvHeadersTrade}
+                            ></CSVLink>
+                            <EXPButton onClick={this.onExportCSV}>
+                              {t("export_btn.message")}
+                            </EXPButton>
+                          </>
+                        ) : (
                           ""
-                        )}
+                        )
+                      ) : (
+                        ""
+                      )}
                     </div>
                   )}
                   {this.state.activeKey === "2" && (
@@ -1012,33 +1011,33 @@ class History extends Component {
                       </EXPButton>
                       {this.state.csvSimplexFields !== undefined ? (
                         this.state.csvSimplexFields.length > 0 &&
-                          this.state.csvSimplexFields !== null ? (
-                            // <EXPButton>
-                            //   <CSVLink
-                            //     filename="simplexreportfile.csv"
-                            //     data={this.state.csvSimplexFields}
-                            //     headers={this.state.csvHeadersSimplex}
-                            //   >
-                            //     {t("export_btn.message")}
-                            //   </CSVLink>
-                            // </EXPButton>
-                            <>
-                              <CSVLink
-                                ref={this.exportCsvEle}
-                                filename="simplexreportfile.csv"
-                                data={this.state.csvSimplexFields}
-                                headers={this.state.csvHeadersSimplex}
-                              ></CSVLink>
-                              <EXPButton onClick={this.onExportCSV}>
-                                {t("export_btn.message")}
-                              </EXPButton>
-                            </>
-                          ) : (
-                            ""
-                          )
-                      ) : (
+                        this.state.csvSimplexFields !== null ? (
+                          // <EXPButton>
+                          //   <CSVLink
+                          //     filename="simplexreportfile.csv"
+                          //     data={this.state.csvSimplexFields}
+                          //     headers={this.state.csvHeadersSimplex}
+                          //   >
+                          //     {t("export_btn.message")}
+                          //   </CSVLink>
+                          // </EXPButton>
+                          <>
+                            <CSVLink
+                              ref={this.exportCsvEle}
+                              filename="simplexreportfile.csv"
+                              data={this.state.csvSimplexFields}
+                              headers={this.state.csvHeadersSimplex}
+                            ></CSVLink>
+                            <EXPButton onClick={this.onExportCSV}>
+                              {t("export_btn.message")}
+                            </EXPButton>
+                          </>
+                        ) : (
                           ""
-                        )}
+                        )
+                      ) : (
+                        ""
+                      )}
                     </div>
                   )}
                   {this.state.activeKey === "3" && (
@@ -1061,25 +1060,25 @@ class History extends Component {
                             </CSVLink>
                           </EXPButton>
                         ) : (
-                            ""
-                          )
-                      ) : (
                           ""
-                        )}
+                        )
+                      ) : (
+                        ""
+                      )}
                     </div>
                   )}
                 </Filter>
                 {this.state.activeKey === "2" ? (
                   ""
                 ) : (
-                    <FilterDivSelection>
-                      <CheckboxGroupS
-                        options={options}
-                        value={this.state.checkedGroupValue}
-                        onChange={this.onChangeCheck}
-                      />
-                    </FilterDivSelection>
-                  )}
+                  <FilterDivSelection>
+                    <CheckboxGroupS
+                      options={options}
+                      value={this.state.checkedGroupValue}
+                      onChange={this.onChangeCheck}
+                    />
+                  </FilterDivSelection>
+                )}
               </HeadHis>
               <HisWrap>
                 <Tabs activeKey={this.state.activeKey} onChange={this.callback}>
@@ -1221,13 +1220,13 @@ class History extends Component {
                                   .format(
                                     `${self.props.profileData.date_format} HH:mm:ss`
                                   );
-                                var side =
-                                  Number(temps.user_id) ===
-                                    self.props.profileData.id
-                                    ? temps.side
-                                    : temps.side === "Buy"
-                                      ? "Sell"
-                                      : "Buy";
+                                // var side =
+                                //   Number(temps.user_id) ===
+                                //   self.props.profileData.id
+                                //     ? temps.side
+                                //     : temps.side === "Buy"
+                                //     ? "Sell"
+                                //     : "Buy";
 
                                 var limit_price =
                                   temps.order_type != "Market"
@@ -1237,8 +1236,23 @@ class History extends Component {
                                   temps.order_type == "StopLimit"
                                     ? precision(temps.stop_price)
                                     : 0.0;
-
-                                console.log(self.props.profileData.id);
+                                var side, orderType;
+                                if (
+                                  temps.user_id !== self.props.profileData.id
+                                ) {
+                                  side = temps.side;
+                                  orderType = temps.order_type;
+                                } else if (
+                                  temps.requested_user_id ==
+                                  self.props.profileData.id
+                                ) {
+                                  side = temps.side === "Buy" ? "Sell" : "Buy";
+                                  if (temps.is_stop_limit) {
+                                    orderType = "Stop Limit";
+                                  } else {
+                                    orderType = "Limit";
+                                  }
+                                }
                                 return (
                                   <tr>
                                     <td>{temps.symbol}</td>
@@ -1252,7 +1266,7 @@ class History extends Component {
                                     >
                                       {side}
                                     </td>
-                                    <td>{temps.order_type}</td>
+                                    <td>{orderType}</td>
                                     <td>{limit_price}</td>
                                     <td>{stop_price}</td>
                                   </tr>
@@ -1260,17 +1274,17 @@ class History extends Component {
                               })}
                             </tbody>
                           ) : (
-                              <NDF>
-                                <tr>
-                                  <td colSpan="8">
-                                    {t("support:no_data_found.message")}
-                                  </td>
-                                </tr>
-                              </NDF>
-                            )
+                            <NDF>
+                              <tr>
+                                <td colSpan="8">
+                                  {t("support:no_data_found.message")}
+                                </td>
+                              </tr>
+                            </NDF>
+                          )
                         ) : (
-                            ""
-                          )}
+                          ""
+                        )}
                       </HisTable>
                     </Tablediv>
                     <PagDiv>
@@ -1286,112 +1300,119 @@ class History extends Component {
                           pageSizeOptions={pageSizeOptions}
                         />
                       ) : (
-                          ""
-                        )}
+                        ""
+                      )}
                     </PagDiv>
                   </TabPane>
-                  <TabPane
-                    tab={this.t(
-                      "header:navbar_sub_menu_conversation_credit_card.message"
-                    )}
-                    key="2"
-                  >
-                    <Tablediv>
-                      <HisTable responsive striped condensed>
-                        <thead>
-                          <tr>
-                            <th>{t("settings:table_head_coin.message")}</th>
-                            <th>{t("wallet:date_text.message")}</th>
-                            <th>
-                              {t("filled_text.message")}&nbsp;
-                              {t("price_text.message")}
-                            </th>
-                            <th>{t("wallet:amount_text.message")}</th>
-                            <th>
-                              {t("header:navbar_menu_wallet.message")}&nbsp;
-                              {t("wallet:address_text.message")}
-                            </th>
-                            <th>
-                              {t("payment_text.message")}&nbsp;
-                              {t("id_text.message")}
-                            </th>
-                            <th>
-                              {t("quote_text.message")}&nbsp;
-                              {t("id_text.message")}
-                            </th>
-                            <th>
-                              {t("payment_text.message")}&nbsp;
-                              {t("security_tab:title_status.message")}
-                            </th>
-                          </tr>
-                        </thead>
-                        {this.state.historySimplexData !== undefined ? (
-                          this.state.historySimplexData.length > 0 ? (
-                            <tbody>
-                              {this.state.historySimplexData.map(function (
-                                temps
-                              ) {
-                                var date = moment
-                                  .utc(temps.created_at)
-                                  .local()
-                                  .format(
-                                    `${self.props.profileData.date_format} HH:mm:ss`
-                                  );
-                                var side =
-                                  Number(temps.user_id) ===
+                  {!this.props.profileData.is_tier_enabled && (
+                    <TabPane
+                      tab={this.t(
+                        "header:navbar_sub_menu_conversation_credit_card.message"
+                      )}
+                      key="2"
+                    >
+                      <Tablediv>
+                        <HisTable responsive striped condensed>
+                          <thead>
+                            <tr>
+                              <th>{t("settings:table_head_coin.message")}</th>
+                              <th>{t("wallet:date_text.message")}</th>
+                              <th>
+                                {t("filled_text.message")}&nbsp;
+                                {t("price_text.message")}
+                              </th>
+                              <th>{t("wallet:amount_text.message")}</th>
+                              <th>
+                                {t("header:navbar_menu_wallet.message")}&nbsp;
+                                {t("wallet:address_text.message")}
+                              </th>
+                              <th>
+                                {t("payment_text.message")}&nbsp;
+                                {t("id_text.message")}
+                              </th>
+                              <th>
+                                {t("quote_text.message")}&nbsp;
+                                {t("id_text.message")}
+                              </th>
+                              <th>
+                                {t("payment_text.message")}&nbsp;
+                                {t("security_tab:title_status.message")}
+                              </th>
+                            </tr>
+                          </thead>
+                          {this.state.historySimplexData !== undefined ? (
+                            this.state.historySimplexData.length > 0 ? (
+                              <tbody>
+                                {this.state.historySimplexData.map(function (
+                                  temps
+                                ) {
+                                  var date = moment
+                                    .utc(temps.created_at)
+                                    .local()
+                                    .format(
+                                      `${self.props.profileData.date_format} HH:mm:ss`
+                                    );
+                                  var side =
+                                    Number(temps.user_id) ===
                                     self.props.profileData.id
-                                    ? temps.side
-                                    : temps.side === "Buy"
+                                      ? temps.side
+                                      : temps.side === "Buy"
                                       ? t("sell_text.message")
                                       : t("buy_text.message");
-                                if (temps.simplex_payment_status === 1) {
-                                  var simplex_payment_status = "Under Approval";
-                                }
-                                if (temps.simplex_payment_status === 2) {
-                                  var simplex_payment_status = "Approved";
-                                }
-                                if (temps.simplex_payment_status === 3) {
-                                  var simplex_payment_status = "Cancelled";
-                                }
-                                let url;
-                                url = "https://payment-status.simplex.com/#/payment/" + temps.payment_id;
-                                return (
-                                  <tr>
-                                    <td>{temps.symbol}</td>
-                                    <td>{date}</td>
-                                    <td>{temps.fill_price}</td>
-                                    <td>{temps.quantity}</td>
-                                    <td>{temps.address}</td>
-                                    <td><a target="_blank" href={url}>
-                                      {temps.payment_id}
-                                    </a></td>
-                                    <td>{temps.quote_id}</td>
-                                    <td>
-                                      {simplex_payment_status ==
-                                        "Under Approval" && (
+                                  if (temps.simplex_payment_status === 1) {
+                                    var simplex_payment_status =
+                                      "Under Approval";
+                                  }
+                                  if (temps.simplex_payment_status === 2) {
+                                    var simplex_payment_status = "Approved";
+                                  }
+                                  if (temps.simplex_payment_status === 3) {
+                                    var simplex_payment_status = "Cancelled";
+                                  }
+                                  let url;
+                                  url =
+                                    "https://payment-status.simplex.com/#/payment/" +
+                                    temps.payment_id;
+                                  return (
+                                    <tr>
+                                      <td>{temps.symbol}</td>
+                                      <td>{date}</td>
+                                      <td>{temps.fill_price}</td>
+                                      <td>{temps.quantity}</td>
+                                      <td>{temps.address}</td>
+                                      <td>
+                                        <a target="_blank" href={url}>
+                                          {temps.payment_id}
+                                        </a>
+                                      </td>
+                                      <td>{temps.quote_id}</td>
+                                      <td>
+                                        {simplex_payment_status ==
+                                          "Under Approval" && (
                                           <span className="order-inapproval">
                                             {self.t(
                                               "under_approval_text.message"
                                             )}
                                           </span>
                                         )}
-                                      {simplex_payment_status == "Approved" && (
-                                        <span className="order-sucess">
-                                          {self.t("approved_text.message")}
-                                        </span>
-                                      )}
-                                      {simplex_payment_status ==
-                                        "Cancelled" && (
+                                        {simplex_payment_status ==
+                                          "Approved" && (
+                                          <span className="order-sucess">
+                                            {self.t("approved_text.message")}
+                                          </span>
+                                        )}
+                                        {simplex_payment_status ==
+                                          "Cancelled" && (
                                           <span className="order-cancelled">
                                             {self.t("cancelled_text.message")}
                                           </span>
                                         )}
-                                    </td>
-                                  </tr>
-                                );
-                              })}
-                            </tbody>
-                          ) : (
+                                      </td>
+                                    </tr>
+                                  );
+                                })}
+                              </tbody>
+                            ) : (
                               <NDF>
                                 <tr>
                                   <td colSpan="8">
@@ -1400,28 +1421,29 @@ class History extends Component {
                                 </tr>
                               </NDF>
                             )
-                        ) : (
+                          ) : (
                             ""
                           )}
-                      </HisTable>
-                    </Tablediv>
-                    <PagDiv>
-                      {tradeCount > 0 ? (
-                        <PaginationS
-                          className="ant-users-pagination"
-                          onChange={this.handlePagination.bind(this)}
-                          pageSize={limit}
-                          current={page}
-                          total={tradeCount}
-                          showSizeChanger
-                          onShowSizeChange={this.changePaginationSize}
-                          pageSizeOptions={pageSizeOptions}
-                        />
-                      ) : (
+                        </HisTable>
+                      </Tablediv>
+                      <PagDiv>
+                        {tradeCount > 0 ? (
+                          <PaginationS
+                            className="ant-users-pagination"
+                            onChange={this.handlePagination.bind(this)}
+                            pageSize={limit}
+                            current={page}
+                            total={tradeCount}
+                            showSizeChanger
+                            onShowSizeChange={this.changePaginationSize}
+                            pageSizeOptions={pageSizeOptions}
+                          />
+                        ) : (
                           ""
                         )}
-                    </PagDiv>
-                  </TabPane>
+                      </PagDiv>
+                    </TabPane>
+                  )}
                 </Tabs>
               </HisWrap>
             </ContainerContact>

@@ -5,7 +5,7 @@ import SimpleReactValidator from "simple-react-validator";
 import "antd/dist/antd.css";
 import { Row, Col, Radio, notification, Spin, Tooltip, Icon } from "antd";
 import { translate } from "react-i18next";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 
 /* STYLED-COMPONENTS */
 import {
@@ -33,6 +33,8 @@ import {
   ApproxBelow,
   WillpayBelow,
   WillpayBelow2,
+  TooltipDiv,
+  MakerTaker,
 } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
 
 /* Components */
@@ -45,6 +47,7 @@ import { ThirdLabel } from "../../../STYLED-COMPONENTS/LANDING_CATEGORIES/contac
 import CompleteKYC from "../../../SHARED-COMPONENTS/CompleteKYC";
 import PanicEnabled from "../../../SHARED-COMPONENTS/PanicEnabled";
 import CompleteProfile from "../../../SHARED-COMPONENTS/completeProfile";
+import TrialTierUpgrade from "../../../SHARED-COMPONENTS/trailTierUpgrade";
 
 let { SOCKET_HOST } = globalVariables;
 const API_URL = globalVariables.API_URL;
@@ -78,18 +81,28 @@ class Market extends Component {
       bestBid: 0,
       buyMaxValue: 0,
       sellMaxValue: 0,
-      minCryptoLimit: 20,
+      minCryptoLimit: 0,
       completeKYC: false,
       countryAccess: false,
       completeProfile: false,
       panic_status: this.props.panic_status,
+      tradeLimit: 0,
+      tradeLimitLeft: 0,
+      tradeLimitLeftAfter: 0,
+      tradeLimitFlag: false,
+      trialTierUpgrade: false,
+      tradeDaysCompleted: false,
+      freeTierDays: "",
+      showTierOne: false,
     };
+    this.timeout = null;
     this.t = this.props.t;
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.marketAccess = this.marketAccess.bind(this);
     this.walletAccess = this.walletAccess.bind(this);
     this.clearValidation = this.clearValidation.bind(this);
+    this.emitAmount = this.emitAmount.bind(this);
     this.validator = new SimpleReactValidator({
       gtzero: {
         // name the rule
@@ -132,7 +145,19 @@ class Market extends Component {
   async marketAccess() {
     if (this.state.panic_status === true) {
       this.setState({ panicEnabled: true });
+    } else if (this.props.profileDetails.is_tier_enabled) {
+      if (this.props.profileDetails.is_user_updated) {
+        if (this.props.profileDetails.legal_allowed) {
+        } else {
+          await this.setState({ countryAccess: true });
+        }
+      } else {
+        this.setState({
+          completeProfile: true,
+        });
+      }
     } else if (
+      !this.props.profileDetails.is_tier_enabled &&
       !this.props.profileDetails.is_user_updated &&
       this.props.profileDetails.is_kyc_done != "2"
     ) {
@@ -165,8 +190,21 @@ class Market extends Component {
   walletAccess(coin) {
     if (this.state.panic_status === true) {
       this.setState({ panicEnabled: true });
+    } else if (this.props.profileDetails.is_tier_enabled) {
+      if (this.props.profileDetails.is_user_updated) {
+        if (this.props.profileDetails.legal_allowed) {
+          this.props.history.push(`/walletDetails?coinID0=${coin}`);
+        } else {
+          this.setState({ countryAccess: true });
+        }
+      } else {
+        this.setState({
+          completeProfile: true,
+        });
+      }
     } else if (
       !this.props.profileDetails.is_user_updated &&
+      !this.props.profileDetails.is_tier_enabled &&
       this.props.profileDetails.is_kyc_done != "2"
     ) {
       this.setState({
@@ -244,6 +282,7 @@ class Market extends Component {
               minCryptoLimit: data.minimumValue,
             },
             () => {
+              this.emitAmount();
               if (this.state.amount > 0) {
                 if (this.state.side === "Buy") {
                   if (
@@ -389,6 +428,68 @@ class Market extends Component {
           );
         }
       });
+      this.props.io.emit("tier-0-trade-limit", {
+        amount: 0,
+        crypto: this.state.crypto,
+        symbol: `${this.state.crypto}-${this.state.currency}`,
+      });
+      this.props.io.on("trade-user-limit-availability", (data) => {
+        if (data) {
+          if (data.account_tier_flag && data.response_flag && data.tier_flag) {
+            this.setState({
+              trialTierUpgrade: true,
+              freeTierDays: data.days,
+              showTierOne: true,
+            });
+          } else if (data.account_tier_flag && data.tier_flag == false) {
+            this.setState({
+              showTierOne: false,
+            });
+            if (!data.tier_flag) {
+              this.setState({
+                completeKYC: true,
+              });
+            } else {
+              this.setState({
+                completeKYC: false,
+              });
+            }
+          } else if (!data.account_tier_flag) {
+            this.setState({
+              showTierOne: false,
+            });
+          }
+          if (data.valueObject) {
+            this.setState(
+              {
+                tradeLimit: data.valueObject.available_trade_limit_actual
+                  ? data.valueObject.available_trade_limit_actual
+                  : "0",
+                tradeLimitLeft: data.valueObject.current_left_limit
+                  ? data.valueObject.current_left_limit
+                  : "0",
+                tradeLimitLeftAfter: data.valueObject.amount_left_after_trade
+                  ? data.valueObject.amount_left_after_trade
+                  : "0",
+                tradeLimitFlag: !data.leftFlag,
+                tradeDaysCompleted: data.response_flag,
+                showTierOne: true,
+              },
+              () => {
+                if (this.state.tradeDaysCompleted) {
+                  this.setState({
+                    trialTierUpgrade: true,
+                  });
+                } else {
+                  this.setState({
+                    trialTierUpgrade: false,
+                  });
+                }
+              }
+            );
+          }
+        }
+      });
     }
     let fiat, currency;
     if (this.props.profileDetails) {
@@ -489,10 +590,14 @@ class Market extends Component {
     }
     if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
       if (props.cryptoPair.crypto !== this.state.crypto) {
-        this.setState({ crypto: props.cryptoPair.crypto });
+        this.setState({ crypto: props.cryptoPair.crypto }, () => {
+          this.emitAmount();
+        });
       }
       if (props.cryptoPair.currency !== this.state.currency) {
-        this.setState({ currency: props.cryptoPair.currency });
+        this.setState({ currency: props.cryptoPair.currency }, () => {
+          this.emitAmount();
+        });
       }
     }
   }
@@ -506,6 +611,7 @@ class Market extends Component {
       completeKYC: false,
       panicEnabled: false,
       completeProfile: false,
+      trialTierUpgrade: false,
     });
   };
   clearValidation() {
@@ -518,8 +624,18 @@ class Market extends Component {
         Page: /trade --> market
         this method is called to change BUY/SELL side.
     */
-
+  emitAmount() {
+    this.props.io.emit("tier-0-trade-limit", {
+      amount: this.state.amount ? parseFloat(this.state.amount) : 0,
+      crypto: this.state.crypto,
+      symbol: `${this.state.crypto}-${this.state.currency}`,
+    });
+  }
   onChange(e) {
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => {
+      this.emitAmount();
+    }, 1500);
     var self = this;
     let obj = {};
     let name = e.target.name;
@@ -545,6 +661,12 @@ class Market extends Component {
           total: 0,
         });
       }
+      this.emitAmount();
+      this.setState({
+        tradeLimit: 0,
+        tradeLimitLeft: 0,
+        tradeLimitLeftAfter: 0,
+      });
     } else {
       obj[name] = parseFloat(value).toFixed(8);
     }
@@ -555,6 +677,7 @@ class Market extends Component {
       () => {
         obj = {};
         if (this.state.amount > 0) {
+          // this.timeout = setTimeout(this.emitAmount(), 1500);
           if (this.state.side === "Buy") {
             self.setState({
               // buyPayAmt: Number(this.state.amount) * this.props.userBal.buyPay,
@@ -748,14 +871,14 @@ class Market extends Component {
         this method is called when u submit form to BUY/SELL.
     */
 
-  onSubmit() {
+  async onSubmit() {
     var self = this;
-    this.marketAccess();
+    await this.marketAccess();
     if (
       this.validator.allValid() &&
       !this.state.completeKYC &&
       !this.state.completeProfile &&
-      !this.state.completeProfile
+      !this.state.countryAccess
     ) {
       let params = {
         symbol:
@@ -794,6 +917,7 @@ class Market extends Component {
               sellEstPrice: 0,
             },
             () => {
+              this.emitAmount();
               if (this.state.side === "Buy") {
                 this.setState({
                   fiatCurrencyValue: 0,
@@ -876,9 +1000,35 @@ class Market extends Component {
       sellEstPrice,
       sellPayAmt,
       amount,
+      tradeLimit,
+      tradeLimitLeft,
+      tradeLimitLeftAfter,
     } = this.state;
     const RadioGroup = Radio.Group;
-
+    const text = (
+      <TooltipDiv>
+        <p>How are fees processed?</p>
+        <p>
+          Once any order gets executed, you are charged either Maker or Taker
+          fees, as applicable.
+        </p>
+        <p>
+          For more details, visit:{" "}
+          <a href="https://www.faldax.com/fees/" target="_blank">
+            https://www.faldax.com/fees/
+          </a>
+        </p>
+        <p>Maker Fee: {this.state.userBalFeesMaker} %</p>
+        <p>
+          If you place an order, which is not immediately matched, then you are
+          considered a Maker.
+        </p>
+        <p>Taker Fee: {this.state.userBalFees} %</p>
+        <p>
+          Placing an order that gets executed immediately makes you a Taker.
+        </p>
+      </TooltipDiv>
+    );
     let stepValue;
     switch (this.props.qtyPrecision.toString()) {
       case "0":
@@ -1272,12 +1422,113 @@ class Market extends Component {
                     {this.state.currency}
                   </WillpayBelow2>
                 </ApproxBelow>
+
                 <ApproxBelow>
                   <WillpayBelow>
                     {this.t("conversion:fee_text.message")}:{" "}
                     {this.state.userBalFees} %
                   </WillpayBelow>
+                  {/* <MakerTaker
+                    className="makerTaker"
+                    placement="topLeft"
+                    title={text}
+                    // trigger="click"
+                  > */}
+                  {/* <WillpayBelow className="right">
+                    <Icon type="info-circle" />{" "}
+                    {this.t("conversion:fee_text.message")}
+                  </WillpayBelow> */}
+                  {/* </MakerTaker> */}
+                  {/* <WillpayBelow>
+                    {this.t("tier_changes:taker_fee_text.message")}:{" "}
+                    {this.state.userBalFees} %
+                  </WillpayBelow> */}
+
+                  <WillpayBelow className="right">
+                    {/* {this.t("tier_changes:maker_fee_text.message")}:{" "}
+                    {this.state.userBalFeesMaker} % */}
+                    {/* {console.log(
+                      "buyPayAmt - buyEstPrice %%%",
+                      amount,
+                      (amount * this.state.userBalFees) / 100
+                    )} */}
+                    {/* {(buyPayAmt - buyEstPrice).toFixed(8)} {this.state.crypto} */}
+                    {/* {precision(buyPayAmt - buyEstPrice)} {this.state.crypto} */}
+                    {/* {precise(
+                      (amount * this.state.userBalFees) / 100,
+                      this.props.pricePrecision
+                    )}{" "}
+                    {this.state.crypto} */}
+                  </WillpayBelow>
                 </ApproxBelow>
+                {this.state.showTierOne && !this.state.trialTierUpgrade ? (
+                  <>
+                    <hr />
+                    <ApproxBelow>
+                      <WillpayBelow>
+                        {this.t("tier_0_text:starter_trade_limit_text.message")}
+                      </WillpayBelow>
+                      <WillpayBelow2>
+                        {tradeLimit == "Unlimited"
+                          ? this.t("tiers:unlimited_text.message")
+                          : `${precise(parseFloat(tradeLimit), "2")} USD`}
+                      </WillpayBelow2>
+                    </ApproxBelow>
+                    <ApproxBelow>
+                      <WillpayBelow>
+                        {this.t(
+                          "tier_0_text:available_trade_limit_text.message"
+                        )}
+                      </WillpayBelow>
+                      <WillpayBelow2>
+                        {tradeLimitLeft == "Unlimited"
+                          ? this.t("tiers:unlimited_text.message")
+                          : `${precise(parseFloat(tradeLimitLeft), "2")} USD`}
+                      </WillpayBelow2>
+                    </ApproxBelow>
+                    <ApproxBelow>
+                      <WillpayBelow>
+                        {this.t(
+                          "tier_0_text:estimated_limit_after_trade_text.message"
+                        )}
+                      </WillpayBelow>
+                      <WillpayBelow2
+                        className={this.state.tradeLimitFlag ? "red" : ""}
+                      >
+                        {this.state.tradeLimitFlag
+                          ? this.t(
+                              "tier_0_text:exceeds_trade_limit_text.message"
+                            )
+                          : tradeLimitLeftAfter == "Unlimited"
+                          ? this.t("tiers:unlimited_text.message")
+                          : `${precise(
+                              parseFloat(tradeLimitLeftAfter),
+                              "2"
+                            )} USD`}
+                      </WillpayBelow2>
+                    </ApproxBelow>
+                  </>
+                ) : this.state.showTierOne ? (
+                  <>
+                    <hr />
+                    <ApproxBelow>
+                      <WillpayBelow className="tier_upgrade">
+                        {this.t("tier_0_text:congratulations_text.message")}{" "}
+                        {this.state.freeTierDays}{" "}
+                        {this.t("tier_0_text:congratulations_text1.message")}
+                        <Link to="/editProfile">
+                          {" "}
+                          {this.t(
+                            "settings:deactivate_popup_click_here.message"
+                          )}
+                          .
+                        </Link>
+                      </WillpayBelow>
+                    </ApproxBelow>
+                  </>
+                ) : (
+                  ""
+                )}
               </Esti>
             </Pay>
           ) : (
@@ -1316,12 +1567,97 @@ class Market extends Component {
                     {this.state.currency}
                   </WillpayBelow2>
                 </ApproxBelow>
+
                 <ApproxBelow>
                   <WillpayBelow>
                     {this.t("conversion:fee_text.message")}:{" "}
                     {this.state.userBalFees} %
                   </WillpayBelow>
+                  {/* <WillpayBelow className="right">
+                    {this.t("tier_changes:maker_fee_text.message")}:{" "}
+                    {this.state.userBalFeesMaker} % */}
+                  {/* {console.log(
+                      "sellPayAmt - sellEstPrice %%%",
+                      sellPayAmt,
+                      sellEstPrice
+                    )} */}
+                  {/* {(sellPayAmt - sellEstPrice).toFixed(8)}{" "} */}
+                  {/* {precision(sellPayAmt - sellEstPrice)} {this.state.currency} */}
+                  {/* {precise(
+                      (this.state.total * this.state.userBalFees) / 100,
+                      this.props.pricePrecision
+                    )}{" "}
+                    {this.state.currency} */}
+                  {/* </WillpayBelow> */}
                 </ApproxBelow>
+                {this.state.showTierOne && !this.state.trialTierUpgrade ? (
+                  <>
+                    <hr />
+                    <ApproxBelow>
+                      <WillpayBelow>
+                        {this.t("tier_0_text:starter_trade_limit_text.message")}
+                      </WillpayBelow>
+                      <WillpayBelow2>
+                        {tradeLimit == "Unlimited"
+                          ? this.t("tiers:unlimited_text.message")
+                          : `${precise(parseFloat(tradeLimit), "2")} USD`}
+                      </WillpayBelow2>
+                    </ApproxBelow>
+                    <ApproxBelow>
+                      <WillpayBelow>
+                        {this.t(
+                          "tier_0_text:available_trade_limit_text.message"
+                        )}
+                      </WillpayBelow>
+                      <WillpayBelow2>
+                        {tradeLimitLeft == "Unlimited"
+                          ? this.t("tiers:unlimited_text.message")
+                          : `${precise(parseFloat(tradeLimitLeft), "2")} USD`}
+                      </WillpayBelow2>
+                    </ApproxBelow>
+                    <ApproxBelow>
+                      <WillpayBelow>
+                        {this.t(
+                          "tier_0_text:estimated_limit_after_trade_text.message"
+                        )}
+                      </WillpayBelow>
+                      <WillpayBelow2
+                        className={this.state.tradeLimitFlag ? "red" : ""}
+                      >
+                        {this.state.tradeLimitFlag
+                          ? this.t(
+                              "tier_0_text:exceeds_trade_limit_text.message"
+                            )
+                          : tradeLimitLeftAfter == "Unlimited"
+                          ? this.t("tiers:unlimited_text.message")
+                          : `${precise(
+                              parseFloat(tradeLimitLeftAfter),
+                              "2"
+                            )} USD`}
+                      </WillpayBelow2>
+                    </ApproxBelow>
+                  </>
+                ) : this.state.showTierOne ? (
+                  <>
+                    <hr />
+                    <ApproxBelow>
+                      <WillpayBelow className="tier_upgrade">
+                        {this.t("tier_0_text:congratulations_text.message")}{" "}
+                        {this.state.freeTierDays}{" "}
+                        {this.t("tier_0_text:congratulations_text1.message")}
+                        <Link to="/editProfile">
+                          {" "}
+                          {this.t(
+                            "settings:deactivate_popup_click_here.message"
+                          )}
+                          .
+                        </Link>
+                      </WillpayBelow>
+                    </ApproxBelow>
+                  </>
+                ) : (
+                  ""
+                )}
               </Esti>
             </Pay>
           )
@@ -1334,7 +1670,8 @@ class Market extends Component {
               this.state.disabledMode ||
               this.state.disabledbtn ||
               this.state.disabledInvalidMode ||
-              this.state.disabledCryptoMode
+              this.state.disabledCryptoMode ||
+              this.state.tradeLimitFlag
             }
             side={this.state.side}
             onClick={this.onSubmit}
@@ -1358,6 +1695,10 @@ class Market extends Component {
           comingCancel={(e) => this.comingCancel(e)}
           visible={this.state.completeProfile}
         />
+        {/* <TrialTierUpgrade
+          comingCancel={(e) => this.comingCancel(e)}
+          visible={this.state.trialTierUpgrade}
+        /> */}
         {this.state.Loader === true ? (
           <SpinSingle className="Single_spin">
             <Spin size="small" />
@@ -1396,4 +1737,7 @@ export default translate([
   "general_3",
   "tier_changes",
   "header",
+  "tier_0_text",
+  "settings",
+  "tiers",
 ])(connect(mapStateToProps)(withRouter(Market)));
