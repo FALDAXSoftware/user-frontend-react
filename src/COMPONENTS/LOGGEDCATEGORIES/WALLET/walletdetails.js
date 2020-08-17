@@ -185,7 +185,6 @@ class WalletDetails extends Component {
       }
     }
     if (this.props.location !== undefined) {
-      console.log("Here", this.props.profileDetails);
       if (
         this.props.location.search.includes("coinID") &&
         this.props.profileDetails.is_tier_enabled &&

@@ -250,7 +250,6 @@ class DetailsTable extends React.Component {
                               break;
                           }
                         }
-                        console.log("^^^erc", details[index].network_fees);
                         if (me.props.isERC) {
                           url =
                             "https://etherscan.io/tx/" +

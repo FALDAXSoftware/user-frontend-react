@@ -101,7 +101,6 @@ class MarketPage extends React.PureComponent {
   };
   goFullScreen = (id = "body") => {
     let element = document.getElementById(id);
-    console.log(element);
     if (element) {
       if (element.requestFullscreen) {
         element.requestFullscreen();

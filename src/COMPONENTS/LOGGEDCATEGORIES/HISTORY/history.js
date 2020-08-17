@@ -218,7 +218,6 @@ class History extends Component {
     ) {
       this.props.history.push("/editProfile");
     }
-    console.log("^^^adngf", this.props.location);
     if (
       this.props.location.state === undefined ||
       this.props.location.state.flag === "" ||

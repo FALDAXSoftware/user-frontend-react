@@ -165,7 +165,6 @@ class DepthChart extends Component {
     var self = this;
     let bidData = [...self.state.bidData];
     let askData = [...self.state.askData];
-    console.log(bidData, askData, self.state.zoom);
     let ask_lenght = Math.ceil(askData.length / self.state.zoom);
     let bid_length = Math.ceil(bidData.length / self.state.zoom);
     if (self.state.zoom > 1) {
@@ -175,7 +174,6 @@ class DepthChart extends Component {
     }
     bidData = bidData.slice(0, bid_length);
     askData = askData.slice(0, ask_lenght);
-    console.log(bidData, askData);
 
     let graphData = {
       type: "line",

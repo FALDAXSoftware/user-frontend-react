@@ -463,7 +463,6 @@ class Trade extends Component {
   }
   componentWillUnmount() {
     clearInterval(this.interval);
-    console.log("thisd unmount", this.props);
     this.props.io.disconnect();
   }
   componentWillMount() {
@@ -518,7 +517,6 @@ class Trade extends Component {
         this.setState({ userBal: data, userBalLoader: false });
       });
       this.props.io.on("spread-values", (data) => {
-        console.log("dataspread",data)
         if (data) {
           let spread =
             (data[0].ask_price - data[0].bid_price) /
@@ -752,11 +750,6 @@ class Trade extends Component {
   orderSocket(month, filter_type) {
     // io.emit("")
     // this.setState({ orderTradeLoader: true });
-    console.log({
-      month,
-      flag: filter_type,
-      pair: `${this.state.crypto}-${this.state.currency}`,
-    });
     if (this.props.io) {
       this.props.io.emit("trade_users_history_event", {
         month: month,
@@ -797,15 +790,10 @@ class Trade extends Component {
   //
 
   updateMyOrder(response) {
-    this.setState(
-      {
-        orderTradeData: response,
-        orderTradeLoader: false,
-      },
-      () => {
-        console.log("Trade data^^^", this.state.orderTradeData);
-      }
-    );
+    this.setState({
+      orderTradeData: response,
+      orderTradeLoader: false,
+    });
   }
 
   // created by Meghal Patel at 2019-04-27 15:23.
@@ -818,7 +806,6 @@ class Trade extends Component {
     this.setState({
       orderTradeLoader: true,
     });
-    console.log(id, side, type);
     fetch(SOCKET_HOST + `/api/v1/tradding/cancel-pending-order`, {
       method: "post",
       headers: {
@@ -1963,7 +1950,6 @@ class Trade extends Component {
                             return {
                               onClick: (event) => {
                                 self.currencyPair(record.name);
-                                console.log("instruments", record);
                                 self.setState({
                                   pricePrecision: record.pricePrecision
                                     ? record.pricePrecision
