@@ -208,6 +208,7 @@ class DocUpload extends Component {
                   frontHeight = img.height;
 
                   if (fileSize >= 400000) {
+                    console.log("test here");
                     if (_self.state.targetName === "front-doc") {
                       _self.setState({ icon1: "check", displayFirst: "" });
                       reader.onload = (upload) => {
@@ -231,9 +232,7 @@ class DocUpload extends Component {
                         });
                       };
                     }
-
                     //check file size to max 5mb (5*1024*1024=5242880) and type image
-
                     reader.readAsDataURL(file);
                     var DataForm = new FormData();
                     DataForm.append("image", file);
@@ -268,7 +267,9 @@ class DocUpload extends Component {
                       _self.t("general_1:upload_note_text.message")
                     );
                     document.getElementById("front").value = "";
-                    document.getElementById("back").value = "";
+                    if (_self.props.docText.toLowerCase() != "passport") {
+                      document.getElementById("back").value = "";
+                    }
                   }
                 };
                 img.src = fr.result;
@@ -301,7 +302,9 @@ class DocUpload extends Component {
                 _self.t("general_1:max_image_size_error.message")
               );
               document.getElementById("front").value = "";
-              document.getElementById("back").value = "";
+              if (_self.props.docText.toLowerCase() != "passport") {
+                document.getElementById("back").value = "";
+              }
             }
           } else {
             _self.openNotificationWithIcon(
@@ -310,7 +313,9 @@ class DocUpload extends Component {
               _self.t("general_1:only_images_error.message")
             );
             document.getElementById("front").value = "";
-            document.getElementById("back").value = "";
+            if (_self.props.docText.toLowerCase() != "passport") {
+              document.getElementById("back").value = "";
+            }
           }
         } catch (error) {
           _self.setState({ imagemsg: "Something went wrong please try again" });

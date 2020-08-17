@@ -21,6 +21,9 @@ export const HeadSpan = styled.p`
 `;
 export const ContactWrap = styled.div`
   background-color: #f5f6fa;
+  & .ant-empty-description {
+    color: #7f7f7f !important;
+  }
   & .sidebar-layout {
     background: ${(props) =>
       props.theme.mode === "dark" ? "#01090f" : "#f0f2f5"};
