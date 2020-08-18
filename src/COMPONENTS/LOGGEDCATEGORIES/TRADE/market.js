@@ -589,17 +589,15 @@ class Market extends Component {
         singlefiatCurrencyValue: props.userBal.currencyFiat,
       });
     }
-    if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
-      if (props.cryptoPair.crypto !== this.state.crypto) {
-        this.setState({ crypto: props.cryptoPair.crypto }, () => {
-          this.emitAmount();
-        });
-      }
-      if (props.cryptoPair.currency !== this.state.currency) {
-        this.setState({ currency: props.cryptoPair.currency }, () => {
-          this.emitAmount();
-        });
-      }
+    if (props.crypto && props.crypto !== this.props.crypto) {
+      this.setState({ crypto: props.crypto }, () => {
+        this.emitAmount();
+      });
+    }
+    if (props.currency && props.currency !== this.props.currency) {
+      this.setState({ currency: props.currency }, () => {
+        this.emitAmount();
+      });
     }
   }
   /*
