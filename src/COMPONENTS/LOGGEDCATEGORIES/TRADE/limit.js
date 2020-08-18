@@ -362,6 +362,7 @@ class Limit extends Component {
         amount: 0,
         crypto: this.state.crypto,
         symbol: `${this.state.crypto}-${this.state.currency}`,
+        user_id: this.props.profileDetails.id,
       });
       this.props.io.on("trade-user-limit-availability", (data) => {
         if (data) {
@@ -587,6 +588,7 @@ class Limit extends Component {
       amount: this.state.amount ? parseFloat(this.state.amount) : 0,
       crypto: this.state.crypto,
       symbol: `${this.state.crypto}-${this.state.currency}`,
+      user_id: this.props.profileDetails.id,
     });
   }
   onChange(e) {
