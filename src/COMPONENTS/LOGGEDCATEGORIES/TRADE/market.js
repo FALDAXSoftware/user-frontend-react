@@ -445,14 +445,12 @@ class Market extends Component {
           } else if (data.account_tier_flag && data.tier_flag == false) {
             this.setState({
               showTierOne: false,
+              completeKYC: true,
             });
-            if (!data.tier_flag) {
+            if (!this.state.completeKYC) {
               this.setState({
                 completeKYC: true,
-              });
-            } else {
-              this.setState({
-                completeKYC: false,
+                trialTierUpgrade: true,
               });
             }
           } else if (!data.account_tier_flag) {
