@@ -2220,6 +2220,12 @@
       "message_type": "Web content",
       "context": "Ticket status Closed text"
     },
+    "ticket_status_unresolved_closed_text": {
+      "page": "View all tickets",
+      "message": "\u30af\u30ed\u30fc\u30ba-\u672a\u89e3\u6c7a",
+      "message_type": "Web content",
+      "context": "Ticket status Closed text"
+    },
     "ticket_read_more_text": {
       "page": "View all tickets",
       "message": "\u7d9a\u304d\u3092\u8aad\u3080",
@@ -4641,6 +4647,62 @@
       "message": "\n\u6ce8\u6587\u6570\u91cf\u306f",
       "message_type": "Web content",
       "context": "Order Quantity must be greater than minimum asset limit"
+    }
+  },
+  "tier_0_text": {
+    "starter_trade_limit_text": {
+      "page": "Trade",
+      "message": "\u30b9\u30bf\u30fc\u30bf\u30fc\u30c8\u30ec\u30fc\u30c9\u30ea\u30df\u30c3\u30c8\uff08\u6bce\u65e5\uff09",
+      "message_type": "Web content",
+      "context": "Starter Trade Limit (Daily) text"
+    },
+    "available_trade_limit_text": {
+      "page": "Trade",
+      "message": "\u5229\u7528\u53ef\u80fd\u306a\u53d6\u5f15\u5236\u9650",
+      "message_type": "Web content",
+      "context": "Available Trade Limit text"
+    },
+    "estimated_limit_after_trade_text": {
+      "page": "Trade",
+      "message": "\u53d6\u5f15\u5f8c\u306e\u63a8\u5b9a\u5236\u9650",
+      "message_type": "Web content",
+      "context": "Estimated Limit after Trade text"
+    },
+    "exceeds_trade_limit_text": {
+      "page": "Trade",
+      "message": "\u8cbf\u6613\u5236\u9650\u3092\u8d85\u3048\u3066\u3044\u307e\u3059",
+      "message_type": "Web content",
+      "context": "Exceeds Trade Limit text"
+    },
+    "congratulations_text": {
+      "page": "Trade",
+      "message": "\u304a\u3081\u3067\u3068\u3046\uff01\u5b8c\u4e86\u3057\u307e\u3057\u305f",
+      "message_type": "Web content",
+      "context": "Congratulations! You have completed text"
+    },
+    "congratulations_text1": {
+      "page": "Trade",
+      "message": "FALDAX\u306e\u6570\u65e5\u9593\u3001\u30b9\u30bf\u30fc\u30bf\u30fc\u30c6\u30a3\u30a2\u306e\u7279\u6a29\u3092\u30a2\u30c3\u30d7\u30b0\u30ec\u30fc\u30c9\u3059\u308b\u6642\u304c\u6765\u307e\u3057\u305f\u3002\u30d7\u30e9\u30c3\u30c8\u30d5\u30a9\u30fc\u30e0\u3067\u3055\u3089\u306b\u53d6\u5f15\u3092\u7d9a\u3051\u308b\u306b\u306f\u3001\u30d7\u30ed\u30d5\u30a1\u30a4\u30eb\u30bb\u30af\u30b7\u30e7\u30f3\u306e[ID\u78ba\u8a8d]\u30bf\u30d6\u304b\u3089Tier 1\u30a2\u30c3\u30d7\u30b0\u30ec\u30fc\u30c9\u3092\u5b8c\u4e86\u3057\u3066\u304f\u3060\u3055\u3044\u3002",
+      "message_type": "Web content",
+      "context": "Congratulations text"
+    },
+    "min_max_govt_issued": {
+      "page": "Trade",
+      "message": "\u653f\u5e9c\u767a\u884c\u306eID\u756a\u53f7\u306f4\u6587\u5b57\u4ee5\u4e0a20\u6587\u5b57\u4ee5\u4e0b\u3067\u3042\u308b\u5fc5\u8981\u304c\u3042\u308a\u307e\u3059",
+      "message_type": "Web content",
+      "context": "min max government issued id number validation text"
+    },
+    "num_and_dashes_govt_issued": {
+      "page": "Trade",
+      "message": "\u653f\u5e9c\u767a\u884c\u306eID\u756a\u53f7\u306b\u306f\u3001\u6570\u5b57\u3068\u30c0\u30c3\u30b7\u30e5\u306e\u307f\u3092\u542b\u3081\u308b\u3053\u3068\u304c\u3067\u304d\u307e\u3059",
+      "message_type": "Web content",
+      "context": "Number and dashes government issued id number validation text"
+    },
+    "wallet_info_strip_text": {
+      "page": "Wallet",
+      "message": "\u30b9\u30bf\u30fc\u30bf\u30fc\u30d7\u30ed\u30d5\u30a1\u30a4\u30eb\u306b\u306f\u3001\u4f4e\u3044\u53d6\u5f15\u5236\u9650\u3068\u5f15\u304d\u51fa\u3057\u5236\u9650\u304c\u3042\u308a\u307e\u3059\u3002\u53d6\u5f15\u304a\u3088\u3073\u5f15\u304d\u51fa\u3057\u9650\u5ea6\u984d\u3092\u5897\u3084\u3059\u306b\u306f\u3001\u30d7\u30ed\u30d5\u30a1\u30a4\u30eb\u30bb\u30af\u30b7\u30e7\u30f3\u306e[ID\u78ba\u8a8d]\u30bf\u30d6\u304b\u3089Tier 1\u30a2\u30c3\u30d7\u30b0\u30ec\u30fc\u30c9\u3092\u5b8c\u4e86\u3057\u3066\u304f\u3060\u3055\u3044\u3002",
+      "message_type": "Web content",
+      "context": "wallet ifo strip for tier 0 account users"
     }
   }
 }
