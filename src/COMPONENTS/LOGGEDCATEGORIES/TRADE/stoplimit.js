@@ -97,6 +97,7 @@ class StopLimit extends Component {
       tradeDaysCompleted: false,
       freeTierDays: "",
       showTierOne: false,
+      tier0Inactive: false,
     };
     this.timeout = null;
     this.t = this.props.t;
@@ -415,23 +416,17 @@ class StopLimit extends Component {
               trialTierUpgrade: true,
               freeTierDays: data.days,
               showTierOne: true,
+              tier0Inactive: false,
             });
           } else if (data.account_tier_flag && data.tier_flag == false) {
             this.setState({
               showTierOne: false,
+              tier0Inactive: true,
             });
-            if (!data.tier_flag) {
-              this.setState({
-                completeKYC: true,
-              });
-            } else {
-              this.setState({
-                completeKYC: false,
-              });
-            }
           } else if (!data.account_tier_flag) {
             this.setState({
               showTierOne: false,
+              tier0Inactive: false,
             });
           }
           if (data.valueObject) {
@@ -449,6 +444,7 @@ class StopLimit extends Component {
                 tradeLimitFlag: !data.leftFlag,
                 tradeDaysCompleted: data.response_flag,
                 showTierOne: true,
+                tier0Inactive: false,
               },
               () => {
                 if (this.state.tradeDaysCompleted) {
@@ -1662,6 +1658,15 @@ class StopLimit extends Component {
                       </WillpayBelow>
                     </ApproxBelow>
                   </>
+                ) : this.state.tier0Inactive ? (
+                  <>
+                    <hr />
+                    <ApproxBelow>
+                      <WillpayBelow className="tier_upgrade">
+                        {this.t("tier_0_text:wallet_info_strip_text.message")}
+                      </WillpayBelow>
+                    </ApproxBelow>
+                  </>
                 ) : (
                   ""
                 )}
@@ -1778,6 +1783,15 @@ class StopLimit extends Component {
                       </WillpayBelow>
                     </ApproxBelow>
                   </>
+                ) : this.state.tier0Inactive ? (
+                  <>
+                    <hr />
+                    <ApproxBelow>
+                      <WillpayBelow className="tier_upgrade">
+                        {this.t("tier_0_text:wallet_info_strip_text.message")}
+                      </WillpayBelow>
+                    </ApproxBelow>
+                  </>
                 ) : (
                   ""
                 )}
@@ -1808,7 +1822,8 @@ class StopLimit extends Component {
               this.state.disabledMode ||
               this.state.disabledBtnMode ||
               this.state.disabledCryptoMode ||
-              this.state.tradeLimitFlag
+              this.state.tradeLimitFlag ||
+              this.state.tier0Inactive
             }
             side={this.state.side}
             onClick={this.onSubmit}
