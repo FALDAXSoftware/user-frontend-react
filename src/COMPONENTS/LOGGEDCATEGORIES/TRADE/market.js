@@ -94,6 +94,7 @@ class Market extends Component {
       tradeDaysCompleted: false,
       freeTierDays: "",
       showTierOne: false,
+      tier0Inactive: false,
     };
     this.timeout = null;
     this.t = this.props.t;
@@ -441,23 +442,17 @@ class Market extends Component {
               trialTierUpgrade: true,
               freeTierDays: data.days,
               showTierOne: true,
+              tier0Inactive: false,
             });
           } else if (data.account_tier_flag && data.tier_flag == false) {
             this.setState({
               showTierOne: false,
+              tier0Inactive: true,
             });
-            if (!data.tier_flag) {
-              this.setState({
-                completeKYC: true,
-              });
-            } else {
-              this.setState({
-                completeKYC: false,
-              });
-            }
           } else if (!data.account_tier_flag) {
             this.setState({
               showTierOne: false,
+              tier0Inactive: false,
             });
           }
           if (data.valueObject) {
@@ -475,6 +470,7 @@ class Market extends Component {
                 tradeLimitFlag: !data.leftFlag,
                 tradeDaysCompleted: data.response_flag,
                 showTierOne: true,
+                tier0Inactive: false,
               },
               () => {
                 if (this.state.tradeDaysCompleted) {
@@ -1526,6 +1522,15 @@ class Market extends Component {
                       </WillpayBelow>
                     </ApproxBelow>
                   </>
+                ) : this.state.tier0Inactive ? (
+                  <>
+                    <hr />
+                    <ApproxBelow>
+                      <WillpayBelow className="tier_upgrade">
+                        {this.t("tier_0_text:wallet_info_strip_text.message")}
+                      </WillpayBelow>
+                    </ApproxBelow>
+                  </>
                 ) : (
                   ""
                 )}
@@ -1655,6 +1660,15 @@ class Market extends Component {
                       </WillpayBelow>
                     </ApproxBelow>
                   </>
+                ) : this.state.tier0Inactive ? (
+                  <>
+                    <hr />
+                    <ApproxBelow>
+                      <WillpayBelow className="tier_upgrade">
+                        {this.t("tier_0_text:wallet_info_strip_text.message")}
+                      </WillpayBelow>
+                    </ApproxBelow>
+                  </>
                 ) : (
                   ""
                 )}
@@ -1671,7 +1685,8 @@ class Market extends Component {
               this.state.disabledbtn ||
               this.state.disabledInvalidMode ||
               this.state.disabledCryptoMode ||
-              this.state.tradeLimitFlag
+              this.state.tradeLimitFlag ||
+              this.state.tier0Inactive
             }
             side={this.state.side}
             onClick={this.onSubmit}
