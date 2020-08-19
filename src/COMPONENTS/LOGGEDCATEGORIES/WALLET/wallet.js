@@ -27,6 +27,7 @@ import {
   SearchCoin2,
   HeaderWrap2,
 } from "STYLED-COMPONENTS/LOGGED_STYLE/walletStyle";
+import { Link } from "react-router-dom";
 /* import { globalVariables } from 'Globals.js'; */
 
 /* Actions */
@@ -37,7 +38,16 @@ import { APIUtility } from "../../../httpHelper";
 
 /* let { API_URL } = globalVariables; */
 const Search = Input.Search;
-
+const StripContent = styled.div`
+  max-width: 1170px;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  padding: 10px;
+  font-weight: bold;
+  color: ${(props) =>
+    props.theme.mode === "dark" ? "#fff" : "rgb( 80,80,80 )"};
+`;
 const ContainerContact = styled(Container)`
   background-color: ${(props) =>
     props.theme.mode === "dark" ? "#041422" : "white"};
@@ -153,25 +163,6 @@ class Wallet extends Component {
         }
       }
     }
-    // var total = 0;
-    // var tableData = this.props.walletDetails.activated_asset_lists;
-    // var FIAT = this.props.profileDetails.fiat;
-    // if (tableData !== undefined) {
-    //   tableData.map(function(index, key) {
-    //     // console.log(index.quote);
-    //     if (index.quote !== null)
-    //       if (
-    //         index.quote[`${FIAT}`].price !== undefined &&
-    //         index.quote[`${FIAT}`].price !== null
-    //       ) {
-    //         var fiat = this.props.profileDetails.fiat;
-
-    //         total = total + index.quote[`${fiat}`].price * index.balance;
-    //       }
-    //   });
-    //   console.log("Total^^^", total);
-    //   this.setState({ total });
-    // }
     var coll = document.getElementsByClassName("collapsible");
     var i;
     for (i = 0; i < coll.length; i++) {
@@ -193,39 +184,6 @@ class Wallet extends Component {
     }
     this.props.walletBal(this.props.isLoggedIn);
     this.props.getAllCoins(this.props.isLoggedIn);
-    // var total = 0,
-    //   me = this;
-    // if (this.props.walletDetails !== null) {
-    //   console.log("props", this.props.walletDetails);
-    //   var tableData = this.props.walletDetails;
-    //   var FIAT = this.props.profileDetails.fiat;
-    //   if (tableData !== undefined) {
-    //     tableData.map(function(index, key) {
-    //       // console.log(index.quote);
-    //       if (index.quote !== null)
-    //         if (
-    //           index.quote[`${FIAT}`].price !== undefined &&
-    //           index.quote[`${FIAT}`].price !== null
-    //         ) {
-    //           var fiat = me.props.profileDetails.fiat;
-
-    //           total = total + index.quote[`${fiat}`].price * index.balance;
-    //           console.log(
-    //             "fiat",
-    //             fiat,
-    //             index.quote[`${fiat}`].price,
-    //             index.balance,
-    //             total
-    //           );
-    //         }
-    //     });
-    //     // console.log(total)
-    //   }
-    // } else {
-    //   console.log("mount", this.props);
-    // }
-    // this.setState({ total });
-    // console.log("mount", this.props.walletDetails);
   }
   componentWillReceiveProps(newProps) {
     var total = 0;
@@ -372,6 +330,14 @@ class Wallet extends Component {
         <LoggedNavigation />
         <GreyWrap>
           {/* walletDetails > activated_asset_lists start */}
+          {this.props.profileDetails.is_tier_enabled && (
+            <StripContent>
+              {this.t("tier_0_text:wallet_info_strip_text.message")}{" "}
+              <Link to="editProfile">
+                {this.t("settings:deactivate_popup_click_here.message")}
+              </Link>
+            </StripContent>
+          )}
           {this.props.walletDetails &&
             this.props.walletDetails["activated_asset_lists"].length > 0 && (
               <ContainerContact>
@@ -644,6 +610,8 @@ export default translate([
   "general_2",
   "setting",
   "edit_profile_titles",
+  "tier_0_text",
+  "settings",
 ])(connect(mapStateToProps, mapDispatchToProps)(Wallet));
 function precisionTwo(x) {
   if (Math.abs(x) < 1.0) {

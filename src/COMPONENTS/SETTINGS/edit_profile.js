@@ -76,7 +76,7 @@ class Editprofile extends Component {
     this.setState({
       activeKey: key,
     });
-    if (key == "4") {
+    if (key == "2") {
       if (
         !this.props.profileDetails.is_user_updated &&
         this.props.profileDetails.is_kyc_done != "2"
@@ -210,10 +210,25 @@ class Editprofile extends Component {
               <TabPane tab={t("head_personal_details.message")} key="1">
                 <PersonalDetails {...this.props} />
               </TabPane>
-              <TabPane tab={t("head_security.message")} key="2">
+              <TabPane tab={t("head_identity_verification.message")} key="2">
+                {this.state.countryAccess ? (
+                  <CompleteProfile
+                    comingCancel={(e) => this.comingCancel(e)}
+                    visible={this.state.countryAccess}
+                  />
+                ) : this.state.access ? (
+                  <Tier />
+                ) : (
+                  <CountryAccess
+                    comingCancel={(e) => this.comingCancel(e)}
+                    visible={!this.state.access}
+                  />
+                )}
+              </TabPane>
+              <TabPane tab={t("head_security.message")} key="3">
                 <Passwordchange {...this.props} />
               </TabPane>
-              <TabPane tab={t("head_settings.message")} key="3">
+              <TabPane tab={t("head_settings.message")} key="4">
                 {this.state.countryAccess ? (
                   <CompleteProfile
                     comingCancel={(e) => this.comingCancel(e)}
@@ -234,21 +249,7 @@ class Editprofile extends Component {
                   totalUSDOfWallet={this.state.totalUSDOfWallet}
                 /> */}
               </TabPane>
-              <TabPane tab={t("head_identity_verification.message")} key="4">
-                {this.state.countryAccess ? (
-                  <CompleteProfile
-                    comingCancel={(e) => this.comingCancel(e)}
-                    visible={this.state.countryAccess}
-                  />
-                ) : this.state.access ? (
-                  <Tier />
-                ) : (
-                  <CountryAccess
-                    comingCancel={(e) => this.comingCancel(e)}
-                    visible={!this.state.access}
-                  />
-                )}
-              </TabPane>
+
               <TabPane tab={t("head_referral.message")} key="5">
                 <Referral {...this.props} />
               </TabPane>

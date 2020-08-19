@@ -272,13 +272,17 @@ export const UpgradeTable = styled.table`
     > tr.limit_exceed {
       > td.center {
         text-align: center;
+        color: red;
+      }
+      > td.left {
+        color: red;
       }
     }
     > tr {
       > td {
         font-size: 14px;
         font-weight: 600;
-        color: ${(props) => (props.theme.mode == "dark" ? "#000" : "#000000")};
+        color: ${(props) => (props.theme.mode == "dark" ? "#fff" : "#000000")};
         padding: 10px;
         border: 1px solid #c6dfff;
         border-left: 0;

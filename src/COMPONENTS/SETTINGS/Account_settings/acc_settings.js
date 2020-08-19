@@ -46,11 +46,11 @@ import {
   DeNewButton,
   SummaryTable,
   DeactivateWrapper,
-  DeactiveWrap
+  DeactiveWrap,
 } from "STYLED-COMPONENTS/SETTINGS/accsettingsStyle";
 import {
   NewButton,
-  NewInput
+  NewInput,
 } from "COMPONENTS/SETTINGS/changePassword/change_email";
 import {
   VerifyModal,
@@ -58,7 +58,7 @@ import {
   NewP,
   InputLabel,
   OTPInput,
-  ButtonDiv
+  ButtonDiv,
 } from "./ip_modal";
 import ThresholdNotification from "./threshold_notification";
 
@@ -139,37 +139,37 @@ class Acc_settings extends Component {
       // user2fastatus: this.props.user2fastatus,
       fields: {
         ip: null,
-        days: null
+        days: null,
       },
-      isWhitelistIp: false
+      isWhitelistIp: false,
     };
     this.t = this.props.t;
     this.validator = new SimpleReactValidator({
       ipvalid: {
         message: this.t("validations:invalid_ip_error.message"),
-        rule: val => {
+        rule: (val) => {
           var RE = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/;
           if (RE.test(val)) {
             return true;
           } else {
             return false;
           }
-        }
+        },
       },
       matchDelete: {
         message: this.t("validations:forfeit_funds_error.message"),
-        rule: val => {
+        rule: (val) => {
           var RE = /^FORFEIT FUNDS$/;
           if (RE.test(val)) {
             return true;
           } else {
             return false;
           }
-        }
+        },
       },
       gttoday: {
         message: this.t("validations:invalid_end_date_error.message"),
-        rule: val => {
+        rule: (val) => {
           var a = moment();
           var b = moment(val);
           var ans = b.diff(a, "days", true); // "in a day"
@@ -180,32 +180,32 @@ class Acc_settings extends Component {
             // console.log("ans1", ans);
             return true;
           }
-        }
-      }
+        },
+      },
     });
     this.validator1 = new SimpleReactValidator({
       matchDelete: {
         message: this.t("validations:forfeit_funds_error.message"),
-        rule: val => {
+        rule: (val) => {
           var RE = /^FORFEIT FUNDS$/;
           if (RE.test(val)) {
             return true;
           } else {
             return false;
           }
-        }
+        },
       },
       matchDeactivate: {
         message: this.t("validations:deactivate_error.message"),
-        rule: val => {
+        rule: (val) => {
           var RE = /^DEACTIVATE$/;
           if (RE.test(val)) {
             return true;
           } else {
             return false;
           }
-        }
-      }
+        },
+      },
     });
     this.getIpWhitelist = this.getIpWhitelist.bind(this);
     this.addIpWhitelist = this.addIpWhitelist.bind(this);
@@ -253,14 +253,14 @@ class Acc_settings extends Component {
       this.props.profileDetails !== undefined
     ) {
       this.setState({
-        checked: this.props.profileDetails.security_feature
+        checked: this.props.profileDetails.security_feature,
       });
       if (
         this.props.profileDetails.is_whitelist_ip !== undefined &&
         this.props.profileDetails.is_whitelist_ip !== null
       ) {
         this.setState({
-          isWhitelistIp: this.props.profileDetails.is_whitelist_ip
+          isWhitelistIp: this.props.profileDetails.is_whitelist_ip,
         });
       }
     }
@@ -271,18 +271,18 @@ class Acc_settings extends Component {
         else
           this.setState({
             notiCSS: "noti_table_night",
-            historyCSS: "history_table_night"
+            historyCSS: "history_table_night",
           });
       }
     }
   }
-  onChange = value => {
+  onChange = (value) => {
     var a = moment();
     var b = moment(value);
     var ans = b.diff(a, "days"); // "in a day"
     this.setState({
       startValue: value,
-      validDays: ans + 1
+      validDays: ans + 1,
     });
   };
   clearValidation() {
@@ -293,13 +293,13 @@ class Acc_settings extends Component {
   checkBoxChange(key, e, record) {
     const { data_noti } = this.state;
     if (key == "allEmail") {
-      let newData = data_noti.map(ele => {
+      let newData = data_noti.map((ele) => {
         ele["email"] = e.target.checked;
         return ele;
       });
       this.setState({ selectAllEmail: e.target.checked, data_noti: newData });
     } else if (key == "allText") {
-      let newData = data_noti.map(ele => {
+      let newData = data_noti.map((ele) => {
         ele["text"] = e.target.checked;
         return ele;
       });
@@ -313,14 +313,14 @@ class Acc_settings extends Component {
       this.setState({
         data_noti,
         selectAllEmail: selectAllEmail,
-        selectAllText: selectAllText
+        selectAllText: selectAllText,
       });
     }
   }
 
-  getEmailAndText = data_noti => {
+  getEmailAndText = (data_noti) => {
     let [selectedAllText, selectedAllEmail] = [true, true];
-    data_noti.map(ele => {
+    data_noti.map((ele) => {
       if (ele["text"] == false || ele["text"] == "false") {
         selectedAllText = false;
       }
@@ -337,11 +337,11 @@ class Acc_settings extends Component {
       headers: {
         "Accept-Language": localStorage["i18nextLng"],
         Authorization: "Bearer " + this.props.isLoggedIn,
-        "Accept-Language": localStorage["i18nextLng"]
-      }
+        "Accept-Language": localStorage["i18nextLng"],
+      },
     })
-      .then(response => response.json())
-      .then(responseData => {
+      .then((response) => response.json())
+      .then((responseData) => {
         if (responseData.status == 200) {
           let b = JSON.parse(JSON.stringify(responseData.data));
           let [selectAllEmail, selectAllText] = this.getEmailAndText(
@@ -351,7 +351,7 @@ class Acc_settings extends Component {
             data_noti: responseData.data,
             savedDataNoti: b,
             selectAllEmail,
-            selectAllText
+            selectAllText,
           });
         } else {
           this.openNotificationWithIcon(
@@ -362,7 +362,7 @@ class Acc_settings extends Component {
         }
         this.setState({ loader: false });
       })
-      .catch(error => {
+      .catch((error) => {
         this.setState({ loader: false });
         console.log(error);
       });
@@ -375,19 +375,19 @@ class Acc_settings extends Component {
       headers: {
         "Accept-Language": localStorage["i18nextLng"],
         Authorization: "Bearer " + this.props.isLoggedIn,
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(data_noti)
+      body: JSON.stringify(data_noti),
     })
-      .then(response => response.json())
-      .then(responseData => {
+      .then((response) => response.json())
+      .then((responseData) => {
         // console.log("Did IP : ", responseData);
         if (responseData.status == 200) {
           let b = JSON.parse(JSON.stringify(responseData.data));
           this.setState({
             data_noti: responseData.data,
             savedDataNoti: b,
-            loader: false
+            loader: false,
           });
           this.openNotificationWithIcon(
             "success",
@@ -403,7 +403,7 @@ class Acc_settings extends Component {
           this.setState({ loader: false });
         }
       })
-      .catch(error => {
+      .catch((error) => {
         this.setState({ loader: false });
         this.openNotificationWithIcon("error", "Error", error);
       });
@@ -413,15 +413,15 @@ class Acc_settings extends Component {
       method: "get",
       headers: {
         "Accept-Language": localStorage["i18nextLng"],
-        Authorization: "Bearer " + this.props.isLoggedIn
-      }
+        Authorization: "Bearer " + this.props.isLoggedIn,
+      },
     })
-      .then(response => response.json())
-      .then(responseData => {
+      .then((response) => response.json())
+      .then((responseData) => {
         if (responseData.status == 200) {
           this.setState({
             whitelistData: responseData.data,
-            ipCount: responseData.IPCount
+            ipCount: responseData.IPCount,
           });
         } else {
           this.openNotificationWithIcon(
@@ -431,7 +431,7 @@ class Acc_settings extends Component {
           );
         }
       })
-      .catch(error => {
+      .catch((error) => {
         // console.log(error);
       });
   }
@@ -454,12 +454,12 @@ class Acc_settings extends Component {
           Accept: "application/json",
           "Content-Type": "application/json",
           "Accept-Language": localStorage["i18nextLng"],
-          Authorization: "Bearer " + this.props.isLoggedIn
+          Authorization: "Bearer " + this.props.isLoggedIn,
         },
-        body: JSON.stringify(value)
+        body: JSON.stringify(value),
       })
-        .then(response => response.json())
-        .then(responseData => {
+        .then((response) => response.json())
+        .then((responseData) => {
           if (responseData.status == 200) {
             this.setState({ loader: false });
             this.openNotificationWithIcon(
@@ -477,7 +477,7 @@ class Acc_settings extends Component {
           // dispatch(removeLoader());
           this.setState({ loader: false });
         })
-        .catch(error => {
+        .catch((error) => {
           // dispatch(removeLoader());
           this.setState({ loader: false });
         });
@@ -509,7 +509,7 @@ class Acc_settings extends Component {
         Login History API is called in it.
     */
 
-  getAllLoginHistory = curr => {
+  getAllLoginHistory = (curr) => {
     var self = this;
     /* var Data = {}; */
     this.setState({ loader: true });
@@ -517,16 +517,16 @@ class Acc_settings extends Component {
       method: "get",
       headers: {
         "Accept-Language": localStorage["i18nextLng"],
-        Authorization: "Bearer " + this.props.isLoggedIn
-      }
+        Authorization: "Bearer " + this.props.isLoggedIn,
+      },
     })
-      .then(response => response.json())
-      .then(responseData => {
+      .then((response) => response.json())
+      .then((responseData) => {
         /*  console.log(responseData) */
         if (responseData.status == 200) {
           let antTableData = [];
           this.setState({ historyCount: responseData.historyCount });
-          Object.keys(responseData.data).map(function(key, index) {
+          Object.keys(responseData.data).map(function (key, index) {
             var deviceType;
             if (responseData.data[index].device_type === 1)
               deviceType = <FontAwesomeIconS icon={faMobileAlt} />;
@@ -549,13 +549,13 @@ class Acc_settings extends Component {
                 .local()
                 .format(`${date_format}, HH:mm:ss`),
               IP: ip,
-              Device: deviceType
+              Device: deviceType,
             };
             antTableData.push(temp);
           });
           self.setState({
             loginHistory: antTableData,
-            loader: false
+            loader: false,
           });
         } else {
           self.setState({ loader: false });
@@ -566,7 +566,7 @@ class Acc_settings extends Component {
           );
         }
       })
-      .catch(error => {
+      .catch((error) => {
         this.openNotificationWithIcon("error", "Error", error);
       });
   };
@@ -577,13 +577,13 @@ class Acc_settings extends Component {
         getAllLoginHistory() will be called from this function and login history API will be called.
     */
 
-  handleHistoryPagination = page => {
+  handleHistoryPagination = (page) => {
     this.setState({ pageHistory: page }, () => {
       this.getAllLoginHistory(page);
     });
   };
 
-  handleIpPagination = page => {
+  handleIpPagination = (page) => {
     this.setState({ pageIp: page }, () => {
       this.getAllLoginHistory(page);
     });
@@ -598,7 +598,7 @@ class Acc_settings extends Component {
     notification[type]({
       message: msg,
       description: desc,
-      duration: 3
+      duration: 3,
     });
   };
   /* 
@@ -620,25 +620,25 @@ class Acc_settings extends Component {
           // console.log("Oops errors!")
         });
       },
-      onCancel() {}
+      onCancel() {},
     });
   }
   openDeleteModal() {
     this.clearValidation();
     this.setState({
-      showDeleteModal: true
+      showDeleteModal: true,
     });
   }
   openDeactivateModal() {
     this.clearValidation();
     this.setState({
-      showDeactivateModal: true
+      showDeactivateModal: true,
     });
   }
   openAddModal() {
     this.clearValidation();
     this.setState({
-      showAddModal: true
+      showAddModal: true,
     });
   }
   closeModal() {
@@ -660,8 +660,8 @@ class Acc_settings extends Component {
       deactivateText: null,
       fields: {
         ip: null,
-        days: null
-      }
+        days: null,
+      },
     });
   }
   fianlPerIpWhitelist(fields) {
@@ -670,15 +670,15 @@ class Acc_settings extends Component {
       method: "post",
       headers: {
         "Accept-Language": localStorage["i18nextLng"],
-        Authorization: "Bearer " + this.props.isLoggedIn
+        Authorization: "Bearer " + this.props.isLoggedIn,
       },
-      body: JSON.stringify(fields)
+      body: JSON.stringify(fields),
     })
-      .then(response => {
+      .then((response) => {
         // console.log(response);
         return response.json();
       })
-      .then(responseData => {
+      .then((responseData) => {
         // console.log("Response ---> ", responseData);
         if (responseData.status == 200) {
           this.getIpWhitelist(this.state.pageIp);
@@ -689,14 +689,14 @@ class Acc_settings extends Component {
           );
           let fields = {
             days: null,
-            ip: null
+            ip: null,
           };
           this.setState({
             loader: false,
             showAddModal: false,
             fields,
             visibleIpModal: false,
-            isWhitelistIp: true
+            isWhitelistIp: true,
           });
         } else if (responseData.status == 500) {
           this.setState({ loader: false });
@@ -714,7 +714,7 @@ class Acc_settings extends Component {
           );
         }
       })
-      .catch(error => {
+      .catch((error) => {
         // console.log(error);
         this.setState({ loader: false });
       });
@@ -724,21 +724,21 @@ class Acc_settings extends Component {
     this.setState({ loader: true });
     var values = {
       ip: this.state.fields.ip,
-      days: this.state.validDays
+      days: this.state.validDays,
     };
     fetch(API_URL + `/users/add-whitelist-ip`, {
       method: "post",
       headers: {
         "Accept-Language": localStorage["i18nextLng"],
-        Authorization: "Bearer " + this.props.isLoggedIn
+        Authorization: "Bearer " + this.props.isLoggedIn,
       },
-      body: JSON.stringify(values)
+      body: JSON.stringify(values),
     })
-      .then(response => {
+      .then((response) => {
         // console.log(response);
         return response.json();
       })
-      .then(responseData => {
+      .then((responseData) => {
         // console.log("Response ---> ", responseData);
         if (responseData.status == 200) {
           this.getIpWhitelist(this.state.pageIp);
@@ -748,7 +748,7 @@ class Acc_settings extends Component {
             responseData.message
           );
           let fields = {
-            ip: null
+            ip: null,
           };
           this.setState({
             loader: false,
@@ -758,7 +758,7 @@ class Acc_settings extends Component {
             isDateValid: false,
             startValue: null,
             visibleIpModal: false,
-            isWhitelistIp: true
+            isWhitelistIp: true,
           });
         } else if (responseData.status == 500) {
           this.setState({ loader: false });
@@ -776,7 +776,7 @@ class Acc_settings extends Component {
           );
         }
       })
-      .catch(error => {
+      .catch((error) => {
         // console.log(error);
         this.setState({ loader: false });
       });
@@ -809,14 +809,14 @@ class Acc_settings extends Component {
       method: "delete",
       headers: {
         "Accept-Language": localStorage["i18nextLng"],
-        Authorization: "Bearer " + this.props.isLoggedIn
+        Authorization: "Bearer " + this.props.isLoggedIn,
       },
-      body: JSON.stringify({ id: src.id })
+      body: JSON.stringify({ id: src.id }),
     })
-      .then(response => {
+      .then((response) => {
         return response.json();
       })
-      .then(responseData => {
+      .then((responseData) => {
         this.getIpWhitelist(this.state.pageIp);
         this.openNotificationWithIcon(
           "success",
@@ -825,7 +825,7 @@ class Acc_settings extends Component {
         );
         this.setState({ loader: false });
       })
-      .catch(error => {
+      .catch((error) => {
         /* console.log(error) */
         this.setState({ loader: false });
       });
@@ -836,22 +836,22 @@ class Acc_settings extends Component {
     if (e.target.value.trim() !== "") fields[e.target.name] = e.target.value;
     else fields[e.target.name] = "";
     this.setState({
-      fields
+      fields,
     });
   }
   deleteText(e) {
     this.setState({
-      deleteText: e.target.value
+      deleteText: e.target.value,
     });
   }
   deactivateText(e) {
     this.setState({
-      deactivateText: e.target.value
+      deactivateText: e.target.value,
     });
   }
   code2fa(e) {
     this.setState({
-      code2fa: e.target.value
+      code2fa: e.target.value,
     });
   }
   onChangeSwitch(checked) {
@@ -861,18 +861,18 @@ class Acc_settings extends Component {
       method: "post",
       headers: {
         "Accept-Language": localStorage["i18nextLng"],
-        Authorization: "Bearer " + this.props.isLoggedIn
+        Authorization: "Bearer " + this.props.isLoggedIn,
       },
       body: JSON.stringify({
-        security_feature: checked
-      })
+        security_feature: checked,
+      }),
     })
-      .then(response => response.json())
-      .then(responseData => {
+      .then((response) => response.json())
+      .then((responseData) => {
         if (responseData.status == 200) {
           this.setState(
             {
-              checked
+              checked,
             },
             () => {
               this.openNotificationWithIcon(
@@ -891,7 +891,7 @@ class Acc_settings extends Component {
         }
         this.setState({ loader: false });
       })
-      .catch(error => {
+      .catch((error) => {
         /* console.log(error) */
         this.openNotificationWithIcon(
           "error",
@@ -909,7 +909,7 @@ class Acc_settings extends Component {
   }
   getWalletSummary() {
     this.setState({
-      loader: true
+      loader: true,
     });
     fetch(API_URL + `/user/deleteAccountCheck`, {
       method: "get",
@@ -917,23 +917,23 @@ class Acc_settings extends Component {
         Accept: "application/json",
         "Content-Type": "application/json",
         "Accept-Language": localStorage["i18nextLng"],
-        Authorization: "Bearer " + this.props.isLoggedIn
-      }
+        Authorization: "Bearer " + this.props.isLoggedIn,
+      },
     })
-      .then(response => response.json())
-      .then(responseData => {
+      .then((response) => response.json())
+      .then((responseData) => {
         if (responseData.status == 201) {
           this.setState({
             totalUSDOfWallet: responseData.usd_price.toFixed(2),
             walletCoins: responseData.data,
             user2fastatus: responseData.user2fastatus,
-            loader: false
+            loader: false,
           });
         } else if (responseData.status == 200) {
           this.setState({
             walletCoins: null,
             user2fastatus: responseData.user2fastatus,
-            loader: false
+            loader: false,
           });
         } else if (responseData.status == 403) {
           this.openNotificationWithIcon(
@@ -943,7 +943,7 @@ class Acc_settings extends Component {
           );
           this.setState(
             {
-              loader: false
+              loader: false,
             },
             () => {
               let tempValue2 = {};
@@ -954,7 +954,7 @@ class Acc_settings extends Component {
           );
         }
       })
-      .catch(error => {});
+      .catch((error) => {});
   }
   forfeitFunds() {
     this.closeModal();
@@ -973,14 +973,14 @@ class Acc_settings extends Component {
         title: `${t("head_notifications.message")}`,
         dataIndex: "title",
         className: "column-Noti",
-        key: "title"
+        key: "title",
       },
       {
         title: (
           <>
             <Checkbox
               className="mg-lt-45"
-              onChange={e => this.checkBoxChange("allText", e)}
+              onChange={(e) => this.checkBoxChange("allText", e)}
               value={this.state.selectAllText}
               checked={this.state.selectAllText}
             />
@@ -996,10 +996,10 @@ class Acc_settings extends Component {
               checked={typeof value == "string" ? JSON.parse(value) : value}
               value={value}
               key={record.id}
-              onChange={e => this.checkBoxChange("text", e, record)}
+              onChange={(e) => this.checkBoxChange("text", e, record)}
             ></Checkbox>
           );
-        }
+        },
       },
       {
         title: (
@@ -1007,7 +1007,7 @@ class Acc_settings extends Component {
             <Checkbox
               className="mg-lt-50"
               checked={this.state.selectAllEmail}
-              onChange={e => this.checkBoxChange("allEmail", e)}
+              onChange={(e) => this.checkBoxChange("allEmail", e)}
               value={this.state.selectAllEmail}
             />
             <span>&nbsp;{t("table_head_email.message")}</span>
@@ -1023,23 +1023,23 @@ class Acc_settings extends Component {
               checked={typeof value == "string" ? JSON.parse(value) : value}
               value={value}
               key={record.id}
-              onChange={e => this.checkBoxChange("email", e, record)}
+              onChange={(e) => this.checkBoxChange("email", e, record)}
             ></Checkbox>
           );
-        }
-      }
+        },
+      },
     ];
     this.columnsIP = [
       {
         title: "IP Whitelist",
         dataIndex: "ip",
-        key: "ip"
+        key: "ip",
       },
       {
         title: "Till Date",
         dataIndex: "expire_time",
         key: "day",
-        render: src => {
+        render: (src) => {
           let date_format = this.props.profileDetails.date_format
             ? this.props.profileDetails.date_format
             : "DD/MM/YYYY";
@@ -1047,19 +1047,16 @@ class Acc_settings extends Component {
           return (
             <span>
               {src !== ""
-                ? moment
-                    .utc(src)
-                    .local()
-                    .format(`${date_format}, HH:mm:ss`)
+                ? moment.utc(src).local().format(`${date_format}, HH:mm:ss`)
                 : "-"}
             </span>
           );
-        }
+        },
       },
       {
         title: "Action",
         key: "action",
-        render: src => {
+        render: (src) => {
           // console.log(src.is_permanent);
           return (
             <div>
@@ -1075,8 +1072,8 @@ class Acc_settings extends Component {
               )}
             </div>
           );
-        }
-      }
+        },
+      },
     ];
 
     const { fields, data_noti, savedDataNoti, startValue } = this.state;
@@ -1085,13 +1082,13 @@ class Acc_settings extends Component {
       {
         title: `${t("table_head_ip_whitelist.message")}`,
         dataIndex: "ip",
-        key: "ip"
+        key: "ip",
       },
       {
         title: `${t("table_head_till_date.message")}`,
         dataIndex: "expire_time",
         key: "day",
-        render: src => {
+        render: (src) => {
           let date_format = this.props.profileDetails.date_format
             ? this.props.profileDetails.date_format
             : "DD/MM/YYYY";
@@ -1099,19 +1096,16 @@ class Acc_settings extends Component {
           return (
             <span>
               {src !== ""
-                ? moment
-                    .utc(src)
-                    .local()
-                    .format(`${date_format}, HH:mm:ss`)
+                ? moment.utc(src).local().format(`${date_format}, HH:mm:ss`)
                 : "-"}
             </span>
           );
-        }
+        },
       },
       {
         title: `${t("table_head_action.message")}`,
         key: "action",
-        render: src => {
+        render: (src) => {
           // console.log(src.is_permanent);
           return (
             <div>
@@ -1127,26 +1121,26 @@ class Acc_settings extends Component {
               )}
             </div>
           );
-        }
-      }
+        },
+      },
     ];
     const columns = [
       {
         title: `${t("table_head_date_time.message")}`,
         dataIndex: "date",
-        key: "date"
+        key: "date",
       },
       {
         title: `${t("table_head_ip_address.message")}`,
         dataIndex: "IP",
-        key: "IP"
+        key: "IP",
       },
       {
         title: `${t("table_head_device.message")}`,
         className: "column_device",
         dataIndex: "Device",
-        key: "Device"
-      }
+        key: "Device",
+      },
     ];
     let disabled = true;
     // console.log(savedDataNoti, "-------------->", data_noti);
@@ -1287,7 +1281,7 @@ class Acc_settings extends Component {
             visible={this.state.visibleIpModal}
             security={this.props.profileDetails.security_feature}
             ipModalCancel={() => this.ipModalCancel()}
-            permanentIp={fields => this.addPerIpWhitelist(null, fields)}
+            permanentIp={(fields) => this.addPerIpWhitelist(null, fields)}
           />
 
           {this.state.isWhitelistIp && (
@@ -1387,7 +1381,7 @@ class Acc_settings extends Component {
                 {
                   required:
                     this.t("general_1:end_date_text.message") +
-                    this.t("validations:field_is_required.message")
+                    this.t("validations:field_is_required.message"),
                 }
               )}
             </div>
@@ -1417,7 +1411,7 @@ class Acc_settings extends Component {
               </thead>
               {this.state.walletCoins ? (
                 <tbody>
-                  {this.state.walletCoins.map(function(temps) {
+                  {this.state.walletCoins.map(function (temps) {
                     var balance = parseFloat(temps.totalAmount).toFixed(8);
                     var fiat = parseFloat(
                       temps.fiat * temps.totalAmount
@@ -1444,7 +1438,12 @@ class Acc_settings extends Component {
             <DeactivateButtonWarp>
               <DeButtonDiv
                 onClick={() => {
-                  this.props.history.push("/wallet");
+                  this.props.history.push({
+                    pathname: "/wallet",
+                    state: {
+                      flag: true,
+                    },
+                  });
                 }}
               >
                 <DeNewButton>
@@ -1459,301 +1458,307 @@ class Acc_settings extends Component {
             </DeactivateButtonWarp>
           </div>
         </VerifyModal>
-        <VerifyModal
-          visible={this.state.showDeactivateModal}
-          onCancel={this.closeModal}
-          title={t("deactivate_popup_title.message")}
-          footer={null}
-          className="deactivate_modal"
-        >
-          {this.state.walletCoins ? (
-            <div>
-              <Description>{t("deactivate_popup_text.message")}</Description>
-              <SummaryTable>
-                <thead>
-                  <tr>
-                    <th>{t("deactivate_popup_table_head_coins.message")}</th>
-                    <th>{t("deactivate_popup_table_head_quantity.message")}</th>
-                    <th>
-                      {t("deactivate_popup_table_head_fiat_value.message")}
-                    </th>
-                  </tr>
-                </thead>
+        {this.state.showDeactivateModal == true ? (
+          <VerifyModal
+            visible={this.state.showDeactivateModal}
+            onCancel={this.closeModal}
+            title={t("deactivate_popup_title.message")}
+            footer={null}
+            className="deactivate_modal"
+          >
+            {this.state.walletCoins ? (
+              <div>
+                <Description>{t("deactivate_popup_text.message")}</Description>
+                <SummaryTable>
+                  <thead>
+                    <tr>
+                      <th>{t("deactivate_popup_table_head_coins.message")}</th>
+                      <th>
+                        {t("deactivate_popup_table_head_quantity.message")}
+                      </th>
+                      <th>
+                        {t("deactivate_popup_table_head_fiat_value.message")}
+                      </th>
+                    </tr>
+                  </thead>
 
-                <tbody>
-                  {this.state.walletCoins.map(function(temps) {
-                    var balance = parseFloat(temps.totalAmount).toFixed(8);
-                    var fiat = parseFloat(
-                      temps.fiat * temps.totalAmount
-                    ).toFixed(2);
-                    return (
-                      <tr>
-                        <td>{temps.coin_name}</td>
-                        <td>{balance}</td>
-                        <td>$ {fiat}</td>
-                      </tr>
-                    );
-                  })}
-                  <tr>
-                    <td colSpan="2">
-                      {t("deactivate_popup_table_footer_head.message")}
-                    </td>
-                    <td>$ {this.state.totalUSDOfWallet}</td>
-                  </tr>
-                </tbody>
-              </SummaryTable>
-            </div>
-          ) : (
-            ""
-          )}
-
-          <DeactiveWrap className="" id="deactivate">
-            <Description className="final_deactivate">
-              {t("deactivate_popup_text_confirm.message")}
-            </Description>
-            <DeactivateButtonWarp className="final_deactivate">
-              <DeButtonDiv
-                className="final_deactivate"
-                onClick={this.closeModal}
-              >
-                <DeNewButton>
-                  {t("edit_profile_titles:dont_agree_no_btn.message")}
-                </DeNewButton>
-              </DeButtonDiv>
-              <DeButtonDiv
-                className="right_btn final_deactivate"
-                onClick={this.handleDeactivateYes}
-              >
-                <DeNewButton className="right_text">
-                  {t("edit_profile_titles:dont_agree_yes_btn.message")}
-                </DeNewButton>
-              </DeButtonDiv>
-            </DeactivateButtonWarp>
-          </DeactiveWrap>
-          {this.state.walletCoins ? (
-            <DeactivateWrapper className="wrapper" id="wrapper">
-              <Description>
-                *{t("deactivate_popup_text_note.message")}
-              </Description>
-              <div className="nav__body">
-                <NewP className="deactivate">
-                  <InputLabel>
-                    {t("deactivate_popup_label3.message")}
-                  </InputLabel>
-                  <div className="otp-input-wrap">
-                    <OTPInput
-                      className="otp-input"
-                      value={this.state.deleteText}
-                      size="medium"
-                      onChange={this.deleteText.bind(this)}
-                      name="ip"
-                      // style={{ marginBottom: "20px" }}
-                    />
-                    {this.validator1.message(
-                      "text",
-                      this.state.deleteText,
-                      "required|matchDelete",
-                      "text-danger-validation",
-                      {
-                        required: this.t(
-                          "general_1:this_field_required_error.message"
-                        )
-                      }
-                    )}
-                  </div>
-                  {this.state.user2fastatus ? (
-                    <div>
-                      <InputLabel>
-                        {t("deactivate_popup_label2.message")}:
-                      </InputLabel>
-                      <div>
-                        <OTPInput
-                          min="1"
-                          value={this.state.code2fa}
-                          type="text"
-                          size="medium"
-                          onChange={this.code2fa.bind(this)}
-                          name="2FA code"
-                        />
-                        {this.validator1.message(
-                          "2FA code",
-                          this.state.code2fa,
-                          "required|numeric|min:6|max:6",
-                          "text-danger-validation",
-                          {
-                            required: t(
-                              "general_1:2fa_field_required_error.message"
-                            ),
-                            numeric: t(
-                              "general_1:2fa_must_number_error.message"
-                            ),
-                            min: t("general_1:2fa_min_error.message"),
-                            max: t("general_1:2fa_max_error.message")
-                          }
-                        )}
-                      </div>
-                    </div>
-                  ) : (
-                    <Code2FADiv>
-                      <p>{t("deactivate_popup_text1.message")}</p>
-                      <p>{t("deactivate_popup_text2.message")}</p>
-                      <Link to={"/editProfile"}>
-                        {t("deactivate_popup_click_here.message")}
-                      </Link>
-                    </Code2FADiv>
-                  )}
-                </NewP>
-                <DeactivateButtonWarp className="final_deactivate">
-                  <DeButtonDiv
-                    className="final_deactivate"
-                    onClick={this.closeModal}
-                  >
-                    <DeNewButton>
-                      {t(
-                        "edit_profile_titles:subhead_personal_form_cancel_btn.message"
-                      )}
-                    </DeNewButton>
-                  </DeButtonDiv>
-                  {this.state.user2fastatus ? (
-                    <DeButtonDiv
-                      className="right_btn final_deactivate"
-                      onClick={this.deleteUserAccount}
-                    >
-                      <DeNewButton className="right_text">
-                        {t("conversion:confirm_btn.message")}
-                      </DeNewButton>
-                    </DeButtonDiv>
-                  ) : (
-                    <DeButtonDiv
-                      disabled
-                      className="right_btn final_deactivate disabled"
-                      onClick={this.deleteUserAccount}
-                    >
-                      <DeNewButton className="right_text">
-                        {t("conversion:confirm_btn.message")}
-                      </DeNewButton>
-                    </DeButtonDiv>
-                  )}
-                </DeactivateButtonWarp>
+                  <tbody>
+                    {this.state.walletCoins.map(function (temps) {
+                      var balance = parseFloat(temps.totalAmount).toFixed(8);
+                      var fiat = parseFloat(
+                        temps.fiat * temps.totalAmount
+                      ).toFixed(2);
+                      return (
+                        <tr>
+                          <td>{temps.coin_name}</td>
+                          <td>{balance}</td>
+                          <td>$ {fiat}</td>
+                        </tr>
+                      );
+                    })}
+                    <tr>
+                      <td colSpan="2">
+                        {t("deactivate_popup_table_footer_head.message")}
+                      </td>
+                      <td>$ {this.state.totalUSDOfWallet}</td>
+                    </tr>
+                  </tbody>
+                </SummaryTable>
               </div>
-            </DeactivateWrapper>
-          ) : (
-            <DeactivateWrapper className="wrapper" id="wrapper">
-              {/* <Description>
+            ) : (
+              ""
+            )}
+
+            <DeactiveWrap className="" id="deactivate">
+              <Description className="final_deactivate">
+                {t("deactivate_popup_text_confirm.message")}
+              </Description>
+              <DeactivateButtonWarp className="final_deactivate">
+                <DeButtonDiv
+                  className="final_deactivate"
+                  onClick={this.closeModal}
+                >
+                  <DeNewButton>
+                    {t("edit_profile_titles:dont_agree_no_btn.message")}
+                  </DeNewButton>
+                </DeButtonDiv>
+                <DeButtonDiv
+                  className="right_btn final_deactivate"
+                  onClick={this.handleDeactivateYes}
+                >
+                  <DeNewButton className="right_text">
+                    {t("edit_profile_titles:dont_agree_yes_btn.message")}
+                  </DeNewButton>
+                </DeButtonDiv>
+              </DeactivateButtonWarp>
+            </DeactiveWrap>
+            {this.state.walletCoins ? (
+              <DeactivateWrapper className="wrapper" id="wrapper">
+                <Description>
+                  *{t("deactivate_popup_text_note.message")}
+                </Description>
+                <div className="nav__body">
+                  <NewP className="deactivate">
+                    <InputLabel>
+                      {t("deactivate_popup_label3.message")}
+                    </InputLabel>
+                    <div className="otp-input-wrap">
+                      <OTPInput
+                        className="otp-input"
+                        value={this.state.deleteText}
+                        size="medium"
+                        onChange={this.deleteText.bind(this)}
+                        name="ip"
+                        // style={{ marginBottom: "20px" }}
+                      />
+                      {this.validator1.message(
+                        "text",
+                        this.state.deleteText,
+                        "required|matchDelete",
+                        "text-danger-validation",
+                        {
+                          required: this.t(
+                            "general_1:this_field_required_error.message"
+                          ),
+                        }
+                      )}
+                    </div>
+                    {this.state.user2fastatus ? (
+                      <div>
+                        <InputLabel>
+                          {t("deactivate_popup_label2.message")}:
+                        </InputLabel>
+                        <div>
+                          <OTPInput
+                            min="1"
+                            value={this.state.code2fa}
+                            type="text"
+                            size="medium"
+                            onChange={this.code2fa.bind(this)}
+                            name="2FA code"
+                          />
+                          {this.validator1.message(
+                            "2FA code",
+                            this.state.code2fa,
+                            "required|numeric|min:6|max:6",
+                            "text-danger-validation",
+                            {
+                              required: t(
+                                "general_1:2fa_field_required_error.message"
+                              ),
+                              numeric: t(
+                                "general_1:2fa_must_number_error.message"
+                              ),
+                              min: t("general_1:2fa_min_error.message"),
+                              max: t("general_1:2fa_max_error.message"),
+                            }
+                          )}
+                        </div>
+                      </div>
+                    ) : (
+                      <Code2FADiv>
+                        <p>{t("deactivate_popup_text1.message")}</p>
+                        <p>{t("deactivate_popup_text2.message")}</p>
+                        <Link to={"/editProfile"}>
+                          {t("deactivate_popup_click_here.message")}
+                        </Link>
+                      </Code2FADiv>
+                    )}
+                  </NewP>
+                  <DeactivateButtonWarp className="final_deactivate">
+                    <DeButtonDiv
+                      className="final_deactivate"
+                      onClick={this.closeModal}
+                    >
+                      <DeNewButton>
+                        {t(
+                          "edit_profile_titles:subhead_personal_form_cancel_btn.message"
+                        )}
+                      </DeNewButton>
+                    </DeButtonDiv>
+                    {this.state.user2fastatus ? (
+                      <DeButtonDiv
+                        className="right_btn final_deactivate"
+                        onClick={this.deleteUserAccount}
+                      >
+                        <DeNewButton className="right_text">
+                          {t("conversion:confirm_btn.message")}
+                        </DeNewButton>
+                      </DeButtonDiv>
+                    ) : (
+                      <DeButtonDiv
+                        disabled
+                        className="right_btn final_deactivate disabled"
+                        onClick={this.deleteUserAccount}
+                      >
+                        <DeNewButton className="right_text">
+                          {t("conversion:confirm_btn.message")}
+                        </DeNewButton>
+                      </DeButtonDiv>
+                    )}
+                  </DeactivateButtonWarp>
+                </div>
+              </DeactivateWrapper>
+            ) : (
+              <DeactivateWrapper className="wrapper" id="wrapper">
+                {/* <Description>
                 *Any funds in your wallet will no longer be accessible after
                 deactivation of account.
               </Description> */}
-              <div className="nav__body">
-                <NewP className="deactivate deactivate_no_funds">
-                  <InputLabel>
-                    {t("deactivate_popup_label1.message")}:
-                  </InputLabel>
-                  <div className="otp-input-wrap">
-                    <OTPInput
-                      className="otp-input"
-                      value={this.state.deactivateText}
-                      size="medium"
-                      onChange={this.deactivateText.bind(this)}
-                      name="ip"
-                      // style={{ marginBottom: "20px" }}
-                    />
-                    {this.validator1.message(
-                      "text",
-                      this.state.deactivateText,
-                      "required|matchDeactivate",
-                      "text-danger-validation",
-                      {
-                        required: this.t(
-                          "general_1:this_field_required_error.message"
-                        )
-                      }
-                    )}
-                  </div>
-                  {this.state.user2fastatus ? (
-                    <div>
-                      <InputLabel>
-                        {this.t("deactivate_popup_label2.message")}:
-                      </InputLabel>
-                      <div>
-                        <OTPInput
-                          // style={{ paddingRight: "10px" }}
-                          min="1"
-                          value={this.state.code2fa}
-                          type="text"
-                          size="medium"
-                          onChange={this.code2fa.bind(this)}
-                          name="2FA code"
-                        />
-                        {this.validator1.message(
-                          "2FA code",
-                          this.state.code2fa,
-                          "required|numeric|min:6|max:6",
-                          "text-danger-validation",
-                          {
-                            required: this.t(
-                              "general_1:2fa_field_required_error.message"
-                            ),
-                            numeric: this.t(
-                              "general_1:2fa_must_number_error.message"
-                            ),
-                            min: this.t("general_1:2fa_min_error.message"),
-                            max: this.t("general_1:2fa_max_error.message")
-                          }
-                        )}
-                      </div>
-                    </div>
-                  ) : (
-                    <Code2FADiv>
-                      <p>{t("deactivate_popup_text1.message")}</p>
-                      <p>{t("deactivate_popup_text2.message")}</p>
-                      <Link to={"/editProfile"}>
-                        {t("deactivate_popup_click_here.message")}
-                      </Link>
-                    </Code2FADiv>
-                  )}
-                </NewP>
-                <DeactivateButtonWarp className="final_deactivate">
-                  <DeButtonDiv
-                    className="final_deactivate"
-                    onClick={this.closeModal}
-                  >
-                    <DeNewButton>
-                      {t(
-                        "edit_profile_titles:subhead_personal_form_cancel_btn.message"
+                <div className="nav__body">
+                  <NewP className="deactivate deactivate_no_funds">
+                    <InputLabel>
+                      {t("deactivate_popup_label1.message")}:
+                    </InputLabel>
+                    <div className="otp-input-wrap">
+                      <OTPInput
+                        className="otp-input"
+                        value={this.state.deactivateText}
+                        size="medium"
+                        onChange={this.deactivateText.bind(this)}
+                        name="ip"
+                        // style={{ marginBottom: "20px" }}
+                      />
+                      {this.validator1.message(
+                        "text",
+                        this.state.deactivateText,
+                        "required|matchDeactivate",
+                        "text-danger-validation",
+                        {
+                          required: this.t(
+                            "general_1:this_field_required_error.message"
+                          ),
+                        }
                       )}
-                    </DeNewButton>
-                  </DeButtonDiv>
-                  {this.state.user2fastatus ? (
+                    </div>
+                    {this.state.user2fastatus ? (
+                      <div>
+                        <InputLabel>
+                          {this.t("deactivate_popup_label2.message")}:
+                        </InputLabel>
+                        <div>
+                          <OTPInput
+                            // style={{ paddingRight: "10px" }}
+                            min="1"
+                            value={this.state.code2fa}
+                            type="text"
+                            size="medium"
+                            onChange={this.code2fa.bind(this)}
+                            name="2FA code"
+                          />
+                          {this.validator1.message(
+                            "2FA code",
+                            this.state.code2fa,
+                            "required|numeric|min:6|max:6",
+                            "text-danger-validation",
+                            {
+                              required: this.t(
+                                "general_1:2fa_field_required_error.message"
+                              ),
+                              numeric: this.t(
+                                "general_1:2fa_must_number_error.message"
+                              ),
+                              min: this.t("general_1:2fa_min_error.message"),
+                              max: this.t("general_1:2fa_max_error.message"),
+                            }
+                          )}
+                        </div>
+                      </div>
+                    ) : (
+                      <Code2FADiv>
+                        <p>{t("deactivate_popup_text1.message")}</p>
+                        <p>{t("deactivate_popup_text2.message")}</p>
+                        <Link to={"/editProfile"}>
+                          {t("deactivate_popup_click_here.message")}
+                        </Link>
+                      </Code2FADiv>
+                    )}
+                  </NewP>
+                  <DeactivateButtonWarp className="final_deactivate">
                     <DeButtonDiv
-                      className="right_btn final_deactivate"
-                      onClick={this.deleteUserAccount}
+                      className="final_deactivate"
+                      onClick={this.closeModal}
                     >
-                      <DeNewButton className="right_text">
-                        {t("conversion:confirm_btn.message")}
+                      <DeNewButton>
+                        {t(
+                          "edit_profile_titles:subhead_personal_form_cancel_btn.message"
+                        )}
                       </DeNewButton>
                     </DeButtonDiv>
-                  ) : (
-                    <DeButtonDiv
-                      disabled
-                      className="right_btn final_deactivate disabled"
-                      onClick={this.deleteUserAccount}
-                    >
-                      <DeNewButton className="right_text">
-                        {t("conversion:confirm_btn.message")}
-                      </DeNewButton>
-                    </DeButtonDiv>
-                  )}
-                </DeactivateButtonWarp>
-              </div>
-            </DeactivateWrapper>
-          )}
-        </VerifyModal>
+                    {this.state.user2fastatus ? (
+                      <DeButtonDiv
+                        className="right_btn final_deactivate"
+                        onClick={this.deleteUserAccount}
+                      >
+                        <DeNewButton className="right_text">
+                          {t("conversion:confirm_btn.message")}
+                        </DeNewButton>
+                      </DeButtonDiv>
+                    ) : (
+                      <DeButtonDiv
+                        disabled
+                        className="right_btn final_deactivate disabled"
+                        onClick={this.deleteUserAccount}
+                      >
+                        <DeNewButton className="right_text">
+                          {t("conversion:confirm_btn.message")}
+                        </DeNewButton>
+                      </DeButtonDiv>
+                    )}
+                  </DeactivateButtonWarp>
+                </div>
+              </DeactivateWrapper>
+            )}
+          </VerifyModal>
+        ) : (
+          ""
+        )}
       </AccWrap>
     );
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   /* console.log("personalDetails",state) */
   return {
     ...state,
@@ -1765,13 +1770,14 @@ const mapStateToProps = state => {
     profileDetails:
       state.simpleReducer.profileDetails !== undefined
         ? state.simpleReducer.profileDetails.data[0]
-        : ""
+        : "",
   };
 };
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   deleteAccount: (isLoggedIn, value) =>
     dispatch(deleteAccount(isLoggedIn, value)),
-  LogoutUser: (isLoggedIn, user_id) => dispatch(LogoutUser(isLoggedIn, user_id))
+  LogoutUser: (isLoggedIn, user_id) =>
+    dispatch(LogoutUser(isLoggedIn, user_id)),
 });
 
 export default translate([
@@ -1779,5 +1785,5 @@ export default translate([
   "edit_profile_titles",
   "general_1",
   "validations",
-  "conversion"
+  "conversion",
 ])(connect(mapStateToProps, mapDispatchToProps)(Acc_settings));

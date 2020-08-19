@@ -5,7 +5,7 @@ import SimpleReactValidator from "simple-react-validator";
 import "antd/dist/antd.css";
 import { Row, Col, Radio, notification, Spin } from "antd";
 import { translate } from "react-i18next";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 
 /* components */
 import { SpinSingle } from "STYLED-COMPONENTS/LOGGED_STYLE/dashStyle";
@@ -45,6 +45,7 @@ import CountryAccess from "../../../SHARED-COMPONENTS/CountryAccess";
 import CompleteKYC from "../../../SHARED-COMPONENTS/CompleteKYC";
 import PanicEnabled from "../../../SHARED-COMPONENTS/PanicEnabled";
 import CompleteProfile from "../../../SHARED-COMPONENTS/completeProfile";
+import TrialTierUpgrade from "../../../SHARED-COMPONENTS/trailTierUpgrade";
 
 let { SOCKET_HOST } = globalVariables;
 
@@ -84,13 +85,23 @@ class Limit extends Component {
       countryAccess: false,
       completeProfile: false,
       panic_status: this.props.panic_status,
+      tradeLimit: 0,
+      tradeLimitLeft: 0,
+      tradeLimitLeftAfter: 0,
+      tradeLimitFlag: false,
+      trialTierUpgrade: false,
+      tradeDaysCompleted: false,
+      freeTierDays: "",
+      showTierOne: false,
     };
+    this.timeout = null;
     this.t = this.props.t;
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.marketAccess = this.marketAccess.bind(this);
     this.walletAccess = this.walletAccess.bind(this);
     this.clearValidation = this.clearValidation.bind(this);
+    this.emitAmount = this.emitAmount.bind(this);
     this.validator = new SimpleReactValidator({
       gtzero: {
         // name the rule
@@ -141,10 +152,22 @@ class Limit extends Component {
   }
 
   /* Life-Cycle Methods */
-  marketAccess() {
+  async marketAccess() {
     if (this.state.panic_status === true) {
       this.setState({ panicEnabled: true });
+    } else if (this.props.profileDetails.is_tier_enabled) {
+      if (this.props.profileDetails.is_user_updated) {
+        if (this.props.profileDetails.legal_allowed) {
+        } else {
+          await this.setState({ countryAccess: true });
+        }
+      } else {
+        this.setState({
+          completeProfile: true,
+        });
+      }
     } else if (
+      !this.props.profileDetails.is_tier_enabled &&
       !this.props.profileDetails.is_user_updated &&
       this.props.profileDetails.is_kyc_done != "2"
     ) {
@@ -177,8 +200,21 @@ class Limit extends Component {
   walletAccess(coin) {
     if (this.state.panic_status === true) {
       this.setState({ panicEnabled: true });
+    } else if (this.props.profileDetails.is_tier_enabled) {
+      if (this.props.profileDetails.is_user_updated) {
+        if (this.props.profileDetails.legal_allowed) {
+          this.props.history.push(`/walletDetails?coinID0=${coin}`);
+        } else {
+          this.setState({ countryAccess: true });
+        }
+      } else {
+        this.setState({
+          completeProfile: true,
+        });
+      }
     } else if (
       !this.props.profileDetails.is_user_updated &&
+      !this.props.profileDetails.is_tier_enabled &&
       this.props.profileDetails.is_kyc_done != "2"
     ) {
       this.setState({
@@ -246,6 +282,7 @@ class Limit extends Component {
               // maxValue: data.maximumValue,
             },
             () => {
+              this.emitAmount();
               if (this.state.amount > 0) {
                 if (this.state.side === "Buy") {
                   if (
@@ -319,6 +356,68 @@ class Limit extends Component {
               }
             }
           );
+        }
+      });
+      this.props.io.emit("tier-0-trade-limit", {
+        amount: 0,
+        crypto: this.state.crypto,
+        symbol: `${this.state.crypto}-${this.state.currency}`,
+      });
+      this.props.io.on("trade-user-limit-availability", (data) => {
+        if (data) {
+          if (data.account_tier_flag && data.response_flag && data.tier_flag) {
+            this.setState({
+              trialTierUpgrade: true,
+              freeTierDays: data.days,
+              showTierOne: true,
+            });
+          } else if (data.account_tier_flag && data.tier_flag == false) {
+            this.setState({
+              showTierOne: false,
+            });
+            if (!data.tier_flag) {
+              this.setState({
+                completeKYC: true,
+              });
+            } else {
+              this.setState({
+                completeKYC: false,
+              });
+            }
+          } else if (!data.account_tier_flag) {
+            this.setState({
+              showTierOne: false,
+            });
+          }
+          if (data.valueObject) {
+            this.setState(
+              {
+                tradeLimit: data.valueObject.available_trade_limit_actual
+                  ? data.valueObject.available_trade_limit_actual
+                  : "0",
+                tradeLimitLeft: data.valueObject.current_left_limit
+                  ? data.valueObject.current_left_limit
+                  : "0",
+                tradeLimitLeftAfter: data.valueObject.amount_left_after_trade
+                  ? data.valueObject.amount_left_after_trade
+                  : "0",
+                tradeLimitFlag: !data.leftFlag,
+                tradeDaysCompleted: data.response_flag,
+                showTierOne: true,
+              },
+              () => {
+                if (this.state.tradeDaysCompleted) {
+                  this.setState({
+                    trialTierUpgrade: true,
+                  });
+                } else {
+                  this.setState({
+                    trialTierUpgrade: false,
+                  });
+                }
+              }
+            );
+          }
         }
       });
     }
@@ -408,10 +507,14 @@ class Limit extends Component {
 
     if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
       if (props.cryptoPair.crypto !== this.state.crypto) {
-        this.setState({ crypto: props.cryptoPair.crypto });
+        this.setState({ crypto: props.cryptoPair.crypto }, () => {
+          this.emitAmount();
+        });
       }
       if (props.cryptoPair.currency !== this.state.currency) {
-        this.setState({ currency: props.cryptoPair.currency });
+        this.setState({ currency: props.cryptoPair.currency }, () => {
+          this.emitAmount();
+        });
       }
     }
     // if (props.sellTotal && props.sellTotal != this.props.sellTotal) {
@@ -476,9 +579,21 @@ class Limit extends Component {
       completeKYC: false,
       panicEnabled: false,
       completeProfile: false,
+      trialTierUpgrade: false,
     });
   };
+  emitAmount() {
+    this.props.io.emit("tier-0-trade-limit", {
+      amount: this.state.amount ? parseFloat(this.state.amount) : 0,
+      crypto: this.state.crypto,
+      symbol: `${this.state.crypto}-${this.state.currency}`,
+    });
+  }
   onChange(e) {
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => {
+      this.emitAmount();
+    }, 1500);
     var self = this;
     let obj = {};
     let name = e.target.name;
@@ -501,6 +616,12 @@ class Limit extends Component {
           fiatCurrencyValue: 0,
         });
       }
+      this.emitAmount();
+      this.setState({
+        tradeLimit: 0,
+        tradeLimitLeft: 0,
+        tradeLimitLeftAfter: 0,
+      });
     } else {
       obj[name] = parseFloat(value).toFixed(8);
     }
@@ -714,9 +835,9 @@ class Limit extends Component {
         this method is called when Submit is called for BUY/SELL.
     */
 
-  onSubmit() {
+  async onSubmit() {
     var self = this;
-    this.marketAccess();
+    await this.marketAccess();
     if (
       this.validator.allValid() &&
       !this.state.completeKYC &&
@@ -764,6 +885,7 @@ class Limit extends Component {
                 sellEstPrice: 0,
               },
               () => {
+                this.emitAmount();
                 if (this.state.side === "Buy") {
                   this.setState({
                     fiatCurrencyValue: 0,
@@ -861,6 +983,9 @@ class Limit extends Component {
       buyPayAmt,
       sellEstPrice,
       sellPayAmt,
+      tradeLimit,
+      tradeLimitLeft,
+      tradeLimitLeftAfter,
     } = this.state;
     const RadioGroup = Radio.Group;
     let stepValue, limitPrecision;
@@ -1318,6 +1443,74 @@ class Limit extends Component {
                     {this.state.crypto} */}
                   </WillpayBelow2>
                 </ApproxBelow>
+                {this.state.showTierOne && !this.state.trialTierUpgrade ? (
+                  <>
+                    <hr />
+                    <ApproxBelow>
+                      <WillpayBelow>
+                        {this.t("tier_0_text:starter_trade_limit_text.message")}
+                      </WillpayBelow>
+                      <WillpayBelow2>
+                        {tradeLimit == "Unlimited"
+                          ? this.t("tiers:unlimited_text.message")
+                          : `${precise(parseFloat(tradeLimit), "2")} USD`}
+                      </WillpayBelow2>
+                    </ApproxBelow>
+                    <ApproxBelow>
+                      <WillpayBelow>
+                        {this.t(
+                          "tier_0_text:available_trade_limit_text.message"
+                        )}
+                      </WillpayBelow>
+                      <WillpayBelow2>
+                        {tradeLimitLeft == "Unlimited"
+                          ? this.t("tiers:unlimited_text.message")
+                          : `${precise(parseFloat(tradeLimitLeft), "2")} USD`}
+                      </WillpayBelow2>
+                    </ApproxBelow>
+                    <ApproxBelow>
+                      <WillpayBelow>
+                        {this.t(
+                          "tier_0_text:estimated_limit_after_trade_text.message"
+                        )}
+                      </WillpayBelow>
+                      <WillpayBelow2
+                        className={this.state.tradeLimitFlag ? "red" : ""}
+                      >
+                        {this.state.tradeLimitFlag
+                          ? this.t(
+                              "tier_0_text:exceeds_trade_limit_text.message"
+                            )
+                          : tradeLimitLeftAfter == "Unlimited"
+                          ? this.t("tiers:unlimited_text.message")
+                          : `${precise(
+                              parseFloat(tradeLimitLeftAfter),
+                              "2"
+                            )} USD`}
+                      </WillpayBelow2>
+                    </ApproxBelow>
+                  </>
+                ) : this.state.showTierOne ? (
+                  <>
+                    <hr />
+                    <ApproxBelow>
+                      <WillpayBelow className="tier_upgrade">
+                        {this.t("tier_0_text:congratulations_text.message")}{" "}
+                        {this.state.freeTierDays}{" "}
+                        {this.t("tier_0_text:congratulations_text1.message")}
+                        <Link to="/editProfile">
+                          {" "}
+                          {this.t(
+                            "settings:deactivate_popup_click_here.message"
+                          )}
+                          .
+                        </Link>
+                      </WillpayBelow>
+                    </ApproxBelow>
+                  </>
+                ) : (
+                  ""
+                )}
               </Esti>
             </Pay>
           ) : (
@@ -1366,6 +1559,74 @@ class Limit extends Component {
                     {this.state.currency} */}
                   </WillpayBelow2>
                 </ApproxBelow>
+                {this.state.showTierOne && !this.state.trialTierUpgrade ? (
+                  <>
+                    <hr />
+                    <ApproxBelow>
+                      <WillpayBelow>
+                        {this.t("tier_0_text:starter_trade_limit_text.message")}
+                      </WillpayBelow>
+                      <WillpayBelow2>
+                        {tradeLimit == "Unlimited"
+                          ? this.t("tiers:unlimited_text.message")
+                          : `${precise(parseFloat(tradeLimit), "2")} USD`}
+                      </WillpayBelow2>
+                    </ApproxBelow>
+                    <ApproxBelow>
+                      <WillpayBelow>
+                        {this.t(
+                          "tier_0_text:available_trade_limit_text.message"
+                        )}
+                      </WillpayBelow>
+                      <WillpayBelow2>
+                        {tradeLimitLeft == "Unlimited"
+                          ? this.t("tiers:unlimited_text.message")
+                          : `${precise(parseFloat(tradeLimitLeft), "2")} USD`}
+                      </WillpayBelow2>
+                    </ApproxBelow>
+                    <ApproxBelow>
+                      <WillpayBelow>
+                        {this.t(
+                          "tier_0_text:estimated_limit_after_trade_text.message"
+                        )}
+                      </WillpayBelow>
+                      <WillpayBelow2
+                        className={this.state.tradeLimitFlag ? "red" : ""}
+                      >
+                        {this.state.tradeLimitFlag
+                          ? this.t(
+                              "tier_0_text:exceeds_trade_limit_text.message"
+                            )
+                          : tradeLimitLeftAfter == "Unlimited"
+                          ? this.t("tiers:unlimited_text.message")
+                          : `${precise(
+                              parseFloat(tradeLimitLeftAfter),
+                              "2"
+                            )} USD`}
+                      </WillpayBelow2>
+                    </ApproxBelow>
+                  </>
+                ) : this.state.showTierOne ? (
+                  <>
+                    <hr />
+                    <ApproxBelow>
+                      <WillpayBelow className="tier_upgrade">
+                        {this.t("tier_0_text:congratulations_text.message")}{" "}
+                        {this.state.freeTierDays}{" "}
+                        {this.t("tier_0_text:congratulations_text1.message")}
+                        <Link to="/editProfile">
+                          {" "}
+                          {this.t(
+                            "settings:deactivate_popup_click_here.message"
+                          )}
+                          .
+                        </Link>
+                      </WillpayBelow>
+                    </ApproxBelow>
+                  </>
+                ) : (
+                  ""
+                )}
               </Esti>
             </Pay>
           )
@@ -1377,7 +1638,8 @@ class Limit extends Component {
             disabled={
               this.state.disabledMode ||
               this.state.disabledbtn ||
-              this.state.disabledCryptoMode
+              this.state.disabledCryptoMode ||
+              this.state.tradeLimitFlag
             }
             side={this.state.side}
             onClick={this.onSubmit}
@@ -1401,6 +1663,10 @@ class Limit extends Component {
           comingCancel={(e) => this.comingCancel(e)}
           visible={this.state.completeProfile}
         />
+        {/* <TrialTierUpgrade
+          comingCancel={(e) => this.comingCancel(e)}
+          visible={this.state.trialTierUpgrade}
+        /> */}
         {this.state.loader === true ? (
           <SpinSingle className="Single_spin">
             <Spin size="small" />
@@ -1439,4 +1705,7 @@ export default translate([
   "general_3",
   "tier_changes",
   "header",
+  "tier_0_text",
+  "settings",
+  "tiers",
 ])(connect(mapStateToProps)(withRouter(Limit)));
