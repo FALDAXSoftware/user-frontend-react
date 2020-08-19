@@ -735,6 +735,7 @@ export const TierUpload = styled.div`
     font-weight: 600;
     color: ${(props) => (props.theme.mode === "dark" ? "#fff" : "#505050")};
     opacity: 80%;
+    word-break: break-all;
     > .anticon-close {
       margin: 0 0 0 10px;
       font-size: 12px;

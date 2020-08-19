@@ -199,6 +199,11 @@ class TierTwo extends React.Component {
       console.log(error);
     } finally {
     }
+    if (this.props.profileDetails.ssn_number) {
+      this.setState({
+        id_number: this.props.profileDetails.ssn_number,
+      });
+    }
     this.setState(
       {
         is_twofactor_enabled: this.props.profileDetails.is_twofactor,
@@ -218,6 +223,15 @@ class TierTwo extends React.Component {
         is_twofactor_enabled: newProps.profileDetails.is_twofactor,
       });
     }
+    if (
+      newProps.profileDetails.ssn_number &&
+      newProps.profileDetails.ssn_number !==
+        this.props.profileDetails.ssn_number
+    ) {
+      this.setState({
+        id_number: newProps.profileDetails.ssn_number,
+      });
+    }
   }
   async getTierDetails() {
     try {
@@ -230,7 +244,6 @@ class TierTwo extends React.Component {
         values
       );
       if (result.status == 200) {
-        console.log("result^^^", result.data);
         this.setState({
           tierData: result.data,
         });
@@ -341,6 +354,7 @@ class TierTwo extends React.Component {
                 reUpload3: reupload3,
                 ssnStatus: ssn,
                 ssnNote: tierDoc.public_note,
+                id_number: tierDoc.ssn,
               });
               return;
             case 4:
@@ -419,9 +433,7 @@ class TierTwo extends React.Component {
                     var DataForm = new FormData();
                     DataForm.append("image", file);
                     if (_self.state.targetName === "valid-id") {
-                      _self.setState({ validID: file }, () => {
-                        console.log(_self.state.validID.name);
-                      });
+                      _self.setState({ validID: file });
                     } else {
                       _self.setState({ residenceProof: file });
                     }
@@ -649,7 +661,7 @@ class TierTwo extends React.Component {
       icon2: "plus",
       displaySecond: "none",
       residenceProof: "",
-      id_number: "",
+      id_number: this.props.profileDetails.ssn_number,
       TwoFactorMessage: false,
     });
     document.getElementById("valid-id").value = "";

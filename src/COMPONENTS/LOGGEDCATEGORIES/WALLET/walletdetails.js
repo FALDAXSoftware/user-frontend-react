@@ -10,7 +10,7 @@ import PanicEnabled from "SHARED-COMPONENTS/PanicEnabled";
 import { walletBal, getAllCoins } from "ACTIONS/LOGGEDCAT/walletActions";
 import { translate } from "react-i18next";
 // import { Tabs } from 'antd';
-
+import { Link } from "react-router-dom";
 /* import { DropdownButton, ButtonToolbar } from 'react-bootstrap'; */
 
 /* Styled-Components */
@@ -69,7 +69,16 @@ function callback(key) {
 }
 let { API_URL, _AMAZONBUCKET, WordpressSiteURL } = globalVariables;
 const Option = Select.Option;
-
+const StripContent = styled.div`
+  max-width: 1170px;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  padding: 10px;
+  font-weight: bold;
+  color: ${(props) =>
+    props.theme.mode === "dark" ? "#fff" : "rgb( 80,80,80 )"};
+`;
 const ContainerContact = styled(Container)`
   background-color: ${(props) =>
     props.theme.mode === "dark" ? "#041422" : "white"};
@@ -177,6 +186,12 @@ class WalletDetails extends Component {
     }
     if (this.props.location !== undefined) {
       if (
+        this.props.location.search.includes("coinID") &&
+        this.props.profileDetails.is_tier_enabled &&
+        this.props.profileDetails.legal_allowed
+      ) {
+        await this.walletDetailsApi();
+      } else if (
         this.props.location.search.includes("coinID") &&
         this.props.profileDetails.is_kyc_done == 2 &&
         this.props.profileDetails.is_allowed == true
@@ -409,6 +424,8 @@ class WalletDetails extends Component {
             this.t("validations:success_text.message"),
             responseData.message
           );
+        } else if (responseData.status == 401) {
+          this.props.history.push("/");
         } else {
           this.openNotificationWithIcon(
             "error",
@@ -443,6 +460,14 @@ class WalletDetails extends Component {
       <ContactWrap>
         <LoggedNavigation />
         <GreyWrap>
+          {this.props.profileDetails.is_tier_enabled && (
+            <StripContent>
+              {this.t("tier_0_text:wallet_info_strip_text.message")}{" "}
+              <Link to="editProfile">
+                {this.t("settings:deactivate_popup_click_here.message")}
+              </Link>
+            </StripContent>
+          )}
           {Object.keys(walletUserData).length > 0 ? (
             walletUserData.flag == 0 ? (
               <ContainerContact2>
@@ -870,9 +895,13 @@ const mapDispatchToProps = (dispatch) => ({
   LogoutUser: (isLoggedIn, user_id) =>
     dispatch(LogoutUser(isLoggedIn, user_id)),
 });
-export default translate(["general_2", "wallet", "header"])(
-  connect(mapStateToProps, mapDispatchToProps)(WalletDetails)
-);
+export default translate([
+  "general_2",
+  "wallet",
+  "header",
+  "tier_0_text",
+  "settings",
+])(connect(mapStateToProps, mapDispatchToProps)(WalletDetails));
 function precision(x) {
   if (Math.abs(x) < 1.0) {
     var e = parseInt(x.toString().split("e-")[1]);

@@ -340,7 +340,6 @@ class KYCForm extends Component {
     if (props.kycData !== undefined && props.kycData !== "") {
       if (props.kycData.status === 200) {
         this.props.kycformData();
-
         this.props.next_step(1, null, this.state.showSSN);
       } else {
         this.openNotificationWithIcon(
@@ -377,7 +376,6 @@ class KYCForm extends Component {
   async getKYCDetails() {
     var self = this;
     this.setState({ loader: true });
-    console.log("test", this.props.profileDetails.countryJsonId);
     await this.getCountryByUsingId(this.props.profileDetails.countryJsonId);
     let responseData = await (
       await fetch(API_URL + "/users/get-kyc-detail", {
@@ -758,6 +756,7 @@ class KYCForm extends Component {
       temp["zip"] = this.state.fields.zip.trim();
       var profileData = temp;
       profileData["steps"] = 1;
+      this.setState({ loader: true });
       this.props.kycFormAction(this.props.isLoggedIn, profileData);
     } else {
       this.validator.showMessages();

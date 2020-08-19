@@ -8,7 +8,7 @@ import { createForm, formShape } from "rc-form";
 import {
   removeLoader,
   addLoader,
-  getProfileDataAction
+  getProfileDataAction,
 } from "ACTIONS/SETTINGS/settingActions";
 
 /* components */
@@ -30,12 +30,12 @@ import {
   verifyTF,
   verifyQRData,
   TF_Disable,
-  disableAction
+  disableAction,
 } from "ACTIONS/SETTINGS/passwordActions.js";
 import {
   UserIconF,
   UserIconS,
-  EmailReq
+  EmailReq,
 } from "COMPONENTS/LANDING/USERFORMS/login_form";
 import { globalVariables } from "../../../Globals";
 const Wrapper = styled.div``;
@@ -119,7 +119,7 @@ const Repeat = styled(Old)`
 export const OldLabel = styled.label`
   font-size: 14.007px;
   font-family: "Open Sans";
-  color: ${props =>
+  color: ${(props) =>
     props.theme.mode === "dark" ? "#617090" : "rgba( 80, 80, 80, 0.502 )"};
   -moz-transform: matrix(0.99999985149599, 0, 0, 0.99949238260564, 0, 0);
   -webkit-transform: matrix(0.99999985149599, 0, 0, 0.99949238260564, 0, 0);
@@ -130,9 +130,9 @@ const Repeatlabel = styled(OldLabel)``;
 export const OldInput = styled(Input)`
     margin-top:5px;
     width: 95%;
-    background-color:${props =>
+    background-color:${(props) =>
       props.theme.mode === "dark" ? "#041422" : "#f8f8f8"};
-    color:${props => (props.theme.mode === "dark" ? "white" : "")}
+    color:${(props) => (props.theme.mode === "dark" ? "white" : "")}
     display:inline-block;
     font-family: "Open Sans";
     font-size:16;
@@ -177,7 +177,7 @@ const HeadTF = styled.p`
   font-size: 20px;
   font-family: "Open Sans";
   font-weight: 600;
-  color: ${props =>
+  color: ${(props) =>
     props.theme.mode === "dark" ? "#ffffff" : "rgb( 80, 80, 80 )"};
   -moz-transform: matrix(0.99999985149599, 0, 0, 0.99949238260564, 0, 0);
   -webkit-transform: matrix(0.99999985149599, 0, 0, 0.99949238260564, 0, 0);
@@ -187,7 +187,7 @@ const IsEnabled = styled.p`
   font-size: 15.008px;
   font-family: "Open Sans";
   margin-bottom: 0px !important;
-  color: ${props =>
+  color: ${(props) =>
     props.theme.mode === "dark" ? "#617090" : "rgb( 80, 80, 80 )"};
   margin-top: 20px;
   -moz-transform: matrix(0.99999985149599, 0, 0, 0.99949238260564, 0, 0);
@@ -195,13 +195,13 @@ const IsEnabled = styled.p`
   -ms-transform: matrix(0.99999985149599, 0, 0, 0.99949238260564, 0, 0);
 `;
 const Headtext = styled.p`
-  color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
 `;
 const BarRow = styled(Row)`
     width:81%;
     margin:0 auto;
     height:auto
-    background-color:${props =>
+    background-color:${(props) =>
       props.theme.mode === "dark" ? "#01090f" : "#f8f8f8"};
     margin-top:45px;
     border:1px solid #d6d6d6;
@@ -242,7 +242,7 @@ const Keywrap = styled.div`
 const Keytext = styled.span`
   font-size: 13.007px;
   font-family: "Open Sans";
-  color: ${props =>
+  color: ${(props) =>
     props.theme.mode === "dark" ? "white" : "rgb( 80, 80, 80 )"};
   line-height: 1.846;
   text-align: center;
@@ -253,7 +253,7 @@ const Keytext = styled.span`
 const Key = styled.p`
   font-size: 13.007px;
   font-family: "Open Sans";
-  color: ${props =>
+  color: ${(props) =>
     props.theme.mode === "dark" ? "rgb(0,170,250)" : "rgb(0,170,250)"};
   line-height: 1.846;
   text-align: center;
@@ -265,7 +265,7 @@ const RightCol = styled(Col)``;
 const Orderlist = styled.ol`
   margin-top: 50px;
   text-align: left;
-  color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+  color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
 `;
 const LI = styled.li`
   margin-top: 10px;
@@ -276,7 +276,7 @@ const TFcode = styled.div`
   margin-left: 40px;
 `;
 const TFlabel = styled.label`
-  color: ${props => (props.theme.mode === "dark" ? "rgb(0,170,250)" : "")};
+  color: ${(props) => (props.theme.mode === "dark" ? "rgb(0,170,250)" : "")};
 `;
 const TFinput = styled(Input)`
   width: 148px;
@@ -314,7 +314,7 @@ const Progressbar = styled(Progress)`
   margin-top: 20px;
   width: 100%;
   > div > .ant-progress-text {
-    color: ${props => (props.theme.mode === "dark" ? "white" : "")};
+    color: ${(props) => (props.theme.mode === "dark" ? "white" : "")};
   }
 `;
 
@@ -349,12 +349,12 @@ class PasswordChange extends Component {
       verify_otp: "",
       showModalTFA: false,
       backupCodeTFA: "",
-      showTFAModalOtp: false
+      showTFAModalOtp: false,
     };
     this.t = this.props.t;
   }
   static propTypes = {
-    form: formShape
+    form: formShape,
   };
 
   /* Life-Cycle Methods */
@@ -399,7 +399,7 @@ class PasswordChange extends Component {
           show_QR: false,
           isEnabled: "ENABLED",
           showModalTFA: true,
-          backupCodeTFA: props.verifyOTP.twofactor_backup_code
+          backupCodeTFA: props.verifyOTP.twofactor_backup_code,
         });
       } else {
         this.openNotificationWithIcon(
@@ -420,7 +420,7 @@ class PasswordChange extends Component {
         this.setState({
           is_twofactor: "ENABLE",
           isEnabled: "DISABLED",
-          show_QR: false
+          show_QR: false,
         });
       } else {
         this.openNotificationWithIcon(
@@ -440,7 +440,7 @@ class PasswordChange extends Component {
       ) {
         this.setState({
           QR_img: props.QR_code.dataURL,
-          Key: props.QR_code.tempSecret
+          Key: props.QR_code.tempSecret,
         });
       }
       this.props.QRData();
@@ -506,7 +506,7 @@ class PasswordChange extends Component {
             {
               current_msg: `${t("subhead_title_old_password.message")} ${t(
                 "validations:field_is_required.message"
-              )}.`
+              )}.`,
             },
             () => {
               document.querySelectorAll(".oldchange_msg")[0].style.display =
@@ -523,7 +523,7 @@ class PasswordChange extends Component {
             {
               new_msg: `${t("subhead_title_new_password.message")} ${t(
                 "validations:field_is_required.message"
-              )}.`
+              )}.`,
             },
             () => {
               document.querySelectorAll(".newchange_msg")[0].style.display =
@@ -540,7 +540,7 @@ class PasswordChange extends Component {
             {
               confirmPass_msg: `${t(
                 "general_1:subhead_title_confirm_password.message"
-              )} ${t("validations:field_is_required.message")}.`
+              )} ${t("validations:field_is_required.message")}.`,
             },
             () => {
               document.querySelectorAll(".confirmchange_msg")[0].style.display =
@@ -570,7 +570,7 @@ class PasswordChange extends Component {
         this.setState({
           current_msg: `${t("subhead_title_old_password.message")} ${t(
             "validations:field_is_required.message"
-          )}.`
+          )}.`,
         });
       }
     } else if (field === "new_password") {
@@ -597,7 +597,7 @@ class PasswordChange extends Component {
           this.setState({
             confirmPass_msg: this.t(
               "validations:password_mismatch_error.message"
-            )
+            ),
           });
         } else {
           this.setState({ confirmIcon: true });
@@ -665,7 +665,7 @@ class PasswordChange extends Component {
             document.querySelectorAll(".newchange_msg")[0].style.display =
               "block";
             this.setState({
-              new_msg: `${t("general_1:password_no_space_error.message")}`
+              new_msg: `${t("general_1:password_no_space_error.message")}`,
             });
           } else {
             this.setState({ newpassIcon: false });
@@ -676,7 +676,7 @@ class PasswordChange extends Component {
             document.querySelectorAll(".newchange_msg")[0].style.display =
               "block";
             this.setState({
-              new_msg: `${t("general_1:password_regex_error.message")}`
+              new_msg: `${t("general_1:password_regex_error.message")}`,
             });
           }
         }
@@ -690,7 +690,7 @@ class PasswordChange extends Component {
         this.setState({
           new_msg: `${t("subhead_title_new_password.message")} ${t(
             "validations:field_is_required.message"
-          )}.`
+          )}.`,
         });
       }
     } else if (field === "confirm_password") {
@@ -717,7 +717,7 @@ class PasswordChange extends Component {
           this.setState({
             confirmPass_msg: `${t(
               "general_1:password_not_match_error.message"
-            )}`
+            )}`,
           });
         }
       } else {
@@ -738,7 +738,7 @@ class PasswordChange extends Component {
         It is called when Enable/Disable TFAUTH is clicked so to check if TF is enabled or not.
     */
 
-  disable2FA = async otp => {
+  disable2FA = async (otp) => {
     try {
       this.props.showLoader();
       let response = await (
@@ -747,9 +747,9 @@ class PasswordChange extends Component {
           headers: {
             "Content-Type": "application/json",
             "Accept-Language": localStorage["i18nextLng"],
-            Authorization: "Bearer " + this.props.isLoggedIn
+            Authorization: "Bearer " + this.props.isLoggedIn,
           },
-          body: JSON.stringify({ otp: otp })
+          body: JSON.stringify({ otp: otp }),
         })
       ).json();
       if (response.status == 200) {
@@ -762,7 +762,7 @@ class PasswordChange extends Component {
           showTFAModalOtp: false,
           is_twofactor: "ENABLE",
           isEnabled: "DISABLED",
-          show_QR: false
+          show_QR: false,
         });
         this.props.getProfileData(this.props.isLoggedIn);
       } else {
@@ -773,7 +773,6 @@ class PasswordChange extends Component {
         );
       }
     } catch (error) {
-      console.log(this.t("validations:error_text.message"), error);
     } finally {
       this.props.hideLoader();
     }
@@ -813,7 +812,7 @@ class PasswordChange extends Component {
           document.querySelector("#otp_fail").style.display = "inline-block";
           document.querySelectorAll(".MSG_OTP")[0].style.display = "block";
           this.setState({
-            otp_msg: `*${t("validations:otp_error.message")}`
+            otp_msg: `*${t("validations:otp_error.message")}`,
           });
         }
       } else {
@@ -822,7 +821,7 @@ class PasswordChange extends Component {
         document.querySelector("#otp_fail").style.display = "none";
         document.querySelectorAll(".MSG_OTP")[0].style.display = "block";
         this.setState({
-          otp_msg: `*${t("general_1:otp_required_error.message")}`
+          otp_msg: `*${t("general_1:otp_required_error.message")}`,
         });
       }
     }
@@ -856,13 +855,13 @@ class PasswordChange extends Component {
   openNotificationWithIcon(type, head, desc) {
     notification[type]({
       message: head,
-      description: desc
+      description: desc,
     });
   }
 
   TFAModalCancel = () => {
     this.setState({
-      showModalTFA: false
+      showModalTFA: false,
     });
   };
   render() {
@@ -876,7 +875,7 @@ class PasswordChange extends Component {
       current_msg,
       percent,
       repeatEye,
-      showTFAModalOtp
+      showTFAModalOtp,
     } = this.state;
 
     return (
@@ -899,8 +898,8 @@ class PasswordChange extends Component {
                       me.onChangeField(e.target.value, "current_password");
                     }, // have to write original onChange here if you need
                     rules: [
-                      { type: "string", required: true, whitespace: true }
-                    ]
+                      { type: "string", required: true, whitespace: true },
+                    ],
                   })}
                 />
                 {typeEye === "password" ? (
@@ -936,8 +935,8 @@ class PasswordChange extends Component {
                       me.onChangeField(e.target.value, "new_password");
                     }, // have to write original onChange here if you need
                     rules: [
-                      { type: "string", required: true, whitespace: false }
-                    ]
+                      { type: "string", required: true, whitespace: false },
+                    ],
                   })}
                 />
                 {newEye === "password" ? (
@@ -981,8 +980,8 @@ class PasswordChange extends Component {
                       me.onChangeField(e.target.value, "confirm_password");
                     }, // have to write original onChange here if you need
                     rules: [
-                      { type: "string", required: true, whitespace: true }
-                    ]
+                      { type: "string", required: true, whitespace: true },
+                    ],
                   })}
                 />
                 {repeatEye === "password" ? (
@@ -1117,7 +1116,7 @@ class PasswordChange extends Component {
         <TFAModalOTP
           visible={showTFAModalOtp}
           isLoggedIn={this.props.isLoggedIn}
-          submit={otp => this.TF_AUTH(otp)}
+          submit={(otp) => this.TF_AUTH(otp)}
         />
       </Wrapper>
     );
@@ -1146,23 +1145,23 @@ function mapStateToProps(state) {
       state.passwordReducer.DisableTF !== undefined
         ? state.passwordReducer.DisableTF
         : null,
-    loader: state.simpleReducer.loader
+    loader: state.simpleReducer.loader,
   };
 }
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   passwordChange: (isLoggedIn, value) =>
     dispatch(passwordChange(isLoggedIn, value)),
   passwordChangeData: () => dispatch(passwordChangeData()),
-  TF_Enable: isLoggedIn => dispatch(TF_Enable(isLoggedIn)),
+  TF_Enable: (isLoggedIn) => dispatch(TF_Enable(isLoggedIn)),
   QRData: () => dispatch(QRData()),
   verifyTF: (isLoggedIn, value) => dispatch(verifyTF(isLoggedIn, value)),
   verifyQRData: () => dispatch(verifyQRData()),
-  TF_Disable: isLoggedIn => dispatch(TF_Disable(isLoggedIn)),
+  TF_Disable: (isLoggedIn) => dispatch(TF_Disable(isLoggedIn)),
   disableAction: () => dispatch(disableAction()),
   showLoader: () => dispatch(addLoader()),
   hideLoader: () => dispatch(removeLoader()),
-  getProfileData: isLoggedIn => dispatch(getProfileDataAction(isLoggedIn))
+  getProfileData: (isLoggedIn) => dispatch(getProfileDataAction(isLoggedIn)),
 });
 
 export default translate(["security_tab", "general_1", "validations"])(
