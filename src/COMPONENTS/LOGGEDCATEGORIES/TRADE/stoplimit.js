@@ -406,6 +406,7 @@ class StopLimit extends Component {
         amount: 0,
         crypto: this.state.crypto,
         symbol: `${this.state.crypto}-${this.state.currency}`,
+        user_id: this.props.profileDetails.id,
       });
       this.props.io.on("trade-user-limit-availability", (data) => {
         if (data) {
@@ -553,17 +554,15 @@ class StopLimit extends Component {
         singlefiatCurrencyValue: props.userBal.currencyFiat,
       });
     }
-    if (props.cryptoPair !== undefined && props.cryptoPair !== "") {
-      if (props.cryptoPair.crypto !== this.state.crypto) {
-        this.setState({ crypto: props.cryptoPair.crypto }, () => {
-          this.emitAmount();
-        });
-      }
-      if (props.cryptoPair.currency !== this.state.currency) {
-        this.setState({ currency: props.cryptoPair.currency }, () => {
-          this.emitAmount();
-        });
-      }
+    if (props.crypto && props.crypto !== this.props.crypto) {
+      this.setState({ crypto: props.crypto }, () => {
+        this.emitAmount();
+      });
+    }
+    if (props.currency && props.currency !== this.props.currency) {
+      this.setState({ currency: props.currency }, () => {
+        this.emitAmount();
+      });
     }
     // if (
     //   props.latestFillPrice &&
@@ -641,6 +640,7 @@ class StopLimit extends Component {
       amount: this.state.amount ? parseFloat(this.state.amount) : 0,
       crypto: this.state.crypto,
       symbol: `${this.state.crypto}-${this.state.currency}`,
+      user_id: this.props.profileDetails.id,
     });
   }
   onChange(e) {
