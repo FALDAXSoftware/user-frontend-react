@@ -372,17 +372,15 @@ class Limit extends Component {
               freeTierDays: data.days,
               showTierOne: true,
             });
-          } else if (data.account_tier_flag && data.tier_flag == false) {
+          } else if (data.account_tier_flag && !data.tier_flag) {
             this.setState({
               showTierOne: false,
+              completeKYC: true,
             });
-            if (!data.tier_flag) {
+            if (!this.state.completeKYC) {
               this.setState({
                 completeKYC: true,
-              });
-            } else {
-              this.setState({
-                completeKYC: false,
+                trialTierUpgrade: true,
               });
             }
           } else if (!data.account_tier_flag) {
