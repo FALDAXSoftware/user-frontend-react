@@ -518,7 +518,7 @@ class Trade extends Component {
       });
       this.props.io.on("spread-values", (data) => {
         if (data) {
-          if (data.ask_price && data.bid_price) {
+          if (data[0].ask_price && data[0].bid_price) {
             let spread =
               (data[0].ask_price - data[0].bid_price) /
               ((data[0].bid_price + data[0].ask_price) / 2);
