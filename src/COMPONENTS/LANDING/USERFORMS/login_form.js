@@ -909,7 +909,11 @@ class Login_Form extends Component {
         this.props.location.state.from &&
         this.props.location.state.from.pathname == "/trade"
       ) {
-        this.props.history.push(this.props.location.state.from.pathname);
+        if (this.props.isKYCDone == 2) {
+          this.props.history.push("/trade");
+        } else {
+          this.props.history.push("/editProfile");
+        }
       } else {
         if (this.props.isKYCDone == 2) {
           this.props.history.push("/trade");
@@ -931,7 +935,7 @@ class Login_Form extends Component {
                 href={
                   globalVariables.WordpressSiteURL +
                   (localStorage["i18nextLng"] &&
-                    localStorage["i18nextLng"] !== "en"
+                  localStorage["i18nextLng"] !== "en"
                     ? "/" + localStorage["i18nextLng"]
                     : "")
                 }
@@ -1003,11 +1007,11 @@ class Login_Form extends Component {
                       {this.state.typeEye === "password" ? (
                         <FAI src={_EYE} onClick={this.handleEye.bind(this)} />
                       ) : (
-                          <ActiveFAI
-                            src={_ACTIVEEYE}
-                            onClick={this.handleEye.bind(this)}
-                          />
-                        )}
+                        <ActiveFAI
+                          src={_ACTIVEEYE}
+                          onClick={this.handleEye.bind(this)}
+                        />
+                      )}
                       <PassIconS
                         id="passlog_icon_success"
                         type="check-circle"
@@ -1058,8 +1062,8 @@ class Login_Form extends Component {
                         </PassReq>
                       </div>
                     ) : (
-                        ""
-                      )}
+                      ""
+                    )}
                     <ButtonValue type="submit" value="Submit" />
                   </form>
                   {!this.state.isOtpRequired && (
@@ -1078,8 +1082,8 @@ class Login_Form extends Component {
                       </Forgot>
                     </CheckWrap>
                   ) : (
-                      ""
-                    )}
+                    ""
+                  )}
                   {this.state.showBackUpInput ? (
                     <CheckWrap>
                       {/* <Remember>
@@ -1089,8 +1093,8 @@ class Login_Form extends Component {
                       </Forgot>
                     </CheckWrap>
                   ) : (
-                      ""
-                    )}
+                    ""
+                  )}
                   {this.state.showBackUpInput && (
                     <BackUpOtp className="backuptext">
                       <OtpLabel>
@@ -1148,7 +1152,7 @@ class Login_Form extends Component {
                     {this.t("login_page:no_account_text.message")}?{" "}
                     <Signa
                       href="/signup"
-                    // onClick={() => this.dispModal("signup")}
+                      // onClick={() => this.dispModal("signup")}
                     >
                       {this.t("login_page:sign_up_text.message")}
                     </Signa>
