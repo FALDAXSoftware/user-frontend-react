@@ -466,9 +466,9 @@ class Trade extends Component {
     this.props.io.disconnect();
   }
   componentWillMount() {
-    if (!this.props.profileDetails.is_terms_agreed) {
-      this.props.history.push("/editProfile");
-    }
+    // if (!this.props.profileDetails.is_terms_agreed) {
+    //   this.props.history.push("/editProfile");
+    // }
   }
   async componentDidMount() {
     if (!this.props.profileDetails) {
