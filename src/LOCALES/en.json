@@ -3752,7 +3752,7 @@
     },
     "limit_after_transfer_text": {
       "page": "Wallet Popup",
-      "message": "Available limit after transfer",
+      "message": "Limit after transfer",
       "message_type": "Web content",
       "context": "Limit after transfer label text"
     },
@@ -4676,13 +4676,13 @@
     },
     "congratulations_text": {
       "page": "Trade",
-      "message": "Congratulations! You have completed",
+      "message": "Thank you for being apart of the FALDAX family for",
       "message_type": "Web content",
       "context": "Congratulations! You have completed text"
     },
     "congratulations_text1": {
       "page": "Trade",
-      "message": "days on FALDAX and it is time we upgrade your Starter Tier privileges. To continue further trade on the platform, please complete your Tier 1 Upgrade from the Identity Verification tab under Profile Section.",
+      "message": "days. To increase your account limits please upgrade your account tier from the Identity Verification tab under the Profile section.",
       "message_type": "Web content",
       "context": "Congratulations text"
     },
@@ -4700,7 +4700,7 @@
     },
     "wallet_info_strip_text": {
       "page": "Wallet",
-      "message": "Starter Profile has low Trade and Withdrawal limits. To increase your Trade and Withdrawal Limits, please complete your Tier 1 Upgrade from the Identity Verification tab under Profile Section.",
+      "message": "Starter Profile has low Trade and Withdrawal limits. To increase your Trade and Withdrawal Limits, please complete your Tier 1 Upgrade from the Identity Verification tab under the Profile Section.",
       "message_type": "Web content",
       "context": "wallet ifo strip for tier 0 account users"
     }
