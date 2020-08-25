@@ -169,6 +169,11 @@ class OrderTrade extends Component {
                   ) : (
                     ""
                   )}
+                  {self.props.pending === 3 ? (
+                    <th>{this.t("tier_0_text:note_text.message")}</th>
+                  ) : (
+                    ""
+                  )}
                 </tr>
               </thead>
             </TableHeader>
@@ -381,6 +386,11 @@ class OrderTrade extends Component {
                             ) : (
                               ""
                             )}
+                            {self.props.pending === 3 ? (
+                              <td>{data.reason ? data.reason : "-"}</td>
+                            ) : (
+                              ""
+                            )}
                           </tr>
                         );
                       })
@@ -398,6 +408,10 @@ class OrderTrade extends Component {
   }
 }
 
-export default translate(["trade", "conversion", "wallet", "support"])(
-  OrderTrade
-);
+export default translate([
+  "trade",
+  "conversion",
+  "wallet",
+  "support",
+  "tier_0_text",
+])(OrderTrade);
