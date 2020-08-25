@@ -74,7 +74,7 @@ class StopLimit extends Component {
       fiatCryptoValue: "",
       fiatCurrencyValue: 0,
       fiatCurrency: "",
-      latestFillPrice: "",
+      latestFillPrice: 0,
       disabledBtn: false,
       sellTotal: 0,
       buyTotal: 0,
@@ -364,8 +364,9 @@ class StopLimit extends Component {
               if (this.state.stop_price > 0) {
                 if (this.state.side === "Buy") {
                   if (
+                    parseFloat(this.state.latestFillPrice) != 0 &&
                     parseFloat(this.state.stop_price) >
-                    parseFloat(this.state.latestFillPrice)
+                      parseFloat(this.state.latestFillPrice)
                   ) {
                     this.setState({
                       disabledBtn: false,
@@ -377,8 +378,9 @@ class StopLimit extends Component {
                   }
                 } else {
                   if (
+                    parseFloat(this.state.latestFillPrice) != 0 &&
                     parseFloat(this.state.stop_price) <
-                    parseFloat(this.state.latestFillPrice)
+                      parseFloat(this.state.latestFillPrice)
                   ) {
                     this.setState({
                       disabledBtn: false,
@@ -398,7 +400,7 @@ class StopLimit extends Component {
           );
         } else {
           this.setState({
-            latestFillPrice: "",
+            latestFillPrice: 0,
             disabledBtn: false,
           });
         }
@@ -682,8 +684,9 @@ class StopLimit extends Component {
         if (this.state.stop_price > 0) {
           if (this.state.side === "Buy") {
             if (
+              parseFloat(this.state.latestFillPrice) != 0 &&
               parseFloat(this.state.stop_price) >
-              parseFloat(this.state.latestFillPrice)
+                parseFloat(this.state.latestFillPrice)
             ) {
               this.setState({
                 disabledBtn: false,
@@ -695,8 +698,9 @@ class StopLimit extends Component {
             }
           } else {
             if (
+              parseFloat(this.state.latestFillPrice) != 0 &&
               parseFloat(this.state.stop_price) <
-              parseFloat(this.state.latestFillPrice)
+                parseFloat(this.state.latestFillPrice)
             ) {
               this.setState({
                 disabledBtn: false,
@@ -1454,7 +1458,8 @@ class StopLimit extends Component {
                 }
               )}
             </TotalWrap>
-            {this.state.side === "Buy" && this.state.latestFillPrice ? (
+            {this.state.side === "Buy" &&
+            parseFloat(this.state.latestFillPrice) != 0 ? (
               <TriggerDiv className={this.state.disabledBtn ? "red" : ""}>
                 <span>
                   {this.t("tier_changes:trigger_text.message")}{" "}
@@ -1468,7 +1473,7 @@ class StopLimit extends Component {
                 </span>
               </TriggerDiv>
             ) : (
-              this.state.latestFillPrice && (
+              parseFloat(this.state.latestFillPrice) != 0 && (
                 <TriggerDiv className={this.state.disabledBtn ? "red" : ""}>
                   <span>
                     {this.t("tier_changes:trigger_text.message")}{" "}
