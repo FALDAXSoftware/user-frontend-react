@@ -491,6 +491,7 @@ class Trade extends Component {
 
     this.joinRoom();
     if (this.props.io) {
+      this.props.getProfileDataAction(this.props.isLoggedIn);
       this.setState({
         insLoader: true,
         userBalLoader: true,
