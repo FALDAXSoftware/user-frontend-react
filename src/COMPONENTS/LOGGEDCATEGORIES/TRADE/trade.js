@@ -515,7 +515,18 @@ class Trade extends Component {
         this.getInstrumentData();
       }, 10000);
       this.props.io.on("user-wallet-balance", (data) => {
-        this.setState({ userBal: data, userBalLoader: false });
+        if (data) {
+          this.props.io.emit("user_wallet_data", {
+            user_id: this.props.profileDetails.id,
+            crypto: this.state.crypto,
+            currency: this.state.currency,
+          });
+        }
+      });
+      this.props.io.on("user-after-wallet-balance", (data) => {
+        if (data) {
+          this.setState({ userBal: data, userBalLoader: false });
+        }
       });
       this.props.io.on("spread-values", (data) => {
         if (data) {
