@@ -48,7 +48,7 @@ class SellTable extends Component {
     super(props);
     this.state = {
       data: [],
-      crypto: this.props.cryptoPair ? this.props.cryptoPair.crypto : "XRP",
+      crypto: this.props.cryptoPair ? this.props.cryptoPair.crypto : "ETH",
       currency: this.props.cryptoPair ? this.props.cryptoPair.currency : "BTC",
       lastsum: 0,
       loader: false,
@@ -64,7 +64,10 @@ class SellTable extends Component {
     // var self = this;
     if (this.props.io) {
       this.props.io.on("sell-book-data", (data) => {
-        this.updateData(data);
+        console.log(">>>>>>>>>>>>>>>>>>>>", data)
+        if (data.name == this.props.crypto + "-" + this.props.currency) {
+          this.updateData(data);
+        }
       });
     }
     // self.sellTableData();
@@ -347,8 +350,8 @@ class SellTable extends Component {
                         ))}
                       </tbody>
                     ) : (
-                      <NDF>{this.t("wallet:no_data_found_text.message")}</NDF>
-                    )}
+                        <NDF>{this.t("wallet:no_data_found_text.message")}</NDF>
+                      )}
                   </TableContent>
                 </Scrollbars>
               </ScrollTableContent>
@@ -360,8 +363,8 @@ class SellTable extends Component {
             <Spin size="small" />
           </SpinSingle>
         ) : (
-          ""
-        )}
+            ""
+          )}
       </div>
     );
   }
