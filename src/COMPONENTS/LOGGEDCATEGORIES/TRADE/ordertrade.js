@@ -291,19 +291,18 @@ class OrderTrade extends Component {
                             <SideType type={sideValue}>
                               {precise(data.quantity, self.props.qtyPrecision)}
                             </SideType>
-                            <td>
-                              {self.props.pending !== 2
-                                ? data.order_type === "Market"
-                                  ? data.order_type
-                                  : `${precise(
-                                      data.limit_price,
-                                      self.props.pricePrecision
-                                    )}`
+                            {self.props.pending !== 2
+                              ? data.order_type === "Market" &&
+                                data.user_id == self.props.profileDetails.id
+                                ? data.order_type
                                 : `${precise(
-                                    data.limit_price,
+                                    data.fill_price,
                                     self.props.pricePrecision
-                                  )}`}
-                            </td>
+                                  )}`
+                              : `${precise(
+                                  data.limit_price,
+                                  self.props.pricePrecision
+                                )}`}
                             <SideType type={sideValue}>
                               {self.props.pending !== 2
                                 ? `${precise(
