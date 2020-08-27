@@ -181,8 +181,8 @@ export const ButtonDel = styled(Button)`
 `;
 export const PaginationS = styled(Pagination)`
   margin-top: 30px !important;
-  &.trade_pagination {
-    margin: 30px;
+  &.my_order_trade_pagination {
+    margin-top: 22px !important;
   }
   & .ant-pagination-item-link {
     background-color: ${(props) =>

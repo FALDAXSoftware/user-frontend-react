@@ -16,7 +16,9 @@ import {
   ScrollTableContent,
 } from "STYLED-COMPONENTS/LOGGED_STYLE/tradeStyle";
 import { precise } from "../../../precision";
-import { PairMainDiv } from "./trade";
+import trade, { PairMainDiv } from "./trade";
+import { PaginationS } from "../../../STYLED-COMPONENTS/SETTINGS/accsettingsStyle";
+import { PAGE_SIZE_OPTIONS, PAGESIZE } from "Globals.js";
 
 export const OrderWrap = styled.div`
   margin-left: 30px;
@@ -44,6 +46,9 @@ const CancelBTN = styled(Button)`
   padding: 0;
   background: transparent;
   height: auto;
+`;
+const PaginationDiv = styled.div`
+  margin: 0 30px !important;
 `;
 export const HTable = styled(Table)`
   > thead {
@@ -88,6 +93,8 @@ class OrderTrade extends Component {
     super(props);
     this.state = {
       disabled: false,
+      tradeCount: 100,
+      tableHeight: "",
     };
     this.t = this.props.t;
     this.cancelOrder = this.cancelOrder.bind(this);
@@ -97,11 +104,38 @@ class OrderTrade extends Component {
         Page: /trade --> Orders and Trades
         This method is called when u cancel an order and parent callback method is called.
     */
+  componentDidMount() {
+    let height = this.props.height;
+    if (this.state.tradeCount > 0) {
+      height = height - 30;
+      this.setState({
+        tableHeight: height,
+      });
+    } else {
+      this.setState({
+        tableHeight: height,
+      });
+    }
+  }
   componentWillReceiveProps(props) {
     if (props.butonEnable) {
       this.setState({
         disabled: false,
       });
+    }
+    if (this.props.height !== props.height && props.height) {
+      let height = props.height;
+      if (this.state.tradeCount > 0) {
+        height = height - 30;
+        this.setState({
+          tableHeight: height,
+        });
+      } else {
+        this.setState({
+          tableHeight: height,
+        });
+      }
+      console.log("heigjht peops", props.height, height);
     }
   }
   cancelOrder(id, side, type, flagValue) {
@@ -110,302 +144,337 @@ class OrderTrade extends Component {
     });
     this.props.cancelOrder(id, side, type, flagValue);
   }
-
+  handlePagination = (page) => {
+    this.setState({ page }, () => {
+      console.log("Emit event page change");
+      // this.historyResult();
+    });
+  };
   render() {
+    let pageSizeOptions = PAGE_SIZE_OPTIONS;
+    const { tradeCount, page, limit } = this.state;
     var self = this;
     return (
-      <OrderWrap>
-        <OTwrap>
-          <div className="tbl-header">
-            <TableHeader cellpadding="10px" cellspacing="0" border="0">
-              {/* <HTable striped responsive> */}
-              <thead>
-                <tr>
-                  {/* <th>{this.t("history:side_text.message")}</th> */}
-                  <th>
-                    {this.t("wallet:amount_text.message")} ({self.props.crypto})
-                  </th>
-                  {self.props.pending !== 2 ? (
+      <>
+        <OrderWrap>
+          <OTwrap>
+            <div className="tbl-header">
+              <TableHeader cellpadding="10px" cellspacing="0" border="0">
+                {/* <HTable striped responsive> */}
+                <thead>
+                  <tr>
+                    {/* <th>{this.t("history:side_text.message")}</th> */}
                     <th>
-                      {this.t("history:price_text.message")} (
+                      {this.t("wallet:amount_text.message")} (
+                      {self.props.crypto})
+                    </th>
+                    {self.props.pending !== 2 ? (
+                      <th>
+                        {this.t("history:price_text.message")} (
+                        {self.props.currency})
+                      </th>
+                    ) : (
+                      <th>
+                        {this.t("limit_price_text.message")} (
+                        {self.props.currency})
+                      </th>
+                    )}
+                    {self.props.pending !== 2 ? (
+                      <th>
+                        {this.t("unfilled_text.message")} ({self.props.crypto})
+                      </th>
+                    ) : (
+                      <th>
+                        {this.t("stop_price_text.message")} (
+                        {self.props.currency})
+                      </th>
+                    )}
+                    {self.props.pending === 3 ? (
+                      <th>
+                        {this.t("limit_price_text.message")} (
+                        {self.props.currency})
+                      </th>
+                    ) : (
+                      <th>
+                        {this.t("fill_price_text.message")} (
+                        {self.props.currency})
+                      </th>
+                    )}
+                    <th>{this.t("type_text.message")}</th>
+                    <th>{this.t("time_text.message")}</th>
+                    <th>
+                      {this.t("conversion:total_text.message")} (
                       {self.props.currency})
                     </th>
+                    {self.props.pending === 2 ? (
+                      <th>{this.t("actions_text.message")}</th>
+                    ) : (
+                      ""
+                    )}
+                    {self.props.pending === 3 ? (
+                      <th>{this.t("tier_0_text:note_text.message")}</th>
+                    ) : (
+                      ""
+                    )}
+                  </tr>
+                </thead>
+              </TableHeader>
+            </div>
+          </OTwrap>
+          <OTwrap>
+            <ScrollTableContent>
+              <Scrollbars
+                style={{ height: this.state.tableHeight }}
+                className="scrollbar"
+              >
+                <TableContent cellpadding="10px" cellspacing="0" border="0">
+                  {this.props.orderTradeLoader ? (
+                    <tbody>
+                      <Loader color="#1990ff" width="50" height="50" />
+                    </tbody>
                   ) : (
-                    <th>
-                      {this.t("limit_price_text.message")} (
-                      {self.props.currency})
-                    </th>
-                  )}
-                  {self.props.pending !== 2 ? (
-                    <th>
-                      {this.t("unfilled_text.message")} ({self.props.crypto})
-                    </th>
-                  ) : (
-                    <th>
-                      {this.t("stop_price_text.message")} ({self.props.currency}
-                      )
-                    </th>
-                  )}
-                  {self.props.pending === 3 ? (
-                    <th>
-                      {this.t("limit_price_text.message")} (
-                      {self.props.currency})
-                    </th>
-                  ) : (
-                    <th>
-                      {this.t("fill_price_text.message")} ({self.props.currency}
-                      )
-                    </th>
-                  )}
+                    <tbody>
+                      {this.props.orderTradeData.length > 0 ? (
+                        this.props.orderTradeData.map(function (data) {
+                          // console.log("data^^^data", data);
+                          var date;
+                          var flagValue = false;
+                          if (data.flag == true) {
+                            data.fill_price = 0.0;
+                          }
+                          if (data.flag == true) {
+                            flagValue = true;
+                          }
+                          if (
+                            self.props.profileDetails.date_format ===
+                            "MM/DD/YYYY"
+                          )
+                            date = moment
+                              .utc(data.created_at)
+                              .local()
+                              .format("MM/DD/YYYY, HH:mm:ss");
+                          else if (
+                            self.props.profileDetails.date_format ===
+                            "DD/MM/YYYY"
+                          )
+                            date = moment
+                              .utc(data.created_at)
+                              .local()
+                              .format("DD/MM/YYYY, HH:mm:ss");
+                          else
+                            date = moment
+                              .utc(data.created_at)
+                              .local()
+                              .format("MMM D, YYYY, HH:mm:ss");
 
-                  <th>{this.t("type_text.message")}</th>
-                  <th>{this.t("time_text.message")}</th>
-                  <th>
-                    {this.t("conversion:total_text.message")} (
-                    {self.props.currency})
-                  </th>
-                  {self.props.pending === 2 ? (
-                    <th>{this.t("actions_text.message")}</th>
-                  ) : (
-                    ""
-                  )}
-                  {self.props.pending === 3 ? (
-                    <th>{this.t("tier_0_text:note_text.message")}</th>
-                  ) : (
-                    ""
-                  )}
-                </tr>
-              </thead>
-            </TableHeader>
-          </div>
-        </OTwrap>
-        <OTwrap>
-          <ScrollTableContent>
-            <Scrollbars
-              style={{ height: this.props.height }}
-              className="scrollbar"
-            >
-              <TableContent cellpadding="10px" cellspacing="0" border="0">
-                {this.props.orderTradeLoader ? (
-                  <tbody>
-                    <Loader color="#1990ff" width="50" height="50" />
-                  </tbody>
-                ) : (
-                  <tbody>
-                    {this.props.orderTradeData.length > 0 ? (
-                      this.props.orderTradeData.map(function (data) {
-                        // console.log("data^^^data", data);
-                        var date;
-                        var flagValue = false;
-                        if (data.flag == true) {
-                          data.fill_price = 0.0;
-                        }
-                        if (data.flag == true) {
-                          flagValue = true;
-                        }
-                        if (
-                          self.props.profileDetails.date_format === "MM/DD/YYYY"
-                        )
-                          date = moment
-                            .utc(data.created_at)
-                            .local()
-                            .format("MM/DD/YYYY, HH:mm:ss");
-                        else if (
-                          self.props.profileDetails.date_format === "DD/MM/YYYY"
-                        )
-                          date = moment
-                            .utc(data.created_at)
-                            .local()
-                            .format("DD/MM/YYYY, HH:mm:ss");
-                        else
-                          date = moment
-                            .utc(data.created_at)
-                            .local()
-                            .format("MMM D, YYYY, HH:mm:ss");
-
-                        if (
-                          data.requested_user_id == self.props.profileDetails.id
-                        ) {
-                          var Filled = 0;
-                        } else {
-                          if (data.fix_quantity) {
-                            var Filled = data.fix_quantity - data.quantity;
+                          if (
+                            data.requested_user_id ==
+                            self.props.profileDetails.id
+                          ) {
+                            var Filled = 0;
                           } else {
-                            var Filled = data.quantity;
+                            if (data.fix_quantity) {
+                              var Filled = data.fix_quantity - data.quantity;
+                            } else {
+                              var Filled = data.quantity;
+                            }
                           }
-                        }
-                        var typeValue = "";
-                        var currencyValue = "";
-                        var sideValue;
-                        if (self.props.pending == 1) {
-                          if (data.user_id == self.props.profileDetails.id) {
-                            sideValue = data.side;
-                          } else if (
-                            data.requested_user_id ==
-                            self.props.profileDetails.id
-                          ) {
-                            sideValue = data.side == "Buy" ? "Sell" : "Buy";
-                          }
-                          if (data.side == "Buy") {
+                          var typeValue = "";
+                          var currencyValue = "";
+                          var sideValue;
+                          if (self.props.pending == 1) {
                             if (data.user_id == self.props.profileDetails.id) {
-                              currencyValue = data.settle_currency;
+                              sideValue = data.side;
                             } else if (
                               data.requested_user_id ==
                               self.props.profileDetails.id
                             ) {
-                              currencyValue = data.currency;
+                              sideValue = data.side == "Buy" ? "Sell" : "Buy";
                             }
-                          } else if (data.side == "Sell") {
+                            if (data.side == "Buy") {
+                              if (
+                                data.user_id == self.props.profileDetails.id
+                              ) {
+                                currencyValue = data.settle_currency;
+                              } else if (
+                                data.requested_user_id ==
+                                self.props.profileDetails.id
+                              ) {
+                                currencyValue = data.currency;
+                              }
+                            } else if (data.side == "Sell") {
+                              if (
+                                data.user_id == self.props.profileDetails.id
+                              ) {
+                                currencyValue = data.settle_currency;
+                              } else if (
+                                data.requested_user_id ==
+                                self.props.profileDetails.id
+                              ) {
+                                currencyValue = data.currency;
+                              }
+                            }
                             if (data.user_id == self.props.profileDetails.id) {
-                              currencyValue = data.settle_currency;
+                              typeValue = data.order_type;
                             } else if (
                               data.requested_user_id ==
                               self.props.profileDetails.id
                             ) {
-                              currencyValue = data.currency;
+                              if (data.is_stop_limit == true) {
+                                typeValue = "StopLimit";
+                              } else {
+                                typeValue = "Limit";
+                              }
                             }
-                          }
-                          if (data.user_id == self.props.profileDetails.id) {
-                            typeValue = data.order_type;
-                          } else if (
-                            data.requested_user_id ==
-                            self.props.profileDetails.id
-                          ) {
+                          } else {
                             if (data.is_stop_limit == true) {
                               typeValue = "StopLimit";
                             } else {
-                              typeValue = "Limit";
+                              typeValue = data.order_type;
                             }
+                            currencyValue = data.settle_currency;
+                            sideValue = data.side;
                           }
-                        } else {
-                          if (data.is_stop_limit == true) {
-                            typeValue = "StopLimit";
-                          } else {
-                            typeValue = data.order_type;
-                          }
-                          currencyValue = data.settle_currency;
-                          sideValue = data.side;
-                        }
-                        return (
-                          <tr>
-                            <SideType type={sideValue}>
-                              {precise(data.quantity, self.props.qtyPrecision)}
-                            </SideType>
+                          return (
+                            <tr>
+                              <SideType type={sideValue}>
+                                {precise(
+                                  data.quantity,
+                                  self.props.qtyPrecision
+                                )}
+                              </SideType>
 
-                            <td>
-                              {self.props.pending !== 2
-                                ? data.order_type === "Market" &&
-                                  data.user_id == self.props.profileDetails.id
-                                  ? data.order_type
+                              <td>
+                                {self.props.pending !== 2
+                                  ? data.order_type === "Market" &&
+                                    data.user_id == self.props.profileDetails.id
+                                    ? data.order_type
+                                    : `${precise(
+                                        data.fill_price,
+                                        self.props.pricePrecision
+                                      )}`
                                   : `${precise(
-                                      data.fill_price,
+                                      data.limit_price,
+                                      self.props.pricePrecision
+                                    )}`}
+                              </td>
+                              <SideType type={sideValue}>
+                                {self.props.pending !== 2
+                                  ? `${precise(
+                                      Filled,
                                       self.props.pricePrecision
                                     )}`
-                                : `${precise(
-                                    data.limit_price,
-                                    self.props.pricePrecision
-                                  )}`}
-                            </td>
-                            <SideType type={sideValue}>
-                              {self.props.pending !== 2
-                                ? `${precise(
-                                    Filled,
-                                    self.props.pricePrecision
-                                  )}`
-                                : data.stop_price !== undefined
-                                ? `${precise(
-                                    data.stop_price,
-                                    self.props.pricePrecision
-                                  )}`
-                                : 0}
-                            </SideType>
-                            <td>
-                              {self.props.pending === 2
-                                ? data.order_type === "Market"
-                                  ? "Market"
+                                  : data.stop_price !== undefined
+                                  ? `${precise(
+                                      data.stop_price,
+                                      self.props.pricePrecision
+                                    )}`
+                                  : 0}
+                              </SideType>
+                              <td>
+                                {self.props.pending === 2
+                                  ? data.order_type === "Market"
+                                    ? "Market"
+                                    : precise(
+                                        data.fill_price,
+                                        self.props.pricePrecision
+                                      )
+                                  : self.props.pending === 3
+                                  ? precise(
+                                      data.limit_price,
+                                      self.props.pricePrecision
+                                    )
                                   : precise(
                                       data.fill_price,
                                       self.props.pricePrecision
-                                    )
-                                : self.props.pending === 3
-                                ? precise(
-                                    data.limit_price,
-                                    self.props.pricePrecision
+                                    )}
+                              </td>
+                              <td>{typeValue}</td>
+                              <td>{date}</td>
+                              <td>
+                                {self.props.pending === 2
+                                  ? `${precise(
+                                      data.quantity * data.limit_price,
+                                      self.props.pricePrecision
+                                    )}`
+                                  : self.props.pending === 3
+                                  ? `${precise(
+                                      data.quantity * data.limit_price,
+                                      self.props.pricePrecision
+                                    )}`
+                                  : `${precise(
+                                      data.quantity * data.fill_price,
+                                      self.props.pricePrecision
+                                    )}`}
+                              </td>
+                              {self.props.pending === 2 ? (
+                                data.order_type !== "Market" ? (
+                                  data.flag && data.is_under_execution ? (
+                                    <td>-</td>
+                                  ) : (
+                                    <td>
+                                      <CancelBTN
+                                        disabled={self.state.disabled}
+                                        onClick={() =>
+                                          self.cancelOrder(
+                                            data.id,
+                                            data.side,
+                                            data.order_type,
+                                            flagValue
+                                          )
+                                        }
+                                      >
+                                        <Icon
+                                          style={{
+                                            color: "#279CED",
+                                            fontSize: "18px",
+                                          }}
+                                          type="close-circle"
+                                        />
+                                      </CancelBTN>
+                                    </td>
                                   )
-                                : precise(
-                                    data.fill_price,
-                                    self.props.pricePrecision
-                                  )}
-                            </td>
-                            <td>{typeValue}</td>
-                            <td>{date}</td>
-                            <td>
-                              {self.props.pending === 2
-                                ? `${precise(
-                                    data.quantity * data.limit_price,
-                                    self.props.pricePrecision
-                                  )}`
-                                : self.props.pending === 3
-                                ? `${precise(
-                                    data.quantity * data.limit_price,
-                                    self.props.pricePrecision
-                                  )}`
-                                : `${precise(
-                                    data.quantity * data.fill_price,
-                                    self.props.pricePrecision
-                                  )}`}
-                            </td>
-                            {self.props.pending === 2 ? (
-                              data.order_type !== "Market" ? (
-                                data.flag && data.is_under_execution ? (
-                                  <td>-</td>
                                 ) : (
-                                  <td>
-                                    <CancelBTN
-                                      disabled={self.state.disabled}
-                                      onClick={() =>
-                                        self.cancelOrder(
-                                          data.id,
-                                          data.side,
-                                          data.order_type,
-                                          flagValue
-                                        )
-                                      }
-                                    >
-                                      <Icon
-                                        style={{
-                                          color: "#279CED",
-                                          fontSize: "18px",
-                                        }}
-                                        type="close-circle"
-                                      />
-                                    </CancelBTN>
-                                  </td>
+                                  <td>-</td>
                                 )
                               ) : (
-                                <td>-</td>
-                              )
-                            ) : (
-                              ""
-                            )}
-                            {self.props.pending === 3 ? (
-                              <td>{data.reason ? data.reason : "-"}</td>
-                            ) : (
-                              ""
-                            )}
-                          </tr>
-                        );
-                      })
-                    ) : (
-                      <NDF>{this.t("support:no_data_found.message")}</NDF>
-                    )}
-                  </tbody>
-                )}
-              </TableContent>
-            </Scrollbars>
-          </ScrollTableContent>
-        </OTwrap>
-      </OrderWrap>
+                                ""
+                              )}
+                              {self.props.pending === 3 ? (
+                                <td>{data.reason ? data.reason : "-"}</td>
+                              ) : (
+                                ""
+                              )}
+                            </tr>
+                          );
+                        })
+                      ) : (
+                        <NDF>{this.t("support:no_data_found.message")}</NDF>
+                      )}
+                    </tbody>
+                  )}
+                </TableContent>
+              </Scrollbars>
+            </ScrollTableContent>
+          </OTwrap>
+        </OrderWrap>
+        {/* <PaginationDiv>
+          {tradeCount > 0 ? (
+            <PaginationS
+              className="ant-users-pagination my_order_trade_pagination"
+              onChange={this.handlePagination.bind(this)}
+              pageSize={limit}
+              current={page}
+              total={tradeCount}
+              showSizeChanger
+              onShowSizeChange={this.changePaginationSize}
+              pageSizeOptions={pageSizeOptions}
+            />
+          ) : (
+            ""
+          )}
+        </PaginationDiv> */}
+      </>
     );
   }
 }

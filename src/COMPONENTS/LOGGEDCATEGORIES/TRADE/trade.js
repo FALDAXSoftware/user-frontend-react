@@ -76,7 +76,9 @@ import DepthChartAm from "./depth_ammchart";
 import { getProfileDataAction } from "../../../ACTIONS/SETTINGS/settingActions";
 import { precise } from "../../../precision";
 import { APIUtility } from "../../../httpHelper";
-function precision(x) { }
+import { PaginationS } from "../../../STYLED-COMPONENTS/SETTINGS/accsettingsStyle";
+import { PAGE_SIZE_OPTIONS, PAGESIZE } from "Globals.js";
+function precision(x) {}
 function precisionTwo(x) {
   if (Math.abs(x) < 1.0) {
     var e = parseInt(x.toString().split("e-")[1]);
@@ -133,6 +135,9 @@ const OrderTradeWrap = styled.div`
     flex-wrap: wrap;
   }
 `;
+const PaginationDiv = styled.div`
+  margin: 0 30px !important;
+`;
 const GreyWrapTrade = styled(GreyWrap)`
   font-family: "Open sans";
   padding-top: 95px;
@@ -142,7 +147,7 @@ const GreyWrapTrade = styled(GreyWrap)`
     // margin: 5px;
     overflow: hidden;
     background-color: ${(props) =>
-    props.theme.mode === "dark" ? "#041b2c" : "white"};
+      props.theme.mode === "dark" ? "#041b2c" : "white"};
     border-radius: 5px;
     -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -154,7 +159,7 @@ const GreyWrapTrade = styled(GreyWrap)`
     // margin: 5px;
     overflow: auto;
     background-color: ${(props) =>
-    props.theme.mode === "dark" ? "#041b2c" : "white"};
+      props.theme.mode === "dark" ? "#041b2c" : "white"};
     border-radius: 5px;
     -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -166,7 +171,7 @@ const GreyWrapTrade = styled(GreyWrap)`
     // margin: 5px;
     overflow: auto;
     background-color: ${(props) =>
-    props.theme.mode === "dark" ? "#041b2c" : "white"};
+      props.theme.mode === "dark" ? "#041b2c" : "white"};
     border-radius: 5px;
     -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -178,7 +183,7 @@ const GreyWrapTrade = styled(GreyWrap)`
     // margin: 5px;
     overflow: auto;
     background-color: ${(props) =>
-    props.theme.mode === "dark" ? "#041b2c" : "white"};
+      props.theme.mode === "dark" ? "#041b2c" : "white"};
     border-radius: 5px;
     -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -190,7 +195,7 @@ const GreyWrapTrade = styled(GreyWrap)`
     // margin: 5px;
     overflow: auto;
     background-color: ${(props) =>
-    props.theme.mode === "dark" ? "#041b2c" : "white"};
+      props.theme.mode === "dark" ? "#041b2c" : "white"};
     border-radius: 5px;
     -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -202,7 +207,7 @@ const GreyWrapTrade = styled(GreyWrap)`
     // margin: 5px;
     overflow: auto;
     background-color: ${(props) =>
-    props.theme.mode === "dark" ? "#041b2c" : "white"};
+      props.theme.mode === "dark" ? "#041b2c" : "white"};
     border-radius: 5px;
     -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -214,7 +219,7 @@ const GreyWrapTrade = styled(GreyWrap)`
     // margin: 5px;
     overflow: auto;
     background-color: ${(props) =>
-    props.theme.mode === "dark" ? "#041b2c" : "white"};
+      props.theme.mode === "dark" ? "#041b2c" : "white"};
     border-radius: 5px;
     -webkit-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
     -moz-box-shadow: -1px 5px 31px -10px rgba(0, 0, 0, 0.53);
@@ -225,13 +230,13 @@ const GreyWrapTrade = styled(GreyWrap)`
 const RGL = styled(ResponsiveReactGridLayout)`
   & .react-resizable-handle::after {
     border-right: ${(props) =>
-    props.theme.mode === "dark"
-      ? "2px solid rgb(255, 255, 255) !important"
-      : ""};
+      props.theme.mode === "dark"
+        ? "2px solid rgb(255, 255, 255) !important"
+        : ""};
     border-bottom: ${(props) =>
-    props.theme.mode === "dark"
-      ? "2px solid rgb(255, 255, 255) !important"
-      : ""};
+      props.theme.mode === "dark"
+        ? "2px solid rgb(255, 255, 255) !important"
+        : ""};
   }
 `;
 export const PairMainDiv = styled(Col)`
@@ -311,7 +316,7 @@ const TopDiv = styled.div`
     font-weight: bold;
     font-size: 16px;
     color: ${(props) =>
-    props.theme.mode === "dark" ? "#fff" : "rgba(0, 0, 0, 0.65)"};
+      props.theme.mode === "dark" ? "#fff" : "rgba(0, 0, 0, 0.65)"};
     > .change {
       padding: 0 15px 0 0;
     }
@@ -339,11 +344,11 @@ const TopDiv = styled.div`
   &.pair_name {
     & .top_head {
       color: ${(props) =>
-    props.theme.mode === "dark" ? "#1890ff" : "#174c7e"};
+        props.theme.mode === "dark" ? "#1890ff" : "#174c7e"};
     }
     & .bottom_name {
       color: ${(props) =>
-    props.theme.mode === "dark" ? "#fff" : "rgba(0, 0, 0, 0.65)"};
+        props.theme.mode === "dark" ? "#fff" : "rgba(0, 0, 0, 0.65)"};
     }
   }
   @media (max-width: 990px) {
@@ -395,6 +400,9 @@ class Trade extends Component {
       quantityPrecision: "0",
       panic_status: false,
       spreadPer: "",
+      page: 1,
+      limit: PAGESIZE,
+      tradeCount: 100,
     };
     io = this.props.io;
     this.t = this.props.t;
@@ -436,8 +444,8 @@ class Trade extends Component {
             // self.getUserBal();
             this.joinRoom(
               props.cryptoPair.prevRoom.crypto +
-              "-" +
-              props.cryptoPair.prevRoom.currency
+                "-" +
+                props.cryptoPair.prevRoom.currency
             );
           }
         );
@@ -453,8 +461,8 @@ class Trade extends Component {
             // self.getUserBal();
             this.joinRoom(
               props.cryptoPair.prevRoom.crypto +
-              "-" +
-              props.cryptoPair.prevRoom.currency
+                "-" +
+                props.cryptoPair.prevRoom.currency
             );
           }
         );
@@ -499,8 +507,7 @@ class Trade extends Component {
       });
       // this.setState({ userBalLoader: true });
       this.props.io.on("symbol-high-level-info", (data) => {
-        console.log(">>>>>>>>>>>>>>>>>>>>", data)
-        if ((data.name) == (this.state.crypto + "-" + this.state.currency)) {
+        if (data.name == this.state.crypto + "-" + this.state.currency) {
           this.setState({
             symbolHighLevelInfo: data,
           });
@@ -537,7 +544,7 @@ class Trade extends Component {
       });
       this.props.io.on("spread-values", (data) => {
         if (data) {
-          if (data[0].name == (this.state.crypto + "-" + this.state.currency)) {
+          if (data[0].name == this.state.crypto + "-" + this.state.currency) {
             if (data[0].ask_price && data[0].bid_price) {
               let spread =
                 (data[0].ask_price - data[0].bid_price) /
@@ -578,7 +585,7 @@ class Trade extends Component {
           });
         }
       })
-      .catch((error) => { });
+      .catch((error) => {});
   }
   getInstrumentData = () => {
     fetch(SOCKET_HOST + `/api/v1/tradding/get-instrument-data`, {
@@ -606,7 +613,7 @@ class Trade extends Component {
           this.updateInstrumentsData(responseData.data);
         }
       })
-      .catch((error) => { });
+      .catch((error) => {});
   };
   joinRoom = (prevRoom = null) => {
     io.emit("join", {
@@ -778,6 +785,8 @@ class Trade extends Component {
         month: month,
         flag: filter_type,
         pair: `${this.state.crypto}-${this.state.currency}`,
+        page: this.state.page,
+        limit: this.state.limit,
       });
     }
     // var URL;
@@ -870,7 +879,7 @@ class Trade extends Component {
           orderTradeLoader: false,
         });
       })
-      .catch((error) => { });
+      .catch((error) => {});
   }
 
   // created by Meghal Patel at 2019-04-27 15:24.
@@ -1633,8 +1642,21 @@ class Trade extends Component {
   // Description: Render method starts.
   //
   //
-
+  handlePagination = (page) => {
+    this.setState({ page }, () => {
+      console.log("Emit event page change");
+      this.orderSocket(this.state.timePeriod, this.state.status);
+    });
+  };
+  changePaginationSize = (current, pageSize) => {
+    this.setState({ page: current, limit: pageSize }, () => {
+      console.log("Emit event page change");
+      this.orderSocket(this.state.timePeriod, this.state.status);
+    });
+  };
   render() {
+    let pageSizeOptions = PAGE_SIZE_OPTIONS;
+    const { tradeCount, page, limit } = this.state;
     var self = this;
     const columns = [
       {
@@ -1768,9 +1790,9 @@ class Trade extends Component {
                     >
                       {this.state.symbolHighLevelInfo.last_price
                         ? precise(
-                          this.state.symbolHighLevelInfo.last_price,
-                          this.state.pricePrecision
-                        )
+                            this.state.symbolHighLevelInfo.last_price,
+                            this.state.pricePrecision
+                          )
                         : "0"}
                     </span>
                   </span>
@@ -1779,9 +1801,9 @@ class Trade extends Component {
                       value={
                         this.state.symbolHighLevelInfo.fiatValue
                           ? precise(
-                            this.state.symbolHighLevelInfo.fiatValue,
-                            "2"
-                          )
+                              this.state.symbolHighLevelInfo.fiatValue,
+                              "2"
+                            )
                           : "0"
                       }
                       displayType={"text"}
@@ -1808,9 +1830,9 @@ class Trade extends Component {
                         value={
                           this.state.symbolHighLevelInfo.change
                             ? precise(
-                              Math.abs(this.state.symbolHighLevelInfo.change),
-                              "2"
-                            )
+                                Math.abs(this.state.symbolHighLevelInfo.change),
+                                "2"
+                              )
                             : "0"
                         }
                         displayType={"text"}
@@ -1828,9 +1850,9 @@ class Trade extends Component {
                     <span>
                       {this.state.symbolHighLevelInfo.high
                         ? precise(
-                          this.state.symbolHighLevelInfo.high,
-                          this.state.pricePrecision
-                        )
+                            this.state.symbolHighLevelInfo.high,
+                            this.state.pricePrecision
+                          )
                         : "0"}
                     </span>
                   </span>
@@ -1843,9 +1865,9 @@ class Trade extends Component {
                     <span>
                       {this.state.symbolHighLevelInfo.low
                         ? precise(
-                          this.state.symbolHighLevelInfo.low,
-                          this.state.pricePrecision
-                        )
+                            this.state.symbolHighLevelInfo.low,
+                            this.state.pricePrecision
+                          )
                         : "0"}
                     </span>
                   </span>
@@ -1862,9 +1884,9 @@ class Trade extends Component {
                         value={
                           this.state.symbolHighLevelInfo.volume
                             ? precise(
-                              this.state.symbolHighLevelInfo.volume,
-                              "2"
-                            )
+                                this.state.symbolHighLevelInfo.volume,
+                                "2"
+                              )
                             : "0"
                         }
                         displayType={"text"}
@@ -1876,11 +1898,11 @@ class Trade extends Component {
                 </TopDiv>
               </PairMainDiv>
             ) : (
-                <PairMainDiv className="spin_load">
-                  {/* <Spin size="small" /> */}
-                  <Loader color="#1990ff" width="50" height="50" />
-                </PairMainDiv>
-              )}
+              <PairMainDiv className="spin_load">
+                {/* <Spin size="small" /> */}
+                <Loader color="#1990ff" width="50" height="50" />
+              </PairMainDiv>
+            )}
             <Col>
               <RGL
                 className="layout"
@@ -1896,7 +1918,7 @@ class Trade extends Component {
                 <div key="tradeView">
                   <div
                     className="tradeView"
-                  // style={{ height: "100%", width: "100%" }}
+                    // style={{ height: "100%", width: "100%" }}
                   >
                     <MainTV>
                       <TVBar>
@@ -1909,7 +1931,7 @@ class Trade extends Component {
                           onClick={() => {
                             window.open(
                               tvChartURL +
-                              `/${this.state.crypto}-${this.state.currency}`,
+                                `/${this.state.crypto}-${this.state.currency}`,
                               "_blank",
                               "location=yes,height=800,width=1000,scrollbars=yes,status=yes"
                             );
@@ -1935,13 +1957,13 @@ class Trade extends Component {
                 <div key="instruments">
                   <div
                     className="instruments"
-                  // style={{ height: "100%", width: "100%", overflow: "auto" }}
+                    // style={{ height: "100%", width: "100%", overflow: "auto" }}
                   >
                     {this.state.insLoader === true ? (
                       <Loader color="#1990ff" width="50" height="50" />
                     ) : (
-                        ""
-                      )}
+                      ""
+                    )}
                     <LeftDiv1>
                       <Instru>{this.t("instruments_text.message")}</Instru>
                       {/* {this.state.InsData ? (
@@ -2009,13 +2031,13 @@ class Trade extends Component {
                 <div key="tradeAction">
                   <div
                     className="tradeAction"
-                  // style={{ height: "100%", width: "100%", overflow: "auto" }}
+                    // style={{ height: "100%", width: "100%", overflow: "auto" }}
                   >
                     {this.state.userBalLoader === true ? (
                       <Loader color="#1990ff" width="50" height="50" />
                     ) : (
-                        ""
-                      )}
+                      ""
+                    )}
                     <RightDiv1>
                       <TabsRight
                         defaultActiveKey="2"
@@ -2033,7 +2055,7 @@ class Trade extends Component {
                             cryptoCode={
                               this.state.symbolHighLevelInfo.crypto_coin_code
                                 ? this.state.symbolHighLevelInfo
-                                  .crypto_coin_code
+                                    .crypto_coin_code
                                 : "teth"
                             }
                             cryptoName={
@@ -2044,13 +2066,13 @@ class Trade extends Component {
                             currencyName={
                               this.state.symbolHighLevelInfo.currency_coin_name
                                 ? this.state.symbolHighLevelInfo
-                                  .currency_coin_name
+                                    .currency_coin_name
                                 : "Bitcoin"
                             }
                             currencyCode={
                               this.state.symbolHighLevelInfo.currency_coin_code
                                 ? this.state.symbolHighLevelInfo
-                                  .currency_coin_code
+                                    .currency_coin_code
                                 : "tbtc"
                             }
                             pricePrecision={this.state.pricePrecision}
@@ -2068,7 +2090,7 @@ class Trade extends Component {
                             cryptoCode={
                               this.state.symbolHighLevelInfo.crypto_coin_code
                                 ? this.state.symbolHighLevelInfo
-                                  .crypto_coin_code
+                                    .crypto_coin_code
                                 : "teth"
                             }
                             cryptoName={
@@ -2079,13 +2101,13 @@ class Trade extends Component {
                             currencyName={
                               this.state.symbolHighLevelInfo.currency_coin_name
                                 ? this.state.symbolHighLevelInfo
-                                  .currency_coin_name
+                                    .currency_coin_name
                                 : "Bitcoin"
                             }
                             currencyCode={
                               this.state.symbolHighLevelInfo.currency_coin_code
                                 ? this.state.symbolHighLevelInfo
-                                  .currency_coin_code
+                                    .currency_coin_code
                                 : "tbtc"
                             }
                             pricePrecision={this.state.pricePrecision}
@@ -2106,7 +2128,7 @@ class Trade extends Component {
                             cryptoCode={
                               this.state.symbolHighLevelInfo.crypto_coin_code
                                 ? this.state.symbolHighLevelInfo
-                                  .crypto_coin_code
+                                    .crypto_coin_code
                                 : "teth"
                             }
                             cryptoName={
@@ -2117,13 +2139,13 @@ class Trade extends Component {
                             currencyName={
                               this.state.symbolHighLevelInfo.currency_coin_name
                                 ? this.state.symbolHighLevelInfo
-                                  .currency_coin_name
+                                    .currency_coin_name
                                 : "Bitcoin"
                             }
                             currencyCode={
                               this.state.symbolHighLevelInfo.currency_coin_code
                                 ? this.state.symbolHighLevelInfo
-                                  .currency_coin_code
+                                    .currency_coin_code
                                 : "tbtc"
                             }
                             pricePrecision={this.state.pricePrecision}
@@ -2137,7 +2159,7 @@ class Trade extends Component {
                 <div key="buysellBook">
                   <div
                     className="buysellBook"
-                  // style={{ height: "100%", width: "100%", overflow: "auto" }}
+                    // style={{ height: "100%", width: "100%", overflow: "auto" }}
                   >
                     {/* {this.state.buySellLoader === true ? (
                       <Loader color="#1990ff" width="50" height="50" />
@@ -2160,13 +2182,13 @@ class Trade extends Component {
                 <div key="depthChart">
                   <div
                     className="depthChart"
-                  // style={{ height: "100%", width: "100%", overflow: "auto" }}
+                    // style={{ height: "100%", width: "100%", overflow: "auto" }}
                   >
                     {this.state.depthLoader === true ? (
                       <Loader color="#1990ff" width="50" height="50" />
                     ) : (
-                        ""
-                      )}
+                      ""
+                    )}
                     <RightDiv>
                       {/* <DepthChart
                         crypto={this.state.crypto}
@@ -2191,13 +2213,13 @@ class Trade extends Component {
                 <div key="orderHistory">
                   <div
                     className="orderHistory"
-                  // style={{ height: "100%", width: "100%", overflow: "auto" }}
+                    // style={{ height: "100%", width: "100%", overflow: "auto" }}
                   >
                     {this.state.hisLoader === true ? (
                       <Loader color="#1990ff" width="50" height="50" />
                     ) : (
-                        ""
-                      )}
+                      ""
+                    )}
                     <OrderHIstory
                       io={io}
                       hisFunc={(loader) => this.hisFunc(loader)}
@@ -2212,7 +2234,7 @@ class Trade extends Component {
                 <div key="myorder">
                   <div
                     className="myorder"
-                  // style={{ height: "100%", width: "100%", overflow: "auto" }}
+                    // style={{ height: "100%", width: "100%", overflow: "auto" }}
                   >
                     {/* {this.state.orderTradeLoader === true ? (
                       <Loader color="#1990ff" width="50" height="50" />
@@ -2282,6 +2304,22 @@ class Trade extends Component {
                         pricePrecision={this.state.pricePrecision}
                         qtyPrecision={this.state.quantityPrecision}
                       />
+                      <PaginationDiv>
+                        {tradeCount > 0 ? (
+                          <PaginationS
+                            className="ant-users-pagination my_order_trade_pagination"
+                            onChange={this.handlePagination.bind(this)}
+                            pageSize={limit}
+                            current={page}
+                            total={tradeCount}
+                            showSizeChanger
+                            onShowSizeChange={this.changePaginationSize}
+                            pageSizeOptions={pageSizeOptions}
+                          />
+                        ) : (
+                          ""
+                        )}
+                      </PaginationDiv>
                     </LeftDiv2>
                   </div>
                 </div>
