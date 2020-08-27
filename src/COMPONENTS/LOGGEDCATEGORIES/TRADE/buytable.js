@@ -47,7 +47,7 @@ class BuyTABLE extends Component {
     super(props);
     this.state = {
       data: [],
-      crypto: this.props.cryptoPair ? this.props.cryptoPair.crypto : "XRP",
+      crypto: this.props.cryptoPair ? this.props.cryptoPair.crypto : "ETH",
       currency: this.props.cryptoPair ? this.props.cryptoPair.currency : "BTC",
       lastsum: 0,
       loader: false,
@@ -80,7 +80,9 @@ class BuyTABLE extends Component {
       this.props.loaderfunc(true);
       this.setState({ loader: true });
       this.props.io.on("buy-book-data", (data) => {
-        this.updateData(data);
+        if (data.name == this.props.crypto + "-" + this.props.currency) {
+          this.updateData(data);
+        }
       });
     }
 
@@ -340,8 +342,8 @@ class BuyTABLE extends Component {
                         ))}
                       </tbody>
                     ) : (
-                      <NDF>{this.t("wallet:no_data_found_text.message")}</NDF>
-                    )}
+                        <NDF>{this.t("wallet:no_data_found_text.message")}</NDF>
+                      )}
                   </TableContent>
                 </Scrollbars>
               </ScrollTableContent>
@@ -353,8 +355,8 @@ class BuyTABLE extends Component {
             <Spin size="small" />
           </SpinSingle>
         ) : (
-          ""
-        )}
+            ""
+          )}
       </div>
     );
   }
