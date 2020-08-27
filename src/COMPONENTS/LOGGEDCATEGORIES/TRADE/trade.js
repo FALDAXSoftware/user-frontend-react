@@ -499,9 +499,11 @@ class Trade extends Component {
       });
       // this.setState({ userBalLoader: true });
       this.props.io.on("symbol-high-level-info", (data) => {
-        this.setState({
-          symbolHighLevelInfo: data,
-        });
+        if ((data.coin_name + "-" + data.currency_coin_name) == (this.state.crypto + "-" + this.state.currency)) {
+          this.setState({
+            symbolHighLevelInfo: data,
+          });
+        }
       });
       this.props.io.on("users-all-trade-data", (data) => {
         this.updateMyOrder(data);
