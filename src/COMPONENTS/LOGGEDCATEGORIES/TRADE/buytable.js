@@ -80,7 +80,9 @@ class BuyTABLE extends Component {
       this.props.loaderfunc(true);
       this.setState({ loader: true });
       this.props.io.on("buy-book-data", (data) => {
-        this.updateData(data);
+        if (data.name == this.props.crypto + "-" + this.props.currency) {
+          this.updateData(data);
+        }
       });
     }
 

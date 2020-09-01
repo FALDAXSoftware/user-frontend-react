@@ -499,9 +499,11 @@ class Trade extends Component {
       });
       // this.setState({ userBalLoader: true });
       this.props.io.on("symbol-high-level-info", (data) => {
-        this.setState({
-          symbolHighLevelInfo: data,
-        });
+        if (data.name == this.state.crypto + "-" + this.state.currency) {
+          this.setState({
+            symbolHighLevelInfo: data,
+          });
+        }
       });
       this.props.io.on("users-all-trade-data", (data) => {
         this.updateMyOrder(data);
@@ -515,17 +517,34 @@ class Trade extends Component {
         this.getInstrumentData();
       }, 10000);
       this.props.io.on("user-wallet-balance", (data) => {
-        this.setState({ userBal: data, userBalLoader: false });
+        if (data == true) {
+          this.props.io.emit("user_wallet_data", {
+            user_id: this.props.profileDetails.id,
+            crypto: this.state.crypto,
+            currency: this.state.currency,
+          });
+        } else {
+          // if (data) {
+          this.setState({ userBal: data, userBalLoader: false });
+          // }
+        }
+      });
+      this.props.io.on("user-after-wallet-balance", (data) => {
+        if (data) {
+          this.setState({ userBal: data, userBalLoader: false });
+        }
       });
       this.props.io.on("spread-values", (data) => {
         if (data) {
-          if (data[0].ask_price && data[0].bid_price) {
-            let spread =
-              (data[0].ask_price - data[0].bid_price) /
-              ((data[0].bid_price + data[0].ask_price) / 2);
-            this.setState({
-              spreadPer: precise(parseFloat(spread), "8"),
-            });
+          if (data[0].name == this.state.crypto + "-" + this.state.currency) {
+            if (data[0].ask_price && data[0].bid_price) {
+              let spread =
+                (data[0].ask_price - data[0].bid_price) /
+                ((data[0].bid_price + data[0].ask_price) / 2);
+              this.setState({
+                spreadPer: precise(parseFloat(spread), "8"),
+              });
+            }
           }
         }
       });
