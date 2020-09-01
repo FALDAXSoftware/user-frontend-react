@@ -746,6 +746,8 @@ class Trade extends Component {
       timePeriod: value.key,
       orderTradeData: {},
       orderTradeLoader: true,
+      page: 1,
+      limit: 50,
     });
     this.orderSocket(value.key, this.state.status);
   }
@@ -766,7 +768,13 @@ class Trade extends Component {
     } else if (e.target.value === "c") {
       status = 3;
     }
-    this.setState({ status, orderTradeData: {}, orderTradeLoader: true });
+    this.setState({
+      status,
+      orderTradeData: {},
+      orderTradeLoader: true,
+      page: 1,
+      limit: 50,
+    });
     this.orderSocket(this.state.timePeriod, status);
   }
 
