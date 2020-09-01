@@ -64,7 +64,9 @@ class SellTable extends Component {
     // var self = this;
     if (this.props.io) {
       this.props.io.on("sell-book-data", (data) => {
-        this.updateData(data);
+        if (data.name == this.props.crypto + "-" + this.props.currency) {
+          this.updateData(data);
+        }
       });
     }
     // self.sellTableData();
