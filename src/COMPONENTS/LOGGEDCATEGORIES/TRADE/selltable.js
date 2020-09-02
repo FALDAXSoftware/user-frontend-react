@@ -64,7 +64,6 @@ class SellTable extends Component {
     // var self = this;
     if (this.props.io) {
       this.props.io.on("sell-book-data", (data) => {
-        console.log(">>>>>>>>>>>>>>>>>>>>", data)
         if (data.name == this.props.crypto + "-" + this.props.currency) {
           this.updateData(data);
         }
@@ -335,14 +334,20 @@ class SellTable extends Component {
                           <tr>
                             {/* <td>{element.my_size.toFixed(8)}</td> */}
                             <td>
-                              {precise(element.amount, this.props.qtyPrecision)}
-                            </td>
-                            <td>
-                              {precise(element.ask, this.props.pricePrecision)}
+                              {precise(
+                                parseFloat(element.amount),
+                                this.props.qtyPrecision
+                              )}
                             </td>
                             <td>
                               {precise(
-                                element.total,
+                                parseFloat(element.ask),
+                                this.props.pricePrecision
+                              )}
+                            </td>
+                            <td>
+                              {precise(
+                                parseFloat(element.total),
                                 this.props.pricePrecision
                               )}
                             </td>
@@ -350,8 +355,8 @@ class SellTable extends Component {
                         ))}
                       </tbody>
                     ) : (
-                        <NDF>{this.t("wallet:no_data_found_text.message")}</NDF>
-                      )}
+                      <NDF>{this.t("wallet:no_data_found_text.message")}</NDF>
+                    )}
                   </TableContent>
                 </Scrollbars>
               </ScrollTableContent>
@@ -363,8 +368,8 @@ class SellTable extends Component {
             <Spin size="small" />
           </SpinSingle>
         ) : (
-            ""
-          )}
+          ""
+        )}
       </div>
     );
   }
