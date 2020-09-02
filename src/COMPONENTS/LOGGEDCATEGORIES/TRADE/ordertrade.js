@@ -295,10 +295,10 @@ class OrderTrade extends Component {
                                 ? data.order_type === "Market" &&
                                   data.user_id == self.props.profileDetails.id
                                   ? data.order_type
-                                  : `${precise(
+                                  : (data.fill_price == 0) ? (data.limit_price) : (`${precise(
                                     data.fill_price,
                                     self.props.pricePrecision
-                                  )}`
+                                  )}`)
                                 : `${precise(
                                   data.limit_price,
                                   self.props.pricePrecision
