@@ -185,7 +185,7 @@ export const precise = (value, precise_value) => {
         x += new Array(e + 1).join("0");
       }
     }
-    if (x.toString().split(".")[1] && x.toString().split(".")[1].length > 4) {
+    if (x.toString().split(".")[1] && x.toString().split(".")[1].length > 5) {
       {
         x = parseFloat(x).toFixed(4);
         if (
