@@ -1589,8 +1589,6 @@ class Trade extends Component {
   //
 
   goFullScreen() {
-    alert("go to full screen");
-
     let body = document.getElementsByTagName("body");
     let element = body[0];
     if (element.requestFullscreen) {
