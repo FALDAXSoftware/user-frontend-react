@@ -228,7 +228,7 @@ class OrderTrade extends Component {
                         ) {
                           var Filled = 0;
                         } else {
-                          if (data.fix_quantity) {
+                          if (data.fix_quantity && data.reason == null) {
                             var Filled = data.fix_quantity - data.quantity;
                           } else {
                             var Filled = data.quantity;
