@@ -474,6 +474,10 @@ class Trade extends Component {
     if (!this.props.profileDetails) {
       this.props.getProfileDataAction(this.props.isLoggedIn);
     }
+    this.setState({
+      crypto: "ETH",
+      currency: "BTC",
+    });
     var self = this;
     // io.sails.headers = {
     //   Accept: "application/json",
