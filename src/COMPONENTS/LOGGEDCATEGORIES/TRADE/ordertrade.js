@@ -292,7 +292,6 @@ class OrderTrade extends Component {
                               {precise(data.quantity, self.props.qtyPrecision)}
                             </SideType>
                             <td>
-                              {" "}
                               {self.props.pending !== 2
                                 ? data.order_type === "Market" &&
                                   data.user_id == self.props.profileDetails.id
