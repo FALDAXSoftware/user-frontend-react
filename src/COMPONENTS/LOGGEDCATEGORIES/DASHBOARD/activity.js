@@ -12,6 +12,7 @@ import {
   ActTable,
   SpinSingle,
 } from "../../../STYLED-COMPONENTS/LOGGED_STYLE/dashStyle";
+import NumberFormat from "react-number-format";
 const SideType = styled.td`
   color: ${(props) => (props.type === "Sell" ? "#f13239" : "#4fb153")};
   font-weight: 600;
@@ -67,12 +68,18 @@ class Activity extends Component {
             activityData.push({
               date: date,
               action: element.side,
-              amount: (element.quantity == 0) ? (element.fix_quantity) : (precision(element.quantity)),
+              amount:
+                element.quantity == 0
+                  ? element.fix_quantity
+                  : precision(element.quantity),
               symbol: element.symbol,
-              completed: (element.quantity == 0) ? (100) : (parseInt(
-                (parseFloat(element.quantity) * 100) /
-                parseFloat(element.fix_quantity)
-              )),
+              completed:
+                element.quantity == 0
+                  ? 100
+                  : parseInt(
+                      (parseFloat(element.quantity) * 100) /
+                        parseFloat(element.fix_quantity)
+                    ),
             });
           });
           self.setState({
@@ -104,6 +111,13 @@ class Activity extends Component {
         dataIndex: "amount",
         key: "amount",
         className: "amount",
+        render: (amount) => (
+          <NumberFormat
+            value={amount}
+            displayType={"text"}
+            thousandSeparator={true}
+          />
+        ),
       },
       {
         title: this.t("symbol_text.message"),
@@ -138,8 +152,8 @@ class Activity extends Component {
             <Spin size="small" />
           </SpinSingle>
         ) : (
-            ""
-          )}
+          ""
+        )}
       </>
     );
   }

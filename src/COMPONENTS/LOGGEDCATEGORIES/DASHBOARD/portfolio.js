@@ -12,6 +12,7 @@ import {
 } from "../../../STYLED-COMPONENTS/LOGGED_STYLE/dashStyle";
 import { Spin, Icon } from "antd";
 import { translate } from "react-i18next";
+import NumberFormat from "react-number-format";
 
 class Portfolio extends Component {
   constructor(props) {
@@ -82,12 +83,26 @@ class Portfolio extends Component {
         dataIndex: "amount",
         key: "amount",
         className: "amount",
+        render: (amount) => (
+          <NumberFormat
+            value={amount}
+            displayType={"text"}
+            thousandSeparator={true}
+          />
+        ),
       },
       {
         title: this.t("wallet:value_text.message"),
         dataIndex: "value",
         key: "value",
         className: "value",
+        render: (value) => (
+          <NumberFormat
+            value={value}
+            displayType={"text"}
+            thousandSeparator={true}
+          />
+        ),
       },
       {
         title: this.t("trade:change_text.message"),
@@ -114,9 +129,18 @@ class Portfolio extends Component {
         <HighLow>
           <LeftHl>
             {/* {precision(parseFloat(this.state.total))} {userFiat} */}
-            {this.state.total == "Infinity"
+            {/* {this.state.total == "Infinity"
               ? `0 ${userFiat}`
-              : `${precision(parseFloat(this.state.total))} ${userFiat}`}
+              : `${precision(parseFloat(this.state.total))} ${userFiat}`} */}
+            <NumberFormat
+              value={
+                this.state.total == "Infinity"
+                  ? `0 ${userFiat}`
+                  : `${precision(parseFloat(this.state.total))} ${userFiat}`
+              }
+              displayType={"text"}
+              thousandSeparator={true}
+            />
           </LeftHl>
           <RightHl
             className={
@@ -128,7 +152,12 @@ class Portfolio extends Component {
             ) : (
               <Icon type="arrow-up" />
             )}
-            {Math.abs(this.state.diffrence)} {userFiat}
+            <NumberFormat
+              value={Math.abs(this.state.diffrence)}
+              displayType={"text"}
+              thousandSeparator={true}
+            />
+            {/* {Math.abs(this.state.diffrence)} {userFiat} */}
           </RightHl>
         </HighLow>
         <ActDiv>
