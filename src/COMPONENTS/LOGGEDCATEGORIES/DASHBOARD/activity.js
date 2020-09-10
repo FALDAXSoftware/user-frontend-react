@@ -67,12 +67,12 @@ class Activity extends Component {
             activityData.push({
               date: date,
               action: element.side,
-              amount: precision(element.quantity),
+              amount: (element.quantity == 0) ? (element.fix_quantity) : (precision(element.quantity)),
               symbol: element.symbol,
-              completed: parseInt(
+              completed: (element.quantity == 0) ? (100) : (parseInt(
                 (parseFloat(element.quantity) * 100) /
-                  parseFloat(element.fix_quantity)
-              ),
+                parseFloat(element.fix_quantity)
+              )),
             });
           });
           self.setState({
@@ -138,8 +138,8 @@ class Activity extends Component {
             <Spin size="small" />
           </SpinSingle>
         ) : (
-          ""
-        )}
+            ""
+          )}
       </>
     );
   }
