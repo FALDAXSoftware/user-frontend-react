@@ -1148,7 +1148,7 @@ class Login_Form extends Component {
                   >
                     {this.t("login_page:login_text.message")}
                   </ButtonLogin>
-                  <Sign>
+                  {/* <Sign>
                     {this.t("login_page:no_account_text.message")}?{" "}
                     <Signa
                       href="/signup"
@@ -1156,7 +1156,7 @@ class Login_Form extends Component {
                     >
                       {this.t("login_page:sign_up_text.message")}
                     </Signa>
-                  </Sign>
+                  </Sign> */}
                   {this.state.loader === true ? <FaldaxLoader /> : ""}
                 </div>
               </RightWrap>
