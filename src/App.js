@@ -5,7 +5,7 @@ import {
   Route,
   Switch,
   Redirect,
-  withRouter
+  withRouter,
 } from "react-router-dom";
 import "./App.css";
 import { ThemeProvider } from "styled-components";
@@ -67,7 +67,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      theme: this.props.theme === false ? "light" : "dark"
+      theme: this.props.theme === false ? "light" : "dark",
     };
   }
   componentDidUpdate(prevProps, prevState) {
@@ -130,7 +130,7 @@ class App extends Component {
     }) => (
       <Route
         {...rest}
-        render={props => {
+        render={(props) => {
           // console.log(props, rest, isLoggedIn);
           if (isLoggedIn) {
             if (props.location.pathname === "/") {
@@ -138,7 +138,7 @@ class App extends Component {
                 <Redirect
                   to={{
                     pathname: "/login",
-                    state: { from: props.location }
+                    state: { from: props.location },
                   }}
                 />
               );
@@ -151,7 +151,7 @@ class App extends Component {
                 <Redirect
                   to={{
                     pathname: "/login",
-                    state: { from: props.location }
+                    state: { from: props.location },
                   }}
                 />
               );
@@ -160,7 +160,7 @@ class App extends Component {
                 <Redirect
                   to={{
                     pathname: "/login",
-                    state: { from: props.location }
+                    state: { from: props.location },
                   }}
                 />
               );
@@ -171,7 +171,7 @@ class App extends Component {
     );
 
     let theme = {
-      mode: this.state.theme
+      mode: this.state.theme,
     };
     return (
       <div className="App">
@@ -199,12 +199,12 @@ class App extends Component {
                       title="Reset Password"
                       component={ResetPassword}
                     />
-                    <Route
+                    {/* <Route
                       path="/signup"
                       exact
                       title="Signup"
                       component={SignupForm}
-                    />
+                    /> */}
                     <Route
                       path="/forgot-password"
                       exact
@@ -352,7 +352,7 @@ function mapStateToProps(state, ownProps) {
   return {
     isLoggedIn: state.simpleReducer.isLoggedIn !== undefined ? true : false,
     theme:
-      state.themeReducer.theme !== undefined ? state.themeReducer.theme : ""
+      state.themeReducer.theme !== undefined ? state.themeReducer.theme : "",
   };
 }
 
